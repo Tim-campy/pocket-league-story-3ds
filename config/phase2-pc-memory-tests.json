@@ -1,0 +1,33 @@
+{
+  "operation": "own-Windows-process-memory-sampler",
+  "status": "PASS",
+  "assertions": 8,
+  "measurements": {
+    "status": "PASS",
+    "assertions": 8,
+    "baseline_resident_bytes": 3538944,
+    "baseline_private_commit_bytes": 536576,
+    "baseline_executable_image_committed_bytes": 4014080,
+    "baseline_executable_image_resident_bytes": 2187264,
+    "page_bytes": 4096,
+    "allocation_bytes": 67108864
+  },
+  "producer_sha256": "33f61c431003328610963f145d72d9a7f7bd8e88b31c10bb4ca3af2256455412",
+  "inputs_sha256": {
+    "tests/kairo/pc_memory_fixtures.cpp": "4702c02ef48584545749b2698eb5d7970f619b1791bab62cc91985535b451daa",
+    "src/main/pc_memory.cpp": "5510247cb0372b1b626a3e188bc779e2b91e29ea247a426b15f031d4e1a127ab",
+    "src/main/pc_memory.hpp": "81f0048a3c8360c273c2b486aa12a5e2f2cc143b4f751ed87bcb82acd6ccc692"
+  },
+  "native_executable": {
+    "path": "build/pc-memory-fixtures/pc-memory-fixtures.exe",
+    "sha256": "8af8dcb11dc11f1976aa42c364e449ada01d25d82c12e0f4b60cbca1facd67be"
+  },
+  "production_methods_promoted": 0,
+  "game_executed": false,
+  "limitations": [
+    "Measurements describe only the synthetic fixture process, not game boot.",
+    "Working set and executable page samples are sequential, not atomic.",
+    "Executable MEM_IMAGE page counts include EXE/DLL padding and shared pages; not exact compiled machine-code lengths.",
+    "No per-category resident or managed heap byte attribution is inferred."
+  ]
+}

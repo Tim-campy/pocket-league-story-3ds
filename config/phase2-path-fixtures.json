@@ -1,0 +1,2517 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 378,
+  "passed": 378,
+  "expected_lines": 189,
+  "actual_lines": 189,
+  "native_collector_tests": null,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\PathFixtures.cs": "6adc4774af782927532bcb87ce55ef73c950f922c40062c3321ad3ccf61c4a82",
+    "tests\\translator\\path_fixtures.cpp": "58e5dcb2bd07d98f62560cb7974487decf02dd3d53b274f79519fa59685e8917",
+    "src\\kairo\\common\\semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src\\kairo\\common\\semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src\\kairo\\common\\managed_collections.hpp": "daee4c23611a2658e1de478fd4062476832588d04dd959a1f4ff932dd9894560",
+    "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97",
+    "tools\\test_path.py": "36e1eb7fb24a777d2b4f37ecd937da3e8a1957413675675274c018b3a6c07088",
+    "src\\kairo\\common\\managed_path.hpp": "545683f23b690b066bb420199b282ecf04ecff1a49207111febd8e86fbd9498c"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "framework_reference": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\System.Core.dll",
+    "framework_reference_sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "extension0",
+      "expected": "extension0=null",
+      "actual": "extension0=null",
+      "passed": true
+    },
+    {
+      "case": "extension1",
+      "expected": "extension1=",
+      "actual": "extension1=",
+      "passed": true
+    },
+    {
+      "case": "extension2",
+      "expected": "extension2=",
+      "actual": "extension2=",
+      "passed": true
+    },
+    {
+      "case": "extension3",
+      "expected": "extension3=002e006500780074",
+      "actual": "extension3=002e006500780074",
+      "passed": true
+    },
+    {
+      "case": "extension4",
+      "expected": "extension4=",
+      "actual": "extension4=",
+      "passed": true
+    },
+    {
+      "case": "extension5",
+      "expected": "extension5=002e0078",
+      "actual": "extension5=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension6",
+      "expected": "extension6=002e0078",
+      "actual": "extension6=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension7",
+      "expected": "extension7=",
+      "actual": "extension7=",
+      "passed": true
+    },
+    {
+      "case": "extension8",
+      "expected": "extension8=",
+      "actual": "extension8=",
+      "passed": true
+    },
+    {
+      "case": "extension9",
+      "expected": "extension9=",
+      "actual": "extension9=",
+      "passed": true
+    },
+    {
+      "case": "extension10",
+      "expected": "extension10=002e0067007a",
+      "actual": "extension10=002e0067007a",
+      "passed": true
+    },
+    {
+      "case": "extension11",
+      "expected": "extension11=002e0078",
+      "actual": "extension11=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension12",
+      "expected": "extension12=",
+      "actual": "extension12=",
+      "passed": true
+    },
+    {
+      "case": "extension13",
+      "expected": "extension13=002e0078003a0079",
+      "actual": "extension13=002e0078003a0079",
+      "passed": true
+    },
+    {
+      "case": "extension14",
+      "expected": "extension14=002e0079",
+      "actual": "extension14=002e0079",
+      "passed": true
+    },
+    {
+      "case": "extension15",
+      "expected": "extension15=",
+      "actual": "extension15=",
+      "passed": true
+    },
+    {
+      "case": "extension16",
+      "expected": "extension16=002e00780000",
+      "actual": "extension16=002e00780000",
+      "passed": true
+    },
+    {
+      "case": "extension17",
+      "expected": "extension17=002e0078",
+      "actual": "extension17=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension18",
+      "expected": "extension18=002e0078000a",
+      "actual": "extension18=002e0078000a",
+      "passed": true
+    },
+    {
+      "case": "extension19",
+      "expected": "extension19=002e00780020",
+      "actual": "extension19=002e00780020",
+      "passed": true
+    },
+    {
+      "case": "extension20",
+      "expected": "extension20=002e0078",
+      "actual": "extension20=002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename0",
+      "expected": "filename0=null",
+      "actual": "filename0=null",
+      "passed": true
+    },
+    {
+      "case": "filename1",
+      "expected": "filename1=",
+      "actual": "filename1=",
+      "passed": true
+    },
+    {
+      "case": "filename2",
+      "expected": "filename2=006f0077006e",
+      "actual": "filename2=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "filename3",
+      "expected": "filename3=006f0077006e002e006500780074",
+      "actual": "filename3=006f0077006e002e006500780074",
+      "passed": true
+    },
+    {
+      "case": "filename4",
+      "expected": "filename4=006f0077006e",
+      "actual": "filename4=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "filename5",
+      "expected": "filename5=006f0077006e002e0078",
+      "actual": "filename5=006f0077006e002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename6",
+      "expected": "filename6=002e0078",
+      "actual": "filename6=002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename7",
+      "expected": "filename7=006f0077006e002e",
+      "actual": "filename7=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "filename8",
+      "expected": "filename8=002e",
+      "actual": "filename8=002e",
+      "passed": true
+    },
+    {
+      "case": "filename9",
+      "expected": "filename9=002e002e",
+      "actual": "filename9=002e002e",
+      "passed": true
+    },
+    {
+      "case": "filename10",
+      "expected": "filename10=006f0077006e002e007400610072002e0067007a",
+      "actual": "filename10=006f0077006e002e007400610072002e0067007a",
+      "passed": true
+    },
+    {
+      "case": "filename11",
+      "expected": "filename11=006f0077006e002e0078",
+      "actual": "filename11=006f0077006e002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename12",
+      "expected": "filename12=006f0077006e",
+      "actual": "filename12=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "filename13",
+      "expected": "filename13=0066002e0078003a0079",
+      "actual": "filename13=0066002e0078003a0079",
+      "passed": true
+    },
+    {
+      "case": "filename14",
+      "expected": "filename14=0078002e0079",
+      "actual": "filename14=0078002e0079",
+      "passed": true
+    },
+    {
+      "case": "filename15",
+      "expected": "filename15=",
+      "actual": "filename15=",
+      "passed": true
+    },
+    {
+      "case": "filename16",
+      "expected": "filename16=006f0077006e002e00780000",
+      "actual": "filename16=006f0077006e002e00780000",
+      "passed": true
+    },
+    {
+      "case": "filename17",
+      "expected": "filename17=006f0077006e003c002e0078",
+      "actual": "filename17=006f0077006e003c002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename18",
+      "expected": "filename18=006f0077006e002e0078000a",
+      "actual": "filename18=006f0077006e002e0078000a",
+      "passed": true
+    },
+    {
+      "case": "filename19",
+      "expected": "filename19=006f0077006e002e00780020",
+      "actual": "filename19=006f0077006e002e00780020",
+      "passed": true
+    },
+    {
+      "case": "filename20",
+      "expected": "filename20=d800002e0078",
+      "actual": "filename20=d800002e0078",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension0",
+      "expected": "withoutExtension0=null",
+      "actual": "withoutExtension0=null",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension1",
+      "expected": "withoutExtension1=",
+      "actual": "withoutExtension1=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension2",
+      "expected": "withoutExtension2=006f0077006e",
+      "actual": "withoutExtension2=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension3",
+      "expected": "withoutExtension3=006f0077006e",
+      "actual": "withoutExtension3=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension4",
+      "expected": "withoutExtension4=006f0077006e",
+      "actual": "withoutExtension4=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension5",
+      "expected": "withoutExtension5=006f0077006e",
+      "actual": "withoutExtension5=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension6",
+      "expected": "withoutExtension6=",
+      "actual": "withoutExtension6=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension7",
+      "expected": "withoutExtension7=006f0077006e",
+      "actual": "withoutExtension7=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension8",
+      "expected": "withoutExtension8=",
+      "actual": "withoutExtension8=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension9",
+      "expected": "withoutExtension9=002e",
+      "actual": "withoutExtension9=002e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension10",
+      "expected": "withoutExtension10=006f0077006e002e007400610072",
+      "actual": "withoutExtension10=006f0077006e002e007400610072",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension11",
+      "expected": "withoutExtension11=006f0077006e",
+      "actual": "withoutExtension11=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension12",
+      "expected": "withoutExtension12=006f0077006e",
+      "actual": "withoutExtension12=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension13",
+      "expected": "withoutExtension13=0066",
+      "actual": "withoutExtension13=0066",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension14",
+      "expected": "withoutExtension14=0078",
+      "actual": "withoutExtension14=0078",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension15",
+      "expected": "withoutExtension15=",
+      "actual": "withoutExtension15=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension16",
+      "expected": "withoutExtension16=006f0077006e",
+      "actual": "withoutExtension16=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension17",
+      "expected": "withoutExtension17=006f0077006e003c",
+      "actual": "withoutExtension17=006f0077006e003c",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension18",
+      "expected": "withoutExtension18=006f0077006e",
+      "actual": "withoutExtension18=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension19",
+      "expected": "withoutExtension19=006f0077006e",
+      "actual": "withoutExtension19=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension20",
+      "expected": "withoutExtension20=d800",
+      "actual": "withoutExtension20=d800",
+      "passed": true
+    },
+    {
+      "case": "change0_0",
+      "expected": "change0_0=null",
+      "actual": "change0_0=null",
+      "passed": true
+    },
+    {
+      "case": "change0_1",
+      "expected": "change0_1=null",
+      "actual": "change0_1=null",
+      "passed": true
+    },
+    {
+      "case": "change0_2",
+      "expected": "change0_2=null",
+      "actual": "change0_2=null",
+      "passed": true
+    },
+    {
+      "case": "change0_3",
+      "expected": "change0_3=null",
+      "actual": "change0_3=null",
+      "passed": true
+    },
+    {
+      "case": "change0_4",
+      "expected": "change0_4=null",
+      "actual": "change0_4=null",
+      "passed": true
+    },
+    {
+      "case": "change0_5",
+      "expected": "change0_5=null",
+      "actual": "change0_5=null",
+      "passed": true
+    },
+    {
+      "case": "change1_0",
+      "expected": "change1_0=",
+      "actual": "change1_0=",
+      "passed": true
+    },
+    {
+      "case": "change1_1",
+      "expected": "change1_1=",
+      "actual": "change1_1=",
+      "passed": true
+    },
+    {
+      "case": "change1_2",
+      "expected": "change1_2=",
+      "actual": "change1_2=",
+      "passed": true
+    },
+    {
+      "case": "change1_3",
+      "expected": "change1_3=",
+      "actual": "change1_3=",
+      "passed": true
+    },
+    {
+      "case": "change1_4",
+      "expected": "change1_4=",
+      "actual": "change1_4=",
+      "passed": true
+    },
+    {
+      "case": "change1_5",
+      "expected": "change1_5=",
+      "actual": "change1_5=",
+      "passed": true
+    },
+    {
+      "case": "change2_0",
+      "expected": "change2_0=006f0077006e",
+      "actual": "change2_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change2_1",
+      "expected": "change2_1=006f0077006e002e",
+      "actual": "change2_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change2_2",
+      "expected": "change2_2=006f0077006e002e007400780074",
+      "actual": "change2_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change2_3",
+      "expected": "change2_3=006f0077006e002e007400780074",
+      "actual": "change2_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change2_4",
+      "expected": "change2_4=006f0077006e002e",
+      "actual": "change2_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change2_5",
+      "expected": "change2_5=006f0077006e002e0078002f0079",
+      "actual": "change2_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change3_0",
+      "expected": "change3_0=006f0077006e",
+      "actual": "change3_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change3_1",
+      "expected": "change3_1=006f0077006e002e",
+      "actual": "change3_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change3_2",
+      "expected": "change3_2=006f0077006e002e007400780074",
+      "actual": "change3_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change3_3",
+      "expected": "change3_3=006f0077006e002e007400780074",
+      "actual": "change3_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change3_4",
+      "expected": "change3_4=006f0077006e002e",
+      "actual": "change3_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change3_5",
+      "expected": "change3_5=006f0077006e002e0078002f0079",
+      "actual": "change3_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change4_0",
+      "expected": "change4_0=006400690072002e0078002f006f0077006e",
+      "actual": "change4_0=006400690072002e0078002f006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change4_1",
+      "expected": "change4_1=006400690072002e0078002f006f0077006e002e",
+      "actual": "change4_1=006400690072002e0078002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change4_2",
+      "expected": "change4_2=006400690072002e0078002f006f0077006e002e007400780074",
+      "actual": "change4_2=006400690072002e0078002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change4_3",
+      "expected": "change4_3=006400690072002e0078002f006f0077006e002e007400780074",
+      "actual": "change4_3=006400690072002e0078002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change4_4",
+      "expected": "change4_4=006400690072002e0078002f006f0077006e002e",
+      "actual": "change4_4=006400690072002e0078002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change4_5",
+      "expected": "change4_5=006400690072002e0078002f006f0077006e002e0078002f0079",
+      "actual": "change4_5=006400690072002e0078002f006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change5_0",
+      "expected": "change5_0=006400690072002f006f0077006e",
+      "actual": "change5_0=006400690072002f006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change5_1",
+      "expected": "change5_1=006400690072002f006f0077006e002e",
+      "actual": "change5_1=006400690072002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change5_2",
+      "expected": "change5_2=006400690072002f006f0077006e002e007400780074",
+      "actual": "change5_2=006400690072002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change5_3",
+      "expected": "change5_3=006400690072002f006f0077006e002e007400780074",
+      "actual": "change5_3=006400690072002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change5_4",
+      "expected": "change5_4=006400690072002f006f0077006e002e",
+      "actual": "change5_4=006400690072002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change5_5",
+      "expected": "change5_5=006400690072002f006f0077006e002e0078002f0079",
+      "actual": "change5_5=006400690072002f006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change6_0",
+      "expected": "change6_0=",
+      "actual": "change6_0=",
+      "passed": true
+    },
+    {
+      "case": "change6_1",
+      "expected": "change6_1=002e",
+      "actual": "change6_1=002e",
+      "passed": true
+    },
+    {
+      "case": "change6_2",
+      "expected": "change6_2=002e007400780074",
+      "actual": "change6_2=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change6_3",
+      "expected": "change6_3=002e007400780074",
+      "actual": "change6_3=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change6_4",
+      "expected": "change6_4=002e",
+      "actual": "change6_4=002e",
+      "passed": true
+    },
+    {
+      "case": "change6_5",
+      "expected": "change6_5=002e0078002f0079",
+      "actual": "change6_5=002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change7_0",
+      "expected": "change7_0=006f0077006e",
+      "actual": "change7_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change7_1",
+      "expected": "change7_1=006f0077006e002e",
+      "actual": "change7_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change7_2",
+      "expected": "change7_2=006f0077006e002e007400780074",
+      "actual": "change7_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change7_3",
+      "expected": "change7_3=006f0077006e002e007400780074",
+      "actual": "change7_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change7_4",
+      "expected": "change7_4=006f0077006e002e",
+      "actual": "change7_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change7_5",
+      "expected": "change7_5=006f0077006e002e0078002f0079",
+      "actual": "change7_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change8_0",
+      "expected": "change8_0=",
+      "actual": "change8_0=",
+      "passed": true
+    },
+    {
+      "case": "change8_1",
+      "expected": "change8_1=002e",
+      "actual": "change8_1=002e",
+      "passed": true
+    },
+    {
+      "case": "change8_2",
+      "expected": "change8_2=002e007400780074",
+      "actual": "change8_2=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change8_3",
+      "expected": "change8_3=002e007400780074",
+      "actual": "change8_3=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change8_4",
+      "expected": "change8_4=002e",
+      "actual": "change8_4=002e",
+      "passed": true
+    },
+    {
+      "case": "change8_5",
+      "expected": "change8_5=002e0078002f0079",
+      "actual": "change8_5=002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change9_0",
+      "expected": "change9_0=002e",
+      "actual": "change9_0=002e",
+      "passed": true
+    },
+    {
+      "case": "change9_1",
+      "expected": "change9_1=002e002e",
+      "actual": "change9_1=002e002e",
+      "passed": true
+    },
+    {
+      "case": "change9_2",
+      "expected": "change9_2=002e002e007400780074",
+      "actual": "change9_2=002e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change9_3",
+      "expected": "change9_3=002e002e007400780074",
+      "actual": "change9_3=002e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change9_4",
+      "expected": "change9_4=002e002e",
+      "actual": "change9_4=002e002e",
+      "passed": true
+    },
+    {
+      "case": "change9_5",
+      "expected": "change9_5=002e002e0078002f0079",
+      "actual": "change9_5=002e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change10_0",
+      "expected": "change10_0=006f0077006e002e007400610072",
+      "actual": "change10_0=006f0077006e002e007400610072",
+      "passed": true
+    },
+    {
+      "case": "change10_1",
+      "expected": "change10_1=006f0077006e002e007400610072002e",
+      "actual": "change10_1=006f0077006e002e007400610072002e",
+      "passed": true
+    },
+    {
+      "case": "change10_2",
+      "expected": "change10_2=006f0077006e002e007400610072002e007400780074",
+      "actual": "change10_2=006f0077006e002e007400610072002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change10_3",
+      "expected": "change10_3=006f0077006e002e007400610072002e007400780074",
+      "actual": "change10_3=006f0077006e002e007400610072002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change10_4",
+      "expected": "change10_4=006f0077006e002e007400610072002e",
+      "actual": "change10_4=006f0077006e002e007400610072002e",
+      "passed": true
+    },
+    {
+      "case": "change10_5",
+      "expected": "change10_5=006f0077006e002e007400610072002e0078002f0079",
+      "actual": "change10_5=006f0077006e002e007400610072002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change11_0",
+      "expected": "change11_0=006400690072005c006f0077006e",
+      "actual": "change11_0=006400690072005c006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change11_1",
+      "expected": "change11_1=006400690072005c006f0077006e002e",
+      "actual": "change11_1=006400690072005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change11_2",
+      "expected": "change11_2=006400690072005c006f0077006e002e007400780074",
+      "actual": "change11_2=006400690072005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change11_3",
+      "expected": "change11_3=006400690072005c006f0077006e002e007400780074",
+      "actual": "change11_3=006400690072005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change11_4",
+      "expected": "change11_4=006400690072005c006f0077006e002e",
+      "actual": "change11_4=006400690072005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change11_5",
+      "expected": "change11_5=006400690072005c006f0077006e002e0078002f0079",
+      "actual": "change11_5=006400690072005c006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change12_0",
+      "expected": "change12_0=006400690072002e0078005c006f0077006e",
+      "actual": "change12_0=006400690072002e0078005c006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change12_1",
+      "expected": "change12_1=006400690072002e0078005c006f0077006e002e",
+      "actual": "change12_1=006400690072002e0078005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change12_2",
+      "expected": "change12_2=006400690072002e0078005c006f0077006e002e007400780074",
+      "actual": "change12_2=006400690072002e0078005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change12_3",
+      "expected": "change12_3=006400690072002e0078005c006f0077006e002e007400780074",
+      "actual": "change12_3=006400690072002e0078005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change12_4",
+      "expected": "change12_4=006400690072002e0078005c006f0077006e002e",
+      "actual": "change12_4=006400690072002e0078005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change12_5",
+      "expected": "change12_5=006400690072002e0078005c006f0077006e002e0078002f0079",
+      "actual": "change12_5=006400690072002e0078005c006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change13_0",
+      "expected": "change13_0=0066",
+      "actual": "change13_0=0066",
+      "passed": true
+    },
+    {
+      "case": "change13_1",
+      "expected": "change13_1=0066002e",
+      "actual": "change13_1=0066002e",
+      "passed": true
+    },
+    {
+      "case": "change13_2",
+      "expected": "change13_2=0066002e007400780074",
+      "actual": "change13_2=0066002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change13_3",
+      "expected": "change13_3=0066002e007400780074",
+      "actual": "change13_3=0066002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change13_4",
+      "expected": "change13_4=0066002e",
+      "actual": "change13_4=0066002e",
+      "passed": true
+    },
+    {
+      "case": "change13_5",
+      "expected": "change13_5=0066002e0078002f0079",
+      "actual": "change13_5=0066002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change14_0",
+      "expected": "change14_0=0066003a0078",
+      "actual": "change14_0=0066003a0078",
+      "passed": true
+    },
+    {
+      "case": "change14_1",
+      "expected": "change14_1=0066003a0078002e",
+      "actual": "change14_1=0066003a0078002e",
+      "passed": true
+    },
+    {
+      "case": "change14_2",
+      "expected": "change14_2=0066003a0078002e007400780074",
+      "actual": "change14_2=0066003a0078002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change14_3",
+      "expected": "change14_3=0066003a0078002e007400780074",
+      "actual": "change14_3=0066003a0078002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change14_4",
+      "expected": "change14_4=0066003a0078002e",
+      "actual": "change14_4=0066003a0078002e",
+      "passed": true
+    },
+    {
+      "case": "change14_5",
+      "expected": "change14_5=0066003a0078002e0078002f0079",
+      "actual": "change14_5=0066003a0078002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change15_0",
+      "expected": "change15_0=0066002e0078002f",
+      "actual": "change15_0=0066002e0078002f",
+      "passed": true
+    },
+    {
+      "case": "change15_1",
+      "expected": "change15_1=0066002e0078002f002e",
+      "actual": "change15_1=0066002e0078002f002e",
+      "passed": true
+    },
+    {
+      "case": "change15_2",
+      "expected": "change15_2=0066002e0078002f002e007400780074",
+      "actual": "change15_2=0066002e0078002f002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change15_3",
+      "expected": "change15_3=0066002e0078002f002e007400780074",
+      "actual": "change15_3=0066002e0078002f002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change15_4",
+      "expected": "change15_4=0066002e0078002f002e",
+      "actual": "change15_4=0066002e0078002f002e",
+      "passed": true
+    },
+    {
+      "case": "change15_5",
+      "expected": "change15_5=0066002e0078002f002e0078002f0079",
+      "actual": "change15_5=0066002e0078002f002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change16_0",
+      "expected": "change16_0=006f0077006e",
+      "actual": "change16_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change16_1",
+      "expected": "change16_1=006f0077006e002e",
+      "actual": "change16_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change16_2",
+      "expected": "change16_2=006f0077006e002e007400780074",
+      "actual": "change16_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change16_3",
+      "expected": "change16_3=006f0077006e002e007400780074",
+      "actual": "change16_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change16_4",
+      "expected": "change16_4=006f0077006e002e",
+      "actual": "change16_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change16_5",
+      "expected": "change16_5=006f0077006e002e0078002f0079",
+      "actual": "change16_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change17_0",
+      "expected": "change17_0=006f0077006e003c",
+      "actual": "change17_0=006f0077006e003c",
+      "passed": true
+    },
+    {
+      "case": "change17_1",
+      "expected": "change17_1=006f0077006e003c002e",
+      "actual": "change17_1=006f0077006e003c002e",
+      "passed": true
+    },
+    {
+      "case": "change17_2",
+      "expected": "change17_2=006f0077006e003c002e007400780074",
+      "actual": "change17_2=006f0077006e003c002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change17_3",
+      "expected": "change17_3=006f0077006e003c002e007400780074",
+      "actual": "change17_3=006f0077006e003c002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change17_4",
+      "expected": "change17_4=006f0077006e003c002e",
+      "actual": "change17_4=006f0077006e003c002e",
+      "passed": true
+    },
+    {
+      "case": "change17_5",
+      "expected": "change17_5=006f0077006e003c002e0078002f0079",
+      "actual": "change17_5=006f0077006e003c002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change18_0",
+      "expected": "change18_0=006f0077006e",
+      "actual": "change18_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change18_1",
+      "expected": "change18_1=006f0077006e002e",
+      "actual": "change18_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change18_2",
+      "expected": "change18_2=006f0077006e002e007400780074",
+      "actual": "change18_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change18_3",
+      "expected": "change18_3=006f0077006e002e007400780074",
+      "actual": "change18_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change18_4",
+      "expected": "change18_4=006f0077006e002e",
+      "actual": "change18_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change18_5",
+      "expected": "change18_5=006f0077006e002e0078002f0079",
+      "actual": "change18_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change19_0",
+      "expected": "change19_0=006f0077006e",
+      "actual": "change19_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change19_1",
+      "expected": "change19_1=006f0077006e002e",
+      "actual": "change19_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change19_2",
+      "expected": "change19_2=006f0077006e002e007400780074",
+      "actual": "change19_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change19_3",
+      "expected": "change19_3=006f0077006e002e007400780074",
+      "actual": "change19_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change19_4",
+      "expected": "change19_4=006f0077006e002e",
+      "actual": "change19_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change19_5",
+      "expected": "change19_5=006f0077006e002e0078002f0079",
+      "actual": "change19_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change20_0",
+      "expected": "change20_0=d800",
+      "actual": "change20_0=d800",
+      "passed": true
+    },
+    {
+      "case": "change20_1",
+      "expected": "change20_1=d800002e",
+      "actual": "change20_1=d800002e",
+      "passed": true
+    },
+    {
+      "case": "change20_2",
+      "expected": "change20_2=d800002e007400780074",
+      "actual": "change20_2=d800002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change20_3",
+      "expected": "change20_3=d800002e007400780074",
+      "actual": "change20_3=d800002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change20_4",
+      "expected": "change20_4=d800002e",
+      "actual": "change20_4=d800002e",
+      "passed": true
+    },
+    {
+      "case": "change20_5",
+      "expected": "change20_5=d800002e0078002f0079",
+      "actual": "change20_5=d800002e0078002f0079",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "extension0",
+      "expected": "extension0=null",
+      "actual": "extension0=null",
+      "passed": true
+    },
+    {
+      "case": "extension1",
+      "expected": "extension1=",
+      "actual": "extension1=",
+      "passed": true
+    },
+    {
+      "case": "extension2",
+      "expected": "extension2=",
+      "actual": "extension2=",
+      "passed": true
+    },
+    {
+      "case": "extension3",
+      "expected": "extension3=002e006500780074",
+      "actual": "extension3=002e006500780074",
+      "passed": true
+    },
+    {
+      "case": "extension4",
+      "expected": "extension4=",
+      "actual": "extension4=",
+      "passed": true
+    },
+    {
+      "case": "extension5",
+      "expected": "extension5=002e0078",
+      "actual": "extension5=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension6",
+      "expected": "extension6=002e0078",
+      "actual": "extension6=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension7",
+      "expected": "extension7=",
+      "actual": "extension7=",
+      "passed": true
+    },
+    {
+      "case": "extension8",
+      "expected": "extension8=",
+      "actual": "extension8=",
+      "passed": true
+    },
+    {
+      "case": "extension9",
+      "expected": "extension9=",
+      "actual": "extension9=",
+      "passed": true
+    },
+    {
+      "case": "extension10",
+      "expected": "extension10=002e0067007a",
+      "actual": "extension10=002e0067007a",
+      "passed": true
+    },
+    {
+      "case": "extension11",
+      "expected": "extension11=002e0078",
+      "actual": "extension11=002e0078",
+      "passed": true
+    },
+    {
+      "case": "extension12",
+      "expected": "extension12=",
+      "actual": "extension12=",
+      "passed": true
+    },
+    {
+      "case": "extension13",
+      "expected": "extension13=",
+      "actual": "extension13=",
+      "passed": true
+    },
+    {
+      "case": "extension14",
+      "expected": "extension14=002e0079",
+      "actual": "extension14=002e0079",
+      "passed": true
+    },
+    {
+      "case": "extension15",
+      "expected": "extension15=",
+      "actual": "extension15=",
+      "passed": true
+    },
+    {
+      "case": "extension16",
+      "expected": "extension16=System.ArgumentException",
+      "actual": "extension16=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "extension17",
+      "expected": "extension17=System.ArgumentException",
+      "actual": "extension17=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "extension18",
+      "expected": "extension18=System.ArgumentException",
+      "actual": "extension18=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "extension19",
+      "expected": "extension19=002e00780020",
+      "actual": "extension19=002e00780020",
+      "passed": true
+    },
+    {
+      "case": "extension20",
+      "expected": "extension20=002e0078",
+      "actual": "extension20=002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename0",
+      "expected": "filename0=null",
+      "actual": "filename0=null",
+      "passed": true
+    },
+    {
+      "case": "filename1",
+      "expected": "filename1=",
+      "actual": "filename1=",
+      "passed": true
+    },
+    {
+      "case": "filename2",
+      "expected": "filename2=006f0077006e",
+      "actual": "filename2=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "filename3",
+      "expected": "filename3=006f0077006e002e006500780074",
+      "actual": "filename3=006f0077006e002e006500780074",
+      "passed": true
+    },
+    {
+      "case": "filename4",
+      "expected": "filename4=006f0077006e",
+      "actual": "filename4=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "filename5",
+      "expected": "filename5=006f0077006e002e0078",
+      "actual": "filename5=006f0077006e002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename6",
+      "expected": "filename6=002e0078",
+      "actual": "filename6=002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename7",
+      "expected": "filename7=006f0077006e002e",
+      "actual": "filename7=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "filename8",
+      "expected": "filename8=002e",
+      "actual": "filename8=002e",
+      "passed": true
+    },
+    {
+      "case": "filename9",
+      "expected": "filename9=002e002e",
+      "actual": "filename9=002e002e",
+      "passed": true
+    },
+    {
+      "case": "filename10",
+      "expected": "filename10=006f0077006e002e007400610072002e0067007a",
+      "actual": "filename10=006f0077006e002e007400610072002e0067007a",
+      "passed": true
+    },
+    {
+      "case": "filename11",
+      "expected": "filename11=006f0077006e002e0078",
+      "actual": "filename11=006f0077006e002e0078",
+      "passed": true
+    },
+    {
+      "case": "filename12",
+      "expected": "filename12=006f0077006e",
+      "actual": "filename12=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "filename13",
+      "expected": "filename13=0079",
+      "actual": "filename13=0079",
+      "passed": true
+    },
+    {
+      "case": "filename14",
+      "expected": "filename14=0078002e0079",
+      "actual": "filename14=0078002e0079",
+      "passed": true
+    },
+    {
+      "case": "filename15",
+      "expected": "filename15=",
+      "actual": "filename15=",
+      "passed": true
+    },
+    {
+      "case": "filename16",
+      "expected": "filename16=System.ArgumentException",
+      "actual": "filename16=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "filename17",
+      "expected": "filename17=System.ArgumentException",
+      "actual": "filename17=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "filename18",
+      "expected": "filename18=System.ArgumentException",
+      "actual": "filename18=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "filename19",
+      "expected": "filename19=006f0077006e002e00780020",
+      "actual": "filename19=006f0077006e002e00780020",
+      "passed": true
+    },
+    {
+      "case": "filename20",
+      "expected": "filename20=d800002e0078",
+      "actual": "filename20=d800002e0078",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension0",
+      "expected": "withoutExtension0=null",
+      "actual": "withoutExtension0=null",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension1",
+      "expected": "withoutExtension1=",
+      "actual": "withoutExtension1=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension2",
+      "expected": "withoutExtension2=006f0077006e",
+      "actual": "withoutExtension2=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension3",
+      "expected": "withoutExtension3=006f0077006e",
+      "actual": "withoutExtension3=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension4",
+      "expected": "withoutExtension4=006f0077006e",
+      "actual": "withoutExtension4=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension5",
+      "expected": "withoutExtension5=006f0077006e",
+      "actual": "withoutExtension5=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension6",
+      "expected": "withoutExtension6=",
+      "actual": "withoutExtension6=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension7",
+      "expected": "withoutExtension7=006f0077006e",
+      "actual": "withoutExtension7=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension8",
+      "expected": "withoutExtension8=",
+      "actual": "withoutExtension8=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension9",
+      "expected": "withoutExtension9=002e",
+      "actual": "withoutExtension9=002e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension10",
+      "expected": "withoutExtension10=006f0077006e002e007400610072",
+      "actual": "withoutExtension10=006f0077006e002e007400610072",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension11",
+      "expected": "withoutExtension11=006f0077006e",
+      "actual": "withoutExtension11=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension12",
+      "expected": "withoutExtension12=006f0077006e",
+      "actual": "withoutExtension12=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension13",
+      "expected": "withoutExtension13=0079",
+      "actual": "withoutExtension13=0079",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension14",
+      "expected": "withoutExtension14=0078",
+      "actual": "withoutExtension14=0078",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension15",
+      "expected": "withoutExtension15=",
+      "actual": "withoutExtension15=",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension16",
+      "expected": "withoutExtension16=System.ArgumentException",
+      "actual": "withoutExtension16=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension17",
+      "expected": "withoutExtension17=System.ArgumentException",
+      "actual": "withoutExtension17=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension18",
+      "expected": "withoutExtension18=System.ArgumentException",
+      "actual": "withoutExtension18=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension19",
+      "expected": "withoutExtension19=006f0077006e",
+      "actual": "withoutExtension19=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "withoutExtension20",
+      "expected": "withoutExtension20=d800",
+      "actual": "withoutExtension20=d800",
+      "passed": true
+    },
+    {
+      "case": "change0_0",
+      "expected": "change0_0=null",
+      "actual": "change0_0=null",
+      "passed": true
+    },
+    {
+      "case": "change0_1",
+      "expected": "change0_1=null",
+      "actual": "change0_1=null",
+      "passed": true
+    },
+    {
+      "case": "change0_2",
+      "expected": "change0_2=null",
+      "actual": "change0_2=null",
+      "passed": true
+    },
+    {
+      "case": "change0_3",
+      "expected": "change0_3=null",
+      "actual": "change0_3=null",
+      "passed": true
+    },
+    {
+      "case": "change0_4",
+      "expected": "change0_4=null",
+      "actual": "change0_4=null",
+      "passed": true
+    },
+    {
+      "case": "change0_5",
+      "expected": "change0_5=null",
+      "actual": "change0_5=null",
+      "passed": true
+    },
+    {
+      "case": "change1_0",
+      "expected": "change1_0=",
+      "actual": "change1_0=",
+      "passed": true
+    },
+    {
+      "case": "change1_1",
+      "expected": "change1_1=002e",
+      "actual": "change1_1=002e",
+      "passed": true
+    },
+    {
+      "case": "change1_2",
+      "expected": "change1_2=",
+      "actual": "change1_2=",
+      "passed": true
+    },
+    {
+      "case": "change1_3",
+      "expected": "change1_3=",
+      "actual": "change1_3=",
+      "passed": true
+    },
+    {
+      "case": "change1_4",
+      "expected": "change1_4=",
+      "actual": "change1_4=",
+      "passed": true
+    },
+    {
+      "case": "change1_5",
+      "expected": "change1_5=",
+      "actual": "change1_5=",
+      "passed": true
+    },
+    {
+      "case": "change2_0",
+      "expected": "change2_0=006f0077006e",
+      "actual": "change2_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change2_1",
+      "expected": "change2_1=006f0077006e002e",
+      "actual": "change2_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change2_2",
+      "expected": "change2_2=006f0077006e002e007400780074",
+      "actual": "change2_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change2_3",
+      "expected": "change2_3=006f0077006e002e007400780074",
+      "actual": "change2_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change2_4",
+      "expected": "change2_4=006f0077006e002e",
+      "actual": "change2_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change2_5",
+      "expected": "change2_5=006f0077006e002e0078002f0079",
+      "actual": "change2_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change3_0",
+      "expected": "change3_0=006f0077006e",
+      "actual": "change3_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change3_1",
+      "expected": "change3_1=006f0077006e002e",
+      "actual": "change3_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change3_2",
+      "expected": "change3_2=006f0077006e002e007400780074",
+      "actual": "change3_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change3_3",
+      "expected": "change3_3=006f0077006e002e007400780074",
+      "actual": "change3_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change3_4",
+      "expected": "change3_4=006f0077006e002e",
+      "actual": "change3_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change3_5",
+      "expected": "change3_5=006f0077006e002e0078002f0079",
+      "actual": "change3_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change4_0",
+      "expected": "change4_0=006400690072002e0078002f006f0077006e",
+      "actual": "change4_0=006400690072002e0078002f006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change4_1",
+      "expected": "change4_1=006400690072002e0078002f006f0077006e002e",
+      "actual": "change4_1=006400690072002e0078002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change4_2",
+      "expected": "change4_2=006400690072002e0078002f006f0077006e002e007400780074",
+      "actual": "change4_2=006400690072002e0078002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change4_3",
+      "expected": "change4_3=006400690072002e0078002f006f0077006e002e007400780074",
+      "actual": "change4_3=006400690072002e0078002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change4_4",
+      "expected": "change4_4=006400690072002e0078002f006f0077006e002e",
+      "actual": "change4_4=006400690072002e0078002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change4_5",
+      "expected": "change4_5=006400690072002e0078002f006f0077006e002e0078002f0079",
+      "actual": "change4_5=006400690072002e0078002f006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change5_0",
+      "expected": "change5_0=006400690072002f006f0077006e",
+      "actual": "change5_0=006400690072002f006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change5_1",
+      "expected": "change5_1=006400690072002f006f0077006e002e",
+      "actual": "change5_1=006400690072002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change5_2",
+      "expected": "change5_2=006400690072002f006f0077006e002e007400780074",
+      "actual": "change5_2=006400690072002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change5_3",
+      "expected": "change5_3=006400690072002f006f0077006e002e007400780074",
+      "actual": "change5_3=006400690072002f006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change5_4",
+      "expected": "change5_4=006400690072002f006f0077006e002e",
+      "actual": "change5_4=006400690072002f006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change5_5",
+      "expected": "change5_5=006400690072002f006f0077006e002e0078002f0079",
+      "actual": "change5_5=006400690072002f006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change6_0",
+      "expected": "change6_0=",
+      "actual": "change6_0=",
+      "passed": true
+    },
+    {
+      "case": "change6_1",
+      "expected": "change6_1=002e",
+      "actual": "change6_1=002e",
+      "passed": true
+    },
+    {
+      "case": "change6_2",
+      "expected": "change6_2=002e007400780074",
+      "actual": "change6_2=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change6_3",
+      "expected": "change6_3=002e007400780074",
+      "actual": "change6_3=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change6_4",
+      "expected": "change6_4=002e",
+      "actual": "change6_4=002e",
+      "passed": true
+    },
+    {
+      "case": "change6_5",
+      "expected": "change6_5=002e0078002f0079",
+      "actual": "change6_5=002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change7_0",
+      "expected": "change7_0=006f0077006e",
+      "actual": "change7_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change7_1",
+      "expected": "change7_1=006f0077006e002e",
+      "actual": "change7_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change7_2",
+      "expected": "change7_2=006f0077006e002e007400780074",
+      "actual": "change7_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change7_3",
+      "expected": "change7_3=006f0077006e002e007400780074",
+      "actual": "change7_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change7_4",
+      "expected": "change7_4=006f0077006e002e",
+      "actual": "change7_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change7_5",
+      "expected": "change7_5=006f0077006e002e0078002f0079",
+      "actual": "change7_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change8_0",
+      "expected": "change8_0=",
+      "actual": "change8_0=",
+      "passed": true
+    },
+    {
+      "case": "change8_1",
+      "expected": "change8_1=002e",
+      "actual": "change8_1=002e",
+      "passed": true
+    },
+    {
+      "case": "change8_2",
+      "expected": "change8_2=002e007400780074",
+      "actual": "change8_2=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change8_3",
+      "expected": "change8_3=002e007400780074",
+      "actual": "change8_3=002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change8_4",
+      "expected": "change8_4=002e",
+      "actual": "change8_4=002e",
+      "passed": true
+    },
+    {
+      "case": "change8_5",
+      "expected": "change8_5=002e0078002f0079",
+      "actual": "change8_5=002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change9_0",
+      "expected": "change9_0=002e",
+      "actual": "change9_0=002e",
+      "passed": true
+    },
+    {
+      "case": "change9_1",
+      "expected": "change9_1=002e002e",
+      "actual": "change9_1=002e002e",
+      "passed": true
+    },
+    {
+      "case": "change9_2",
+      "expected": "change9_2=002e002e007400780074",
+      "actual": "change9_2=002e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change9_3",
+      "expected": "change9_3=002e002e007400780074",
+      "actual": "change9_3=002e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change9_4",
+      "expected": "change9_4=002e002e",
+      "actual": "change9_4=002e002e",
+      "passed": true
+    },
+    {
+      "case": "change9_5",
+      "expected": "change9_5=002e002e0078002f0079",
+      "actual": "change9_5=002e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change10_0",
+      "expected": "change10_0=006f0077006e002e007400610072",
+      "actual": "change10_0=006f0077006e002e007400610072",
+      "passed": true
+    },
+    {
+      "case": "change10_1",
+      "expected": "change10_1=006f0077006e002e007400610072002e",
+      "actual": "change10_1=006f0077006e002e007400610072002e",
+      "passed": true
+    },
+    {
+      "case": "change10_2",
+      "expected": "change10_2=006f0077006e002e007400610072002e007400780074",
+      "actual": "change10_2=006f0077006e002e007400610072002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change10_3",
+      "expected": "change10_3=006f0077006e002e007400610072002e007400780074",
+      "actual": "change10_3=006f0077006e002e007400610072002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change10_4",
+      "expected": "change10_4=006f0077006e002e007400610072002e",
+      "actual": "change10_4=006f0077006e002e007400610072002e",
+      "passed": true
+    },
+    {
+      "case": "change10_5",
+      "expected": "change10_5=006f0077006e002e007400610072002e0078002f0079",
+      "actual": "change10_5=006f0077006e002e007400610072002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change11_0",
+      "expected": "change11_0=006400690072005c006f0077006e",
+      "actual": "change11_0=006400690072005c006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change11_1",
+      "expected": "change11_1=006400690072005c006f0077006e002e",
+      "actual": "change11_1=006400690072005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change11_2",
+      "expected": "change11_2=006400690072005c006f0077006e002e007400780074",
+      "actual": "change11_2=006400690072005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change11_3",
+      "expected": "change11_3=006400690072005c006f0077006e002e007400780074",
+      "actual": "change11_3=006400690072005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change11_4",
+      "expected": "change11_4=006400690072005c006f0077006e002e",
+      "actual": "change11_4=006400690072005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change11_5",
+      "expected": "change11_5=006400690072005c006f0077006e002e0078002f0079",
+      "actual": "change11_5=006400690072005c006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change12_0",
+      "expected": "change12_0=006400690072002e0078005c006f0077006e",
+      "actual": "change12_0=006400690072002e0078005c006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change12_1",
+      "expected": "change12_1=006400690072002e0078005c006f0077006e002e",
+      "actual": "change12_1=006400690072002e0078005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change12_2",
+      "expected": "change12_2=006400690072002e0078005c006f0077006e002e007400780074",
+      "actual": "change12_2=006400690072002e0078005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change12_3",
+      "expected": "change12_3=006400690072002e0078005c006f0077006e002e007400780074",
+      "actual": "change12_3=006400690072002e0078005c006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change12_4",
+      "expected": "change12_4=006400690072002e0078005c006f0077006e002e",
+      "actual": "change12_4=006400690072002e0078005c006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change12_5",
+      "expected": "change12_5=006400690072002e0078005c006f0077006e002e0078002f0079",
+      "actual": "change12_5=006400690072002e0078005c006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change13_0",
+      "expected": "change13_0=0066002e0078003a0079",
+      "actual": "change13_0=0066002e0078003a0079",
+      "passed": true
+    },
+    {
+      "case": "change13_1",
+      "expected": "change13_1=0066002e0078003a0079002e",
+      "actual": "change13_1=0066002e0078003a0079002e",
+      "passed": true
+    },
+    {
+      "case": "change13_2",
+      "expected": "change13_2=0066002e0078003a0079002e007400780074",
+      "actual": "change13_2=0066002e0078003a0079002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change13_3",
+      "expected": "change13_3=0066002e0078003a0079002e007400780074",
+      "actual": "change13_3=0066002e0078003a0079002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change13_4",
+      "expected": "change13_4=0066002e0078003a0079002e",
+      "actual": "change13_4=0066002e0078003a0079002e",
+      "passed": true
+    },
+    {
+      "case": "change13_5",
+      "expected": "change13_5=0066002e0078003a0079002e0078002f0079",
+      "actual": "change13_5=0066002e0078003a0079002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change14_0",
+      "expected": "change14_0=0066003a0078",
+      "actual": "change14_0=0066003a0078",
+      "passed": true
+    },
+    {
+      "case": "change14_1",
+      "expected": "change14_1=0066003a0078002e",
+      "actual": "change14_1=0066003a0078002e",
+      "passed": true
+    },
+    {
+      "case": "change14_2",
+      "expected": "change14_2=0066003a0078002e007400780074",
+      "actual": "change14_2=0066003a0078002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change14_3",
+      "expected": "change14_3=0066003a0078002e007400780074",
+      "actual": "change14_3=0066003a0078002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change14_4",
+      "expected": "change14_4=0066003a0078002e",
+      "actual": "change14_4=0066003a0078002e",
+      "passed": true
+    },
+    {
+      "case": "change14_5",
+      "expected": "change14_5=0066003a0078002e0078002f0079",
+      "actual": "change14_5=0066003a0078002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change15_0",
+      "expected": "change15_0=0066002e0078002f",
+      "actual": "change15_0=0066002e0078002f",
+      "passed": true
+    },
+    {
+      "case": "change15_1",
+      "expected": "change15_1=0066002e0078002f002e",
+      "actual": "change15_1=0066002e0078002f002e",
+      "passed": true
+    },
+    {
+      "case": "change15_2",
+      "expected": "change15_2=0066002e0078002f002e007400780074",
+      "actual": "change15_2=0066002e0078002f002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change15_3",
+      "expected": "change15_3=0066002e0078002f002e007400780074",
+      "actual": "change15_3=0066002e0078002f002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change15_4",
+      "expected": "change15_4=0066002e0078002f002e",
+      "actual": "change15_4=0066002e0078002f002e",
+      "passed": true
+    },
+    {
+      "case": "change15_5",
+      "expected": "change15_5=0066002e0078002f002e0078002f0079",
+      "actual": "change15_5=0066002e0078002f002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change16_0",
+      "expected": "change16_0=System.ArgumentException",
+      "actual": "change16_0=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change16_1",
+      "expected": "change16_1=System.ArgumentException",
+      "actual": "change16_1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change16_2",
+      "expected": "change16_2=System.ArgumentException",
+      "actual": "change16_2=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change16_3",
+      "expected": "change16_3=System.ArgumentException",
+      "actual": "change16_3=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change16_4",
+      "expected": "change16_4=System.ArgumentException",
+      "actual": "change16_4=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change16_5",
+      "expected": "change16_5=System.ArgumentException",
+      "actual": "change16_5=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change17_0",
+      "expected": "change17_0=System.ArgumentException",
+      "actual": "change17_0=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change17_1",
+      "expected": "change17_1=System.ArgumentException",
+      "actual": "change17_1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change17_2",
+      "expected": "change17_2=System.ArgumentException",
+      "actual": "change17_2=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change17_3",
+      "expected": "change17_3=System.ArgumentException",
+      "actual": "change17_3=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change17_4",
+      "expected": "change17_4=System.ArgumentException",
+      "actual": "change17_4=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change17_5",
+      "expected": "change17_5=System.ArgumentException",
+      "actual": "change17_5=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change18_0",
+      "expected": "change18_0=System.ArgumentException",
+      "actual": "change18_0=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change18_1",
+      "expected": "change18_1=System.ArgumentException",
+      "actual": "change18_1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change18_2",
+      "expected": "change18_2=System.ArgumentException",
+      "actual": "change18_2=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change18_3",
+      "expected": "change18_3=System.ArgumentException",
+      "actual": "change18_3=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change18_4",
+      "expected": "change18_4=System.ArgumentException",
+      "actual": "change18_4=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change18_5",
+      "expected": "change18_5=System.ArgumentException",
+      "actual": "change18_5=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "change19_0",
+      "expected": "change19_0=006f0077006e",
+      "actual": "change19_0=006f0077006e",
+      "passed": true
+    },
+    {
+      "case": "change19_1",
+      "expected": "change19_1=006f0077006e002e",
+      "actual": "change19_1=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change19_2",
+      "expected": "change19_2=006f0077006e002e007400780074",
+      "actual": "change19_2=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change19_3",
+      "expected": "change19_3=006f0077006e002e007400780074",
+      "actual": "change19_3=006f0077006e002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change19_4",
+      "expected": "change19_4=006f0077006e002e",
+      "actual": "change19_4=006f0077006e002e",
+      "passed": true
+    },
+    {
+      "case": "change19_5",
+      "expected": "change19_5=006f0077006e002e0078002f0079",
+      "actual": "change19_5=006f0077006e002e0078002f0079",
+      "passed": true
+    },
+    {
+      "case": "change20_0",
+      "expected": "change20_0=d800",
+      "actual": "change20_0=d800",
+      "passed": true
+    },
+    {
+      "case": "change20_1",
+      "expected": "change20_1=d800002e",
+      "actual": "change20_1=d800002e",
+      "passed": true
+    },
+    {
+      "case": "change20_2",
+      "expected": "change20_2=d800002e007400780074",
+      "actual": "change20_2=d800002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change20_3",
+      "expected": "change20_3=d800002e007400780074",
+      "actual": "change20_3=d800002e007400780074",
+      "passed": true
+    },
+    {
+      "case": "change20_4",
+      "expected": "change20_4=d800002e",
+      "actual": "change20_4=d800002e",
+      "passed": true
+    },
+    {
+      "case": "change20_5",
+      "expected": "change20_5=d800002e0078002f0079",
+      "actual": "change20_5=d800002e0078002f0079",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "extension13",
+      "dotnet": "extension13=002e0078003a0079",
+      "unity_mono": "extension13="
+    },
+    {
+      "case": "extension16",
+      "dotnet": "extension16=002e00780000",
+      "unity_mono": "extension16=System.ArgumentException"
+    },
+    {
+      "case": "extension17",
+      "dotnet": "extension17=002e0078",
+      "unity_mono": "extension17=System.ArgumentException"
+    },
+    {
+      "case": "extension18",
+      "dotnet": "extension18=002e0078000a",
+      "unity_mono": "extension18=System.ArgumentException"
+    },
+    {
+      "case": "filename13",
+      "dotnet": "filename13=0066002e0078003a0079",
+      "unity_mono": "filename13=0079"
+    },
+    {
+      "case": "filename16",
+      "dotnet": "filename16=006f0077006e002e00780000",
+      "unity_mono": "filename16=System.ArgumentException"
+    },
+    {
+      "case": "filename17",
+      "dotnet": "filename17=006f0077006e003c002e0078",
+      "unity_mono": "filename17=System.ArgumentException"
+    },
+    {
+      "case": "filename18",
+      "dotnet": "filename18=006f0077006e002e0078000a",
+      "unity_mono": "filename18=System.ArgumentException"
+    },
+    {
+      "case": "withoutExtension13",
+      "dotnet": "withoutExtension13=0066",
+      "unity_mono": "withoutExtension13=0079"
+    },
+    {
+      "case": "withoutExtension16",
+      "dotnet": "withoutExtension16=006f0077006e",
+      "unity_mono": "withoutExtension16=System.ArgumentException"
+    },
+    {
+      "case": "withoutExtension17",
+      "dotnet": "withoutExtension17=006f0077006e003c",
+      "unity_mono": "withoutExtension17=System.ArgumentException"
+    },
+    {
+      "case": "withoutExtension18",
+      "dotnet": "withoutExtension18=006f0077006e",
+      "unity_mono": "withoutExtension18=System.ArgumentException"
+    },
+    {
+      "case": "change1_1",
+      "dotnet": "change1_1=",
+      "unity_mono": "change1_1=002e"
+    },
+    {
+      "case": "change13_0",
+      "dotnet": "change13_0=0066",
+      "unity_mono": "change13_0=0066002e0078003a0079"
+    },
+    {
+      "case": "change13_1",
+      "dotnet": "change13_1=0066002e",
+      "unity_mono": "change13_1=0066002e0078003a0079002e"
+    },
+    {
+      "case": "change13_2",
+      "dotnet": "change13_2=0066002e007400780074",
+      "unity_mono": "change13_2=0066002e0078003a0079002e007400780074"
+    },
+    {
+      "case": "change13_3",
+      "dotnet": "change13_3=0066002e007400780074",
+      "unity_mono": "change13_3=0066002e0078003a0079002e007400780074"
+    },
+    {
+      "case": "change13_4",
+      "dotnet": "change13_4=0066002e",
+      "unity_mono": "change13_4=0066002e0078003a0079002e"
+    },
+    {
+      "case": "change13_5",
+      "dotnet": "change13_5=0066002e0078002f0079",
+      "unity_mono": "change13_5=0066002e0078003a0079002e0078002f0079"
+    },
+    {
+      "case": "change16_0",
+      "dotnet": "change16_0=006f0077006e",
+      "unity_mono": "change16_0=System.ArgumentException"
+    },
+    {
+      "case": "change16_1",
+      "dotnet": "change16_1=006f0077006e002e",
+      "unity_mono": "change16_1=System.ArgumentException"
+    },
+    {
+      "case": "change16_2",
+      "dotnet": "change16_2=006f0077006e002e007400780074",
+      "unity_mono": "change16_2=System.ArgumentException"
+    },
+    {
+      "case": "change16_3",
+      "dotnet": "change16_3=006f0077006e002e007400780074",
+      "unity_mono": "change16_3=System.ArgumentException"
+    },
+    {
+      "case": "change16_4",
+      "dotnet": "change16_4=006f0077006e002e",
+      "unity_mono": "change16_4=System.ArgumentException"
+    },
+    {
+      "case": "change16_5",
+      "dotnet": "change16_5=006f0077006e002e0078002f0079",
+      "unity_mono": "change16_5=System.ArgumentException"
+    },
+    {
+      "case": "change17_0",
+      "dotnet": "change17_0=006f0077006e003c",
+      "unity_mono": "change17_0=System.ArgumentException"
+    },
+    {
+      "case": "change17_1",
+      "dotnet": "change17_1=006f0077006e003c002e",
+      "unity_mono": "change17_1=System.ArgumentException"
+    },
+    {
+      "case": "change17_2",
+      "dotnet": "change17_2=006f0077006e003c002e007400780074",
+      "unity_mono": "change17_2=System.ArgumentException"
+    },
+    {
+      "case": "change17_3",
+      "dotnet": "change17_3=006f0077006e003c002e007400780074",
+      "unity_mono": "change17_3=System.ArgumentException"
+    },
+    {
+      "case": "change17_4",
+      "dotnet": "change17_4=006f0077006e003c002e",
+      "unity_mono": "change17_4=System.ArgumentException"
+    },
+    {
+      "case": "change17_5",
+      "dotnet": "change17_5=006f0077006e003c002e0078002f0079",
+      "unity_mono": "change17_5=System.ArgumentException"
+    },
+    {
+      "case": "change18_0",
+      "dotnet": "change18_0=006f0077006e",
+      "unity_mono": "change18_0=System.ArgumentException"
+    },
+    {
+      "case": "change18_1",
+      "dotnet": "change18_1=006f0077006e002e",
+      "unity_mono": "change18_1=System.ArgumentException"
+    },
+    {
+      "case": "change18_2",
+      "dotnet": "change18_2=006f0077006e002e007400780074",
+      "unity_mono": "change18_2=System.ArgumentException"
+    },
+    {
+      "case": "change18_3",
+      "dotnet": "change18_3=006f0077006e002e007400780074",
+      "unity_mono": "change18_3=System.ArgumentException"
+    },
+    {
+      "case": "change18_4",
+      "dotnet": "change18_4=006f0077006e002e",
+      "unity_mono": "change18_4=System.ArgumentException"
+    },
+    {
+      "case": "change18_5",
+      "dotnet": "change18_5=006f0077006e002e0078002f0079",
+      "unity_mono": "change18_5=System.ArgumentException"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

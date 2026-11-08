@@ -10,12 +10,22 @@ struct ProbeForm:FormBase {
  bool ProcessEvent(pls::cs::Ref<AppEvent>)override{trace+="E"+std::to_string(GetId())+",";return GetId()==2;}
  bool CheckMainWindow()override{return GetId()!=2;}
 };
+struct ConstructorProbe:FormBase {
+ inline static std::string trace;int value{};
+ static int mark(const char* phase){trace+=std::string(phase)+",";return std::string(phase)=="basearg"?23:17;}
+ void source_ctor(){value=mark("field");source_construct(mark("basearg"));mark("body");}
+};
+struct TouchProbe:FormBase {
+ std::int32_t received_type{},received_value{};TouchProbe():FormBase(42){}
+ std::int32_t GetTouchValue(std::int32_t type,std::int32_t index)override{return pls::cs::add_i32(pls::cs::add_i32(pls::cs::add_i32(pls::cs::mul_i32(type,31),index),received_type),received_value);}
+ void SetTouchValue(std::int32_t type,std::int32_t value)override{received_type=type;received_value=value;}
+};
 template<class F>void P(const char* name,F&& f){std::cout<<name<<'=';try{std::cout<<f();}catch(const pls::cs::Exception& e){std::cout<<'!'<<e.type_name();}std::cout<<'\n';}
 const char* T(bool v){return v?"True":"False";}
 int policy(){
  unsigned int checks=0;auto require=[&](bool value){if(!value)throw std::runtime_error("Forms native policy failed");++checks;};
  auto rejects=[&](auto&& operation){bool failed=false;try{operation();}catch(const pls::cs::NotSupportedException&){failed=true;}require(failed);};
- auto manager=pls::cs::make_ref<FormManagerBase>();auto form=pls::cs::make_ref<FormBase>(27);
+ auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<FormBase>(27);
  rejects([&]{manager->ChangeCurrentForm(form);});require(manager->GetFormsNum()==0);
  rejects([&]{manager->Execute();});rejects([&]{manager->OnDraw();});rejects([&]{manager->Capture();});
  auto canvas=Canvas::GetInstance();bool absent=false;try{canvas->BeginPaint();}catch(const pls::cs::InvalidOperationException&){absent=true;}require(absent);
@@ -28,13 +38,22 @@ int policy(){
  // Native FormBase<->FormManager references participate in the cooperative
  // collector; this cycle must not become an invisible permanent native root.
  std::weak_ptr<FormBase> weak;
- {auto cycle=pls::cs::make_ref<FormManagerBase>();auto child=pls::cs::make_ref<FormBase>(1);cycle->Push(child);weak=child;}
+ {auto cycle=pls::cs::make_ref<FormManagerBase>();cycle->source_construct();auto child=pls::cs::make_ref<FormBase>(1);cycle->Push(child);weak=child;}
  pls::cs::gc_collect();require(weak.expired());
+ unsigned int constructions=0;int derived_field=0;
+ form_construction_hook=[&](FormManagerBase&){require(derived_field==41);++constructions;};
+ auto deferred=pls::cs::make_ref<FormManagerBase>();require(constructions==0);
+ derived_field=41;deferred->source_construct();require(constructions==1);form_construction_hook={};
+ auto bare=pls::cs::make_ref<FormBase>();require(bare->GetId()==0&&bare->GetLeftSoftLabel().is_null());bare->source_construct(9);require(bare->GetId()==9&&bare->GetLeftSoftLabel()==Str(u""));
+ struct Adapter:CanvasSurface {void RawKeyDown(std::int32_t,pls::cs::Ref<KeyEvent>)override{}void KeyDown(std::int32_t)override{}void KeyUp(std::int32_t)override{}void Touch(pls::cs::Ref<MotionEvent>)override{}void ClearTouch()override{}void ClearGameTouch()override{}};
+ auto original=pls::cs::make_ref<pls::cs::Object>();auto adapter=pls::cs::make_ref<Adapter>();canvas->host_source_surface(original,adapter);require(canvas->GetSourceSurfaceManager()==original&&canvas->GetSurfaceManager()==adapter);
+ bool mismatch=false;try{canvas->host_source_surface(original,{});}catch(const pls::cs::InvalidOperationException&){mismatch=true;}require(mismatch);
+ canvas->SetSurfaceManager({});require(!canvas->GetSourceSurfaceManager()&&!canvas->GetSurfaceManager());
  std::cout<<"{\"policy_assertions\":"<<checks<<",\"unbound_effects_rejected\":true,\"native_form_cycle_collected\":true,\"game_boot\":false}\n";return 0;
 }
 int main(int argc,char**){
  if(argc==2)return policy();
- auto m=pls::cs::make_ref<FormManagerBase>();m->host_game_state(nullptr);
+ auto m=pls::cs::make_ref<FormManagerBase>();m->source_construct();m->host_game_state(nullptr);
  auto S=[&]{std::string s;for(int i=0;i<m->GetFormsNum();++i){auto f=m->GetForm(i);s+=std::to_string(f->GetId())+":"+std::to_string(f->GetProcessMode())+",";}return s;};
  auto c=Canvas::GetInstance();auto a=pls::cs::make_ref<ProbeForm>(1),b=pls::cs::make_ref<ProbeForm>(2),d=pls::cs::make_ref<ProbeForm>(3);
  P("empty",[&]{return std::to_string(m->GetFormsNum())+":"+T(!m->GetTopForm())+":"+T(a->CheckUsable())+":"+T(a->IsAlive())+":"+T(a->Pop());});
@@ -65,4 +84,8 @@ int main(int argc,char**){
  P("back-show-dialog",[&]{m->Pop();m->ProcessBackKey();return std::string(T(m->CheckShowTerminationDialog()));});
  P("index",[&]{return std::to_string(m->GetFormIndex(a))+":"+std::to_string(m->GetFormIndex(b));});
  P("app-event-default",[]{auto e=pls::cs::make_ref<AppEvent>(AppEventType::Exit);return std::to_string(static_cast<int>(e->Type))+":"+std::to_string(e->Args.length());});
+ P("constructor-order",[]{ConstructorProbe::trace.clear();auto p=pls::cs::make_ref<ConstructorProbe>();p->source_ctor();return ConstructorProbe::trace+"/"+std::to_string(p->GetId())+":"+std::to_string(p->value)+":"+p->GetLeftSoftLabel().utf8();});
+ P("touch-base-default",[]{pls::cs::Ref<TouchValueAccessor> touch=pls::cs::make_ref<FormBase>(9);touch->SetTouchValue(1,2);return std::to_string(touch->GetTouchValue(3,4))+":"+T(bool(std::dynamic_pointer_cast<FormBase>(touch)));});
+ P("touch-derived-dispatch",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;touch->SetTouchValue(5,7);p->source_SetTouchValue(5,6);return std::to_string(touch->GetTouchValue(3,4))+":"+std::to_string(p->source_GetTouchValue(3,4))+":"+std::to_string(p->received_type)+":"+std::to_string(p->received_value);});
+ P("touch-object-identity",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;auto boxed=std::dynamic_pointer_cast<pls::cs::Object>(touch);return std::string(T(boxed==std::static_pointer_cast<pls::cs::Object>(p)))+":"+T(std::dynamic_pointer_cast<TouchValueAccessor>(std::dynamic_pointer_cast<TouchProbe>(boxed))==touch);});
 }

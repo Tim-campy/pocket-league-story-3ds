@@ -16,7 +16,7 @@ AttributeArgumentList,2,False,NOT_YET_VALIDATED
 AttributeList,2,False,NOT_YET_VALIDATED
 AttributeTargetSpecifier,2,False,NOT_YET_VALIDATED
 BaseConstructorInitializer,30,False,NOT_YET_VALIDATED
-BaseExpression,108,False,NOT_YET_VALIDATED
+BaseExpression,108,True,observed-in-emitted-body
 BaseList,54,False,NOT_YET_VALIDATED
 BitwiseAndExpression,57,True,observed-in-emitted-body
 BitwiseNotExpression,1,True,observed-in-emitted-body
@@ -26,7 +26,7 @@ BracketedArgumentList,11408,False,NOT_YET_VALIDATED
 BreakStatement,331,True,observed-in-emitted-body
 CaseSwitchLabel,251,False,NOT_YET_VALIDATED
 CastExpression,1633,True,observed-in-emitted-body
-CatchClause,148,False,NOT_YET_VALIDATED
+CatchClause,148,True,observed-in-emitted-body
 CatchDeclaration,146,False,NOT_YET_VALIDATED
 CharacterLiteralExpression,47,True,observed-in-emitted-body
 ClassDeclaration,96,False,NOT_YET_VALIDATED
@@ -56,7 +56,7 @@ ForStatement,1316,True,observed-in-emitted-body
 GenericName,157,False,NOT_YET_VALIDATED
 GetAccessorDeclaration,5,False,NOT_YET_VALIDATED
 GotoCaseStatement,1,False,NOT_YET_VALIDATED
-GotoStatement,8,False,NOT_YET_VALIDATED
+GotoStatement,8,True,observed-in-emitted-body
 GreaterThanExpression,595,True,observed-in-emitted-body
 GreaterThanOrEqualExpression,469,True,observed-in-emitted-body
 IdentifierName,103184,True,observed-in-emitted-body
@@ -64,8 +64,8 @@ IfStatement,7101,True,observed-in-emitted-body
 InterfaceDeclaration,3,False,NOT_YET_VALIDATED
 InvocationExpression,16872,True,observed-in-emitted-body
 IsExpression,6,True,observed-in-emitted-body
-LabeledStatement,14,False,NOT_YET_VALIDATED
-LeftShiftExpression,27,False,NOT_YET_VALIDATED
+LabeledStatement,14,True,observed-in-emitted-body
+LeftShiftExpression,27,True,observed-in-emitted-body
 LessThanExpression,1886,True,observed-in-emitted-body
 LessThanOrEqualExpression,226,True,observed-in-emitted-body
 LocalDeclarationStatement,4949,True,observed-in-emitted-body
@@ -97,7 +97,7 @@ PreIncrementExpression,1,False,NOT_YET_VALIDATED
 PropertyDeclaration,5,False,NOT_YET_VALIDATED
 QualifiedName,851,False,NOT_YET_VALIDATED
 ReturnStatement,1698,True,observed-in-emitted-body
-RightShiftExpression,2,False,NOT_YET_VALIDATED
+RightShiftExpression,2,True,observed-in-emitted-body
 SetAccessorDeclaration,5,False,NOT_YET_VALIDATED
 SimpleAssignmentExpression,8102,True,observed-in-emitted-body
 SimpleBaseType,60,False,NOT_YET_VALIDATED
@@ -106,7 +106,7 @@ StringLiteralExpression,2231,True,observed-in-emitted-body
 SubtractAssignmentExpression,104,True,observed-in-emitted-body
 SubtractExpression,3295,True,observed-in-emitted-body
 SwitchSection,239,False,NOT_YET_VALIDATED
-SwitchStatement,48,False,NOT_YET_VALIDATED
+SwitchStatement,48,True,observed-in-emitted-body
 ThisConstructorInitializer,5,False,NOT_YET_VALIDATED
 ThisExpression,131,True,observed-in-emitted-body
 ThrowStatement,25,False,NOT_YET_VALIDATED
@@ -121,4 +121,4 @@ UnaryMinusExpression,1403,True,observed-in-emitted-body
 UsingDirective,631,False,NOT_YET_VALIDATED
 VariableDeclaration,10837,True,observed-in-emitted-body
 VariableDeclarator,10948,False,NOT_YET_VALIDATED
-WhileStatement,59,False,NOT_YET_VALIDATED
+WhileStatement,59,True,observed-in-emitted-body

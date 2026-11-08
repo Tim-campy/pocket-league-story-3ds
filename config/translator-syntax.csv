@@ -3,7 +3,7 @@ AccessorList,5,False,NOT_YET_VALIDATED
 AddAssignmentExpression,454,True,observed-in-emitted-body
 AddExpression,6301,True,observed-in-emitted-body
 AliasQualifiedName,30,False,NOT_YET_VALIDATED
-AnonymousMethodExpression,31,False,NOT_YET_VALIDATED
+AnonymousMethodExpression,31,True,observed-in-emitted-body
 Argument,45265,False,NOT_YET_VALIDATED
 ArgumentList,17768,False,NOT_YET_VALIDATED
 ArrayCreationExpression,2022,True,observed-in-emitted-body
@@ -16,7 +16,7 @@ AttributeArgumentList,2,False,NOT_YET_VALIDATED
 AttributeList,2,False,NOT_YET_VALIDATED
 AttributeTargetSpecifier,2,False,NOT_YET_VALIDATED
 BaseConstructorInitializer,30,False,NOT_YET_VALIDATED
-BaseExpression,108,False,NOT_YET_VALIDATED
+BaseExpression,108,True,observed-in-emitted-body
 BaseList,54,False,NOT_YET_VALIDATED
 BitwiseAndExpression,57,True,observed-in-emitted-body
 BitwiseNotExpression,1,True,observed-in-emitted-body
@@ -34,10 +34,10 @@ CompilationUnit,97,False,NOT_YET_VALIDATED
 ConditionalExpression,120,True,observed-in-emitted-body
 ConstructorConstraint,3,False,NOT_YET_VALIDATED
 ConstructorDeclaration,118,False,NOT_YET_VALIDATED
-ContinueStatement,268,False,NOT_YET_VALIDATED
+ContinueStatement,268,True,observed-in-emitted-body
 DefaultSwitchLabel,18,False,NOT_YET_VALIDATED
 DelegateDeclaration,1,False,NOT_YET_VALIDATED
-DivideAssignmentExpression,14,False,NOT_YET_VALIDATED
+DivideAssignmentExpression,14,True,observed-in-emitted-body
 DivideExpression,1552,True,observed-in-emitted-body
 ElementAccessExpression,11408,True,observed-in-emitted-body
 ElseClause,2406,False,NOT_YET_VALIDATED
@@ -51,12 +51,12 @@ ExpressionStatement,17044,True,observed-in-emitted-body
 FalseLiteralExpression,727,True,observed-in-emitted-body
 FieldDeclaration,4574,False,NOT_YET_VALIDATED
 FinallyClause,88,False,NOT_YET_VALIDATED
-ForEachStatement,10,False,NOT_YET_VALIDATED
+ForEachStatement,10,True,observed-in-emitted-body
 ForStatement,1316,True,observed-in-emitted-body
 GenericName,157,False,NOT_YET_VALIDATED
 GetAccessorDeclaration,5,False,NOT_YET_VALIDATED
 GotoCaseStatement,1,False,NOT_YET_VALIDATED
-GotoStatement,8,False,NOT_YET_VALIDATED
+GotoStatement,8,True,observed-in-emitted-body
 GreaterThanExpression,595,True,observed-in-emitted-body
 GreaterThanOrEqualExpression,469,True,observed-in-emitted-body
 IdentifierName,103184,True,observed-in-emitted-body
@@ -64,10 +64,10 @@ IfStatement,7101,True,observed-in-emitted-body
 InterfaceDeclaration,3,False,NOT_YET_VALIDATED
 InvocationExpression,16872,True,observed-in-emitted-body
 IsExpression,6,True,observed-in-emitted-body
-LabeledStatement,14,False,NOT_YET_VALIDATED
+LabeledStatement,14,True,observed-in-emitted-body
 LeftShiftExpression,27,True,observed-in-emitted-body
 LessThanExpression,1886,True,observed-in-emitted-body
-LessThanOrEqualExpression,226,False,NOT_YET_VALIDATED
+LessThanOrEqualExpression,226,True,observed-in-emitted-body
 LocalDeclarationStatement,4949,True,observed-in-emitted-body
 LockStatement,2,False,NOT_YET_VALIDATED
 LogicalAndExpression,904,True,observed-in-emitted-body
@@ -85,7 +85,7 @@ NullLiteralExpression,1298,True,observed-in-emitted-body
 NumericLiteralExpression,44948,True,observed-in-emitted-body
 ObjectCreationExpression,861,True,observed-in-emitted-body
 OmittedArraySizeExpression,2196,False,NOT_YET_VALIDATED
-OrAssignmentExpression,11,False,NOT_YET_VALIDATED
+OrAssignmentExpression,11,True,observed-in-emitted-body
 Parameter,2776,False,NOT_YET_VALIDATED
 ParameterList,1851,False,NOT_YET_VALIDATED
 ParenthesizedExpression,2703,True,observed-in-emitted-body
@@ -93,7 +93,7 @@ ParenthesizedLambdaExpression,3,False,NOT_YET_VALIDATED
 PostDecrementExpression,131,True,observed-in-emitted-body
 PostIncrementExpression,1618,True,observed-in-emitted-body
 PredefinedType,16523,False,NOT_YET_VALIDATED
-PreIncrementExpression,1,False,NOT_YET_VALIDATED
+PreIncrementExpression,1,True,observed-in-emitted-body
 PropertyDeclaration,5,False,NOT_YET_VALIDATED
 QualifiedName,851,False,NOT_YET_VALIDATED
 ReturnStatement,1698,True,observed-in-emitted-body
@@ -103,7 +103,7 @@ SimpleAssignmentExpression,8102,True,observed-in-emitted-body
 SimpleBaseType,60,False,NOT_YET_VALIDATED
 SimpleMemberAccessExpression,28860,True,observed-in-emitted-body
 StringLiteralExpression,2231,True,observed-in-emitted-body
-SubtractAssignmentExpression,104,False,NOT_YET_VALIDATED
+SubtractAssignmentExpression,104,True,observed-in-emitted-body
 SubtractExpression,3295,True,observed-in-emitted-body
 SwitchSection,239,False,NOT_YET_VALIDATED
 SwitchStatement,48,True,observed-in-emitted-body

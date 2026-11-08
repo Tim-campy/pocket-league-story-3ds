@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 namespace pls::assets {
-enum class Kind : std::uint8_t { resource=1,member=2,image=3,font=4,audio=5,builtin_font=6,baked_array=7 };
+enum class Kind : std::uint8_t { resource=1,member=2,image=3,font=4,audio=5,builtin_font=6,baked_array=7,raw_resource=8 };
 struct Entry { Kind kind;std::string key,path,sha256;std::uint64_t size{};std::uint32_t width{},height{}; };
 class Catalog {
     std::filesystem::path root_;

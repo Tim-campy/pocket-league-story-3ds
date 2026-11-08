@@ -1,16 +1,17 @@
 {
   "operation": "phase2-checkpoint-full-verification",
   "status": "PASS",
+  "complete": true,
   "checks": [
     {
       "name": "repository-tests",
       "exit_code": 0,
-      "log_sha256": "6ca5a7fc24972355f633b022c5f420adcda27742ad48146d67cebec4bf7c172e"
+      "log_sha256": "697de8c5eba343c7b1f90ae3daf1962eebc804967ccdb8c88143595fb8399531"
     },
     {
       "name": "syntax-inventory-tests",
       "exit_code": 0,
-      "log_sha256": "544ab7ea4ccb817ff689cf3993b91e9589a5666cf848f709687a1e5889e548db"
+      "log_sha256": "6e85e1d3e4c17c3f17d49e1304f9a982cc60b4d644a430de2c5ac50d7404cc59"
     },
     {
       "name": "reference",
@@ -18,24 +19,54 @@
       "log_sha256": "6c28d69d2f1fceb7dc3c459b7a734e6c8c7ac2cbc64a0af962ef07ee339997cf"
     },
     {
+      "name": "culture-bound-inventory",
+      "exit_code": 0,
+      "log_sha256": "1df4cf530031c8afd264b95d0f8f004d9fe8b3d5e8856b88edb0c2be21bbd5ff"
+    },
+    {
+      "name": "boot-concurrency-inventory",
+      "exit_code": 0,
+      "log_sha256": "3005e01d69bbe9a18b3000521b46582399b89a55daa5b83130a9f593610fa2dc"
+    },
+    {
+      "name": "mono-collation-source",
+      "exit_code": 0,
+      "log_sha256": "a6245cfceca2dd425ee2b3e4bb66850044d1adbcd63441a6b9fc90a4feaf85d2"
+    },
+    {
+      "name": "mono-collation-generation",
+      "exit_code": 0,
+      "log_sha256": "524b87b019ee087be7c2de19dd8b605ba8b210e563dd40fe04abb5008831066f"
+    },
+    {
+      "name": "effective-core-profile",
+      "exit_code": 0,
+      "log_sha256": "f1d0b0b51098f85fa4cc355b5d3a09297ac3e0e6734093ce32e08a87f75981dc"
+    },
+    {
       "name": "portable-compile",
       "exit_code": 0,
-      "log_sha256": "ceeb0e0d334323949b3d9aeff39964c58b281b129dd828450cc85cb37cc3d1ce"
+      "log_sha256": "fe1d1736c97fb4fce7cc7c9b89577b9d86b48410f5b206eb2bc21e518288dbd9"
     },
     {
       "name": "portable-differential",
       "exit_code": 0,
-      "log_sha256": "1b60953588bed1d7a6646b11001722647597744eedc7327f50643678260fbc84"
+      "log_sha256": "2ecd1c5ba5fc13c2cc428e375425364dbf4eea54e03c7873eba3d093e2e7f204"
     },
     {
       "name": "lowering-differential",
       "exit_code": 0,
-      "log_sha256": "009de8a60540de183c82686c5857c90659a945f8a7d2f2d5d82865669b2a904b"
+      "log_sha256": "f030eaa60175be4b546ef39427b53c46fd651e301fb6b3c96c78776c06e4df51"
+    },
+    {
+      "name": "content-lowering",
+      "exit_code": 0,
+      "log_sha256": "86a3af230043e7dd93364ac428251f554ff87cb61aa59efdbe7fcc7b7f66d38e"
     },
     {
       "name": "game-partial-compile",
       "exit_code": 0,
-      "log_sha256": "41741c5a2924cf841d11ab3e1cbfd859aa803e55b23a7a0e29436184036e58de"
+      "log_sha256": "57c1503cbf79931d6f6fb60487014209614f31a36d17b33fdd08db31211cd98f"
     },
     {
       "name": "runtime-SemanticFixtures",
@@ -113,6 +144,76 @@
       "log_sha256": "662bef6f414f07035a0c627a6a08d61895254c8aac348f93fc8295b4cf3e0a07"
     },
     {
+      "name": "binary-reader",
+      "exit_code": 0,
+      "log_sha256": "02c46147e2175fff29b7fb3ebfaf1bc6081a005be6eca7be5668e9401b43de04"
+    },
+    {
+      "name": "stream-reader",
+      "exit_code": 0,
+      "log_sha256": "7c3708ebfd0cc67b81a2c05be840a906a9835b310d640abbf1de4d39ea058f45"
+    },
+    {
+      "name": "runtime-type-init",
+      "exit_code": 0,
+      "log_sha256": "976842b1e8b813596e6348f3b29275b17bb75fd712dffb5ede42a7f8c114ea5c"
+    },
+    {
+      "name": "runtime-exception-objects",
+      "exit_code": 0,
+      "log_sha256": "7e9b6b1db5cad18b9723b8eeeb30e050f44cf196c7149f9c34c930719a799ac9"
+    },
+    {
+      "name": "runtime-encoding",
+      "exit_code": 0,
+      "log_sha256": "da11dc7d82af382a03e6fa26a2e043d43c7d86029f13f34695ba9ff58aa83801"
+    },
+    {
+      "name": "string-ops",
+      "exit_code": 0,
+      "log_sha256": "682d2bfdb30c0547a6b7fe96f6ce2027f7c538370c9607c5b993bedc97701ef5"
+    },
+    {
+      "name": "runtime-regex",
+      "exit_code": 0,
+      "log_sha256": "54fb9245325f4af220eb1ccd4b53d1deb7a0c955f1f8a207a95f39694d569e3a"
+    },
+    {
+      "name": "runtime-path",
+      "exit_code": 0,
+      "log_sha256": "9b33caad0945b904ca22006c9f0f04d00a7f138ea4fb41524cfe203353511015"
+    },
+    {
+      "name": "mono-collation-differential",
+      "exit_code": 0,
+      "log_sha256": "55d6236fff77f0141576332c7784a0b9ee7c8654d8e63c1ebe24616482c0c687"
+    },
+    {
+      "name": "managed-threads",
+      "exit_code": 0,
+      "log_sha256": "ef66b54124129bc29cb73d6464799741eef4932e9f5e6afcf432674f7448b7ef"
+    },
+    {
+      "name": "managed-shared-fields",
+      "exit_code": 0,
+      "log_sha256": "1a07e65d1ae565328603214eb46e8279e2a954f0030a6a2961d1dcedc36f6eb4"
+    },
+    {
+      "name": "native-globalization",
+      "exit_code": 0,
+      "log_sha256": "b2beb82b10dd1896ea55d76a3bda235832db26a6a6098155b5fe45abd7cf4872"
+    },
+    {
+      "name": "pc-memory-sampler",
+      "exit_code": 0,
+      "log_sha256": "27063a7fad9876305fd4495fe376756419da4f02d52d59690bcad2c5477ca5e1"
+    },
+    {
+      "name": "ui-dispatch-GC",
+      "exit_code": 0,
+      "log_sha256": "3bf7146de5cf1c25ea715d542612427d6b62dac260fc982250e867b1f4125fae"
+    },
+    {
       "name": "service-policy",
       "exit_code": 0,
       "log_sha256": "fcec5e1312c61d0e25a2c85c2ed05cccd83b25ae7ae621863a05c0d8901b8b0e"
@@ -120,7 +221,7 @@
     {
       "name": "services",
       "exit_code": 0,
-      "log_sha256": "c33e6646fdd689b52c3986299728fb825a537274d2e55c946c9845eb334f834e"
+      "log_sha256": "b93c2c03f4b00e4966027a18d43c3cfaad91ae47c802f8b48d38e03050217502"
     },
     {
       "name": "legacy-assets",
@@ -128,14 +229,24 @@
       "log_sha256": "7ac1da73c5b43230ec8b10bd75919d72015ea8451e594f7f4a56d4efc74f023a"
     },
     {
+      "name": "private-resource-catalog",
+      "exit_code": 0,
+      "log_sha256": "726ed93aece64e17c293a9b6b326da6bbf7c77e424cff271ab400306be3e19f1"
+    },
+    {
       "name": "sdl-and-assets",
       "exit_code": 0,
-      "log_sha256": "fd6b524e1d3f865e7f89aae3d0d2aab3ab819876c80c98b415862de3ae565c75"
+      "log_sha256": "9f6a8541e69ef6660c8b34bf83a72206157f13b90b113e902de60cad7a1c0a0d"
     },
     {
       "name": "graphics-and-font",
       "exit_code": 0,
-      "log_sha256": "5dc0a97f5597f7b3c40393c2051d5fdf36de7fa68bb94718f723dd3698371757"
+      "log_sha256": "dea746d8687bb869e73b4846d7229ec96e6123619fdc3572ea834beac8761fe4"
+    },
+    {
+      "name": "image-lifetime",
+      "exit_code": 0,
+      "log_sha256": "ea75e512211ce07dac760789c691cb1494e2bb28256b5adf2a3f0a4761b865a8"
     },
     {
       "name": "streaming-media",
@@ -145,7 +256,12 @@
     {
       "name": "storage",
       "exit_code": 0,
-      "log_sha256": "53a3bcfe0ba6b01ffc5f637c12853280688be8d86011d60deb7dc6ba7787fd7a"
+      "log_sha256": "5135b8c44b4f593b9978a3faeb59dd1077cbcd9ac378a3c4806db8b42561a2b0"
+    },
+    {
+      "name": "raw-asset-reader",
+      "exit_code": 0,
+      "log_sha256": "52e91ece699fb220d4eea6fdda9321986028baab5f406148b936c59378297b88"
     },
     {
       "name": "input",
@@ -155,7 +271,37 @@
     {
       "name": "forms",
       "exit_code": 0,
-      "log_sha256": "ea75e512211ce07dac760789c691cb1494e2bb28256b5adf2a3f0a4761b865a8"
+      "log_sha256": "1549fcb7f5f4c1effa7eabddc6f5aa550f457cd886b81e01e2c32e9b5f4275e6"
+    },
+    {
+      "name": "forms-execution",
+      "exit_code": 0,
+      "log_sha256": "5fa6d8814495842d2e9147172248637f9ed0667a6c25f3e4718508a391c9d306"
+    },
+    {
+      "name": "managed-service-bindings",
+      "exit_code": 0,
+      "log_sha256": "d0b0cb3707e594e1a0a8aa407035364b2c0f92d549b9b62ab3d4882eb248f699"
+    },
+    {
+      "name": "offline-http-contract",
+      "exit_code": 0,
+      "log_sha256": "a061cf37ddcb1f84ea8655a269d560aafdcaaf6eb411d16d0d37ea5f45b8744b"
+    },
+    {
+      "name": "offline-analytics-contract",
+      "exit_code": 0,
+      "log_sha256": "058b223311ecd54ab687a7b2f010a149c363d778b930b705138a696368fc78ec"
+    },
+    {
+      "name": "bootstrap-order",
+      "exit_code": 0,
+      "log_sha256": "36af128ef76184dba12c2775c3c1a6eb139eebadc6ae940999da617373fa3ea0"
+    },
+    {
+      "name": "dialog-service",
+      "exit_code": 0,
+      "log_sha256": "4c3f07bea53fcdf1d08f543513b199ca255faedb64ad0bc6a95f7a3599b1a4a0"
     },
     {
       "name": "sound-API",
@@ -165,7 +311,7 @@
     {
       "name": "native-system-leaves",
       "exit_code": 0,
-      "log_sha256": "6c265c9fbd0c6f8cf9bbff3f6e6a0c0b1f7c798b8197cdd78f28b6a9fd8307ce"
+      "log_sha256": "2fd3f18b03ffa8c2d31047b6e0cc7f711d11abca421be3ee1b7d19bec09f2d06"
     },
     {
       "name": "android-GC-static",
@@ -173,58 +319,102 @@
       "log_sha256": "0c39b7a04b029d3a894fc77e139e7e299c3d5e9d33170023b7f0b3cf951158d3"
     },
     {
+      "name": "android-Unicode-static",
+      "exit_code": 0,
+      "log_sha256": "52d325014562fe09eff767afd4e41f41d48b2a69c396bb35d906c7e7cda54e44"
+    },
+    {
+      "name": "android-math-static",
+      "exit_code": 0,
+      "log_sha256": "ed52d15b0286ab784199c210d9b41aa98c24da76f044a65bb211a4e92cc4e113"
+    },
+    {
       "name": "culture-characterization",
       "exit_code": 0,
       "log_sha256": "76467df063bff4c32f0defd9cc178614d70503a9a88844839e1d61f2ea3e7e9b"
     },
     {
+      "name": "checkpoint-comparison",
+      "exit_code": 0,
+      "log_sha256": "dd1c1226771f995611e3cfc31210d7e474a2fac0d1923a3034119d4db3d97720"
+    },
+    {
       "name": "progress",
       "exit_code": 0,
-      "log_sha256": "cd3f81accc0c4023f79d74e92fcec30aa8dce34a78b940e011982ba0a45e7f75"
+      "log_sha256": "abab7387e51e49f2d35e794d2d940712d9bbb80cdb7e1b90f4edf1109cf80da0"
     }
   ],
-  "producer_sha256": "66cd658076f5968da6b38df66655d7fd7ec26a86aada109b9bde61beb7fd06cf",
+  "producer_sha256": "15e1adbbe7deef5ae2b676de4d322dd2cafe765b0cc8940f3f4aebdecb74dbbe",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "game_boot": false,
   "receipts": {
+    "phase2-analytics-offline-tests.json": "65d393e3408ad4c750a67dfe748f262533cb9578fb6b49961f80267a9ee86ea1",
     "phase2-android-gc.json": "e6794fe8c5a5931f592316203ebc269db19524acf25a5edf97c765e0e4ffbe80",
-    "phase2-array-bridge-fixtures.json": "4c9a92981966ecbb493aa9818b3331a65186a66a32a552a8aa4e03f9fdb1b138",
+    "phase2-android-math.json": "bdb28400c9beeb1c9a1c6e8fa86530c120c4cba8c0994bb4f25a917b586091ed",
+    "phase2-android-unicode.json": "092dd04fc929c58bb143023b96089af707643c80a8a665ed2e399dd0ba21c44b",
+    "phase2-array-bridge-fixtures.json": "a0b262dbe2385dec9693d552d852219ade7d1cdf76d6f9a3f79cdd9f1fb1e875",
+    "phase2-asset-reader-tests.json": "9b7be0db55b96b0d1ae4d14c80a48958742d0fa882c810568beadb801353c654",
     "phase2-assets.json": "6008f5229566e0d45d83c0c1d1ea6f1c44246fa66c8afaed8aab9863663bddd8",
-    "phase2-binary-reader-fixtures.json": "26292a21b352e445acaae1d388226231db0292c2e39032301d58f1a30123b0fe",
-    "phase2-boot-attempts.json": "b0f9d8c559b03d0d85a91cc2f9be707fa8b28dc4375c2e264fbf24f05df34e45",
-    "phase2-collections-fixtures.json": "0a29aa4425cda743deb5b2e4ebaad7641fb5b9916562d58966d15a2487cbe27a",
-    "phase2-conversion-fixtures.json": "122abd516e63478ff94c6f21bf356af50adbe78a534eac78e6ed2a8737ddd7aa",
-    "phase2-dictionary-fixtures.json": "2116f3093fb3e2c0fd47c1be31f533a1488ce600f8ebee5f2689166c040e0c2f",
-    "phase2-encoding-fixtures.json": "f0746d1f45afb7c03df5dec475433324621d5c6bff4f91b69d2920ae700aa817",
-    "phase2-floating-cast-fixtures.json": "9c2d2d0cf833ddcf0a7de393be7143350696365458363c86003b372d460b7188",
-    "phase2-forms-tests.json": "28e17d0680da438f5b18f0b56853cad321efb073fd1772d3b0a87f8f21b0178f",
+    "phase2-binary-reader-fixtures.json": "6c248eef267c04d36c41e1b5683c17ddc23137852d6a2dff2c9bc4f1f2fcca7a",
+    "phase2-boot-attempts.json": "6ce5a9be555f19cef044fd933a0540f6a54586a6f22571300f4d5ff122ff98ef",
+    "phase2-boot-concurrency.json": "5436e39a465fe9edaa1108f2c1b155c4156a9f3246928bf386bc68a487e13285",
+    "phase2-bootstrap-plan.json": "2b4fd29913615d78c301f92074700c0c3bac08b9cc3bb672a3ad7ab512452c0b",
+    "phase2-bootstrap-tests.json": "a93774bb6bba18515c482902047a55fb8091e70945432c47a30afa9c4e8e21c8",
+    "phase2-checkpoint-comparison.json": "6aab0e7e38c6ab1110a3bf9221d13d0dd75a570a8e3085dec3cb26ccdc983328",
+    "phase2-collections-fixtures.json": "4953e6ed7b155e40640075e6a86935618f4d1df39ce95c53eacfd319ded0b95b",
+    "phase2-content-fixtures.json": "cbaca6081f1a800a3e59bdb629d8b45da63f9cc615ad801d34c9fb89bebce3b6",
+    "phase2-conversion-fixtures.json": "818daaa458e3f013ffa1aee57829e02b6e4a177b044148927c81fc6cccb2e4ac",
+    "phase2-core-profile-tests.json": "628d72eee1f7567e84cecfafd12e0482858babf354a3c4cf841292627454438a",
+    "phase2-dialog-tests.json": "614c62aedb70ec8fe059eadee5dad22891806285885557e39208d412af32fd82",
+    "phase2-dictionary-fixtures.json": "9b91b2ce5716b073188abe807ac260cf71f98f93ea50d828f14582ab9c2993fa",
+    "phase2-encoding-fixtures.json": "d2b67e197ddfec9f92ee79b119400181f80a97cbc309ee479a1e903d4105d063",
+    "phase2-exception-objects-fixtures.json": "1ce9e70a6ab1df0434306938a50943a37a0e17f0c952a6bbea88335847912143",
+    "phase2-floating-cast-fixtures.json": "8637ca00b4997fa35a333ae36d096800d0c769676127676ead163f282973ef16",
+    "phase2-forms-execution-tests.json": "ad1af7c2645e4c1bfe7b1d8ea5158109801484b208931a12e5f01a105d8c90e4",
+    "phase2-forms-tests.json": "837b33db62f934179b71ea4d7e72e31653107ea0f086fd3d822bc3137da4ba40",
     "phase2-game-diagnostics.json": "9e461c0516eeab6c9bb9f7603fbe09e0061baa019c35238cd1717ca0c08d2beb",
-    "phase2-game-translation.json": "053f5e07949ba835b82f4ac7e547a210e9fe5eb2ad6f0f1c4d7597f866e2b555",
-    "phase2-gc-fixtures.json": "3a569cb39a12e9d05d5ca67bf24712e62cd1322daefe40b75badfea454f3a2e8",
-    "phase2-graphics-tests.json": "d2bbb2346083a0815ca1a3ce444bab75081f81134a4f2fbef54cf9e776960ffc",
-    "phase2-image-tests.json": "c235dbd835ffdb8117bdeedd680ab7ec040b8bb1e31f52a3e3d8b622542b26d1",
-    "phase2-input-tests.json": "8bd54b1fcffb7624f157a55e1219abe406867fc0c609f259e094f0ff79d4711f",
-    "phase2-integer-parse-fixtures.json": "258536bd9de8d0351270e4cdfec4ad6a34ec932cb1d14b3a615ccfc3733e43f8",
+    "phase2-game-translation.json": "cb60f9d53bf7bd5678848ed770ef035f5b241dbc099ce86bc678156c1809da8e",
+    "phase2-gc-fixtures.json": "b251ee6685bd2bafdef7786c08bbc1c2f0d69ad3e9c6ea8c1af20ad5f9435d3a",
+    "phase2-globalization-tests.json": "23d667463a2b957658aa633cf8417100f8682319c7b24178a3f32ab6f16e8c60",
+    "phase2-graphics-tests.json": "e5d20f0acf517570ab4816106ce7f585818c2111092ed9e8eea53078e3ed3da0",
+    "phase2-image-lifetime-tests.json": "be2b9761d39189f38ecf6d15417f3c61dc33594f28bc1fea7f6268f7c0eb6398",
+    "phase2-image-tests.json": "52e3f7472e6d9d4303a84bcc0d2d755ce473715e9540ca7d40651ae5b4c3b914",
+    "phase2-input-tests.json": "c32d037e9078f9c3b9d7fb4c9c07dedfa1be1dedd558e1b9be73d225015b37a0",
+    "phase2-integer-parse-fixtures.json": "de36439e155a946262509ee0f3388bf3e981c92e4b64dc099e481d6f4349177e",
     "phase2-legacy-assets.json": "0c886fda78e72fc95d6c97cc402ecd77efe5a55ada11b4efe1113771ccb7eed1",
-    "phase2-lowering-fixtures.json": "8ceb385415a32692ec8e2ff4866fec9949ff7f14943a2bf818f2cbc5699a5150",
-    "phase2-media-tests.json": "bcf1555a2e84413ca76f684a4a1958c8104510913638418d7fd6f714a7e747ef",
-    "phase2-object-dispatch-fixtures.json": "6bfa8cf104effb9344d8d28792b1a6783ecc86d8507a922e8fbdb7dbb5e986b1",
-    "phase2-portable-differential.json": "976ade5f0e03679ea61d64fa656b3ae21ca5542ad4e5ab2bf5c8e0a2007fdf7b",
-    "phase2-progress.json": "b6c51ad64e2c9c06c85ace8408b529ea3e1dfed73ad210ef685ffb6119717d11",
-    "phase2-random-fixtures.json": "363ca8ad4df375f9e42bbcbbd837a4e62c67aea5308317fe90d3cfb1eb9c2570",
-    "phase2-resource-catalog.json": "f130db0a1797d23b991a0520141c45a00ca99dae868b079458182383aedeb8d3",
-    "phase2-runtime-fixtures.json": "581fc824fe26b873a8f7df00c535c85ada7e1fd023c99984a118e7e6152b010c",
+    "phase2-lowering-fixtures.json": "70a58f7ffe58486710137cb74857f9630f2e8f577102551b0ef4899d8ff92b51",
+    "phase2-managed-services-tests.json": "6d3c320117caa61b289ec6b16592e3a4f29b4fad6a25ea75be474afd329607c2",
+    "phase2-media-tests.json": "ad2344b75634e398a17c735e0499646e26e345ca4a36df814fdc48846c941fff",
+    "phase2-mono-collation-source.json": "8db2c20224800c5a74d577d912f850bd73b8081ccba66f936b03b5b40ddb227c",
+    "phase2-mono-collation-tests.json": "53e247e03ddeacd0f9990ef5561eb0f53d16b4429153b8e1da1d424e9d1f8b58",
+    "phase2-object-dispatch-fixtures.json": "654d26b7938a2fbbd498af25b4f4e94e40e7775f890a57c5b960152decd2387c",
+    "phase2-offline-http-tests.json": "c79a67f77064fe6051213c357f1526de83a46b1d20f52a548dd06a85ad7b954c",
+    "phase2-path-fixtures.json": "4410459925e212e92b3fa2073e08f4aa9700931887397c2f3dab3e3245682bc9",
+    "phase2-pc-memory-tests.json": "6846e08cf8be83e0ae90658fe2252587a236427e9775242c650f31ddb98a0442",
+    "phase2-portable-differential.json": "ea9bb8647c79832201ed50453183bf6288b932cc0be450e2090c9ce75bbe5840",
+    "phase2-progress.json": "417bdbef298b1d3608d1e9ed1c78a2d4801b6cee38ded471cde65f6873716445",
+    "phase2-random-fixtures.json": "b0d704ce35895f67e4e4e2aa6a148796c9495f7677bfeda788e3742e2728a194",
+    "phase2-regex-fixtures.json": "6e60a6086c52c0a8643c9fff5ed002b77938f2786643232d77c0133b484bf9d5",
+    "phase2-resource-catalog.json": "60efc6acc17338c6e52986868fb88ef5e00bfc98358dcca25197324302bb8f75",
+    "phase2-runtime-encoding-fixtures.json": "c5f93e8a965dc5a42a1763948efe4653b6c322554f946f78679d9692b2bf53c9",
+    "phase2-runtime-fixtures.json": "82c83d5a25b9316d47556de8fc20b18e56ecb61b7205f098f6b77183fa0eb42d",
     "phase2-sdl-verification.json": "b9893f047cbf49f4a803b1f89d7abb5be87d57cec95231032916693fc52ec38f",
-    "phase2-services-tests.json": "4bc251cca823d0d7d17a4ffa6120a865b1fe6b702d8b9c5c801e53c113dc3008",
-    "phase2-sound-tests.json": "e7b846ee3b9fa103e03d2dd10269b3866c52f2868796beb718aeeb09106f5810",
-    "phase2-split-fixtures.json": "43a6a131838dff45e17622f73fb8eba6eefef97381f009a9eb2d82d12709c620",
-    "phase2-storage-tests.json": "280ba5c3856d11115fb566ea1df32a06494fe208d9da09f17d94e7ea77548622",
-    "phase2-streams-fixtures.json": "a18db9d6291abd764326bc6c2f924a4cc0ba121e853ddb69fea7c78605dd71bb",
-    "phase2-string-builder-fixtures.json": "05e6a740aa2c062bc674019a1357f77ae190126fd5c45b807cbf6118a645fa17",
+    "phase2-services-tests.json": "364cc4df067e0515cfd97498fae44ff69f64bc28bb62d44c7ac8e47aae386bb5",
+    "phase2-shared-field-tests.json": "83c465150cbc897affefcb880cba8411f3f55261a725110e551b4b96141575ca",
+    "phase2-sound-tests.json": "801f0a011708d2ea657ceb96e1162864fc8bfe43dfc56bda35d418e79a887a8f",
+    "phase2-split-fixtures.json": "ed80c4889d4edb1960f42dc00f45594b9d2647f6e952ea01eebf60be9e3c816e",
+    "phase2-storage-tests.json": "0d628bceb590bad9002f4463a1b9e96afc3870862d5b618486ff5620af667969",
+    "phase2-stream-reader-tests.json": "a7c7d3d497fae26add5eb002ea8af46c3a36f4be1e0eb4ec2fde2d302bedb915",
+    "phase2-streams-fixtures.json": "4d69cef8f63d7c69742a355ccb1c2783d64da3db2622459acb7145f109583a73",
+    "phase2-string-builder-fixtures.json": "96bebb51b5db37163bcc7bb067795bbf600a44c1fab212f3bab3707a7ea10599",
     "phase2-string-culture-probe.json": "224a8b42b296ea068ac9c7367793015cb535d61c1180f5085ef92c8963dad6bd",
-    "phase2-system-tests.json": "87b7bdfce215c3afb1b472937c02b5ff35af92eaf4dcf84f3db1d8e0faa4f5f8",
-    "phase2-time-fixtures.json": "9a5203502503148754aa7af8cc6eee896b233c746def83bc7420e14ffe44eda7",
-    "phase2-timezone-fixtures.json": "4ba818e62d081b855c53047d284244afe057bd2a813ab27fe64c23e21a0cf103",
-    "phase2-translation.json": "8a6446540b8125ea7081b4fb3d98f626e8da09ee2143b110d50643f357dfcc0e"
+    "phase2-string-ops-tests.json": "b4a4bbab6c9b86b45427623719d52f3955af6ae8665db1e57d2706eab8f9229e",
+    "phase2-system-tests.json": "a7e9bc68297cb4109ec7a0799f2358131f65fe98620123d6e227d931e1b62d45",
+    "phase2-thread-tests.json": "f3505ff588d16de03427792cae782075b1fd77bf1a7075f35ba343c9d49bc711",
+    "phase2-time-fixtures.json": "dc594c7592c38aaf687966387336f92cf25acfed639fc5c7dcac0c50b5498e0c",
+    "phase2-timezone-fixtures.json": "78ed0302cadb3450f4bf5e96732bf1384479c675462d45c905163e1e08a8de27",
+    "phase2-translation.json": "617f457b48e6273127c87b8c8b854630eaec01ba6f433b11207d03e85f9908fb",
+    "phase2-type-init-fixtures.json": "b39fadabc739adb4119c736e26e1327a35cbe77db2dd5a16556d63e66085540b",
+    "phase2-ui-dispatch-gc-tests.json": "76f3ada2f8b4b10e738c60208d8fab56c7709ffa240126314f0b45fbae5c47f6"
   }
 }

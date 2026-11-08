@@ -51,7 +51,7 @@ namespace java.util {
 namespace kairo.common.cfg {public static class Config {public static bool PRINT=false;}}
 namespace kairo.unity.native {public static class KairoPlugin {public static void ShowToast(string s,int n){throw new NotSupportedException();}}}
 namespace kairo.unity.system {public class KairoBase {public static KairoBase GetInstance(){return null;}public bool IsGamePlaying(){return false;}public void SetGameState(bool v){throw new Exception();}}}
-namespace kairo.unity.surface {public interface TouchValueAccessor{}public class SurfaceBase {public bool IsGameSurface(){return true;}public void ClearTouchComponent(){}}public class SurfaceManagerBase {public Vector<SurfaceBase> GetSurfaceList(){return new Vector<SurfaceBase>();}public static bool IsAutoGLRender(){return false;}}}
+namespace kairo.unity.surface {public class SurfaceBase {public bool IsGameSurface(){return true;}public void ClearTouchComponent(){}}public class SurfaceManagerBase {public Vector<SurfaceBase> GetSurfaceList(){return new Vector<SurfaceBase>();}public static bool IsAutoGLRender(){return false;}}}
 namespace kairo.unity.util {public static class Log {public static void Info(object o){}}}
 namespace kairo.unity.ui {
  public class Graphics {public void BeginGLRender(){}public void EndGLRender(){}}
@@ -69,7 +69,7 @@ namespace kairo.unity.form {
 }
 '''
  generated=folder/'OriginalFormFragments.cs';generated.write_text(facade,encoding='utf-8',newline='\n')
- originals=[original/'kairo/unity/form/FormBase.cs',original/'kairo/unity/ui/AppEvent.cs',original/'kairo/unity/ui/AppEventType.cs']
+ originals=[original/'kairo/unity/form/FormBase.cs',original/'kairo/unity/ui/AppEvent.cs',original/'kairo/unity/ui/AppEventType.cs',original/'kairo/unity/surface/TouchValueAccessor.cs']
  source=ROOT/'tests/kairo/FormsOracle.cs';sources=[source,generated,*originals]
  oracle=folder/'FormsOracle.dll';compile_modern(sources,oracle,folder,'dotnet',csc,framework)
  unity=Path(os.environ.get('UNITY_ROOT',str(Path.home()/'AppData/Local/Programs/Unity/5.3.4f1')))
@@ -77,7 +77,7 @@ namespace kairo.unity.form {
  env=dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
  old=folder/'FormsOracle-mono.exe';run([mono,smcs,'-nologo','-noconfig','-optimize+','-r:'+str(unity/'Editor/Data/Mono/lib/mono/2.0/System.Core.dll'),'-out:'+str(old),*sources],folder,'mono-compile',env)
  native_sources=[ROOT/p for p in ['tests/kairo/forms_fixtures.cpp','src/kairo/common/canvas.cpp','src/kairo/common/forms.cpp','src/kairo/platform/sdl/input.cpp',
-   'src/kairo/common/graphics.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
+   'src/kairo/common/graphics.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
  native=folder/'forms-fixtures.exe';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
  sdk=ROOT/'build/deps/native-media'
  objects=[]
@@ -95,7 +95,7 @@ namespace kairo.unity.form {
   cases += [dict(profile=profile,case=x.split('=',1)[0],expected=x,actual=y,passed=x==y) for x,y in zip(a,b)]
  policy=json.loads(run([native,'policy'],folder,'native-policy',environment()))
  passed=all(x['passed'] for x in cases)
- inputs=native_sources+[source,ROOT/'tools/test_forms.py',ROOT/'tools/native_api_proof.py',ROOT/'tools/test_input.py']+[ROOT/'src/kairo/api'/p for p in ['canvas.hpp','forms.hpp','input.hpp','graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/asset_catalog.hpp',ROOT/'src/kairo/platform/sdl/font.hpp']
+ inputs=native_sources+[source,ROOT/'tools/test_forms.py',ROOT/'tools/native_api_proof.py',ROOT/'tools/test_input.py']+[ROOT/'src/kairo/api'/p for p in ['canvas.hpp','forms.hpp','touch_value_accessor.hpp','input.hpp','graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/asset_catalog.hpp',ROOT/'src/kairo/platform/sdl/font.hpp']
  report=dict(verified_boundary_ids=forms_ids(),operation='original-source-FormBase-stack-Canvas-label-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(x['passed'] for x in cases),cases=cases,native_platform_policy=policy,
   inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},source_manifest=[dict(path=p.relative_to(ROOT/'reference').as_posix(),sha256=sha(p)) for p in [manager,canvas,*originals]],
   original_methods={'FormManagerBase':MANAGER,'Canvas':CANVAS,'FormBase':'entire original class'},

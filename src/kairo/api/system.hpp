@@ -4,8 +4,17 @@
 #include <chrono>
 #include <mutex>
 #include <thread>
+#include <iostream>
 
 namespace pls::kairo {
+inline std::mutex debug_log_mutex;
+inline void debug_log(const cs::String& text){
+    // Platform diagnostic leaf only; Config.PRINT/listener/deduplication remain
+    // in the generated source Log implementation.
+    auto output=text.is_null()?std::string("Null"):text.utf8();
+    std::lock_guard<std::mutex> guard(debug_log_mutex);std::cerr<<output<<'\n';
+}
+inline void debug_log(const cs::Ref<cs::Object>& value){debug_log(value?value->ToString():cs::String(u"Null"));}
 // Platform replacements for the two Unity setters reached by Main.OnUpdate.
 // The host paces explicit positive target rates. A non-positive rate leaves
 // pacing to the platform; it does not silently substitute a game frame rate.

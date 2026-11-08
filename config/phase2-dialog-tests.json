@@ -1,0 +1,41 @@
+{
+  "operation": "native-platform-dialog-request-policy",
+  "status": "PASS",
+  "assertions": 28,
+  "types_tested": 5,
+  "automatic_positive_choice": false,
+  "sdl_backend_compiled": true,
+  "interactive_SDL_dialog_exercised": false,
+  "game_boot": false,
+  "inputs": {
+    "tests/kairo/dialog_fixtures.cpp": "47c4044c194398fb44b834a674f99466fd0bccc94ec45e1d8bdbdb3e64d4baec",
+    "src/kairo/common/dialog_service.cpp": "8f1c7137fbbd241198ef872493d45eab088231e2f8d5e0100385911d6e3bed6d",
+    "src/kairo/platform/sdl/dialog.cpp": "9c665b154d017e49337c4ec8bcc5e838bf6aa4cd075c7f89e2df9420c234c7d9",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/api/dialog_service.hpp": "76af044e7b00e41cbef4f5c7e407fca5d111fcc57c9acda01315af15b9e9947e",
+    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/platform/sdl/dialog.hpp": "50ed8ff49fe1b27b83dfdf2462274cf283ed85dec0e1b6c4c5f2fe8a76d9c189",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "tools/test_dialog.py": "86073d99c9ea0e1064777b99990ef46331f00e2c8cbf04a72ea1c704d10725e3",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Dialog.cs",
+      "sha256": "6111117dd0c33cde8bfb2dbe209255f8f59e8856df763d8e4329f95cbd4ca24e"
+    }
+  ],
+  "native_executable": {
+    "path": "build/dialog-tests/dialog-fixtures.exe",
+    "sha256": "d72bd4ac6f3123694bb4425a04aa14e2e48acef0dcd60ca86dcc6838af99c056"
+  },
+  "verified_boundary_ids": [],
+  "intended_leaf": "M:kairo.unity.native.KairoPlugin.ShowDialog(System.Int32,System.String,System.String,System.String)",
+  "limits": [
+    "Own request/presenter fixtures, no original JNI code or Android dialog execution.",
+    "Localized default labels and real modal audio/input scope must be installed by the generated/host bridge.",
+    "Custom button return mapping and Android dismissal code are UNKNOWN; custom mapping rejects, SDL dismissal remains -1."
+  ],
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

@@ -40,6 +40,9 @@ O SDK de desenvolvimento SDL2 deve ser preparado com a autorização apropriada.
 
 ```powershell
 python tools/setup_sdl2.py --fetch
+python tools/setup_media_deps.py
+python tools/setup_mono_collation.py --apk 'CAMINHO_DO_SEU_APK'
+python tools/generate_mono_collator.py
 python tools/build-pc --fixtures-only
 python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK'
 ```
@@ -47,6 +50,13 @@ python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK
 Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e tenta compilar e ligar o jogo gerado; os callbacks ainda sem corpo impedem o link, sem stubs de menu. FreeType e o mixer Vorbis já rasterizam as fontes e reproduzem áudio em streaming nos testes nativos; o boot continua pendente. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
 
 FreeType, libogg e libvorbis foram autorizados e preparados localmente, sem instalação global. O [catálogo privado](docs/notes/phase2-private-catalog.md) associa recursos a identificadores e mantém os inicializadores numéricos classificados fora do C++ público. Armazenamento, entrada, formulários e som têm [provas separadas](docs/notes/phase2-storage-input-ui.md); isso não comprova sua execução dentro do jogo.
+
+A colação histórica utiliza fontes oficiais fixados por hash e tabelas
+reduzidas, sem carregar um runtime Unity no port. MIT/X11 e GNU Library GPLv2
+ficam separados em [THIRD_PARTY.md](THIRD_PARTY.md). A [medição cultural](docs/culture-usage.md)
+registra os métodos/dados atingidos; a cultura CLR é independente do idioma dos
+assets. O core `unity` usado pelo oráculo é idêntico por SHA-256 ao mscorlib do
+APK; o perfil SDK `2.0` foi descartado. Nenhuma dessas DLLs integra o executável.
 
 ## Conteúdo e distribuição
 

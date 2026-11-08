@@ -1,0 +1,25 @@
+{
+  "operation": "native-UI-dispatch-collector-cooperation",
+  "status": "PASS",
+  "assertions": 24,
+  "passed": 24,
+  "ui_gc_collections": 16,
+  "game_boot": false,
+  "original_binaries_used": false,
+  "verified_boundary_ids": [],
+  "native_executable": {
+    "path": "build/ui-dispatch-gc/fixture.exe",
+    "sha256": "0a0241551bc2ed9812d8981795f324dc0f232747f518a92fa368fe1affd8c5e1"
+  },
+  "inputs": {
+    "tools/test_ui_dispatch_gc.py": "96cd05642e90277580d4eb8d0e0e1711c569ffd9867a6c7b4e11e83af5abc352",
+    "tests/kairo/ui_dispatch_gc.cpp": "1c75edaaac21639c5f7f251ea148c798929b520c40627a1bced03172e4c7e139",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7"
+  },
+  "limitations": [
+    "Own native scheduling invariants; not a source-oracle or game boot.",
+    "Does not fix unsynchronized fields in generated Game classes."
+  ]
+}

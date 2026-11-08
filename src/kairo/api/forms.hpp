@@ -1,7 +1,9 @@
 #pragma once
 #include "canvas.hpp"
+#include "touch_value_accessor.hpp"
 #include <optional>
 #include <thread>
+#include <atomic>
 namespace pls::kairo {
 enum class AppEventType:std::int32_t {Hidden=0,Sleep=1,Browser=2,Exit=3,Resume=4};
 class AppEvent : public cs::Object {
@@ -12,16 +14,23 @@ public:
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(Args,v);}void release_edges()override{cs::release_value(Args);}
 };
 class FormManagerBase;
-class FormBase : public cs::Object {
+class SourceFormExecution;
+inline std::function<void(FormManagerBase&)> form_construction_hook;
+class FormBase : public cs::Object, public TouchValueAccessor {
     friend class FormManagerBase;
-    std::int32_t id_,mode_{},continuous_{};
-    cs::String left_{u""},right_{u""},third_,fourth_;
+    friend class SourceFormExecution;
+    std::int32_t id_{},mode_{},continuous_{};
+    cs::String left_,right_,third_,fourth_;
     cs::Ref<FormManagerBase> manager_;
 public:
-    explicit FormBase(std::int32_t id):id_(id){}
+    FormBase()=default;
+    // Emitted allocation is separate from the C# base-constructor invocation.
+    // Until this bridge runs, managed fields retain CLR-zero/default values.
+    explicit FormBase(std::int32_t id){source_construct(id);}
+    void source_construct(std::int32_t id){left_=cs::String(u"");right_=cs::String(u"");id_=id;}
     virtual bool Init(){return true;}virtual void Draw(cs::Ref<Graphics>){}virtual bool Update(){return true;}
     virtual bool Resume(){return true;}virtual void Suspend(){}virtual bool Finish(){return true;}
-    virtual std::int32_t GetTouchValue(std::int32_t,std::int32_t){return 0;}virtual void SetTouchValue(std::int32_t,std::int32_t){}
+    std::int32_t GetTouchValue(std::int32_t,std::int32_t)override{return 0;}void SetTouchValue(std::int32_t,std::int32_t)override{}
     virtual bool CheckMainWindow(){return true;}virtual bool ProcessEvent(cs::Ref<AppEvent>){return false;}
     virtual bool ProcessBackKey(){return !CheckMainWindow();}
     // Qualified base calls from generated free-function bodies must bypass the
@@ -43,9 +52,9 @@ public:
     bool IsAlive(){return mode_==3||mode_==1||mode_==2;}
     void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
 };
-// Platform bridges expose genuinely absent collaborators explicitly. A null
-// game-state bridge is only accepted after host_game_state(nullptr), meaning
-// the source KairoBase.GetInstance() has independently been established null.
+// Platform bridges resolve real source collaborators. A null game-state bridge
+// is useful only for isolated null-branch fixtures: the authenticated game
+// getter creates KairoDummy when instance_ is absent, and must remain generated.
 class FormGameState : public cs::Object {
 public:virtual bool IsGamePlaying()=0;virtual void SetGameState(bool)=0;
 };
@@ -56,13 +65,18 @@ public:
 };
 class FormManagerBase : public cs::Object {
     friend class FormBase;
+    friend class SourceFormExecution;
     std::vector<cs::Ref<FormBase>> stack_;
     std::vector<std::pair<cs::Ref<FormBase>,bool>> game_states_;
     cs::Ref<FormBase> current_,loading_,print_;
     cs::Ref<FormGameState> game_state_;
     cs::Ref<FormExecutionBridge> execution_;
-    bool game_state_configured_{},termination_{},notified_exit_{},draw_all_{true},draw_skip_{},soft_label_{true},show_termination_{},pause_{},resume_{},surface_changed_{},warning_{};
-    std::thread::id owner_=std::this_thread::get_id();
+    bool game_state_configured_{},termination_{},notified_exit_{},draw_all_{},draw_skip_{},soft_label_{},show_termination_{},pause_{},resume_{},surface_changed_{},warning_{};
+    bool service_update_{},last_keyguard_{},last_visible_{};
+    std::atomic<bool> request_sync_{false},synchronizing_{false},wait_late_update_{false},lock_update_{false};
+    std::atomic<std::int64_t> lock_update_time_{0};
+    std::int64_t update_start_time_{};
+    std::thread::id owner_;
     void owner();void labels(cs::Ref<FormBase>);
 protected:
     virtual void PreUpdate(){Canvas::GetInstance()->DecideKeyState();}
@@ -70,6 +84,7 @@ protected:
     virtual void PreDraw(){}virtual void Drawn(){}
 public:
     FormManagerBase()=default;
+    void source_construct(){stack_.clear();game_states_.clear();draw_all_=true;soft_label_=true;last_visible_=true;owner_=std::this_thread::get_id();if(form_construction_hook)form_construction_hook(*this);}
     void host_game_state(cs::Ref<FormGameState> state){game_state_=std::move(state);game_state_configured_=true;}
     void host_execution(cs::Ref<FormExecutionBridge> bridge){execution_=std::move(bridge);}
     cs::Ref<FormBase> GetForm(std::int32_t);std::int32_t GetFormIndex(cs::Ref<FormBase>);
@@ -91,6 +106,7 @@ public:
     // not substitute for the SaveRecorder/KairoBase/SurfaceManager scheduler.
     void source_ExecuteInitAndFinish();void source_PreUpdate(){FormManagerBase::PreUpdate();}void source_Updated(){FormManagerBase::Updated();}
     void source_PreDraw(){FormManagerBase::PreDraw();}void source_Drawn(){FormManagerBase::Drawn();}
+    void source_Resume(){FormManagerBase::Resume();}
     void ProcessEvent(cs::Ref<AppEvent>);static void ProcessEvent(AppEventType,cs::Array<cs::Ref<cs::Object>> args={});
     void ProcessBackKey();void ShowTerminationDialog(){show_termination_=true;}bool CheckShowTerminationDialog(){return show_termination_;}
     void SetPause(bool value){pause_=value;}bool IsPause(){return pause_;}void SurfaceChanged(){surface_changed_=true;}

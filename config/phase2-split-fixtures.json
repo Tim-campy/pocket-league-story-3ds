@@ -1,19 +1,28 @@
 {
   "operation": "forced-chunking-of-real-generated-portable-methods",
-  "cases": 1561,
-  "passed": 1561,
-  "methods": 223,
-  "executed_method_ids": [
+  "cases": 2618,
+  "passed": 2617,
+  "methods": 374,
+  "verified_method_ids": [
     "M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",
     "M:java.io.ByteArrayInputStream.Available",
     "M:java.io.ByteArrayOutputStream.#ctor",
     "M:java.io.ByteArrayOutputStream.Close",
     "M:java.io.ByteArrayOutputStream.ToByteArray",
+    "M:java.io.ByteArrayOutputStream.ToString",
+    "M:java.io.DataInputStream.#ctor(java.io.InputStream)",
+    "M:java.io.DataInputStream.Close",
+    "M:java.io.DataInputStream.ReadInt",
+    "M:java.io.EOFException.#ctor(System.String)",
     "M:java.io.InputStream.#ctor",
     "M:java.io.InputStream.Available",
     "M:java.io.InputStream.CanSeek",
     "M:java.io.InputStream.Close",
     "M:java.io.InputStream.get_Position",
+    "M:java.io.InputStream.GetWrappedStream",
+    "M:java.io.InputStream.Mark(System.Int32)",
+    "M:java.io.InputStream.MarkSupported",
+    "M:java.io.InputStream.op_Implicit(java.io.InputStream)~System.IO.Stream",
     "M:java.io.InputStream.Read",
     "M:java.io.InputStream.Read(System.Byte[],System.Int32,System.Int32)",
     "M:java.io.InputStream.Read(System.Byte[])",
@@ -26,6 +35,7 @@
     "M:java.io.OutputStream.Write(System.Byte[],System.Int32,System.Int32)",
     "M:java.io.OutputStream.Write(System.Byte[])",
     "M:java.io.OutputStream.Write(System.Int32)",
+    "M:java.io.WrappedSystemStream.#ctor(java.io.InputStream)",
     "M:java.io.WrappedSystemStream.Close",
     "M:java.io.WrappedSystemStream.Flush",
     "M:java.io.WrappedSystemStream.get_CanRead",
@@ -35,6 +45,7 @@
     "M:java.io.WrappedSystemStream.get_Length",
     "M:java.io.WrappedSystemStream.get_OutputStream",
     "M:java.io.WrappedSystemStream.get_Position",
+    "M:java.io.WrappedSystemStream.OnMark(System.Int32)",
     "M:java.io.WrappedSystemStream.Read(System.Byte[],System.Int32,System.Int32)",
     "M:java.io.WrappedSystemStream.ReadByte",
     "M:java.io.WrappedSystemStream.Seek(System.Int64,System.IO.SeekOrigin)",
@@ -43,53 +54,85 @@
     "M:java.io.WrappedSystemStream.Write(System.Byte[],System.Int32,System.Int32)",
     "M:java.io.WrappedSystemStream.WriteByte(System.Byte)",
     "M:java.lang.JInteger.#ctor(System.Int32)",
+    "M:java.lang.JInteger.Equals(System.Object)",
+    "M:java.lang.JInteger.GetHashCode",
     "M:java.lang.JInteger.IntValue",
     "M:java.lang.JInteger.op_Implicit(java.lang.JInteger)~System.Int32",
     "M:java.lang.JInteger.ParseInt(System.String)",
+    "M:java.lang.JInteger.ToString",
     "M:java.lang.JInteger.ValueOf(System.String)",
     "M:java.lang.JLong.ParseLong(System.String)",
     "M:java.lang.JMath.Abs(System.Int32)",
     "M:java.lang.JMath.Abs(System.Int64)",
     "M:java.lang.JMath.Abs(System.Single)",
     "M:java.lang.JMath.Cos(System.Double)",
-    "M:java.lang.JMath.Sin(System.Double)",
     "M:java.lang.JMath.Sqrt(System.Double)",
     "M:java.lang.JMath.ToRadians(System.Double)",
     "M:java.lang.JRuntime.#ctor",
     "M:java.lang.JRuntime.Gc",
     "M:java.lang.JRuntime.GetRuntime",
+    "M:java.lang.JString.GetSJIS(System.Byte[],System.Int32,System.Int32)",
+    "M:java.lang.JString.GetUnicode(System.UInt16)",
+    "M:java.lang.JString.New(System.Byte[],System.String)",
     "M:java.lang.JString.New(System.Byte[])",
     "M:java.lang.JString.New(System.String)",
     "M:java.lang.JString.ValueOf(System.Char)",
     "M:java.lang.JString.ValueOf(System.Int32)",
     "M:java.lang.JString.ValueOf(System.Int64)",
+    "M:java.lang.JString.ValueOf(System.Object)",
     "M:java.lang.JSystem.Arraycopy(System.Object,System.Int32,System.Object,System.Int32,System.Int32)",
     "M:java.lang.JSystem.CurrentTimeMillis",
     "M:java.lang.JSystem.Gc",
     "M:java.lang.StringEx.CharAt(System.String,System.Int32)",
+    "M:java.lang.StringEx.EqualsIgnoreCase(System.String,System.String)",
     "M:java.lang.StringEx.GetBytes(System.String)",
     "M:java.lang.StringEx.IndexOf(System.String,System.Int32)",
     "M:java.lang.StringEx.Length(System.String)",
+    "M:java.lang.StringEx.StartsWith(System.String,System.String,System.Int32)",
     "M:java.lang.StringEx.SubstringJ(System.String,System.Int32,System.Int32)",
     "M:java.lang.StringEx.SubstringJ(System.String,System.Int32)",
+    "M:java.lang.StringEx.ToLowerCase(System.String)",
+    "M:java.util.JCalendar.#ctor",
+    "M:java.util.JCalendar.Equals(System.Object)",
     "M:java.util.JCalendar.Get(System.Int32)",
+    "M:java.util.JCalendar.GetHashCode",
+    "M:java.util.JCalendar.GetInstance",
+    "M:java.util.JCalendar.GetTimeInMillis",
     "M:java.util.JCalendar.SetTime(java.util.JDate)",
     "M:java.util.JCalendar.SetTimeInMillis(System.Int64)",
     "M:java.util.JDate.#ctor",
     "M:java.util.JDate.#ctor(System.Int64)",
+    "M:java.util.JDate.Equals(System.Object)",
     "M:java.util.JDate.GetDateTime",
+    "M:java.util.JDate.GetHashCode",
+    "M:java.util.JDate.GetTime",
     "M:java.util.JDate.SetTime(System.Int64)",
+    "M:java.util.JLocale.#ctor(System.String,System.String)",
+    "M:java.util.JLocale.Equals(System.Object)",
+    "M:java.util.JLocale.GetCountry",
+    "M:java.util.JLocale.GetDefault",
+    "M:java.util.JLocale.GetHashCode",
+    "M:java.util.JLocale.GetLanguage",
+    "M:java.util.JLocale.op_Equality(java.util.JLocale,java.util.JLocale)",
+    "M:java.util.JLocale.op_Inequality(java.util.JLocale,java.util.JLocale)",
     "M:java.util.JRandom.#ctor",
     "M:java.util.JRandom.#ctor(System.Int64)",
     "M:java.util.JRandom.NextInt",
+    "M:java.util.JTimeZone.#ctor(System.String)",
+    "M:java.util.JTimeZone.GetDefault",
     "M:java.util.JTimeZone.GetTimeZoneInfo",
+    "M:java.util.JTool.MakeArray``1(System.Int32[])",
+    "M:java.util.JTool.MakeArrayRecursive(System.Type,System.Int32[],System.Int32)",
     "M:java.util.Vector.#ctor",
+    "M:java.util.Vector.Equals(System.Object)",
     "M:java.util.Vector`1.#ctor",
     "M:java.util.Vector`1.Add(`0)",
     "M:java.util.Vector`1.AddElement(`0)",
     "M:java.util.Vector`1.Clear",
     "M:java.util.Vector`1.ElementAt(System.Int32)",
+    "M:java.util.Vector`1.Equals(System.Object)",
     "M:java.util.Vector`1.FirstElement",
+    "M:java.util.Vector`1.get_List",
     "M:java.util.Vector`1.IndexOf(`0)",
     "M:java.util.Vector`1.InsertElementAt(`0,System.Int32)",
     "M:java.util.Vector`1.op_Equality(java.util.Vector{`0},java.util.Vector)",
@@ -99,17 +142,38 @@
     "M:java.util.Vector`1.RemoveElementAt(System.Int32)",
     "M:java.util.Vector`1.SetElementAt(`0,System.Int32)",
     "M:java.util.Vector`1.Size",
+    "M:java.util.Vector`1.ToString",
     "M:kairo.common.cfg.Config.#ctor",
+    "M:kairo.common.cfg.Config.ConvertExtension(System.String)",
+    "M:kairo.common.cfg.Config.Init(System.String)",
+    "M:kairo.unity.io.AssetReader._getData(System.String)",
+    "M:kairo.unity.io.AssetReader._getTextAsset(System.String)",
+    "M:kairo.unity.io.AssetReader._init",
+    "M:kairo.unity.io.AssetReader.Exist(System.String)",
+    "M:kairo.unity.io.AssetReader.GetAccessFilesList(System.String)",
+    "M:kairo.unity.io.AssetReader.GetData(System.String)",
+    "M:kairo.unity.io.AssetReader.GetInputStream(System.String)",
+    "M:kairo.unity.io.ByteListOutputStream._expand",
+    "M:kairo.unity.io.ByteListOutputStream._init(System.Int32)",
+    "M:kairo.unity.io.ByteListOutputStream.#ctor",
+    "M:kairo.unity.io.ByteListOutputStream.Close",
+    "M:kairo.unity.io.ByteListOutputStream.Flush",
     "M:kairo.unity.io.ByteListOutputStream.Size",
     "M:kairo.unity.io.ByteListOutputStream.ToByteArray(System.Int32,System.Int32,System.Byte[])",
     "M:kairo.unity.io.ByteListOutputStream.ToByteArray(System.Int32,System.Int32)",
+    "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[],System.Int32,System.Int32)",
+    "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[])",
+    "M:kairo.unity.io.ByteListOutputStream.Write(System.Int32)",
+    "M:kairo.unity.io.ConnectionException.GetStatus",
     "M:kairo.unity.m3d4.util3d.Vector3D.#ctor",
     "M:kairo.unity.m3d4.util3d.Vector3D.#ctor(System.Single,System.Single,System.Single)",
     "M:kairo.unity.m3d4.util3d.Vector3D.Add(kairo.unity.m3d4.util3d.Vector3D)",
     "M:kairo.unity.m3d4.util3d.Vector3D.Add(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Deserialize(java.io.InputStream)",
     "M:kairo.unity.m3d4.util3d.Vector3D.GetX",
     "M:kairo.unity.m3d4.util3d.Vector3D.GetY",
     "M:kairo.unity.m3d4.util3d.Vector3D.GetZ",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Serialize(java.io.OutputStream)",
     "M:kairo.unity.m3d4.util3d.Vector3D.Set(kairo.unity.m3d4.util3d.Vector3D)",
     "M:kairo.unity.m3d4.util3d.Vector3D.Set(System.Single,System.Single,System.Single)",
     "M:kairo.unity.m3d4.util3d.Vector3D.SetX(System.Single)",
@@ -122,6 +186,19 @@
     "M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)",
     "M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)",
     "M:kairo.unity.util.BitUtil.Split(System.Int32)",
+    "M:kairo.unity.util.Compressor._getBitBuffer",
+    "M:kairo.unity.util.Compressor._getLowestNode(kairo.unity.util.FastVector)",
+    "M:kairo.unity.util.Compressor._readBit",
+    "M:kairo.unity.util.Compressor._readByte",
+    "M:kairo.unity.util.Compressor._readNodeFromBitBuffer",
+    "M:kairo.unity.util.Compressor._setBitBuffer(System.Byte[])",
+    "M:kairo.unity.util.Compressor._writeBit(System.Int32)",
+    "M:kairo.unity.util.Compressor._writeByte(System.Int32)",
+    "M:kairo.unity.util.Compressor._writeNodeToBitBuffer(kairo.unity.util.Compressor.Node)",
+    "M:kairo.unity.util.Compressor.Compress(System.Byte[])",
+    "M:kairo.unity.util.Compressor.Expand(System.Byte[])",
+    "M:kairo.unity.util.Compressor.Node.#ctor",
+    "M:kairo.unity.util.Compressor.Node.#ctor(kairo.unity.util.Compressor.Node,kairo.unity.util.Compressor.Node,kairo.unity.util.Compressor.Node,System.Int32,System.Int32)",
     "M:kairo.unity.util.CRC64.GetValue(System.Byte[])",
     "M:kairo.unity.util.CRC64.MakeCrcTable",
     "M:kairo.unity.util.CRC64.Update(System.Int64,System.Byte[],System.Int32)",
@@ -135,6 +212,7 @@
     "M:kairo.unity.util.EncodeUtil.LongToByteAry(System.Int64,System.Boolean)",
     "M:kairo.unity.util.EncodeUtil.ShortToByteAry(System.Int16,System.Boolean)",
     "M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.Decode(System.Byte[])",
     "M:kairo.unity.util.Encrypter.Encode(System.Byte[],System.Byte[])",
     "M:kairo.unity.util.Encrypter.SetEncryptionKey(System.Byte[])",
     "M:kairo.unity.util.FastVector.#ctor",
@@ -144,6 +222,7 @@
     "M:kairo.unity.util.FastVector`1.Contains(`0)",
     "M:kairo.unity.util.FastVector`1.ElementAt(System.Int32)",
     "M:kairo.unity.util.FastVector`1.FirstElement",
+    "M:kairo.unity.util.FastVector`1.GetHashCode",
     "M:kairo.unity.util.FastVector`1.IndexOf(`0)",
     "M:kairo.unity.util.FastVector`1.InsertElementAt(`0,System.Int32)",
     "M:kairo.unity.util.FastVector`1.LastElement",
@@ -152,31 +231,81 @@
     "M:kairo.unity.util.FastVector`1.RemoveElement(`0)",
     "M:kairo.unity.util.FastVector`1.RemoveElementAt(System.Int32)",
     "M:kairo.unity.util.FastVector`1.Size",
+    "M:kairo.unity.util.FastVector`1.ToString",
+    "M:kairo.unity.util.JarInflater._load(java.io.InputStream)",
+    "M:kairo.unity.util.JarInflater._search(System.String)",
+    "M:kairo.unity.util.JarInflater.#ctor(System.Byte[])",
+    "M:kairo.unity.util.JarInflater.Close",
+    "M:kairo.unity.util.JarInflater.ConvertExtension(System.String)",
+    "M:kairo.unity.util.JarInflater.FileInfo.#ctor",
+    "M:kairo.unity.util.JarInflater.GetData(System.String)",
+    "M:kairo.unity.util.JarInflater.GetInputStream(System.String)",
+    "M:kairo.unity.util.JarInflater.GetResourceAsStream(System.String)",
+    "M:kairo.unity.util.JarInflater.GetSize(System.String)",
+    "M:kairo.unity.util.Language._translateText(System.String)",
+    "M:kairo.unity.util.Language.AdjustMacroScope(System.String)",
+    "M:kairo.unity.util.Language.ConvertLanguagePack(System.String,System.Byte[])",
+    "M:kairo.unity.util.Language.Get",
+    "M:kairo.unity.util.Language.Get(java.util.JLocale)",
+    "M:kairo.unity.util.Language.GetFolder",
+    "M:kairo.unity.util.Language.GetLanguagePackFolders",
+    "M:kairo.unity.util.Language.Japanese",
+    "M:kairo.unity.util.Language.MakeTextTable(System.String[][])",
+    "M:kairo.unity.util.Language.TranslateSoftLabel(System.String)",
+    "M:kairo.unity.util.Language.TranslateText(System.String,System.Boolean)",
+    "M:kairo.unity.util.Log.DebugLog(System.String)",
+    "M:kairo.unity.util.Log.GetThrowableLog(System.String,System.Exception)",
+    "M:kairo.unity.util.Log.GetThrowableName(System.Exception)",
+    "M:kairo.unity.util.Log.Info(System.Exception)",
+    "M:kairo.unity.util.Log.Info(System.String,System.Exception)",
     "M:kairo.unity.util.Property.#ctor",
     "M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property)",
     "M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property[],System.Int32[],System.Int64[],System.String[],System.Byte[][])",
+    "M:kairo.unity.util.Property.GetTypeNum",
+    "M:kairo.unity.util.Property.Load(java.io.InputStream)",
+    "M:kairo.unity.util.Property.Load(System.Byte[])",
+    "M:kairo.unity.util.Property.Read(java.io.InputStream,System.Int32,System.Int32,System.Byte[])",
     "M:kairo.unity.util.Property.SetData(kairo.unity.util.Property[])",
     "M:kairo.unity.util.Property.SetData(System.Byte[][])",
     "M:kairo.unity.util.Property.SetData(System.Int32[])",
     "M:kairo.unity.util.Property.SetData(System.Int64[])",
     "M:kairo.unity.util.Property.SetData(System.String[])",
+    "M:kairo.unity.util.Property.Size(System.Int32)",
+    "M:kairo.unity.util.Property.ToByteArray",
+    "M:kairo.unity.util.Property.ToByteArray(java.io.OutputStream)",
+    "M:kairo.unity.util.Property.Write(java.io.OutputStream,System.Int32)",
     "M:kairo.unity.util.SecureInt.#ctor",
     "M:kairo.unity.util.SecureInt.#ctor(kairo.unity.util.SecureInt)",
     "M:kairo.unity.util.SecureInt.#ctor(System.Int32)",
+    "M:kairo.unity.util.SecureInt.Array(System.Int32)",
+    "M:kairo.unity.util.SecureInt.Equals(System.Object)",
     "M:kairo.unity.util.SecureInt.Get",
+    "M:kairo.unity.util.SecureInt.GetHashCode",
     "M:kairo.unity.util.SecureInt.op_Implicit(kairo.unity.util.SecureInt)~System.Int32",
     "M:kairo.unity.util.SecureInt.op_Implicit(System.Int32)~kairo.unity.util.SecureInt",
+    "M:kairo.unity.util.SecureInt.Set(System.Int32)",
+    "M:kairo.unity.util.SecureLong.#ctor",
     "M:kairo.unity.util.SecureLong.#ctor(System.Int64)",
+    "M:kairo.unity.util.SecureLong.Array(System.Int32)",
+    "M:kairo.unity.util.SecureLong.Equals(System.Object)",
     "M:kairo.unity.util.SecureLong.Get",
+    "M:kairo.unity.util.SecureLong.GetHashCode",
     "M:kairo.unity.util.SecureLong.op_Implicit(kairo.unity.util.SecureLong)~System.Int64",
     "M:kairo.unity.util.SecureLong.op_Implicit(System.Int64)~kairo.unity.util.SecureLong",
+    "M:kairo.unity.util.SecureLong.Set(System.Int64)",
     "M:kairo.unity.util.SecureNumber.#ctor",
     "M:kairo.unity.util.SecureNumber.#ctor(System.Int64)",
     "M:kairo.unity.util.SecureNumber.Generate(System.Int64)",
+    "M:kairo.unity.util.SecureNumber.GetHashCode",
     "M:kairo.unity.util.SecureNumber.GetLong",
     "M:kairo.unity.util.SecureNumber.SetLong(System.Int64)",
+    "M:kairo.unity.util.SecureNumber.ToString",
     "M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty)",
     "M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty[],System.Int32[],System.Int64[],System.String[],System.Byte[][])",
+    "M:kairo.unity.util.SecureProperty.GetTypeNum",
+    "M:kairo.unity.util.SecureProperty.Load(java.io.InputStream)",
+    "M:kairo.unity.util.SecureProperty.Load(System.Byte[])",
+    "M:kairo.unity.util.SecureProperty.Read(java.io.InputStream,System.Int32,System.Int32,System.Byte[])",
     "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureInt[])",
     "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureLong[])",
     "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureProperty[])",
@@ -185,20 +314,29 @@
     "M:kairo.unity.util.SecureProperty.SetData(System.Int32[])",
     "M:kairo.unity.util.SecureProperty.SetData(System.Int64[])",
     "M:kairo.unity.util.SecureProperty.SetData(System.String[])",
+    "M:kairo.unity.util.SecureProperty.Size(System.Int32)",
+    "M:kairo.unity.util.SecureProperty.ToByteArray",
+    "M:kairo.unity.util.SecureProperty.ToByteArray(java.io.OutputStream)",
+    "M:kairo.unity.util.SecureProperty.Write(java.io.OutputStream,System.Int32)",
     "M:kairo.unity.util.SecureString.#ctor(kairo.unity.util.SecureString)",
     "M:kairo.unity.util.SecureString.#ctor(System.String)",
     "M:kairo.unity.util.SecureString.Arraycopy(kairo.unity.util.SecureString[],System.Int32,kairo.unity.util.SecureString[],System.Int32,System.Int32)",
+    "M:kairo.unity.util.SecureString.EndsWith(System.String)",
     "M:kairo.unity.util.SecureString.Equals(kairo.unity.util.SecureString)",
+    "M:kairo.unity.util.SecureString.Equals(System.Object)",
     "M:kairo.unity.util.SecureString.Equals(System.String)",
     "M:kairo.unity.util.SecureString.Generate(System.Char)",
     "M:kairo.unity.util.SecureString.Generate(System.Char[],System.Char[])",
     "M:kairo.unity.util.SecureString.Get",
+    "M:kairo.unity.util.SecureString.GetBytes",
+    "M:kairo.unity.util.SecureString.GetHashCode",
     "M:kairo.unity.util.SecureString.IndexOf(System.Int32)",
     "M:kairo.unity.util.SecureString.Length",
     "M:kairo.unity.util.SecureString.op_Addition(kairo.unity.util.SecureString,System.String)",
     "M:kairo.unity.util.SecureString.op_Implicit(kairo.unity.util.SecureString)~System.String",
     "M:kairo.unity.util.SecureString.op_Implicit(System.String)~kairo.unity.util.SecureString",
     "M:kairo.unity.util.SecureString.Set(System.String)",
+    "M:kairo.unity.util.SecureString.StartsWith(System.String)",
     "M:kairo.unity.util.SecureString.ToString",
     "M:kairo.unity.util.SecureString.ToString(kairo.unity.util.SecureString)",
     "M:kairo.unity.util.SecureString.ValueOf(System.String)",
@@ -211,8 +349,10 @@
     "M:kairo.unity.util.StreamUtil.ReadInt(java.io.InputStream)",
     "M:kairo.unity.util.StreamUtil.ReadLong(java.io.InputStream)",
     "M:kairo.unity.util.StreamUtil.ReadShort(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadString(java.io.InputStream)",
     "M:kairo.unity.util.StreamUtil.ReadVector3D(java.io.InputStream)",
     "M:kairo.unity.util.StreamUtil.Write(java.io.OutputStream,System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.StreamUtil.Write(java.io.OutputStream,System.Byte[])",
     "M:kairo.unity.util.StreamUtil.WriteBoolean(java.io.OutputStream,System.Boolean)",
     "M:kairo.unity.util.StreamUtil.WriteByte(java.io.OutputStream,System.Byte)",
     "M:kairo.unity.util.StreamUtil.WriteByte(java.io.OutputStream,System.SByte)",
@@ -226,93 +366,1144 @@
     "M:kairo.unity.util.StringUtil.Escape(System.String)",
     "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean)",
     "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char)",
-    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32)"
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32)",
+    "M:kairo.unity.util.StringUtil.GetCode(System.Byte[])",
+    "M:kairo.unity.util.StringUtil.GetString(System.Byte[])",
+    "M:kairo.unity.util.StringUtil.LoadStringArray(java.io.InputStream,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String)",
+    "M:kairo.unity.util.StringUtil.Replace(System.String,System.String,System.String)",
+    "M:kairo.unity.util.StringUtil.Replace(System.String,System.String)",
+    "M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.Split(System.String,System.String)",
+    "M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)"
   ],
-  "failures": [],
+  "known_platform_differences": [
+    {
+      "method": "M:java.lang.JMath.Sin(System.Double)",
+      "case": "62:1",
+      "note": "Windows Unity Mono Math.Sin(-0) returns +0 while std::sin returns -0; Android runtime sign UNKNOWN, original Android Mono imports sin. Production call is unchanged."
+    }
+  ],
+  "unexpected_failures": [],
+  "executed_method_ids": [
+    "M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",
+    "M:java.io.ByteArrayInputStream.Available",
+    "M:java.io.ByteArrayOutputStream.#ctor",
+    "M:java.io.ByteArrayOutputStream.Close",
+    "M:java.io.ByteArrayOutputStream.ToByteArray",
+    "M:java.io.ByteArrayOutputStream.ToString",
+    "M:java.io.DataInputStream.#ctor(java.io.InputStream)",
+    "M:java.io.DataInputStream.Close",
+    "M:java.io.DataInputStream.ReadInt",
+    "M:java.io.EOFException.#ctor(System.String)",
+    "M:java.io.InputStream.#ctor",
+    "M:java.io.InputStream.Available",
+    "M:java.io.InputStream.CanSeek",
+    "M:java.io.InputStream.Close",
+    "M:java.io.InputStream.get_Position",
+    "M:java.io.InputStream.GetWrappedStream",
+    "M:java.io.InputStream.Mark(System.Int32)",
+    "M:java.io.InputStream.MarkSupported",
+    "M:java.io.InputStream.op_Implicit(java.io.InputStream)~System.IO.Stream",
+    "M:java.io.InputStream.Read",
+    "M:java.io.InputStream.Read(System.Byte[],System.Int32,System.Int32)",
+    "M:java.io.InputStream.Read(System.Byte[])",
+    "M:java.io.InputStream.Reset",
+    "M:java.io.InputStream.set_Position(System.Int64)",
+    "M:java.io.InputStream.Skip(System.Int64)",
+    "M:java.io.OutputStream.#ctor",
+    "M:java.io.OutputStream.Close",
+    "M:java.io.OutputStream.Flush",
+    "M:java.io.OutputStream.Write(System.Byte[],System.Int32,System.Int32)",
+    "M:java.io.OutputStream.Write(System.Byte[])",
+    "M:java.io.OutputStream.Write(System.Int32)",
+    "M:java.io.WrappedSystemStream.#ctor(java.io.InputStream)",
+    "M:java.io.WrappedSystemStream.Close",
+    "M:java.io.WrappedSystemStream.Flush",
+    "M:java.io.WrappedSystemStream.get_CanRead",
+    "M:java.io.WrappedSystemStream.get_CanSeek",
+    "M:java.io.WrappedSystemStream.get_CanWrite",
+    "M:java.io.WrappedSystemStream.get_InputStream",
+    "M:java.io.WrappedSystemStream.get_Length",
+    "M:java.io.WrappedSystemStream.get_OutputStream",
+    "M:java.io.WrappedSystemStream.get_Position",
+    "M:java.io.WrappedSystemStream.OnMark(System.Int32)",
+    "M:java.io.WrappedSystemStream.Read(System.Byte[],System.Int32,System.Int32)",
+    "M:java.io.WrappedSystemStream.ReadByte",
+    "M:java.io.WrappedSystemStream.Seek(System.Int64,System.IO.SeekOrigin)",
+    "M:java.io.WrappedSystemStream.set_Position(System.Int64)",
+    "M:java.io.WrappedSystemStream.SetLength(System.Int64)",
+    "M:java.io.WrappedSystemStream.Write(System.Byte[],System.Int32,System.Int32)",
+    "M:java.io.WrappedSystemStream.WriteByte(System.Byte)",
+    "M:java.lang.JInteger.#ctor(System.Int32)",
+    "M:java.lang.JInteger.Equals(System.Object)",
+    "M:java.lang.JInteger.GetHashCode",
+    "M:java.lang.JInteger.IntValue",
+    "M:java.lang.JInteger.op_Implicit(java.lang.JInteger)~System.Int32",
+    "M:java.lang.JInteger.ParseInt(System.String)",
+    "M:java.lang.JInteger.ToString",
+    "M:java.lang.JInteger.ValueOf(System.String)",
+    "M:java.lang.JLong.ParseLong(System.String)",
+    "M:java.lang.JMath.Abs(System.Int32)",
+    "M:java.lang.JMath.Abs(System.Int64)",
+    "M:java.lang.JMath.Abs(System.Single)",
+    "M:java.lang.JMath.Cos(System.Double)",
+    "M:java.lang.JMath.Sin(System.Double)",
+    "M:java.lang.JMath.Sqrt(System.Double)",
+    "M:java.lang.JMath.ToRadians(System.Double)",
+    "M:java.lang.JRuntime.#ctor",
+    "M:java.lang.JRuntime.Gc",
+    "M:java.lang.JRuntime.GetRuntime",
+    "M:java.lang.JString.GetSJIS(System.Byte[],System.Int32,System.Int32)",
+    "M:java.lang.JString.GetUnicode(System.UInt16)",
+    "M:java.lang.JString.New(System.Byte[],System.String)",
+    "M:java.lang.JString.New(System.Byte[])",
+    "M:java.lang.JString.New(System.String)",
+    "M:java.lang.JString.ValueOf(System.Char)",
+    "M:java.lang.JString.ValueOf(System.Int32)",
+    "M:java.lang.JString.ValueOf(System.Int64)",
+    "M:java.lang.JString.ValueOf(System.Object)",
+    "M:java.lang.JSystem.Arraycopy(System.Object,System.Int32,System.Object,System.Int32,System.Int32)",
+    "M:java.lang.JSystem.CurrentTimeMillis",
+    "M:java.lang.JSystem.Gc",
+    "M:java.lang.StringEx.CharAt(System.String,System.Int32)",
+    "M:java.lang.StringEx.EqualsIgnoreCase(System.String,System.String)",
+    "M:java.lang.StringEx.GetBytes(System.String)",
+    "M:java.lang.StringEx.IndexOf(System.String,System.Int32)",
+    "M:java.lang.StringEx.Length(System.String)",
+    "M:java.lang.StringEx.StartsWith(System.String,System.String,System.Int32)",
+    "M:java.lang.StringEx.SubstringJ(System.String,System.Int32,System.Int32)",
+    "M:java.lang.StringEx.SubstringJ(System.String,System.Int32)",
+    "M:java.lang.StringEx.ToLowerCase(System.String)",
+    "M:java.util.JCalendar.#ctor",
+    "M:java.util.JCalendar.Equals(System.Object)",
+    "M:java.util.JCalendar.Get(System.Int32)",
+    "M:java.util.JCalendar.GetHashCode",
+    "M:java.util.JCalendar.GetInstance",
+    "M:java.util.JCalendar.GetTimeInMillis",
+    "M:java.util.JCalendar.SetTime(java.util.JDate)",
+    "M:java.util.JCalendar.SetTimeInMillis(System.Int64)",
+    "M:java.util.JDate.#ctor",
+    "M:java.util.JDate.#ctor(System.Int64)",
+    "M:java.util.JDate.Equals(System.Object)",
+    "M:java.util.JDate.GetDateTime",
+    "M:java.util.JDate.GetHashCode",
+    "M:java.util.JDate.GetTime",
+    "M:java.util.JDate.SetTime(System.Int64)",
+    "M:java.util.JLocale.#ctor(System.String,System.String)",
+    "M:java.util.JLocale.Equals(System.Object)",
+    "M:java.util.JLocale.GetCountry",
+    "M:java.util.JLocale.GetDefault",
+    "M:java.util.JLocale.GetHashCode",
+    "M:java.util.JLocale.GetLanguage",
+    "M:java.util.JLocale.op_Equality(java.util.JLocale,java.util.JLocale)",
+    "M:java.util.JLocale.op_Inequality(java.util.JLocale,java.util.JLocale)",
+    "M:java.util.JRandom.#ctor",
+    "M:java.util.JRandom.#ctor(System.Int64)",
+    "M:java.util.JRandom.NextInt",
+    "M:java.util.JTimeZone.#ctor(System.String)",
+    "M:java.util.JTimeZone.GetDefault",
+    "M:java.util.JTimeZone.GetTimeZoneInfo",
+    "M:java.util.JTool.MakeArray``1(System.Int32[])",
+    "M:java.util.JTool.MakeArrayRecursive(System.Type,System.Int32[],System.Int32)",
+    "M:java.util.Vector.#ctor",
+    "M:java.util.Vector.Equals(System.Object)",
+    "M:java.util.Vector`1.#ctor",
+    "M:java.util.Vector`1.Add(`0)",
+    "M:java.util.Vector`1.AddElement(`0)",
+    "M:java.util.Vector`1.Clear",
+    "M:java.util.Vector`1.ElementAt(System.Int32)",
+    "M:java.util.Vector`1.Equals(System.Object)",
+    "M:java.util.Vector`1.FirstElement",
+    "M:java.util.Vector`1.get_List",
+    "M:java.util.Vector`1.IndexOf(`0)",
+    "M:java.util.Vector`1.InsertElementAt(`0,System.Int32)",
+    "M:java.util.Vector`1.op_Equality(java.util.Vector{`0},java.util.Vector)",
+    "M:java.util.Vector`1.op_Inequality(java.util.Vector{`0},java.util.Vector)",
+    "M:java.util.Vector`1.RemoveAllElements",
+    "M:java.util.Vector`1.RemoveElement(`0)",
+    "M:java.util.Vector`1.RemoveElementAt(System.Int32)",
+    "M:java.util.Vector`1.SetElementAt(`0,System.Int32)",
+    "M:java.util.Vector`1.Size",
+    "M:java.util.Vector`1.ToString",
+    "M:kairo.common.cfg.Config.#ctor",
+    "M:kairo.common.cfg.Config.ConvertExtension(System.String)",
+    "M:kairo.common.cfg.Config.Init(System.String)",
+    "M:kairo.unity.io.AssetReader._getData(System.String)",
+    "M:kairo.unity.io.AssetReader._getTextAsset(System.String)",
+    "M:kairo.unity.io.AssetReader._init",
+    "M:kairo.unity.io.AssetReader.Exist(System.String)",
+    "M:kairo.unity.io.AssetReader.GetAccessFilesList(System.String)",
+    "M:kairo.unity.io.AssetReader.GetData(System.String)",
+    "M:kairo.unity.io.AssetReader.GetInputStream(System.String)",
+    "M:kairo.unity.io.ByteListOutputStream._expand",
+    "M:kairo.unity.io.ByteListOutputStream._init(System.Int32)",
+    "M:kairo.unity.io.ByteListOutputStream.#ctor",
+    "M:kairo.unity.io.ByteListOutputStream.Close",
+    "M:kairo.unity.io.ByteListOutputStream.Flush",
+    "M:kairo.unity.io.ByteListOutputStream.Size",
+    "M:kairo.unity.io.ByteListOutputStream.ToByteArray(System.Int32,System.Int32,System.Byte[])",
+    "M:kairo.unity.io.ByteListOutputStream.ToByteArray(System.Int32,System.Int32)",
+    "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[],System.Int32,System.Int32)",
+    "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[])",
+    "M:kairo.unity.io.ByteListOutputStream.Write(System.Int32)",
+    "M:kairo.unity.io.ConnectionException.GetStatus",
+    "M:kairo.unity.m3d4.util3d.Vector3D.#ctor",
+    "M:kairo.unity.m3d4.util3d.Vector3D.#ctor(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Add(kairo.unity.m3d4.util3d.Vector3D)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Add(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Deserialize(java.io.InputStream)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.GetX",
+    "M:kairo.unity.m3d4.util3d.Vector3D.GetY",
+    "M:kairo.unity.m3d4.util3d.Vector3D.GetZ",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Serialize(java.io.OutputStream)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Set(kairo.unity.m3d4.util3d.Vector3D)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Set(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.SetX(System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.SetY(System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.SetZ(System.Single)",
+    "M:kairo.unity.util.Base64.Decode(System.String)",
+    "M:kairo.unity.util.Base64.Encode(System.Byte[])",
+    "M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.Join(System.Int16,System.Int16)",
+    "M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.Split(System.Int32)",
+    "M:kairo.unity.util.Compressor._getBitBuffer",
+    "M:kairo.unity.util.Compressor._getLowestNode(kairo.unity.util.FastVector)",
+    "M:kairo.unity.util.Compressor._readBit",
+    "M:kairo.unity.util.Compressor._readByte",
+    "M:kairo.unity.util.Compressor._readNodeFromBitBuffer",
+    "M:kairo.unity.util.Compressor._setBitBuffer(System.Byte[])",
+    "M:kairo.unity.util.Compressor._writeBit(System.Int32)",
+    "M:kairo.unity.util.Compressor._writeByte(System.Int32)",
+    "M:kairo.unity.util.Compressor._writeNodeToBitBuffer(kairo.unity.util.Compressor.Node)",
+    "M:kairo.unity.util.Compressor.Compress(System.Byte[])",
+    "M:kairo.unity.util.Compressor.Expand(System.Byte[])",
+    "M:kairo.unity.util.Compressor.Node.#ctor",
+    "M:kairo.unity.util.Compressor.Node.#ctor(kairo.unity.util.Compressor.Node,kairo.unity.util.Compressor.Node,kairo.unity.util.Compressor.Node,System.Int32,System.Int32)",
+    "M:kairo.unity.util.CRC64.GetValue(System.Byte[])",
+    "M:kairo.unity.util.CRC64.MakeCrcTable",
+    "M:kairo.unity.util.CRC64.Update(System.Int64,System.Byte[],System.Int32)",
+    "M:kairo.unity.util.EncodeUtil.ByteAryToFloat(System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ByteAryToInt(System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ByteAryToLong(System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ByteAryToShort(System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ConvertEndian(System.Byte[],System.Int32)",
+    "M:kairo.unity.util.EncodeUtil.FloatToByteAry(System.Single,System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.IntToByteAry(System.Int32,System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.LongToByteAry(System.Int64,System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ShortToByteAry(System.Int16,System.Boolean)",
+    "M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.Decode(System.Byte[])",
+    "M:kairo.unity.util.Encrypter.Encode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.SetEncryptionKey(System.Byte[])",
+    "M:kairo.unity.util.FastVector.#ctor",
+    "M:kairo.unity.util.FastVector`1.#ctor",
+    "M:kairo.unity.util.FastVector`1.Add(`0)",
+    "M:kairo.unity.util.FastVector`1.AddElement(`0)",
+    "M:kairo.unity.util.FastVector`1.Contains(`0)",
+    "M:kairo.unity.util.FastVector`1.ElementAt(System.Int32)",
+    "M:kairo.unity.util.FastVector`1.FirstElement",
+    "M:kairo.unity.util.FastVector`1.GetHashCode",
+    "M:kairo.unity.util.FastVector`1.IndexOf(`0)",
+    "M:kairo.unity.util.FastVector`1.InsertElementAt(`0,System.Int32)",
+    "M:kairo.unity.util.FastVector`1.LastElement",
+    "M:kairo.unity.util.FastVector`1.RemoveAllElements",
+    "M:kairo.unity.util.FastVector`1.RemoveAllElementsKeep",
+    "M:kairo.unity.util.FastVector`1.RemoveElement(`0)",
+    "M:kairo.unity.util.FastVector`1.RemoveElementAt(System.Int32)",
+    "M:kairo.unity.util.FastVector`1.Size",
+    "M:kairo.unity.util.FastVector`1.ToString",
+    "M:kairo.unity.util.JarInflater._load(java.io.InputStream)",
+    "M:kairo.unity.util.JarInflater._search(System.String)",
+    "M:kairo.unity.util.JarInflater.#ctor(System.Byte[])",
+    "M:kairo.unity.util.JarInflater.Close",
+    "M:kairo.unity.util.JarInflater.ConvertExtension(System.String)",
+    "M:kairo.unity.util.JarInflater.FileInfo.#ctor",
+    "M:kairo.unity.util.JarInflater.GetData(System.String)",
+    "M:kairo.unity.util.JarInflater.GetInputStream(System.String)",
+    "M:kairo.unity.util.JarInflater.GetResourceAsStream(System.String)",
+    "M:kairo.unity.util.JarInflater.GetSize(System.String)",
+    "M:kairo.unity.util.Language._translateText(System.String)",
+    "M:kairo.unity.util.Language.AdjustMacroScope(System.String)",
+    "M:kairo.unity.util.Language.ConvertLanguagePack(System.String,System.Byte[])",
+    "M:kairo.unity.util.Language.Get",
+    "M:kairo.unity.util.Language.Get(java.util.JLocale)",
+    "M:kairo.unity.util.Language.GetFolder",
+    "M:kairo.unity.util.Language.GetLanguagePackFolders",
+    "M:kairo.unity.util.Language.Japanese",
+    "M:kairo.unity.util.Language.MakeTextTable(System.String[][])",
+    "M:kairo.unity.util.Language.TranslateSoftLabel(System.String)",
+    "M:kairo.unity.util.Language.TranslateText(System.String,System.Boolean)",
+    "M:kairo.unity.util.Log.DebugLog(System.String)",
+    "M:kairo.unity.util.Log.GetThrowableLog(System.String,System.Exception)",
+    "M:kairo.unity.util.Log.GetThrowableName(System.Exception)",
+    "M:kairo.unity.util.Log.Info(System.Exception)",
+    "M:kairo.unity.util.Log.Info(System.String,System.Exception)",
+    "M:kairo.unity.util.Property.#ctor",
+    "M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property)",
+    "M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property[],System.Int32[],System.Int64[],System.String[],System.Byte[][])",
+    "M:kairo.unity.util.Property.GetTypeNum",
+    "M:kairo.unity.util.Property.Load(java.io.InputStream)",
+    "M:kairo.unity.util.Property.Load(System.Byte[])",
+    "M:kairo.unity.util.Property.Read(java.io.InputStream,System.Int32,System.Int32,System.Byte[])",
+    "M:kairo.unity.util.Property.SetData(kairo.unity.util.Property[])",
+    "M:kairo.unity.util.Property.SetData(System.Byte[][])",
+    "M:kairo.unity.util.Property.SetData(System.Int32[])",
+    "M:kairo.unity.util.Property.SetData(System.Int64[])",
+    "M:kairo.unity.util.Property.SetData(System.String[])",
+    "M:kairo.unity.util.Property.Size(System.Int32)",
+    "M:kairo.unity.util.Property.ToByteArray",
+    "M:kairo.unity.util.Property.ToByteArray(java.io.OutputStream)",
+    "M:kairo.unity.util.Property.Write(java.io.OutputStream,System.Int32)",
+    "M:kairo.unity.util.SecureInt.#ctor",
+    "M:kairo.unity.util.SecureInt.#ctor(kairo.unity.util.SecureInt)",
+    "M:kairo.unity.util.SecureInt.#ctor(System.Int32)",
+    "M:kairo.unity.util.SecureInt.Array(System.Int32)",
+    "M:kairo.unity.util.SecureInt.Equals(System.Object)",
+    "M:kairo.unity.util.SecureInt.Get",
+    "M:kairo.unity.util.SecureInt.GetHashCode",
+    "M:kairo.unity.util.SecureInt.op_Implicit(kairo.unity.util.SecureInt)~System.Int32",
+    "M:kairo.unity.util.SecureInt.op_Implicit(System.Int32)~kairo.unity.util.SecureInt",
+    "M:kairo.unity.util.SecureInt.Set(System.Int32)",
+    "M:kairo.unity.util.SecureLong.#ctor",
+    "M:kairo.unity.util.SecureLong.#ctor(System.Int64)",
+    "M:kairo.unity.util.SecureLong.Array(System.Int32)",
+    "M:kairo.unity.util.SecureLong.Equals(System.Object)",
+    "M:kairo.unity.util.SecureLong.Get",
+    "M:kairo.unity.util.SecureLong.GetHashCode",
+    "M:kairo.unity.util.SecureLong.op_Implicit(kairo.unity.util.SecureLong)~System.Int64",
+    "M:kairo.unity.util.SecureLong.op_Implicit(System.Int64)~kairo.unity.util.SecureLong",
+    "M:kairo.unity.util.SecureLong.Set(System.Int64)",
+    "M:kairo.unity.util.SecureNumber.#ctor",
+    "M:kairo.unity.util.SecureNumber.#ctor(System.Int64)",
+    "M:kairo.unity.util.SecureNumber.Generate(System.Int64)",
+    "M:kairo.unity.util.SecureNumber.GetHashCode",
+    "M:kairo.unity.util.SecureNumber.GetLong",
+    "M:kairo.unity.util.SecureNumber.SetLong(System.Int64)",
+    "M:kairo.unity.util.SecureNumber.ToString",
+    "M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty)",
+    "M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty[],System.Int32[],System.Int64[],System.String[],System.Byte[][])",
+    "M:kairo.unity.util.SecureProperty.GetTypeNum",
+    "M:kairo.unity.util.SecureProperty.Load(java.io.InputStream)",
+    "M:kairo.unity.util.SecureProperty.Load(System.Byte[])",
+    "M:kairo.unity.util.SecureProperty.Read(java.io.InputStream,System.Int32,System.Int32,System.Byte[])",
+    "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureInt[])",
+    "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureLong[])",
+    "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureProperty[])",
+    "M:kairo.unity.util.SecureProperty.SetData(kairo.unity.util.SecureString[])",
+    "M:kairo.unity.util.SecureProperty.SetData(System.Byte[][])",
+    "M:kairo.unity.util.SecureProperty.SetData(System.Int32[])",
+    "M:kairo.unity.util.SecureProperty.SetData(System.Int64[])",
+    "M:kairo.unity.util.SecureProperty.SetData(System.String[])",
+    "M:kairo.unity.util.SecureProperty.Size(System.Int32)",
+    "M:kairo.unity.util.SecureProperty.ToByteArray",
+    "M:kairo.unity.util.SecureProperty.ToByteArray(java.io.OutputStream)",
+    "M:kairo.unity.util.SecureProperty.Write(java.io.OutputStream,System.Int32)",
+    "M:kairo.unity.util.SecureString.#ctor(kairo.unity.util.SecureString)",
+    "M:kairo.unity.util.SecureString.#ctor(System.String)",
+    "M:kairo.unity.util.SecureString.Arraycopy(kairo.unity.util.SecureString[],System.Int32,kairo.unity.util.SecureString[],System.Int32,System.Int32)",
+    "M:kairo.unity.util.SecureString.EndsWith(System.String)",
+    "M:kairo.unity.util.SecureString.Equals(kairo.unity.util.SecureString)",
+    "M:kairo.unity.util.SecureString.Equals(System.Object)",
+    "M:kairo.unity.util.SecureString.Equals(System.String)",
+    "M:kairo.unity.util.SecureString.Generate(System.Char)",
+    "M:kairo.unity.util.SecureString.Generate(System.Char[],System.Char[])",
+    "M:kairo.unity.util.SecureString.Get",
+    "M:kairo.unity.util.SecureString.GetBytes",
+    "M:kairo.unity.util.SecureString.GetHashCode",
+    "M:kairo.unity.util.SecureString.IndexOf(System.Int32)",
+    "M:kairo.unity.util.SecureString.Length",
+    "M:kairo.unity.util.SecureString.op_Addition(kairo.unity.util.SecureString,System.String)",
+    "M:kairo.unity.util.SecureString.op_Implicit(kairo.unity.util.SecureString)~System.String",
+    "M:kairo.unity.util.SecureString.op_Implicit(System.String)~kairo.unity.util.SecureString",
+    "M:kairo.unity.util.SecureString.Set(System.String)",
+    "M:kairo.unity.util.SecureString.StartsWith(System.String)",
+    "M:kairo.unity.util.SecureString.ToString",
+    "M:kairo.unity.util.SecureString.ToString(kairo.unity.util.SecureString)",
+    "M:kairo.unity.util.SecureString.ValueOf(System.String)",
+    "M:kairo.unity.util.StreamUtil.Read(java.io.InputStream,System.Boolean)",
+    "M:kairo.unity.util.StreamUtil.Read(java.io.InputStream,System.Int32)",
+    "M:kairo.unity.util.StreamUtil.Read(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadBoolean(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadByte(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadFloat(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadInt(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadLong(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadShort(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadString(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.ReadVector3D(java.io.InputStream)",
+    "M:kairo.unity.util.StreamUtil.Write(java.io.OutputStream,System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.StreamUtil.Write(java.io.OutputStream,System.Byte[])",
+    "M:kairo.unity.util.StreamUtil.WriteBoolean(java.io.OutputStream,System.Boolean)",
+    "M:kairo.unity.util.StreamUtil.WriteByte(java.io.OutputStream,System.Byte)",
+    "M:kairo.unity.util.StreamUtil.WriteByte(java.io.OutputStream,System.SByte)",
+    "M:kairo.unity.util.StreamUtil.WriteFloat(java.io.OutputStream,System.Single)",
+    "M:kairo.unity.util.StreamUtil.WriteInt(java.io.OutputStream,System.Int32)",
+    "M:kairo.unity.util.StreamUtil.WriteLong(java.io.OutputStream,System.Int64)",
+    "M:kairo.unity.util.StreamUtil.WriteShort(java.io.OutputStream,System.Int16)",
+    "M:kairo.unity.util.StreamUtil.WriteString(java.io.OutputStream,kairo.unity.util.SecureString)",
+    "M:kairo.unity.util.StreamUtil.WriteString(java.io.OutputStream,System.String)",
+    "M:kairo.unity.util.StreamUtil.WriteVector3D(java.io.OutputStream,kairo.unity.m3d4.util3d.Vector3D)",
+    "M:kairo.unity.util.StringUtil.Escape(System.String)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32)",
+    "M:kairo.unity.util.StringUtil.GetCode(System.Byte[])",
+    "M:kairo.unity.util.StringUtil.GetString(System.Byte[])",
+    "M:kairo.unity.util.StringUtil.LoadStringArray(java.io.InputStream,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String)",
+    "M:kairo.unity.util.StringUtil.Replace(System.String,System.String,System.String)",
+    "M:kairo.unity.util.StringUtil.Replace(System.String,System.String)",
+    "M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.Split(System.String,System.String)",
+    "M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)"
+  ],
+  "failures": [
+    {
+      "method": "M:java.lang.JMath.Sin(System.Double)",
+      "case": "62:1"
+    }
+  ],
   "scalar_float_comparison": "exact IEEE bits",
+  "identity_hash_comparison": "For exact return base.GetHashCode bodies only: repeated calls must be stable; allocation-dependent raw values are recorded privately and are not compared across runtimes.",
+  "identity_hash_method_ids": [
+    "M:java.util.JCalendar.GetHashCode",
+    "M:java.util.JDate.GetHashCode",
+    "M:java.util.JLocale.GetHashCode",
+    "M:kairo.unity.util.FastVector`1.GetHashCode",
+    "M:kairo.unity.util.SecureNumber.GetHashCode"
+  ],
   "post_state_compared": true,
   "original_binaries_used": false,
   "game_executed": false,
-  "runtime_profile": "DotNet; fixture input selected operations do not exercise documented Mono-specific divergences",
-  "source_oracle_sha256": "0631392c4ce9dcd0ec21fb24d8add88b1c8ddf28038f87b563a2e0c8e1a34e18",
-  "cpp_generated_sha256": "ec4c22dce4ab51adf559cfe7abf2c6804ccf2c5a50f063c6d3e0d622c3e0a80b",
-  "hpp_generated_sha256": "8ee4350760ea04ecc86eb3c72715994d300190c8f9fade4b4b575398a67252ee",
+  "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
+  "source_oracle_sha256": "dffb00076afdd9209f9146eec23dfd05a2929e26edae02bea7c0b513d5861367",
+  "cpp_generated_sha256": "c35c1871d0e1ece5a07b43299f83fa7f76c98575c1ac791d031e75d89f3f415e",
+  "hpp_generated_sha256": "90006367c682117c6df73dd1d42cf599f24d9824ee5c6c5d74f09c927ea24322",
   "generated_files": [
     {
       "path": "build/translator/split-generated/portable_generated.cpp",
-      "sha256": "ec4c22dce4ab51adf559cfe7abf2c6804ccf2c5a50f063c6d3e0d622c3e0a80b"
+      "sha256": "c35c1871d0e1ece5a07b43299f83fa7f76c98575c1ac791d031e75d89f3f415e"
     },
     {
       "path": "build/translator/split-generated/portable_generated.hpp",
-      "sha256": "8ee4350760ea04ecc86eb3c72715994d300190c8f9fade4b4b575398a67252ee"
+      "sha256": "90006367c682117c6df73dd1d42cf599f24d9824ee5c6c5d74f09c927ea24322"
     },
     {
       "path": "build/translator/split-generated/portable_generated_cpp_part_0000.inc",
-      "sha256": "68e4389b9342cb87d956e5b1dadff65f05dd8cdcaedfe37949a01d2a267c5a25"
+      "sha256": "e3c71d65a1e70cec312a4b3b6ba833e8f2f2f012de4b3837496c133cde2ebcfa"
     },
     {
       "path": "build/translator/split-generated/portable_generated_cpp_part_0001.inc",
-      "sha256": "c433c4043aa742f8a291b8c89274a215ebddf7cf36dddfd75ba4b5eaef59905b"
+      "sha256": "beb6df368192e43b0cc7fb1f43b3784a69468858743e34abda9779aef92e2842"
     },
     {
       "path": "build/translator/split-generated/portable_generated_cpp_part_0002.inc",
-      "sha256": "d4049d59f73e4b0f152123d8ddd973b7f8ba55efa74fdc25a8b3b55e5a1fa0fc"
+      "sha256": "3cea641e099feda4c0c36029e46c8bde34ce1b7d2f55aad8d9dc7a12634686e7"
     },
     {
       "path": "build/translator/split-generated/portable_generated_cpp_part_0003.inc",
-      "sha256": "88861b9ad7b896bc229aec6936b2874b2d0b364c5a7395c0c5cefda13d0c6fe9"
+      "sha256": "8593de77640fff88e411fbe3698d712258064c8dcb0bd307fe6df6597a342f88"
     },
     {
       "path": "build/translator/split-generated/portable_generated_cpp_part_0004.inc",
-      "sha256": "523e072c39277241f39f90b9fb4993e97cfa7faa2f352c03ee824108225bbdef"
+      "sha256": "5091a3c937b75857b42325f9c0f68aa144394d532836f82b8931a9eab9746432"
     },
     {
       "path": "build/translator/split-generated/portable_generated_cpp_part_0005.inc",
-      "sha256": "f26deb0522b881ed47da182ba60f4c7440737ce1accc4de27c10593e3a64eaed"
+      "sha256": "c9a6a4816fbddc8e6cea2886bf7a07d1b3fec2696225fac8705723804b08fa95"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0006.inc",
+      "sha256": "050f836b787c4df84d17ae8d1db97b472fdfb9659cac0d6f867f7a964faa246d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0007.inc",
+      "sha256": "ae998d28aae1a0194c12c462eb75f1a04e53c8764a2f7aaae7055b1956d01672"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0008.inc",
+      "sha256": "76cf928c242e042ede50b743194641b0a48e5ee567c93297e6329b48d15a87c8"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0009.inc",
+      "sha256": "1b291f0f8505d1d0a56c4b3eedc8c9bffaeecfc353fb2408c3bf6db11343108f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0010.inc",
+      "sha256": "2e7155039cafe3edb0771aee2781f3a8d2e1d05c493860cf3a27d3575bc68a2d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0011.inc",
+      "sha256": "44d4b0241b02be35b7f1077253660965d93a79032bc203d8aefb2ce72f56e537"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0012.inc",
+      "sha256": "b48f5e5e77811044481903734df5d8134d40e29d7d10498b0035a6a3c0632991"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0013.inc",
+      "sha256": "06134a980556789868950b562f3ce122c368d6aaf3dc1a581891a1acc30ef8cd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0014.inc",
+      "sha256": "8dcd1cd6438494c23022ebcb0b07db3303b3808ad21d9189a77fffb39ec97e53"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0015.inc",
+      "sha256": "e852a648148b01ae66456bb51cc7474ad9c14aa8d05b5795c9ea7a0e4b75ecfd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0016.inc",
+      "sha256": "9bcc87ed99324307699b590db667e902ae1991eb3529ccaa4c25334b2b1f66a8"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0017.inc",
+      "sha256": "24f9a25e0cfe5035e0551a7b7ee8828fa5f6a984af0e45826e02576eb621d776"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0018.inc",
+      "sha256": "938a0e9028ad378e2a124ac0196c36fb331e2af48982ac3fbea93b923daf0837"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0019.inc",
+      "sha256": "a40f96fa4739b338b85e0c1ef1e4d3ca332330ec730b894e85ca0645986da7d3"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0020.inc",
+      "sha256": "a27a09fa591dcbfe81e901952746a59b06161599e68669a932588e6a34ac3df1"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0021.inc",
+      "sha256": "5f7221c78fd2109e4f03ca4b5f3590112955a51cef963c2c5997b6e1b86ef5ba"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0022.inc",
+      "sha256": "9306590cfd57c50ac30a3d3afd1afc2aa364814cd3740201abff218d8df2e4c7"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0023.inc",
+      "sha256": "b26cc261bfae1aa157ba21a8129799c1f32cb380af5cede8f55853f29992c32f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0024.inc",
+      "sha256": "13d48308dc5d232643877202f808029154c22c661b8ec5e21cec3712e91c3d77"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0025.inc",
+      "sha256": "fe488706ed8ab0097cda91b64f90d2b78ed04965b21faae6e8bc1fad4e2356c2"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0026.inc",
+      "sha256": "69d76086c59ea543db5f08e87796d4492d5f2d669bd2900a847f1814ef6bb262"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0027.inc",
+      "sha256": "d6683011f98081114a9a20795ef3b7e36d91b2f4d6b5881e5f96f6b8fd5b25c4"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0028.inc",
+      "sha256": "e4a04a1140ca4f5c7c3fee83681040dba5c9492b2358b523c238693b4d96508d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0029.inc",
+      "sha256": "598c5a00cf3f952680a55914d766fbc07b52d0795785a909eba7e0d8ea862878"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0030.inc",
+      "sha256": "efe08e7f5b2031910fbe35ab6fd71a4381fba425af16d2dcfb1c1e4649eb7a45"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0031.inc",
+      "sha256": "84b173957a09e0bd746b0810048aa211251d9ff24c24331648106ace2c853d93"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0032.inc",
+      "sha256": "0d4b6de0fa7c5508814fe92eff1c20e7c3c87168e8e045cf650879629e631aec"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0033.inc",
+      "sha256": "d32e9c3baac728c80d40226b85e77217f1457b0c9c0c83f3252b045b52ce0649"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0034.inc",
+      "sha256": "a111ab973b79696062b065b2fdee1105d20d1d8417de65571060cb1c98a8a3b6"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0035.inc",
+      "sha256": "87bcf68999a2398f8b1e45ee1455af273277f588a59f15b670ab8a32581f2b4f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0036.inc",
+      "sha256": "3c1f6ae7e4cc3ec828a8f40b87ab16330317a2f7d3810a740eb5a332f6d0b80e"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0037.inc",
+      "sha256": "3dec8929e4fe7663722317817a9e8c2b1b73fc670b34b8c23d7e0a702dd06979"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0038.inc",
+      "sha256": "ffa5528a4faa0dc835e3f3e55bdb8be98341365094caf96701e45de005340755"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0039.inc",
+      "sha256": "1826ad3ebeb8317a2f745138fcc35290d49a8f5a7e3e908769cd0ee6e87f8423"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0040.inc",
+      "sha256": "599de1ab7c80dbd150b1819684879034d72ff68c43794f3f9e3ac386cad6b946"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0041.inc",
+      "sha256": "74fbc96073b95cb62f588caaddc7109070af16951d7bfa345ccf7f961035ec33"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0042.inc",
+      "sha256": "9e1eec4bd704998b7789503ea930db1715733edfeb86d77f5dd7fe034f56a9bd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0043.inc",
+      "sha256": "a31088001216a5259babed9cf1f9bf1162cb05b2270bd70414be77a6bf200fbd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0044.inc",
+      "sha256": "dfdf0d822280618a251deda799bf83ec15ed0d2dd2502ae0f6c351f46ccc77e6"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0045.inc",
+      "sha256": "383e1feac30428d87dce346e818ff4cc12bbb5b66491ce7baad577756595b9b5"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0046.inc",
+      "sha256": "361bac902c86f501a81a2c4617bb6e9fb84f6c66deb294af1660f703eba08499"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0047.inc",
+      "sha256": "bf699258b8576712092ec51181204cf626fdd0ae3ad5d428b856890ceb9bef1f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0048.inc",
+      "sha256": "6fd4a8f1466896014502f588b3a83b4e514d3d5a952494b4c505098b82353ef6"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0049.inc",
+      "sha256": "ec4c03ac1223676cfffb1f0e0724e8836bae104625a21549ca9ad1d925a2f297"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0050.inc",
+      "sha256": "5da91a1931fecdcf3ee54d843840ed064b80015cec7aff3164ef5b4664d2f115"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0051.inc",
+      "sha256": "e3b427f1b97d0b5bfa03aa4a034b64dd4e3317ad4aa7461b8e63489376848314"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0052.inc",
+      "sha256": "4f297aa1be7687362f36987af4c83f5d6f8835ba74022d419ad85300cea5afcf"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0053.inc",
+      "sha256": "11b24d301c98c12af820b2975f9dcc4d7e35bfe8a84b35332ff6d4b1bbca4169"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0054.inc",
+      "sha256": "1a5465be37e43cf0dc289813db7db6c33fb4fca9e050ced405c9c8101ca51e8a"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0055.inc",
+      "sha256": "07be949f6b26c01f7023b5a91990c9514bb40833f0ad9aab776c21a62c226319"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0056.inc",
+      "sha256": "608806442adbbb23f3f341df7d695b15ef9001eba184bb79b7c5374288411835"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0057.inc",
+      "sha256": "1df91391cbd0834e46b8aba51d3ea01d52cd33de6f54511063df3fb068267d13"
     },
     {
       "path": "build/translator/split-generated/portable_generated_hpp_part_0000.inc",
-      "sha256": "70d9444c0e7c1641915bc8bdabf5319b58ec2d130c1c509ad3bc254ddae4e5ab"
+      "sha256": "c88cbf6242735718fad130b22f2df46c0ff749a0ca874262c7c23c9beca3bc9d"
     },
     {
       "path": "build/translator/split-generated/portable_generated_hpp_part_0001.inc",
-      "sha256": "acb75d235abcc5a02e682d14cb08cb02faa0849b9377e52f6d72b4b182b48281"
+      "sha256": "81492753be4dfb373c4c1413c882e955e7b813cade1dfffecf22a981c783610d"
     },
     {
       "path": "build/translator/split-generated/portable_generated_hpp_part_0002.inc",
-      "sha256": "5efd07e36dc90000846ba7274484999776492d5f0612cdf2b5ad42272d45f5f1"
+      "sha256": "2fb640b9126e242662c57b8d834cad0e59ceedacfb177cabc8ff93814d0a93d0"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0003.inc",
+      "sha256": "e46fdc80695db0be37870bf8c26990504069d30ced4a5f90c2f907d4f3d6e7c0"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0004.inc",
+      "sha256": "8ecdc2c17b0cd056c38a9f3cd802ace8a2be361ab5b323a2d60859a32b30811a"
     }
   ],
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "83d9098df47f528c100039a892673b22272b73ec44eab688b629bcd62e026e35"
+    "sha256": "3e9ec86f111f82f475f7fda27c24f1e1fbdfd048e3dd02ca37eee2c34abcbb38"
   },
   "source_oracle_executable": {
-    "path": "build/translator/split-differential/Harness.dll",
-    "sha256": "c1147adb63cd3d64a4d093d6b5e8479d99f775668a4440938030386a26c88192"
+    "path": "build/translator/split-differential/Harness-managed.exe",
+    "sha256": "f400ef128f59d4237e621f46383911dceae0d813e831ed9ae0617c9bfcf3ba6d"
   },
-  "differential_runner_sha256": "c4aaf478dfe6fe828858c8867e1bfcabed8cd1b160d08a856d67952a27ce6d09",
+  "differential_runner_sha256": "f192f25e22b0dfc4295270db0d591ab68edc24521b8e6ed6192bc94a866d9741",
   "runtime_sources": [
     {
+      "path": "build/generated/mono-collation/mono_character_tables.inc",
+      "sha256": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a"
+    },
+    {
+      "path": "build/generated/mono-collation/mono_collation_tables.inc",
+      "sha256": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8"
+    },
+    {
+      "path": "build/generated/mono-collation/mono_decimal_digit_ranges.inc",
+      "sha256": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e"
+    },
+    {
+      "path": "build/translator/split-differential/Harness.cpp",
+      "sha256": "d4b0421d3f6e5d887e9ce0fb837e41823cf318d088c1c2c64ecb58dc4f831f12"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated.cpp",
+      "sha256": "c35c1871d0e1ece5a07b43299f83fa7f76c98575c1ac791d031e75d89f3f415e"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated.hpp",
+      "sha256": "90006367c682117c6df73dd1d42cf599f24d9824ee5c6c5d74f09c927ea24322"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0000.inc",
+      "sha256": "e3c71d65a1e70cec312a4b3b6ba833e8f2f2f012de4b3837496c133cde2ebcfa"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0001.inc",
+      "sha256": "beb6df368192e43b0cc7fb1f43b3784a69468858743e34abda9779aef92e2842"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0002.inc",
+      "sha256": "3cea641e099feda4c0c36029e46c8bde34ce1b7d2f55aad8d9dc7a12634686e7"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0003.inc",
+      "sha256": "8593de77640fff88e411fbe3698d712258064c8dcb0bd307fe6df6597a342f88"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0004.inc",
+      "sha256": "5091a3c937b75857b42325f9c0f68aa144394d532836f82b8931a9eab9746432"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0005.inc",
+      "sha256": "c9a6a4816fbddc8e6cea2886bf7a07d1b3fec2696225fac8705723804b08fa95"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0006.inc",
+      "sha256": "050f836b787c4df84d17ae8d1db97b472fdfb9659cac0d6f867f7a964faa246d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0007.inc",
+      "sha256": "ae998d28aae1a0194c12c462eb75f1a04e53c8764a2f7aaae7055b1956d01672"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0008.inc",
+      "sha256": "76cf928c242e042ede50b743194641b0a48e5ee567c93297e6329b48d15a87c8"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0009.inc",
+      "sha256": "1b291f0f8505d1d0a56c4b3eedc8c9bffaeecfc353fb2408c3bf6db11343108f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0010.inc",
+      "sha256": "2e7155039cafe3edb0771aee2781f3a8d2e1d05c493860cf3a27d3575bc68a2d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0011.inc",
+      "sha256": "44d4b0241b02be35b7f1077253660965d93a79032bc203d8aefb2ce72f56e537"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0012.inc",
+      "sha256": "b48f5e5e77811044481903734df5d8134d40e29d7d10498b0035a6a3c0632991"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0013.inc",
+      "sha256": "06134a980556789868950b562f3ce122c368d6aaf3dc1a581891a1acc30ef8cd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0014.inc",
+      "sha256": "8dcd1cd6438494c23022ebcb0b07db3303b3808ad21d9189a77fffb39ec97e53"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0015.inc",
+      "sha256": "e852a648148b01ae66456bb51cc7474ad9c14aa8d05b5795c9ea7a0e4b75ecfd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0016.inc",
+      "sha256": "9bcc87ed99324307699b590db667e902ae1991eb3529ccaa4c25334b2b1f66a8"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0017.inc",
+      "sha256": "24f9a25e0cfe5035e0551a7b7ee8828fa5f6a984af0e45826e02576eb621d776"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0018.inc",
+      "sha256": "938a0e9028ad378e2a124ac0196c36fb331e2af48982ac3fbea93b923daf0837"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0019.inc",
+      "sha256": "a40f96fa4739b338b85e0c1ef1e4d3ca332330ec730b894e85ca0645986da7d3"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0020.inc",
+      "sha256": "a27a09fa591dcbfe81e901952746a59b06161599e68669a932588e6a34ac3df1"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0021.inc",
+      "sha256": "5f7221c78fd2109e4f03ca4b5f3590112955a51cef963c2c5997b6e1b86ef5ba"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0022.inc",
+      "sha256": "9306590cfd57c50ac30a3d3afd1afc2aa364814cd3740201abff218d8df2e4c7"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0023.inc",
+      "sha256": "b26cc261bfae1aa157ba21a8129799c1f32cb380af5cede8f55853f29992c32f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0024.inc",
+      "sha256": "13d48308dc5d232643877202f808029154c22c661b8ec5e21cec3712e91c3d77"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0025.inc",
+      "sha256": "fe488706ed8ab0097cda91b64f90d2b78ed04965b21faae6e8bc1fad4e2356c2"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0026.inc",
+      "sha256": "69d76086c59ea543db5f08e87796d4492d5f2d669bd2900a847f1814ef6bb262"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0027.inc",
+      "sha256": "d6683011f98081114a9a20795ef3b7e36d91b2f4d6b5881e5f96f6b8fd5b25c4"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0028.inc",
+      "sha256": "e4a04a1140ca4f5c7c3fee83681040dba5c9492b2358b523c238693b4d96508d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0029.inc",
+      "sha256": "598c5a00cf3f952680a55914d766fbc07b52d0795785a909eba7e0d8ea862878"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0030.inc",
+      "sha256": "efe08e7f5b2031910fbe35ab6fd71a4381fba425af16d2dcfb1c1e4649eb7a45"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0031.inc",
+      "sha256": "84b173957a09e0bd746b0810048aa211251d9ff24c24331648106ace2c853d93"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0032.inc",
+      "sha256": "0d4b6de0fa7c5508814fe92eff1c20e7c3c87168e8e045cf650879629e631aec"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0033.inc",
+      "sha256": "d32e9c3baac728c80d40226b85e77217f1457b0c9c0c83f3252b045b52ce0649"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0034.inc",
+      "sha256": "a111ab973b79696062b065b2fdee1105d20d1d8417de65571060cb1c98a8a3b6"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0035.inc",
+      "sha256": "87bcf68999a2398f8b1e45ee1455af273277f588a59f15b670ab8a32581f2b4f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0036.inc",
+      "sha256": "3c1f6ae7e4cc3ec828a8f40b87ab16330317a2f7d3810a740eb5a332f6d0b80e"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0037.inc",
+      "sha256": "3dec8929e4fe7663722317817a9e8c2b1b73fc670b34b8c23d7e0a702dd06979"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0038.inc",
+      "sha256": "ffa5528a4faa0dc835e3f3e55bdb8be98341365094caf96701e45de005340755"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0039.inc",
+      "sha256": "1826ad3ebeb8317a2f745138fcc35290d49a8f5a7e3e908769cd0ee6e87f8423"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0040.inc",
+      "sha256": "599de1ab7c80dbd150b1819684879034d72ff68c43794f3f9e3ac386cad6b946"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0041.inc",
+      "sha256": "74fbc96073b95cb62f588caaddc7109070af16951d7bfa345ccf7f961035ec33"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0042.inc",
+      "sha256": "9e1eec4bd704998b7789503ea930db1715733edfeb86d77f5dd7fe034f56a9bd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0043.inc",
+      "sha256": "a31088001216a5259babed9cf1f9bf1162cb05b2270bd70414be77a6bf200fbd"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0044.inc",
+      "sha256": "dfdf0d822280618a251deda799bf83ec15ed0d2dd2502ae0f6c351f46ccc77e6"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0045.inc",
+      "sha256": "383e1feac30428d87dce346e818ff4cc12bbb5b66491ce7baad577756595b9b5"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0046.inc",
+      "sha256": "361bac902c86f501a81a2c4617bb6e9fb84f6c66deb294af1660f703eba08499"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0047.inc",
+      "sha256": "bf699258b8576712092ec51181204cf626fdd0ae3ad5d428b856890ceb9bef1f"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0048.inc",
+      "sha256": "6fd4a8f1466896014502f588b3a83b4e514d3d5a952494b4c505098b82353ef6"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0049.inc",
+      "sha256": "ec4c03ac1223676cfffb1f0e0724e8836bae104625a21549ca9ad1d925a2f297"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0050.inc",
+      "sha256": "5da91a1931fecdcf3ee54d843840ed064b80015cec7aff3164ef5b4664d2f115"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0051.inc",
+      "sha256": "e3b427f1b97d0b5bfa03aa4a034b64dd4e3317ad4aa7461b8e63489376848314"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0052.inc",
+      "sha256": "4f297aa1be7687362f36987af4c83f5d6f8835ba74022d419ad85300cea5afcf"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0053.inc",
+      "sha256": "11b24d301c98c12af820b2975f9dcc4d7e35bfe8a84b35332ff6d4b1bbca4169"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0054.inc",
+      "sha256": "1a5465be37e43cf0dc289813db7db6c33fb4fca9e050ced405c9c8101ca51e8a"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0055.inc",
+      "sha256": "07be949f6b26c01f7023b5a91990c9514bb40833f0ad9aab776c21a62c226319"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0056.inc",
+      "sha256": "608806442adbbb23f3f341df7d695b15ef9001eba184bb79b7c5374288411835"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_cpp_part_0057.inc",
+      "sha256": "1df91391cbd0834e46b8aba51d3ea01d52cd33de6f54511063df3fb068267d13"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0000.inc",
+      "sha256": "c88cbf6242735718fad130b22f2df46c0ff749a0ca874262c7c23c9beca3bc9d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0001.inc",
+      "sha256": "81492753be4dfb373c4c1413c882e955e7b813cade1dfffecf22a981c783610d"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0002.inc",
+      "sha256": "2fb640b9126e242662c57b8d834cad0e59ceedacfb177cabc8ff93814d0a93d0"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0003.inc",
+      "sha256": "e46fdc80695db0be37870bf8c26990504069d30ced4a5f90c2f907d4f3d6e7c0"
+    },
+    {
+      "path": "build/translator/split-generated/portable_generated_hpp_part_0004.inc",
+      "sha256": "8ecdc2c17b0cd056c38a9f3cd802ace8a2be361ab5b323a2d60859a32b30811a"
+    },
+    {
+      "path": "src/kairo/api/application.hpp",
+      "sha256": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7"
+    },
+    {
+      "path": "src/kairo/api/asset_reader.hpp",
+      "sha256": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3"
+    },
+    {
+      "path": "src/kairo/api/bootstrap.hpp",
+      "sha256": "30d97bada49ba6093e9c01329ddfb8de79a9440afe20b93b8bf388130fad4b83"
+    },
+    {
+      "path": "src/kairo/api/canvas.hpp",
+      "sha256": "a796b0b13bc61a47bf8604a7e7bc4107472e18799c0abc637717674cb64d6873"
+    },
+    {
+      "path": "src/kairo/api/dialog_service.hpp",
+      "sha256": "76af044e7b00e41cbef4f5c7e407fca5d111fcc57c9acda01315af15b9e9947e"
+    },
+    {
+      "path": "src/kairo/api/display_metrics.hpp",
+      "sha256": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70"
+    },
+    {
+      "path": "src/kairo/api/font.hpp",
+      "sha256": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee"
+    },
+    {
+      "path": "src/kairo/api/forms.hpp",
+      "sha256": "ae8068a84a39266669c4937fc6a1858f23952a45e256d1b72d858f47dde403bd"
+    },
+    {
+      "path": "src/kairo/api/forms_callbacks.hpp",
+      "sha256": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd"
+    },
+    {
+      "path": "src/kairo/api/forms_execution.hpp",
+      "sha256": "438873bd6f8525f0b821f9b277da122e09c8fb936b1cdb5d015abe575ddbb028"
+    },
+    {
+      "path": "src/kairo/api/game_entry.hpp",
+      "sha256": "c8b19367908562580b78eef682b103ed2646480c33d56e6a15aab784517d4f53"
+    },
+    {
+      "path": "src/kairo/api/globalization.hpp",
+      "sha256": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65"
+    },
+    {
+      "path": "src/kairo/api/graphics.hpp",
+      "sha256": "4f2371753410ff7ffabe8798690fc13da4efa8bad3c057a0b464b3539b5a21af"
+    },
+    {
+      "path": "src/kairo/api/input.hpp",
+      "sha256": "f54d520710f8adc4335b54f1666c11b1ab78c7f607b4b9213dae525046769d09"
+    },
+    {
+      "path": "src/kairo/api/offline_http.hpp",
+      "sha256": "a18f5ef72d163e33687c4ab80c0592edf8a1093f709f6c684e56eb24b3aa7850"
+    },
+    {
+      "path": "src/kairo/api/platform.hpp",
+      "sha256": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1"
+    },
+    {
+      "path": "src/kairo/api/services_managed.hpp",
+      "sha256": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5"
+    },
+    {
+      "path": "src/kairo/api/sound.hpp",
+      "sha256": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0"
+    },
+    {
+      "path": "src/kairo/api/storage.hpp",
+      "sha256": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2"
+    },
+    {
+      "path": "src/kairo/api/system.hpp",
+      "sha256": "f2d26bb21b6ff604ea00841cea34d4893333d827b45ed9876440e60265117fa2"
+    },
+    {
+      "path": "src/kairo/api/touch_value_accessor.hpp",
+      "sha256": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a"
+    },
+    {
+      "path": "src/kairo/common/asset_catalog.cpp",
+      "sha256": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387"
+    },
+    {
       "path": "src/kairo/common/asset_catalog.hpp",
-      "sha256": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26"
+      "sha256": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60"
+    },
+    {
+      "path": "src/kairo/common/asset_reader.cpp",
+      "sha256": "bf8d107a15993bea7a77c980f8eaf2d47a5bfe9fc24b329103a5d54d03c35669"
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
       "sha256": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf"
     },
     {
+      "path": "src/kairo/common/generated/portable_generated.hpp",
+      "sha256": "79ce29c741bba4324306bb08d7142c51f883d6ea3bf0c21268dbc03517181ced"
+    },
+    {
+      "path": "src/kairo/common/managed_collation.cpp",
+      "sha256": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778"
+    },
+    {
+      "path": "src/kairo/common/managed_collation.hpp",
+      "sha256": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d"
+    },
+    {
       "path": "src/kairo/common/managed_collections.hpp",
-      "sha256": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b"
+      "sha256": "daee4c23611a2658e1de478fd4062476832588d04dd959a1f4ff932dd9894560"
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
       "sha256": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0"
     },
     {
+      "path": "src/kairo/common/managed_encoding.cpp",
+      "sha256": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20"
+    },
+    {
+      "path": "src/kairo/common/managed_encoding.hpp",
+      "sha256": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66"
+    },
+    {
+      "path": "src/kairo/common/managed_exceptions.cpp",
+      "sha256": "745e2888f7df6121829b5b3aadf96cafef3700d910e930b12eae4361b1d8856a"
+    },
+    {
+      "path": "src/kairo/common/managed_exceptions.hpp",
+      "sha256": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b"
+    },
+    {
+      "path": "src/kairo/common/managed_mono_character_data.cpp",
+      "sha256": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df"
+    },
+    {
+      "path": "src/kairo/common/managed_path.hpp",
+      "sha256": "545683f23b690b066bb420199b282ecf04ecff1a49207111febd8e86fbd9498c"
+    },
+    {
       "path": "src/kairo/common/managed_random.hpp",
       "sha256": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf"
+    },
+    {
+      "path": "src/kairo/common/managed_reflection.hpp",
+      "sha256": "3b6fbecdf446ed74c45521e004b88724a22989df12d335469c943d4b50e756ad"
+    },
+    {
+      "path": "src/kairo/common/managed_regex.cpp",
+      "sha256": "fd2abe8620339c867db57620862c8ea2a82a2f721ee54a9ae31a1dcad87f00ac"
+    },
+    {
+      "path": "src/kairo/common/managed_regex.hpp",
+      "sha256": "a320c06a2c7183b976f8dcfafdd6ecc6a1e64ea94a178f06aa1eb2cd53eab7e0"
+    },
+    {
+      "path": "src/kairo/common/managed_shared_field.hpp",
+      "sha256": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
+    },
+    {
+      "path": "src/kairo/common/managed_stream_reader.cpp",
+      "sha256": "ae83f5638ede4fbbb157181d0ae305771d5194747f7e948cc35d77a9b694c721"
+    },
+    {
+      "path": "src/kairo/common/managed_stream_reader.hpp",
+      "sha256": "96e53adda06be397ec8372a91ab7045358e88866ea5a017acb4eaf215c8ae538"
     },
     {
       "path": "src/kairo/common/managed_streams.cpp",
@@ -323,20 +1514,40 @@
       "sha256": "ef93cc1d080d67a78c4718efd2ea260e31ecf4bdf41b4db1191cd398077d6c7d"
     },
     {
+      "path": "src/kairo/common/managed_string_ops.cpp",
+      "sha256": "053d988815f4dbeaec8ac547ba9f148dd0a3d2f66110d7a96f9961048b04d20b"
+    },
+    {
+      "path": "src/kairo/common/managed_string_ops.hpp",
+      "sha256": "7ec154c1fce37083e5ef297052a9a0e58175064264c7859db1c6045ebe366c7d"
+    },
+    {
       "path": "src/kairo/common/managed_text.hpp",
       "sha256": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b"
+    },
+    {
+      "path": "src/kairo/common/managed_thread.cpp",
+      "sha256": "76ddd5568410670d790f953dc3111976ff48144364ad088724eebf3e61feadaf"
+    },
+    {
+      "path": "src/kairo/common/managed_thread.hpp",
+      "sha256": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b"
     },
     {
       "path": "src/kairo/common/managed_time.hpp",
       "sha256": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1"
     },
     {
+      "path": "src/kairo/common/managed_type_init.hpp",
+      "sha256": "2d54016e820fe8e9356a24b28ef72e8d30ce266850c11daccd14fb008ab406d2"
+    },
+    {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd"
+      "sha256": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509"
+      "sha256": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -345,62 +1556,301 @@
     {
       "path": "src/kairo/common/sha256.hpp",
       "sha256": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c"
+    },
+    {
+      "path": "src/kairo/common/storage.cpp",
+      "sha256": "877f8898170328a10786e879e981d00b317025a0c6284595411a5c233cf7c4fa"
+    },
+    {
+      "path": "src/kairo/platform/sdl/globalization.cpp",
+      "sha256": "0eb2305b34557c51d9a3b71d46ffa1261defb9193a8d647576de2238dafa1d99"
     }
   ],
-  "comparison_profile": "Standalone source oracle compiled with current Roslyn/.NET10; native profile DotNet. Historical divergences require separate runtime-oracle receipts.",
+  "snapshot_comparison": "SHA256 of every UTF-16LE byte of the complete deterministic post-state serialization; no field, value or surrogate normalization",
+  "oracle_framework": [
+    {
+      "filename": "mscorlib.dll",
+      "sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1"
+    },
+    {
+      "filename": "System.dll",
+      "sha256": "7e72b92ddcd6b7b791ab24dd5756544f2da81f65e7ba7d1ebe8223123720d0ac"
+    },
+    {
+      "filename": "System.Core.dll",
+      "sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c"
+    }
+  ],
+  "comparison_profile": "Standalone readonly-source oracle compiled with current Roslyn against Unity SDK mscorlib/System/System.Core; executes on Unity Mono 2.6.5. Native target UnityMono265, invariant fixture culture.",
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "9b1ca8deed8368e361fbd0118f38a5d6859b0c6861ae72395b3258f65b7f6d5a",
-    "driver_sha256": "2c878c8a06d22c153ce8ccc0b9c2064a5c2cb9b166224276d0959d756ec8c090"
+    "translator_source_sha256": "0c96df2831ed2decda20021cfa5b9f8695328f6781cb56f0c86c8a003760f06b",
+    "driver_sha256": "39e42eec8028f316a252b96000388c6fb38789ead4c1a0549eb446f78110835f"
   },
   "chunk_budget_bytes": 32768,
-  "chunk_count": 11,
-  "max_chunk_bytes": 32762,
+  "chunk_count": 65,
+  "max_chunk_bytes": 32768,
   "generated_chunks": [
     {
       "file": "portable_generated.hpp",
-      "bytes": 252
+      "bytes": 348
     },
     {
       "file": "portable_generated_hpp_part_0000.inc",
-      "bytes": 32734
+      "bytes": 32768
     },
     {
       "file": "portable_generated_hpp_part_0001.inc",
-      "bytes": 32754
+      "bytes": 32734
     },
     {
       "file": "portable_generated_hpp_part_0002.inc",
-      "bytes": 10945
+      "bytes": 32767
+    },
+    {
+      "file": "portable_generated_hpp_part_0003.inc",
+      "bytes": 32753
+    },
+    {
+      "file": "portable_generated_hpp_part_0004.inc",
+      "bytes": 3601
     },
     {
       "file": "portable_generated.cpp",
-      "bytes": 383
+      "bytes": 2879
     },
     {
       "file": "portable_generated_cpp_part_0000.inc",
-      "bytes": 32762
+      "bytes": 32744
     },
     {
       "file": "portable_generated_cpp_part_0001.inc",
-      "bytes": 32723
+      "bytes": 32726
     },
     {
       "file": "portable_generated_cpp_part_0002.inc",
-      "bytes": 32756
+      "bytes": 32644
     },
     {
       "file": "portable_generated_cpp_part_0003.inc",
-      "bytes": 32725
+      "bytes": 32660
     },
     {
       "file": "portable_generated_cpp_part_0004.inc",
-      "bytes": 32747
+      "bytes": 32768
     },
     {
       "file": "portable_generated_cpp_part_0005.inc",
-      "bytes": 4940
+      "bytes": 32640
+    },
+    {
+      "file": "portable_generated_cpp_part_0006.inc",
+      "bytes": 32648
+    },
+    {
+      "file": "portable_generated_cpp_part_0007.inc",
+      "bytes": 32666
+    },
+    {
+      "file": "portable_generated_cpp_part_0008.inc",
+      "bytes": 32640
+    },
+    {
+      "file": "portable_generated_cpp_part_0009.inc",
+      "bytes": 32648
+    },
+    {
+      "file": "portable_generated_cpp_part_0010.inc",
+      "bytes": 32671
+    },
+    {
+      "file": "portable_generated_cpp_part_0011.inc",
+      "bytes": 32643
+    },
+    {
+      "file": "portable_generated_cpp_part_0012.inc",
+      "bytes": 32640
+    },
+    {
+      "file": "portable_generated_cpp_part_0013.inc",
+      "bytes": 32664
+    },
+    {
+      "file": "portable_generated_cpp_part_0014.inc",
+      "bytes": 32650
+    },
+    {
+      "file": "portable_generated_cpp_part_0015.inc",
+      "bytes": 32768
+    },
+    {
+      "file": "portable_generated_cpp_part_0016.inc",
+      "bytes": 32768
+    },
+    {
+      "file": "portable_generated_cpp_part_0017.inc",
+      "bytes": 32641
+    },
+    {
+      "file": "portable_generated_cpp_part_0018.inc",
+      "bytes": 32647
+    },
+    {
+      "file": "portable_generated_cpp_part_0019.inc",
+      "bytes": 32740
+    },
+    {
+      "file": "portable_generated_cpp_part_0020.inc",
+      "bytes": 32703
+    },
+    {
+      "file": "portable_generated_cpp_part_0021.inc",
+      "bytes": 32640
+    },
+    {
+      "file": "portable_generated_cpp_part_0022.inc",
+      "bytes": 32659
+    },
+    {
+      "file": "portable_generated_cpp_part_0023.inc",
+      "bytes": 32655
+    },
+    {
+      "file": "portable_generated_cpp_part_0024.inc",
+      "bytes": 32640
+    },
+    {
+      "file": "portable_generated_cpp_part_0025.inc",
+      "bytes": 32648
+    },
+    {
+      "file": "portable_generated_cpp_part_0026.inc",
+      "bytes": 32666
+    },
+    {
+      "file": "portable_generated_cpp_part_0027.inc",
+      "bytes": 32640
+    },
+    {
+      "file": "portable_generated_cpp_part_0028.inc",
+      "bytes": 32648
+    },
+    {
+      "file": "portable_generated_cpp_part_0029.inc",
+      "bytes": 32759
+    },
+    {
+      "file": "portable_generated_cpp_part_0030.inc",
+      "bytes": 32648
+    },
+    {
+      "file": "portable_generated_cpp_part_0031.inc",
+      "bytes": 32730
+    },
+    {
+      "file": "portable_generated_cpp_part_0032.inc",
+      "bytes": 32705
+    },
+    {
+      "file": "portable_generated_cpp_part_0033.inc",
+      "bytes": 32059
+    },
+    {
+      "file": "portable_generated_cpp_part_0034.inc",
+      "bytes": 32649
+    },
+    {
+      "file": "portable_generated_cpp_part_0035.inc",
+      "bytes": 32612
+    },
+    {
+      "file": "portable_generated_cpp_part_0036.inc",
+      "bytes": 32765
+    },
+    {
+      "file": "portable_generated_cpp_part_0037.inc",
+      "bytes": 32652
+    },
+    {
+      "file": "portable_generated_cpp_part_0038.inc",
+      "bytes": 32754
+    },
+    {
+      "file": "portable_generated_cpp_part_0039.inc",
+      "bytes": 32744
+    },
+    {
+      "file": "portable_generated_cpp_part_0040.inc",
+      "bytes": 32768
+    },
+    {
+      "file": "portable_generated_cpp_part_0041.inc",
+      "bytes": 32744
+    },
+    {
+      "file": "portable_generated_cpp_part_0042.inc",
+      "bytes": 32762
+    },
+    {
+      "file": "portable_generated_cpp_part_0043.inc",
+      "bytes": 32760
+    },
+    {
+      "file": "portable_generated_cpp_part_0044.inc",
+      "bytes": 32748
+    },
+    {
+      "file": "portable_generated_cpp_part_0045.inc",
+      "bytes": 32706
+    },
+    {
+      "file": "portable_generated_cpp_part_0046.inc",
+      "bytes": 32764
+    },
+    {
+      "file": "portable_generated_cpp_part_0047.inc",
+      "bytes": 32749
+    },
+    {
+      "file": "portable_generated_cpp_part_0048.inc",
+      "bytes": 32754
+    },
+    {
+      "file": "portable_generated_cpp_part_0049.inc",
+      "bytes": 32719
+    },
+    {
+      "file": "portable_generated_cpp_part_0050.inc",
+      "bytes": 32749
+    },
+    {
+      "file": "portable_generated_cpp_part_0051.inc",
+      "bytes": 32724
+    },
+    {
+      "file": "portable_generated_cpp_part_0052.inc",
+      "bytes": 32723
+    },
+    {
+      "file": "portable_generated_cpp_part_0053.inc",
+      "bytes": 32717
+    },
+    {
+      "file": "portable_generated_cpp_part_0054.inc",
+      "bytes": 32733
+    },
+    {
+      "file": "portable_generated_cpp_part_0055.inc",
+      "bytes": 32749
+    },
+    {
+      "file": "portable_generated_cpp_part_0056.inc",
+      "bytes": 32743
+    },
+    {
+      "file": "portable_generated_cpp_part_0057.inc",
+      "bytes": 19832
     }
   ],
   "split_runner_sha256": "b3ff4935edc9826bd2e6c388122406c50378cedd347249c6e7764e6d78fb8d5c"

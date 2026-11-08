@@ -74,6 +74,37 @@ O serviço expõe apenas `Licensing::not_applicable`, sem rede, chave pública d
 
 Referências completas: `NotifyManager.cs:30–238`, `IApplication.cs:225–226/440–461/500–505`, `FormManagerBase.cs:442–444`, `KairoBase.cs:1675–1693/2332–2346/2567–2582` e `KairoPlugin.cs:979–1058`. Desligar só push não bastava: SendString agendava localmente independentemente dessa flag, e gerente null não satisfazia a guarda original de ConnectNotificationSend. Ambos foram abrangidos pela política. Dados previamente importados não são entregues como novas notificações nem usados para acionar a simulação.
 
+## Transporte indisponível e analytics
+
+`AnalyticsTracker.Setup` não é uma folha vazia: marca a inicialização, lê a
+fila persistida em PlayerPrefs ou grava a fila vazia e chama DispatchPageView.
+O port conserva esses corpos e os de Track/Save/Run, incluindo dados importados;
+não remove a fila nem fabrica confirmação do servidor. A folha
+`KairoPlugin.GetInstallReferrer` retorna nulo no PC sem origem de campanha,
+como o ramo não Android reconstruído. Isso não atribui uma campanha fictícia.
+
+`offline_http.hpp` substitui somente `UnityEngine.WWW` no contexto HttpObject.
+A requisição termina com `isDone=true` e erro não vazio, sem abrir transporte.
+Os corpos originais de HttpObject ainda fazem timestamp, POST_MARK, criação de
+IOException, escolha de retry e finally. No ramo de falha, `errorCode_=-98`,
+`errorUrl_` recebe o URL com timestamp, `errorText_/errorTextOrg_` ficam nulos,
+`askRetry_` segue IsRetryEnable e o objeto é descartado/retirado no finally.
+GetErrorText mantém o fallback localizado do fonte. O texto exato de WWW.error
+no player Android é UNKNOWN e dependente da plataforma; o port usa um motivo
+técnico local, não uma resposta do servidor. O override de CgiRegist intercepta
+o registro antes de qualquer caminho de licenciamento.
+
+`tools/test_offline_http.py` compila HttpObject integral como fonte novo com
+uma fachada WWW própria: **24 observações** nos dois perfis, incluindo GET,
+POST com e sem marcador, retry cancelado, erro/pop/reset e descarte. A folha
+C++ passa por **12 asserções** independentes. `tools/test_analytics_offline.py`
+compila AnalyticsTracker e HttpObject integrais e mede **10 observações** nos
+dois perfis: setup inicial/idempotente, fila prévia preservada com Retry
+incrementado após duas falhas e preferência malformada não reescrita. A thread
+da fixture é síncrona para medir ordem; concorrência não é alegada por ela.
+Nenhuma rede é contatada. Os dois recibos mantêm integração gerada PENDING até
+o emissor compilar e exercitar os respectivos corpos.
+
 ## Testes e o que ainda não foi provado
 
 `python tools/test_services.py` compila C++17 com MSVC existente, `/W4 /WX /fp:strict`, sem instalar ferramentas. Os testes próprios verificam resposta de registro, identidade estável após dois processos reais, nova identidade em outro diretório, UID vazio e prévio conservados, rejeição de identidade inválida sem substituir o arquivo, save sintético com bytes/campos desconhecidos intacto após todas as operações indisponíveis, ausência de concessão, anúncios zero e notificações vazias/desligadas. Recibo gerado: `config/phase2-services-tests.json`.

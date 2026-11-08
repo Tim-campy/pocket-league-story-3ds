@@ -1,4 +1,5 @@
 #include "storage.hpp"
+#include "managed_collation.hpp"
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -45,6 +46,7 @@ int policy(const std::filesystem::path& root){
  return 0;
 }
 int main(int argc,char**argv){
+ pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture(pls::cs::CollationCulture{});
  if(argc==3&&std::string(argv[2])=="policy"){configure_storage(std::filesystem::u8path(argv[1]));return policy(std::filesystem::u8path(argv[1]));}
  if(argc!=3&&argc!=4)return 2;
  pls::assets::Catalog catalog(std::filesystem::u8path(argv[2]));configure_storage(std::filesystem::u8path(argv[1]),&catalog);
@@ -73,6 +75,9 @@ int main(int argc,char**argv){
  P("heap-null-size",[&]{return std::to_string(heap->GetSize(Str(u"nil")));});
  P("heap-delete",[&]{heap->Delete(Str(u"b.gif"));return A(heap->GetFiles());});
  P("null-filename",[&]{return B(heap->Read({}));});
+ P("heap-cultural-composed",[&]{heap->Write(Str(u"synthetic-caf\u00e9"),Bytes::from({61}));return B(heap->Read(Str(u"synthetic-cafe\u0301")));});
+ P("heap-cultural-replace",[&]{const auto n=heap->GetFiles().length();heap->Write(Str(u"synthetic-cafe\u0301"),Bytes::from({62}));return B(heap->Read(Str(u"synthetic-caf\u00e9")))+":"+std::to_string(heap->GetFiles().length()-n);});
+ P("heap-cultural-delete",[&]{heap->Delete(Str(u"synthetic-cafe\u0301"));return truth(heap->Exists(Str(u"synthetic-caf\u00e9")));});
  P("resource",[]{return B(Storage::Read(3,false,Str(u"fixture.dat")))+":"+truth(Storage::Exists(3,Str(u"fixture.dat")));});
  P("resource-missing",[]{return B(Storage::Read(3,false,Str(u"missing")))+":"+truth(Storage::Exists(3,Str(u"missing")));});
  P("resource-readonly",[]{Storage::Write(3,false,Str(u"fixture.dat"),Bytes::from({1}));return B(Storage::Read(3,false,Str(u"fixture.dat")));});

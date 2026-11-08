@@ -1,0 +1,104 @@
+{
+  "operation": "raw-textasset-leaves-and-desktop-metrics",
+  "status": "PASS",
+  "fixture_cases": 6,
+  "passed": 6,
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "first-static-access",
+      "expected": "first-static-access=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "actual": "first-static-access=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "constructor-does-not-refresh",
+      "expected": "constructor-does-not-refresh=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "actual": "constructor-does-not-refresh=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "explicit-update",
+      "expected": "explicit-update=1070386381:240:400:240:1070386381:1070386381:1070386381",
+      "actual": "explicit-update=1070386381:240:400:240:1070386381:1070386381:1070386381",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "first-static-access",
+      "expected": "first-static-access=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "actual": "first-static-access=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "constructor-does-not-refresh",
+      "expected": "constructor-does-not-refresh=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "actual": "constructor-does-not-refresh=1070386381:240:240:280:1070386381:1070386381:1070386381",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "explicit-update",
+      "expected": "explicit-update=1070386381:240:400:240:1070386381:1070386381:1070386381",
+      "actual": "explicit-update=1070386381:240:400:240:1070386381:1070386381:1070386381",
+      "passed": true
+    }
+  ],
+  "verified_boundary_ids": [],
+  "native_resource_policy": {
+    "raw_resources": 2,
+    "raw_bytes": 268,
+    "filelist_text_assets": 1,
+    "assertions": 306,
+    "game_boot": false
+  },
+  "private_resource_readback": {
+    "raw_resources": 21,
+    "raw_bytes": 3275098,
+    "filelist_text_assets": 1,
+    "assertions": 3277326,
+    "game_boot": false,
+    "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+    "catalog_sha256": "f6de1542c2f7b60e73a0d4697f1bec363d461e0f678231d2cbafe6ff7750cc19",
+    "catalog_producer_receipt_sha256": "60efc6acc17338c6e52986868fb88ef5e00bfc98358dcca25197324302bb8f75"
+  },
+  "inputs": {
+    "tests/kairo/asset_reader_fixtures.cpp": "0b45697e86033bf0c22a285db7c68dae439d3f215700130c39c2ac8eedc7db27",
+    "src/kairo/common/asset_reader.cpp": "bf8d107a15993bea7a77c980f8eaf2d47a5bfe9fc24b329103a5d54d03c35669",
+    "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
+    "src/kairo/common/managed_encoding.cpp": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/DisplayMetricsOracle.cs": "c9bec8a1773c09a235f7cda9bbe13f307545c2f4b4683383ffaaf525d8a4c02b",
+    "tools/test_asset_reader.py": "0d86bffef1e295d14ca6b46726b91042f7cb38f1dff446fa0517c6ddd4e44266",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
+    "src/kairo/api/display_metrics.hpp": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70",
+    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
+    "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/DisplayMetrics.cs",
+      "sha256": "89561058be397fe78b859faefebe4b0bea6a6a4c51761ad01b86a2616a0ffdd3"
+    }
+  ],
+  "native_executable": {
+    "path": "build/asset-reader-tests/asset-reader-fixtures.exe",
+    "sha256": "e446e6ee1f3077b205420548bceb9a40ab4df21e3aa1349cce47b8290d1ae7ab"
+  },
+  "game_assets_used": true,
+  "original_binaries_executed": false,
+  "game_boot": false,
+  "limits": [
+    "Desktop metrics are compared against the unchanged original source; Android display/JNI and 3DS layout are not represented.",
+    "TextAsset loader reads only raw kind8 and never decrypts; AssetReader.GetData, security, locale/DPI, Exist/filelist stay generated source.",
+    "UTF8 text conversion is validated for the ASCII filelist consumed by this corpus; arbitrary Unity BOM/encoding rules are UNKNOWN.",
+    "CPU unload releases no global engine state; post-unload engine object invalidation and Unity array aliasing are not verified."
+  ]
+}

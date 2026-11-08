@@ -1,0 +1,463 @@
+{
+  "operation": "original-source-Image-use-expiry-eviction-differential",
+  "status": "PASS",
+  "fixture_cases": 56,
+  "passed": 56,
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "lazy",
+      "expected": "lazy=0:0:0:0/False:False:3:2:True",
+      "actual": "lazy=0:0:0:0/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "used",
+      "expected": "used=1:6:6:0/True:False:3:2:True",
+      "actual": "used=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "threshold-equal",
+      "expected": "threshold-equal=1:6:6:0/True:False:3:2:True",
+      "actual": "threshold-equal=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "threshold-past",
+      "expected": "threshold-past=0:0:0:1/False:False:3:2:True",
+      "actual": "threshold-past=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "reloaded",
+      "expected": "reloaded=1:6:6:1/True:False:3:2:True",
+      "actual": "reloaded=1:6:6:1/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "disposed",
+      "expected": "disposed=0:0:0:2/False:True:0:0:True",
+      "actual": "disposed=0:0:0:2/False:True:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "locked",
+      "expected": "locked=1:6:6:0/True:False:3:2:False",
+      "actual": "locked=1:6:6:0/True:False:3:2:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "global-frames",
+      "expected": "global-frames=0:0:0:1/False:False:3:2:True",
+      "actual": "global-frames=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "zero-disabled",
+      "expected": "zero-disabled=1:6:6:0/True:False:3:2:True",
+      "actual": "zero-disabled=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "negative-disabled",
+      "expected": "negative-disabled=1:6:6:0/True:False:3:2:True",
+      "actual": "negative-disabled=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "created-locked",
+      "expected": "created-locked=1:6:6:0/True:False:3:2:False",
+      "actual": "created-locked=1:6:6:0/True:False:3:2:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "created-expired-dispose",
+      "expected": "created-expired-dispose=0:0:0:1/False:True:0:0:True",
+      "actual": "created-expired-dispose=0:0:0:1/False:True:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "texture-not-reloadable",
+      "expected": "texture-not-reloadable=0:0:6:0/True:False:3:2:True",
+      "actual": "texture-not-reloadable=0:0:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "texture-disposed",
+      "expected": "texture-disposed=0:0:0:1/False:True:0:0:True",
+      "actual": "texture-disposed=0:0:0:1/False:True:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "count-evicts-locked",
+      "expected": "count-evicts-locked=1:4:4:1/False:False:3:2:False/True:False:4:1:True",
+      "actual": "count-evicts-locked=1:4:4:1/False:False:3:2:False/True:False:4:1:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "pixels-evict-created",
+      "expected": "pixels-evict-created=1:4:4:1/False:True:0:0:False/True:False:4:1:True",
+      "actual": "pixels-evict-created=1:4:4:1/False:True:0:0:False/True:False:4:1:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "oldest-weight",
+      "expected": "oldest-weight=2:5:5:1/False:False:3:2:True/True:False:4:1:True/True:False:1:1:True",
+      "actual": "oldest-weight=2:5:5:1/False:False:3:2:True/True:False:4:1:True/True:False:1:1:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "wrapped-one",
+      "expected": "wrapped-one=1:6:6:0/True:False:3:2:True",
+      "actual": "wrapped-one=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "wrapped-two",
+      "expected": "wrapped-two=0:0:0:1/False:False:3:2:True",
+      "actual": "wrapped-two=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-placeholder",
+      "expected": "file-placeholder=0:0:0:0/False:False:240:240:True",
+      "actual": "file-placeholder=0:0:0:0/False:False:240:240:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-loaded",
+      "expected": "file-loaded=1:6:6:0/True:False:3:2:True",
+      "actual": "file-loaded=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-reloaded",
+      "expected": "file-reloaded=1:6:6:1/True:False:3:2:True",
+      "actual": "file-reloaded=1:6:6:1/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "draw-stamp-equal",
+      "expected": "draw-stamp-equal=1:6:6:0/True:False:3:2:True",
+      "actual": "draw-stamp-equal=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "draw-stamp-past",
+      "expected": "draw-stamp-past=0:0:0:1/False:False:3:2:True",
+      "actual": "draw-stamp-past=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "source-alias-before-use",
+      "expected": "source-alias-before-use=0:0:0:0/False:False:3:2:True",
+      "actual": "source-alias-before-use=0:0:0:0/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "source-alias-after-use",
+      "expected": "source-alias-after-use=1:4:4:0/True:False:4:1:True",
+      "actual": "source-alias-after-use=1:4:4:0/True:False:4:1:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "source-alias-reload",
+      "expected": "source-alias-reload=1:1:1:1/True:False:1:1:True",
+      "actual": "source-alias-reload=1:1:1:1/True:False:1:1:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "count-disabled-unuse",
+      "expected": "count-disabled-unuse=0:0:6:1/False:False:3:2:True",
+      "actual": "count-disabled-unuse=0:0:6:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "lazy",
+      "expected": "lazy=0:0:0:0/False:False:3:2:True",
+      "actual": "lazy=0:0:0:0/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "used",
+      "expected": "used=1:6:6:0/True:False:3:2:True",
+      "actual": "used=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "threshold-equal",
+      "expected": "threshold-equal=1:6:6:0/True:False:3:2:True",
+      "actual": "threshold-equal=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "threshold-past",
+      "expected": "threshold-past=0:0:0:1/False:False:3:2:True",
+      "actual": "threshold-past=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "reloaded",
+      "expected": "reloaded=1:6:6:1/True:False:3:2:True",
+      "actual": "reloaded=1:6:6:1/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "disposed",
+      "expected": "disposed=0:0:0:2/False:True:0:0:True",
+      "actual": "disposed=0:0:0:2/False:True:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "locked",
+      "expected": "locked=1:6:6:0/True:False:3:2:False",
+      "actual": "locked=1:6:6:0/True:False:3:2:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "global-frames",
+      "expected": "global-frames=0:0:0:1/False:False:3:2:True",
+      "actual": "global-frames=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "zero-disabled",
+      "expected": "zero-disabled=1:6:6:0/True:False:3:2:True",
+      "actual": "zero-disabled=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "negative-disabled",
+      "expected": "negative-disabled=1:6:6:0/True:False:3:2:True",
+      "actual": "negative-disabled=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "created-locked",
+      "expected": "created-locked=1:6:6:0/True:False:3:2:False",
+      "actual": "created-locked=1:6:6:0/True:False:3:2:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "created-expired-dispose",
+      "expected": "created-expired-dispose=0:0:0:1/False:True:0:0:True",
+      "actual": "created-expired-dispose=0:0:0:1/False:True:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "texture-not-reloadable",
+      "expected": "texture-not-reloadable=0:0:6:0/True:False:3:2:True",
+      "actual": "texture-not-reloadable=0:0:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "texture-disposed",
+      "expected": "texture-disposed=0:0:0:1/False:True:0:0:True",
+      "actual": "texture-disposed=0:0:0:1/False:True:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "count-evicts-locked",
+      "expected": "count-evicts-locked=1:4:4:1/False:False:3:2:False/True:False:4:1:True",
+      "actual": "count-evicts-locked=1:4:4:1/False:False:3:2:False/True:False:4:1:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "pixels-evict-created",
+      "expected": "pixels-evict-created=1:4:4:1/False:True:0:0:False/True:False:4:1:True",
+      "actual": "pixels-evict-created=1:4:4:1/False:True:0:0:False/True:False:4:1:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "oldest-weight",
+      "expected": "oldest-weight=2:5:5:1/False:False:3:2:True/True:False:4:1:True/True:False:1:1:True",
+      "actual": "oldest-weight=2:5:5:1/False:False:3:2:True/True:False:4:1:True/True:False:1:1:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "wrapped-one",
+      "expected": "wrapped-one=1:6:6:0/True:False:3:2:True",
+      "actual": "wrapped-one=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "wrapped-two",
+      "expected": "wrapped-two=0:0:0:1/False:False:3:2:True",
+      "actual": "wrapped-two=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-placeholder",
+      "expected": "file-placeholder=0:0:0:0/False:False:240:240:True",
+      "actual": "file-placeholder=0:0:0:0/False:False:240:240:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-loaded",
+      "expected": "file-loaded=1:6:6:0/True:False:3:2:True",
+      "actual": "file-loaded=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-reloaded",
+      "expected": "file-reloaded=1:6:6:1/True:False:3:2:True",
+      "actual": "file-reloaded=1:6:6:1/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "draw-stamp-equal",
+      "expected": "draw-stamp-equal=1:6:6:0/True:False:3:2:True",
+      "actual": "draw-stamp-equal=1:6:6:0/True:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "draw-stamp-past",
+      "expected": "draw-stamp-past=0:0:0:1/False:False:3:2:True",
+      "actual": "draw-stamp-past=0:0:0:1/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "source-alias-before-use",
+      "expected": "source-alias-before-use=0:0:0:0/False:False:3:2:True",
+      "actual": "source-alias-before-use=0:0:0:0/False:False:3:2:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "source-alias-after-use",
+      "expected": "source-alias-after-use=1:4:4:0/True:False:4:1:True",
+      "actual": "source-alias-after-use=1:4:4:0/True:False:4:1:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "source-alias-reload",
+      "expected": "source-alias-reload=1:1:1:1/True:False:1:1:True",
+      "actual": "source-alias-reload=1:1:1:1/True:False:1:1:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "count-disabled-unuse",
+      "expected": "count-disabled-unuse=0:0:6:1/False:False:3:2:True",
+      "actual": "count-disabled-unuse=0:0:6:1/False:False:3:2:True",
+      "passed": true
+    }
+  ],
+  "verified_boundary_ids": [],
+  "native_policy": {
+    "assertions": 6,
+    "missing_bindings_rejected": true,
+    "loader_cycle_collected": true,
+    "source_cache_owns_resident_images": true,
+    "game_boot": false
+  },
+  "inputs": {
+    "tests/kairo/image_lifetime_fixtures.cpp": "6f34af239ad10ab4e89e28362933bd340bff63f95c6ddbc4f7455d9e5ff493b4",
+    "src/kairo/common/image_lifetime.cpp": "46eb7b0f818d28f48cedf6cef4542ea0026178d8e0b9ff300f5391b349abba86",
+    "src/kairo/common/graphics.cpp": "213c50f8f8e71a0d9a2dd88936ce79d2c65737d172bcbe423a7e8bdda3534e4f",
+    "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
+    "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
+    "tests/kairo/ImageLifetimeOracle.cs": "9eada50ef9d686e508f9c5a03f6e4100e6705e2a9c0566624964afdadd7b6cbb",
+    "tools/test_image_lifetime.py": "7eef93d61e94288e6f0a54b062e8383df73e742dca71a97136ca1622aa861c45",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "src/kairo/api/graphics.hpp": "4f2371753410ff7ffabe8798690fc13da4efa8bad3c057a0b464b3539b5a21af",
+    "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
+    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
+    "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Image.cs",
+      "sha256": "7bdaf432a70d5c38e2635d3c3e9b76c19915f3060c19f604183e74d9f7933a72"
+    }
+  ],
+  "original_methods": [
+    "public Image(Texture image)",
+    "public Image(byte[] src, Format format = Format.Default, Filter filterMode = Filter.Default)",
+    "public Image(string file, Format format = Format.Default, Filter filterMode = Filter.Default)",
+    "public static Image CreateImage(int width, int height, Format format = Format.RGB24, Filter filterMode = Filter.Default)",
+    "public void Use()",
+    "public void Unuse()",
+    "public void Dispose()",
+    "internal void Release()",
+    "public void SetExpiration(bool yes, int validateFrames = -1)",
+    "public bool IsExpiration()",
+    "public static void UnuseExpirationImages()",
+    "public static void SetSourceImageMaxCount(int max)",
+    "public static void SetSourceImageMaxPixels(int max)",
+    "public static void SetSourceImageValidateFrames(int frames)",
+    "public int GetWidth()",
+    "public int GetHeight()"
+  ],
+  "native_executable": {
+    "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
+    "sha256": "dcd267df1c4c31e76370b19d5e5321045e9eaaffb953750bb1da9a472f3323bd"
+  },
+  "game_assets_used": false,
+  "original_binaries_executed": false,
+  "game_boot": false,
+  "limits": [
+    "Own texture decoder/catalog exercise original lifetime bodies, not Unity PNG decoding, atlas behavior, texture format conversion or OOM recovery.",
+    "Draw stamp is the observed checkCount assignment; full Android rendering equivalence is not asserted.",
+    "Game bindings must read/update generated Config counters; standalone graphics without those bindings do not report game accounting."
+  ]
+}

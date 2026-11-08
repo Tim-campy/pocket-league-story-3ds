@@ -20,6 +20,7 @@ class Canvas : public cs::Object {
     cs::Ref<Graphics> graphics_;
     cs::Ref<Font> default_font_;
     cs::Ref<CanvasSurface> surface_;
+    cs::Ref<cs::Object> source_surface_;
     cs::Array<cs::String> labels_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
     cs::Array<cs::String> shown_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
     std::int32_t background_{};
@@ -34,7 +35,12 @@ public:
     void host_display(cs::Ref<Image>,cs::Ref<Font>);
     void host_event(const platform::Input& event){input_.feed(event);}
     void SetDisplayCurrent(cs::Ref<IApplication>){} // Original body is empty.
-    void SetSurfaceManager(cs::Ref<CanvasSurface> value){surface_=std::move(value);}
+    void SetSurfaceManager(cs::Ref<CanvasSurface> value){source_surface_=value;surface_=std::move(value);}
+    // Generated source keeps its original SurfaceManagerBase object/Vector.
+    // Native scheduling uses the adapter; C# getter lowering uses this source
+    // identity instead of exposing an unrelated native wrapper as the object.
+    void host_source_surface(cs::Ref<cs::Object> source,cs::Ref<CanvasSurface> adapter){if(bool(source)!=bool(adapter))throw cs::InvalidOperationException("Surface source and adapter must be installed together");source_surface_=std::move(source);surface_=std::move(adapter);}
+    cs::Ref<cs::Object> GetSourceSurfaceManager(){return source_surface_;}
     cs::Ref<CanvasSurface> GetSurfaceManager(){return surface_;}
     cs::Ref<Graphics> GetGraphicsInstance(){return graphics_;}
     cs::Ref<Graphics> BeginPaint();

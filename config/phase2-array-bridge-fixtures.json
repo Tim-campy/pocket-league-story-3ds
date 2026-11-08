@@ -19,14 +19,14 @@
   "inputs": {
     "tests\\translator\\ArrayBridgeFixtures.cs": "21f0a74a621b0ed1dac3c669c4f7d8f8db3ff6cef42620486487287947e26ef0",
     "tests\\translator\\array_bridge_fixtures.cpp": "b619e10f8614dd46b68ef5361dae8a621890a965172bc1b34d5c3f140ec1a5fe",
-    "src\\kairo\\common\\semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
-    "src\\kairo\\common\\semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
-    "src\\kairo\\common\\managed_collections.hpp": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b",
+    "src\\kairo\\common\\semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src\\kairo\\common\\semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src\\kairo\\common\\managed_collections.hpp": "daee4c23611a2658e1de478fd4062476832588d04dd959a1f4ff932dd9894560",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
     "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
     "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
-    "tests\\translator\\run_semantic_fixtures.py": "d7aa3b76fcd4427314e5dc8de1b54c6cfc7773f4d55b294ea97a6308256573b0"
+    "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97"
   },
   "historical_oracle": {
     "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",

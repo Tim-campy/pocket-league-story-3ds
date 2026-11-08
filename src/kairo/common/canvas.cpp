@@ -36,6 +36,6 @@ bool Canvas::OnKeyDown(std::int32_t code,cs::Ref<KeyEvent> event){
 }
 bool Canvas::OnKeyUp(std::int32_t code,cs::Ref<KeyEvent> event){if(!event)throw cs::NullReferenceException();if(event->GetRepeatCount()==0)keys_.PhysicalUp(code);return true;}
 bool Canvas::OnTouchEvent(cs::Ref<MotionEvent> event){if(!event)throw cs::NullReferenceException();if(surface_)surface_->Touch(std::move(event));return true;}
-void Canvas::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(display_,visitor);cs::trace_value(graphics_,visitor);cs::trace_value(default_font_,visitor);cs::trace_value(surface_,visitor);cs::trace_value(labels_,visitor);cs::trace_value(shown_,visitor);}
-void Canvas::release_edges(){display_.reset();graphics_.reset();default_font_.reset();surface_.reset();cs::release_value(labels_);cs::release_value(shown_);on_back={};}
+void Canvas::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(display_,visitor);cs::trace_value(graphics_,visitor);cs::trace_value(default_font_,visitor);cs::trace_value(surface_,visitor);cs::trace_value(source_surface_,visitor);cs::trace_value(labels_,visitor);cs::trace_value(shown_,visitor);}
+void Canvas::release_edges(){display_.reset();graphics_.reset();default_font_.reset();surface_.reset();source_surface_.reset();cs::release_value(labels_);cs::release_value(shown_);on_back={};}
 }

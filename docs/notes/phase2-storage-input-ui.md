@@ -15,6 +15,15 @@ heap com alias dos arrays, pasta `files/`, recursos somente para leitura e RMS
 em `rs/`. `Storage.Setup` não altera a raiz real de I/O: assim também ocorre no
 fonte, cujo campo `root_` não é usado pelos métodos de arquivo.
 
+`Storage.HeapFile` usa `String.CompareTo`, portanto nomes no heap seguem a
+comparação CurrentCulture histórica do Mono, não igualdade ordinal. O backend
+usa `culture_compare` com as tabelas autorizadas; a cultura é fornecida pelo
+host, independentemente da língua escolhida no jogo. Os casos sintéticos com
+caractere composto e sequência combinante comprovam leitura, substituição sem
+nova entrada e remoção equivalentes. O nome da primeira inserção é mantido.
+O conjunto Storage/RecordStore agora tem **86/86** casos nos dois perfis. Isso
+não altera as chaves ordinais do container PlayerPrefs abaixo.
+
 `AssetReader._getTextAsset` exige prefixo `Data/`, conversão de extensão, `Trim`
 e nova tentativa removendo a última extensão. O catálogo do APK contém caminhos
 ASCII em minúsculas. A resolução de recursos aplica equivalência ASCII de caixa;
@@ -84,6 +93,14 @@ eventos; a coleta física completa do Unity não foi executada.
 
 ## Formulários e Canvas
 
+`FormBase` implementa o contrato nativo `TouchValueAccessor` com os dois slots
+originais GetTouchValue/SetTouchValue. A interface não adiciona uma segunda base
+Object; casts entre interface, formulário e Object conservam a mesma identidade.
+O oráculo compila também a interface C# original e compara defaults, despacho
+derivado e chamadas base qualificadas. Com esses casos, o conjunto Forms passa
+**64/64** nos dois perfis. Isso comprova o contrato de tipo, não uma interação
+de toque executada pelo jogo.
+
 `FormBase` conserva os hooks vazios ou com retorno verdadeiro do original,
 modo de processo, labels e referências ao manager. `FormManagerBase` contém
 stack, Push/Pop/ChangeCurrentForm, reordenação, execução de Init/Finish, eventos
@@ -102,13 +119,15 @@ adiada por `SetSoftLabel(string...)` e imediata na sobrecarga por índice.
 As partes abaixo estão **bloqueadas por integração**, com exceção explícita em
 vez de implementação vazia:
 
-- `FormManagerBase.Execute/OnDraw` exigem `FormExecutionBridge`. A ponte precisa
-  preservar SoundPlayer, SaveRecorder.Lock/Unlock, KairoBase.Update e o finally
-  de reserveSave, FepPanel, SurfaceManager, loading e sincronização. Não existe
-  um loop simplificado de Update/Draw sendo anunciado como boot do jogo.
-- `ChangeCurrentForm` exige `host_game_state`. Passar `nullptr` é uma afirmação
-  explícita do host de que o KairoBase original seria nulo; não é um padrão que
-  possa apagar o estado do jogo.
+- `FormManagerBase.Execute/OnDraw` agora dispõem de SourceFormExecution e
+  adapters tipados, validados em 48/48 cenários do fonte original. Os bindings
+  para os objetos gerados reais continuam obrigatórios. Loading, captura e
+  handshake entre threads permanecem sem prova. Detalhes no documento
+  [bootstrap e scheduler](phase2-bootstrap-scheduler.md).
+- `ChangeCurrentForm` exige `host_game_state` dinâmico. `nullptr` aparece apenas
+  na fixture sintética: no jogo, o getter original KairoBase.GetInstance cria
+  KairoDummy e chama LoadAppList quando a instância ainda não existe. Não se
+  pode substituir esse caminho por nulo permanente nem por KairoService.
 - Rotas do SurfaceManager exigem `CanvasSurface`; `Touch` representa a entrega
   em ordem inversa aos OnReceiveTouchEvent, e ClearGameTouch é separado de
   ClearTouch. O backend não fornece uma lista vazia fictícia de superfícies.

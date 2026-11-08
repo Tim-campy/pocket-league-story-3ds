@@ -5,16 +5,41 @@
 #include "managed_random.hpp"
 #include "managed_time.hpp"
 #include "managed_streams.hpp"
+#include "managed_dictionary.hpp"
+#include "managed_type_init.hpp"
+#include "managed_reflection.hpp"
+#include "managed_exceptions.hpp"
+#include "managed_thread.hpp"
+#include "managed_collation.hpp"
+#include "managed_encoding.hpp"
+#include "managed_regex.hpp"
+#include "managed_stream_reader.hpp"
+#include "managed_path.hpp"
+#include "managed_string_ops.hpp"
+#include "system.hpp"
+#include "globalization.hpp"
+#include "storage.hpp"
+#include "application.hpp"
+#include "asset_reader.hpp"
+#include "display_metrics.hpp"
 #include <cmath>
 #include <cstring>
 namespace pls::generated {
 [[maybe_unused]] static float cs_f32(std::uint32_t bits) { float value; std::memcpy(&value,&bits,sizeof(value)); return value; }
 [[maybe_unused]] static double cs_f64(std::uint64_t bits) { double value; std::memcpy(&value,&bits,sizeof(value)); return value; }
 
+template<class T>bool cs_is(const pls::cs::Ref<pls::cs::Object>&value){if(!value)return false;if constexpr(pls::cs::is_shared_ref<T>::value)return bool(std::dynamic_pointer_cast<typename pls::cs::is_shared_ref<T>::element_type>(value));else{try{(void)pls::cs::unbox<T>(value);return true;}catch(const pls::cs::InvalidCastException&){return false;}}}
+template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(value);if(!object)throw pls::cs::NullReferenceException();return object->GetHashCode();}
+[[maybe_unused]] static pls::cs::String cs_string_identity(const pls::cs::String&value){value.length();return value;}
+[[maybe_unused]] static pls::cs::String cs_object_string(const pls::cs::Ref<pls::cs::Object>&value){return value?value->ToString():pls::cs::String(u"");}
+[[maybe_unused]] static bool cs_contains_string(const pls::cs::String&source,const pls::cs::String&value){return pls::cs::culture_index_of(source,value)>=0;}
 [[maybe_unused]] static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)throw pls::cs::NullReferenceException();return value;}
 [[maybe_unused]] static pls::cs::String cs_string_from_chars(pls::cs::Array<char16_t> chars){if(chars.is_null())throw pls::cs::ArgumentNullException();std::u16string out;for(std::int32_t i=0;i<chars.length();++i)out.push_back(chars.at(i));return pls::cs::String(std::move(out));}
 [[maybe_unused]] static bool cs_is_little_endian(){const std::uint16_t value=1;std::uint8_t first;std::memcpy(&first,&value,1);return first==1;}
+template<class T> static T cs_network_to_host(T value){
+ if(!cs_is_little_endian())return value;using U=std::make_unsigned_t<T>;U bits{};std::memcpy(&bits,&value,sizeof(T));U result=0;for(std::size_t i=0;i<sizeof(T);++i){result=static_cast<U>((result<<8)|(bits&255));bits>>=8;}T out{};std::memcpy(&out,&result,sizeof(T));return out;
+}
 [[maybe_unused]] static pls::cs::String cs_substring2(const pls::cs::String& source,std::int32_t start,std::int32_t count) {
  const auto n=source.length(); if(start<0||count<0||static_cast<std::int64_t>(start)+count>n)throw pls::cs::ArgumentOutOfRangeException();
  std::u16string value;for(std::int32_t i=0;i<count;++i)value.push_back(source.at(start+i));return pls::cs::String(std::move(value));
@@ -26,6 +51,7 @@ template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)th
 [[maybe_unused]] static std::int32_t cs_index_char2(const pls::cs::String& source,char16_t value,std::int32_t start) {
  auto n=source.length();if(start<0||start>n)throw pls::cs::ArgumentOutOfRangeException();for(auto i=start;i<n;++i)if(source.at(i)==value)return i;return -1;
 }
+[[maybe_unused]] static std::int32_t cs_last_index_char1(const pls::cs::String& source,char16_t value){for(auto i=source.length();i>0;--i)if(source.at(i-1)==value)return i-1;return -1;}
 [[maybe_unused]] static std::int32_t cs_index_char1(const pls::cs::String& source,char16_t value){return cs_index_char2(source,value,0);}
 [[maybe_unused]] static pls::cs::String cs_char_string(char16_t value){return pls::cs::String(std::u16string(1,value));}
 template<class T> pls::cs::String cs_integer_string(T value) {
@@ -45,13 +71,17 @@ template<class T> T cs_bits_from(pls::cs::Array<std::uint8_t> source,std::int32_
 }
 struct cs_3b41638e424b9ee0;
 struct cs_fb60578b3098a284;
+struct cs_8d93189702e4084b;
+struct cs_64732f8c8acf2fd3;
 struct cs_e7a5499b363ef51b;
 struct cs_ea324a0bbfe717fe;
 struct cs_a09270023ec48eca;
 struct cs_7de6788b61a5af56;
 struct cs_42d69496680e17fc;
+struct cs_a0dc211eb3feb56d;
 struct cs_a465028bea3432a3;
 struct cs_66dbad5679f8ab87;
+struct cs_c0fae45144034cf9;
 struct cs_a0cf9aef6a251bfd;
 struct cs_f59223d2c773f078;
 struct cs_f8b20a4d1d9d695f;
@@ -59,25 +89,54 @@ template<typename T_T>
 struct cs_51222df74ac70bab;
 struct cs_e7d772862db62924;
 struct cs_832d81e198eeeec2;
+struct cs_7254e4706a01e4e7;
 struct cs_3c64e1d398f2e00f;
+struct cs_922b87749168eb15;
 struct cs_15e3f7b692b3f380;
 template<typename T_T>
 struct cs_67cd241ab51652f1;
+struct cs_c4521f4960c4f908;
+struct cs_52158c8b20364c2b;
+struct cs_bfe2a01361163e7a;
+struct cs_98f0a1bec2084c3c;
+struct cs_9487cb83e3a46e0a;
+struct cs_ab1b1085a7ab32b9;
+struct cs_acb158b492b43017;
+struct cs_3da6da0799f0bdf8;
 struct cs_8c57b816bbc8fd6e;
 struct cs_7fd3b635ed6929d0;
 struct cs_924db3d974bae2af;
 struct cs_bd164c3c94a49e2a;
 struct cs_c20c229ea63037d8;
 struct cs_bb652fbb61000386;
-struct cs_64732f8c8acf2fd3 : pls::cs::EndOfStreamException { explicit cs_64732f8c8acf2fd3(std::string message) : pls::cs::EndOfStreamException(std::move(message)) {} const char* type_name()const noexcept override {return "java.io.EOFException";} };
+struct cs_a0dc211eb3feb56d {virtual ~cs_a0dc211eb3feb56d()=default;
+virtual pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_virtual_60122bb6c899278e()=0;
+};
+struct cs_c4521f4960c4f908 {virtual ~cs_c4521f4960c4f908()=default;
+virtual void cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream)=0;
+virtual void cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream)=0;
+};
+struct cs_3da6da0799f0bdf8 {virtual ~cs_3da6da0799f0bdf8()=default;
+virtual void cs_virtual_c0c7948ad6c9b04a(pls::cs::String v_log)=0;
+};
+struct cs_64732f8c8acf2fd3 : pls::cs::ExceptionObject {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::ExceptionObject::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.EOFException";}
+};
 struct cs_e7a5499b363ef51b : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_bb7347310506b971")return "M:java.io.InputStream.Available";if(slot=="cs_virtual_4546aef6e4846446")return "M:java.io.InputStream.Close";if(slot=="cs_virtual_baf1496cdc1c93d8")return "M:java.io.InputStream.Mark(System.Int32)";if(slot=="cs_virtual_7dfe14f35a6a22dd")return "M:java.io.InputStream.MarkSupported";if(slot=="cs_virtual_d49800fd6633bd98")return "M:java.io.InputStream.Read";if(slot=="cs_virtual_e3637c1f0ab57ef5")return "M:java.io.InputStream.Read(System.Byte[])";if(slot=="cs_virtual_4614e302bc22aa99")return "M:java.io.InputStream.Read(System.Byte[],System.Int32,System.Int32)";if(slot=="cs_virtual_a1f672a1edc7446d")return "M:java.io.InputStream.Reset";if(slot=="cs_virtual_c6a293635ddab59b")return "M:java.io.InputStream.Skip(System.Int64)";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.InputStream";}
 std::int64_t cs_8aa92818c04571d3{};
 pls::cs::Ref<pls::cs::Stream> cs_e65a8825426ed7a3{};
 pls::cs::Ref<pls::cs::Stream> cs_0f6af5e5e6987974{};
 virtual std::int32_t cs_virtual_bb7347310506b971();
 virtual void cs_virtual_4546aef6e4846446();
+virtual void cs_virtual_baf1496cdc1c93d8(std::int32_t v_readlimit);
+virtual bool cs_virtual_7dfe14f35a6a22dd();
 virtual std::int32_t cs_virtual_d49800fd6633bd98();
 virtual std::int32_t cs_virtual_e3637c1f0ab57ef5(pls::cs::Array<std::uint8_t> v_buf);
 virtual std::int32_t cs_virtual_4614e302bc22aa99(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len);
@@ -87,6 +146,8 @@ virtual std::int64_t cs_virtual_c6a293635ddab59b(std::int64_t v_cnt);
 struct cs_ea324a0bbfe717fe : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:java.io.OutputStream.Close";if(slot=="cs_virtual_2adf924bd0d7d65a")return "M:java.io.OutputStream.Flush";if(slot=="cs_virtual_a2a7e1a6575cae4c")return "M:java.io.OutputStream.Write(System.Int32)";if(slot=="cs_virtual_109456b2dd9e2d77")return "M:java.io.OutputStream.Write(System.Byte[])";if(slot=="cs_virtual_eeffa75bcd0cd73d")return "M:java.io.OutputStream.Write(System.Byte[],System.Int32,System.Int32)";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.OutputStream";}
 pls::cs::Ref<pls::cs::Stream> cs_f48613bc1c6327b8{};
 virtual void cs_virtual_0d912191800a0b86();
 virtual void cs_virtual_2adf924bd0d7d65a();
@@ -97,6 +158,8 @@ virtual void cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::i
 struct cs_a09270023ec48eca : pls::cs::Stream {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Close")return "M:java.io.WrappedSystemStream.Close";if(slot=="Flush")return "M:java.io.WrappedSystemStream.Flush";if(slot=="Read")return "M:java.io.WrappedSystemStream.Read(System.Byte[],System.Int32,System.Int32)";if(slot=="ReadByte")return "M:java.io.WrappedSystemStream.ReadByte";if(slot=="Seek")return "M:java.io.WrappedSystemStream.Seek(System.Int64,System.IO.SeekOrigin)";if(slot=="SetLength")return "M:java.io.WrappedSystemStream.SetLength(System.Int64)";if(slot=="Write")return "M:java.io.WrappedSystemStream.Write(System.Byte[],System.Int32,System.Int32)";if(slot=="WriteByte")return "M:java.io.WrappedSystemStream.WriteByte(System.Byte)";if(slot=="get_CanRead")return "M:java.io.WrappedSystemStream.get_CanRead";if(slot=="get_CanSeek")return "M:java.io.WrappedSystemStream.get_CanSeek";if(slot=="get_CanWrite")return "M:java.io.WrappedSystemStream.get_CanWrite";if(slot=="get_Length")return "M:java.io.WrappedSystemStream.get_Length";if(slot=="get_Position")return "M:java.io.WrappedSystemStream.get_Position";if(slot=="set_Position")return "M:java.io.WrappedSystemStream.set_Position(System.Int64)";return pls::cs::Stream::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.WrappedSystemStream";}
 pls::cs::Ref<cs_e7a5499b363ef51b> cs_39cd957faf78264b{};
 pls::cs::Ref<cs_ea324a0bbfe717fe> cs_929af7514695a90d{};
 std::int32_t cs_5e4e8e9b761e8c94{};
@@ -119,64 +182,175 @@ virtual void set_Position(std::int64_t v_value);
 struct cs_7de6788b61a5af56 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:java.lang.JInteger.ToString";if(slot=="Equals")return "M:java.lang.JInteger.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.lang.JInteger.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.lang.JInteger";}
 std::int32_t cs_159529d7b41663da{};
+virtual pls::cs::String ToString();
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
 };
 struct cs_42d69496680e17fc : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.lang.JRuntime";}
 };
 struct cs_a465028bea3432a3 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.JCalendar.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.util.JCalendar.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.util.JCalendar";}
 pls::cs::Ref<cs_66dbad5679f8ab87> cs_03197f755fcefa4b{};
 pls::cs::Ref<cs_f59223d2c773f078> cs_99f3f6ad5516299e{};
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
 };
 struct cs_66dbad5679f8ab87 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.JDate.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.util.JDate.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.util.JDate";}
 pls::cs::DateTime cs_672aeddf6395a59c{};
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
+};
+struct cs_c0fae45144034cf9 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.JLocale.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.util.JLocale.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.util.JLocale";}
+pls::cs::String cs_c8e01a4bd3e5d216{};
+pls::cs::String cs_c7b2df62ecfb4014{};
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
 };
 struct cs_a0cf9aef6a251bfd : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.util.JRandom";}
 pls::cs::Ref<pls::cs::Random> cs_51f4a63dee24d947{};
 };
 struct cs_f59223d2c773f078 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.util.JTimeZone";}
 pls::cs::String cs_05e71bcde75517db{};
 std::int64_t cs_0350607f8ec43af6{};
 pls::cs::Ref<pls::cs::TimeZoneInfo> cs_59055747f3e8f843{};
 };
 template<typename T_T>
-struct cs_51222df74ac70bab : pls::cs::Object {
+struct cs_51222df74ac70bab : pls::cs::Object, cs_a0dc211eb3feb56d {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.Vector`1.Equals(System.Object)";if(slot=="ToString")return "M:java.util.Vector`1.ToString";if(slot=="cs_virtual_60122bb6c899278e")return "M:java.util.Vector`1.get_List";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return std::string("java.util.Vector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
 pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_056e387f40164bd6{};
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual pls::cs::String ToString();
+virtual pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_virtual_60122bb6c899278e();
 };
 struct cs_e7d772862db62924 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.common.cfg.Config";}
 };
-struct cs_3c64e1d398f2e00f : pls::cs::Object {
+struct cs_7254e4706a01e4e7 : pls::cs::ExceptionObject {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::ExceptionObject::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.io.ConnectionException";}
+};
+struct cs_3c64e1d398f2e00f : pls::cs::Object, cs_c4521f4960c4f908 {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_8d925e3b30750eb6")return "M:kairo.unity.m3d4.util3d.Vector3D.Serialize(java.io.OutputStream)";if(slot=="cs_virtual_f2ab7f0a88763f04")return "M:kairo.unity.m3d4.util3d.Vector3D.Deserialize(java.io.InputStream)";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.m3d4.util3d.Vector3D";}
 float cs_5940b7db44d7fcc3{};
 float cs_3f971496b3e90e07{};
 float cs_992193a3ad58af68{};
+virtual void cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream);
+virtual void cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+};
+struct cs_922b87749168eb15 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.Compressor+Node";}
+pls::cs::Ref<cs_922b87749168eb15> cs_51d08ca6eed04eda{};
+pls::cs::Ref<cs_922b87749168eb15> cs_8e6817a8d663aa67{};
+pls::cs::Ref<cs_922b87749168eb15> cs_0d73049ca9cd4bf6{};
+std::int32_t cs_5b846f0fd1fb1aa0{};
+std::int32_t cs_57d6fb57c6af0de7{};
 };
 template<typename T_T>
 struct cs_67cd241ab51652f1 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="GetHashCode")return "M:kairo.unity.util.FastVector`1.GetHashCode";if(slot=="ToString")return "M:kairo.unity.util.FastVector`1.ToString";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return std::string("kairo.unity.util.FastVector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
 std::int32_t cs_f025835c3cf7842a{};
 std::int32_t cs_965b7a32b9c12921{};
 pls::cs::Array<T_T> cs_6d298c7f8339f4aa{};
 std::int32_t cs_c59f41a6c3bb514a{};
+virtual std::int32_t GetHashCode();
+virtual pls::cs::String ToString();
+};
+struct cs_52158c8b20364c2b : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.JarInflater";}
+pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_bfe2a01361163e7a>> cs_6f69af47bcfae216{};
+pls::cs::Array<std::uint8_t> cs_8f27992211ad5e96{};
+pls::cs::String cs_578ed5fb729c9567{};
+};
+struct cs_bfe2a01361163e7a : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.JarInflater+FileInfo";}
+pls::cs::String cs_638e5d654c077b59{};
+std::int32_t cs_6ec368f1de920152{};
+std::int32_t cs_45a972d6cedcd20a{};
+std::uint8_t cs_83fbaf866783c8ce{};
+};
+struct cs_98f0a1bec2084c3c : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.Language+LangPackFormat";}
+pls::cs::String cs_a0cee6b194388bb1{};
+char16_t cs_96513160b9f9c6b8{};
+char16_t cs_37e0eb7044938cba{};
+};
+struct cs_9487cb83e3a46e0a : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.Language+LangPackRecord";}
+std::int32_t cs_c85df0bf60809784{};
+pls::cs::String cs_05293b75838ad9b4{};
+pls::cs::List<cs_ab1b1085a7ab32b9> cs_11bb01ff7e196717{};
+pls::cs::List<pls::cs::String> cs_eacffaa0f8c3f949{};
+pls::cs::List<pls::cs::String> cs_da40773ef2f3923c{};
+};
+struct cs_ab1b1085a7ab32b9 {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();
+std::int32_t cs_1bd11544863adf53{};
+std::int32_t cs_2525b3344f53d974{};
+};
+struct cs_acb158b492b43017 {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();
+std::int32_t cs_06609f2ab38c958b{};
+std::int32_t cs_018ea348c0cf88c0{};
+pls::cs::Ref<cs_9487cb83e3a46e0a> cs_5043ee31a67ae639{};
 };
 struct cs_8c57b816bbc8fd6e : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.Property";}
 pls::cs::Array<pls::cs::Ref<cs_8c57b816bbc8fd6e>> cs_4fa0b3a7eea3a844{};
 pls::cs::Array<std::int32_t> cs_72da38f2b646e254{};
 pls::cs::Array<std::int64_t> cs_cfccd28f4d6b847a{};
@@ -186,13 +360,19 @@ pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_ba76615c0cb37783{};
 struct cs_bd164c3c94a49e2a : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:kairo.unity.util.SecureNumber.ToString";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureNumber.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.SecureNumber";}
 std::int64_t cs_7e5e9d5195f577e0{};
 std::int64_t cs_83418f44729261df{};
 std::int64_t cs_79a097054602f289{};
+virtual pls::cs::String ToString();
+virtual std::int32_t GetHashCode();
 };
 struct cs_c20c229ea63037d8 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.SecureProperty";}
 pls::cs::Array<pls::cs::Ref<cs_c20c229ea63037d8>> cs_3a492b4165f9d5db{};
 pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> cs_6747c51e21a34296{};
 pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> cs_1393912ba87bd2f6{};
@@ -202,46 +382,264 @@ pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_26072971e2305223{};
 struct cs_3b41638e424b9ee0 : cs_e7a5499b363ef51b {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_bb7347310506b971")return "M:java.io.ByteArrayInputStream.Available";return cs_e7a5499b363ef51b::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.ByteArrayInputStream";}
 virtual std::int32_t cs_virtual_bb7347310506b971();
 };
 struct cs_fb60578b3098a284 : cs_ea324a0bbfe717fe {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:java.io.ByteArrayOutputStream.Close";if(slot=="ToString")return "M:java.io.ByteArrayOutputStream.ToString";return cs_ea324a0bbfe717fe::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.ByteArrayOutputStream";}
 virtual void cs_virtual_0d912191800a0b86();
+virtual pls::cs::String ToString();
+};
+struct cs_8d93189702e4084b : cs_e7a5499b363ef51b {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_4546aef6e4846446")return "M:java.io.DataInputStream.Close";return cs_e7a5499b363ef51b::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.io.DataInputStream";}
+pls::cs::Ref<pls::cs::BinaryReader> cs_783a5dc8c7385bc4{};
+virtual void cs_virtual_4546aef6e4846446();
 };
 struct cs_f8b20a4d1d9d695f : cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>> {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.Vector.Equals(System.Object)";return cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "java.util.Vector";}
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 };
 struct cs_832d81e198eeeec2 : cs_ea324a0bbfe717fe {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:kairo.unity.io.ByteListOutputStream.Close";if(slot=="cs_virtual_eeffa75bcd0cd73d")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[],System.Int32,System.Int32)";if(slot=="cs_virtual_109456b2dd9e2d77")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[])";if(slot=="cs_virtual_a2a7e1a6575cae4c")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Int32)";if(slot=="cs_virtual_2adf924bd0d7d65a")return "M:kairo.unity.io.ByteListOutputStream.Flush";return cs_ea324a0bbfe717fe::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.io.ByteListOutputStream";}
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_dc88a962e561cf72{};
 std::int32_t cs_96bf466f63c1692d{};
 std::int32_t cs_565b1ab091133717{};
 std::int32_t cs_bd6a014dfd6a30e7{};
+virtual void cs_virtual_0d912191800a0b86();
+virtual void cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len);
+virtual void cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b);
+virtual void cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b);
+virtual void cs_virtual_2adf924bd0d7d65a();
 };
 struct cs_15e3f7b692b3f380 : cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>> {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.FastVector";}
 };
 struct cs_7fd3b635ed6929d0 : cs_bd164c3c94a49e2a {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:kairo.unity.util.SecureInt.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureInt.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.SecureInt";}
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
 };
 struct cs_924db3d974bae2af : cs_bd164c3c94a49e2a {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:kairo.unity.util.SecureLong.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureLong.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.SecureLong";}
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
 };
 struct cs_bb652fbb61000386 : cs_bd164c3c94a49e2a {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:kairo.unity.util.SecureString.ToString";if(slot=="Equals")return "M:kairo.unity.util.SecureString.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureString.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.SecureString";}
 pls::cs::String cs_3a4ab2d19bbedee8{};
 pls::cs::Array<char16_t> cs_23af4da78e1ad81f{};
 pls::cs::Array<char16_t> cs_3af0cc4416bce0e0{};
 std::int32_t cs_fe44ec569b4e9ab5{};
 virtual pls::cs::String ToString();
+virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
+virtual std::int32_t GetHashCode();
 };
+void cs_init_3b41638e424b9ee0();
+void cs_init_fb60578b3098a284();
+void cs_init_8d93189702e4084b();
+void cs_init_64732f8c8acf2fd3();
+void cs_init_e7a5499b363ef51b();
+void cs_init_ea324a0bbfe717fe();
+void cs_init_a09270023ec48eca();
+void cs_init_7de6788b61a5af56();
+void cs_init_1feb9ce0db5130ce();
+void cs_init_ead0ac0906403160();
+void cs_init_42d69496680e17fc();
+void cs_init_86e62a3c0e632a0f();
+void cs_init_3af9088680f95fb3();
+void cs_init_582a926e9c7748a6();
+void cs_init_a465028bea3432a3();
+void cs_init_66dbad5679f8ab87();
+void cs_init_c0fae45144034cf9();
+void cs_init_a0cf9aef6a251bfd();
+void cs_init_f59223d2c773f078();
+void cs_init_cbac662a28aa40b1();
+void cs_init_f8b20a4d1d9d695f();
+void cs_init_e7d772862db62924();
+void cs_init_edf182ae9bfd734d();
+void cs_init_832d81e198eeeec2();
+void cs_init_7254e4706a01e4e7();
+void cs_init_3c64e1d398f2e00f();
+void cs_init_d4a32b46456ca92c();
+void cs_init_f3ea616d36334b95();
+void cs_init_18054fa8aeee43c7();
+void cs_init_922b87749168eb15();
+void cs_init_8b851671e0d8b17f();
+void cs_init_c783ca99640a5ce3();
+void cs_init_4978cb69e37b8564();
+void cs_init_15e3f7b692b3f380();
+void cs_init_52158c8b20364c2b();
+void cs_init_bfe2a01361163e7a();
+void cs_init_72d9658ed61145d6();
+void cs_init_83a7bc36395d16bd();
+void cs_init_8c57b816bbc8fd6e();
+void cs_init_7fd3b635ed6929d0();
+void cs_init_924db3d974bae2af();
+void cs_init_bd164c3c94a49e2a();
+void cs_init_c20c229ea63037d8();
+void cs_init_bb652fbb61000386();
+void cs_init_5098bfda9cf65745();
+void cs_init_1ff3292665c8e0c4();
+pls::cs::Ref<cs_42d69496680e17fc>& cs_c1bf1420af51dac4();
+pls::cs::Array<pls::cs::Array<std::uint16_t>>& cs_a5cd9f1fd4c2c1ad();
+pls::cs::DateTime& cs_fa93015d6ad485b9();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_7a7ace56bed83b03();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_b78c3f5d9d47c84b();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_11311bb802a8e0e8();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_cc21044dfc4de694();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_3afe6640285fae71();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_cd1d5e1402c76f9e();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_a87e4df5f380d8da();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_7714c661504f45a9();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_5d6b42858efe1435();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_18de959dcf2925cc();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_1f99b443f119b498();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_a19001fed598d965();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_a4b9e66ad097f435();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_bc255e4e0273dc64();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_ea6949987f40441a();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_ac2d8087ffaf8ccf();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_658cc4bdef009c44();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_f0b4a3f6b1351854();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_04218468071e6e83();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_df02c6d7688b6224();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_34c197abe832387a();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_6d164375cda18d7c();
+pls::cs::Ref<cs_c0fae45144034cf9>& cs_cece9e1e5fc285c3();
+std::int32_t& cs_c57b75ba2c108877();
+pls::cs::String& cs_acfe0d20af2323a8();
+bool& cs_641d09da1fd4cb6f();
+pls::cs::String& cs_3403795577da603c();
+std::int32_t& cs_fe98f159e1f0c2a7();
+pls::cs::String& cs_1ce7e3797101a750();
+std::int32_t& cs_1a0c417252a50258();
+pls::cs::String& cs_c707455b0857f14c();
+std::int32_t& cs_56b87a4889a075c1();
+pls::cs::Array<bool>& cs_2c1d5d154b0f74ed();
+bool& cs_7d035d79ab9d9082();
+std::int32_t& cs_ae88aadf0313d525();
+bool& cs_b0827224162a4f93();
+bool& cs_01d5980f91155b3c();
+bool& cs_3de093fc674f80ed();
+bool& cs_3020341c80294797();
+bool& cs_3853de49e17e07cd();
+bool& cs_e5cfdc00c9449422();
+bool& cs_a0d04541596b7678();
+bool& cs_d058affcdd0b23a7();
+std::int32_t& cs_f970055179afa1e0();
+std::int32_t& cs_64c23caca1e41663();
+std::int32_t& cs_220e04776206e9cc();
+std::int32_t& cs_3b6b8ce3637f0d5a();
+std::int32_t& cs_5c6d8357da0c0aaf();
+bool& cs_bdeecc395da0c8ba();
+bool& cs_534ddf5c958564fa();
+bool& cs_c85047b12129912e();
+bool& cs_9ac7702677443627();
+bool& cs_1708f3ca3d8d1229();
+std::int32_t& cs_0dc92919b1751224();
+bool& cs_89a30a814542a913();
+bool& cs_98a039c4edacf2e2();
+bool& cs_d6caa754a735f006();
+bool& cs_6a817fe7e36e1f1d();
+pls::cs::String& cs_f43ec1743d6637fa();
+std::int32_t& cs_efcdf5d0d7b2cdc2();
+pls::cs::String& cs_c64c5925b5d6071d();
+pls::cs::String& cs_8c4c7e2e9fdb33f7();
+bool& cs_a242c60cc463f683();
+bool& cs_4cc76a7a43706693();
+bool& cs_137686a1e7856340();
+bool& cs_19a8f436a39a237f();
+bool& cs_49795a9b1ce2f0ca();
+bool& cs_ec57416f7acf6303();
+bool& cs_ab4e6340d409ef70();
+bool& cs_383c676f92bb4305();
+bool& cs_f15c6a3105cad248();
+bool& cs_3420b9de46d631e2();
+pls::cs::String& cs_55b9773d40ef294f();
+bool& cs_191c63b05b3afe39();
+pls::cs::String& cs_716a03e631cc2599();
+pls::cs::String& cs_883a98c5db7cd0d2();
+pls::cs::String& cs_c90e657ed8ad42ad();
+pls::cs::String& cs_56fa4ec33bde825a();
+pls::cs::String& cs_7072b3e737bf9940();
+pls::cs::String& cs_455a8fee53914552();
+pls::cs::String& cs_1e2bd71cada8c5c4();
+pls::cs::String& cs_7f5d05d9a8be3705();
+pls::cs::String& cs_29a6912fb32f7990();
+pls::cs::String& cs_60ba7ae89ea683db();
+bool& cs_39f314d39eeb5419();
+bool& cs_d267cfa02a71f045();
+bool& cs_37261ec9732c529e();
+bool& cs_e8e122e44197f378();
+pls::cs::String& cs_6ce655df5c01ad40();
+pls::cs::Array<std::int64_t>& cs_6e88f492355c58fb();
+std::int32_t& cs_0be6a67a68fc8c7b();
+pls::cs::Array<pls::cs::String>& cs_33074213f1660560();
+bool& cs_8491f3974fd931ce();
+pls::cs::Dictionary<pls::cs::String,bool>& cs_55ec76aaf7c140e9();
+pls::cs::String& cs_eddd1c84a8587987();
+pls::cs::Array<std::int8_t>& cs_229d1569f1fc0620();
+pls::cs::Array<std::int32_t>& cs_0ee869b1ec0c9fc3();
+pls::cs::Array<std::int16_t>& cs_4854f02f058c4f7b();
+pls::cs::Array<std::int32_t>& cs_3591f84dd15a7131();
+pls::cs::Array<std::uint8_t>& cs_410b8666022ebeba();
+std::int32_t& cs_a175562839f44634();
+pls::cs::Array<std::uint8_t>& cs_5b2c53d265751d9b();
+pls::cs::Array<pls::cs::Ref<cs_922b87749168eb15>>& cs_06f52091d473e08c();
+pls::cs::Array<std::uint8_t>& cs_2184fc12b87895ce();
+pls::cs::Array<std::int32_t>& cs_615d3b682d6758f8();
+pls::cs::Array<std::int64_t>& cs_f9196b08a328bd32();
+pls::cs::Array<std::uint8_t>& cs_1c11d615d9916ed8();
+pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_d135969453118803();
+pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_e7e31338a40ebcb2();
+pls::cs::Array<pls::cs::Array<pls::cs::Array<pls::cs::String>>>& cs_a41430b838321192();
+pls::cs::Array<pls::cs::String>& cs_068e31826b0fd723();
+std::int32_t& cs_593dc05baccea7cd();
+pls::cs::String& cs_01c4bf6216ab6adc();
+pls::cs::String& cs_3fb70c2eded7c9ff();
+pls::cs::String& cs_885e46a8a2b95893();
+pls::cs::String& cs_9d62cf693893d256();
+pls::cs::String& cs_8da583a8425c5117();
+pls::cs::Array<pls::cs::String>& cs_74c39fff0f46ab52();
+pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_98f0a1bec2084c3c>>& cs_2c85f04bd0d708d9();
+pls::cs::Dictionary<pls::cs::String,pls::cs::Array<pls::cs::List<cs_acb158b492b43017>>>& cs_d82354f7d4cc6e5c();
+pls::cs::Array<pls::cs::Ref<cs_9487cb83e3a46e0a>>& cs_fe1686f2bdf4b397();
+std::int32_t& cs_237ab1e79f07965b();
+pls::cs::String& cs_2fd3deed1e409352();
+std::int32_t& cs_33fd9fa03c065bd8();
+std::int32_t& cs_a73b188b45467dba();
+pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_6393581f8e4c2247();
+pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_aefbaa4ea6f5261a();
+pls::cs::Array<pls::cs::Array<pls::cs::Array<pls::cs::String>>>& cs_560940226681a6a6();
+pls::cs::String& cs_5dc81e2eacc2181a();
+pls::cs::Ref<cs_3da6da0799f0bdf8>& cs_8a995ef2c270d901();
+std::int64_t& cs_a55a986dcce0645f();
+pls::cs::Ref<cs_a0cf9aef6a251bfd>& cs_1e58df81cbed8f35();
 pls::cs::Ref<cs_3b41638e424b9ee0> cs_c3a84083a67ee263(pls::cs::Array<std::uint8_t> v_data);
 void cs_c3a84083a67ee263_init(pls::cs::Ref<cs_3b41638e424b9ee0> cs_this,pls::cs::Array<std::uint8_t> v_data);
 std::int32_t cs_67338973d6c3b7c6(pls::cs::Ref<cs_3b41638e424b9ee0> cs_this);
@@ -249,12 +647,23 @@ pls::cs::Ref<cs_fb60578b3098a284> cs_10f86e0fa81e1b57();
 void cs_10f86e0fa81e1b57_init(pls::cs::Ref<cs_fb60578b3098a284> cs_this);
 void cs_939f1d17e9442852(pls::cs::Ref<cs_fb60578b3098a284> cs_this);
 pls::cs::Array<std::uint8_t> cs_c875afd29ab2966c(pls::cs::Ref<cs_fb60578b3098a284> cs_this);
+pls::cs::String cs_576830aae6220bdb(pls::cs::Ref<cs_fb60578b3098a284> cs_this);
+pls::cs::Ref<cs_8d93189702e4084b> cs_606370a03155bf34(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+void cs_606370a03155bf34_init(pls::cs::Ref<cs_8d93189702e4084b> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+void cs_5b229bc3548b08c7(pls::cs::Ref<cs_8d93189702e4084b> cs_this);
+std::int32_t cs_d79f36f4078735fb(pls::cs::Ref<cs_8d93189702e4084b> cs_this);
+pls::cs::Ref<cs_64732f8c8acf2fd3> cs_a8c0bbab413528f7(pls::cs::String v_s);
+void cs_a8c0bbab413528f7_init(pls::cs::Ref<cs_64732f8c8acf2fd3> cs_this,pls::cs::String v_s);
 pls::cs::Ref<cs_e7a5499b363ef51b> cs_7c187221d1d7c346();
 void cs_7c187221d1d7c346_init(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
 std::int32_t cs_bb7347310506b971(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
 bool cs_134fe7a07d721941(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
 void cs_4546aef6e4846446(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
 std::int64_t cs_9dac93bf518080bf(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
+pls::cs::Ref<pls::cs::Stream> cs_a8c261103d5c33e8(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
+void cs_baf1496cdc1c93d8(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this,std::int32_t v_readlimit);
+bool cs_7dfe14f35a6a22dd(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
+pls::cs::Ref<pls::cs::Stream> cs_010114ded9156773(pls::cs::Ref<cs_e7a5499b363ef51b> v_s);
 std::int32_t cs_d49800fd6633bd98(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this);
 std::int32_t cs_4614e302bc22aa99(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this,pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len);
 std::int32_t cs_e3637c1f0ab57ef5(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this,pls::cs::Array<std::uint8_t> v_buf);
@@ -268,6 +677,8 @@ void cs_2adf924bd0d7d65a(pls::cs::Ref<cs_ea324a0bbfe717fe> cs_this);
 void cs_eeffa75bcd0cd73d(pls::cs::Ref<cs_ea324a0bbfe717fe> cs_this,pls::cs::Array<std::uint8_t> v_b,std::int32_t v_offset,std::int32_t v_len);
 void cs_109456b2dd9e2d77(pls::cs::Ref<cs_ea324a0bbfe717fe> cs_this,pls::cs::Array<std::uint8_t> v_b);
 void cs_a2a7e1a6575cae4c(pls::cs::Ref<cs_ea324a0bbfe717fe> cs_this,std::int32_t v_b);
+pls::cs::Ref<cs_a09270023ec48eca> cs_f4af9cf35590567d(pls::cs::Ref<cs_e7a5499b363ef51b> v_ist);
+void cs_f4af9cf35590567d_init(pls::cs::Ref<cs_a09270023ec48eca> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_ist);
 void cs_3f2440e57ef29f1e(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
 void cs_6c7bbca4c29839c1(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
 bool cs_0ad1ba7c0fd9d02e(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
@@ -277,6 +688,7 @@ pls::cs::Ref<cs_e7a5499b363ef51b> cs_fde8a8ea457737fa(pls::cs::Ref<cs_a09270023e
 std::int64_t cs_c8a570aac49067da(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
 pls::cs::Ref<cs_ea324a0bbfe717fe> cs_362ad6b68823aeb0(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
 std::int64_t cs_8acc9ec5371d8299(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
+void cs_6050dd00fcef65a8(pls::cs::Ref<cs_a09270023ec48eca> cs_this,std::int32_t v_nb);
 std::int32_t cs_7a3b85e65662d47c(pls::cs::Ref<cs_a09270023ec48eca> cs_this,pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count);
 std::int32_t cs_ad4fa1e286b44f3a(pls::cs::Ref<cs_a09270023ec48eca> cs_this);
 std::int64_t cs_e1435e7e4b074f26(pls::cs::Ref<cs_a09270023ec48eca> cs_this,std::int64_t v_offset,pls::cs::SeekOrigin v_origin);
@@ -286,9 +698,12 @@ void cs_399352675683031c(pls::cs::Ref<cs_a09270023ec48eca> cs_this,pls::cs::Arra
 void cs_b58a5f8e785cf771(pls::cs::Ref<cs_a09270023ec48eca> cs_this,std::uint8_t v_value);
 pls::cs::Ref<cs_7de6788b61a5af56> cs_6ebf505bf86af890(std::int32_t v_value);
 void cs_6ebf505bf86af890_init(pls::cs::Ref<cs_7de6788b61a5af56> cs_this,std::int32_t v_value);
+bool cs_ebd756e2a16440e5(pls::cs::Ref<cs_7de6788b61a5af56> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
+std::int32_t cs_16762e09ddce2966(pls::cs::Ref<cs_7de6788b61a5af56> cs_this);
 std::int32_t cs_b1fe1ec0a394cd44(pls::cs::Ref<cs_7de6788b61a5af56> cs_this);
 std::int32_t cs_9c23d908aa6dc449(pls::cs::Ref<cs_7de6788b61a5af56> v_s);
 std::int32_t cs_2dbfed27c63e8b3d(pls::cs::String v_s);
+pls::cs::String cs_044a765a6989d563(pls::cs::Ref<cs_7de6788b61a5af56> cs_this);
 pls::cs::Ref<cs_7de6788b61a5af56> cs_908687d09e1c5f78(pls::cs::String v_s);
 std::int64_t cs_fbdffc982daddb52(pls::cs::String v_s);
 std::int32_t cs_2913a1bf47038615(std::int32_t v_a);
@@ -302,37 +717,69 @@ pls::cs::Ref<cs_42d69496680e17fc> cs_8fb57d859eee275a();
 void cs_8fb57d859eee275a_init(pls::cs::Ref<cs_42d69496680e17fc> cs_this);
 void cs_b8f5dfbc2bf26f5f(pls::cs::Ref<cs_42d69496680e17fc> cs_this);
 pls::cs::Ref<cs_42d69496680e17fc> cs_232fa563e68dcabb();
+pls::cs::String cs_6e12fc217a0052c1(pls::cs::Array<std::uint8_t> v_sjis_bytes,std::int32_t v_offset,std::int32_t v_length);
+std::uint16_t cs_28045a7b4d1d326f(std::uint16_t v_sjis);
+pls::cs::String cs_0b9238a3df4985af(pls::cs::Array<std::uint8_t> v_bytes,pls::cs::String v_enc);
 pls::cs::String cs_0062608f682073ef(pls::cs::Array<std::uint8_t> v_bytes);
 pls::cs::String cs_b5c18ae6a6b66a78(pls::cs::String v_value);
 pls::cs::String cs_f8c13f883911de4b(char16_t v_c);
 pls::cs::String cs_420fb62b9e208a96(std::int32_t v_i);
 pls::cs::String cs_45bf8972ccfd60d6(std::int64_t v_l);
+pls::cs::String cs_2ff893c603156d85(pls::cs::Ref<pls::cs::Object> v_obj);
 void cs_d7f58c7ab5ff68b6(pls::cs::Ref<pls::cs::Object> v_src,std::int32_t v_src_position,pls::cs::Ref<pls::cs::Object> v_dst,std::int32_t v_dst_position,std::int32_t v_length);
 std::int64_t cs_55fcf3528750ae31();
 void cs_ff348c05d6b0416a();
 char16_t cs_b5d1dc3a4e215d09(pls::cs::String v_str,std::int32_t v_index);
+bool cs_f9dd1affe68f18d5(pls::cs::String v_str,pls::cs::String v_anotherString);
 pls::cs::Array<std::uint8_t> cs_a8e45b955b78e04d(pls::cs::String v_str);
 std::int32_t cs_54a151f146e7cda1(pls::cs::String v_str,std::int32_t v_ch);
 std::int32_t cs_8eed6765a32617b7(pls::cs::String v_str);
+bool cs_9edf4346f293871d(pls::cs::String v_str,pls::cs::String v_prefix,std::int32_t v_toffset);
 pls::cs::String cs_c8a33d0ecbcf0b78(pls::cs::String v_str,std::int32_t v_beginIndex,std::int32_t v_endIndex);
 pls::cs::String cs_51d6c186b8b049a1(pls::cs::String v_str,std::int32_t v_beginIndex);
+pls::cs::String cs_69fdc17c11a6247b(pls::cs::String v_str);
+pls::cs::Ref<cs_a465028bea3432a3> cs_d176e2e695c74782();
+void cs_d176e2e695c74782_init(pls::cs::Ref<cs_a465028bea3432a3> cs_this);
+bool cs_9f8cfce81641ea7a(pls::cs::Ref<cs_a465028bea3432a3> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 std::int32_t cs_8d8ff05768cced2b(pls::cs::Ref<cs_a465028bea3432a3> cs_this,std::int32_t v_field);
+std::int32_t cs_26468f4a2c9b3470(pls::cs::Ref<cs_a465028bea3432a3> cs_this);
+pls::cs::Ref<cs_a465028bea3432a3> cs_23a91b30234d4879();
+std::int64_t cs_1e354cc0ba1a9ce0(pls::cs::Ref<cs_a465028bea3432a3> cs_this);
 void cs_e2c62bcb22f058c9(pls::cs::Ref<cs_a465028bea3432a3> cs_this,pls::cs::Ref<cs_66dbad5679f8ab87> v_date);
 void cs_ab403c0b96bfdb59(pls::cs::Ref<cs_a465028bea3432a3> cs_this,std::int64_t v_millis);
 pls::cs::Ref<cs_66dbad5679f8ab87> cs_f437b6bb4cf7b2a6();
 void cs_f437b6bb4cf7b2a6_init(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this);
 pls::cs::Ref<cs_66dbad5679f8ab87> cs_bbcadd583a6daacb(std::int64_t v_date);
 void cs_bbcadd583a6daacb_init(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this,std::int64_t v_date);
+bool cs_8682e14f5d0030c8(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 pls::cs::DateTime cs_d6f2aad1fde7cbfd(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this);
+std::int32_t cs_bc050b58fd51f9b2(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this);
+std::int64_t cs_f91743457814379a(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this);
 void cs_d5b7c3d10f4ecec3(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this,std::int64_t v_time);
+pls::cs::Ref<cs_c0fae45144034cf9> cs_a6b35afeab568a11(pls::cs::String v_language,pls::cs::String v_country);
+void cs_a6b35afeab568a11_init(pls::cs::Ref<cs_c0fae45144034cf9> cs_this,pls::cs::String v_language,pls::cs::String v_country);
+bool cs_fea61c607b5a4210(pls::cs::Ref<cs_c0fae45144034cf9> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
+pls::cs::String cs_9731cae4f8bdbaf7(pls::cs::Ref<cs_c0fae45144034cf9> cs_this);
+pls::cs::Ref<cs_c0fae45144034cf9> cs_7faa6468ee6a5cd1();
+std::int32_t cs_6deeff3691e8822a(pls::cs::Ref<cs_c0fae45144034cf9> cs_this);
+pls::cs::String cs_af0690d8cc2a7c96(pls::cs::Ref<cs_c0fae45144034cf9> cs_this);
+bool cs_5bd23c8492e95ec7(pls::cs::Ref<cs_c0fae45144034cf9> v_obj1,pls::cs::Ref<cs_c0fae45144034cf9> v_obj2);
+bool cs_e2e4500778945c6e(pls::cs::Ref<cs_c0fae45144034cf9> v_obj1,pls::cs::Ref<cs_c0fae45144034cf9> v_obj2);
 pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_783c2dc4bd688739();
 void cs_783c2dc4bd688739_init(pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_this);
 pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_8d402734b0c5f510(std::int64_t v_seed);
 void cs_8d402734b0c5f510_init(pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_this,std::int64_t v_seed);
 std::int32_t cs_1811bb4f9e389c4b(pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_this);
+pls::cs::Ref<cs_f59223d2c773f078> cs_bcb3a1c31d9b5d23(pls::cs::String v_id);
+void cs_bcb3a1c31d9b5d23_init(pls::cs::Ref<cs_f59223d2c773f078> cs_this,pls::cs::String v_id);
+pls::cs::Ref<cs_f59223d2c773f078> cs_0ccfddc5d383b7b6();
 pls::cs::Ref<pls::cs::TimeZoneInfo> cs_48f0684537101017(pls::cs::Ref<cs_f59223d2c773f078> cs_this);
+template<typename T_T>
+T_T cs_e958ba3e955da10a(pls::cs::Array<std::int32_t> v_counts);
+pls::cs::Ref<pls::cs::ArrayBase> cs_c751cd2e64c3775f(pls::cs::Ref<pls::cs::RuntimeType> v_type,pls::cs::Array<std::int32_t> v_counts,std::int32_t v_index);
 pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_b5d75502f0a9aa7e();
 void cs_b5d75502f0a9aa7e_init(pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_this);
+bool cs_673ba145a871a846(pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 template<typename T_T>
 pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_946b70ecd88b233a();
 template<typename T_T>
@@ -346,7 +793,11 @@ void cs_ccc6918433418e24(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this);
 template<typename T_T>
 T_T cs_46529d25e14daec6(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,std::int32_t v_index);
 template<typename T_T>
+bool cs_5456805d05dd254d(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
+template<typename T_T>
 T_T cs_0d26c45ae3c275d4(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this);
+template<typename T_T>
+pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_aacded9f4fa90723(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this);
 template<typename T_T>
 std::int32_t cs_3a643b1c499c91f2(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_elem);
 template<typename T_T>
@@ -365,20 +816,43 @@ template<typename T_T>
 void cs_221133265c339075(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_obj,std::int32_t v_index);
 template<typename T_T>
 std::int32_t cs_c55367423dbb79a1(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this);
+template<typename T_T>
+pls::cs::String cs_43bff43663390cb7(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this);
 pls::cs::Ref<cs_e7d772862db62924> cs_6b6e33fd4eab08cf();
 void cs_6b6e33fd4eab08cf_init(pls::cs::Ref<cs_e7d772862db62924> cs_this);
+pls::cs::String cs_56a96842a5446791(pls::cs::String v_file);
+void cs_3906dbbf3696bb10(pls::cs::String v_sourceUrl);
+pls::cs::Array<std::uint8_t> cs_8c6bbd3f0b8c1627(pls::cs::String v_file);
+pls::cs::Ref<pls::kairo::NativeTextAsset> cs_d142809cb87361d3(pls::cs::String v_file);
+void cs_f39e5dc55d257528();
+bool cs_0932d38228a45953(pls::cs::String v_file);
+pls::cs::Array<pls::cs::String> cs_2abb7e234674bdd0(pls::cs::String v_file);
+pls::cs::Array<std::uint8_t> cs_7b3078b027129799(pls::cs::String v_file);
+pls::cs::Ref<cs_e7a5499b363ef51b> cs_3b653770361acb31(pls::cs::String v_file);
+void cs_2c474068bf2bc8ac(pls::cs::Ref<cs_832d81e198eeeec2> cs_this);
+void cs_9a08c52e842b2bca(pls::cs::Ref<cs_832d81e198eeeec2> cs_this,std::int32_t v_listNum);
+pls::cs::Ref<cs_832d81e198eeeec2> cs_62c87c20be2abf48();
+void cs_62c87c20be2abf48_init(pls::cs::Ref<cs_832d81e198eeeec2> cs_this);
+void cs_ee6ef7b3c5c52f4e(pls::cs::Ref<cs_832d81e198eeeec2> cs_this);
+void cs_5e27bc3565f1a832(pls::cs::Ref<cs_832d81e198eeeec2> cs_this);
 std::int32_t cs_de90486df5eaa436(pls::cs::Ref<cs_832d81e198eeeec2> cs_this);
 pls::cs::Array<std::uint8_t> cs_03248748e929fa37(pls::cs::Ref<cs_832d81e198eeeec2> cs_this,std::int32_t v_index,std::int32_t v_length,pls::cs::Array<std::uint8_t> v_dst);
 pls::cs::Array<std::uint8_t> cs_a98d1e0db662120b(pls::cs::Ref<cs_832d81e198eeeec2> cs_this,std::int32_t v_index,std::int32_t v_length);
+void cs_049fbfd8c1e94864(pls::cs::Ref<cs_832d81e198eeeec2> cs_this,pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len);
+void cs_43cbea7ccad9d4d6(pls::cs::Ref<cs_832d81e198eeeec2> cs_this,pls::cs::Array<std::uint8_t> v_b);
+void cs_f1d0001066598458(pls::cs::Ref<cs_832d81e198eeeec2> cs_this,std::int32_t v_b);
+std::int32_t cs_bf1ddcf69d442d48(pls::cs::Ref<cs_7254e4706a01e4e7> cs_this);
 pls::cs::Ref<cs_3c64e1d398f2e00f> cs_f0250768de698879();
 void cs_f0250768de698879_init(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this);
 pls::cs::Ref<cs_3c64e1d398f2e00f> cs_4df100a3a5400345(float v_x,float v_y,float v_z);
 void cs_4df100a3a5400345_init(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,float v_y,float v_z);
 void cs_b222f1bce980230f(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<cs_3c64e1d398f2e00f> v_v);
 void cs_c44a23edacd04c43(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,float v_y,float v_z);
+void cs_d64267dcdc138fe0(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 float cs_057460bc67f561ff(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this);
 float cs_b09e372c7963bada(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this);
 float cs_8c6fe63f0a32cc25(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this);
+void cs_086b1f406f360542(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream);
 void cs_cdf43d81dba1e3fb(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<cs_3c64e1d398f2e00f> v_v);
 void cs_eab8c2f1c1ba14e9(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,float v_y,float v_z);
 void cs_456e4aca00a0b62a(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x);
@@ -391,6 +865,21 @@ std::int32_t cs_959570d45f7028be(std::int16_t v_high,std::int16_t v_low);
 std::int32_t cs_14daf94c5cc9a117(std::int32_t v_v,std::int32_t v_bit);
 std::int32_t cs_239ce9a0914fe00b(std::int32_t v_v,std::int32_t v_bit);
 pls::cs::Array<std::int16_t> cs_ba020c0b5c680349(std::int32_t v_value);
+pls::cs::Array<std::uint8_t> cs_560fbd464452ab06();
+pls::cs::Array<std::int32_t> cs_1239dbf1c63653a5(pls::cs::Ref<cs_15e3f7b692b3f380> v_list);
+std::int32_t cs_bac9e060fc04efba();
+std::int32_t cs_2a068e59f5256386();
+pls::cs::Ref<cs_922b87749168eb15> cs_d55770566d7a5dd6();
+void cs_277fdced2c4e5018(pls::cs::Array<std::uint8_t> v_data);
+void cs_b4bc001e9edc179c(std::int32_t v_bit);
+void cs_067486e1d5e125b1(std::int32_t v_v);
+void cs_a11a596a3ae3687e(pls::cs::Ref<cs_922b87749168eb15> v_node);
+pls::cs::Array<std::uint8_t> cs_e44260e02e247abd(pls::cs::Array<std::uint8_t> v_data);
+pls::cs::Array<std::uint8_t> cs_76473a48703be5ba(pls::cs::Array<std::uint8_t> v_data);
+pls::cs::Ref<cs_922b87749168eb15> cs_25fc81be857429d9();
+void cs_25fc81be857429d9_init(pls::cs::Ref<cs_922b87749168eb15> cs_this);
+pls::cs::Ref<cs_922b87749168eb15> cs_87ec71db506764c9(pls::cs::Ref<cs_922b87749168eb15> v_parent,pls::cs::Ref<cs_922b87749168eb15> v_left,pls::cs::Ref<cs_922b87749168eb15> v_right,std::int32_t v_weight,std::int32_t v_value);
+void cs_87ec71db506764c9_init(pls::cs::Ref<cs_922b87749168eb15> cs_this,pls::cs::Ref<cs_922b87749168eb15> v_parent,pls::cs::Ref<cs_922b87749168eb15> v_left,pls::cs::Ref<cs_922b87749168eb15> v_right,std::int32_t v_weight,std::int32_t v_value);
 std::int64_t cs_4d36dd315e2118af(pls::cs::Array<std::uint8_t> v_buf);
 void cs_6d14bc0d20253aa7();
 std::int64_t cs_cb749cec81c9fbdd(std::int64_t v_crc,pls::cs::Array<std::uint8_t> v_buf,std::int32_t v_len);
@@ -404,6 +893,7 @@ pls::cs::Array<std::uint8_t> cs_650130ed3a48c8b1(std::int32_t v_data,bool v_endi
 pls::cs::Array<std::uint8_t> cs_afc3ba06e9b75538(std::int64_t v_data,bool v_endian);
 pls::cs::Array<std::uint8_t> cs_3271310f2199f07a(std::int16_t v_data,bool v_endian);
 void cs_33fd658d45a27eb0(pls::cs::Array<std::uint8_t> v_src,pls::cs::Array<std::uint8_t> v_key);
+void cs_b78cf957d6d975eb(pls::cs::Array<std::uint8_t> v_src);
 void cs_17e1939c126befd5(pls::cs::Array<std::uint8_t> v_src,pls::cs::Array<std::uint8_t> v_key);
 void cs_a232dc3a48dd6d41(pls::cs::Array<std::uint8_t> v_key);
 pls::cs::Ref<cs_15e3f7b692b3f380> cs_617649d3cca73756();
@@ -423,6 +913,8 @@ T_T cs_4b357a5c06369f9d(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,std::int3
 template<typename T_T>
 T_T cs_656627fbbe890703(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this);
 template<typename T_T>
+std::int32_t cs_eb30533b1cca1f84(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this);
+template<typename T_T>
 std::int32_t cs_5149fb87b013384f(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_elem);
 template<typename T_T>
 void cs_58bd30f4afc5bccd(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_obj,std::int32_t v_index);
@@ -438,42 +930,96 @@ template<typename T_T>
 void cs_cc1549d9ed88f4a6(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,std::int32_t v_index);
 template<typename T_T>
 std::int32_t cs_66a816fe45ab90e7(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this);
+template<typename T_T>
+pls::cs::String cs_31d9db7cf8a97aa7(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this);
+void cs_e488b26211313625(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+pls::cs::Ref<cs_bfe2a01361163e7a> cs_642a65c689c877cf(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_name);
+pls::cs::Ref<cs_52158c8b20364c2b> cs_9eb68b9f4334471a(pls::cs::Array<std::uint8_t> v_data);
+void cs_9eb68b9f4334471a_init(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::Array<std::uint8_t> v_data);
+void cs_22ec1e3c74812f59(pls::cs::Ref<cs_52158c8b20364c2b> cs_this);
+pls::cs::String cs_cfa0bd9ae3912c7e(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_file);
+pls::cs::Ref<cs_bfe2a01361163e7a> cs_b704c7698ceaf8f6();
+void cs_b704c7698ceaf8f6_init(pls::cs::Ref<cs_bfe2a01361163e7a> cs_this);
+pls::cs::Array<std::uint8_t> cs_344d0f488664be89(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_name);
+pls::cs::Ref<cs_e7a5499b363ef51b> cs_f410f19385e7fe89(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_name);
+pls::cs::Ref<cs_e7a5499b363ef51b> cs_c147457aef6fbe27(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_file);
+std::int64_t cs_95ade8baca7a8831(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_name);
+pls::cs::String cs_23cc986a963e717e(pls::cs::String v_text);
+pls::cs::String cs_8e466a550673662a(pls::cs::String v_src);
+pls::cs::Array<std::uint8_t> cs_25d47473f7a22197(pls::cs::String v_file,pls::cs::Array<std::uint8_t> v_data);
+std::int32_t cs_f2f74213ca1ea9bc();
+std::int32_t cs_ed54521e4ea13171(pls::cs::Ref<cs_c0fae45144034cf9> v_locale);
+pls::cs::String cs_32fd76cf013efb1e();
+pls::cs::Array<pls::cs::String> cs_2f109647f6f30207();
+bool cs_ce0912b8167f3504();
+pls::cs::Array<pls::cs::Array<pls::cs::Array<pls::cs::String>>> cs_79b14a50dd86de7d(pls::cs::Array<pls::cs::Array<pls::cs::String>> v_textTable);
+pls::cs::String cs_d772a2b798b74044(pls::cs::String v_softlabel);
+pls::cs::String cs_519a2204b16d0770(pls::cs::String v_text,bool v_tabCheck);
+void cs_4fdae576ed75d546(pls::cs::String v_text);
+pls::cs::String cs_a66c820e92bb7b9a(pls::cs::String v_text,pls::cs::Ref<pls::cs::ExceptionObject> v_t);
+pls::cs::String cs_b85f936b499334d9(pls::cs::Ref<pls::cs::ExceptionObject> v_t);
+pls::cs::String cs_b686603f380b2527(pls::cs::Ref<pls::cs::ExceptionObject> v_t);
+pls::cs::String cs_812090ed79928522(pls::cs::String v_text,pls::cs::Ref<pls::cs::ExceptionObject> v_t);
 pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_7a9ac0812c6bac9b();
 void cs_7a9ac0812c6bac9b_init(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this);
 pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_908c27d4c8b0dafd(pls::cs::Ref<cs_8c57b816bbc8fd6e> v_property);
 void cs_908c27d4c8b0dafd_init(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Ref<cs_8c57b816bbc8fd6e> v_property);
 pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_e34104df98d3719c(pls::cs::Array<pls::cs::Ref<cs_8c57b816bbc8fd6e>> v_pros,pls::cs::Array<std::int32_t> v_ints,pls::cs::Array<std::int64_t> v_lngs,pls::cs::Array<pls::cs::String> v_strs,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_bins);
 void cs_e34104df98d3719c_init(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<pls::cs::Ref<cs_8c57b816bbc8fd6e>> v_pros,pls::cs::Array<std::int32_t> v_ints,pls::cs::Array<std::int64_t> v_lngs,pls::cs::Array<pls::cs::String> v_strs,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_bins);
+std::int32_t cs_9bed1c1a7cdf0fd7(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this);
+void cs_35c274628bb2d40e(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+void cs_abffc02b85346a7d(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<std::uint8_t> v_data);
+void cs_0f2f500f52fc5e3a(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream,std::int32_t v_type,std::int32_t v_size,pls::cs::Array<std::uint8_t> v_ids);
 void cs_429d9dc2b2289494(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<pls::cs::Ref<cs_8c57b816bbc8fd6e>> v_data);
 void cs_960037fcb764cd47(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_data);
 void cs_24b7db1f10b3afd6(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<std::int32_t> v_data);
 void cs_2df7da8ec260c971(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<std::int64_t> v_data);
 void cs_72451e36c1ffa133(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<pls::cs::String> v_data);
+std::int32_t cs_ff354c4ba5c59c19(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,std::int32_t v_type);
+pls::cs::Array<std::uint8_t> cs_944778f16504220d(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this);
+void cs_427aae041d90349e(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Ref<cs_ea324a0bbfe717fe> v_os);
+void cs_9c13460311212528(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,std::int32_t v_type);
 pls::cs::Ref<cs_7fd3b635ed6929d0> cs_26fc017eba499603();
 void cs_26fc017eba499603_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this);
 pls::cs::Ref<cs_7fd3b635ed6929d0> cs_112e7bd8029af781(pls::cs::Ref<cs_7fd3b635ed6929d0> v_src);
 void cs_112e7bd8029af781_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,pls::cs::Ref<cs_7fd3b635ed6929d0> v_src);
 pls::cs::Ref<cs_7fd3b635ed6929d0> cs_891849d99054b970(std::int32_t v_value);
 void cs_891849d99054b970_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,std::int32_t v_value);
+pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> cs_5d4aff714c1aa3f1(std::int32_t v_n);
+bool cs_286beec6ddeed9d7(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 std::int32_t cs_59fd81cb225539c6(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this);
+std::int32_t cs_f1365e1209ff8d97(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this);
 std::int32_t cs_d940a557e2a81257(pls::cs::Ref<cs_7fd3b635ed6929d0> v_s);
 pls::cs::Ref<cs_7fd3b635ed6929d0> cs_9aee68341f2c87b1(std::int32_t v_s);
+pls::cs::Ref<cs_7fd3b635ed6929d0> cs_f863ec11d99c7a7d(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,std::int32_t v_value);
+pls::cs::Ref<cs_924db3d974bae2af> cs_74758feb8d7ec688();
+void cs_74758feb8d7ec688_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this);
 pls::cs::Ref<cs_924db3d974bae2af> cs_8b6e6e5ae1d900bd(std::int64_t v_value);
 void cs_8b6e6e5ae1d900bd_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this,std::int64_t v_value);
+pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> cs_6f0c7cad5125d866(std::int32_t v_n);
+bool cs_682c2d787a0c6c7f(pls::cs::Ref<cs_924db3d974bae2af> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 std::int64_t cs_b3c751b9e91311fd(pls::cs::Ref<cs_924db3d974bae2af> cs_this);
+std::int32_t cs_f8a6bf38dd75ef58(pls::cs::Ref<cs_924db3d974bae2af> cs_this);
 std::int64_t cs_b0c8f3d2fe942bf1(pls::cs::Ref<cs_924db3d974bae2af> v_s);
 pls::cs::Ref<cs_924db3d974bae2af> cs_867c5dd84cdc90b1(std::int64_t v_s);
+pls::cs::Ref<cs_924db3d974bae2af> cs_1658bba34982ce50(pls::cs::Ref<cs_924db3d974bae2af> cs_this,std::int64_t v_value);
 pls::cs::Ref<cs_bd164c3c94a49e2a> cs_a55d2b3f0d930c1e();
 void cs_a55d2b3f0d930c1e_init(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this);
 pls::cs::Ref<cs_bd164c3c94a49e2a> cs_6a8c2e7be2327b6f(std::int64_t v_value);
 void cs_6a8c2e7be2327b6f_init(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this,std::int64_t v_value);
 std::int64_t cs_b952a8b36c6ec76a(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this,std::int64_t v_value);
+std::int32_t cs_bf31ab7151677a25(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this);
 std::int64_t cs_229565c5769360dd(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this);
 pls::cs::Ref<cs_bd164c3c94a49e2a> cs_322ad21e82d893d1(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this,std::int64_t v_value);
+pls::cs::String cs_67d34e7fd071e188(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this);
 pls::cs::Ref<cs_c20c229ea63037d8> cs_5d0efd71eb31c332(pls::cs::Ref<cs_c20c229ea63037d8> v_property);
 void cs_5d0efd71eb31c332_init(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Ref<cs_c20c229ea63037d8> v_property);
 pls::cs::Ref<cs_c20c229ea63037d8> cs_1ec84b4dfcd94394(pls::cs::Array<pls::cs::Ref<cs_c20c229ea63037d8>> v_pros,pls::cs::Array<std::int32_t> v_ints,pls::cs::Array<std::int64_t> v_lngs,pls::cs::Array<pls::cs::String> v_strs,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_bins);
 void cs_1ec84b4dfcd94394_init(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<pls::cs::Ref<cs_c20c229ea63037d8>> v_pros,pls::cs::Array<std::int32_t> v_ints,pls::cs::Array<std::int64_t> v_lngs,pls::cs::Array<pls::cs::String> v_strs,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_bins);
+std::int32_t cs_38e558d47271c1b8(pls::cs::Ref<cs_c20c229ea63037d8> cs_this);
+void cs_99629a76ecf66de7(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+void cs_f3dde7064a66be23(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<std::uint8_t> v_data);
+void cs_4a85f8f915bb71be(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream,std::int32_t v_type,std::int32_t v_size,pls::cs::Array<std::uint8_t> v_ids);
 void cs_2b44d4f7409d5877(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> v_data);
 void cs_c010944179b54e7f(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> v_data);
 void cs_200d272a8eaa4ac4(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<pls::cs::Ref<cs_c20c229ea63037d8>> v_data);
@@ -482,22 +1028,31 @@ void cs_bfb5dba687727afb(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Arra
 void cs_e2efbe60a722c41f(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<std::int32_t> v_data);
 void cs_4c0e8a7c7f726363(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<std::int64_t> v_data);
 void cs_80cc4827894ac539(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<pls::cs::String> v_data);
+std::int32_t cs_c3f290ad9c4c778b(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,std::int32_t v_type);
+pls::cs::Array<std::uint8_t> cs_1dc2914985e48e1c(pls::cs::Ref<cs_c20c229ea63037d8> cs_this);
+void cs_d22c20b5f1d8a8cf(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Ref<cs_ea324a0bbfe717fe> v_os);
+void cs_1235f27d1e326536(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,std::int32_t v_type);
 pls::cs::Ref<cs_bb652fbb61000386> cs_54c6ff780bd91d97(pls::cs::Ref<cs_bb652fbb61000386> v_src);
 void cs_54c6ff780bd91d97_init(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::Ref<cs_bb652fbb61000386> v_src);
 pls::cs::Ref<cs_bb652fbb61000386> cs_ede7ead54c734d4c(pls::cs::String v_value);
 void cs_ede7ead54c734d4c_init(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_value);
 void cs_d3ffac04a047de61(pls::cs::Array<pls::cs::Ref<cs_bb652fbb61000386>> v_srcArray,std::int32_t v_srcIndex,pls::cs::Array<pls::cs::Ref<cs_bb652fbb61000386>> v_dstArray,std::int32_t v_dstIndex,std::int32_t v_length);
+bool cs_8ebcc441a59bda9a(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_suffix);
 bool cs_77a6541b4422f624(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::Ref<cs_bb652fbb61000386> v_anObject);
+bool cs_145a142f07908920(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 bool cs_6dfda3f794a136b1(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_anObject);
 char16_t cs_abc0bea20e9163ed(pls::cs::Ref<cs_bb652fbb61000386> cs_this,char16_t v_value);
 void cs_f91a0cd22df6e95f(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::Array<char16_t> v_from,pls::cs::Array<char16_t> v_to);
 pls::cs::String cs_6dd0b8d6220bd2b3(pls::cs::Ref<cs_bb652fbb61000386> cs_this);
+pls::cs::Array<std::uint8_t> cs_14b03fdc4ae8f84c(pls::cs::Ref<cs_bb652fbb61000386> cs_this);
+std::int32_t cs_0a77e2bc4ebc201e(pls::cs::Ref<cs_bb652fbb61000386> cs_this);
 std::int32_t cs_9f636226b66780dc(pls::cs::Ref<cs_bb652fbb61000386> cs_this,std::int32_t v_ch);
 std::int32_t cs_4b9659319b202661(pls::cs::Ref<cs_bb652fbb61000386> cs_this);
 pls::cs::Ref<cs_bb652fbb61000386> cs_ac62509f5a77f0ac(pls::cs::Ref<cs_bb652fbb61000386> v_z,pls::cs::String v_w);
 pls::cs::String cs_f1e3fe1dceee44d7(pls::cs::Ref<cs_bb652fbb61000386> v_s);
 pls::cs::Ref<cs_bb652fbb61000386> cs_7047562b1e051211(pls::cs::String v_s);
 pls::cs::Ref<cs_bb652fbb61000386> cs_fc11351e7d5d875d(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_value);
+bool cs_eaf1659172f4a34c(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_prefix);
 pls::cs::String cs_f93784de5b5888a8(pls::cs::Ref<cs_bb652fbb61000386> cs_this);
 pls::cs::String cs_1192c1f2378de3bb(pls::cs::Ref<cs_bb652fbb61000386> v_str);
 pls::cs::Ref<cs_bb652fbb61000386> cs_376859ff51e2fc37(pls::cs::String v_str);
@@ -510,8 +1065,10 @@ float cs_92c2775ee2dbf38f(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 std::int32_t cs_3715f8f52a079812(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 std::int64_t cs_faab575a7db8f157(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 std::int16_t cs_1368899db48b4fc9(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
+pls::cs::String cs_50da92fdb560017f(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 pls::cs::Ref<cs_3c64e1d398f2e00f> cs_44850fa25c576879(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 void cs_850594681175a2d3(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,pls::cs::Array<std::uint8_t> v_data,bool v_size);
+void cs_242552fbbe53e929(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,pls::cs::Array<std::uint8_t> v_data);
 void cs_7c02733ae541274e(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,bool v_data);
 void cs_c43b9bbf725f702e(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,std::uint8_t v_data);
 void cs_e6e935ad4dd232ab(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,std::int8_t v_data);
@@ -526,13 +1083,35 @@ pls::cs::String cs_d7ec43a7abb0b748(pls::cs::String v_text);
 pls::cs::String cs_b1be14b163e17dea(pls::cs::String v_value,std::int32_t v_len,char16_t v_padding,bool v_left);
 pls::cs::String cs_c6a612f36129f54a(pls::cs::String v_value,std::int32_t v_len,char16_t v_padding);
 pls::cs::String cs_17904ea55a78170d(pls::cs::String v_value,std::int32_t v_len);
+pls::cs::String cs_4cdefdb4e661cd56(pls::cs::Array<std::uint8_t> v_bytes);
+pls::cs::String cs_5d8e9e8201c04369(pls::cs::Array<std::uint8_t> v_bytes);
+pls::cs::Array<pls::cs::String> cs_38c511d0555671a7(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream,bool v_zeroSkip);
+pls::cs::Array<pls::cs::String> cs_93446701c72d7a20(pls::cs::Ref<cs_52158c8b20364c2b> v_jar,pls::cs::String v_fileName,bool v_zeroSkip);
+pls::cs::Array<pls::cs::String> cs_aa767d3dce39dc9d(pls::cs::Ref<cs_52158c8b20364c2b> v_jar,pls::cs::String v_fileName);
+pls::cs::String cs_8857a152f901dbe0(pls::cs::String v_value,pls::cs::String v_oldStr,pls::cs::String v_newStr);
+pls::cs::String cs_abfabf5a341e90ae(pls::cs::String v_value,pls::cs::String v_args);
+pls::cs::Array<pls::cs::String> cs_0f7a7a73dac52ca4(pls::cs::String v_text,pls::cs::String v_sep,bool v_trim,bool v_excludeZeroLength,bool v_escape);
+pls::cs::Array<pls::cs::String> cs_aed90764bf1359a3(pls::cs::String v_value,pls::cs::String v_sep);
+pls::cs::Array<std::int32_t> cs_deba8d22dc04f33a(pls::cs::String v_src,pls::cs::String v_sep);
+// M:java.util.JTool.MakeArray``1(System.Int32[])
+template<typename T_T>
+T_T cs_e958ba3e955da10a(pls::cs::Array<std::int32_t> v_counts) { cs_init_cbac662a28aa40b1();
+{
+if (([&]() -> bool { auto cs_left = (v_counts).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
+return T_T{};
+}
+pls::cs::Ref<pls::cs::RuntimeType> v_typeFromHandle_191 = pls::cs::runtime_type_of<T_T>();
+([&]() { auto cs_value = ([&]() -> pls::cs::Ref<pls::cs::RuntimeType> { auto cs_receiver = pls::generated::cs_require(v_typeFromHandle_191)->get_Assembly(); auto cs_arg0 = ([&]() -> pls::cs::String { auto cs_arg0 = pls::generated::cs_require(v_typeFromHandle_191)->get_FullName(); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg2 = ([&]() -> std::int32_t { auto cs_left = (pls::generated::cs_require(v_typeFromHandle_191)->get_FullName()).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return pls::generated::cs_substring2(cs_arg0,cs_arg1,cs_arg2); }()); return pls::generated::cs_require(cs_receiver)->GetType(cs_arg0); }()); v_typeFromHandle_191 = cs_value; return cs_value; }());
+return pls::cs::unbox<T_T>(pls::cs::box(([&]() -> pls::cs::Ref<pls::cs::ArrayBase> { auto cs_arg0 = v_typeFromHandle_191; auto cs_arg1 = v_counts; auto cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_c751cd2e64c3775f(cs_arg0,cs_arg1,cs_arg2); }())));
+}
+}
 // M:java.util.Vector`1.#ctor
 template<typename T_T>
 pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_946b70ecd88b233a() { auto cs_this = pls::cs::make_ref<cs_51222df74ac70bab<T_T>>(); cs_946b70ecd88b233a_init(cs_this); return cs_this; }
 template<typename T_T>
 void cs_946b70ecd88b233a_init(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this) {
 {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::List<pls::cs::Ref<pls::cs::Object>>::make(); cs_require(cs_target)->cs_056e387f40164bd6 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::List<pls::cs::Ref<pls::cs::Object>>::make(); pls::generated::cs_require(cs_target)->cs_056e387f40164bd6 = cs_value; return cs_value; }());
 }
 }
 // M:java.util.Vector`1.Add(`0)
@@ -563,12 +1142,27 @@ T_T cs_46529d25e14daec6(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,std::int3
 return pls::cs::unbox<T_T>(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_index = v_index; return cs_array.get_Item(cs_index); }()));
 }
 }
+// M:java.util.Vector`1.Equals(System.Object)
+template<typename T_T>
+bool cs_5456805d05dd254d(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,pls::cs::Ref<pls::cs::Object> v_obj) { if(!cs_this)throw pls::cs::NullReferenceException();
+{
+if (pls::generated::cs_is<pls::cs::Ref<cs_a0dc211eb3feb56d>>(pls::cs::box(v_obj))) {
+return ([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }())); auto cs_right = pls::cs::box(([&]() -> pls::cs::List<pls::cs::Ref<pls::cs::Object>> { auto cs_receiver = (pls::cs::unbox<pls::cs::Ref<cs_a0dc211eb3feb56d>>(v_obj)); return pls::generated::cs_require(cs_receiver)->cs_virtual_60122bb6c899278e(); }())); return cs_left == cs_right; }());
+}
+return ([&]() { auto cs_receiver = pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this)); auto cs_argument = v_obj; return pls::generated::cs_require(cs_receiver)->pls::cs::Object::Equals(cs_argument); }());
+}
+}
 // M:java.util.Vector`1.FirstElement
 template<typename T_T>
 T_T cs_0d26c45ae3c275d4(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
 return pls::cs::unbox<T_T>(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }()));
 }
+}
+// M:java.util.Vector`1.get_List
+template<typename T_T>
+pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_aacded9f4fa90723(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
+{ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); }
 }
 // M:java.util.Vector`1.IndexOf(`0)
 template<typename T_T>
@@ -595,7 +1189,7 @@ return ([&]() { auto cs_left = pls::cs::box(pls::cs::box(v_a)); auto cs_right = 
 // M:java.util.Vector`1.op_Inequality(java.util.Vector{`0},java.util.Vector)
 template<typename T_T>
 bool cs_9739d0439e7c2868(pls::cs::Ref<cs_51222df74ac70bab<T_T>> v_a,pls::cs::Ref<cs_f8b20a4d1d9d695f> v_b) {
-return (!((([&]() { auto cs_left = v_a; auto cs_right = v_b; return cs_391891c911ef6b0a(cs_left,cs_right); }()))));
+return (!((([&]() { pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_left = v_a; pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_right = v_b; return cs_391891c911ef6b0a(cs_left,cs_right); }()))));
 }
 // M:java.util.Vector`1.RemoveAllElements
 template<typename T_T>
@@ -637,6 +1231,13 @@ std::int32_t cs_c55367423dbb79a1(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this)
 return (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }())).get_Count();
 }
 }
+// M:java.util.Vector`1.ToString
+template<typename T_T>
+pls::cs::String cs_43bff43663390cb7(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
+{
+return ([&](){auto cs_value=pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()));return pls::generated::cs_require(cs_value)->ToString();}());
+}
+}
 // M:kairo.unity.util.FastVector`1.#ctor
 template<typename T_T>
 pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_f349692afe9e225e() { auto cs_this = pls::cs::make_ref<cs_67cd241ab51652f1<T_T>>(); cs_f349692afe9e225e_init(cs_this); return cs_this; }
@@ -663,11 +1264,11 @@ pls::cs::Array<T_T> v_dst_750 = pls::cs::Array<T_T>::make(([&]() -> std::int32_t
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
 ([&]() -> void { auto cs_arg0 = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg2 = pls::cs::box(v_dst_750); auto cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg4 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 }
-([&]() { auto cs_target = cs_this; auto cs_value = v_dst_750; cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = v_dst_750; pls::generated::cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); pls::generated::cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
 }
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_value = v_obj; cs_target.at(cs_index) = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_old = cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::add_i32(cs_old,1); cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
+([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::add_i32(cs_old,1); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
 }
 }
 // M:kairo.unity.util.FastVector`1.Contains(`0)
@@ -675,7 +1276,7 @@ template<typename T_T>
 bool cs_c08c9d3910849f27(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_elem) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
 for (std::int32_t v_i_1479 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_1479; auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_1479; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_1479 = cs_new; return cs_old; }())) {
-if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.at(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.at(cs_index); }())); return cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
+if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.at(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.at(cs_index); }())); return pls::generated::cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
 return true;
 }
 }
@@ -696,12 +1297,19 @@ T_T cs_656627fbbe890703(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs
 return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.at(cs_index); }());
 }
 }
+// M:kairo.unity.util.FastVector`1.GetHashCode
+template<typename T_T>
+std::int32_t cs_eb30533b1cca1f84(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
+{
+return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());
+}
+}
 // M:kairo.unity.util.FastVector`1.IndexOf(`0)
 template<typename T_T>
 std::int32_t cs_5149fb87b013384f(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_elem) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
 for (std::int32_t v_i_1713 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_1713; auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_1713; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_1713 = cs_new; return cs_old; }())) {
-if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.at(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.at(cs_index); }())); return cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
+if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.at(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.at(cs_index); }())); return pls::generated::cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
 return v_i_1713;
 }
 }
@@ -717,14 +1325,14 @@ pls::cs::Array<T_T> v_dst_3382 = pls::cs::Array<T_T>::make(([&]() -> std::int32_
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
 ([&]() -> void { auto cs_arg0 = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg2 = pls::cs::box(v_dst_3382); auto cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg4 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 }
-([&]() { auto cs_target = cs_this; auto cs_value = v_dst_3382; cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = v_dst_3382; pls::generated::cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); pls::generated::cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
 }
 for (std::int32_t v_num_3592 = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); ([&]() -> bool { auto cs_left = v_num_3592; auto cs_right = v_index; return (cs_left >= cs_right); }()); ([&]() { auto cs_old = v_num_3592; auto cs_new = pls::cs::sub_i32(cs_old,1); v_num_3592 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_num_3592; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); auto cs_value = ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_num_3592; return cs_array.at(cs_index); }()); cs_target.at(cs_index) = cs_value; return cs_value; }());
 }
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; auto cs_value = v_obj; cs_target.at(cs_index) = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_old = cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::add_i32(cs_old,1); cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
+([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::add_i32(cs_old,1); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
 }
 }
 // M:kairo.unity.util.FastVector`1.LastElement
@@ -742,17 +1350,17 @@ if (([&]() { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver
 for (std::int32_t v_i_4689 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_4689; auto cs_right = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_4689; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_4689 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_4689; auto cs_value = T_T{}; cs_target.at(cs_index) = cs_value; return cs_value; }());
 }
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<T_T>{}; cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<T_T>{}; pls::generated::cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
 }
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_require(cs_target)->cs_965b7a32b9c12921 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::generated::cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
 }
 }
 // M:kairo.unity.util.FastVector`1.RemoveAllElementsKeep
 template<typename T_T>
 void cs_8e64ae9ae7382110(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_require(cs_target)->cs_965b7a32b9c12921 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_value; return cs_value; }());
 }
 }
 // M:kairo.unity.util.FastVector`1.RemoveElement(`0)
@@ -775,7 +1383,7 @@ void cs_cc1549d9ed88f4a6(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,std::int
 for (std::int32_t v_i_5118 = ([&]() -> std::int32_t { auto cs_left = v_index; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); ([&]() -> bool { auto cs_left = v_i_5118; auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_5118; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_5118 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_i_5118; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); auto cs_value = ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_5118; return cs_array.at(cs_index); }()); cs_target.at(cs_index) = cs_value; return cs_value; }());
 }
-([&]() { auto cs_target = cs_this; auto cs_old = cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::sub_i32(cs_old,1); cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
+([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::sub_i32(cs_old,1); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
 }
 }
 // M:kairo.unity.util.FastVector`1.Size
@@ -785,10 +1393,21 @@ std::int32_t cs_66a816fe45ab90e7(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this)
 return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }());
 }
 }
+// M:kairo.unity.util.FastVector`1.ToString
+template<typename T_T>
+pls::cs::String cs_31d9db7cf8a97aa7(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
+{
+return ([&]() { auto cs_left = ([&]() { auto cs_left = ([&](){auto cs_receiver = std::static_pointer_cast<pls::cs::Object>(cs_this);return pls::generated::cs_require(cs_receiver)->pls::cs::Object::ToString();}()); auto cs_right = pls::cs::String(std::u16string(u"\x003a" u"\x0073" u"\x0069" u"\x007a" u"\x0065" u"\x003d" u"",6)); return pls::cs::String::concat(cs_left,cs_right); }()); auto cs_right = pls::generated::cs_integer_string(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }())); return pls::cs::String::concat(cs_left,cs_right); }());
+}
+}
 inline void cs_3b41638e424b9ee0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_e7a5499b363ef51b::trace_edges(visitor);}
 inline void cs_3b41638e424b9ee0::release_edges(){cs_e7a5499b363ef51b::release_edges();}
 inline void cs_fb60578b3098a284::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_ea324a0bbfe717fe::trace_edges(visitor);}
 inline void cs_fb60578b3098a284::release_edges(){cs_ea324a0bbfe717fe::release_edges();}
+inline void cs_8d93189702e4084b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_e7a5499b363ef51b::trace_edges(visitor);pls::cs::trace_value(cs_783a5dc8c7385bc4,visitor);}
+inline void cs_8d93189702e4084b::release_edges(){cs_e7a5499b363ef51b::release_edges();pls::cs::release_value(cs_783a5dc8c7385bc4);}
+inline void cs_64732f8c8acf2fd3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
+inline void cs_64732f8c8acf2fd3::release_edges(){pls::cs::ExceptionObject::release_edges();}
 inline void cs_e7a5499b363ef51b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_8aa92818c04571d3,visitor);pls::cs::trace_value(cs_e65a8825426ed7a3,visitor);pls::cs::trace_value(cs_0f6af5e5e6987974,visitor);}
 inline void cs_e7a5499b363ef51b::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_8aa92818c04571d3);pls::cs::release_value(cs_e65a8825426ed7a3);pls::cs::release_value(cs_0f6af5e5e6987974);}
 inline void cs_ea324a0bbfe717fe::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_f48613bc1c6327b8,visitor);}
@@ -803,6 +1422,8 @@ inline void cs_a465028bea3432a3::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_a465028bea3432a3::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_03197f755fcefa4b);pls::cs::release_value(cs_99f3f6ad5516299e);}
 inline void cs_66dbad5679f8ab87::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_672aeddf6395a59c,visitor);}
 inline void cs_66dbad5679f8ab87::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_672aeddf6395a59c);}
+inline void cs_c0fae45144034cf9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_c8e01a4bd3e5d216,visitor);pls::cs::trace_value(cs_c7b2df62ecfb4014,visitor);}
+inline void cs_c0fae45144034cf9::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_c8e01a4bd3e5d216);pls::cs::release_value(cs_c7b2df62ecfb4014);}
 inline void cs_a0cf9aef6a251bfd::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_51f4a63dee24d947,visitor);}
 inline void cs_a0cf9aef6a251bfd::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_51f4a63dee24d947);}
 inline void cs_f59223d2c773f078::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_05e71bcde75517db,visitor);pls::cs::trace_value(cs_0350607f8ec43af6,visitor);pls::cs::trace_value(cs_59055747f3e8f843,visitor);}
@@ -817,14 +1438,30 @@ inline void cs_e7d772862db62924::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_e7d772862db62924::release_edges(){pls::cs::Object::release_edges();}
 inline void cs_832d81e198eeeec2::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_ea324a0bbfe717fe::trace_edges(visitor);pls::cs::trace_value(cs_dc88a962e561cf72,visitor);pls::cs::trace_value(cs_96bf466f63c1692d,visitor);pls::cs::trace_value(cs_565b1ab091133717,visitor);pls::cs::trace_value(cs_bd6a014dfd6a30e7,visitor);}
 inline void cs_832d81e198eeeec2::release_edges(){cs_ea324a0bbfe717fe::release_edges();pls::cs::release_value(cs_dc88a962e561cf72);pls::cs::release_value(cs_96bf466f63c1692d);pls::cs::release_value(cs_565b1ab091133717);pls::cs::release_value(cs_bd6a014dfd6a30e7);}
+inline void cs_7254e4706a01e4e7::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
+inline void cs_7254e4706a01e4e7::release_edges(){pls::cs::ExceptionObject::release_edges();}
 inline void cs_3c64e1d398f2e00f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_5940b7db44d7fcc3,visitor);pls::cs::trace_value(cs_3f971496b3e90e07,visitor);pls::cs::trace_value(cs_992193a3ad58af68,visitor);}
 inline void cs_3c64e1d398f2e00f::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_5940b7db44d7fcc3);pls::cs::release_value(cs_3f971496b3e90e07);pls::cs::release_value(cs_992193a3ad58af68);}
+inline void cs_922b87749168eb15::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_51d08ca6eed04eda,visitor);pls::cs::trace_value(cs_8e6817a8d663aa67,visitor);pls::cs::trace_value(cs_0d73049ca9cd4bf6,visitor);pls::cs::trace_value(cs_5b846f0fd1fb1aa0,visitor);pls::cs::trace_value(cs_57d6fb57c6af0de7,visitor);}
+inline void cs_922b87749168eb15::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_51d08ca6eed04eda);pls::cs::release_value(cs_8e6817a8d663aa67);pls::cs::release_value(cs_0d73049ca9cd4bf6);pls::cs::release_value(cs_5b846f0fd1fb1aa0);pls::cs::release_value(cs_57d6fb57c6af0de7);}
 inline void cs_15e3f7b692b3f380::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::trace_edges(visitor);}
 inline void cs_15e3f7b692b3f380::release_edges(){cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::release_edges();}
 template<typename T_T>
 inline void cs_67cd241ab51652f1<T_T>::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_f025835c3cf7842a,visitor);pls::cs::trace_value(cs_965b7a32b9c12921,visitor);pls::cs::trace_value(cs_6d298c7f8339f4aa,visitor);pls::cs::trace_value(cs_c59f41a6c3bb514a,visitor);}
 template<typename T_T>
 inline void cs_67cd241ab51652f1<T_T>::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_f025835c3cf7842a);pls::cs::release_value(cs_965b7a32b9c12921);pls::cs::release_value(cs_6d298c7f8339f4aa);pls::cs::release_value(cs_c59f41a6c3bb514a);}
+inline void cs_52158c8b20364c2b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6f69af47bcfae216,visitor);pls::cs::trace_value(cs_8f27992211ad5e96,visitor);pls::cs::trace_value(cs_578ed5fb729c9567,visitor);}
+inline void cs_52158c8b20364c2b::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_6f69af47bcfae216);pls::cs::release_value(cs_8f27992211ad5e96);pls::cs::release_value(cs_578ed5fb729c9567);}
+inline void cs_bfe2a01361163e7a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_638e5d654c077b59,visitor);pls::cs::trace_value(cs_6ec368f1de920152,visitor);pls::cs::trace_value(cs_45a972d6cedcd20a,visitor);pls::cs::trace_value(cs_83fbaf866783c8ce,visitor);}
+inline void cs_bfe2a01361163e7a::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_638e5d654c077b59);pls::cs::release_value(cs_6ec368f1de920152);pls::cs::release_value(cs_45a972d6cedcd20a);pls::cs::release_value(cs_83fbaf866783c8ce);}
+inline void cs_98f0a1bec2084c3c::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_a0cee6b194388bb1,visitor);pls::cs::trace_value(cs_96513160b9f9c6b8,visitor);pls::cs::trace_value(cs_37e0eb7044938cba,visitor);}
+inline void cs_98f0a1bec2084c3c::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_a0cee6b194388bb1);pls::cs::release_value(cs_96513160b9f9c6b8);pls::cs::release_value(cs_37e0eb7044938cba);}
+inline void cs_9487cb83e3a46e0a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_c85df0bf60809784,visitor);pls::cs::trace_value(cs_05293b75838ad9b4,visitor);pls::cs::trace_value(cs_11bb01ff7e196717,visitor);pls::cs::trace_value(cs_eacffaa0f8c3f949,visitor);pls::cs::trace_value(cs_da40773ef2f3923c,visitor);}
+inline void cs_9487cb83e3a46e0a::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_c85df0bf60809784);pls::cs::release_value(cs_05293b75838ad9b4);pls::cs::release_value(cs_11bb01ff7e196717);pls::cs::release_value(cs_eacffaa0f8c3f949);pls::cs::release_value(cs_da40773ef2f3923c);}
+inline void cs_ab1b1085a7ab32b9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_1bd11544863adf53,visitor);pls::cs::trace_value(cs_2525b3344f53d974,visitor);}
+inline void cs_ab1b1085a7ab32b9::release_edges(){pls::cs::release_value(cs_1bd11544863adf53);pls::cs::release_value(cs_2525b3344f53d974);}
+inline void cs_acb158b492b43017::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_06609f2ab38c958b,visitor);pls::cs::trace_value(cs_018ea348c0cf88c0,visitor);pls::cs::trace_value(cs_5043ee31a67ae639,visitor);}
+inline void cs_acb158b492b43017::release_edges(){pls::cs::release_value(cs_06609f2ab38c958b);pls::cs::release_value(cs_018ea348c0cf88c0);pls::cs::release_value(cs_5043ee31a67ae639);}
 inline void cs_8c57b816bbc8fd6e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_4fa0b3a7eea3a844,visitor);pls::cs::trace_value(cs_72da38f2b646e254,visitor);pls::cs::trace_value(cs_cfccd28f4d6b847a,visitor);pls::cs::trace_value(cs_d5b37f60e20607b6,visitor);pls::cs::trace_value(cs_ba76615c0cb37783,visitor);}
 inline void cs_8c57b816bbc8fd6e::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_4fa0b3a7eea3a844);pls::cs::release_value(cs_72da38f2b646e254);pls::cs::release_value(cs_cfccd28f4d6b847a);pls::cs::release_value(cs_d5b37f60e20607b6);pls::cs::release_value(cs_ba76615c0cb37783);}
 inline void cs_7fd3b635ed6929d0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_bd164c3c94a49e2a::trace_edges(visitor);}
@@ -837,33 +1474,72 @@ inline void cs_c20c229ea63037d8::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_c20c229ea63037d8::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_3a492b4165f9d5db);pls::cs::release_value(cs_6747c51e21a34296);pls::cs::release_value(cs_1393912ba87bd2f6);pls::cs::release_value(cs_4e32a5d73d9793f0);pls::cs::release_value(cs_26072971e2305223);}
 inline void cs_bb652fbb61000386::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_bd164c3c94a49e2a::trace_edges(visitor);pls::cs::trace_value(cs_3a4ab2d19bbedee8,visitor);pls::cs::trace_value(cs_23af4da78e1ad81f,visitor);pls::cs::trace_value(cs_3af0cc4416bce0e0,visitor);pls::cs::trace_value(cs_fe44ec569b4e9ab5,visitor);}
 inline void cs_bb652fbb61000386::release_edges(){cs_bd164c3c94a49e2a::release_edges();pls::cs::release_value(cs_3a4ab2d19bbedee8);pls::cs::release_value(cs_23af4da78e1ad81f);pls::cs::release_value(cs_3af0cc4416bce0e0);pls::cs::release_value(cs_fe44ec569b4e9ab5);}
-inline std::int32_t cs_3b41638e424b9ee0::cs_virtual_bb7347310506b971() {return cs_67338973d6c3b7c6(std::static_pointer_cast<cs_3b41638e424b9ee0>(shared_from_this()));}
-inline void cs_fb60578b3098a284::cs_virtual_0d912191800a0b86() {cs_939f1d17e9442852(std::static_pointer_cast<cs_fb60578b3098a284>(shared_from_this()));}
-inline void cs_e7a5499b363ef51b::cs_virtual_a1f672a1edc7446d() {cs_a1f672a1edc7446d(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
 inline void cs_a09270023ec48eca::set_Position(std::int64_t v_value) {cs_0cc5bcdc262d1e1f(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 inline std::int64_t cs_a09270023ec48eca::get_Position() {return cs_8acc9ec5371d8299(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 inline std::int64_t cs_a09270023ec48eca::get_Length() {return cs_c8a570aac49067da(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 inline bool cs_a09270023ec48eca::get_CanWrite() {return cs_6f3b40a37d8f526a(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 inline bool cs_a09270023ec48eca::get_CanSeek() {return cs_4aca7975001a4e6b(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 inline bool cs_a09270023ec48eca::get_CanRead() {return cs_0ad1ba7c0fd9d02e(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
-inline void cs_ea324a0bbfe717fe::cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b) {cs_a2a7e1a6575cae4c(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
-inline void cs_a09270023ec48eca::WriteByte(std::uint8_t v_value) {cs_b58a5f8e785cf771(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 inline void cs_ea324a0bbfe717fe::cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_offset,std::int32_t v_len) {cs_eeffa75bcd0cd73d(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b,v_offset,v_len);}
+inline void cs_ea324a0bbfe717fe::cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b) {cs_109456b2dd9e2d77(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
+inline void cs_ea324a0bbfe717fe::cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b) {cs_a2a7e1a6575cae4c(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
+inline void cs_ea324a0bbfe717fe::cs_virtual_2adf924bd0d7d65a() {cs_2adf924bd0d7d65a(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
+inline void cs_ea324a0bbfe717fe::cs_virtual_0d912191800a0b86() {cs_0d912191800a0b86(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
+inline void cs_a09270023ec48eca::WriteByte(std::uint8_t v_value) {cs_b58a5f8e785cf771(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 inline void cs_a09270023ec48eca::Write(pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count) {cs_399352675683031c(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_buffer,v_offset,v_count);}
 inline void cs_a09270023ec48eca::SetLength(std::int64_t v_value) {cs_a78c59b4469863e5(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 inline std::int64_t cs_a09270023ec48eca::Seek(std::int64_t v_offset,pls::cs::SeekOrigin v_origin) {return cs_e1435e7e4b074f26(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_offset,v_origin);}
-inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_d49800fd6633bd98() {return cs_d49800fd6633bd98(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
 inline std::int32_t cs_a09270023ec48eca::ReadByte() {return cs_ad4fa1e286b44f3a(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
-inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_4614e302bc22aa99(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len) {return cs_4614e302bc22aa99(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_b,v_off,v_len);}
 inline std::int32_t cs_a09270023ec48eca::Read(pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count) {return cs_7a3b85e65662d47c(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_buffer,v_offset,v_count);}
-inline void cs_ea324a0bbfe717fe::cs_virtual_2adf924bd0d7d65a() {cs_2adf924bd0d7d65a(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
 inline void cs_a09270023ec48eca::Flush() {cs_6c7bbca4c29839c1(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
-inline void cs_e7a5499b363ef51b::cs_virtual_4546aef6e4846446() {cs_4546aef6e4846446(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
-inline void cs_ea324a0bbfe717fe::cs_virtual_0d912191800a0b86() {cs_0d912191800a0b86(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
 inline void cs_a09270023ec48eca::Close() {cs_3f2440e57ef29f1e(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
-inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_bb7347310506b971() {return cs_bb7347310506b971(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
-inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_e3637c1f0ab57ef5(pls::cs::Array<std::uint8_t> v_buf) {return cs_e3637c1f0ab57ef5(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_buf);}
 inline std::int64_t cs_e7a5499b363ef51b::cs_virtual_c6a293635ddab59b(std::int64_t v_cnt) {return cs_c6a293635ddab59b(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_cnt);}
+inline void cs_e7a5499b363ef51b::cs_virtual_a1f672a1edc7446d() {cs_a1f672a1edc7446d(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
+inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_4614e302bc22aa99(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len) {return cs_4614e302bc22aa99(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_b,v_off,v_len);}
+inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_e3637c1f0ab57ef5(pls::cs::Array<std::uint8_t> v_buf) {return cs_e3637c1f0ab57ef5(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_buf);}
+inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_d49800fd6633bd98() {return cs_d49800fd6633bd98(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
+inline bool cs_e7a5499b363ef51b::cs_virtual_7dfe14f35a6a22dd() {return cs_7dfe14f35a6a22dd(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
+inline void cs_e7a5499b363ef51b::cs_virtual_baf1496cdc1c93d8(std::int32_t v_readlimit) {cs_baf1496cdc1c93d8(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_readlimit);}
+inline void cs_e7a5499b363ef51b::cs_virtual_4546aef6e4846446() {cs_4546aef6e4846446(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
+inline std::int32_t cs_e7a5499b363ef51b::cs_virtual_bb7347310506b971() {return cs_bb7347310506b971(std::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
+inline std::int32_t cs_3b41638e424b9ee0::cs_virtual_bb7347310506b971() {return cs_67338973d6c3b7c6(std::static_pointer_cast<cs_3b41638e424b9ee0>(shared_from_this()));}
+inline pls::cs::String cs_fb60578b3098a284::ToString() {return cs_576830aae6220bdb(std::static_pointer_cast<cs_fb60578b3098a284>(shared_from_this()));}
+inline void cs_fb60578b3098a284::cs_virtual_0d912191800a0b86() {cs_939f1d17e9442852(std::static_pointer_cast<cs_fb60578b3098a284>(shared_from_this()));}
+inline void cs_8d93189702e4084b::cs_virtual_4546aef6e4846446() {cs_5b229bc3548b08c7(std::static_pointer_cast<cs_8d93189702e4084b>(shared_from_this()));}
+inline std::int32_t cs_7de6788b61a5af56::GetHashCode() {return cs_16762e09ddce2966(std::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
+inline bool cs_7de6788b61a5af56::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_ebd756e2a16440e5(std::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()),v_obj);}
+inline pls::cs::String cs_7de6788b61a5af56::ToString() {return cs_044a765a6989d563(std::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
+inline std::int32_t cs_a465028bea3432a3::GetHashCode() {return cs_26468f4a2c9b3470(std::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()));}
+inline std::int32_t cs_66dbad5679f8ab87::GetHashCode() {return cs_bc050b58fd51f9b2(std::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()));}
+inline bool cs_66dbad5679f8ab87::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_8682e14f5d0030c8(std::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()),v_obj);}
+inline bool cs_a465028bea3432a3::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_9f8cfce81641ea7a(std::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()),v_obj);}
+template<typename T_T>
+inline pls::cs::String cs_51222df74ac70bab<T_T>::ToString() {return cs_43bff43663390cb7(std::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
+template<typename T_T>
+inline pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_51222df74ac70bab<T_T>::cs_virtual_60122bb6c899278e() {return cs_aacded9f4fa90723(std::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
+template<typename T_T>
+inline bool cs_51222df74ac70bab<T_T>::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_5456805d05dd254d(std::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()),v_obj);}
+inline bool cs_f8b20a4d1d9d695f::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_673ba145a871a846(std::static_pointer_cast<cs_f8b20a4d1d9d695f>(shared_from_this()),v_obj);}
+inline std::int32_t cs_c0fae45144034cf9::GetHashCode() {return cs_6deeff3691e8822a(std::static_pointer_cast<cs_c0fae45144034cf9>(shared_from_this()));}
+inline bool cs_c0fae45144034cf9::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_fea61c607b5a4210(std::static_pointer_cast<cs_c0fae45144034cf9>(shared_from_this()),v_obj);}
+inline void cs_832d81e198eeeec2::cs_virtual_2adf924bd0d7d65a() {cs_5e27bc3565f1a832(std::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()));}
+inline void cs_832d81e198eeeec2::cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b) {cs_f1d0001066598458(std::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()),v_b);}
+inline void cs_832d81e198eeeec2::cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b) {cs_43cbea7ccad9d4d6(std::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()),v_b);}
+inline void cs_832d81e198eeeec2::cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_off,std::int32_t v_len) {cs_049fbfd8c1e94864(std::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()),v_b,v_off,v_len);}
+inline void cs_832d81e198eeeec2::cs_virtual_0d912191800a0b86() {cs_ee6ef7b3c5c52f4e(std::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()));}
+inline void cs_3c64e1d398f2e00f::cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) {cs_d64267dcdc138fe0(std::static_pointer_cast<cs_3c64e1d398f2e00f>(shared_from_this()),v_stream);}
+inline void cs_3c64e1d398f2e00f::cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream) {cs_086b1f406f360542(std::static_pointer_cast<cs_3c64e1d398f2e00f>(shared_from_this()),v_stream);}
+template<typename T_T>
+inline pls::cs::String cs_67cd241ab51652f1<T_T>::ToString() {return cs_31d9db7cf8a97aa7(std::static_pointer_cast<cs_67cd241ab51652f1<T_T>>(shared_from_this()));}
+template<typename T_T>
+inline std::int32_t cs_67cd241ab51652f1<T_T>::GetHashCode() {return cs_eb30533b1cca1f84(std::static_pointer_cast<cs_67cd241ab51652f1<T_T>>(shared_from_this()));}
+inline std::int32_t cs_bd164c3c94a49e2a::GetHashCode() {return cs_bf31ab7151677a25(std::static_pointer_cast<cs_bd164c3c94a49e2a>(shared_from_this()));}
+inline pls::cs::String cs_bd164c3c94a49e2a::ToString() {return cs_67d34e7fd071e188(std::static_pointer_cast<cs_bd164c3c94a49e2a>(shared_from_this()));}
+inline std::int32_t cs_7fd3b635ed6929d0::GetHashCode() {return cs_f1365e1209ff8d97(std::static_pointer_cast<cs_7fd3b635ed6929d0>(shared_from_this()));}
+inline bool cs_7fd3b635ed6929d0::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_286beec6ddeed9d7(std::static_pointer_cast<cs_7fd3b635ed6929d0>(shared_from_this()),v_obj);}
+inline std::int32_t cs_924db3d974bae2af::GetHashCode() {return cs_f8a6bf38dd75ef58(std::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()));}
+inline bool cs_924db3d974bae2af::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_682c2d787a0c6c7f(std::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()),v_obj);}
+inline std::int32_t cs_bb652fbb61000386::GetHashCode() {return cs_0a77e2bc4ebc201e(std::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
+inline bool cs_bb652fbb61000386::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_145a142f07908920(std::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()),v_obj);}
 inline pls::cs::String cs_bb652fbb61000386::ToString() {return cs_f93784de5b5888a8(std::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
-inline void cs_ea324a0bbfe717fe::cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b) {cs_109456b2dd9e2d77(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
 }

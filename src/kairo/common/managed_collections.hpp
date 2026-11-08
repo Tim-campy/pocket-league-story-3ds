@@ -75,6 +75,7 @@ struct IEnumerator : Object {
 
 template<class T>class List {
     struct Storage : Object {
+        std::string managed_type_name()const override{return "System.Collections.Generic.List`1["+managed_type_name_traits<T>::name()+"]";}
         Array<T> items=Array<T>::make(0);
         std::int32_t size=0;
         std::uint32_t version=0;

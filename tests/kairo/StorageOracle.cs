@@ -52,6 +52,9 @@ public static class StorageOracle {
   P("heap-null-size",delegate{return heap.GetSize("nil").ToString();});
   P("heap-delete",delegate{heap.Delete("b.gif");return A(heap.GetFiles());});
   P("null-filename",delegate{return B(heap.Read(null));});
+  P("heap-cultural-composed",delegate{heap.Write("synthetic-caf\u00e9",new byte[]{61});return B(heap.Read("synthetic-cafe\u0301"));});
+  P("heap-cultural-replace",delegate{int n=heap.GetFiles().Length;heap.Write("synthetic-cafe\u0301",new byte[]{62});return B(heap.Read("synthetic-caf\u00e9"))+":"+(heap.GetFiles().Length-n);});
+  P("heap-cultural-delete",delegate{heap.Delete("synthetic-cafe\u0301");return heap.Exists("synthetic-caf\u00e9").ToString();});
   P("resource",delegate{return B(Storage.Read(3,false,"fixture.dat"))+":"+Storage.Exists(3,"fixture.dat");});
   P("resource-missing",delegate{return B(Storage.Read(3,false,"missing"))+":"+Storage.Exists(3,"missing");});
   P("resource-readonly",delegate{Storage.Write(3,false,"fixture.dat",new byte[]{1});return B(Storage.Read(3,false,"fixture.dat"));});

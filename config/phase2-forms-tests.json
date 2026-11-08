@@ -28,8 +28,8 @@
   ],
   "operation": "original-source-FormBase-stack-Canvas-label-differential",
   "status": "PASS",
-  "fixture_cases": 56,
-  "passed": 56,
+  "fixture_cases": 64,
+  "passed": 64,
   "cases": [
     {
       "profile": "dotnet",
@@ -228,6 +228,34 @@
       "passed": true
     },
     {
+      "profile": "dotnet",
+      "case": "constructor-order",
+      "expected": "constructor-order=field,basearg,body,/23:17:",
+      "actual": "constructor-order=field,basearg,body,/23:17:",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "touch-base-default",
+      "expected": "touch-base-default=0:True",
+      "actual": "touch-base-default=0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "touch-derived-dispatch",
+      "expected": "touch-derived-dispatch=109:0:5:7",
+      "actual": "touch-derived-dispatch=109:0:5:7",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "touch-object-identity",
+      "expected": "touch-object-identity=True:True",
+      "actual": "touch-object-identity=True:True",
+      "passed": true
+    },
+    {
       "profile": "mono",
       "case": "empty",
       "expected": "empty=0:True:False:False:True",
@@ -422,36 +450,66 @@
       "expected": "app-event-default=3:0",
       "actual": "app-event-default=3:0",
       "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "constructor-order",
+      "expected": "constructor-order=field,basearg,body,/23:17:",
+      "actual": "constructor-order=field,basearg,body,/23:17:",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "touch-base-default",
+      "expected": "touch-base-default=0:True",
+      "actual": "touch-base-default=0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "touch-derived-dispatch",
+      "expected": "touch-derived-dispatch=109:0:5:7",
+      "actual": "touch-derived-dispatch=109:0:5:7",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "touch-object-identity",
+      "expected": "touch-object-identity=True:True",
+      "actual": "touch-object-identity=True:True",
+      "passed": true
     }
   ],
   "native_platform_policy": {
-    "policy_assertions": 16,
+    "policy_assertions": 24,
     "unbound_effects_rejected": true,
     "native_form_cycle_collected": true,
     "game_boot": false
   },
   "inputs": {
-    "tests/kairo/forms_fixtures.cpp": "2616dc1f8818b6d21cabf65961303b1e51b2f721523484890c286a10c9802e50",
-    "src/kairo/common/canvas.cpp": "53dfee74af792cf91ab1ffbb56771f1e3b477e65d1134c3b8957c97261a9c989",
+    "tests/kairo/forms_fixtures.cpp": "016a728534e61b5ecf449c6e5f61adf5ee34c623f99564f5db2cb5910cdeef73",
+    "src/kairo/common/canvas.cpp": "288ee3b9e2b09e2c1f2c6228c6437f2b20d13b2764908a0881397e7d07d6e996",
     "src/kairo/common/forms.cpp": "5ee8b9002f7ecc3ad94a753afdbe356db05a02767bd920a224b05a69a05fa8fc",
     "src/kairo/platform/sdl/input.cpp": "b8f9c7b9cad5eb0d83f9c2aeaad4ecf3c39dfed98b0cc6915ebd96c701029680",
-    "src/kairo/common/graphics.cpp": "98f41b7cdd00e8f66d8a60ffb3b7155e0aa3aa85ee3026863a29d42614cb897a",
+    "src/kairo/common/graphics.cpp": "213c50f8f8e71a0d9a2dd88936ce79d2c65737d172bcbe423a7e8bdda3534e4f",
+    "src/kairo/common/image_lifetime.cpp": "46eb7b0f818d28f48cedf6cef4542ea0026178d8e0b9ff300f5391b349abba86",
     "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
     "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
-    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
-    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
-    "tests/kairo/FormsOracle.cs": "633b8b9dbc17c659a2c3b5a6818856acd797cb3c068649ec68084aba57267cef",
-    "tools/test_forms.py": "0f127acba3c1f96d78916ef7df8fee30d4f18ee2fd4347c812cb97420387e138",
+    "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/FormsOracle.cs": "6531c1423c4d01c72ade9dce4f5767d355e48ab605726fbc4ac68f9dc22a630b",
+    "tools/test_forms.py": "67678313c8b423ef7bcf93b9abf647451e043027fee67d370d681fb2a98400b5",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
-    "src/kairo/api/canvas.hpp": "70279bd5f9b03f3dee73449245395f82c90bba88750db0ef58b54592658de106",
-    "src/kairo/api/forms.hpp": "9e2a512468322622718349909a604510cca295dbeb0537ab2e69fa05e2266d7b",
+    "src/kairo/api/canvas.hpp": "a796b0b13bc61a47bf8604a7e7bc4107472e18799c0abc637717674cb64d6873",
+    "src/kairo/api/forms.hpp": "ae8068a84a39266669c4937fc6a1858f23952a45e256d1b72d858f47dde403bd",
+    "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/input.hpp": "f54d520710f8adc4335b54f1666c11b1ab78c7f607b4b9213dae525046769d09",
-    "src/kairo/api/graphics.hpp": "af7af8a6032982b53f18fdbb3f08f7e19e35c282bef0994cccc7727b88c04d73",
+    "src/kairo/api/graphics.hpp": "4f2371753410ff7ffabe8798690fc13da4efa8bad3c057a0b464b3539b5a21af",
     "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
-    "src/kairo/api/application.hpp": "6ed7c969bc376084e3098d011c9dc7b1af2788b238cbf934d3b78ef5ad0bb8bc",
-    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
-    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
+    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd"
   },
   "source_manifest": [
@@ -474,6 +532,10 @@
     {
       "path": "src/KairoLibrary/kairo/unity/ui/AppEventType.cs",
       "sha256": "bdfc9a171aab83ab4f8650d50b849fc0f9ae023150fd71d6785ffe78b99326c4"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/TouchValueAccessor.cs",
+      "sha256": "81bfcc13e2793e6aedfdf1a9239c0befc9e601e6f61a3e8c50435b90c9eda732"
     }
   ],
   "original_methods": {
@@ -516,7 +578,7 @@
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "caa3007aaf7c4d3e1143d5c13c9655fd7c384f9abafe0f953137c5efbf50ac1b"
+    "sha256": "ca2f762b07ad82d0201c03a45b721a56fb04aaadcae4f53e3b630883adfeb6b1"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

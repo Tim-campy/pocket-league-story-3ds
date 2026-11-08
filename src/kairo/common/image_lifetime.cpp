@@ -1,0 +1,84 @@
+#include "graphics.hpp"
+#include "sha256.hpp"
+#include "application.hpp"
+namespace pls::kairo {
+namespace {
+ImageRuntimeBindings runtime;
+std::vector<cs::Ref<Image>> source_images;
+std::int32_t source_pixels{},max_count{},max_pixels{},default_frames{},release_count{};
+std::int32_t now(){return runtime.check_count?runtime.check_count():0;}
+void area(std::int32_t delta){if(runtime.count_enabled&&runtime.count_enabled())runtime.adjust_create_area(delta);}
+const assets::Entry& source_entry(cs::Array<std::uint8_t> bytes){
+    if(!assets::installed_catalog)throw cs::InvalidOperationException("Authenticated image catalog is not installed");
+    std::vector<std::uint8_t> raw(static_cast<std::size_t>(bytes.length()));for(std::int32_t i=0;i<bytes.length();++i)raw[static_cast<std::size_t>(i)]=bytes.at(i);
+    const auto* entry=assets::installed_catalog->find(assets::Kind::image,assets::sha256(raw));
+    if(!entry)throw cs::IOException("Image source is absent from the authenticated catalog");return *entry;
+}
+}
+void install_image_runtime(ImageRuntimeBindings bindings){
+    if(!bindings.check_count||!bindings.count_enabled||!bindings.adjust_create_area)throw cs::ArgumentException("Complete source image counter bindings are required");runtime=std::move(bindings);
+}
+void Image::track_created(const cs::Ref<Image>& image,bool generated){
+    const auto pixels=cs::mul_i32(image->width_,image->height_);area(pixels);
+    if(generated){image->created_image_=true;image->lock_expiration_=true;image->check_count_=now();source_images.push_back(image);source_pixels=cs::add_i32(source_pixels,pixels);}
+}
+cs::Ref<Image> Image::FromSource(cs::Array<std::uint8_t> bytes,Format f,Filter filter){
+    const auto& entry=source_entry(bytes);auto image=cs::make_ref<Image>();image->source_bytes_=bytes;
+    image->width_=static_cast<std::int32_t>(entry.width);image->height_=static_cast<std::int32_t>(entry.height);
+    image->format=f==Format::Default?Format::ARGB32:f;image->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return image;
+}
+cs::Ref<Image> Image::FromLoader(cs::Delegate<cs::Array<std::uint8_t>()> loader,Format f,Filter filter){
+    if(!loader)throw cs::ArgumentNullException();auto image=cs::make_ref<Image>();image->source_loader_=std::move(loader);image->width_=image->height_=240;
+    image->format=f==Format::Default?Format::ARGB32:f;image->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return image;
+}
+void Image::Use(){
+    if(alive_||disposed_||(source_bytes_.is_null()&&!source_loader_))return;
+    if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
+        auto self=std::dynamic_pointer_cast<Image>(shared_from_this());auto raw=self.get();
+        app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Use",[raw]{raw->Use();}),true);return;
+    }
+    auto bytes=source_bytes_;if(bytes.is_null())bytes=source_loader_();if(bytes.is_null())return;
+    const auto& entry=source_entry(bytes);auto decoded=assets::installed_catalog->read(entry);
+    width_=static_cast<std::int32_t>(entry.width);height_=static_cast<std::int32_t>(entry.height);rgba_=std::move(decoded);alive_=true;check_count_=now();
+    auto self=std::dynamic_pointer_cast<Image>(shared_from_this());source_images.push_back(self);
+    const auto pixels=cs::mul_i32(width_,height_);source_pixels=cs::add_i32(source_pixels,pixels);area(pixels);
+    while(source_images.size()>1&&((max_count>0&&max_count<static_cast<std::int32_t>(source_images.size()))||(max_pixels>0&&max_pixels<source_pixels))){
+        cs::Ref<Image> selected;auto oldest=std::numeric_limits<std::int64_t>::min();
+        for(std::size_t i=0;i+1<source_images.size();++i){const auto& candidate=source_images[i];
+            const auto score=cs::sub_i64(cs::mul_i64(cs::sub_i32(now(),candidate->check_count_),1000),cs::mul_i32(candidate->width_,candidate->height_)/100);
+            if(oldest<score){oldest=score;selected=candidate;}
+        }
+        if(!selected)throw cs::InvalidOperationException("Source image eviction made no selection");
+        if(selected->created_image_)selected->Dispose();else selected->Unuse();
+    }
+}
+void Image::Unuse(){
+    if(!alive_||(!created_image_&&source_bytes_.is_null()&&!source_loader_))return;
+    if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
+        auto self=std::dynamic_pointer_cast<Image>(shared_from_this());auto raw=self.get();
+        app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Unuse",[raw]{raw->Unuse();}),true);return;
+    }
+    alive_=false;std::vector<std::uint8_t>().swap(rgba_);
+    release_count=cs::add_i32(release_count,1);
+    auto found=std::find_if(source_images.begin(),source_images.end(),[&](const auto& image){return image.get()==this;});if(found!=source_images.end())source_images.erase(found);
+    const auto pixels=cs::mul_i32(width_,height_);source_pixels=cs::sub_i32(source_pixels,pixels);area(cs::neg_i32(pixels));
+}
+void Image::Dispose(){
+    Unuse();if(alive_){area(cs::neg_i32(cs::mul_i32(width_,height_)));release_count=cs::add_i32(release_count,1);}
+    alive_=false;std::vector<std::uint8_t>().swap(rgba_);source_bytes_={};source_loader_={};width_=height_=0;disposed_=true;
+}
+void Image::SetSourceImageMaxCount(std::int32_t value){max_count=value;}
+void Image::SetSourceImageMaxPixels(std::int32_t value){max_pixels=value;}
+void Image::SetSourceImageValidateFrames(std::int32_t value){default_frames=value;}
+void Image::UnuseExpirationImages(){
+    if(!runtime.check_count)throw cs::InvalidOperationException("Generated Config image counter bindings are not installed");
+    for(std::int32_t i=static_cast<std::int32_t>(source_images.size())-1;i>=0;--i){auto image=source_images[static_cast<std::size_t>(i)];const auto frames=image->validate_frames_==-1?default_frames:image->validate_frames_;
+        if(frames>0&&!image->lock_expiration_&&cs::sub_i32(now(),image->check_count_)>frames){if(image->created_image_)image->Dispose();else image->Unuse();}
+    }
+}
+void Image::source_drawn(){check_count_=now();}
+std::array<std::int32_t,2> Image::native_cache_size(){return {static_cast<std::int32_t>(source_images.size()),source_pixels};}
+std::int32_t Image::native_releases(){return release_count;}
+void Image::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(source_bytes_,visitor);cs::trace_value(source_loader_,visitor);}
+void Image::release_edges(){cs::release_value(source_bytes_);cs::release_value(source_loader_);}
+}

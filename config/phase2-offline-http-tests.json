@@ -1,0 +1,72 @@
+{
+  "operation": "original-source-HttpObject-offline-failure-characterization",
+  "status": "PASS",
+  "source_cases_per_profile": 12,
+  "source_profiles": {
+    "dotnet": [
+      "get-no-retry=System.IO.IOException:-98:False:True:True:True:False:1:1:0:-1",
+      "get-no-retry-pop=-98:0:True:True",
+      "get-no-retry-interrupt=-98:False:True",
+      "get-retry-cancel=System.IO.IOException:-98:True:True:True:True:False:1:1:1:-1",
+      "get-retry-cancel-pop=-98:0:True:True",
+      "get-retry-cancel-interrupt=-98:False:True",
+      "post-no-mark=System.IO.IOException:-98:False:True:True:True:False:1:1:0:3",
+      "post-no-mark-pop=-98:0:True:True",
+      "post-no-mark-interrupt=-98:False:True",
+      "post-with-mark=System.IO.IOException:-98:False:True:True:True:False:1:1:0:7",
+      "post-with-mark-pop=-98:0:True:True",
+      "post-with-mark-interrupt=-98:False:True"
+    ],
+    "mono": [
+      "get-no-retry=System.IO.IOException:-98:False:True:True:True:False:1:1:0:-1",
+      "get-no-retry-pop=-98:0:True:True",
+      "get-no-retry-interrupt=-98:False:True",
+      "get-retry-cancel=System.IO.IOException:-98:True:True:True:True:False:1:1:1:-1",
+      "get-retry-cancel-pop=-98:0:True:True",
+      "get-retry-cancel-interrupt=-98:False:True",
+      "post-no-mark=System.IO.IOException:-98:False:True:True:True:False:1:1:0:3",
+      "post-no-mark-pop=-98:0:True:True",
+      "post-no-mark-interrupt=-98:False:True",
+      "post-with-mark=System.IO.IOException:-98:False:True:True:True:False:1:1:0:7",
+      "post-with-mark-pop=-98:0:True:True",
+      "post-with-mark-interrupt=-98:False:True"
+    ]
+  },
+  "native_leaf": {
+    "assertions": 12,
+    "transport_attempts": 0,
+    "success_response": false,
+    "generated_HttpObject_executed": false,
+    "game_boot": false
+  },
+  "verified_boundary_ids": [],
+  "generated_http_integration": "PENDING",
+  "inputs": {
+    "tests/kairo/offline_http_fixtures.cpp": "f444ab6f8ce95690700bd375042d4a23177c81ae769c8adc496d86d3d6153ccc",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/OfflineHttpOracle.cs": "6f4e04c001cbe05a6bdd1d8246b428c2a1c5585774140b226686c0ed206ed43d",
+    "tools/test_offline_http.py": "64c55fcce30fd8fbd4756719867758d6f1f7c6d2cda8d95f9fec7a95149fb0ac",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "src/kairo/api/offline_http.hpp": "a18f5ef72d163e33687c4ab80c0592edf8a1093f709f6c684e56eb24b3aa7850",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/HttpObject.cs",
+      "sha256": "5cc7223951d082a54bdfcde63213bf32cf4680f7d8da81e5339560af3ead602a"
+    }
+  ],
+  "native_executable": {
+    "path": "build/offline-http-tests/offline-http-fixtures.exe",
+    "sha256": "09f93396c05614bdea0b18f0a83e07ed1a8bef392137e238595e810c00f4f951"
+  },
+  "game_assets_used": false,
+  "original_binaries_executed": false,
+  "game_boot": false,
+  "limits": [
+    "Own WWW facade supplies completed failure, never a real request; original HttpObject bodies are compiled unmodified.",
+    "Native leaf assertions and source-state characterization are separate proofs until generated HttpObject execution.",
+    "WWW.error exact text varies by platform and is UNKNOWN on the original Android player; nonempty failure is the observed contract.",
+    "Retry dialog fixture always returns explicit synthetic cancel; it does not validate Android custom-button result mapping."
+  ]
+}

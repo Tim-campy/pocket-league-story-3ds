@@ -17,7 +17,7 @@ Catalog::Catalog(std::filesystem::path root):root_(std::filesystem::canonical(ro
     if(text(file,8)!=std::string("PLSASV1\0",8)||text(file,64)!=expected)throw cs::IOException("Asset index source/version differs");
     auto count=number(file,4);if(count>100000)throw cs::IOException("Asset index count outside supported extent");
     for(std::uint64_t i=0;i<count;++i){
-        auto kind=number(file,1);if(kind<1||kind>7)throw cs::IOException("Unknown asset kind");
+        auto kind=number(file,1);if(kind<1||kind>8)throw cs::IOException("Unknown asset kind");
         Entry e;e.kind=Kind(kind);e.key=field(file);e.path=field(file);e.size=number(file,8);e.width=std::uint32_t(number(file,4));e.height=std::uint32_t(number(file,4));
         auto raw=text(file,32);constexpr char hex[]="0123456789abcdef";for(unsigned char c:raw){e.sha256+=hex[c>>4];e.sha256+=hex[c&15];}
         if(!entries_.emplace(std::make_pair(e.kind,e.key),e).second)throw cs::IOException("Duplicate asset identity");

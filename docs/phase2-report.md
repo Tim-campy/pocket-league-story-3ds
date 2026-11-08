@@ -1,101 +1,153 @@
 # 1. PROGRESSO
 
-Continuação desde `7982970`. **A Fase 2 permanece parcial; não houve primeiro boot do jogo.** Parada por autorização pendente de uma dependência adicional de colação cultural do Mono.
+Marco intermediário após `0b9d3e7`: **as 172 raízes portáveis compilam e foram
+exercitadas**. A Fase 2 continua; título, menu e partida ainda não executaram.
+Não há decisão pendente do usuário neste marco. A autorização adicional LGPL
+foi registrada e aplicada com licença/proveniência separadas.
 
-| Medida | Antes | Agora |
+| Medida | Anterior | Atual |
 |---|---:|---:|
-| Raízes portáveis compiladas e exercitadas | 47/172 | **140/172 (81,395349%)** |
-| Métodos portáveis, incluindo dependências | 50 | **223** |
-| Diferenciais desses métodos | 350/350 | **1.561/1.561** |
-| Assembly-CSharp compilado, identidades IL | 0/1.958 | **316/1.958 (16,138917%)** |
-| Assembly-CSharp executado/verificado em jogo | 0 | **0** |
-| Fronteira verificada | 47/775 | **209/775** |
-| SyntaxKinds observados em corpos emitidos | 42/123 | **53/123** |
+| Raízes portáveis compiladas/exercitadas | 140/172 | 172/172 |
+| Raízes estritamente verificadas | 140/172 | 171/172 |
+| Corpos portáveis incluindo dependências | 223 | 374 |
+| Métodos portáveis sem divergência | 223 no juiz anterior | 373/374 |
+| Observações diferenciais | 1.561/1.561 | 2.617/2.618 |
+| Game associado à assinatura IL e compilado | 316/1.958 | 1.110/1.958 |
+| Game executado/verificado | 0 | 0 |
+| Fronteira verificada | 209/775 | 249/775 |
+| Fronteira implementada, não verificada | 0 | 1 |
 
-As 47 raízes anteriores continuam aceitas: **zero regressões contra a baseline**, ganho de 93 raízes. Os 83 métodos adicionais são dependências. Os 316 corpos do jogo têm vínculo único com a tabela IL, sem IDs UNKNOWN: 315 raízes pedidas pelo emissor e um construtor implícito. Compilar em objeto não prova link ou execução.
+**Zero perdas de compilação** nas 140 raízes/223 corpos anteriores: +32 raízes
+e +151 corpos. Houve uma retirada de qualificação: `JMath.Sin(-0)` retorna +0
+no juiz Mono Windows e −0 no C++; o resultado Android continua UNKNOWN.
+Os juízes anterior e atual diferem, portanto não se afirma comparação homogênea
+de verificações. A implementação não foi normalizada para esconder a diferença.
+Prova por IDs: `config/phase2-checkpoint-comparison.json`.
 
-| Categoria | Total | verified | todo |
-|---|---:|---:|---:|
-| Portável | 254 | 140 | 114 |
-| Reimplementar | 452 | 69 | 383 |
-| Remover | 69 | 0 | 69 |
-| Total | 775 | 209 | 566 |
+| Classificação | Total | verified | implemented | todo |
+|---|---:|---:|---:|---:|
+| Portável | 254 | 171 | 1 | 82 |
+| Reimplementar | 452 | 78 | 0 | 374 |
+| Remover | 69 | 0 | 0 | 69 |
+| Total | 775 | 249 | 1 | 525 |
 
-Os 254 portáveis incluem tipos/campos: restam 32 raízes de método. Assets: três grupos `loads`, seis `extracts`, 35 `inventoried`; antes eram um `loads`, um `converts`, sete `extracts` e 35 `inventoried`. Os 53 contratos offline ainda não estão integrados aos chamadores gerados.
+Os 254 símbolos incluem campos/tipos. Game: 1.107 declarações solicitadas e
+três construtores implícitos compilados; 76 helpers Kairo separados. Existem
+13 slots virtuais declarados sem definição. Assets: três grupos `loads`, seis
+`extracts`, 35 `inventoried`, sem mudança. Sintaxe observada: 64/123 Kairo,
+61/123 Game, **66/123 na união**; observação não comprova todos os casos de cada
+construção e não significa que os 123 estejam implementados.
 
-# 2. O QUE FOI FEITO NESTA RODADA
+# 2. O QUE FOI FEITO NESTE MARCO
 
-- Tradutor: templates genéricos, herança, construtores base/this, dispatch virtual, propriedades/streams, tipos Secure, DateTime/Random/StringBuilder, exceção EOF e rastreamento de campos pelo GC; +93 raízes, zero perdas da baseline.
-- Emissor sintético: 24 métodos, 168/168 casos. Split forçado do mesmo corpus: 1.561/1.561, 11 arquivos, máximo 32.762 bytes sob orçamento de 32.768; padrão 900.000 bytes, uma TU preservando definições únicas.
-- Fundação semântica: 1.158/1.158 casos em 14 suítes, mais 21 invariantes nativos de GC. Streams: 174/174; BinaryReader: mais 90/90. Esses contadores não são métodos do jogo.
-- Desenho/fontes: 550 observações contra corpos C# selecionados, 7.955 assertions nativas, 718 ocorrências PNG carregadas, seis frames sintéticos de texto. Rich text, matrizes/rotações completas e fidelidade raster Android continuam pendentes.
-- FreeType/Vorbis: dois TTF, 126 rasters e 27 Ogg em streaming; 9.043.951 frames percorridos em blocos limitados. Os 18.156.964 checks de canais/amostras não são cenários independentes. Os 27 prefixos comparados ao FFmpeg passaram.
-- Armazenamento: 80/80 diferenciais e 53 checks; 21 recursos reais, 3.275.098 bytes e 63 aliases conferidos. Não se usaram saves do usuário ou chave real nesses oráculos.
-- Entrada: 56/56 diferenciais, 19 checks do adaptador PC. Canvas/FormBase/FormManager: 56/56 diferenciais, 16 checks nativos. Execute/OnDraw exigem pontes ainda ausentes.
-- Som Kairo: 64/64 diferenciais, 75 checks de streaming real, quatro vozes e 27 vínculos de áudio; nove DocIDs da fronteira verificados.
-- Pipeline privado: 3.006 registros de catálogo, 965 arrays constantes comprovados; valores/chaves/tabelas somente em assets ignorados. Nenhum assembly original escrito em build ou executado.
-- Boot: quatro tentativas de construir o executável. A última compilou host e código emitido e falhou no link por quatro callbacks de Main. Não há menu substituto.
+| Frente | Resultado medido | Negativo ou limite |
+|---|---|---|
+| Censo cultural vinculado | 104 chamadas em 61 métodos; 24 buscas ordinais históricas separadas; zero erros de binding | Idioma dos assets não determina cultura CLR. |
+| Colação oficial reduzida | 615.648/615.648, incluindo os 120 casos originais | NLS moderno deixou 26/120 diferenças e não foi adotado. |
+| Core correto | Perfil SDK `unity` integralmente idêntico ao mscorlib do APK | Perfil `2.0` tem helpers/tabelas de Trim diferentes e foi descartado. |
+| Inicialização por tipo | 24/24: ordem, reentrada, falha cacheada e concorrência | Restaurar inicializadores reais retirou temporariamente 187 corpos Game antes aceitos sem a cadeia completa. |
+| Exceções, Encoding, StreamReader | 74/74, 134/134 e 508/508 | Stack trace completo e codecs legados não demonstrados continuam lacunas. |
+| Regex e Path | 752/752 e 378/378 | Subconjuntos medidos; Path distingue Unix/Windows. |
+| Trim/hex/HexNumber/Replace/Split | 395.166/395.166; 219 diferenças históricas preservadas | Preservada inclusive aritmética peculiar de HexNumber sobre dígitos não ASCII. |
+| Threads/GC/UI dispatch | 71/71; 20 invariantes de GC; UI dispatch com 24 invariantes e 16 coletas | Não resolve campos compartilhados do Game. |
+| Closures/interfaces/method groups | 48 métodos sintéticos, 336/336 casos do emissor | Captura com goto continua recusada; zero capturas foreach no Game. |
+| Arrays calculados/constantes | 6/6; ordem de avaliação e recusa de constante sem prova | 965 payloads constantes continuam privados; o guard anterior recusava indevidamente arrays dinâmicos. |
+| Catálogo raw e AssetReader | 21 recursos brutos e 21 decodificados; 15 pares diferentes; 3.027 registros verificados | Evita Decode duplicado; nenhum conteúdo publicado. |
+| Imagens/formulários/bootstrap | Lifetime 56/56, Forms 64/64, scheduler 48/48, bootstrap 12/12 | Colaboradores de teste não são callbacks Game executados. |
+| Storage/serviços | Storage 86/86; registro com 12 assertions; HTTP com 24 observações; analytics com dez | Fila/preferências preservadas; transporte nunca executado. |
+| Memória PC | Sampler com oito invariantes | Não integrado ao jogo; valores sintéticos não são métricas de boot. |
 
-**Verificação completa: 36/36 etapas PASS**, incluindo 32 testes de repositório e quatro de inventário sintático. A falha de link continua registrada separadamente. Recibos: `config/phase2-verification.json` e `phase2-boot-attempts.json`. Diário: `docs/notes/phase2-translator-cycles.md`.
+**Verificação completa: 68/68 checks aprovados**, inclusive publicação fresca
+dos inventários. O verificador reprova `PENDING` do gerador de progresso em vez
+de aceitar uma publicação antiga como checkpoint válido.
 
 # 3. HIPÓTESES
 
-| Estado | Evidência |
-|---|---|
-| CONFIRMADA | Genéricos/dispatch conservam o comportamento nos casos aceitos: 223 métodos e 1.561 diferenciais; fixture confirma despacho derivado durante construtor base. |
-| CONFIRMADA | GC Android anuncia geração máxima zero: o export completo mono_gc_max_generation retorna zero nos libmono x86 e ARM do APK, analisados sem execução. Não prova todo o coletor. |
-| REFUTADA | Cultura pode ser substituída por ordinal: 11/120 observações do Mono divergem. O usuário decidiu preservar cultura nesses métodos. |
-| REFUTADA | APIs culturais do Windows reproduzem o Mono: 26/120 diferenças, com e sem linguistic casing. Nenhuma alternativa foi adotada. |
-| CONFIRMADA | Graphics.GetRenderRect original copia float[] para int[] e lança ArrayTypeMismatchException; os dois oráculos confirmaram a exceção, preservada no nativo. |
-| REFUTADA | Arrays baked podem inicializar como globais C++ antes do host: dependem do catálogo e da ordem C#. Quatro globais foram recusadas; nove corpos dependentes continuam sem emissão até existir cctor fiel. |
-| INCONCLUSIVA | Equivalência visual/sonora/funcional ao Android: não houve execução do jogo C++ nem comparação de partida. |
-
-Negativos corrigidos: 128 diferenças no formatter inicial de nomes genéricos; 43 por classificação incorreta de op_Addition no runner; um caso de dispatch do BinaryReader entre runtimes; incompatibilidade /MT versus /MD; mirror recusado por TLS, resolvido mantendo validação Windows. Não se editaram estados para ocultar falhas. As nove recusas Game estão nomeadas no diário; não são regressões contra a baseline, que tinha zero Game traduzidos.
+- **CONFIRMADA:** não basta comparar a entrada de Trim: helpers/dados diferem
+  no perfil `2.0`; o core `unity` coincide integralmente com o APK por SHA-256.
+- **CONFIRMADA:** ordinal/NLS moderno não substitui a colação histórica;
+  `StringEx`, `StringUtil` e `Language` tornam a diferença observável.
+- **REFUTADA:** limitar a uma cultura ou ASCII: nomes/textos dos assets passam
+  pelos utilitários, e a cultura Android efetiva não foi medida.
+- **CONFIRMADA:** arrays calculados são comandos da lógica; o controle de
+  constantes sem proveniência continua recusado, comprovado pela fixture.
+- **CONFIRMADA:** o bloqueio Shader do construtor implícito vem da varredura
+  de locais/gotos em métodos não chamados da classe. Fixture privada isolou
+  o gatilho; a correção será feita após este checkpoint.
+- **INCONCLUSIVA no Android:** sinal de Math.Sin(-0); imports nativos medidos,
+  mas não houve execução do jogo no aparelho nesta continuidade.
+- **CONFIRMADA:** campos de estado/progresso, labels e entrada têm data races
+  na representação C++ atual. Publicar estado 4 não equivale ao fim do worker.
 
 # 4. PENDENTES POR GRUPO
 
-| Raízes portáveis recusadas | Quantidade |
-|---|---:|
-| DataInputStream/BinaryReader: binding | 3 |
-| JTool/ByteListOutputStream: arrays/reflexão | 2 |
-| Compressor/JarInflater/LoadStringArray: tipos aninhados/Dictionary | 8 |
-| StringEx/SecureString/StringUtil/Config: cultura e dependências de strings | 9 |
-| Property/SecureProperty: conditional access/serialização | 4 |
-| JString/ConnectionException/Log: object e exceções | 4 |
-| JCalendar: provedor de timezone | 1 |
-| StreamUtil.ReadString: GetString/GetCode | 1 |
-| Total | **32** |
+| Grupo | Estado |
+|---|---|
+| Raízes portáveis | Zero sem compilação; Sin sem verificação estrita. |
+| Game | 848 identidades IL sem `translated`; 1.110 compiladas. |
+| Main | OnCreate/OnUpdate ainda sem corpo; OnDraw/GetFormManager/OnDestroy possuem corpos. |
+| Ligação | 13 slots sem definição no recibo; última tentativa registrou oito símbolos não resolvidos. |
+| Sintaxe | 57/123 não observados na união; cobertura semântica mais restrita que observação. |
+| Bootstrap/serviços | Provas nativas prontas; bindings e execução gerada integrados ainda pendentes. |
+| Concorrência | 73 campos/439 acessos/323 chamadas inventariados; 18 campos próprios de BootForm e 25 transitivos detalhados. SharedField tem 21 invariantes, ainda sem aplicação ao Game. |
+| Validação funcional | Nenhum título/menu/partida PC; comparação visual/sonora Android pendente. |
 
-São bloqueios atuais, sem promessa de que uma mudança feche todo o grupo. IDs e dependências adicionais: `config/phase2-translation.json`.
-
-Restam 1.642 identidades IL do jogo sem C++ compilado e 70 SyntaxKinds sem observação em corpos emitidos. O inventário de 123 inclui construções estruturais fora dos corpos; parsing não comprova cobertura semântica.
-
-O link exige Main.OnCreate (Language.Get), OnUpdate (BootForm), OnDraw e GetFormManager (FormManager). Também faltam bootstrap Config/Awake/Language, execução de formulários/SurfaceManager, inicialização estática fiel, integração dos serviços e os demais corpos do jogo.
+Tentativas de boot: tipos de layout ausentes; depois factory não emitida;
+depois oito callbacks/slots ausentes. Nenhum stub foi usado. Não há frame time
+ou RSS do jogo: o executável ainda não iniciou.
 
 # 5. TOOLCHAIN
 
-Mantidos Roslyn 5.8.0-1.26319.2, .NET10.0.10, MSVC 19.51.36252.0, CMake 4.3.1-msvc1, Windows SDK 10.0.26100.0 e SDL2 SDK 2.32.10. Novos: FreeType 2.15.0, libogg 1.3.6 e libvorbis 1.3.7 oficiais, somente em build/deps, sem instalação global. Hashes/flags em `docs/toolchain.md` e `config/media-sdk.json`; runtime MSVC /MD.
+Sem nova instalação no sistema. Roslyn, MSVC/CMake/Ninja, Mono SDK Unity,
+SDL2, FreeType, libogg/libvorbis e JDK foram usados conforme autorizações.
+SDK 3DS/Azahar permanecem para a Fase 4. Versões/flags/hashes:
+`docs/toolchain.md`.
 
-zlib/libpng/stb/miniaudio não foram necessários. Colação Mono é proposta, ainda não preparada. Toolchain 3DS/emulador continuam para a Fase 4. Correspondência exata das tabelas culturais do fork Unity/Android e equivalência de todas as culturas: UNKNOWN.
+O oráculo histórico carrega `lib/mono/unity/mscorlib.dll`, SHA-256
+`7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1`,
+idêntico ao do APK. O perfil `2.0`, hash
+`9380de48b4f19ee5d125f84ac1ce2644175e2490ad265ef12c444eba6916e047`,
+foi descartado. Executar programas próprios no SDK Windows não prova todos
+os comportamentos do JIT Android.
 
 # 6. COMPONENTES EXTERNOS E METADADOS
 
-Referência limpa: v1.0.0-csharp-reconstruction, commit `c7d097a847ca1f1a8e5fb7141ff11d338f5915c4`. APK 2.0.2, SHA-256 `d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8`. Metadados de API são externos; nenhum motor/DLL/SO original incorporado. libmono foi lido estaticamente sem extração no port.
+Mono oficial `f08f8a27bfe3aafda4e430ee2365dec73c1070d7`, confrontado com o
+fork Unity `b6587926c0f146c8b12985744f33a13b39a22d57`. Revisão exata de
+fabricação do SDK inteiro UNKNOWN; os componentes usados têm identidade por
+hash comprovada. MIT/X11 e GNU Library GPLv2 ficam separados em `THIRD_PARTY.md`,
+com o `COPYING.LIB` histórico.
 
-Os 654 RGBA8 somam 16.933.248 bytes; o readback sequencial teve pico de payload de textura de 1.179.648 bytes. No mixer padrão de quatro vozes: rings 262.144 bytes, scratch 131.072, pico somado de saída disponível de resampler 85.448. Não incluem todas as alocações de bibliotecas e **não são memória residente do jogo**. A fixture Sound usa buffers menores, registrados separadamente.
+Colação readonly lógica: **337.358 bytes MIT +46.832 bytes BMP LGPL =384.190**.
+HexNumber acrescenta **80 bytes**: **384.270 bytes** dessas tabelas oficiais.
+Não são RSS nem incluem padding/estruturas ou outras tabelas do fonte
+traduzido. Tailoring adiciona 6.284 bytes UTF-16 no heap, além dos índices.
 
-**Boot: falhou no link. Título/menu/partida: NOT_RUN. RSS por texturas/áudio/código/heap e frame time: UNKNOWN.** Nenhuma discrepância de gameplay foi medida contra Android. Testes de componentes não são provas de partida.
-
-Assets, dados e manifestos privados ignorados. DEX/Java, marca, binários originais e backend 3DS continuam fora. Nenhum APK novo foi montado, instalado ou executado.
+Sete recursos e cinco arrays BMP confrontados com o APK sem salvar/executar
+DLLs/SOs originais. Assets ficam nos diretórios ignorados. A referência mantém
+tag/commit/bytes. Métodos Game são vinculados por tipo/nome/parâmetros/retorno;
+a reconstrução byte a byte anterior não conta como progresso C++.
+Não se montou nem instalou APK nesta continuidade.
 
 # 7. BLOQUEIOS
 
-**Parada pela condição autorizada de dependência fora da lista.** Ordinal e NLS foram medidos e recusados para a semântica cultural. A autorização pendente é para preparar o componente oficial de colação do Mono em build/deps, com versão, hashes e licença, visando C++ sem runtime Mono. A consulta decorre da instrução do usuário: “Qualquer outra dependência, pergunte antes.” Nenhuma instalação/incorporação desse componente foi feita.
+**Nenhuma decisão ou autorização pendente do usuário.** Este marco será salvo
+e a Fase 2 continuará. As tabelas LGPL já estão autorizadas.
 
-Preservar cultura já foi decidido e registrado em AGENTS.md; autorizar a dependência é uma decisão separada. Não falta APK ou compilador. Aprovar a dependência não resolve automaticamente os demais pendentes. Não houve dez rodadas sem avanço nem decisão sobre telas/controles 3DS.
+Impedem o boot: lowering do construtor implícito, Concat de objetos, demais
+slots e bootstrap/serviços reais. Impedem afirmar equivalência do jogo:
+campos compartilhados sem correção, ausência de execução/comparação Android.
+RSS por categoria e frame time continuam UNKNOWN; payload/commit/RSS não são
+somados nem tratados como medidas intercambiáveis.
 
-# 8. SUA RECOMENDAÇÃO
+# 8. RECOMENDAÇÃO E CONTINUIDADE
 
-1. Resolver a autorização da colação e validar versão/tabelas contra o oráculo histórico; manter Android UNKNOWN onde não houver prova.
-2. Fechar as 32 raízes: BinaryReader já tem 90 testes próprios, mas falta binding; tipos aninhados/Dictionary, arrays e conditional access destravam outras famílias.
-3. Integrar API/serviços ao bootstrap e aos chamadores gerados, repetindo o boot após avanços relevantes. Medir RSS/frame time como números do jogo somente quando título/menu executarem.
+1. Corrigir a varredura do construtor implícito com a fixture isolada e depois
+   Concat(Object,Object,Object). Ganho exato de métodos antes do juiz: UNKNOWN.
+2. Ligar bootstrap/políticas aos chamadores, tentar executar e tratar a próxima
+   falha concreta, sem menu sintético.
+3. Aplicar acessos sincronizados inventariados, inclusive nativos, mantendo
+   `++` como carga/operação/store separados; promover Game somente com prova.
+
+Diário e negativos em `docs/notes/phase2-translator-cycles.md`. Nenhuma condição
+de parada foi acionada neste marco; o trabalho prossegue após salvá-lo.

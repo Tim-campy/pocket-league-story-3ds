@@ -11,11 +11,13 @@
     "4": 1,
     "5": 27,
     "6": 1,
-    "7": 965
+    "7": 965,
+    "8": 21
   },
-  "records": 3006,
-  "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
+  "records": 3027,
+  "raw_textasset_view": "kind8 preserves original payload before XOR; kind1 remains decoded storage view",
+  "catalog_sha256": "f6de1542c2f7b60e73a0d4697f1bec363d461e0f678231d2cbafe6ff7750cc19",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
-  "producer_sha256": "cae7e3cead1d685302e69fd8cc996c386738ebbbce12dffeef9a6f9f2ff5d445",
+  "producer_sha256": "bc87218f0339197ed0f90527ce3078e2b76e44f3c8ca1de4e8045ef388e96299",
   "asset_values_published": false
 }

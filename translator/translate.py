@@ -3,6 +3,7 @@ import argparse
 import csv
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -67,19 +68,23 @@ def main():
         with (ROOT/'config/boundary.csv').open(encoding='utf-8',newline='') as f: selected=[r['id'] for r in csv.DictReader(f) if r['classificacao']=='portavel']
         output=args.output or ROOT/'src/kairo/common/generated'
     else:
-        refs=[args.original_managed/n for n in ['mscorlib.dll','KairoLibrary.dll','UnityEngine.dll','System.Core.dll','System.dll']]
+        refs=[args.original_managed/n for n in ['mscorlib.dll','UnityEngine.dll','System.Core.dll','System.dll']]
+        library_order=(reference/'config/compile-order/KairoLibrary.txt').read_text(encoding='utf-8').splitlines()
+        source_names+=[name for name in library_order if name and not name.startswith('#') and not name.endswith('/AssemblyInfo.cs')]
         # Translation metadata uses original full signatures; Roslyn selectors are
         # taken from its bound source methods rather than hand-edited ledgers.
         selected=[];output=args.output or ROOT/'src/game'
     policies=json.loads((ROOT/'config/service-overrides.json').read_text(encoding='utf-8'))
     request=dict(assembly=args.assembly,sources=[str(reference/p) for p in source_names],references=[str(p.resolve()) for p in refs],selected=selected,output=str(output.resolve()),diagnostics_only=args.diagnostics_only,check_symbols=[p['symbol'] for p in policies['overrides']])
     request['source_root']=str(reference)
+    request['external_methods']={'M:UnityEngine.Debug.Log(System.Object)':'pls::kairo::debug_log'}
+    request['native_includes']=['system.hpp']
     if args.assembly=='Assembly-CSharp':
         portable=json.loads((ROOT/'config/phase2-translation.json').read_text(encoding='utf-8'))
-        request.update(select_all_source_methods=True,
+        request.update(select_all_source_methods=True,select_source_prefix="src/Assembly-CSharp/",
             external_types={c['id']:'pls::generated::'+c['cpp_name'].split('<')[0] for c in portable['generated_classes']},
             external_methods={m['id']:'pls::generated::'+m['cpp_name'] for m in portable['emitted_methods']},
-            external_fields={f['id']:f['cpp_name'] for c in portable['generated_classes'] for f in c['fields'] if 'id' in f},
+            external_fields={**{f['id']:f['cpp_name'] for c in portable['generated_classes'] for f in c['fields'] if 'id' in f},**{f['id']:'pls::generated::'+f.get('cpp_accessor',f['cpp_name']) for f in portable['static_fields']}},
             bootstrap_method='M:main.Main.#ctor' if args.bootstrap_main else '')
         request['external_complete_bases']=list(request['external_types'])
         request['external_types']['T:kairo.unity.ui.IApplication']='pls::kairo::IApplication'
@@ -94,14 +99,110 @@ def main():
         request['external_slots']={app+n:n for n in slots}
         request['external_methods'].update({app+n:'member:source_'+n for n in ['OnCreate','OnResume','OnSuspend','OnDestroy']})
         request['external_methods']['M:native.AppPlugin.Finish']='pls::kairo::request_host_finish'
+        request['external_methods']['M:UnityEngine.Debug.Log(System.Object)']='pls::kairo::debug_log'
+        # Exact native API leaves. A mapping supplies a declaration/implementation;
+        # it does not promote API verification or game execution states.
+        native_types={
+            'kairo.unity.ui.IApplication':'IApplication','kairo.unity.ui.Image':'Image','kairo.unity.ui.Graphics':'Graphics','kairo.unity.ui.Font':'Font',
+            'kairo.unity.ui.SoundBase':'SoundBase','kairo.unity.ui.SoundOGG':'SoundOGG','kairo.unity.ui.SoundPlayer':'SoundPlayer',
+            'kairo.unity.ui.Canvas':'Canvas','kairo.unity.form.FormBase':'FormBase','kairo.unity.form.FormManagerBase':'FormManagerBase',
+            'kairo.unity.io.Storage':'Storage','kairo.unity.io.RecordStore':'RecordStore',
+            'UnityEngine.PlayerPrefs':'PlayerPrefs','UnityEngine.Application':'UnityApplication','UnityEngine.QualitySettings':'QualitySettings',
+            'kairo.unity.surface.MotionEvent':'MotionEvent','kairo.unity.ui.KeyEvent':'KeyEvent','kairo.unity.ui.AppEvent':'AppEvent'}
+        request['external_types'].update({'T:'+k:'pls::kairo::'+v for k,v in native_types.items()})
+        request['external_complete_bases']+=['T:kairo.unity.form.FormBase','T:kairo.unity.form.FormManagerBase']
+        request['native_includes']+=['graphics.hpp','font.hpp','sound.hpp','forms.hpp','canvas.hpp','storage.hpp','input.hpp','system.hpp']
+        allow={
+            'IApplication':{'GetCurrentApp','SetViewport','GetViewport','GetWidth','GetHeight','GetWidth2','GetHeight2','GetScaleRatio','CheckUiThread','IsTermination','Visibe','Focus','HasWindowFocus','IsRendering','RunOnUiThread','RunOnUpdate'},
+            'Graphics':{'GetColorOfRGB','GetAnchorPosition','GetRenderRect','SetColor','GetColor','SetFont','GetFont','PushFont','PopFont','SetAutoTextLayout','IsAutoTextLayout','StringWidth','DrawString','SetOrigin','GetOriginX','GetOriginY','PushOrigin','PopOrigin','Scale','GetScale','SetClip','ClipRect','PushClip','PopClip','ClearClip','SetRenderRect','ClearRenderRect','SetRenderMode','GetRenderModeOperator','GetRenderModeSrcRatio','GetRenderModeDstRatio','PushRenderMode','PopRenderMode','FillRect','DrawRect','DrawLine','DrawImage','DrawScaledImage','CopyArea','Dispose'},
+            'Image':{'CreateImage','GetWidth','GetHeight','GetAlpha','SetAlpha','GetTransparentColor','SetTransparentColor','SetTransparentEnabled','GetGraphics','Dispose'},
+            'Font':{'GetSize','GetHeight','SetSize','GetWidth','GetStyle','SetStyle','SetFace','GetFace','Copy','Set','Equals','AdjustFontSize','Dispose','PushLocalizeSetting','PopLocalizeSetting','ClearLocalizeSettings','LockLocalizeSetting','UnlockLocalizeSetting','IsNeedLocalizeScale','GetLocalizeScale','StringWidth','StringWidthF'},
+            'SoundBase':{'GetState','SetLoop','SetSoundType','Stop','Play','SetVolume','Dispose','GetData','GetName','SetName','GetLoop','GetSoundType','ToString'},
+            'SoundOGG':{'Load','Play','SetVolume','Stop','Dispose','GetState'},
+            'SoundPlayer':{'GetInstance','Init','Dispose','SetVolume','SetMute','IsMute','ReflectVolumeAndMute','Play','Stop','StopAll','Resume','Suspend','IsSilentMode','IsOtherAudioPlay','UpdateOtherAudioPlay','GetPort','RemovePort','SetPort','AddPlayingList','RemovePlayingList','SetPortMax','GetPortMax'},
+            'Canvas':{'GetInstance','SetDisplayCurrent','GetGraphicsInstance','BeginPaint','EndPaint','SetBackground','SetBackColor','GetBackColor','GetWidth','GetHeight','GetWidth2','GetHeight2','SetAspectRatio','SetSoftLabel','GetSoftLabelL','GetSoftLabelR','GetSoftLabel','UpdateSoftLabel','DecideKeyState','ClearKeyBuffer','GetKeyState','GetKeypadState','CheckKeyState','CheckKeyPulse','CheckKeyRepeat','CheckKeyDouble','SetKeyRepeatInterval','GetKeyRepeatInterval','SetKeyDoubleInterval','GetKeyDoubleInterval','KeyDown','KeyUp','KeyClick','OnKeyDown','OnKeyUp','OnTouchEvent','GetSyncMillSecound'},
+            'FormBase':{'SetSoftLabel','GetLeftSoftLabel','GetRightSoftLabel','GetSoftLabel3','GetSoftLabel4','Push','Pop','CheckUsable','GetId','GetProcessMode','SetProcessMode','IsAlive'},
+            'FormManagerBase':{'GetForm','GetFormIndex','ChangeCurrentForm','Push','Pop','GetFormsNum','GetTopForm','GetDownForm','GetCurrentForm','RemoveAllForms','MoveToTop','MoveToDown','CheckUsable','DrawAllForms','DrawSkip','IsDrawSkip','SetLoadingForm','SetPrintForm','Draw','Execute','OnDraw','Resume','ProcessEvent','ProcessBackKey','ShowTerminationDialog','CheckShowTerminationDialog','SetPause','IsPause','SurfaceChanged','IsCapturing'},
+            'Storage':{'Setup','Open','GetFolder','Close','Read','Write','Delete','Exists','GetSize','GetFiles'},
+            'RecordStore':{'SetPreferenceMode','Setup','CreateRecordStore','PreferencesToFile','FileToPreferences','SetResourceFiles','AddRecord','WriteRecord','ReadRecord','ExistRecord','GetRecordSize','GetNumRecords','RemoveLastRecord','RemoveAllRecord','CloseRecordStore','GetSizeAvailable','GetCapacity','GetSize','GetRecordInfoSize','OpenRecordStore'},
+            'PlayerPrefs':{'HasKey','GetInt','GetFloat','GetString','SetInt','SetFloat','SetString','DeleteKey','DeleteAll','Save'},
+            'UnityApplication':set(),'QualitySettings':set(),'AppEvent':set(),'MotionEvent':{'GetAction','GetX','GetY','GetDeltaX','GetDeltaY','GetDeltaTime','IsMousePointer','GetPointerCount','GetPointerId'},'KeyEvent':{'GetAction','GetKeyCode','GetRepeatCount'}}
+        csv.field_size_limit(2_000_000)
+        with (ROOT/'config/boundary.csv').open(encoding='utf-8',newline='') as stream:
+            for row in csv.DictReader(stream):
+                identifier=row['id']
+                for source_type,native_type in native_types.items():
+                    prefix='M:'+source_type+'.'
+                    if identifier.startswith(prefix):
+                        name=identifier[len(prefix):].split('(')[0]
+                        if name in allow[native_type]:request['external_methods'][identifier]='native'
+        request['external_methods'].update({
+            'M:kairo.unity.ui.Graphics.GetColorOfRGB(System.Int32,System.Int32,System.Int32)':'native',
+            'M:kairo.unity.ui.Graphics.GetColorOfRGB(System.Int32,System.Int32,System.Int32,System.Int32)':'native',
+            'M:kairo.unity.ui.Font.#ctor':'native',
+            'M:kairo.unity.ui.Font.#ctor(kairo.unity.ui.Font)':'native',
+            'M:kairo.unity.ui.Image.Load(System.Byte[],kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)':'native',
+            'M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)':'pls::kairo::native_plugin_init',
+            'M:UnityEngine.Application.set_targetFrameRate(System.Int32)':'pls::kairo::UnityApplication::set_targetFrameRate',
+            'M:UnityEngine.QualitySettings.set_vSyncCount(System.Int32)':'pls::kairo::QualitySettings::set_vSyncCount'})
+        for base,slots in {'FormBase':['Init','Draw','Update','Resume','Suspend','Finish','GetTouchValue','SetTouchValue','CheckMainWindow','ProcessEvent','ProcessBackKey'],'FormManagerBase':['PreUpdate','Updated','PreDraw','Drawn','Execute','OnDraw','Resume']}.items():
+            for name in slots:
+                # Full signatures are supplied by Roslyn in the lowerer. Slot
+                # matching is by original declaring method documentation ID.
+                file=reference/'src/KairoLibrary/kairo/unity/form'/str(base+'.cs')
+                for row in csv.DictReader((ROOT/'config/boundary.csv').open(encoding='utf-8',newline='')):
+                    if row['id'].startswith('M:kairo.unity.form.'+base+'.'+name+'(') or row['id']=='M:kairo.unity.form.'+base+'.'+name:
+                        request.setdefault('external_slots',{})[row['id']]=name
+                        if name not in ('Execute','OnDraw'):request['external_methods'][row['id']]='member:source_'+name
+        request['external_methods']['M:kairo.unity.form.FormBase.#ctor(System.Int32)']='base:source_construct'
+        request['external_methods']['M:kairo.unity.form.FormManagerBase.#ctor']='base:source_construct'
+        request['external_types']['T:kairo.unity.surface.TouchValueAccessor']='pls::kairo::TouchValueAccessor'
+        request['native_includes']+=['touch_value_accessor.hpp']
+        for name in ('GetTouchValue','SetTouchValue'):
+            identifier='M:kairo.unity.surface.TouchValueAccessor.'+name+'(System.Int32,System.Int32)'
+            request['external_methods'][identifier]='member:'+name
+            request.setdefault('external_slots',{})[identifier]=name
+    # Platform fixtures inject deterministic locale/timezone independently of
+    # the game's Language selection. Production host installs its real backend.
+    request['native_includes']+=['globalization.hpp']
+    request['external_methods'].update({
+        'M:java.native.JavaPlugin.GetDefaultTimeZone':'pls::kairo::native_timezone_id',
+        'M:java.native.JavaPlugin.GetUtcOffset(System.String)':'pls::kairo::native_timezone_raw_offset',
+        'M:java.native.JavaPlugin.GetDefaultLocale':'pls::kairo::native_locale'})
+    request['oracle_external_methods']={
+        'M:java.native.JavaPlugin.GetDefaultTimeZone':'SyntheticPlatform.TimeZone',
+        'M:java.native.JavaPlugin.GetUtcOffset(System.String)':'SyntheticPlatform.RawOffset',
+        'M:java.native.JavaPlugin.GetDefaultLocale':'SyntheticPlatform.Locale'}
+    request['oracle_support']='public static class SyntheticPlatform {public static string TimeZone(){return "Fixture/Zone";} public static int RawOffset(string id){if(id==null)throw new System.ArgumentNullException();return id=="Fixture/Zone"?32400000:0;} public static string[] Locale(){return new string[]{"en","US"};}}'
+    request['oracle_native_setup']='pls::kairo::install_globalization_provider({[](){return pls::cs::String(u"Fixture/Zone");},[](const pls::cs::String&id){if(id.is_null())throw pls::cs::ArgumentNullException();return id==pls::cs::String(u"Fixture/Zone")?32400000:0;},[](){return pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"en"),pls::cs::String(u"US")});}});'
+    # Shared, concrete platform leaves used by generated JarInflater/AssetReader.
+    request.setdefault('external_types',{}).update({'T:kairo.unity.io.Storage':'pls::kairo::Storage','T:kairo.unity.ui.IApplication':'pls::kairo::IApplication','T:kairo.unity.util.DisplayMetrics':'pls::kairo::DisplayMetrics','T:UnityEngine.TextAsset':'pls::kairo::NativeTextAsset','T:UnityEngine.Object':'pls::cs::Object'})
+    request['native_includes']+=['storage.hpp','application.hpp','asset_reader.hpp','display_metrics.hpp']
+    request['external_methods'].update({'M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)':'pls::kairo::Storage::Read','M:kairo.unity.ui.IApplication.GetCurrentApp':'pls::kairo::IApplication::GetCurrentApp','M:kairo.unity.ui.IApplication.RunOnUiThread(kairo.unity.ui.IApplication.UIMethod,System.Boolean)':'member:RunOnUiThread','M:kairo.unity.ui.IApplication.RunOnUiThread(System.Threading.ThreadStart,System.Boolean)':'member:RunOnUiThread','M:UnityEngine.TextAsset.get_bytes':'member:get_bytes','M:UnityEngine.TextAsset.get_text':'member:get_text','M:kairo.unity.util.DisplayMetrics.get_Density':'pls::kairo::DisplayMetrics::get_Density'})
+    if args.assembly=='KairoLibrary':
+        request['oracle_external_methods'].update({'M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)':'SyntheticAssets.Read','M:kairo.unity.ui.IApplication.GetCurrentApp':'SyntheticAssets.Current','M:UnityEngine.Resources.Load(System.String)':'UnityEngine.Resources.Load','M:UnityEngine.Resources.UnloadAsset(UnityEngine.Object)':'UnityEngine.Resources.UnloadAsset'})
+        request['oracle_support']+='''
+public static class SyntheticAssets {public static byte[] Read(int media,bool security,string file){if(media!=3)throw new NotSupportedException();return null;}public static kairo.unity.ui.IApplication Current(){return new kairo.unity.ui.IApplication();}}
+namespace kairo.unity.ui { public class IApplication {public delegate object UIMethod();public object RunOnUiThread(UIMethod method,bool wait=false){return method();}public void RunOnUiThread(System.Threading.ThreadStart method,bool wait=false){method();}}}
+namespace kairo.unity.util {public static class DisplayMetrics {public static float Density {get{return 1.6f;}}}}
+namespace UnityEngine { public class Object {} public class TextAsset:Object{public byte[] bytes;public string text;}public static class Resources {public static Object Load(string name){return null;}public static void UnloadAsset(Object value){}}}
+'''
+        request['oracle_native_setup']+='struct FixtureApp:pls::kairo::IApplication{void OnUpdate()override{}void OnDraw()override{}pls::cs::Ref<pls::kairo::FormManagerBase> GetFormManager()override{return {};}};auto fixtureApp=pls::cs::make_ref<FixtureApp>();fixtureApp->source_Init(fixtureApp);fixtureApp->host_configure(240,280,{},[](){});'
     input_path=folder/(args.assembly+'-input.json');raw_path=folder/(args.assembly+'-translation.json')
     input_path.write_text(json.dumps(request,indent=2)+'\n',encoding='utf-8',newline='\n')
     run([runtime,target,input_path,raw_path],folder/(args.assembly+'-translator.log'))
     report=json.loads(raw_path.read_text(encoding='utf-8-sig'))
+    # Snippets may contain source numeric payloads. Keep those diagnostics only
+    # in ignored build/raw reports; public receipts contain locations, not data.
+    for diagnostic in report.get('rejected_methods',{}).values():
+        site=diagnostic.pop('site',None)
+        if site:
+            location=re.match(r'^(.*?\\.cs):(\\d+):',site)
+            if location:diagnostic.update(node_source=location.group(1),node_line=int(location.group(2)))
     if args.diagnostics_only:
         report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs])
         target_report=ROOT/'config'/('phase2-game-diagnostics.json' if args.assembly=='Assembly-CSharp' else 'phase2-portable-diagnostics.json')
-        target_report.write_text(json.dumps(report,indent=2,ensure_ascii=True)+'\n',encoding='utf-8',newline='\n')
+        target_report.write_text(json.dumps(report,indent=None if args.assembly=='Assembly-CSharp' else 2,ensure_ascii=True,separators=(',',':') if args.assembly=='Assembly-CSharp' else None)+'\n',encoding='utf-8',newline='\n')
         print(json.dumps({k:report[k] for k in ['source_method_declarations','binding_errors','source_bodies_lowered_in_memory','generated_cpp_methods','compiled_methods','executed_methods']}))
         return
     # The source-only oracle is a test artifact, not public game output.
@@ -132,7 +233,7 @@ def main():
         game_translated_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_compiled_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_executed_methods=0,
         generated_files=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted(set(output.glob('*.?pp'))|set(output.glob('*.inc')))])
     report_target=ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
-    report_target.write_text(json.dumps(report,indent=2,ensure_ascii=True)+'\n',encoding='utf-8',newline='\n')
+    report_target.write_text(json.dumps(report,indent=None if args.assembly=='Assembly-CSharp' else 2,ensure_ascii=True,separators=(',',':') if args.assembly=='Assembly-CSharp' else None)+'\n',encoding='utf-8',newline='\n')
     measured=list(csv.DictReader((ROOT/'config/csharp-syntax.csv').open(encoding='utf-8')))
     covered=set(report['emitted_kind_occurrences'])
     syntax=[dict(kind=r['kind'],measured_count=r['count'],observed_in_emitted_body=r['kind'] in covered,

@@ -216,10 +216,10 @@ def main():
         }
         lines=[replace.get(line,line) for line in lines]
         lines += ['## Evidência atual da Fase 2','',
-            f"- Portáveis: {phase2['requested_portable_symbols']} símbolos requisitados correspondem a {phase2['requested_root_methods']} raízes de método. {phase2['emitted_root_methods']} raízes + {phase2['emitted_dependency_methods']} dependências emitidas/compiladas; {phase2['executed_methods']} métodos exercitados em {phase2['differential_cases']} casos diferenciais de fonte, todos aprovados.",
+            f"- Portáveis: {phase2['requested_portable_symbols']} símbolos requisitados correspondem a {phase2['requested_root_methods']} raízes de método. {phase2['emitted_root_methods']} raízes + {phase2['emitted_dependency_methods']} dependências emitidas/compiladas; {phase2['executed_methods']} métodos exercitados e {phase2['verified_methods']} verificados. {phase2['differential_passed']}/{phase2['differential_cases']} observações diferenciais aprovadas; {len(phase2['known_platform_differences'])} diferenças de plataforma explicitamente retidas, sem promoção a verified.",
             f"- Fronteira: {len(phase2['verified_boundary_ids'])}/{len(boundary)} símbolos verificados: {len(phase2['verified_portable_boundary_ids'])} portáveis e {len(phase2['verified_platform_boundary_ids'])} de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.",
             f"- Assembly-CSharp: {phase2['game_emitted_cpp_methods']} corpos emitidos, {phase2['game_compiled_cpp_methods']} compilados em objeto C++; {phase2['game_translated_methods']}/1958 ({phase2['game_translated_methods']/1958*100:.2f}%) associados unicamente à assinatura IL original. {len(phase2['game_mapping_unknown'])} DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou {phase2['game_source_method_declarations'] if phase2['game_source_method_declarations'] is not None else 'UNKNOWN'} identidades declaradas; o pedido atual inclui {phase2['game_requested_method_identities']} identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.",
-            f"- Sintaxe: {phase2['syntax_kinds_observed_in_emitted_bodies']}/{phase2['measured_syntax_kinds']} SyntaxKinds observados em corpos emitidos; observação não comprova cobertura semântica integral de cada construção.",
+            f"- Sintaxe: {phase2['syntax_kinds_observed_in_emitted_bodies']}/{phase2['measured_syntax_kinds']} SyntaxKinds na união dos corpos emitidos ({phase2['portable_syntax_kinds_observed']} Kairo, {phase2['game_syntax_kinds_observed']} Game); observação não comprova cobertura semântica integral de cada construção.",
             f"- Serviços: {phase2['service_contracts']} contratos explícitos e {phase2['service_native_assertions']} assertions nativas; hooks não integrados, nenhum símbolo da fronteira promovido por essas fixtures.",
             f"- Assets: {phase2['rgba8_files']} RGBA8 únicos ({phase2['rgba8_bytes']} bytes) com readback integral; {phase2['ttf_files']} TTF e {phase2['ogg_files']} Ogg "+('exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.' if phase2['media_runtime_verified'] else 'ainda sem prova atual de rasterização/streaming.'),
             '- Backend SDL e fixtures C++/C# foram executados. Título, menu, partida, frame time e memória residente por categoria do jogo permanecem UNKNOWN; não houve primeiro boot do jogo.',
@@ -229,6 +229,16 @@ def main():
             'O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e retorno; construtores retornam System.Void. Não há vínculo só por aridade. Correspondências ambíguas, assinaturas abertas e DocIDs sem identidade IL única ficam registrados como UNKNOWN no recibo. Métodos gerados/auxiliares do IL não são contados como traduzidos por haver uma declaração fonte relacionada.',
             'Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.',
             '', 'Recibos e hashes conferidos pelo gerador: [resumo](config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).', '']
+    if phase2:
+        if phase2.get('culture'):
+            culture=phase2['culture']
+            lines += ['## Contratos culturais e fundação','',
+                f"- Inventário cultural: {culture['calls']} chamadas em {culture['methods']} métodos; {culture['historical_ordinal_calls']} chamadas ordinais do Mono separadas; {culture['culture_assignments']} atribuições de cultura no fonte. Dados e limites: [medição](docs/culture-usage.md)."]
+        for name,proof in phase2.get('foundation',{}).items():
+            lines.append(f"- Fundação `{name}`: {proof['passed']}/{proof['cases']} observações aprovadas, sem promover métodos arbitrários da fronteira.")
+            if name=='mono-collation-tests':
+                lines.append(f"  Payload de tabelas: {proof['logical_table_payload_bytes']} bytes ({proof['mit_resource_bytes']} MIT/X11 + {proof['lgpl_character_bytes']} GNU Library GPLv2); licenças/proveniência separadas em [THIRD_PARTY.md](THIRD_PARTY.md). Footprint no 3DS não medido.")
+        lines.append('')
     assets_document(a,phase2)
     (ROOT/'PROGRESS.md').write_text('\n'.join(lines),encoding='utf-8',newline='\n')
     print(json.dumps(dict(boundary_symbols=len(boundary),translation_methods=len(translation),asset_groups=len(assets),

@@ -1,0 +1,2609 @@
+{
+  "operation": "official-mono-collation-preparation",
+  "revision": "f08f8a27bfe3aafda4e430ee2365dec73c1070d7",
+  "unity_fork_revision": "b6587926c0f146c8b12985744f33a13b39a22d57",
+  "unity_comparison": [
+    {
+      "path": "LICENSE",
+      "sha256": "4c6abe1c24230a058f13f47c94d1ce106a47fc0177b7a3e13dc5a6fe9541fac5",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/MIT.X11",
+      "sha256": "c493ac4f1910850f33e9115002ce7e7c9bc8dfe43f4bbc708d8938dd1cd76f92",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/SimpleCollator.cs",
+      "sha256": "182227d686f9a9c8e54cbc813f7054ede1788e19c1c4c18c0127759e3e22ffb5",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTable.cs",
+      "sha256": "210e804915cd8bad3822edae323f4336b4dd106de17547957aa6777f3cf140de",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTableUtil.cs",
+      "sha256": "1ffd47cba10d72fd1d4283bc5b84de446e90c4e99c9f80a55eed57d03921e153",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/CodePointIndexer.cs",
+      "sha256": "bc2baee883a8a7db7e24da06942ecab13503fe1656d703b3f6772885eff6e75c",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/System/String.cs",
+      "sha256": "011015d86d73fe057f8eefbb8f84f600f112fe324b5d290fdc8cd14dfda26547",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/System/Char.cs",
+      "sha256": "c8943b0e1e1b06cb0d56a8005725f6d59818dd5c419bcec29966431e7486a3f9",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/System.Globalization/TextInfo.cs",
+      "sha256": "3b498c1f9d7b9e56d6ce7f58dcc6e971d6a21609d8891e7698df5619c7c698ee",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/System.Globalization/CompareInfo.cs",
+      "sha256": "5c7d2edf043dc8294e870dbdb7c6e0dbe0e87a16a76feda203c980b91c1173f2",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.core.bin",
+      "sha256": "418209a0f7e0380c6c96279fdcc7f293103a759f8da72715b41a7dfff97d7d12",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.tailoring.bin",
+      "sha256": "959690bf532d5156d8d8530615c735fe288c01f8f878573840978de499d78d07",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkJA.bin",
+      "sha256": "6394132f0fcdc80c6e8960a65ec032d42b9734aed8463b28d81c86ea30cd26c9",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkCHS.bin",
+      "sha256": "ba23e608d99505649001591fb134f85591e0b201b29b0406864eea6e5802350c",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkCHT.bin",
+      "sha256": "b3a7ee51b79123da5175f1c3c8903f6252b86093f5f17be3b2960126253de616",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkKO.bin",
+      "sha256": "d84e0ce625f046824f38c3436bab9324990e2c8cbbaa5cd10bb368ebba741f5a",
+      "matches_upstream": true
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkKOlv2.bin",
+      "sha256": "22d987df85d3c492121ff0653530cc080205c3257885256f1d060b92d93aabbc",
+      "matches_upstream": true
+    },
+    {
+      "path": "mono/metadata/char-conversions.h",
+      "sha256": "b73fbd2efc19dc6e6104448383e3859595264f210e5e0dbdd19e691712477d83",
+      "matches_upstream": true
+    },
+    {
+      "path": "COPYING.LIB",
+      "sha256": "e0db38a37e8178f2032d4e6964e9108d99242b76bedc7818cb39cd856de96389",
+      "matches_upstream": true
+    }
+  ],
+  "selected_revision_reason": "Official mono-2-6 component matches all19 files of Unity5.3 staging merge2016-03-11; all7resources match APK and SDK; exact SDK source revision UNKNOWN",
+  "status": "INSPECTED",
+  "files": [
+    {
+      "path": "LICENSE",
+      "sha256": "4c6abe1c24230a058f13f47c94d1ce106a47fc0177b7a3e13dc5a6fe9541fac5",
+      "bytes": 3727,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/LICENSE",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/MIT.X11",
+      "sha256": "c493ac4f1910850f33e9115002ce7e7c9bc8dfe43f4bbc708d8938dd1cd76f92",
+      "bytes": 1120,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/MIT.X11",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/SimpleCollator.cs",
+      "sha256": "182227d686f9a9c8e54cbc813f7054ede1788e19c1c4c18c0127759e3e22ffb5",
+      "bytes": 63559,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Mono.Globalization.Unicode/SimpleCollator.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTable.cs",
+      "sha256": "210e804915cd8bad3822edae323f4336b4dd106de17547957aa6777f3cf140de",
+      "bytes": 23302,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTable.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTableUtil.cs",
+      "sha256": "1ffd47cba10d72fd1d4283bc5b84de446e90c4e99c9f80a55eed57d03921e153",
+      "bytes": 3680,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Mono.Globalization.Unicode/MSCompatUnicodeTableUtil.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/Mono.Globalization.Unicode/CodePointIndexer.cs",
+      "sha256": "bc2baee883a8a7db7e24da06942ecab13503fe1656d703b3f6772885eff6e75c",
+      "bytes": 4306,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Mono.Globalization.Unicode/CodePointIndexer.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/System/String.cs",
+      "sha256": "011015d86d73fe057f8eefbb8f84f600f112fe324b5d290fdc8cd14dfda26547",
+      "bytes": 84138,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/System/String.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/System/Char.cs",
+      "sha256": "c8943b0e1e1b06cb0d56a8005725f6d59818dd5c419bcec29966431e7486a3f9",
+      "bytes": 15962,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/System/Char.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/System.Globalization/TextInfo.cs",
+      "sha256": "3b498c1f9d7b9e56d6ce7f58dcc6e971d6a21609d8891e7698df5619c7c698ee",
+      "bytes": 12670,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/System.Globalization/TextInfo.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/System.Globalization/CompareInfo.cs",
+      "sha256": "5c7d2edf043dc8294e870dbdb7c6e0dbe0e87a16a76feda203c980b91c1173f2",
+      "bytes": 26421,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/System.Globalization/CompareInfo.cs",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.core.bin",
+      "sha256": "418209a0f7e0380c6c96279fdcc7f293103a759f8da72715b41a7dfff97d7d12",
+      "bytes": 118901,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.core.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.tailoring.bin",
+      "sha256": "959690bf532d5156d8d8530615c735fe288c01f8f878573840978de499d78d07",
+      "bytes": 6724,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.tailoring.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkJA.bin",
+      "sha256": "6394132f0fcdc80c6e8960a65ec032d42b9734aed8463b28d81c86ea30cd26c9",
+      "bytes": 44549,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.cjkJA.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkCHS.bin",
+      "sha256": "ba23e608d99505649001591fb134f85591e0b201b29b0406864eea6e5802350c",
+      "bytes": 55813,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.cjkCHS.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkCHT.bin",
+      "sha256": "b3a7ee51b79123da5175f1c3c8903f6252b86093f5f17be3b2960126253de616",
+      "bytes": 44549,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.cjkCHT.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkKO.bin",
+      "sha256": "d84e0ce625f046824f38c3436bab9324990e2c8cbbaa5cd10bb368ebba741f5a",
+      "bytes": 44549,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.cjkKO.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mcs/class/corlib/resources/collation.cjkKOlv2.bin",
+      "sha256": "22d987df85d3c492121ff0653530cc080205c3257885256f1d060b92d93aabbc",
+      "bytes": 22273,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/resources/collation.cjkKOlv2.bin",
+      "license": "MIT-X11 class-library / licensing map"
+    },
+    {
+      "path": "mono/metadata/char-conversions.h",
+      "sha256": "b73fbd2efc19dc6e6104448383e3859595264f210e5e0dbdd19e691712477d83",
+      "bytes": 302145,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mono/metadata/char-conversions.h",
+      "license": "GNU-Library-GPL-2.0"
+    },
+    {
+      "path": "COPYING.LIB",
+      "sha256": "e0db38a37e8178f2032d4e6964e9108d99242b76bedc7818cb39cd856de96389",
+      "bytes": 25369,
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/COPYING.LIB",
+      "license": "GNU-Library-GPL-2.0"
+    }
+  ],
+  "inspected_assemblies": [
+    {
+      "label": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\2.0\\mscorlib.dll",
+      "assembly_version": "2.0.0.0",
+      "assembly_sha256": "9380de48b4f19ee5d125f84ac1ce2644175e2490ad265ef12c444eba6916e047",
+      "resources": [
+        {
+          "name": "collation.core.bin",
+          "bytes": 118901,
+          "sha256": "418209a0f7e0380c6c96279fdcc7f293103a759f8da72715b41a7dfff97d7d12",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.tailoring.bin",
+          "bytes": 6724,
+          "sha256": "959690bf532d5156d8d8530615c735fe288c01f8f878573840978de499d78d07",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkCHS.bin",
+          "bytes": 55813,
+          "sha256": "ba23e608d99505649001591fb134f85591e0b201b29b0406864eea6e5802350c",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkCHT.bin",
+          "bytes": 44549,
+          "sha256": "b3a7ee51b79123da5175f1c3c8903f6252b86093f5f17be3b2960126253de616",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkJA.bin",
+          "bytes": 44549,
+          "sha256": "6394132f0fcdc80c6e8960a65ec032d42b9734aed8463b28d81c86ea30cd26c9",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkKO.bin",
+          "bytes": 44549,
+          "sha256": "d84e0ce625f046824f38c3436bab9324990e2c8cbbaa5cd10bb368ebba741f5a",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkKOlv2.bin",
+          "bytes": 22273,
+          "sha256": "22d987df85d3c492121ff0653530cc080205c3257885256f1d060b92d93aabbc",
+          "official_resource_matches": true
+        }
+      ],
+      "methods": [
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": ".ctor",
+          "signature": "200001",
+          "il_bytes": 7,
+          "il_sha256": "a0cad094b43ea73be538b32bf52995d26e64c46a3478a92af8f6f0d48589ed28"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 471,
+          "il_sha256": "52e43894d7bc81f21d178b342c4b1dfac47914c588dde85d1a791b0a87541faa"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetTailoringInfo",
+          "signature": "00011281e808",
+          "il_bytes": 52,
+          "il_sha256": "4a78a43348e6601474f842056f42a30e2e23f8425e37ca45465d167770043469"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "BuildTailoringTables",
+          "signature": "0004011288381281e8101d1281ec101d1281f4",
+          "il_bytes": 545,
+          "il_sha256": "603670ec37ff5723993c165920512255aec9abaea28eee070c196e781f1f30c8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "SetCJKReferences",
+          "signature": "0006010e101281e0100f05100f05101281e0100f05",
+          "il_bytes": 245,
+          "il_sha256": "f6197fa4f06dd551fbcef1a17c2bb1f50d3d78d82caa957f328f3d64bc8d3fe5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Category",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "50e2f489a6fc947542ac6044815ba8faefcab394880637ab6e9ece1ad2c033d3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level1",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "85e86bcecbc72c34ba8dbc9bcbfa8a64ef4ee0786d4ab6f109d50235653e6f97"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level2",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "0334d95f6dd7aa5310dc5dcc16bd27c43d5e3ce8c222e3e5c5cd2022d6b8cd08"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level3",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "575b8afa4c3cca9397634f4d886f46c0823b427643098699a1342ec987641f6d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsSortable",
+          "signature": "0001020e",
+          "il_bytes": 48,
+          "il_sha256": "bdcac4c93e0ed1f07cc13a067e532208ecc85ff6bcf3f1e5a6d42d1c6b2bb729"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsSortable",
+          "signature": "00010208",
+          "il_bytes": 189,
+          "il_sha256": "095ae44eaaae27944c6fb6f81d59eb444def2326b2fb0f8400e2bc9070a666cb"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorable",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "e2e15503fc259c6d6e8a7d93883e2884277668fef18727a0f59b6d21325e4baa"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorable",
+          "signature": "0002020805",
+          "il_bytes": 97,
+          "il_sha256": "ab41ff99996e0f9dba70a623916ffe89b0cef5eb60b109ec08979909f9c20408"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorableSymbol",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "e21ee74661828cfa920c84f2cd0b10290ea694e827d870e99f00408955c30530"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorableNonSpacing",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "e6be84f455c149523bbe7fc3f11849824671323d02a1c32ed9981b91359be3e0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "ToKanaTypeInsensitive",
+          "signature": "00010808",
+          "il_bytes": 33,
+          "il_sha256": "b9776eb75421016be67666d4be6e4f81511a8d8381a94a3a8b444c2ae5cf8a6b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "ToWidthCompat",
+          "signature": "00010808",
+          "il_bytes": 418,
+          "il_sha256": "d7ffb9fe85885ce14327567e62e81d204bb1ee4615258ebbe5fd0262c4133a78"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "HasSpecialWeight",
+          "signature": "00010203",
+          "il_bytes": 121,
+          "il_sha256": "e5208bc1daccfcde59ff9ce4fb1fc59d347428b6e42ba6366f3fddc4718005a0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetJapaneseDashType",
+          "signature": "00010503",
+          "il_bytes": 70,
+          "il_sha256": "1e4c6860396290b74902da5a7d4946d117ca9f6830782ea6cfd46978451d252e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsHalfWidthKana",
+          "signature": "00010203",
+          "il_bytes": 26,
+          "il_sha256": "a3943e9ebccc0b9f15d8950df5367a487d4730af67f82983facb673cb519d401"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsHiragana",
+          "signature": "00010203",
+          "il_bytes": 26,
+          "il_sha256": "0c6fd031284a67b2995faced285e7fde2f5fc5fb5ce9a8952d27173330776ab9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsJapaneseSmallLetter",
+          "signature": "00010203",
+          "il_bytes": 283,
+          "il_sha256": "b0ea91a2a3aee7c5758ed4e9088274442e2d45154bd3eaacbd44f76f69e61c5f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "get_IsReady",
+          "signature": "000002",
+          "il_bytes": 6,
+          "il_sha256": "c2a286bc02b27aba88fe1aad0f4c6c883871a29316af6e936a350178be43c5f0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetResource",
+          "signature": "0001180e",
+          "il_bytes": 16,
+          "il_sha256": "93c8a7bd64f1032896df424bd657bafdd7ca34ef74faecf4860eb99dd59ae88b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "UInt32FromBytePtr",
+          "signature": "0002090f0509",
+          "il_bytes": 38,
+          "il_sha256": "e2880a2ae08a089ae0e39f2b00a52069bb6e1f3ef8db651090d4a3f146075a82"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "FillCJK",
+          "signature": "0006010e101281e0100f05100f05101281e0100f05",
+          "il_bytes": 51,
+          "il_sha256": "64816036549f65b71b105add4c7f646f10559bcf78d3f5c91e8fdb0e12190fc2"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "FillCJKCore",
+          "signature": "0006010e101281e0100f05100f05101281e0100f05",
+          "il_bytes": 627,
+          "il_sha256": "d30fc629a5ac5f924533939a4a70d19e8294b69ca3973dd274b5a9abd2e43977"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": ".ctor",
+          "signature": "200101128838",
+          "il_bytes": 441,
+          "il_sha256": "9b2db07c0f953c7c56019b2ca301bec6bbf69ece02b6ae0a4dd809fa3c9636cc"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 41,
+          "il_sha256": "e45912ab1673bba526836bf426cd533907cd6815e392a8c06301c2f99f55489d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "SetCJKTable",
+          "signature": "200601128838101281e0100f05100f05101281e0100f05",
+          "il_bytes": 27,
+          "il_sha256": "470c2ff4bbc0d7821efb2fa3c218f62a3376ee7e6737514ae6732b9c1241ec34"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetNeutralCulture",
+          "signature": "0001128838128838",
+          "il_bytes": 45,
+          "il_sha256": "e8735200b7b97431057c7a1dbccd6ddbf5ce7d854af766f010cc611749c3005e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Category",
+          "signature": "20010508",
+          "il_bytes": 70,
+          "il_sha256": "f00d61eaa78b6c5a33880a400bbaf4a4e3ac11e1793e0a3acd780bd8b882d64e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Level1",
+          "signature": "20010508",
+          "il_bytes": 70,
+          "il_sha256": "d100c1499228e5bbd0ebcde45e254a69f8132bafb572c3964f5e0b5780af4237"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Level2",
+          "signature": "20020508118214",
+          "il_bytes": 197,
+          "il_sha256": "b513aeb9dbae1affa008ac72bfe70349210c2f36e7fba776a925b15a6b261816"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsHalfKana",
+          "signature": "00020208118834",
+          "il_bytes": 20,
+          "il_sha256": "d07f11269793fc2a07b488a2fa59fcaf4b0ec1db39a50a2bacd85f90f58cc55f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20031281ec0e0808",
+          "il_bytes": 57,
+          "il_sha256": "55d9fa406004b4d740551f5ed0ea67e82f178e8fe847640cc50bfe315353b571"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20041281ec0e08081d1281ec",
+          "il_bytes": 152,
+          "il_sha256": "6bdbdb267104901100ffb990de375fbefcc6182bd728c39318324b0ea804f9a2"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetTailContraction",
+          "signature": "20031281ec0e0808",
+          "il_bytes": 57,
+          "il_sha256": "09e18b67cba18d78198fac8a98cc5ee3a989bad54606357ea20f6d1d97285cdd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetTailContraction",
+          "signature": "20041281ec0e08081d1281ec",
+          "il_bytes": 217,
+          "il_sha256": "2c88b4d3c0651196be7c7d845762ccbd18995e0b5fca66a00efa563cd9c0043f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20011281ec03",
+          "il_bytes": 53,
+          "il_sha256": "a57f9e2ddb856ea4d817ac675984afea233008fe6456049d61fa5f0487fb3b49"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20021281ec031d1281ec",
+          "il_bytes": 72,
+          "il_sha256": "f74680ec96c4df182f66bb39804130f4ef3e063c1a76531377cc9d4d158e7fc0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FilterOptions",
+          "signature": "20020808118834",
+          "il_bytes": 93,
+          "il_sha256": "fe5674ac3def04218204ada8c81a0cb3dd538853cab38c6c1e6c1fc855935746"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetExtenderType",
+          "signature": "200111821408",
+          "il_bytes": 244,
+          "il_sha256": "55d0b7db1f627dba27d7377ad9bd43ba91ba9023196e212406580b9cea28519c"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "ToDashTypeValue",
+          "signature": "000205118214118834",
+          "il_bytes": 45,
+          "il_sha256": "f9ce16eabe8b37680dc0531ba024b5e548199b61227a6f9cbf9d90321e2f8709"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FilterExtender",
+          "signature": "20030808118214118834",
+          "il_bytes": 274,
+          "il_sha256": "2bec2738111674ba000fe50851717aef9d5aa0ec13d9c85df8a3c38b0f173183"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsIgnorable",
+          "signature": "00020208118834",
+          "il_bytes": 41,
+          "il_sha256": "e72d1f7cba099ce36469a40277657e5c037d99a680c5704134b9ef348f6f8acc"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSafe",
+          "signature": "20010208",
+          "il_bytes": 45,
+          "il_sha256": "63a7f2d81c22de08b258a970a6680d4252075643773d300541f6dd612df39e81"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "20011282180e",
+          "il_bytes": 9,
+          "il_sha256": "5b59ee683c41bd94ea608d5f27bf7edea077ac70c829a167a538d86e82e03861"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "20021282180e118834",
+          "il_bytes": 16,
+          "il_sha256": "2930a59f49fe64bbe6b51d9fd92c4ee36da0613276fe3360b33480b8ad34c831"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "20041282180e0808118834",
+          "il_bytes": 56,
+          "il_sha256": "9a948f97acd8cff6a27d4c245b3200a851ad05847502088d77b9aa088b5d194f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "2005010e080812821c118834",
+          "il_bytes": 495,
+          "il_sha256": "1b3c2710a9d16abdf12533943eeac09b6a53d43998f0989b560fb9dd760204b2"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FillSortKeyRaw",
+          "signature": "2004010811821412821c118834",
+          "il_bytes": 287,
+          "il_sha256": "bad4ab9573c301cf120303ced71e5a54b999a68ad46826c4fb9e176b73d5d4c5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FillSurrogateSortKeyRaw",
+          "signature": "2002010812821c",
+          "il_bytes": 182,
+          "il_sha256": "085f4db4f5ffc3dfbd79274af128f1c4a0550460eb28d0240cb37a46f72be9ad"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2002080e0e",
+          "il_bytes": 10,
+          "il_sha256": "c883e226c28d590507ca23b3b11fabcdddc9785bcfb16bdfe5c6a39985e31d9f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2003080e0e118834",
+          "il_bytes": 24,
+          "il_sha256": "fa2a04fb1dd9851031a20000d9a797ef037748dc5e547eafc640248b43340c79"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareOrdinal",
+          "signature": "2006080e08080e0808",
+          "il_bytes": 259,
+          "il_sha256": "fbf6ddd7e515a3161e3507f3816c92cd0649858f013af68414d9fc77f82645de"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareQuick",
+          "signature": "2009080e08080e08081002100202",
+          "il_bytes": 463,
+          "il_sha256": "15dd17a80fbf26ec7dc8dad5221a661cc0f29662ca793479597786c6070e3122"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareOrdinalIgnoreCase",
+          "signature": "2006080e08080e0808",
+          "il_bytes": 300,
+          "il_sha256": "8fddd17f7ed0531ec01d125beeed8ae2175c65ab240acba195180dc91eace61f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2007080e08080e0808118834",
+          "il_bytes": 206,
+          "il_sha256": "b2ad4393495485cdc33378e48e8db381ab352bcb1d0a43ed34cf2f36be558103"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "ClearBuffer",
+          "signature": "2002010f0508",
+          "il_bytes": 24,
+          "il_sha256": "b2f413f7be1012f3b5aa6803741e640586bc88d1dfa7a12fdcd7f6a107389f89"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "QuickCheckPossible",
+          "signature": "2006020e08080e0808",
+          "il_bytes": 2,
+          "il_sha256": "84a0936ff1fba6d2811d094757231685673447aed2170738872305076026a316"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareInternal",
+          "signature": "200b080e08080e080810021002020210118208",
+          "il_bytes": 3030,
+          "il_sha256": "b4698e4db1fc844e7e8c19a7094f7a085320c482bc01eed54fb9b6cd082020d1"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareFlagPair",
+          "signature": "2002080202",
+          "il_bytes": 27,
+          "il_sha256": "7c2636a41971acba70bad340901881f7045b712091d01afe067e1af9bc798d02"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2003020e0e118834",
+          "il_bytes": 17,
+          "il_sha256": "09871184ff45c8c1b35cfacfdd1edc62efd680a1e1e38a17f344d7b83645969f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2005020e0e0808118834",
+          "il_bytes": 93,
+          "il_sha256": "d4fc56d7b41bc1fec2f458e00def2081513b7655003cc2ec4de62ec3d4e497d2"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2006020e0e08080210118208",
+          "il_bytes": 30,
+          "il_sha256": "bcb52fc5e2ccfbe4a7a4a9176c795c5a02b0a6ff82be66c584fd6fda4e80aeb4"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSuffix",
+          "signature": "2003020e0e118834",
+          "il_bytes": 24,
+          "il_sha256": "7f55a306bdf8d2366c60deaabb589a0de284ffbefc6270d433e6744be3fb7386"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSuffix",
+          "signature": "2005020e0e0808118834",
+          "il_bytes": 67,
+          "il_sha256": "446e350613da739ca816b436ba75f4277ca8eac7efa81963fbff5e4bec1568e7"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2003080e0e118834",
+          "il_bytes": 17,
+          "il_sha256": "2884d3b00575eb2e4c9811694d70fd8a220a3501d86165c34032650cd008f596"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "QuickIndexOf",
+          "signature": "2005080e0e08081002",
+          "il_bytes": 225,
+          "il_sha256": "6f49e789a92ee5794b92e0f226baf9087d066afe3fb8ad958c52b3cbdbfe196a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2005080e0e0808118834",
+          "il_bytes": 191,
+          "il_sha256": "42eb9f4e2879149bd02f0052680f0e7d5135b9be476d4b8e64e62cc02460627b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinal",
+          "signature": "2004080e0e0808",
+          "il_bytes": 128,
+          "il_sha256": "8aeab620a719c0bea259f4b6143ae17718946d9bca6ac78ad1fcef8d6ae1fbe9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinalIgnoreCase",
+          "signature": "2004080e0e0808",
+          "il_bytes": 150,
+          "il_sha256": "9220341668095da937968c028eb43c3193fd76e123d6038f0b58fc310fdf190a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2003080e03118834",
+          "il_bytes": 17,
+          "il_sha256": "aed020a9fde4ca13a3bf312c0c78163f277d620033018ab5cfe2825c57ea3bd5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2005080e030808118834",
+          "il_bytes": 348,
+          "il_sha256": "8f798401931165f5969f1f4770b9d80ddf56dd2326c0b4dc4e8d8be4d4502c3b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinal",
+          "signature": "2004080e030808",
+          "il_bytes": 40,
+          "il_sha256": "0676ec5882cf4c6ca74758e28203a15e6ecca0fd36e2ce2981cd85f2b257fa79"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinalIgnoreCase",
+          "signature": "2004080e030808",
+          "il_bytes": 65,
+          "il_sha256": "f4d9c6b2ca14c49d214332e3fb11df238bb145246c3b036f1c3e0d6cca1ff4bf"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfSortKey",
+          "signature": "2008080e08080f0503080210118208",
+          "il_bytes": 47,
+          "il_sha256": "ff2eda7d8517495cf5b52253878f01f620b3794b1e922477a70d22dcbc5c3d7e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2006080e0e08080f0510118208",
+          "il_bytes": 563,
+          "il_sha256": "f458620fb6cfec11ff52204e064a2961f5c40448675766110e87cd383de0cce7"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2003080e0e118834",
+          "il_bytes": 24,
+          "il_sha256": "ce2baa747025660dd44bf3d30452f92900dbb3ddc1f6f32252389c4d35a45508"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2005080e0e0808118834",
+          "il_bytes": 156,
+          "il_sha256": "5563d9941ef80959ee999c6c5e5c0559c94588370d0bb8cdc63fc8672cbc97da"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinal",
+          "signature": "2004080e0e0808",
+          "il_bytes": 204,
+          "il_sha256": "253e07b6fe05ae66d5708cad7458e9b4f83dcc6c82829076c3d152650c7de6bb"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinalIgnoreCase",
+          "signature": "2004080e0e0808",
+          "il_bytes": 244,
+          "il_sha256": "670ea55d21ae6f367223c125d4fdb586fa6e6e5930d19f3686f7d4e4d7fef833"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2003080e03118834",
+          "il_bytes": 24,
+          "il_sha256": "2ace2aa68f82a163468ac9b3ac9a0264d91024ff14527f8861a0a8abd383035c"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2005080e030808118834",
+          "il_bytes": 348,
+          "il_sha256": "04daabacd08b8aa5d0c6372c122b9a3a0540d26d86db9146e36dc8866455a6a9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinal",
+          "signature": "2004080e030808",
+          "il_bytes": 53,
+          "il_sha256": "cf7087f0df201481abf961261657cf1adcbf7535e24494d982c448833658524b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinalIgnoreCase",
+          "signature": "2004080e030808",
+          "il_bytes": 77,
+          "il_sha256": "39e11bcc8195669d98a7ad40156f29833ca47b57610ff641df0569720f22ff47"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfSortKey",
+          "signature": "2008080e0808080f05080210118208",
+          "il_bytes": 49,
+          "il_sha256": "bf8b1c9cbbe00d7cf2c76ba7240b098866e7e64323f7f5e65ce9c28713e39b82"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2006080e0e08080f0510118208",
+          "il_bytes": 609,
+          "il_sha256": "5290e8855073e05d4f1ada1a96bc77e1c6c5948a50c32b0242d52ca9c3b3f13a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesForward",
+          "signature": "2007020e100808080f050210118208",
+          "il_bytes": 283,
+          "il_sha256": "0997f5d5cbe8dfc6a5136e7040d9a1d6d89331e260e05e0302fe9becdb53ea55"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesForwardCore",
+          "signature": "2009020e100808080f0502118214101281ec10118208",
+          "il_bytes": 569,
+          "il_sha256": "d3132e8ef7d42c099dd0c46f029cefcc7c260025bafe42dada3cbcada18ac3b9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesPrimitive",
+          "signature": "2007021188340f05081182140f050802",
+          "il_bytes": 215,
+          "il_sha256": "6a9676a80453fa312b355d52b8c4e01af67abfe52886c6c7acb1ffefd7230b28"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesBackward",
+          "signature": "2008020e10080808080f050210118208",
+          "il_bytes": 285,
+          "il_sha256": "3fd4d371f8b698c03c68517d2c73e108652a48a1d4a7647d075edefccd4b0eb8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesBackwardCore",
+          "signature": "200a020e10080808080f0502118214101281ec10118208",
+          "il_bytes": 736,
+          "il_sha256": "687d5c854690e442b0ac88c39ec1809c9146ec06d27c2e13d72215063446de61"
+        }
+      ],
+      "string_trim_methods": [
+        {
+          "type": "System.String",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 34,
+          "il_sha256": "5c288525adad74d76ab7c775b55c2ec004db38b2e5f3156ed8e70dfb2ddfaaf7"
+        },
+        {
+          "type": "System.String",
+          "name": "Trim",
+          "signature": "20000e",
+          "il_bytes": 96,
+          "il_sha256": "e0a3e25b2ffd269a46c66b35a1a78c027332941a25db74a6d1e0de9046280202"
+        },
+        {
+          "type": "System.String",
+          "name": "Trim",
+          "signature": "20010e1d03",
+          "il_bytes": 119,
+          "il_sha256": "17d47c66b123b67f638ba47b13b78d67d9a6ce33cdcf39dc945f9817acbf95e4"
+        },
+        {
+          "type": "System.String",
+          "name": "TrimStart",
+          "signature": "20010e1d03",
+          "il_bytes": 91,
+          "il_sha256": "0e02e0ea9334cfedb0ad2bc3802faacc1d548d7e3995423670a371765dbaeb68"
+        },
+        {
+          "type": "System.String",
+          "name": "TrimEnd",
+          "signature": "20010e1d03",
+          "il_bytes": 98,
+          "il_sha256": "e534b1331cf680c44f0db03a8d8f082753d259e4fd9c9b960544d567e2b63d82"
+        },
+        {
+          "type": "System.String",
+          "name": "FindNotWhiteSpace",
+          "signature": "200308080808",
+          "il_bytes": 170,
+          "il_sha256": "e5859bdae3c15c1789b17e6fd5c02363dbef1ee7b4165c811cf0831fa45f5777"
+        },
+        {
+          "type": "System.String",
+          "name": "FindNotInTable",
+          "signature": "2004080808081d03",
+          "il_bytes": 127,
+          "il_sha256": "cbf21cf81b4b73e88372920775a2a2069034b03d17d628b9988ab09b52c7df84"
+        }
+      ],
+      "string_whitespace_fields": [
+        {
+          "name": "WhiteChars",
+          "signature": "061d03",
+          "attributes": "Private, Static, InitOnly"
+        }
+      ],
+      "string_cctor_constant_data": [
+        {
+          "name": "$$field-0",
+          "bytes": 52,
+          "sha256": "64ae9569cfa1daa300ac8e2c2c8c9e759e3a4b79cb5d8bca8b9da69866dd7ff9"
+        }
+      ]
+    },
+    {
+      "label": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\mscorlib.dll",
+      "assembly_version": "2.0.5.0",
+      "assembly_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+      "resources": [
+        {
+          "name": "collation.core.bin",
+          "bytes": 118901,
+          "sha256": "418209a0f7e0380c6c96279fdcc7f293103a759f8da72715b41a7dfff97d7d12",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.tailoring.bin",
+          "bytes": 6724,
+          "sha256": "959690bf532d5156d8d8530615c735fe288c01f8f878573840978de499d78d07",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkCHS.bin",
+          "bytes": 55813,
+          "sha256": "ba23e608d99505649001591fb134f85591e0b201b29b0406864eea6e5802350c",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkCHT.bin",
+          "bytes": 44549,
+          "sha256": "b3a7ee51b79123da5175f1c3c8903f6252b86093f5f17be3b2960126253de616",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkJA.bin",
+          "bytes": 44549,
+          "sha256": "6394132f0fcdc80c6e8960a65ec032d42b9734aed8463b28d81c86ea30cd26c9",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkKO.bin",
+          "bytes": 44549,
+          "sha256": "d84e0ce625f046824f38c3436bab9324990e2c8cbbaa5cd10bb368ebba741f5a",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkKOlv2.bin",
+          "bytes": 22273,
+          "sha256": "22d987df85d3c492121ff0653530cc080205c3257885256f1d060b92d93aabbc",
+          "official_resource_matches": true
+        }
+      ],
+      "methods": [
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": ".ctor",
+          "signature": "200001",
+          "il_bytes": 7,
+          "il_sha256": "a0cad094b43ea73be538b32bf52995d26e64c46a3478a92af8f6f0d48589ed28"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 471,
+          "il_sha256": "af0bde8fd90f01abf583be992ffe47f41c97b572d21104739218077f834deaba"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetTailoringInfo",
+          "signature": "000112820008",
+          "il_bytes": 52,
+          "il_sha256": "f57516910a11b9135378762d871bb76db07569c8ad0eec093211cdf4d461ae9b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "BuildTailoringTables",
+          "signature": "0004011285f8128200101d128204101d12820c",
+          "il_bytes": 545,
+          "il_sha256": "02ac682820d7fdc0158d243aa49cf5ca10d9457edf09ee8907673496d0b691ec"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "SetCJKReferences",
+          "signature": "0006010e101281f8100f05100f05101281f8100f05",
+          "il_bytes": 245,
+          "il_sha256": "20a345093d11f99c36c641db4ef4f74dbda82e8e42da23bd665ed09ae82a73cc"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Category",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "c79e0a9822b37fec98f3ec0fcdca6428466163db654fedf54467f71f5db1700b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level1",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "4b4ae361704efdc221d0359d8375fe6a861f61d6010d5753eece3225995810d4"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level2",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "c738f29008c0a6dbf3bb1775241421b892bc84722344fd9ab638f5d7445fe258"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level3",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "f1b57af58a4d8b6fceef436b251564de03ba5713abfd8ad9922da7c40ac11616"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsSortable",
+          "signature": "0001020e",
+          "il_bytes": 48,
+          "il_sha256": "32c66ad9f9f1f4306348b5f980756f90fcc0ddf34cdc159868e74d8ac931a461"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsSortable",
+          "signature": "00010208",
+          "il_bytes": 189,
+          "il_sha256": "13ccf8a58b0f2c30288cbfb335d89db2199550b903cf9980e8d786c75734f059"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorable",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "ab99b8d9069a6e1a9694e9ba0649581d804677e11ba0d5f16f0f27e7cf87345a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorable",
+          "signature": "0002020805",
+          "il_bytes": 97,
+          "il_sha256": "fd4552d5e5f4021c4a40f7a46c2b3d7aaabd6ba73675f11b165bd0d45b5b6b2a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorableSymbol",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "7dcc024fba9058dec5d1cfaac3185a76cac1774ea912d4278cac2961d4e9eacf"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorableNonSpacing",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "7fbce7017e2811f793a4dab0a76ae477b604c51022e9eef04d256f837c4dccab"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "ToKanaTypeInsensitive",
+          "signature": "00010808",
+          "il_bytes": 33,
+          "il_sha256": "b9776eb75421016be67666d4be6e4f81511a8d8381a94a3a8b444c2ae5cf8a6b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "ToWidthCompat",
+          "signature": "00010808",
+          "il_bytes": 418,
+          "il_sha256": "d7ffb9fe85885ce14327567e62e81d204bb1ee4615258ebbe5fd0262c4133a78"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "HasSpecialWeight",
+          "signature": "00010203",
+          "il_bytes": 121,
+          "il_sha256": "e5208bc1daccfcde59ff9ce4fb1fc59d347428b6e42ba6366f3fddc4718005a0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetJapaneseDashType",
+          "signature": "00010503",
+          "il_bytes": 70,
+          "il_sha256": "1e4c6860396290b74902da5a7d4946d117ca9f6830782ea6cfd46978451d252e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsHalfWidthKana",
+          "signature": "00010203",
+          "il_bytes": 26,
+          "il_sha256": "a3943e9ebccc0b9f15d8950df5367a487d4730af67f82983facb673cb519d401"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsHiragana",
+          "signature": "00010203",
+          "il_bytes": 26,
+          "il_sha256": "0c6fd031284a67b2995faced285e7fde2f5fc5fb5ce9a8952d27173330776ab9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsJapaneseSmallLetter",
+          "signature": "00010203",
+          "il_bytes": 283,
+          "il_sha256": "b0ea91a2a3aee7c5758ed4e9088274442e2d45154bd3eaacbd44f76f69e61c5f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "get_IsReady",
+          "signature": "000002",
+          "il_bytes": 6,
+          "il_sha256": "f6e58db1527cd1e489180d51c3f0c50332de340d10036ce16807a276730bc18f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetResource",
+          "signature": "0001180e",
+          "il_bytes": 16,
+          "il_sha256": "72ae2895ced1287c07c07d5bf46f868c9cf138fd0188c7877911e12cda187cdd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "UInt32FromBytePtr",
+          "signature": "0002090f0509",
+          "il_bytes": 38,
+          "il_sha256": "e2880a2ae08a089ae0e39f2b00a52069bb6e1f3ef8db651090d4a3f146075a82"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "FillCJK",
+          "signature": "0006010e101281f8100f05100f05101281f8100f05",
+          "il_bytes": 51,
+          "il_sha256": "ef2d1e07ba6b5548f9254039175dee7fb24e6c6a0fce862fbf18097b7e1995b3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "FillCJKCore",
+          "signature": "0006010e101281f8100f05100f05101281f8100f05",
+          "il_bytes": 627,
+          "il_sha256": "fe8bf91f81b0b0d28e78268d578356066f95b845f3e3b2a18ce373633819d449"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": ".ctor",
+          "signature": "2001011285f8",
+          "il_bytes": 441,
+          "il_sha256": "e8b233695f771deeb92bfde1d97af688e39d6588c4ef4abd8b981a0ef325a888"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 41,
+          "il_sha256": "f72dd346aaeb8f4ae8fcc65a8282a7404d91f75cf66d3de761f15aa316f9abe5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "SetCJKTable",
+          "signature": "2006011285f8101281f8100f05100f05101281f8100f05",
+          "il_bytes": 27,
+          "il_sha256": "84d1ca5e35dfbf08f89bf2cd4139835562726db92ad2b98ea215dd3bf7116f3c"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetNeutralCulture",
+          "signature": "00011285f81285f8",
+          "il_bytes": 45,
+          "il_sha256": "a20b27ee2810b367bacb073d381c27758358fa328900a2be5994a2fd7b7403b2"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Category",
+          "signature": "20010508",
+          "il_bytes": 70,
+          "il_sha256": "e0adfc57112814fbd126fe4b7dabb73946269791d68b844015bec049615de228"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Level1",
+          "signature": "20010508",
+          "il_bytes": 70,
+          "il_sha256": "aa3e858525a56d16f5dfa6dd94bd7b46bad0c1c5976d2ae410d893ce4bfd910e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Level2",
+          "signature": "20020508118238",
+          "il_bytes": 197,
+          "il_sha256": "1928aa2935b34fe0b6894bdd08bab66149d1221c363f6d1a24c7c9648bb75fac"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsHalfKana",
+          "signature": "000202081185f4",
+          "il_bytes": 20,
+          "il_sha256": "9097c9f234f53015cfe43baef3d8eee8037e84295f2c21f494ae8e4f8731f634"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20031282040e0808",
+          "il_bytes": 57,
+          "il_sha256": "f022dee7373f0b7d8b73aca81066f7e5dbbe55043e8c5959983243802e9d1212"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20041282040e08081d128204",
+          "il_bytes": 152,
+          "il_sha256": "dc3d448a86742cbacc14d683ef64fc6cd4466287cebce0fe2a53a64d88ab87a3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetTailContraction",
+          "signature": "20031282040e0808",
+          "il_bytes": 57,
+          "il_sha256": "a48a516123fdbf92595c22998bed5b748b0d3fca8b08cca72d856af9bca3648b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetTailContraction",
+          "signature": "20041282040e08081d128204",
+          "il_bytes": 217,
+          "il_sha256": "a5db1bd2ffb958d5dc7f20363d3316dad8dfa0ab3bbfc1d2a1b15987563b0b2d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "200112820403",
+          "il_bytes": 53,
+          "il_sha256": "f62c537406eeae7fff92140e5ffe8f4d08c7b314ddadb80624b3b1b0eb401274"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "2002128204031d128204",
+          "il_bytes": 72,
+          "il_sha256": "8d9024455120229458c8e8a1a6e71064729eff21755c322e58ca67879d97b337"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FilterOptions",
+          "signature": "200208081185f4",
+          "il_bytes": 93,
+          "il_sha256": "2e744f5b40d116bc97e17dc93f531b5c7f643a276c9e76831121401641e1d52e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetExtenderType",
+          "signature": "200111823808",
+          "il_bytes": 244,
+          "il_sha256": "283c25cbb68f7e1f885cda02b3e25b9ac0c9537aad8aefca321d99ae3ad86059"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "ToDashTypeValue",
+          "signature": "0002051182381185f4",
+          "il_bytes": 45,
+          "il_sha256": "f9ce16eabe8b37680dc0531ba024b5e548199b61227a6f9cbf9d90321e2f8709"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FilterExtender",
+          "signature": "200308081182381185f4",
+          "il_bytes": 274,
+          "il_sha256": "df149be2b4357dacf9eff27f676d61d793ea09bbb15257cc87813030f07f3456"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsIgnorable",
+          "signature": "000202081185f4",
+          "il_bytes": 41,
+          "il_sha256": "8129be2c70618e33939d2fe89699cd975fa48a3ec1d368e1f41dd19bc830c09d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSafe",
+          "signature": "20010208",
+          "il_bytes": 45,
+          "il_sha256": "69f17d15ca432b5cec10717a9cecd15fe522420b142114b1ff41041c52f38375"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "200112823c0e",
+          "il_bytes": 9,
+          "il_sha256": "0c16af79cfed68c593c7755a04ee192d5a37722406ae480ba0e4676bbe4fadb0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "200212823c0e1185f4",
+          "il_bytes": 16,
+          "il_sha256": "d4b4a0fe3db3af964be72c7f423cd359183c33dd328346d9a961a175cfa42e45"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "200412823c0e08081185f4",
+          "il_bytes": 56,
+          "il_sha256": "41a93dd887b7fb10f9583aee7e0327e3419e16391b3722e79ac7745ea0d8a338"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "2005010e08081282401185f4",
+          "il_bytes": 495,
+          "il_sha256": "34665d27687049451eefa3ee3863aa52a5bda65019fea667aff8a8aff3541ed6"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FillSortKeyRaw",
+          "signature": "200401081182381282401185f4",
+          "il_bytes": 287,
+          "il_sha256": "495d80b0622ca6aa15539061ebc4a3bfbab487b49d2e0a39929a780af84eaaba"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FillSurrogateSortKeyRaw",
+          "signature": "20020108128240",
+          "il_bytes": 182,
+          "il_sha256": "180333a2a1c1ec4ec2c655136e62dc8de67469f3e579ff39c8ef8046eff85c23"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2002080e0e",
+          "il_bytes": 10,
+          "il_sha256": "f97468517e47718193d545d990443503e8375c613dbd2ae950ee3140f0e5fec8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2003080e0e1185f4",
+          "il_bytes": 24,
+          "il_sha256": "8faeb2ff253a2755a1a55c270158c1af1ed3fa79dd9d585ca3ba6c0b05f9f64d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareOrdinal",
+          "signature": "2006080e08080e0808",
+          "il_bytes": 259,
+          "il_sha256": "c67aeaaf5d141773fd0f15a21bb476c410faaed14acc4490d2f60985f97bad80"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareQuick",
+          "signature": "2009080e08080e08081002100202",
+          "il_bytes": 463,
+          "il_sha256": "798af88f4b16e1ce40d3ca1db6693c91cdd5f8fff4befdbf1c0a86a246fbb5fd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareOrdinalIgnoreCase",
+          "signature": "2006080e08080e0808",
+          "il_bytes": 300,
+          "il_sha256": "688e4e73a52afd690c414fe733bc1eccdaa4328e6263735858ce419e4a09f76f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2007080e08080e08081185f4",
+          "il_bytes": 206,
+          "il_sha256": "514a766510f72e792d681cd4d6c8be48d067d80ad46a7dc1fc2d389d4f3904cd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "ClearBuffer",
+          "signature": "2002010f0508",
+          "il_bytes": 24,
+          "il_sha256": "b2f413f7be1012f3b5aa6803741e640586bc88d1dfa7a12fdcd7f6a107389f89"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "QuickCheckPossible",
+          "signature": "2006020e08080e0808",
+          "il_bytes": 2,
+          "il_sha256": "84a0936ff1fba6d2811d094757231685673447aed2170738872305076026a316"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareInternal",
+          "signature": "200b080e08080e08081002100202021011822c",
+          "il_bytes": 3030,
+          "il_sha256": "ca9284c4bbd7ee7304080e5ec19b1245c320f7f368c2a27e13a63df2442cf63f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareFlagPair",
+          "signature": "2002080202",
+          "il_bytes": 27,
+          "il_sha256": "7c2636a41971acba70bad340901881f7045b712091d01afe067e1af9bc798d02"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2003020e0e1185f4",
+          "il_bytes": 17,
+          "il_sha256": "2be6f931ab78786fad051af4b1e356cd1f6a51c005473a2cfd6178cb6ce9c9a6"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2005020e0e08081185f4",
+          "il_bytes": 93,
+          "il_sha256": "c7937e207497593655e0e7e8cd776f5d71e1b975308c69cbeb22b841c381b7c3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2006020e0e0808021011822c",
+          "il_bytes": 30,
+          "il_sha256": "7b3130dcf56ded56648a77a3d69ff5f4ad0c4fe878d2bc06257876f1fe5e42a9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSuffix",
+          "signature": "2003020e0e1185f4",
+          "il_bytes": 24,
+          "il_sha256": "0ff40ae4c9492614cdc658b0a1bbfccc9d29b5945e8687749bf8e8aef6466ef5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSuffix",
+          "signature": "2005020e0e08081185f4",
+          "il_bytes": 67,
+          "il_sha256": "c2b6990f0c20a4bb4cc4475a8efcc48d98159d515643de4b4f26dad749f608fe"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2003080e0e1185f4",
+          "il_bytes": 17,
+          "il_sha256": "d6c175e4377ad10ecf6dbc51f9554b74bda9fdd3be5814f1f8997de294e0bada"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "QuickIndexOf",
+          "signature": "2005080e0e08081002",
+          "il_bytes": 225,
+          "il_sha256": "6f49e789a92ee5794b92e0f226baf9087d066afe3fb8ad958c52b3cbdbfe196a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2005080e0e08081185f4",
+          "il_bytes": 191,
+          "il_sha256": "f050986f84ee68d984463d40e8e89026981c6f8f13b3093758aadd9182fd8e66"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinal",
+          "signature": "2004080e0e0808",
+          "il_bytes": 128,
+          "il_sha256": "8aeab620a719c0bea259f4b6143ae17718946d9bca6ac78ad1fcef8d6ae1fbe9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinalIgnoreCase",
+          "signature": "2004080e0e0808",
+          "il_bytes": 150,
+          "il_sha256": "ad88196a9fcf8c99f6bd42ad72a78982d7f868899becee7203d2bf6b0a7404d4"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2003080e031185f4",
+          "il_bytes": 17,
+          "il_sha256": "cfe78ba0581688678889ea1b9f0bccf7f2a01af1612bfb377a6baabdeea63da8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2005080e0308081185f4",
+          "il_bytes": 348,
+          "il_sha256": "1affb995b7b638820bcf850e4e2ce6820651d5cfd3e338af71866901a5c18b9f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinal",
+          "signature": "2004080e030808",
+          "il_bytes": 40,
+          "il_sha256": "0676ec5882cf4c6ca74758e28203a15e6ecca0fd36e2ce2981cd85f2b257fa79"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinalIgnoreCase",
+          "signature": "2004080e030808",
+          "il_bytes": 65,
+          "il_sha256": "8fa9a8a71853d3d85cb4c6c6765e0e3fb5adc0b30de281fb76611d3a84517abb"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfSortKey",
+          "signature": "2008080e08080f050308021011822c",
+          "il_bytes": 47,
+          "il_sha256": "e4daf9057f5862cf31d59d5e9044e7689ef407a67d6ed7ab04c586ebba39b2fe"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2006080e0e08080f051011822c",
+          "il_bytes": 563,
+          "il_sha256": "31e653fdb2823956b37e694ba00adb1a9308c51a06bd59abe3d665fa8029a273"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2003080e0e1185f4",
+          "il_bytes": 24,
+          "il_sha256": "22d6b832a6e6ddf7a18e965857426c0d5503a803f1e36e39bea2dc02e37c6ce0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2005080e0e08081185f4",
+          "il_bytes": 156,
+          "il_sha256": "5ae42d83e0340c753a86c566e78c13f47bc58411d763eaa5726caf0c336fc7c5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinal",
+          "signature": "2004080e0e0808",
+          "il_bytes": 204,
+          "il_sha256": "253e07b6fe05ae66d5708cad7458e9b4f83dcc6c82829076c3d152650c7de6bb"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinalIgnoreCase",
+          "signature": "2004080e0e0808",
+          "il_bytes": 244,
+          "il_sha256": "0e25b6c54853b62f4c9c5b4220e5fd2e30a3f724908ee4d59a092e43626a7d4b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2003080e031185f4",
+          "il_bytes": 24,
+          "il_sha256": "45ab5855a96929ff77c645fc4fc29a16abc1e1423eb4d623031d7279345a0d48"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2005080e0308081185f4",
+          "il_bytes": 348,
+          "il_sha256": "f07b61722434b1c7bf37349c8589c3a3e0cf0e2ed72e4aadc59ec280507abed7"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinal",
+          "signature": "2004080e030808",
+          "il_bytes": 53,
+          "il_sha256": "cf7087f0df201481abf961261657cf1adcbf7535e24494d982c448833658524b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinalIgnoreCase",
+          "signature": "2004080e030808",
+          "il_bytes": 77,
+          "il_sha256": "fa759f7e257f57a1c78d7aab56d151f350cf46f9f546d32796e83f02357202a3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfSortKey",
+          "signature": "2008080e0808080f0508021011822c",
+          "il_bytes": 49,
+          "il_sha256": "c55c1b7b6cad63327070ff43d33cb7bb5acc82cfccadc1ae38755f197b889b86"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2006080e0e08080f051011822c",
+          "il_bytes": 609,
+          "il_sha256": "c300c7202e6b955ba8bfa1034b9ada30d52613cc0c26500faf8c54a4ea35b12f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesForward",
+          "signature": "2007020e100808080f05021011822c",
+          "il_bytes": 283,
+          "il_sha256": "175386056063a80fa7b1483e6263c035b38872739f4d023539ff546dde1e65d8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesForwardCore",
+          "signature": "2009020e100808080f0502118238101282041011822c",
+          "il_bytes": 569,
+          "il_sha256": "672de440e2fe9d3db90468312b5a9e59b7096d5f1553798540fba9a9bcf8d746"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesPrimitive",
+          "signature": "2007021185f40f05081182380f050802",
+          "il_bytes": 215,
+          "il_sha256": "d923c5e713816c520c3b622f7d58b8f3ec705c94c6118dbf0ca224120dfe5b97"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesBackward",
+          "signature": "2008020e10080808080f05021011822c",
+          "il_bytes": 285,
+          "il_sha256": "6953dd2b5cdf5c4d226d654f315063abc1dc7911b7db04db82c161d75f67511e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesBackwardCore",
+          "signature": "200a020e10080808080f0502118238101282041011822c",
+          "il_bytes": 736,
+          "il_sha256": "5373867a2c26621000165c0f4d76a243e3562d545766357712688c6a9fe8046e"
+        }
+      ],
+      "string_trim_methods": [
+        {
+          "type": "System.String",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 34,
+          "il_sha256": "cbd7d845e476bca7ad0bbbcedbf9abd8c01d89beab17b456081323bb1a709df8"
+        },
+        {
+          "type": "System.String",
+          "name": "Trim",
+          "signature": "20000e",
+          "il_bytes": 96,
+          "il_sha256": "e0a3e25b2ffd269a46c66b35a1a78c027332941a25db74a6d1e0de9046280202"
+        },
+        {
+          "type": "System.String",
+          "name": "Trim",
+          "signature": "20010e1d03",
+          "il_bytes": 119,
+          "il_sha256": "17d47c66b123b67f638ba47b13b78d67d9a6ce33cdcf39dc945f9817acbf95e4"
+        },
+        {
+          "type": "System.String",
+          "name": "TrimStart",
+          "signature": "20010e1d03",
+          "il_bytes": 91,
+          "il_sha256": "0e02e0ea9334cfedb0ad2bc3802faacc1d548d7e3995423670a371765dbaeb68"
+        },
+        {
+          "type": "System.String",
+          "name": "TrimEnd",
+          "signature": "20010e1d03",
+          "il_bytes": 98,
+          "il_sha256": "e534b1331cf680c44f0db03a8d8f082753d259e4fd9c9b960544d567e2b63d82"
+        },
+        {
+          "type": "System.String",
+          "name": "FindNotWhiteSpace",
+          "signature": "200308080808",
+          "il_bytes": 192,
+          "il_sha256": "bb741c76a76c6181854f6a08c10eda79423356001a6bc3c30a823b1c51df2b65"
+        },
+        {
+          "type": "System.String",
+          "name": "FindNotInTable",
+          "signature": "2004080808081d03",
+          "il_bytes": 127,
+          "il_sha256": "cbf21cf81b4b73e88372920775a2a2069034b03d17d628b9988ab09b52c7df84"
+        }
+      ],
+      "string_whitespace_fields": [
+        {
+          "name": "WhiteChars",
+          "signature": "061d03",
+          "attributes": "Private, Static, InitOnly"
+        }
+      ],
+      "string_cctor_constant_data": [
+        {
+          "name": "$$field-0",
+          "bytes": 56,
+          "sha256": "f85fb86a73ea0bd553c7023e521fc850a2a4648c978b864a4e994f5cb4453f15"
+        }
+      ]
+    },
+    {
+      "label": "APK/mscorlib.dll",
+      "assembly_version": "2.0.5.0",
+      "assembly_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+      "resources": [
+        {
+          "name": "collation.core.bin",
+          "bytes": 118901,
+          "sha256": "418209a0f7e0380c6c96279fdcc7f293103a759f8da72715b41a7dfff97d7d12",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.tailoring.bin",
+          "bytes": 6724,
+          "sha256": "959690bf532d5156d8d8530615c735fe288c01f8f878573840978de499d78d07",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkCHS.bin",
+          "bytes": 55813,
+          "sha256": "ba23e608d99505649001591fb134f85591e0b201b29b0406864eea6e5802350c",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkCHT.bin",
+          "bytes": 44549,
+          "sha256": "b3a7ee51b79123da5175f1c3c8903f6252b86093f5f17be3b2960126253de616",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkJA.bin",
+          "bytes": 44549,
+          "sha256": "6394132f0fcdc80c6e8960a65ec032d42b9734aed8463b28d81c86ea30cd26c9",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkKO.bin",
+          "bytes": 44549,
+          "sha256": "d84e0ce625f046824f38c3436bab9324990e2c8cbbaa5cd10bb368ebba741f5a",
+          "official_resource_matches": true
+        },
+        {
+          "name": "collation.cjkKOlv2.bin",
+          "bytes": 22273,
+          "sha256": "22d987df85d3c492121ff0653530cc080205c3257885256f1d060b92d93aabbc",
+          "official_resource_matches": true
+        }
+      ],
+      "methods": [
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": ".ctor",
+          "signature": "200001",
+          "il_bytes": 7,
+          "il_sha256": "a0cad094b43ea73be538b32bf52995d26e64c46a3478a92af8f6f0d48589ed28"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 471,
+          "il_sha256": "af0bde8fd90f01abf583be992ffe47f41c97b572d21104739218077f834deaba"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetTailoringInfo",
+          "signature": "000112820008",
+          "il_bytes": 52,
+          "il_sha256": "f57516910a11b9135378762d871bb76db07569c8ad0eec093211cdf4d461ae9b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "BuildTailoringTables",
+          "signature": "0004011285f8128200101d128204101d12820c",
+          "il_bytes": 545,
+          "il_sha256": "02ac682820d7fdc0158d243aa49cf5ca10d9457edf09ee8907673496d0b691ec"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "SetCJKReferences",
+          "signature": "0006010e101281f8100f05100f05101281f8100f05",
+          "il_bytes": 245,
+          "il_sha256": "20a345093d11f99c36c641db4ef4f74dbda82e8e42da23bd665ed09ae82a73cc"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Category",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "c79e0a9822b37fec98f3ec0fcdca6428466163db654fedf54467f71f5db1700b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level1",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "4b4ae361704efdc221d0359d8375fe6a861f61d6010d5753eece3225995810d4"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level2",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "c738f29008c0a6dbf3bb1775241421b892bc84722344fd9ab638f5d7445fe258"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "Level3",
+          "signature": "00010508",
+          "il_bytes": 19,
+          "il_sha256": "f1b57af58a4d8b6fceef436b251564de03ba5713abfd8ad9922da7c40ac11616"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsSortable",
+          "signature": "0001020e",
+          "il_bytes": 48,
+          "il_sha256": "32c66ad9f9f1f4306348b5f980756f90fcc0ddf34cdc159868e74d8ac931a461"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsSortable",
+          "signature": "00010208",
+          "il_bytes": 189,
+          "il_sha256": "13ccf8a58b0f2c30288cbfb335d89db2199550b903cf9980e8d786c75734f059"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorable",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "ab99b8d9069a6e1a9694e9ba0649581d804677e11ba0d5f16f0f27e7cf87345a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorable",
+          "signature": "0002020805",
+          "il_bytes": 97,
+          "il_sha256": "fd4552d5e5f4021c4a40f7a46c2b3d7aaabd6ba73675f11b165bd0d45b5b6b2a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorableSymbol",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "7dcc024fba9058dec5d1cfaac3185a76cac1774ea912d4278cac2961d4e9eacf"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsIgnorableNonSpacing",
+          "signature": "00010208",
+          "il_bytes": 8,
+          "il_sha256": "7fbce7017e2811f793a4dab0a76ae477b604c51022e9eef04d256f837c4dccab"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "ToKanaTypeInsensitive",
+          "signature": "00010808",
+          "il_bytes": 33,
+          "il_sha256": "b9776eb75421016be67666d4be6e4f81511a8d8381a94a3a8b444c2ae5cf8a6b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "ToWidthCompat",
+          "signature": "00010808",
+          "il_bytes": 418,
+          "il_sha256": "d7ffb9fe85885ce14327567e62e81d204bb1ee4615258ebbe5fd0262c4133a78"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "HasSpecialWeight",
+          "signature": "00010203",
+          "il_bytes": 121,
+          "il_sha256": "e5208bc1daccfcde59ff9ce4fb1fc59d347428b6e42ba6366f3fddc4718005a0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetJapaneseDashType",
+          "signature": "00010503",
+          "il_bytes": 70,
+          "il_sha256": "1e4c6860396290b74902da5a7d4946d117ca9f6830782ea6cfd46978451d252e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsHalfWidthKana",
+          "signature": "00010203",
+          "il_bytes": 26,
+          "il_sha256": "a3943e9ebccc0b9f15d8950df5367a487d4730af67f82983facb673cb519d401"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsHiragana",
+          "signature": "00010203",
+          "il_bytes": 26,
+          "il_sha256": "0c6fd031284a67b2995faced285e7fde2f5fc5fb5ce9a8952d27173330776ab9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "IsJapaneseSmallLetter",
+          "signature": "00010203",
+          "il_bytes": 283,
+          "il_sha256": "b0ea91a2a3aee7c5758ed4e9088274442e2d45154bd3eaacbd44f76f69e61c5f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "get_IsReady",
+          "signature": "000002",
+          "il_bytes": 6,
+          "il_sha256": "f6e58db1527cd1e489180d51c3f0c50332de340d10036ce16807a276730bc18f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "GetResource",
+          "signature": "0001180e",
+          "il_bytes": 16,
+          "il_sha256": "72ae2895ced1287c07c07d5bf46f868c9cf138fd0188c7877911e12cda187cdd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "UInt32FromBytePtr",
+          "signature": "0002090f0509",
+          "il_bytes": 38,
+          "il_sha256": "e2880a2ae08a089ae0e39f2b00a52069bb6e1f3ef8db651090d4a3f146075a82"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "FillCJK",
+          "signature": "0006010e101281f8100f05100f05101281f8100f05",
+          "il_bytes": 51,
+          "il_sha256": "ef2d1e07ba6b5548f9254039175dee7fb24e6c6a0fce862fbf18097b7e1995b3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.MSCompatUnicodeTable",
+          "name": "FillCJKCore",
+          "signature": "0006010e101281f8100f05100f05101281f8100f05",
+          "il_bytes": 627,
+          "il_sha256": "fe8bf91f81b0b0d28e78268d578356066f95b845f3e3b2a18ce373633819d449"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": ".ctor",
+          "signature": "2001011285f8",
+          "il_bytes": 441,
+          "il_sha256": "e8b233695f771deeb92bfde1d97af688e39d6588c4ef4abd8b981a0ef325a888"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 41,
+          "il_sha256": "f72dd346aaeb8f4ae8fcc65a8282a7404d91f75cf66d3de761f15aa316f9abe5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "SetCJKTable",
+          "signature": "2006011285f8101281f8100f05100f05101281f8100f05",
+          "il_bytes": 27,
+          "il_sha256": "84d1ca5e35dfbf08f89bf2cd4139835562726db92ad2b98ea215dd3bf7116f3c"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetNeutralCulture",
+          "signature": "00011285f81285f8",
+          "il_bytes": 45,
+          "il_sha256": "a20b27ee2810b367bacb073d381c27758358fa328900a2be5994a2fd7b7403b2"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Category",
+          "signature": "20010508",
+          "il_bytes": 70,
+          "il_sha256": "e0adfc57112814fbd126fe4b7dabb73946269791d68b844015bec049615de228"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Level1",
+          "signature": "20010508",
+          "il_bytes": 70,
+          "il_sha256": "aa3e858525a56d16f5dfa6dd94bd7b46bad0c1c5976d2ae410d893ce4bfd910e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Level2",
+          "signature": "20020508118238",
+          "il_bytes": 197,
+          "il_sha256": "1928aa2935b34fe0b6894bdd08bab66149d1221c363f6d1a24c7c9648bb75fac"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsHalfKana",
+          "signature": "000202081185f4",
+          "il_bytes": 20,
+          "il_sha256": "9097c9f234f53015cfe43baef3d8eee8037e84295f2c21f494ae8e4f8731f634"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20031282040e0808",
+          "il_bytes": 57,
+          "il_sha256": "f022dee7373f0b7d8b73aca81066f7e5dbbe55043e8c5959983243802e9d1212"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "20041282040e08081d128204",
+          "il_bytes": 152,
+          "il_sha256": "dc3d448a86742cbacc14d683ef64fc6cd4466287cebce0fe2a53a64d88ab87a3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetTailContraction",
+          "signature": "20031282040e0808",
+          "il_bytes": 57,
+          "il_sha256": "a48a516123fdbf92595c22998bed5b748b0d3fca8b08cca72d856af9bca3648b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetTailContraction",
+          "signature": "20041282040e08081d128204",
+          "il_bytes": 217,
+          "il_sha256": "a5db1bd2ffb958d5dc7f20363d3316dad8dfa0ab3bbfc1d2a1b15987563b0b2d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "200112820403",
+          "il_bytes": 53,
+          "il_sha256": "f62c537406eeae7fff92140e5ffe8f4d08c7b314ddadb80624b3b1b0eb401274"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetContraction",
+          "signature": "2002128204031d128204",
+          "il_bytes": 72,
+          "il_sha256": "8d9024455120229458c8e8a1a6e71064729eff21755c322e58ca67879d97b337"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FilterOptions",
+          "signature": "200208081185f4",
+          "il_bytes": 93,
+          "il_sha256": "2e744f5b40d116bc97e17dc93f531b5c7f643a276c9e76831121401641e1d52e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetExtenderType",
+          "signature": "200111823808",
+          "il_bytes": 244,
+          "il_sha256": "283c25cbb68f7e1f885cda02b3e25b9ac0c9537aad8aefca321d99ae3ad86059"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "ToDashTypeValue",
+          "signature": "0002051182381185f4",
+          "il_bytes": 45,
+          "il_sha256": "f9ce16eabe8b37680dc0531ba024b5e548199b61227a6f9cbf9d90321e2f8709"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FilterExtender",
+          "signature": "200308081182381185f4",
+          "il_bytes": 274,
+          "il_sha256": "df149be2b4357dacf9eff27f676d61d793ea09bbb15257cc87813030f07f3456"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsIgnorable",
+          "signature": "000202081185f4",
+          "il_bytes": 41,
+          "il_sha256": "8129be2c70618e33939d2fe89699cd975fa48a3ec1d368e1f41dd19bc830c09d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSafe",
+          "signature": "20010208",
+          "il_bytes": 45,
+          "il_sha256": "69f17d15ca432b5cec10717a9cecd15fe522420b142114b1ff41041c52f38375"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "200112823c0e",
+          "il_bytes": 9,
+          "il_sha256": "0c16af79cfed68c593c7755a04ee192d5a37722406ae480ba0e4676bbe4fadb0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "200212823c0e1185f4",
+          "il_bytes": 16,
+          "il_sha256": "d4b4a0fe3db3af964be72c7f423cd359183c33dd328346d9a961a175cfa42e45"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "200412823c0e08081185f4",
+          "il_bytes": 56,
+          "il_sha256": "41a93dd887b7fb10f9583aee7e0327e3419e16391b3722e79ac7745ea0d8a338"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "GetSortKey",
+          "signature": "2005010e08081282401185f4",
+          "il_bytes": 495,
+          "il_sha256": "34665d27687049451eefa3ee3863aa52a5bda65019fea667aff8a8aff3541ed6"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FillSortKeyRaw",
+          "signature": "200401081182381282401185f4",
+          "il_bytes": 287,
+          "il_sha256": "495d80b0622ca6aa15539061ebc4a3bfbab487b49d2e0a39929a780af84eaaba"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "FillSurrogateSortKeyRaw",
+          "signature": "20020108128240",
+          "il_bytes": 182,
+          "il_sha256": "180333a2a1c1ec4ec2c655136e62dc8de67469f3e579ff39c8ef8046eff85c23"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2002080e0e",
+          "il_bytes": 10,
+          "il_sha256": "f97468517e47718193d545d990443503e8375c613dbd2ae950ee3140f0e5fec8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2003080e0e1185f4",
+          "il_bytes": 24,
+          "il_sha256": "8faeb2ff253a2755a1a55c270158c1af1ed3fa79dd9d585ca3ba6c0b05f9f64d"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareOrdinal",
+          "signature": "2006080e08080e0808",
+          "il_bytes": 259,
+          "il_sha256": "c67aeaaf5d141773fd0f15a21bb476c410faaed14acc4490d2f60985f97bad80"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareQuick",
+          "signature": "2009080e08080e08081002100202",
+          "il_bytes": 463,
+          "il_sha256": "798af88f4b16e1ce40d3ca1db6693c91cdd5f8fff4befdbf1c0a86a246fbb5fd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareOrdinalIgnoreCase",
+          "signature": "2006080e08080e0808",
+          "il_bytes": 300,
+          "il_sha256": "688e4e73a52afd690c414fe733bc1eccdaa4328e6263735858ce419e4a09f76f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "Compare",
+          "signature": "2007080e08080e08081185f4",
+          "il_bytes": 206,
+          "il_sha256": "514a766510f72e792d681cd4d6c8be48d067d80ad46a7dc1fc2d389d4f3904cd"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "ClearBuffer",
+          "signature": "2002010f0508",
+          "il_bytes": 24,
+          "il_sha256": "b2f413f7be1012f3b5aa6803741e640586bc88d1dfa7a12fdcd7f6a107389f89"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "QuickCheckPossible",
+          "signature": "2006020e08080e0808",
+          "il_bytes": 2,
+          "il_sha256": "84a0936ff1fba6d2811d094757231685673447aed2170738872305076026a316"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareInternal",
+          "signature": "200b080e08080e08081002100202021011822c",
+          "il_bytes": 3030,
+          "il_sha256": "ca9284c4bbd7ee7304080e5ec19b1245c320f7f368c2a27e13a63df2442cf63f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "CompareFlagPair",
+          "signature": "2002080202",
+          "il_bytes": 27,
+          "il_sha256": "7c2636a41971acba70bad340901881f7045b712091d01afe067e1af9bc798d02"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2003020e0e1185f4",
+          "il_bytes": 17,
+          "il_sha256": "2be6f931ab78786fad051af4b1e356cd1f6a51c005473a2cfd6178cb6ce9c9a6"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2005020e0e08081185f4",
+          "il_bytes": 93,
+          "il_sha256": "c7937e207497593655e0e7e8cd776f5d71e1b975308c69cbeb22b841c381b7c3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsPrefix",
+          "signature": "2006020e0e0808021011822c",
+          "il_bytes": 30,
+          "il_sha256": "7b3130dcf56ded56648a77a3d69ff5f4ad0c4fe878d2bc06257876f1fe5e42a9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSuffix",
+          "signature": "2003020e0e1185f4",
+          "il_bytes": 24,
+          "il_sha256": "0ff40ae4c9492614cdc658b0a1bbfccc9d29b5945e8687749bf8e8aef6466ef5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IsSuffix",
+          "signature": "2005020e0e08081185f4",
+          "il_bytes": 67,
+          "il_sha256": "c2b6990f0c20a4bb4cc4475a8efcc48d98159d515643de4b4f26dad749f608fe"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2003080e0e1185f4",
+          "il_bytes": 17,
+          "il_sha256": "d6c175e4377ad10ecf6dbc51f9554b74bda9fdd3be5814f1f8997de294e0bada"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "QuickIndexOf",
+          "signature": "2005080e0e08081002",
+          "il_bytes": 225,
+          "il_sha256": "6f49e789a92ee5794b92e0f226baf9087d066afe3fb8ad958c52b3cbdbfe196a"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2005080e0e08081185f4",
+          "il_bytes": 191,
+          "il_sha256": "f050986f84ee68d984463d40e8e89026981c6f8f13b3093758aadd9182fd8e66"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinal",
+          "signature": "2004080e0e0808",
+          "il_bytes": 128,
+          "il_sha256": "8aeab620a719c0bea259f4b6143ae17718946d9bca6ac78ad1fcef8d6ae1fbe9"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinalIgnoreCase",
+          "signature": "2004080e0e0808",
+          "il_bytes": 150,
+          "il_sha256": "ad88196a9fcf8c99f6bd42ad72a78982d7f868899becee7203d2bf6b0a7404d4"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2003080e031185f4",
+          "il_bytes": 17,
+          "il_sha256": "cfe78ba0581688678889ea1b9f0bccf7f2a01af1612bfb377a6baabdeea63da8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2005080e0308081185f4",
+          "il_bytes": 348,
+          "il_sha256": "1affb995b7b638820bcf850e4e2ce6820651d5cfd3e338af71866901a5c18b9f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinal",
+          "signature": "2004080e030808",
+          "il_bytes": 40,
+          "il_sha256": "0676ec5882cf4c6ca74758e28203a15e6ecca0fd36e2ce2981cd85f2b257fa79"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfOrdinalIgnoreCase",
+          "signature": "2004080e030808",
+          "il_bytes": 65,
+          "il_sha256": "8fa9a8a71853d3d85cb4c6c6765e0e3fb5adc0b30de281fb76611d3a84517abb"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOfSortKey",
+          "signature": "2008080e08080f050308021011822c",
+          "il_bytes": 47,
+          "il_sha256": "e4daf9057f5862cf31d59d5e9044e7689ef407a67d6ed7ab04c586ebba39b2fe"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "IndexOf",
+          "signature": "2006080e0e08080f051011822c",
+          "il_bytes": 563,
+          "il_sha256": "31e653fdb2823956b37e694ba00adb1a9308c51a06bd59abe3d665fa8029a273"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2003080e0e1185f4",
+          "il_bytes": 24,
+          "il_sha256": "22d6b832a6e6ddf7a18e965857426c0d5503a803f1e36e39bea2dc02e37c6ce0"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2005080e0e08081185f4",
+          "il_bytes": 156,
+          "il_sha256": "5ae42d83e0340c753a86c566e78c13f47bc58411d763eaa5726caf0c336fc7c5"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinal",
+          "signature": "2004080e0e0808",
+          "il_bytes": 204,
+          "il_sha256": "253e07b6fe05ae66d5708cad7458e9b4f83dcc6c82829076c3d152650c7de6bb"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinalIgnoreCase",
+          "signature": "2004080e0e0808",
+          "il_bytes": 244,
+          "il_sha256": "0e25b6c54853b62f4c9c5b4220e5fd2e30a3f724908ee4d59a092e43626a7d4b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2003080e031185f4",
+          "il_bytes": 24,
+          "il_sha256": "45ab5855a96929ff77c645fc4fc29a16abc1e1423eb4d623031d7279345a0d48"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2005080e0308081185f4",
+          "il_bytes": 348,
+          "il_sha256": "f07b61722434b1c7bf37349c8589c3a3e0cf0e2ed72e4aadc59ec280507abed7"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinal",
+          "signature": "2004080e030808",
+          "il_bytes": 53,
+          "il_sha256": "cf7087f0df201481abf961261657cf1adcbf7535e24494d982c448833658524b"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfOrdinalIgnoreCase",
+          "signature": "2004080e030808",
+          "il_bytes": 77,
+          "il_sha256": "fa759f7e257f57a1c78d7aab56d151f350cf46f9f546d32796e83f02357202a3"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOfSortKey",
+          "signature": "2008080e0808080f0508021011822c",
+          "il_bytes": 49,
+          "il_sha256": "c55c1b7b6cad63327070ff43d33cb7bb5acc82cfccadc1ae38755f197b889b86"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "LastIndexOf",
+          "signature": "2006080e0e08080f051011822c",
+          "il_bytes": 609,
+          "il_sha256": "c300c7202e6b955ba8bfa1034b9ada30d52613cc0c26500faf8c54a4ea35b12f"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesForward",
+          "signature": "2007020e100808080f05021011822c",
+          "il_bytes": 283,
+          "il_sha256": "175386056063a80fa7b1483e6263c035b38872739f4d023539ff546dde1e65d8"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesForwardCore",
+          "signature": "2009020e100808080f0502118238101282041011822c",
+          "il_bytes": 569,
+          "il_sha256": "672de440e2fe9d3db90468312b5a9e59b7096d5f1553798540fba9a9bcf8d746"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesPrimitive",
+          "signature": "2007021185f40f05081182380f050802",
+          "il_bytes": 215,
+          "il_sha256": "d923c5e713816c520c3b622f7d58b8f3ec705c94c6118dbf0ca224120dfe5b97"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesBackward",
+          "signature": "2008020e10080808080f05021011822c",
+          "il_bytes": 285,
+          "il_sha256": "6953dd2b5cdf5c4d226d654f315063abc1dc7911b7db04db82c161d75f67511e"
+        },
+        {
+          "type": "Mono.Globalization.Unicode.SimpleCollator",
+          "name": "MatchesBackwardCore",
+          "signature": "200a020e10080808080f0502118238101282041011822c",
+          "il_bytes": 736,
+          "il_sha256": "5373867a2c26621000165c0f4d76a243e3562d545766357712688c6a9fe8046e"
+        }
+      ],
+      "string_trim_methods": [
+        {
+          "type": "System.String",
+          "name": ".cctor",
+          "signature": "000001",
+          "il_bytes": 34,
+          "il_sha256": "cbd7d845e476bca7ad0bbbcedbf9abd8c01d89beab17b456081323bb1a709df8"
+        },
+        {
+          "type": "System.String",
+          "name": "Trim",
+          "signature": "20000e",
+          "il_bytes": 96,
+          "il_sha256": "e0a3e25b2ffd269a46c66b35a1a78c027332941a25db74a6d1e0de9046280202"
+        },
+        {
+          "type": "System.String",
+          "name": "Trim",
+          "signature": "20010e1d03",
+          "il_bytes": 119,
+          "il_sha256": "17d47c66b123b67f638ba47b13b78d67d9a6ce33cdcf39dc945f9817acbf95e4"
+        },
+        {
+          "type": "System.String",
+          "name": "TrimStart",
+          "signature": "20010e1d03",
+          "il_bytes": 91,
+          "il_sha256": "0e02e0ea9334cfedb0ad2bc3802faacc1d548d7e3995423670a371765dbaeb68"
+        },
+        {
+          "type": "System.String",
+          "name": "TrimEnd",
+          "signature": "20010e1d03",
+          "il_bytes": 98,
+          "il_sha256": "e534b1331cf680c44f0db03a8d8f082753d259e4fd9c9b960544d567e2b63d82"
+        },
+        {
+          "type": "System.String",
+          "name": "FindNotWhiteSpace",
+          "signature": "200308080808",
+          "il_bytes": 192,
+          "il_sha256": "bb741c76a76c6181854f6a08c10eda79423356001a6bc3c30a823b1c51df2b65"
+        },
+        {
+          "type": "System.String",
+          "name": "FindNotInTable",
+          "signature": "2004080808081d03",
+          "il_bytes": 127,
+          "il_sha256": "cbf21cf81b4b73e88372920775a2a2069034b03d17d628b9988ab09b52c7df84"
+        }
+      ],
+      "string_whitespace_fields": [
+        {
+          "name": "WhiteChars",
+          "signature": "061d03",
+          "attributes": "Private, Static, InitOnly"
+        }
+      ],
+      "string_cctor_constant_data": [
+        {
+          "name": "$$field-0",
+          "bytes": 56,
+          "sha256": "f85fb86a73ea0bd553c7023e521fc850a2a4648c978b864a4e994f5cb4453f15"
+        }
+      ]
+    }
+  ],
+  "inspected_method_comparison": [
+    {
+      "label": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\2.0\\mscorlib.dll",
+      "methods": 94,
+      "raw_il_hashes_equal_to_apk": 17,
+      "metadata_tokens_normalized": false
+    },
+    {
+      "label": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\mscorlib.dll",
+      "methods": 94,
+      "raw_il_hashes_equal_to_apk": 94,
+      "metadata_tokens_normalized": false
+    }
+  ],
+  "inspected_string_trim_comparison": [
+    {
+      "label": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\2.0\\mscorlib.dll",
+      "methods": 7,
+      "raw_il_hashes_equal_to_apk": 5,
+      "whole_managed_core_equal_to_apk": false,
+      "whitespace_fields_equal_to_apk": true,
+      "string_cctor_constant_data_equal_to_apk": false,
+      "metadata_tokens_normalized": false,
+      "original_assembly_executed": false
+    },
+    {
+      "label": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\mscorlib.dll",
+      "methods": 7,
+      "raw_il_hashes_equal_to_apk": 7,
+      "whole_managed_core_equal_to_apk": true,
+      "whitespace_fields_equal_to_apk": true,
+      "string_cctor_constant_data_equal_to_apk": true,
+      "metadata_tokens_normalized": false,
+      "original_assembly_executed": false
+    }
+  ],
+  "official_resource_bytes": 337358,
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "producer_sha256": "3c2dff27fe1a098cdc68f6ee710f8e18bf5792ba1493106aa5ecdb7dafc745a6",
+  "helper_sha256": "dc9e82afcd2215fe98da0aa90ad3bf31c17e99a9d3422450380603c436000b41",
+  "original_assembly_executed": false,
+  "original_assembly_copied": false,
+  "original_resource_bytes_saved": false,
+  "component_compiled_by_this_setup": false,
+  "licensing_scope": "mcs/class collation MIT X11; authorized BMP data mono/metadata/char-conversions.h separately GNU Library GPLv2 June1991",
+  "lgpl_data_authorization": "Explicit user authorization after 0b9d3e7; license and provenance recorded separately"
+}

@@ -1,0 +1,502 @@
+{
+  "operation": "own-managed-Thread-source-differential",
+  "status": "PASS",
+  "cases": 71,
+  "passed": 71,
+  "profiles": {
+    "UnityMono265": {
+      "cases": 32,
+      "passed": 32,
+      "results": [
+        {
+          "case": "null-ctor",
+          "expected": "System.ArgumentNullException",
+          "actual": "System.ArgumentNullException",
+          "passed": true
+        },
+        {
+          "case": "unstarted-state",
+          "expected": "8",
+          "actual": "8",
+          "passed": true
+        },
+        {
+          "case": "unstarted-alive",
+          "expected": "False",
+          "actual": "False",
+          "passed": true
+        },
+        {
+          "case": "unstarted-priority",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "unstarted-join",
+          "expected": "System.Threading.ThreadStateException",
+          "actual": "System.Threading.ThreadStateException",
+          "passed": true
+        },
+        {
+          "case": "unstarted-interrupt",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "priority--1",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-0",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-1",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-2",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-3",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-4",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-5",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "sleep-minus2",
+          "expected": "System.ArgumentOutOfRangeException",
+          "actual": "System.ArgumentOutOfRangeException",
+          "passed": true
+        },
+        {
+          "case": "sleep-zero",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "current-identity",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "current-state",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "current-alive",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "interrupt-beforestart",
+          "expected": "interrupted",
+          "actual": "interrupted",
+          "passed": true
+        },
+        {
+          "case": "stopped-state",
+          "expected": "16",
+          "actual": "16",
+          "passed": true
+        },
+        {
+          "case": "stopped-alive",
+          "expected": "False",
+          "actual": "False",
+          "passed": true
+        },
+        {
+          "case": "stopped-join",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "stopped-interrupt",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "second-start",
+          "expected": "System.Threading.ThreadStateException",
+          "actual": "System.Threading.ThreadStateException",
+          "passed": true
+        },
+        {
+          "case": "stopped-priority",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "stopped-setpriority",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "pending-interrupt",
+          "expected": "interrupt,ok",
+          "actual": "interrupt,ok",
+          "passed": true
+        },
+        {
+          "case": "worker-currentidentity",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "sleep-state",
+          "expected": "32",
+          "actual": "32",
+          "passed": true
+        },
+        {
+          "case": "sleep-alive",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "interrupt-sleep",
+          "expected": "interrupted",
+          "actual": "interrupted",
+          "passed": true
+        },
+        {
+          "case": "interrupt-join",
+          "expected": "interrupted",
+          "actual": "interrupted",
+          "passed": true
+        }
+      ]
+    },
+    "DotNet": {
+      "cases": 32,
+      "passed": 32,
+      "results": [
+        {
+          "case": "null-ctor",
+          "expected": "System.ArgumentNullException",
+          "actual": "System.ArgumentNullException",
+          "passed": true
+        },
+        {
+          "case": "unstarted-state",
+          "expected": "8",
+          "actual": "8",
+          "passed": true
+        },
+        {
+          "case": "unstarted-alive",
+          "expected": "False",
+          "actual": "False",
+          "passed": true
+        },
+        {
+          "case": "unstarted-priority",
+          "expected": "2",
+          "actual": "2",
+          "passed": true
+        },
+        {
+          "case": "unstarted-join",
+          "expected": "System.Threading.ThreadStateException",
+          "actual": "System.Threading.ThreadStateException",
+          "passed": true
+        },
+        {
+          "case": "unstarted-interrupt",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "priority--1",
+          "expected": "System.ArgumentOutOfRangeException",
+          "actual": "System.ArgumentOutOfRangeException",
+          "passed": true
+        },
+        {
+          "case": "priority-0",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "priority-1",
+          "expected": "1",
+          "actual": "1",
+          "passed": true
+        },
+        {
+          "case": "priority-2",
+          "expected": "2",
+          "actual": "2",
+          "passed": true
+        },
+        {
+          "case": "priority-3",
+          "expected": "3",
+          "actual": "3",
+          "passed": true
+        },
+        {
+          "case": "priority-4",
+          "expected": "4",
+          "actual": "4",
+          "passed": true
+        },
+        {
+          "case": "priority-5",
+          "expected": "System.ArgumentOutOfRangeException",
+          "actual": "System.ArgumentOutOfRangeException",
+          "passed": true
+        },
+        {
+          "case": "sleep-minus2",
+          "expected": "System.ArgumentOutOfRangeException",
+          "actual": "System.ArgumentOutOfRangeException",
+          "passed": true
+        },
+        {
+          "case": "sleep-zero",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "current-identity",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "current-state",
+          "expected": "0",
+          "actual": "0",
+          "passed": true
+        },
+        {
+          "case": "current-alive",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "interrupt-beforestart",
+          "expected": "interrupted",
+          "actual": "interrupted",
+          "passed": true
+        },
+        {
+          "case": "stopped-state",
+          "expected": "16",
+          "actual": "16",
+          "passed": true
+        },
+        {
+          "case": "stopped-alive",
+          "expected": "False",
+          "actual": "False",
+          "passed": true
+        },
+        {
+          "case": "stopped-join",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "stopped-interrupt",
+          "expected": "ok",
+          "actual": "ok",
+          "passed": true
+        },
+        {
+          "case": "second-start",
+          "expected": "System.Threading.ThreadStateException",
+          "actual": "System.Threading.ThreadStateException",
+          "passed": true
+        },
+        {
+          "case": "stopped-priority",
+          "expected": "System.Threading.ThreadStateException",
+          "actual": "System.Threading.ThreadStateException",
+          "passed": true
+        },
+        {
+          "case": "stopped-setpriority",
+          "expected": "System.Threading.ThreadStateException",
+          "actual": "System.Threading.ThreadStateException",
+          "passed": true
+        },
+        {
+          "case": "pending-interrupt",
+          "expected": "interrupt,ok",
+          "actual": "interrupt,ok",
+          "passed": true
+        },
+        {
+          "case": "worker-currentidentity",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "sleep-state",
+          "expected": "32",
+          "actual": "32",
+          "passed": true
+        },
+        {
+          "case": "sleep-alive",
+          "expected": "True",
+          "actual": "True",
+          "passed": true
+        },
+        {
+          "case": "interrupt-sleep",
+          "expected": "interrupted",
+          "actual": "interrupted",
+          "passed": true
+        },
+        {
+          "case": "interrupt-join",
+          "expected": "interrupted",
+          "actual": "interrupted",
+          "passed": true
+        }
+      ]
+    }
+  },
+  "historical_culture": {
+    "cases": 7,
+    "passed": 7,
+    "profile_differences": 4,
+    "results": [
+      {
+        "case": "initial",
+        "expected": "1033/9",
+        "actual": "1033/9",
+        "passed": true,
+        "modern": "1046/22"
+      },
+      {
+        "case": "parent-tr",
+        "expected": "1055/31",
+        "actual": "1055/31",
+        "passed": true,
+        "modern": "1055/31"
+      },
+      {
+        "case": "child",
+        "expected": "1033/9",
+        "actual": "1033/9",
+        "passed": true,
+        "modern": "1036/12"
+      },
+      {
+        "case": "child-override",
+        "expected": "1031/7",
+        "actual": "1031/7",
+        "passed": true,
+        "modern": "1031/7"
+      },
+      {
+        "case": "grandchild",
+        "expected": "1033/9",
+        "actual": "1033/9",
+        "passed": true,
+        "modern": "1031/7"
+      },
+      {
+        "case": "parent-fr",
+        "expected": "1036/12",
+        "actual": "1036/12",
+        "passed": true,
+        "modern": "1036/12"
+      },
+      {
+        "case": "restored",
+        "expected": "1033/9",
+        "actual": "1033/9",
+        "passed": true,
+        "modern": "1046/22"
+      }
+    ]
+  },
+  "profile_differences": 9,
+  "native_gc": {
+    "status": "PASS",
+    "assertions": 20
+  },
+  "producer_sha256": "792c416120885f29f7f8bfd1caf1f26ee215f5d152cdd20c876bc497f4d72d1f",
+  "inputs_sha256": {
+    "tests/translator/thread_fixtures.cpp": "e017e3787e9f5d7d8937ff43a41ac0ed01675573454e9947b324f72f4eb10105",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/managed_thread.cpp": "76ddd5568410670d790f953dc3111976ff48144364ad088724eebf3e61feadaf",
+    "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
+    "tests/translator/ThreadProbe.cs": "85be9a67d96e7cbd4dbc44e8e5d64251d7f013654cf72054f6a065367cac695f",
+    "tests/translator/thread_gc_fixtures.cpp": "6ab294b5227a42118dc6079c57c8d228fde9ad97674733cb326cb54bc51b1cc1",
+    "tests/translator/ThreadCultureProbe.cs": "b607def630e73519d3311bfe44056f038ce1524445e94fdc5c5e2736dbbade7b",
+    "tests/translator/thread_culture_fixtures.cpp": "a3604de8cc81c8023428d81354411c994fff4b68958683549ab9289c46fd6fe0",
+    "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
+    "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+    "src/kairo/common/managed_thread.hpp": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
+    "src/kairo/common/managed_collation.hpp": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d",
+    "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
+    "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a"
+  },
+  "compiler": {
+    "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "native_executable": {
+    "path": "build/thread-fixtures/thread-fixtures.exe",
+    "sha256": "ed790307c261957a1e37a2e4318ef9a6b8373e5ba4d734d5c4169d5123f0f6aa"
+  },
+  "production_methods_promoted": 0,
+  "game_binary_loaded": false,
+  "limitations": [
+    "Managed workers are cooperative GC mutators; arbitrary native workers cannot execute managed game code.",
+    "Interrupt targets managed Sleep and Join; it is not abort or forced termination.",
+    "Unhandled worker exceptions terminate the process, rather than being silently discarded.",
+    "Modern priority backend implemented for Windows; other hosts explicitly unsupported for that contrast API.",
+    "Historical CurrentCulture initializes per worker from explicit process default; modern ExecutionContext/culture inheritance is not implemented.",
+    "Full CLR ExecutionContext, ThreadPool, monitors, Suspend and Abort are not implemented."
+  ]
+}

@@ -160,7 +160,7 @@ def validate_emission(emitted,assembly):
 
 def game_evidence(ledger):
     path=ROOT/'config/phase2-game-translation.json'
-    if not path.exists():return {},[],dict(emitted=0,compiled=0,source_declarations=None,requested=0)
+    if not path.exists():return {},[],dict(emitted=0,compiled=0,source_declarations=None,requested=0,syntax_kinds=[])
     report=load('config/phase2-game-translation.json');methods,compiled=validate_emission(report,'Assembly-CSharp')
     if report.get('game_executed_methods',0) or report.get('executed_methods',0):raise ValueError('Game execution requires boot-specific proof, currently absent')
     mapped,unmapped=map_game_identities([methods[i] for i in sorted(compiled)],ledger)
@@ -168,14 +168,16 @@ def game_evidence(ledger):
     diagnostic_path=ROOT/'config/phase2-game-diagnostics.json'
     if diagnostic_path.exists():
         diagnostic=load('config/phase2-game-diagnostics.json')
-        original_manifest={r['path']:r['sha256'] for r in report['source_manifest']}
-        measured_manifest={r['path']:r['sha256'] for r in diagnostic['source_manifest']}
+        # Combined translation also binds Kairo helpers; the declaration census
+        # describes only Game source and retains its own complete input hashes.
+        original_manifest={r['path']:r['sha256'] for r in report['source_manifest'] if r['path'].startswith('src/Assembly-CSharp/')}
+        measured_manifest={r['path']:r['sha256'] for r in diagnostic['source_manifest'] if r['path'].startswith('src/Assembly-CSharp/')}
         if measured_manifest==original_manifest:source_declarations=diagnostic['source_method_declarations']
-    return mapped,unmapped,dict(emitted=len(methods),compiled=len(compiled),source_declarations=source_declarations,requested=report['requested_methods'])
+    return mapped,unmapped,dict(emitted=len(methods),compiled=len(compiled),source_declarations=source_declarations,requested=report['requested_methods'],syntax_kinds=list(report['emitted_kind_occurrences']))
 
 
 def validate_inputs(report):
-    inputs = report.get('inputs', report.get('sources', {}))
+    inputs = report.get('inputs', report.get('inputs_sha256', report.get('sources', {})))
     if isinstance(inputs, dict):
         inputs = [dict(path=p,sha256=h) for p,h in inputs.items()]
     for row in inputs:
@@ -217,14 +219,34 @@ def translator_evidence():
     roots = {i for i,r in methods.items() if r['root']}
     if len(roots) != emitted['root_methods_emitted']:
         raise ValueError('Root method count differs from identities')
-    executed = set(differential['executed_method_ids'])
-    if differential['failures'] or differential['passed'] != differential['cases'] or not executed <= compiled:
-        raise ValueError('Portable differential receipt does not prove all claimed identities')
-    if len(executed) != differential['methods']:
-        raise ValueError('Executed method identity count differs')
+    executed,verified = portable_verification_sets(differential,compiled)
+    if differential.get('known_platform_differences'):
+        math=load('config/phase2-android-math.json')
+        expect_hash(ROOT/'tools/inspect_android_math.py',math['producer_sha256'])
+        if math['status']!='PASS' or math['apk_sha256']!=EXPECTED or len(math['variants'])!=2 or math['android_negative_zero_result']!='UNKNOWN':
+            raise ValueError('Signed-zero platform discrepancy lacks static provenance')
     if any(emitted.get(k,0) for k in ['game_translated_methods','game_compiled_methods','game_executed_methods']):
         raise ValueError('This progress updater has no evidence for game-method promotion')
-    return emitted,differential,methods,roots,compiled,executed
+    return emitted,differential,methods,roots,compiled,executed,verified
+
+
+def portable_verification_sets(differential,compiled):
+    executed=set(differential['executed_method_ids'])
+    if len(executed)!=len(differential['executed_method_ids']) or len(executed)!=differential['methods'] or not executed<=compiled:
+        raise ValueError('Executed method identity count differs')
+    failures=differential['failures'];failed={row['method'] for row in failures}
+    if not failed<=executed or len({row['case'] for row in failures})!=len(failures):
+        raise ValueError('Failure identities are not unique executed cases')
+    if differential['passed']!=differential['cases']-len(failures):
+        raise ValueError('Differential case accounting differs')
+    known=differential.get('known_platform_differences',[])
+    if differential.get('unexpected_failures') or {(r['method'],r['case']) for r in known}!={(r['method'],r['case']) for r in failures}:
+        raise ValueError('Unexplained portable differential failures')
+    if any(row['method']!='M:java.lang.JMath.Sin(System.Double)' for row in known):
+        raise ValueError('Unreviewed platform difference')
+    verified=set(differential.get('verified_method_ids',executed-failed))
+    if verified!=executed-failed:raise ValueError('Nonmatching method cannot be promoted to verified')
+    return executed,verified
 
 
 def asset_evidence():
@@ -320,7 +342,7 @@ def baked_evidence():
 
 def additional_platform_evidence(boundary_ids):
     ids=set();reports={}
-    for area in ['storage','input','forms','sound']:
+    for area in ['storage','input','forms','forms-execution','sound']:
         name='phase2-'+area+'-tests.json'
         if not (ROOT/'config'/name).exists():continue
         proof=load('config/'+name);validate_inputs(proof)
@@ -334,6 +356,47 @@ def additional_platform_evidence(boundary_ids):
             if resource['apk_sha256']!=EXPECTED:raise ValueError('Storage resource proof belongs to another APK')
         ids|=declared;reports[name]=proof
     return ids,reports
+
+
+FOUNDATION_RECEIPTS={
+    'type-init-fixtures':'fixture_cases','exception-objects-fixtures':'fixture_cases',
+    'runtime-encoding-fixtures':'fixture_cases','regex-fixtures':'fixture_cases','path-fixtures':'fixture_cases',
+    'stream-reader-tests':'cases','mono-collation-tests':'cases','thread-tests':'cases',
+    'globalization-tests':'cases','bootstrap-tests':'fixture_cases','asset-reader-tests':'fixture_cases',
+    'string-ops-tests':'cases','image-lifetime-tests':'fixture_cases','ui-dispatch-gc-tests':'assertions',
+}
+
+def foundation_evidence():
+    reports={}
+    for name,count_field in FOUNDATION_RECEIPTS.items():
+        path=ROOT/('config/phase2-'+name+'.json')
+        if not path.exists():continue
+        proof=load(path.relative_to(ROOT));validate_inputs(proof)
+        count=proof[count_field]
+        if proof['status']!='PASS' or count!=proof['passed'] or count<=0:raise ValueError('Foundation proof incomplete: '+name)
+        for key in ['native_executable','edge_native_executable','bmp_native_executable']:
+            if proof.get(key):expect_hash(ROOT/proof[key]['path'],proof[key]['sha256'])
+        reports[name]=dict(cases=count,passed=proof['passed'])
+        if name=='mono-collation-tests':
+            if proof['logical_table_payload_bytes']!=proof['official_resource_bytes']+proof['character_data_bytes']:
+                raise ValueError('Collation table footprint accounting differs')
+            reports[name].update(logical_table_payload_bytes=proof['logical_table_payload_bytes'],mit_resource_bytes=proof['official_resource_bytes'],lgpl_character_bytes=proof['character_data_bytes'])
+    return reports
+
+
+def culture_evidence():
+    path=ROOT/'config/culture-usage.json'
+    if not path.exists():return None
+    proof=load(path.relative_to(ROOT))
+    expect_hash(ROOT/'tools/inventory_culture.py',proof['producer_sha256'])
+    expect_hash(ROOT/'tools/CultureInventory.cs',proof['helper_sha256'])
+    for rows in proof['source_manifest'].values():
+        for row in rows:expect_hash(ROOT/'reference'/row['path'],row['sha256'])
+    if proof['semantic_errors'] or proof['unresolved_invocations'] or proof['self_test']['status']!='PASS' or proof['self_test']['classified_invocations']<=0:
+        raise ValueError('Culture census is not completely bound')
+    calls=proof['direct_calls']
+    return dict(calls=len(calls),methods=len({r['caller'] for r in calls}),by_assembly=dict(Counter(r['assembly'] for r in calls)),
+        by_operation=dict(Counter(r['operation'] for r in calls)),historical_ordinal_calls=len(proof['historical_ordinal_calls']),culture_assignments=len(proof['culture_assignments']))
 
 
 def self_test_mapping():
@@ -364,8 +427,10 @@ def refresh():
     if not (ROOT/'config/phase2-translation.json').is_file():
         return None
     receipt_names=['phase2-translation.json','phase2-portable-differential.json','phase2-assets.json','phase2-image-tests.json','phase2-services-tests.json','phase2-legacy-assets.json','phase2-game-translation.json','phase2-graphics-tests.json','phase2-media-tests.json','baked-array-index.json','phase2-storage-tests.json','phase2-input-tests.json','phase2-forms-tests.json','phase2-sound-tests.json']
+    receipt_names+=['phase2-'+name+'.json' for name in FOUNDATION_RECEIPTS]+['culture-usage.json','phase2-forms-execution-tests.json']
     receipt_snapshot={name:sha(ROOT/'config'/name) for name in receipt_names if (ROOT/'config'/name).exists()}
-    emitted,differential,methods,roots,compiled,executed = translator_evidence()
+    emitted,differential,methods,roots,compiled,executed,verified = translator_evidence()
+    foundation=foundation_evidence();culture=culture_evidence()
     converted,manifest,images,extracted = asset_evidence()
     legacy = load('config/phase2-legacy-assets.json')
     expect_hash(ROOT/'tools/inventory_legacy_assets.py',legacy['producer_sha256'])
@@ -398,9 +463,9 @@ def refresh():
         # Pure helpers implemented outside generated Kairo do not promote APIs.
         row['estado'] = row['backend_sdl'] = row['backend_ctr'] = 'todo'
         if row['classificacao'] == 'portavel' and row['id'] in compiled:
-            row['estado'] = 'verified' if row['id'] in executed else 'implemented'
+            row['estado'] = 'verified' if row['id'] in verified else 'implemented'
             row['backend_sdl'] = row['estado']
-            row['notas'] += '; phase2: generated C++ compiled'+(' and source differential executed' if row['id'] in executed else '')+'; CTR not compiled; no game boot'
+            row['notas'] += '; phase2: generated C++ compiled'+(' and source differential matched' if row['id'] in verified else ' and exercised with unresolved platform difference' if row['id'] in executed else '')+'; CTR not compiled; no game boot'
             promoted.append(row['id'])
         if row['id'] in platform_ids:
             row['estado']=row['backend_sdl']='verified'
@@ -435,8 +500,10 @@ def refresh():
         requested_portable_symbols=emitted['requested_symbols'],requested_root_methods=emitted['requested_methods'],
         emitted_methods=len(methods),emitted_root_methods=len(roots),emitted_dependency_methods=len(methods)-len(roots),
         compiled_methods=len(compiled),executed_methods=len(executed),differential_cases=differential['cases'],
-        verified_boundary_ids=sorted((set(promoted)&executed)|platform_ids),implemented_boundary_ids=sorted(set(promoted)-executed-platform_ids),
-        verified_portable_boundary_ids=sorted(set(promoted)&executed),verified_platform_boundary_ids=sorted(platform_ids),
+        verified_methods=len(verified),differential_passed=differential['passed'],known_platform_differences=differential.get('known_platform_differences',[]),
+        foundation=foundation,culture=culture,
+        verified_boundary_ids=sorted((set(promoted)&verified)|platform_ids),implemented_boundary_ids=sorted(set(promoted)-verified-platform_ids),
+        verified_portable_boundary_ids=sorted(set(promoted)&verified),verified_platform_boundary_ids=sorted(platform_ids),
         platform_proof_ids={name:proof['verified_boundary_ids'] for name,proof in extra_proofs.items()},
         emitted_root_ids_outside_boundary=sorted(roots-boundary_ids),
         game_translated_methods=len(game_mapped),game_compiled_methods=len(game_mapped),game_executed_methods=0,game_verified_methods=0,
@@ -450,7 +517,9 @@ def refresh():
         service_integration='PENDING; no boundary promotion',
         rgba8_files=len(manifest['images']),rgba8_bytes=images['rgba8_bytes'],
         measured_syntax_kinds=len(read_csv('config/csharp-syntax.csv')),
-        syntax_kinds_observed_in_emitted_bodies=sum(r['kind'] in emitted['emitted_kind_occurrences'] for r in read_csv('config/csharp-syntax.csv')),
+        syntax_kinds_observed_in_emitted_bodies=sum(r['kind'] in set(emitted['emitted_kind_occurrences'])|set(game_counts['syntax_kinds']) for r in read_csv('config/csharp-syntax.csv')),
+        portable_syntax_kinds_observed=sum(r['kind'] in emitted['emitted_kind_occurrences'] for r in read_csv('config/csharp-syntax.csv')),
+        game_syntax_kinds_observed=sum(r['kind'] in game_counts['syntax_kinds'] for r in read_csv('config/csharp-syntax.csv')),
         texture_readback_peak_payload_bytes=images['peak_texture_payload_bytes'],
         ttf_files=len(manifest['fonts']),ogg_files=len(manifest['audio']),media_runtime_verified=bool(media),media_assertions=media['assertions'] if media else 0,
         font_cache_fixture_peak_bytes=media['max_font_cache_bytes'] if media else None,

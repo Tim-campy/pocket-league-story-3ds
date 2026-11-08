@@ -22,12 +22,19 @@ static_assert(sizeof(std::int32_t)==4 && sizeof(std::int64_t)==8);
 static_assert(sizeof(float)==4 && sizeof(double)==8);
 static_assert(std::numeric_limits<float>::is_iec559 && std::numeric_limits<double>::is_iec559);
 
+struct Object;
+struct ExceptionIdentity {mutable std::mutex mutex;mutable std::weak_ptr<Object> managed_view;};
 class Exception : public std::exception {
     std::string message_;
+    bool default_message_{true};
+    std::shared_ptr<ExceptionIdentity> identity_=std::make_shared<ExceptionIdentity>();
 public:
-    explicit Exception(std::string message="") : message_(std::move(message)) {}
+    Exception()=default;
+    explicit Exception(std::string message) : message_(std::move(message)),default_message_(false) {}
     const char* what() const noexcept override { return message_.c_str(); }
     virtual const char* type_name() const noexcept { return "System.Exception"; }
+    bool uses_default_message()const noexcept{return default_message_;}
+    const std::shared_ptr<ExceptionIdentity>& identity_token()const noexcept{return identity_;}
 };
 #define PLS_CS_EXCEPTION(name, base, managed_name) \
  class name : public base { public: using base::base; \
@@ -182,6 +189,7 @@ struct Object : std::enable_shared_from_this<Object> {
     virtual bool Equals(const std::shared_ptr<Object>&other){return equals(other);}
     virtual std::int32_t GetHashCode(){return get_hash_code();}
     virtual std::string managed_type_name()const{return "System.Object";}
+    virtual std::string managed_delegate_method_id(const std::string& slot)const{return slot;}
     virtual String ToString();
     virtual void trace_edges(const EdgeVisitor&)const{}
     virtual void release_edges(){}
@@ -200,6 +208,15 @@ public:
     GcMutatorScope();~GcMutatorScope();
     GcMutatorScope(const GcMutatorScope&)=delete;
     GcMutatorScope&operator=(const GcMutatorScope&)=delete;
+};
+// A registered mutator may block in native code after converting every managed
+// input to native values. No managed object access/allocation/callback is allowed
+// until the outermost scope exits. Reentry waits for an ongoing collection.
+class GcNativeBlockingScope {
+public:
+    GcNativeBlockingScope();~GcNativeBlockingScope();
+    GcNativeBlockingScope(const GcNativeBlockingScope&)=delete;
+    GcNativeBlockingScope&operator=(const GcNativeBlockingScope&)=delete;
 };
 template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
     try{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result);return result;}
@@ -277,12 +294,35 @@ struct ArrayBase : Object {
 inline Ref<ArrayBase>array_cast(const Ref<Object>&value){auto result=std::dynamic_pointer_cast<ArrayBase>(value);if(value&&!result)throw InvalidCastException();return result;}
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count);
 
+template<class T>class Array;
+template<class T>struct managed_type_name_traits {
+    static std::string name(){throw NotSupportedException("Managed type name requires generated metadata for this value type");}
+};
+#define PLS_CS_TYPE_NAME(cpp,managed) template<>struct managed_type_name_traits<cpp>{static std::string name(){return managed;}};
+PLS_CS_TYPE_NAME(bool,"System.Boolean")
+PLS_CS_TYPE_NAME(char16_t,"System.Char")
+PLS_CS_TYPE_NAME(std::uint8_t,"System.Byte")
+PLS_CS_TYPE_NAME(std::int8_t,"System.SByte")
+PLS_CS_TYPE_NAME(std::int16_t,"System.Int16")
+PLS_CS_TYPE_NAME(std::uint16_t,"System.UInt16")
+PLS_CS_TYPE_NAME(std::int32_t,"System.Int32")
+PLS_CS_TYPE_NAME(std::uint32_t,"System.UInt32")
+PLS_CS_TYPE_NAME(std::int64_t,"System.Int64")
+PLS_CS_TYPE_NAME(std::uint64_t,"System.UInt64")
+PLS_CS_TYPE_NAME(float,"System.Single")
+PLS_CS_TYPE_NAME(double,"System.Double")
+PLS_CS_TYPE_NAME(String,"System.String")
+PLS_CS_TYPE_NAME(Ref<Object>,"System.Object")
+#undef PLS_CS_TYPE_NAME
+template<class T>struct managed_type_name_traits<Array<T>>{static std::string name(){return managed_type_name_traits<T>::name()+"[]";}};
+
 template<class T> class Array {
     struct Storage : ArrayBase {
         std::int32_t size;
         std::unique_ptr<T[]> values;
         explicit Storage(std::int32_t n):size(n),values(n?std::make_unique<T[]>(static_cast<std::size_t>(n)):nullptr){}
         std::int32_t get_Length()const override{return size;}
+        std::string managed_type_name()const override{return managed_type_name_traits<T>::name()+"[]";}
         const std::type_info&element_type()const noexcept override{return typeid(T);}
         void trace_edges(const EdgeVisitor&visitor)const override{for(std::int32_t i=0;i<size;++i)trace_value(values[static_cast<std::size_t>(i)],visitor);}
         void release_edges()override{for(std::int32_t i=0;i<size;++i)release_value(values[static_cast<std::size_t>(i)]);}
@@ -363,16 +403,19 @@ template<class F,class G>auto run_finally(F&&body,G&&cleanup)->std::invoke_resul
 
 template<class Signature>class Delegate;
 template<class R,class...Args>class Delegate<R(Args...)> {
-    struct Binding{std::shared_ptr<void>target;std::weak_ptr<Object>managed_target;std::string method;std::function<R(Args...)>function;};
+    struct Binding{std::shared_ptr<void>target;std::weak_ptr<Object>managed_target;std::string method;std::function<R(Args...)>function;const void* identity=nullptr;};
     std::vector<Binding> bindings_;
-    static bool equal_binding(const Binding&a,const Binding&b){return a.target==b.target&&a.method==b.method;}
+    static bool equal_binding(const Binding&a,const Binding&b){return a.identity==b.identity&&a.method==b.method;}
 public:
     Delegate()=default;
     template<class T,class F>static Delegate bind(std::shared_ptr<T>target,std::string method,F&&function) {
         std::weak_ptr<Object>managed;
         if constexpr(std::is_base_of_v<Object,T>)managed=target;
-        Delegate result;result.bindings_.push_back({target,managed,std::move(method),std::forward<F>(function)});return result;
+        else if constexpr(std::is_polymorphic_v<T>)managed=std::dynamic_pointer_cast<Object>(target);
+        std::shared_ptr<void>identity=target;if(auto object=managed.lock())identity=object;
+        Delegate result;const void*key=identity.get();result.bindings_.push_back({identity,managed,std::move(method),std::forward<F>(function),key});return result;
     }
+    template<class T,class F>static Delegate bind_identity(std::shared_ptr<T>target,const void*identity,std::string method,F&&function){auto result=bind(std::move(target),std::move(method),std::forward<F>(function));result.bindings_[0].identity=identity;return result;}
     template<class F>static Delegate from_static(std::string method,F&&function) {
         return bind(std::shared_ptr<void>(),std::move(method),std::forward<F>(function));
     }
@@ -398,6 +441,8 @@ public:
     }
     friend Delegate operator+(Delegate a,const Delegate&b){a+=b;return a;}
     friend Delegate operator-(Delegate a,const Delegate&b){a-=b;return a;}
+    friend bool operator==(const Delegate&a,const Delegate&b){if(a.bindings_.size()!=b.bindings_.size())return false;for(std::size_t i=0;i<a.bindings_.size();++i)if(!equal_binding(a.bindings_[i],b.bindings_[i]))return false;return true;}
+    friend bool operator!=(const Delegate&a,const Delegate&b){return !(a==b);}
 };
 String convert_to_base64_string(const Array<std::uint8_t>& value);
 Array<std::uint8_t> convert_from_base64_string(const String& value);

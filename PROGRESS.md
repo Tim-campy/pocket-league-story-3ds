@@ -8,11 +8,11 @@ Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f591
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
-| Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 566, 'verified': 209} |
-| Métodos a traduzir | 1958 | {'todo': 1642, 'translated': 316} |
+| Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 525, 'verified': 249, 'implemented': 1} |
+| Métodos a traduzir | 1958 | {'todo': 848, 'translated': 1110} |
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 209 membros reais da fronteira verificados por diferencial de fonte; 223 métodos portáveis gerados/compilados, 140 raízes entre 172 métodos requisitados e 83 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 316/1958 identidades originais com C++ compilado; 0 executadas/verificadas em jogo.**
+**Fase 2 parcial:** 249 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1110/1958 identidades originais com C++ compilado; 0 executadas/verificadas em jogo.**
 
 ## Preparação e medições da Fase 1 preservadas
 
@@ -35,10 +35,10 @@ Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets]
 
 ## Evidência atual da Fase 2
 
-- Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 140 raízes + 83 dependências emitidas/compiladas; 223 métodos exercitados em 1561 casos diferenciais de fonte, todos aprovados.
-- Fronteira: 209/775 símbolos verificados: 140 portáveis e 69 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.
-- Assembly-CSharp: 316 corpos emitidos, 316 compilados em objeto C++; 316/1958 (16.14%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 1835 identidades declaradas; o pedido atual inclui 1845 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
-- Sintaxe: 53/123 SyntaxKinds observados em corpos emitidos; observação não comprova cobertura semântica integral de cada construção.
+- Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 172 raízes + 202 dependências emitidas/compiladas; 374 métodos exercitados e 373 verificados. 2617/2618 observações diferenciais aprovadas; 1 diferenças de plataforma explicitamente retidas, sem promoção a verified.
+- Fronteira: 249/775 símbolos verificados: 171 portáveis e 78 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.
+- Assembly-CSharp: 1110 corpos emitidos, 1110 compilados em objeto C++; 1110/1958 (56.69%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 1835 identidades declaradas; o pedido atual inclui 1845 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
+- Sintaxe: 66/123 SyntaxKinds na união dos corpos emitidos (64 Kairo, 61 Game); observação não comprova cobertura semântica integral de cada construção.
 - Serviços: 53 contratos explícitos e 49 assertions nativas; hooks não integrados, nenhum símbolo da fronteira promovido por essas fixtures.
 - Assets: 654 RGBA8 únicos (16933248 bytes) com readback integral; 2 TTF e 27 Ogg exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.
 - Backend SDL e fixtures C++/C# foram executados. Título, menu, partida, frame time e memória residente por categoria do jogo permanecem UNKNOWN; não houve primeiro boot do jogo.
@@ -51,3 +51,22 @@ O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e re
 Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.
 
 Recibos e hashes conferidos pelo gerador: [resumo](config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).
+
+## Contratos culturais e fundação
+
+- Inventário cultural: 104 chamadas em 61 métodos; 24 chamadas ordinais do Mono separadas; 0 atribuições de cultura no fonte. Dados e limites: [medição](docs/culture-usage.md).
+- Fundação `type-init-fixtures`: 24/24 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `exception-objects-fixtures`: 74/74 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `runtime-encoding-fixtures`: 134/134 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `regex-fixtures`: 752/752 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `path-fixtures`: 378/378 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `stream-reader-tests`: 508/508 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `mono-collation-tests`: 615648/615648 observações aprovadas, sem promover métodos arbitrários da fronteira.
+  Payload de tabelas: 384190 bytes (337358 MIT/X11 + 46832 GNU Library GPLv2); licenças/proveniência separadas em [THIRD_PARTY.md](THIRD_PARTY.md). Footprint no 3DS não medido.
+- Fundação `thread-tests`: 71/71 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `globalization-tests`: 39/39 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `bootstrap-tests`: 12/12 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `asset-reader-tests`: 6/6 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `string-ops-tests`: 395166/395166 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `image-lifetime-tests`: 56/56 observações aprovadas, sem promover métodos arbitrários da fronteira.
+- Fundação `ui-dispatch-gc-tests`: 24/24 observações aprovadas, sem promover métodos arbitrários da fronteira.

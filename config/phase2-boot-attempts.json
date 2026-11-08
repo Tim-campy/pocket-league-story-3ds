@@ -110,6 +110,108 @@
         "pc_game.exe : fatal error LNK1120: 4 externo n\u00e3o resolvidos"
       ],
       "log_sha256": "6c34055fe52e4b92e8e5adc22c362b687db80312b2ce936e84ee85ca15e0c92e"
+    },
+    {
+      "number": 5,
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "273087be30c3ebe5f4d637ce836e8866f7a99ca9928c72290e16959845cd0a91"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "logs": [
+        {
+          "path": "build/pc/attempts/5/step-0.log",
+          "sha256": "a267d4e7e000f7fb77aef1d2b0027701eb9627278db985e3fbdafdf2910f9648"
+        },
+        {
+          "path": "build/pc/attempts/5/step-1.log",
+          "sha256": "99aeedf81ec773431e1b7c91500b8609ef4f8eaec81e80f3ab9545fed5e7e06a"
+        }
+      ],
+      "stage": "compile-or-link-failed",
+      "exit_code": 2,
+      "diagnostics": [
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.hpp(1644): error C2504: 'cs_4c145fe8f008af05': classe base indefinida",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.hpp(2351): error C2065: 'cs_acb158b492b43017': identificador n\u00e3o declarado",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.hpp(2351): error C2923: 'pls::cs::List': 'cs_acb158b492b43017' n\u00e3o \u00e9 um argumento do tipo modelo v\u00e1lido para o par\u00e2metro 'T'",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.hpp(2351): error C3203: 'List': um classe modelo n\u00e3o especializado n\u00e3o pode ser usado como argumento modelo para o par\u00e2metro modelo 'T', tipo real esperado",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.hpp(2445): error C2065: 'cs_2d2e25a6914f7709': identificador n\u00e3o declarado",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.hpp(2445): error C2923: 'pls::cs::Ref': 'cs_2d2e25a6914f7709' n\u00e3o \u00e9 um argumento do tipo modelo v\u00e1lido para o par\u00e2metro 'T'",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated_cpp_part_0000.inc(339): error C2065: 'cs_acb158b492b43017': identificador n\u00e3o declarado",
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated_cpp_part_0000.inc(339): error C2923: 'pls::cs::List': 'cs_acb158b492b43017' n\u00e3o \u00e9 um argumento do tipo modelo v\u00e1lido para o par\u00e2metro 'T'"
+      ],
+      "log_sha256": "99aeedf81ec773431e1b7c91500b8609ef4f8eaec81e80f3ab9545fed5e7e06a"
+    },
+    {
+      "number": 6,
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "273087be30c3ebe5f4d637ce836e8866f7a99ca9928c72290e16959845cd0a91"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "logs": [
+        {
+          "path": "build/pc/attempts/6/step-0.log",
+          "sha256": "cfa83742532118dfc3a4cc3f2306c11c5aae902163498bb0e71e8bf9dc541d5e"
+        },
+        {
+          "path": "build/pc/attempts/6/step-1.log",
+          "sha256": "e317ce8e0c0c815ca998a62c0a5ced51482fed713d1c85887979e2183f305d14"
+        }
+      ],
+      "stage": "compile-or-link-failed",
+      "exit_code": 4294967295,
+      "diagnostics": [
+        "pc_main.cpp.obj : error LNK2019: s\u00edmbolo externo n\u00e3o resolvido, \"class std::shared_ptr<class pls::kairo::IApplication> __cdecl pls::game::create_application(void)\" (?create_application@game@pls@@YA?AV?$shared_ptr@VIApplication@kairo@pls@@@std@@XZ), referenciado na fun\u00e7\u00e3o main",
+        "pc_game.exe : fatal error LNK1120: 1 externo n\u00e3o resolvidos"
+      ],
+      "log_sha256": "e317ce8e0c0c815ca998a62c0a5ced51482fed713d1c85887979e2183f305d14"
+    },
+    {
+      "number": 7,
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "cc02ac0a29a86df507a63efadfcb33ec48e8e82e8065aed775db3198af7b78c8"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "logs": [
+        {
+          "path": "build/pc/attempts/7/step-0.log",
+          "sha256": "a267d4e7e000f7fb77aef1d2b0027701eb9627278db985e3fbdafdf2910f9648"
+        },
+        {
+          "path": "build/pc/attempts/7/step-1.log",
+          "sha256": "4c57e1e088bddc7405ac6117cfffbb3aba9e930d90fa5b70df45d93ff04a59db"
+        }
+      ],
+      "stage": "compile-or-link-failed",
+      "exit_code": 4294967295,
+      "diagnostics": [
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_bad15ea7469ee2b9::OnCreate(void)\" (?OnCreate@cs_bad15ea7469ee2b9@game@pls@@UEAAXXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_bad15ea7469ee2b9::OnUpdate(void)\" (?OnUpdate@cs_bad15ea7469ee2b9@game@pls@@UEAAXXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_6485f92c2f04639f::Updated(void)\" (?Updated@cs_6485f92c2f04639f@game@pls@@UEAAXXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual bool __cdecl pls::game::cs_5451b2154f09f4c5::Init(void)\" (?Init@cs_5451b2154f09f4c5@game@pls@@UEAA_NXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual int __cdecl pls::game::cs_5451b2154f09f4c5::GetTouchValue(int,int)\" (?GetTouchValue@cs_5451b2154f09f4c5@game@pls@@UEAAHHH@Z)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_5451b2154f09f4c5::SetTouchValue(int,int)\" (?SetTouchValue@cs_5451b2154f09f4c5@game@pls@@UEAAXHH@Z)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual bool __cdecl pls::game::cs_3ee77977aa791047::Init(void)\" (?Init@cs_3ee77977aa791047@game@pls@@UEAA_NXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual bool __cdecl pls::game::cs_3ee77977aa791047::Update(void)\" (?Update@cs_3ee77977aa791047@game@pls@@UEAA_NXZ)"
+      ],
+      "log_sha256": "4c57e1e088bddc7405ac6117cfffbb3aba9e930d90fa5b70df45d93ff04a59db"
     }
   ]
 }

@@ -1,0 +1,57 @@
+{
+  "operation": "own-StringOps-source-differential",
+  "status": "PASS",
+  "cases": 395166,
+  "passed": 395166,
+  "profiles": {
+    "UnityMono265": {
+      "cases": 197583,
+      "passed": 197583,
+      "mismatches": []
+    },
+    "DotNet": {
+      "cases": 197583,
+      "passed": 197583,
+      "mismatches": []
+    }
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "core": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\mscorlib.dll",
+    "core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+    "profile": "unity"
+  },
+  "producer_sha256": "a55bd9bb817012554f65edf5f19a8821e26f48aa512ff9d0468d0c739a0892a9",
+  "inputs_sha256": {
+    "tests/translator/string_ops_fixtures.cpp": "4e9da5b84fa99050a4ba233172bec21df0ea1569cc288040fa8d507a8f9eea2c",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/managed_string_ops.cpp": "053d988815f4dbeaec8ac547ba9f148dd0a3d2f66110d7a96f9961048b04d20b",
+    "tests/translator/StringOpsFixtures.cs": "7eadbec491724507977dac4ae8a4e53f06e23ea43526e9c7505807dd20508492",
+    "src/kairo/common/managed_string_ops.hpp": "7ec154c1fce37083e5ef297052a9a0e58175064264c7859db1c6045ebe366c7d",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
+    "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0"
+  },
+  "native_executable": {
+    "path": "build/string-ops-fixtures/string-ops-fixtures.exe",
+    "sha256": "75ce06b811ffb46336fabb82a67ee20c5039f5d1b4094871854f8d44794666c2"
+  },
+  "profile_differences": 219,
+  "production_methods_promoted": 0,
+  "original_game_binary_loaded": false,
+  "limitations": [
+    "Int32 hexadecimal precision supports only 0..99, the historical standard-format precision range; arbitrary/custom format strings are not implemented.",
+    "BMP operations are measured against the installed Unity SDK Mono, not executed on Android.",
+    "Split implements the char-array overload with default None/preserve-empty; count/options/string-separator overloads are not implemented."
+  ],
+  "profile_differences_by_family": {
+    "trim_bmp": 2,
+    "trim_explicit": 2,
+    "hex_number_bmp": 208,
+    "split_bmp": 2,
+    "hex_number_edges": 3,
+    "split_explicit": 2,
+    "replace": 0
+  }
+}

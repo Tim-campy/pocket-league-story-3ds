@@ -12,6 +12,7 @@ struct CollectorState {
     struct Entry{std::weak_ptr<Object>object;std::int32_t generation=0;};
     std::unordered_map<Object*,Entry>objects;
     std::unordered_map<std::thread::id,std::size_t>mutators;
+    std::unordered_map<std::thread::id,std::size_t>native_blocked;
     std::unordered_set<std::thread::id>parked;
     bool requested=false;std::thread::id collector;GcCollectionStats last;
 };
@@ -27,6 +28,7 @@ struct CollectionPause {
 }
 void register_managed_object(const Ref<Object>&object){
     auto&state=collector_state();std::unique_lock<std::mutex>lock(state.mutex);
+    if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Managed allocation inside a native blocking scope");
     wait_for_collection(state,lock);
     auto it=state.objects.find(object.get());
     if(it==state.objects.end()||it->second.object.expired())state.objects[object.get()]={object,0};
@@ -35,6 +37,7 @@ std::int32_t gc_max_generation()noexcept{return runtime_profile==RuntimeProfile:
 std::int32_t gc_generation(const Ref<Object>&object){if(!object)throw ArgumentNullException();auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);auto it=state.objects.find(object.get());if(it==state.objects.end())throw NotSupportedException("Object was not registered with the managed collector");return it->second.generation;}
 GcMutatorScope::GcMutatorScope(){
     auto&state=collector_state();std::unique_lock<std::mutex>lock(state.mutex);
+    if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Managed entry inside a native blocking scope");
     wait_for_collection(state,lock);
     ++state.mutators[std::this_thread::get_id()];
 }
@@ -44,15 +47,33 @@ GcMutatorScope::~GcMutatorScope(){
 }
 void gc_safepoint(){
     auto&state=collector_state();std::unique_lock<std::mutex>lock(state.mutex);const auto thread=std::this_thread::get_id();
+    if(state.native_blocked.count(thread))throw InvalidOperationException("Managed safepoint inside a native blocking scope");
     if(!state.requested||state.collector==thread)return;
     state.parked.insert(thread);state.condition.notify_all();
     state.condition.wait(lock,[&]{return !state.requested;});state.parked.erase(thread);
+}
+GcNativeBlockingScope::GcNativeBlockingScope(){
+    auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);
+    const auto thread=std::this_thread::get_id();
+    if(state.requested && state.collector==thread)throw InvalidOperationException("Collector cannot enter a native blocking scope");
+    ++state.native_blocked[thread];state.condition.notify_all();
+}
+GcNativeBlockingScope::~GcNativeBlockingScope(){
+    auto&state=collector_state();std::unique_lock<std::mutex>lock(state.mutex);const auto thread=std::this_thread::get_id();
+    auto it=state.native_blocked.find(thread);
+    if(it==state.native_blocked.end() || it->second==0)std::terminate();
+    if(it->second>1){--it->second;return;}
+    // Keep the last depth visible while awaiting reentry. Do not erase another
+    // wait's parked marker, nor let the collector wait for this native thread.
+    state.condition.wait(lock,[&]{return !state.requested;});
+    state.native_blocked.erase(thread);state.condition.notify_all();
 }
 GcCollectionStats gc_last_collection(){auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);return state.last;}
 void gc_collect(std::int32_t generation){
     if(generation<0)throw ArgumentOutOfRangeException();auto&state=collector_state();
     {
         std::unique_lock<std::mutex>lock(state.mutex);
+        if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Collection inside a native blocking scope");
         if(state.requested){
             const auto thread=std::this_thread::get_id();if(state.collector==thread)throw InvalidOperationException("A recursive collection is already active");
             state.parked.insert(thread);state.condition.notify_all();state.condition.wait(lock,[&]{return !state.requested;});state.parked.erase(thread);
@@ -64,7 +85,7 @@ void gc_collect(std::int32_t generation){
         std::vector<Ref<Object>>objects;std::vector<std::int32_t>ages;
         {
             std::unique_lock<std::mutex>lock(state.mutex);
-            const bool quiet=state.condition.wait_for(lock,std::chrono::seconds(1),[&]{for(const auto&entry:state.mutators)if(entry.first!=state.collector&&!state.parked.count(entry.first))return false;return true;});
+            const bool quiet=state.condition.wait_for(lock,std::chrono::seconds(1),[&]{for(const auto&entry:state.mutators)if(entry.first!=state.collector&&!state.parked.count(entry.first)&&!state.native_blocked.count(entry.first))return false;return true;});
             if(!quiet)throw NotSupportedException("Managed worker did not reach a cooperative GC safepoint");
             for(auto it=state.objects.begin();it!=state.objects.end();){if(auto object=it->second.object.lock()){objects.push_back(std::move(object));ages.push_back(it->second.generation);++it;}else it=state.objects.erase(it);}
         }

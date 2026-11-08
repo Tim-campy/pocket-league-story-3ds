@@ -15,7 +15,8 @@ using Microsoft.CodeAnalysis.Operations;
 
 sealed class Unsupported : Exception {
     public readonly string Kind;
-    public Unsupported(SyntaxNode node, string reason) : base(reason) {Kind=node.Kind().ToString();}
+    public readonly string Site;
+    public Unsupported(SyntaxNode node, string reason) : base(reason) {Kind=node.Kind().ToString();var loc=node.GetLocation().GetLineSpan();Site=loc.Path+":"+(loc.StartLinePosition.Line+1)+":"+node.ToString().Substring(0,Math.Min(node.ToString().Length,180));}
 }
 sealed class Request {
     public string assembly {get;set;}="KairoLibrary";
@@ -25,6 +26,7 @@ sealed class Request {
     public string[] check_symbols {get;set;}=Array.Empty<string>();
     public bool diagnostics_only {get;set;}
     public bool select_all_source_methods {get;set;}
+    public string select_source_prefix {get;set;}="";
     public Dictionary<string,string> external_types {get;set;}=new();
     public Dictionary<string,string> external_methods {get;set;}=new();
     public Dictionary<string,string> external_fields {get;set;}=new();
@@ -32,6 +34,10 @@ sealed class Request {
     public string[] external_complete_bases {get;set;}=Array.Empty<string>();
     public string bootstrap_method {get;set;}="";
     public string[] native_includes {get;set;}=Array.Empty<string>();
+    public Dictionary<string,string> oracle_external_methods {get;set;}=new();
+    public string oracle_support {get;set;}="";
+    public string oracle_native_setup {get;set;}="";
+
     public string source_root {get;set;}="";
     public Dictionary<string,BakedSpec> baked_arrays {get;set;}=new();
     public int chunk_bytes {get;set;}=900000;
@@ -40,6 +46,7 @@ sealed class Request {
 sealed class BakedSpec {public string source {get;set;}="";public int span_start {get;set;}public string element_type {get;set;}="";public int count {get;set;}}
 sealed class Lowerer {
     static Dictionary<string,string> externalTypes=new();
+    static Dictionary<string,string> oracleExternalMethods=new();
     static Dictionary<string,string> externalSlots=new();
     static HashSet<string> externalCompleteBases=new();
     readonly Dictionary<string,string> externalMethods;
@@ -56,12 +63,47 @@ sealed class Lowerer {
     readonly Dictionary<string,object> rejected=new();
     readonly Dictionary<string,string> fields=new();
     readonly Dictionary<string,IFieldSymbol> fieldSymbols=new();
+    readonly Dictionary<string,string> typeInitializers=new();
+    readonly Dictionary<string,INamedTypeSymbol> initializedTypes=new();
+    readonly Dictionary<string,HashSet<string>> initializerMethods=new(),initializerFields=new(),initializerClasses=new();
+    readonly HashSet<string> initializingTypes=new();
+    static string TypeInitName(INamedTypeSymbol type)=>"cs_init_"+Hash(Id(type));
+    static string OracleStatics(INamedTypeSymbol type)=>"OracleStatics_"+Hash(Id(type));
+    IEnumerable<IFieldSymbol> OrderedStaticFields(INamedTypeSymbol type)=>type.GetMembers().OfType<IFieldSymbol>().Where(f=>f.IsStatic&&!f.IsConst&&f.DeclaringSyntaxReferences.Length!=0).OrderBy(f=>Array.IndexOf(compilation.SyntaxTrees.ToArray(),f.DeclaringSyntaxReferences[0].SyntaxTree)).ThenBy(f=>f.DeclaringSyntaxReferences[0].Span.Start);
+    void EnsureTypeInitializer(INamedTypeSymbol type,SyntaxNode site) {
+        if(type.DeclaringSyntaxReferences.Length==0)return;
+        if(type.TypeParameters.Length!=0){if(OrderedStaticFields(type).Any())throw new Unsupported(site,"generic static field initialization requires per-instantiation state");return;}
+        var key=Id(type);
+        if(initializingTypes.Contains(key))return;
+        if(typeInitializers.ContainsKey(key)){
+            dependencies[current].UnionWith(initializerMethods[key]);fieldDependencies[current].UnionWith(initializerFields[key]);classDependencies[current].UnionWith(initializerClasses[key]);return;
+        }
+        var beforeMethods=new HashSet<string>(dependencies[current]);var beforeFields=new HashSet<string>(fieldDependencies[current]);var beforeClasses=new HashSet<string>(classDependencies[current]);
+        initializingTypes.Add(key);initializedTypes[key]=type;var saved=model;
+        try {
+            var body=new StringBuilder();
+            foreach(var field in OrderedStaticFields(type)){
+                var id=Id(field);var d=(VariableDeclaratorSyntax)field.DeclaringSyntaxReferences[0].GetSyntax();model=compilation.GetSemanticModel(d.SyntaxTree);
+                fieldSymbols[id]=field;fieldDependencies[current].Add(id);fields[id]=Type(field.Type,d)+" "+Name(field)+"_value{};";
+                if(d.Initializer!=null)body.Append(Name(field)+"_value = "+Converted(d.Initializer.Value,field.Type)+";\n");
+            }
+            var cctor=type.GetMembers().OfType<IMethodSymbol>().FirstOrDefault(m=>m.MethodKind==MethodKind.StaticConstructor&&!m.IsImplicitlyDeclared);
+            if(cctor!=null){var d=(ConstructorDeclarationSyntax)cctor.DeclaringSyntaxReferences[0].GetSyntax();model=compilation.GetSemanticModel(d.SyntaxTree);body.Append(Statement(d.Body!,cctor));}
+            typeInitializers[key]=body.ToString();initializerMethods[key]=dependencies[current].Except(beforeMethods).ToHashSet();initializerFields[key]=fieldDependencies[current].Except(beforeFields).Concat(OrderedStaticFields(type).Select(Id)).ToHashSet();initializerClasses[key]=classDependencies[current].Except(beforeClasses).ToHashSet();
+        }catch{typeInitializers.Remove(key);initializedTypes.Remove(key);throw;}
+        finally{model=saved;initializingTypes.Remove(key);}
+    }
     readonly Dictionary<string,HashSet<string>> dependencies=new();
     readonly Dictionary<string,HashSet<string>> fieldDependencies=new();
     readonly HashSet<string> active=new();
     readonly Dictionary<string,Dictionary<string,int>> methodKinds=new();
     SemanticModel model=null!;
     string current="";
+    HashSet<ISymbol> capturedVariables=new(SymbolEqualityComparer.Default);
+    string ReadLocal(ISymbol symbol)=>capturedVariables.Contains(symbol)?Local(symbol)+"_cell->value":Local(symbol);
+    static ITypeSymbol VariableType(ISymbol symbol)=>symbol is ILocalSymbol local?local.Type:((IParameterSymbol)symbol).Type;
+    string CellType(ISymbol symbol,SyntaxNode site)=>"pls::cs::Ref<pls::cs::Cell<"+Type(VariableType(symbol),site)+">>";
+    string CellAllocation(ISymbol symbol,string value,SyntaxNode site)=>"pls::cs::make_ref<pls::cs::Cell<"+Type(VariableType(symbol),site)+">>("+value+")";
     int temporary;
     bool hoistLocals;
     bool staticInitializer;
@@ -93,6 +135,7 @@ sealed class Lowerer {
     public Lowerer(CSharpCompilation c,Request? request=null) {
         compilation=c;
         this.request=request??new();
+        oracleExternalMethods=request?.oracle_external_methods??new();
         externalTypes=request?.external_types??new();externalMethods=request?.external_methods??new();externalFields=request?.external_fields??new();
         externalSlots=request?.external_slots??new();externalCompleteBases=new(request?.external_complete_bases??Array.Empty<string>());
         foreach(var tree in c.SyntaxTrees) {
@@ -113,16 +156,35 @@ sealed class Lowerer {
     }
     static string Id(ISymbol symbol)=>symbol.OriginalDefinition.GetDocumentationCommentId()??symbol.ToDisplayString();
     static string Hash(string s)=>Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(s))).Substring(0,16).ToLowerInvariant();
+    static string QualifyHelpers(string source,bool game){
+        var scope=game?"pls::game::":"pls::generated::";
+        foreach(var name in new[]{"cs_object_string","cs_contains_string","cs_is","cs_value_hash","cs_string_identity","cs_require","cs_string_equals","cs_network_to_host","cs_string_from_chars","cs_is_little_endian","cs_substring1","cs_substring2","cs_to_chars","cs_index_char1","cs_index_char2","cs_last_index_char1","cs_char_string","cs_integer_string","cs_clone_array","cs_bit_bytes","cs_bits_from","cs_f32","cs_f64"})source=System.Text.RegularExpressions.Regex.Replace(source,"(?<![a-zA-Z0-9_:])"+name+"(?=\\s*[<(])",scope+name);
+        return source;
+    }
     static string Name(ISymbol symbol)=>"cs_"+Hash(Id(symbol));
     static string ClassName(INamedTypeSymbol type)=>Name(type)+(type.TypeArguments.Length==0?"":"<"+String.Join(",",type.TypeArguments.Select(TypeName))+">");
     static string NativeClass(INamedTypeSymbol type)=>FrameworkClass(type)??(externalTypes.TryGetValue(Id(type),out var native)?native+(type.TypeArguments.Length==0?"":"<"+String.Join(",",type.TypeArguments.Select(TypeName))+">"):ClassName(type));
     static string Template(IEnumerable<ITypeParameterSymbol> parameters) {var p=parameters.ToArray();return p.Length==0?"":"template<"+String.Join(",",p.Select(t=>"typename T_"+t.Name))+">\n";}
     static ITypeParameterSymbol[] TypeParameters(IMethodSymbol m)=>m.ContainingType.TypeParameters.Concat(m.TypeParameters).ToArray();
     static IMethodSymbol SlotRoot(IMethodSymbol m){while(m.OverriddenMethod!=null)m=m.OverriddenMethod;return m;}
-    static string Slot(IMethodSymbol m){var root=SlotRoot(m);return externalSlots.TryGetValue(Id(root),out var mapped)?mapped:root.ContainingType.SpecialType==SpecialType.System_Object||root.ContainingType.ToDisplayString()=="System.IO.Stream"?root.Name:"cs_virtual_"+Hash(Id(root));}
-    static string Concrete(string type,IEnumerable<ITypeParameterSymbol> parameters,bool cpp=false) {foreach(var p in parameters)type=cpp?type.Replace("T_"+p.Name,"std::int32_t"):System.Text.RegularExpressions.Regex.Replace(type,"\\b"+p.Name+"\\b","int");return type;}
+    static string Slot(IMethodSymbol m){var root=SlotRoot(m);return externalSlots.TryGetValue(Id(root),out var mapped)?mapped:root.ContainingType.SpecialType==SpecialType.System_Object||(root.ContainingType.ToDisplayString()=="System.IO.Stream"||(externalCompleteBases.Contains(Id(root.ContainingType))&&externalTypes.TryGetValue(Id(root.ContainingType),out var nativeRoot)&&nativeRoot.StartsWith("pls::kairo::",StringComparison.Ordinal)))?root.Name:"cs_virtual_"+Hash(Id(root));}
+    static IEnumerable<IMethodSymbol> InterfaceMethods(INamedTypeSymbol type)=>type.GetMembers().OfType<IMethodSymbol>().Concat(type.GetMembers().OfType<IPropertySymbol>().SelectMany(p=>new[]{p.GetMethod,p.SetMethod}.OfType<IMethodSymbol>())).DistinctBy(Id);
+    static IMethodSymbol? InterfaceImplementation(INamedTypeSymbol type,IMethodSymbol member){
+        if(member.AssociatedSymbol is IPropertySymbol property&&type.FindImplementationForInterfaceMember(property) is IPropertySymbol implementation)return member.MethodKind==MethodKind.PropertyGet?implementation.GetMethod:implementation.SetMethod;
+        return type.FindImplementationForInterfaceMember(member) as IMethodSymbol;
+    }
+    static IEnumerable<string> MethodSlots(IMethodSymbol method){
+        var slots=new HashSet<string>();if(method.IsVirtual||method.IsOverride||method.IsAbstract)slots.Add(Slot(method));
+        foreach(var iface in method.ContainingType.AllInterfaces.Where(t=>t.DeclaringSyntaxReferences.Length!=0))foreach(var member in InterfaceMethods(iface))if(InterfaceImplementation(method.ContainingType,member) is IMethodSymbol implementation&&SymbolEqualityComparer.Default.Equals(implementation.OriginalDefinition,method.OriginalDefinition))slots.Add(Slot(member));
+        return slots;
+    }
+    static string ConcreteCpp(ITypeParameterSymbol parameter)=>parameter.ContainingSymbol is IMethodSymbol m&&m.Name=="MakeArray"&&m.ContainingType.ToDisplayString()=="java.util.JTool"?"pls::cs::Array<pls::cs::Array<std::uint8_t>>":"std::int32_t";
+    static string ConcreteCs(ITypeParameterSymbol parameter)=>parameter.ContainingSymbol is IMethodSymbol m&&m.Name=="MakeArray"&&m.ContainingType.ToDisplayString()=="java.util.JTool"?"byte[][]":"int";
+    static string Concrete(string type,IEnumerable<ITypeParameterSymbol> parameters,bool cpp=false) {foreach(var p in parameters)type=cpp?type.Replace("T_"+p.Name,ConcreteCpp(p)):System.Text.RegularExpressions.Regex.Replace(type,"\\b"+p.Name+"\\b",ConcreteCs(p));return type;}
     static bool SystemList(ITypeSymbol? t)=>t is INamedTypeSymbol n&&n.OriginalDefinition.ToDisplayString()=="System.Collections.Generic.List<T>";
-    static string? FrameworkClass(ITypeSymbol? t)=>t?.ToDisplayString() switch {"System.Random"=>"pls::cs::Random","System.Text.StringBuilder"=>"pls::cs::StringBuilder","System.TimeZoneInfo"=>"pls::cs::TimeZoneInfo","System.IO.Stream"=>"pls::cs::Stream","System.IO.MemoryStream"=>"pls::cs::MemoryStream",_=>null};
+    static bool SystemDictionary(ITypeSymbol? t)=>t is INamedTypeSymbol n&&n.OriginalDefinition.ToDisplayString()=="System.Collections.Generic.Dictionary<TKey, TValue>";
+    static bool ExceptionClass(ITypeSymbol? type){for(var current=type as INamedTypeSymbol;current!=null;current=current.BaseType)if(current.ToDisplayString()=="System.Exception")return true;return false;}
+    static string? FrameworkClass(ITypeSymbol? t)=>ExceptionClass(t)&&t!.DeclaringSyntaxReferences.Length==0?"pls::cs::ExceptionObject":t?.ToDisplayString() switch {"System.Random"=>"pls::cs::Random","System.Text.StringBuilder"=>"pls::cs::StringBuilder","System.TimeZoneInfo"=>"pls::cs::TimeZoneInfo","System.IO.Stream"=>"pls::cs::Stream","System.IO.MemoryStream"=>"pls::cs::MemoryStream","System.IO.BinaryReader"=>"pls::cs::BinaryReader","System.Type"=>"pls::cs::RuntimeType","System.Reflection.Assembly"=>"pls::cs::RuntimeAssembly","System.Threading.Thread"=>"pls::cs::Thread","System.Text.Encoding"=>"pls::cs::RuntimeEncoding","System.IO.StreamReader"=>"pls::cs::RuntimeStreamReader","System.Text.RegularExpressions.MatchCollection"=>"pls::cs::RegexMatchCollection","System.Text.RegularExpressions.Match"=>"pls::cs::RegexMatch","System.Text.RegularExpressions.GroupCollection"=>"pls::cs::RegexGroupCollection","System.Text.RegularExpressions.Group"=>"pls::cs::RegexGroup","System.Text.RegularExpressions.Capture"=>"pls::cs::RegexGroup",_=>null};
     static string? FrameworkValue(ITypeSymbol? t)=>t?.ToDisplayString() switch {"System.DateTime"=>"pls::cs::DateTime","System.TimeSpan"=>"pls::cs::TimeSpan",_=>null};
     static string Local(ISymbol symbol)=>"v_"+symbol.Name.TrimStart('@')+(symbol is ILocalSymbol?"_"+symbol.DeclaringSyntaxReferences.FirstOrDefault()?.Span.Start:"");
     static string TypeName(ITypeSymbol? t) {
@@ -131,12 +193,21 @@ sealed class Lowerer {
             return "pls::cs::Array<"+TypeName(a.ElementType)+">";
         }
         if(t is ITypeParameterSymbol tp)return "T_"+tp.Name;
+        if(t is INamedTypeSymbol{TypeKind:TypeKind.Delegate} delegateType){var invoke=delegateType.DelegateInvokeMethod!;return "pls::cs::Delegate<"+TypeName(invoke.ReturnType)+"("+String.Join(",",invoke.Parameters.Select(p=>TypeName(p.Type)))+")>";}
+        if(SystemDictionary(t))return "pls::cs::Dictionary<"+String.Join(",",((INamedTypeSymbol)t!).TypeArguments.Select(TypeName))+">";
         if(SystemList(t))return "pls::cs::List<"+TypeName(((INamedTypeSymbol)t!).TypeArguments[0])+">";
         if(t?.ToDisplayString()=="System.Array")return "pls::cs::Ref<pls::cs::ArrayBase>";
+        if(t is INamedTypeSymbol record&&RecordStruct(record))return externalTypes.TryGetValue(Id(record),out var externalRecord)?externalRecord:ClassName(record);
         if(FrameworkClass(t) is string framework)return "pls::cs::Ref<"+framework+">";
         if(FrameworkValue(t) is string valueType)return valueType;
+        if(t?.ToDisplayString()=="System.Threading.ThreadStart")return "pls::cs::Delegate<void()>";
+        if(t?.ToDisplayString()=="System.Threading.ThreadPriority")return "pls::cs::ThreadPriority";
+        if(t?.ToDisplayString()=="System.Threading.ThreadState")return "pls::cs::ThreadState";
         if(t?.ToDisplayString()=="System.DateTimeKind")return "pls::cs::DateTimeKind";
         if(t?.ToDisplayString()=="System.IO.SeekOrigin")return "pls::cs::SeekOrigin";
+        if(t?.ToDisplayString()=="kairo.unity.ui.AppEventType")return "pls::kairo::AppEventType";
+        if(t?.ToDisplayString()=="kairo.unity.ui.Image.Format")return "pls::kairo::Image::Format";
+        if(t?.ToDisplayString()=="kairo.unity.ui.Image.Filter")return "pls::kairo::Image::Filter";
         if(t is INamedTypeSymbol{TypeKind:TypeKind.Enum} enumeration)return TypeName(enumeration.EnumUnderlyingType);
         if(t is INamedTypeSymbol external&&externalTypes.ContainsKey(Id(external)))return "pls::cs::Ref<"+NativeClass(external)+">";
         switch(t?.SpecialType) {
@@ -155,31 +226,44 @@ sealed class Lowerer {
             case SpecialType.System_Double:return "double";
             case SpecialType.System_String:return "pls::cs::String";
             case SpecialType.System_Object:return "pls::cs::Ref<pls::cs::Object>";
-            case SpecialType.None when t is INamedTypeSymbol named&&PlainClass(named):return "pls::cs::Ref<"+ClassName(named)+">";
+            case SpecialType.None when t is INamedTypeSymbol named&&(PlainClass(named)||RecordStruct(named)||(named.TypeKind==TypeKind.Interface&&named.DeclaringSyntaxReferences.Length!=0)):return "pls::cs::Ref<"+ClassName(named)+">";
             default:throw new InvalidOperationException("type not lowered: "+t?.ToDisplayString());
         }
     }
-    static bool PlainClass(INamedTypeSymbol t)=>t.TypeKind==TypeKind.Class&&t.DeclaringSyntaxReferences.Length!=0&&!t.IsStatic&&t.ContainingType==null&&(t.BaseType?.SpecialType==SpecialType.System_Object||(t.BaseType!=null&&(FrameworkClass(t.BaseType)!=null||externalCompleteBases.Contains(Id(t.BaseType))||PlainClass(t.BaseType))));
+    bool IdentityHash(IMethodSymbol method){
+        if(method.Name!="GetHashCode"||syntax[Id(method)] is not MethodDeclarationSyntax declaration||declaration.Body?.Statements.Count!=1||declaration.Body.Statements[0] is not ReturnStatementSyntax{Expression:InvocationExpressionSyntax call}||call.Expression is not MemberAccessExpressionSyntax{Expression:BaseExpressionSyntax})return false;
+        return (compilation.GetSemanticModel(call.SyntaxTree).GetSymbolInfo(call).Symbol as IMethodSymbol)?.ContainingType.SpecialType==SpecialType.System_Object;
+    }
+    static bool RecordStruct(INamedTypeSymbol type)=>type.TypeKind==TypeKind.Struct&&type.DeclaringSyntaxReferences.Length!=0&&type.TypeParameters.Length==0&&type.GetMembers().OfType<IMethodSymbol>().Where(m=>!m.IsImplicitlyDeclared).All(m=>m.MethodKind==MethodKind.Constructor)&&type.Interfaces.Length==0;
+    static bool PlainClass(INamedTypeSymbol t)=>t.TypeKind==TypeKind.Class&&t.DeclaringSyntaxReferences.Length!=0&&!t.IsStatic&&(t.ContainingType==null||t.ContainingType.TypeParameters.Length==0)&&(t.BaseType?.SpecialType==SpecialType.System_Object||(t.BaseType!=null&&(FrameworkClass(t.BaseType)!=null||externalCompleteBases.Contains(Id(t.BaseType))||PlainClass(t.BaseType))));
     static IEnumerable<IFieldSymbol> InstanceFields(INamedTypeSymbol type) {
         foreach(var f in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))yield return f;
         if(type.BaseType!=null&&PlainClass(type.BaseType))foreach(var f in InstanceFields(type.BaseType))yield return f;
     }
     static int ClassDepth(INamedTypeSymbol type)=>type.BaseType!=null&&PlainClass(type.BaseType)?1+ClassDepth(type.BaseType):0;
     void RequireClass(INamedTypeSymbol type,SyntaxNode node) {
+        if(externalTypes.ContainsKey(Id(type)))return;
+        if(type.TypeKind==TypeKind.Interface&&type.DeclaringSyntaxReferences.Length!=0){
+            var interfaceId=Id(type);classDependencies[current].Add(interfaceId);if(classes.ContainsKey(interfaceId))return;classes[interfaceId]=type;
+            foreach(var method in InterfaceMethods(type)){Type(method.ReturnType,node);foreach(var parameter in method.Parameters)Type(parameter.Type,node);}return;
+        }
+        if(RecordStruct(type)){var recordId=Id(type);classDependencies[current].Add(recordId);if(classes.ContainsKey(recordId))return;classes[recordId]=type;try{foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))Type(field.Type,node);}catch{classes.Remove(recordId);throw;}return;}
         if(!PlainClass(type))throw new Unsupported(node,"class layout/base binding not lowered: "+type.ToDisplayString()+"; base="+type.BaseType?.ToDisplayString());
         type=type.OriginalDefinition;
         if(type.BaseType?.ToDisplayString()=="System.IO.Stream")foreach(var required in type.GetMembers().OfType<IMethodSymbol>().Where(m=>m.IsOverride))dependencies[current].Add(Id(required));
+        if(compilation.AssemblyName!="Assembly-CSharp")foreach(var required in type.GetMembers().OfType<IMethodSymbol>().Where(m=>MethodSlots(m).Any()&&!m.IsAbstract))dependencies[current].Add(Id(required));
         var id=Id(type);classDependencies[current].Add(id);if(classes.ContainsKey(id))return;
         classes[id]=type;
-        try {if(type.BaseType!=null&&PlainClass(type.BaseType))RequireClass(type.BaseType,node);foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))Type(field.Type,node);}
+        try {foreach(var iface in type.Interfaces.Where(t=>t.DeclaringSyntaxReferences.Length!=0))RequireClass(iface,node);if(type.BaseType!=null&&PlainClass(type.BaseType))RequireClass(type.BaseType,node);foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))Type(field.Type,node);}
         catch {classes.Remove(id);throw;}
     }
     string Type(ITypeSymbol? t,SyntaxNode node) {
         try {
             if(t is IArrayTypeSymbol array)Type(array.ElementType,node);
             if(SystemList(t))Type(((INamedTypeSymbol)t!).TypeArguments[0],node);
+            if(SystemDictionary(t))foreach(var argument in ((INamedTypeSymbol)t!).TypeArguments)Type(argument,node);
             if(t is INamedTypeSymbol external&&externalTypes.ContainsKey(Id(external)))foreach(var argument in external.TypeArguments)Type(argument,node);
-            if(t is INamedTypeSymbol named&&PlainClass(named))RequireClass(named,node);
+            if(t is INamedTypeSymbol named&&(PlainClass(named)||RecordStruct(named)||named.TypeKind==TypeKind.Interface)&&named.DeclaringSyntaxReferences.Length!=0&&!externalTypes.ContainsKey(Id(named)))RequireClass(named,node);
             return TypeName(t);
         }catch(InvalidOperationException e){throw new Unsupported(node,e.Message);}
     }
@@ -190,6 +274,7 @@ sealed class Lowerer {
     void Used(SyntaxNode n){var kind=n.Kind().ToString();var counts=methodKinds[current];counts[kind]=counts.GetValueOrDefault(kind)+1;}
     string Cast(string value,ITypeSymbol? from,ITypeSymbol? to,SyntaxNode node) {
         if(to==null||SymbolEqualityComparer.Default.Equals(from,to))return value;
+        if(to.ToDisplayString()=="System.Threading.ThreadPriority"||to.ToDisplayString()=="System.Threading.ThreadState")return "static_cast<"+Type(to,node)+">("+value+")";
         if(to.ToDisplayString()=="System.DateTimeKind")return "static_cast<pls::cs::DateTimeKind>("+value+")";
         if(from?.ToDisplayString()=="System.DateTimeKind")return "static_cast<"+Type(to,node)+">("+value+")";
         if(to.ToDisplayString()=="System.IO.SeekOrigin")return "static_cast<pls::cs::SeekOrigin>("+value+")";
@@ -207,7 +292,7 @@ sealed class Lowerer {
         if(to.ToDisplayString()=="System.Array"&&from?.SpecialType==SpecialType.System_Object)return "pls::cs::array_cast("+value+")";
         if(from?.SpecialType==SpecialType.System_Object) return "pls::cs::unbox<"+Type(to,node)+">("+value+")";
         if(from!=null&&!SymbolEqualityComparer.Default.Equals(from,to)&&from.IsReferenceType&&to.IsReferenceType) {
-            if(from is INamedTypeSymbol f&&to is INamedTypeSymbol t&&(FrameworkClass(f)!=null||PlainClass(f)||externalTypes.ContainsKey(Id(f)))&&(FrameworkClass(t)!=null||PlainClass(t)||externalTypes.ContainsKey(Id(t)))) {
+            if(from is INamedTypeSymbol f&&to is INamedTypeSymbol t&&(FrameworkClass(f)!=null||PlainClass(f)||f.TypeKind==TypeKind.Interface||externalTypes.ContainsKey(Id(f)))&&(FrameworkClass(t)!=null||PlainClass(t)||t.TypeKind==TypeKind.Interface||externalTypes.ContainsKey(Id(t)))) {
                 Type(to,node);return compilation.ClassifyConversion(from,to).IsImplicit?value:"pls::cs::unbox<"+Type(to,node)+">(pls::cs::box("+value+"))";
             }
             throw new Unsupported(node,"reference covariance/interface conversion not lowered");
@@ -232,30 +317,24 @@ sealed class Lowerer {
     }
     string StaticField(IFieldSymbol field,SyntaxNode site) {
         if(field.HasConstantValue)return Constant(field.ConstantValue,field.Type,site);
+        if(field.IsStatic&&externalFields.TryGetValue(Id(field),out var nativeField))return nativeField;
+        if(field.ContainingType.SpecialType==SpecialType.System_String&&field.Name=="Empty")return "pls::cs::String(u\"\")";
         if(field.ContainingType.ToDisplayString()=="System.BitConverter"&&field.Name=="IsLittleEndian")return "cs_is_little_endian()";
         if(!field.IsStatic) {
+            if(RecordStruct(field.ContainingType)&&site is MemberAccessExpressionSyntax recordMember&&recordMember.Expression is not ThisExpressionSyntax){RequireClass(field.ContainingType,site);return "("+Expr(recordMember.Expression)+")."+Name(field);}
             var externalField=externalFields.ContainsKey(Id(field));if(!externalField)RequireClass(field.ContainingType,site);
             var receiver=site is MemberAccessExpressionSyntax member?Expr(member.Expression):"cs_this";
             return "([&]() { auto cs_receiver = "+receiver+"; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->"+(externalField?externalFields[Id(field)]:Name(field))+"; }())";
         }
-        if(staticInitializer)throw new Unsupported(site,"dependent static initializer requires complete type-initializer lowering");
         var id=Id(field);fieldDependencies[current].Add(id);
-        if(!fields.ContainsKey(id)) {
-            var d=field.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() as VariableDeclaratorSyntax;
-            if(d==null)throw new Unsupported(site,"external nonconstant static field not lowered");
-            var saved=model;var savedStatic=staticInitializer;model=compilation.GetSemanticModel(d.SyntaxTree);staticInitializer=true;
-            fieldSymbols[id]=field;fields[id]="";
-            try {
-                var initializer=d.Initializer==null?Type(field.Type,d)+"{}":Converted(d.Initializer.Value,field.Type);
-                if(compilation.AssemblyName=="Assembly-CSharp"&&initializer.Contains("pls::assets::baked_array<",StringComparison.Ordinal))throw new Unsupported(d,"asset-backed static field requires lazy complete C# type initializer before emission");
-                fields[id]=Type(field.Type,d)+" "+Name(field)+" = "+initializer.Replace("[&]","[]")+";";
-            }
-            catch {fields.Remove(id);fieldSymbols.Remove(id);throw;}
-            finally{model=saved;staticInitializer=savedStatic;}
-        }
-        return Name(field);
+        if(field.DeclaringSyntaxReferences.Length==0)throw new Unsupported(site,"external nonconstant static field not lowered");
+        EnsureTypeInitializer(field.ContainingType,site);
+        if(!fieldSymbols.ContainsKey(id)){fieldSymbols[id]=field;fields[id]=Type(field.Type,site)+" "+Name(field)+"_value{};";}
+        return Name(field)+"()";
     }
     string Converted(ExpressionSyntax node,ITypeSymbol? to) {
+        if(node is AnonymousFunctionExpressionSyntax anonymous&&to is INamedTypeSymbol{TypeKind:TypeKind.Delegate} anonymousType)return Anonymous(anonymous,anonymousType);
+        if(node is IdentifierNameSyntax or MemberAccessExpressionSyntax&&to is INamedTypeSymbol{TypeKind:TypeKind.Delegate} delegateType&&model.GetSymbolInfo(node).Symbol is IMethodSymbol target&&target.MethodKind!=MethodKind.AnonymousFunction)return MethodGroup(node,target,delegateType);
         if(to!=null&&model.ClassifyConversion(node,to).MethodSymbol is IMethodSymbol conversion) {
             string callee;
             if(externalMethods.TryGetValue(Id(conversion),out var external))callee=external;
@@ -265,12 +344,69 @@ sealed class Lowerer {
         }
         return Cast(Expr(node),model.GetTypeInfo(node).Type,to,node);
     }
+    string Anonymous(AnonymousFunctionExpressionSyntax node,INamedTypeSymbol delegateType){
+        Used(node);var symbol=model.GetSymbolInfo(node).Symbol as IMethodSymbol;
+        if(symbol==null||symbol.Parameters.Any(p=>p.RefKind!=RefKind.None))throw new Unsupported(node,"anonymous ref/out signature not lowered");
+        if(hoistLocals)throw new Unsupported(node,"closure in method with goto requires scope-lifetime lowering");
+        var captures=node.DescendantNodes().OfType<IdentifierNameSyntax>().Select(n=>model.GetSymbolInfo(n).Symbol).Where(s=>s is ILocalSymbol||s is IParameterSymbol).Cast<ISymbol>().Where(s=>!s.DeclaringSyntaxReferences.Any(r=>node.Span.Contains(r.Span))).Distinct(SymbolEqualityComparer.Default).ToArray();
+        foreach(var capture in captures)if(!capturedVariables.Contains(capture))throw new Unsupported(node,"captured variable was not allocated a shared cell");
+        bool captureThis=node.DescendantNodes().OfType<ThisExpressionSyntax>().Any()||node.DescendantNodes().OfType<BaseExpressionSyntax>().Any()||node.DescendantNodes().OfType<IdentifierNameSyntax>().Any(n=>!(n.Parent is MemberAccessExpressionSyntax m&&m.Name==n)&&model.GetSymbolInfo(n).Symbol is ISymbol s&&!s.IsStatic&&(s is IFieldSymbol||s is IPropertySymbol||s is IMethodSymbol));
+        if(captureThis&&methods[current].IsStatic)throw new Unsupported(node,"anonymous implicit receiver analysis is incomplete");
+        var name="cs_closure_"+Hash(current+":"+node.SpanStart);var result=Type(symbol.ReturnType,node);var builder=new StringBuilder("([&](){struct "+name+" : pls::cs::Object{");
+        foreach(var capture in captures)builder.Append(CellType(capture,node)+" "+Local(capture)+"_cell;");
+        if(captureThis)builder.Append(Type(methods[current].ContainingType,node)+" cs_this;");
+        builder.Append("void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);");
+        foreach(var capture in captures)builder.Append("pls::cs::trace_value("+Local(capture)+"_cell,v);");
+        if(captureThis)builder.Append("pls::cs::trace_value(cs_this,v);");
+        builder.Append("}void release_edges()override{pls::cs::Object::release_edges();");
+        foreach(var capture in captures)builder.Append(Local(capture)+"_cell.reset();");if(captureThis)builder.Append("cs_this.reset();");
+        builder.Append("}"+result+" Invoke("+String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)))+")");
+        var body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";
+        var parameterCells=String.Concat(symbol.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,node)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),node)+";"));
+        builder.Append("{"+parameterCells+body+"}};auto cs_closure=pls::cs::make_ref<"+name+">();");
+        foreach(var capture in captures)builder.Append("cs_closure->"+Local(capture)+"_cell="+Local(capture)+"_cell;");if(captureThis)builder.Append("cs_closure->cs_this=cs_this;");
+        var key="std::string(\""+current+":"+node.SpanStart+"\")"+String.Concat(captures.Skip(1).Select(c=>"+std::to_string(reinterpret_cast<std::uintptr_t>("+Local(c)+"_cell.get()))"));
+        var identity=captures.Length!=0?Local(captures[0])+"_cell.get()":captureThis?"cs_this.get()":"nullptr";
+        var parameters=String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)));var arguments=String.Join(",",symbol.Parameters.Select(Local));
+        builder.Append("return "+Type(delegateType,node)+"::bind_identity(cs_closure,"+identity+","+key+",[weak=std::weak_ptr<"+name+">(cs_closure)]("+parameters+")->"+result+"{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();"+(symbol.ReturnsVoid?"":"return ")+"target->Invoke("+arguments+");});}())");return builder.ToString();
+    }
+    string MethodGroup(ExpressionSyntax site,IMethodSymbol target,INamedTypeSymbol delegateType){
+        var invoke=delegateType.DelegateInvokeMethod!;if(target.Parameters.Length!=invoke.Parameters.Length)throw new Unsupported(site,"delegate binding parameter arity differs");
+        var native=externalMethods.GetValueOrDefault(Id(target));
+        if(native=="native")native=target.IsStatic?NativeClass(target.ContainingType)+"::"+target.Name:"member:"+target.Name;
+        if(native==null){if(!methods.ContainsKey(Id(target)))throw new Unsupported(site,"delegate method has no source/native body");if(target.ContainingType.TypeKind!=TypeKind.Interface)dependencies[current].Add(Id(target));}
+        var signature=Type(delegateType,site);var result=Type(invoke.ReturnType,site);
+        var parameters=String.Join(",",invoke.Parameters.Select((p,i)=>Type(p.Type,site)+" cs_param"+i));
+        var arguments=invoke.Parameters.Select((p,i)=>Cast("cs_param"+i,p.Type,target.Parameters[i].Type,site)).ToList();
+        string call,setup,capture;
+        if(target.IsStatic){
+            call=(native??Name(target))+(target.IsGenericMethod?"<"+String.Join(",",target.TypeArguments.Select(t=>Type(t,site)))+">":"")+"("+String.Join(",",arguments)+")";
+            setup="";capture="[]";
+        }else{
+            var receiver=site is MemberAccessExpressionSyntax access?Expr(access.Expression):"cs_this";
+            var receiverType=Type(target.ContainingType,site);if(!externalTypes.ContainsKey(Id(target.ContainingType)))RequireClass(target.ContainingType,site);
+            setup="auto cs_target=static_cast<"+receiverType+">("+receiver+");if(!cs_target)throw pls::cs::"+(target.IsVirtual||target.IsOverride||target.IsAbstract?"NullReferenceException":"ArgumentException")+"();";
+            capture="[cs_weak=std::weak_ptr<"+NativeClass(target.ContainingType)+">(cs_target)]";
+            var baseCall=site is MemberAccessExpressionSyntax{Expression:BaseExpressionSyntax};
+            if(native?.StartsWith("member:",StringComparison.Ordinal)??false)call="cs_receiver->"+native.Substring(7)+"("+String.Join(",",arguments)+")";
+            else if(!baseCall&&(target.IsVirtual||target.IsOverride||target.IsAbstract))call="cs_receiver->"+Slot(target)+"("+String.Join(",",arguments)+")";
+            else{arguments.Insert(0,"cs_receiver");call=(native??Name(target))+"("+String.Join(",",arguments)+")";}
+        }
+        var lambda=capture+"("+parameters+")->"+result+"{"+(target.IsStatic?"":"auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();")+(result=="void"?"": "return ")+call+";}";
+        var identity=target.IsVirtual||target.IsOverride||target.IsAbstract?"pls::cs::box(cs_target)->managed_delegate_method_id(\""+Slot(target)+"\")":"\""+Id(target)+"\"";
+        return "([&](){"+setup+"return "+signature+(target.IsStatic?"::from_static(\""+Id(target)+"\","+lambda+")":"::bind(cs_target,"+identity+","+lambda+")")+";}())";
+    }
     string AccessorCall(IMethodSymbol accessor,string? receiver,IEnumerable<string> arguments,SyntaxNode site) {
         var args=arguments.ToList();var property=(IPropertySymbol)accessor.AssociatedSymbol!;
+        if(externalMethods.TryGetValue(Id(accessor),out var externalAccessor)){
+            if(externalAccessor=="native")externalAccessor=accessor.IsStatic?NativeClass(accessor.ContainingType)+"::"+accessor.Name:"member:"+accessor.Name;
+            if(externalAccessor.StartsWith("member:",StringComparison.Ordinal))return "cs_require("+receiver+")->"+externalAccessor.Substring(7)+"("+String.Join(",",args)+")";
+            if(receiver!=null)args.Insert(0,receiver);return externalAccessor+"("+String.Join(",",args)+")";
+        }
         if(FrameworkClass(accessor.ContainingType)!=null)return "cs_require("+receiver+")->"+(accessor.MethodKind==MethodKind.PropertyGet?"get_":"set_")+property.Name+"("+String.Join(",",args)+")";
         if(!methods.ContainsKey(Id(accessor)))throw new Unsupported(site,"property accessor has no source lowering");
-        dependencies[current].Add(Id(accessor));
-        if(receiver!=null&&(accessor.IsVirtual||accessor.IsOverride))return "cs_require("+receiver+")->"+Slot(accessor)+"("+String.Join(",",args)+")";
+        if(accessor.ContainingType.TypeKind!=TypeKind.Interface)dependencies[current].Add(Id(accessor));
+        if(receiver!=null&&(accessor.IsVirtual||accessor.IsOverride||accessor.IsAbstract))return "cs_require("+receiver+")->"+Slot(accessor)+"("+String.Join(",",args)+")";
         if(receiver!=null)args.Insert(0,"static_cast<"+Type(accessor.ContainingType,site)+">("+receiver+")");
         return Name(accessor)+"("+String.Join(",",args)+")";
     }
@@ -280,27 +416,46 @@ sealed class Lowerer {
         return "([&]() -> "+Type(property.Type,site)+" { "+setup+"return "+AccessorCall(property.GetMethod,receiver==null?null:"cs_receiver",arguments,site)+"; }())";
     }
     string Expr(ExpressionSyntax n) {
-        if(compilation.AssemblyName=="Assembly-CSharp") {
+        if(compilation.AssemblyName=="Assembly-CSharp"&&Path.GetRelativePath(request.source_root,n.SyntaxTree.FilePath).Replace('\\','/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)) {
             var initializer=n is ArrayCreationExpressionSyntax creation?creation.Initializer:n is ImplicitArrayCreationExpressionSyntax implicitArray?implicitArray.Initializer:null;
-            if(initializer!=null&&initializer.Expressions.Count>0&&model.GetTypeInfo(n).Type is IArrayTypeSymbol arrayType&&BakedScalar(arrayType.ElementType)) {
+            if(initializer!=null&&initializer.Expressions.Count>0&&initializer.Expressions.All(element=>model.GetConstantValue(element).HasValue)&&model.GetTypeInfo(n).Type is IArrayTypeSymbol arrayType&&BakedScalar(arrayType.ElementType)) {
                 var source=Path.GetRelativePath(request.source_root,n.SyntaxTree.FilePath).Replace('\\','/');
                 var id=Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes("Assembly-CSharp\n"+source+"\n"+n.SpanStart))).ToLowerInvariant();
                 if(!request.baked_arrays.TryGetValue(id,out var proof)||proof.source!=source||proof.span_start!=n.SpanStart||proof.element_type!=arrayType.ElementType.ToDisplayString()||proof.count!=initializer.Expressions.Count)throw new Unsupported(n,"numeric initializer requires authenticated original-payload baked-array proof");
                 bakedUsed.Add(id);return "pls::assets::baked_array<"+Type(arrayType.ElementType,n)+">(\""+id+"\")";
             }
-            if(n is InitializerExpressionSyntax content&&content.Expressions.Any(e=>BakedScalar(model.GetTypeInfo(e).Type)))throw new Unsupported(n,"numeric initializer has no original-payload baked-array proof");
+            if(n is InitializerExpressionSyntax content&&content.Expressions.Count>0&&content.Expressions.All(element=>model.GetConstantValue(element).HasValue)&&content.Expressions.Any(e=>BakedScalar(model.GetTypeInfo(e).Type)))throw new Unsupported(n,"numeric initializer has no original-payload baked-array proof");
         }
         Used(n);
         var constant=model.GetConstantValue(n);
         if(constant.HasValue)return Constant(constant.Value,model.GetTypeInfo(n).Type??model.GetTypeInfo(n).ConvertedType,n);
         switch(n) {
+            case InterpolatedStringExpressionSyntax interpolation:
+                var interpolationBody=new StringBuilder("([&](){");var holes=interpolation.Contents.OfType<InterpolationSyntax>().ToArray();
+                for(int index=0;index<holes.Length;index++)interpolationBody.Append("auto cs_hole"+index+"="+Expr(holes[index].Expression)+";");
+                interpolationBody.Append("pls::cs::String cs_text(u\"\");");int holeIndex=0;
+                foreach(var content in interpolation.Contents){
+                    string text;
+                    if(content is InterpolatedStringTextSyntax literalText)text=Constant(literalText.TextToken.ValueText,compilation.GetSpecialType(SpecialType.System_String),literalText);
+                    else if(content is InterpolationSyntax hole){
+                        if(hole.AlignmentClause!=null)throw new Unsupported(hole,"interpolation alignment requires formatting contract");
+                        var holeType=model.GetTypeInfo(hole.Expression).Type;var value="cs_hole"+holeIndex++;
+                        if(hole.FormatClause!=null){
+                            var format=hole.FormatClause.FormatStringToken.ValueText;var width=format.Length==1?0:int.TryParse(format.Substring(1),out var number)?number:-1;
+                            if(holeType?.SpecialType!=SpecialType.System_Int32||format.Length==0||format[0] is not ('x' or 'X')||width<0||width>99)throw new Unsupported(hole,"interpolation format/type not lowered");
+                            text="pls::cs::format_i32_hex("+value+","+width+","+(format[0]=='X'?"true":"false")+")";
+                        }else text=StringValue(value,holeType,hole);
+                    }else throw new Unsupported(content,"interpolated content not lowered");
+                    interpolationBody.Append("cs_text=pls::cs::String::concat(cs_text,"+text+");");
+                }
+                return interpolationBody+"return cs_text;}())";
             case ThisExpressionSyntax _:return "cs_this";
             case BaseExpressionSyntax _:
                 var bt=methods[current].ContainingType.BaseType!;return "std::static_pointer_cast<"+(bt.SpecialType==SpecialType.System_Object?"pls::cs::Object":NativeClass(bt))+">(cs_this)";
             case ParenthesizedExpressionSyntax p:return "("+Expr(p.Expression)+")";
             case IdentifierNameSyntax id:
                 var symbol=model.GetSymbolInfo(id).Symbol;
-                if(symbol is ILocalSymbol||symbol is IParameterSymbol)return Local(symbol);
+                if(symbol is ILocalSymbol||symbol is IParameterSymbol)return ReadLocal(symbol);
                 if(symbol is IFieldSymbol field)return StaticField(field,id);
                 if(symbol is IPropertySymbol property)return ReadProperty(property,property.IsStatic?null:"cs_this",Array.Empty<string>(),id);
                 throw new Unsupported(n,"identifier is not a supported local/parameter/static field");
@@ -308,14 +463,16 @@ sealed class Lowerer {
             case CastExpressionSyntax cast:return Converted(cast.Expression,model.GetTypeInfo(cast).Type);
             case MemberAccessExpressionSyntax member:
                 if(model.GetSymbolInfo(member).Symbol is IFieldSymbol mf)return StaticField(mf,member);
+                if(model.GetTypeInfo(member.Expression).Type?.ToDisplayString()=="System.Type"&&member.Name.Identifier.ValueText is "Name" or "FullName" or "Assembly")return "cs_require("+Expr(member.Expression)+")->get_"+member.Name.Identifier.ValueText+"()";
                 if(model.GetSymbolInfo(member).Symbol is IPropertySymbol timeProperty&&(FrameworkValue(timeProperty.ContainingType)!=null||FrameworkClass(timeProperty.ContainingType)!=null)) {
                     if(timeProperty.IsStatic)return (FrameworkValue(timeProperty.ContainingType)??FrameworkClass(timeProperty.ContainingType))+"::get_"+timeProperty.Name+"()";
                     var receiver=Expr(member.Expression);
                     return FrameworkValue(timeProperty.ContainingType)!=null?"("+receiver+").get_"+timeProperty.Name+"()":"cs_require("+receiver+")->get_"+timeProperty.Name+"()";
                 }
-                if(model.GetSymbolInfo(member).Symbol is IPropertySymbol sourceProperty&&sourceProperty.GetMethod!=null&&methods.ContainsKey(Id(sourceProperty.GetMethod)))return ReadProperty(sourceProperty,sourceProperty.IsStatic?null:Expr(member.Expression),Array.Empty<string>(),member);
+                if(model.GetSymbolInfo(member).Symbol is IPropertySymbol sourceProperty&&sourceProperty.GetMethod!=null&&(methods.ContainsKey(Id(sourceProperty.GetMethod))||externalMethods.ContainsKey(Id(sourceProperty.GetMethod))))return ReadProperty(sourceProperty,sourceProperty.IsStatic?null:Expr(member.Expression),Array.Empty<string>(),member);
+                if(member.Name.Identifier.ValueText=="Length"&&model.GetTypeInfo(member.Expression).Type?.ToDisplayString()=="System.Array")return "cs_require("+Expr(member.Expression)+")->get_Length()";
                 if(member.Name.Identifier.ValueText=="Length"&&(model.GetTypeInfo(member.Expression).Type is IArrayTypeSymbol||model.GetTypeInfo(member.Expression).Type?.SpecialType==SpecialType.System_String))return "("+Expr(member.Expression)+").length()";
-                if(SystemList(model.GetTypeInfo(member.Expression).Type)&&member.Name.Identifier.ValueText is "Count" or "Capacity")return "("+Expr(member.Expression)+").get_"+member.Name.Identifier.ValueText+"()";
+                if((SystemList(model.GetTypeInfo(member.Expression).Type)||SystemDictionary(model.GetTypeInfo(member.Expression).Type))&&member.Name.Identifier.ValueText is "Count" or "Capacity")return "("+Expr(member.Expression)+").get_"+member.Name.Identifier.ValueText+"()";
                 if(FrameworkClass(model.GetTypeInfo(member.Expression).Type)!=null&&member.Name.Identifier.ValueText is "Length" or "Capacity")return "cs_require("+Expr(member.Expression)+")->get_"+member.Name.Identifier.ValueText+"()";
                 throw new Unsupported(member,"member/property requires platform or object implementation");
             case BinaryExpressionSyntax binary:return Binary(binary);
@@ -336,19 +493,29 @@ sealed class Lowerer {
             case InvocationExpressionSyntax invocation:return Invoke(invocation);
             case ConditionalAccessExpressionSyntax conditional:
                 var conditionalType=model.GetTypeInfo(conditional).Type;
-                if(conditionalType==null||!conditionalType.IsReferenceType||conditional.WhenNotNull is not InvocationExpressionSyntax memberCall)throw new Unsupported(conditional,"conditional access requires reference-returning method lowering");
+                if(conditional.WhenNotNull is not InvocationExpressionSyntax memberCall)throw new Unsupported(conditional,"conditional access requires invocation lowering");
                 var conditionalMethod=model.GetSymbolInfo(memberCall).Symbol as IMethodSymbol;
                 if(conditionalMethod==null||!methods.ContainsKey(Id(conditionalMethod)))throw new Unsupported(conditional,"conditional target requires source method");
+                if(!conditionalMethod.ReturnsVoid&&(conditionalType==null||!conditionalType.IsReferenceType))throw new Unsupported(conditional,"conditional access nullable value result not lowered");
                 dependencies[current].Add(Id(conditionalMethod));
-                return "([&]() -> "+Type(conditionalType,conditional)+" { auto cs_conditional = "+Expr(conditional.Expression)+"; if(!cs_conditional)return "+Type(conditionalType,conditional)+"{}; return "+OrderedCall(conditionalMethod,memberCall.ArgumentList.Arguments.Select(a=>a.Expression).ToList(),conditional,"cs_conditional")+"; }())";
+                var conditionalResult=conditionalMethod.ReturnsVoid?"void":Type(conditionalType,conditional);
+                return "([&]() -> "+conditionalResult+" { auto cs_conditional = "+Expr(conditional.Expression)+"; if(!cs_conditional)return"+(conditionalMethod.ReturnsVoid?"":" "+conditionalResult+"{}")+"; "+(conditionalMethod.ReturnsVoid?"":"return ")+OrderedCall(conditionalMethod,memberCall.ArgumentList.Arguments.Select(a=>a.Expression).ToList(),conditional,"cs_conditional")+"; }())";
             case ObjectCreationExpressionSyntax creation:
                 var ctor=model.GetSymbolInfo(creation).Symbol as IMethodSymbol;
                 if(ctor==null||creation.Initializer!=null)throw new Unsupported(creation,"object initializer/unresolved constructor not lowered");
+                if(ctor.ContainingType.TypeKind==TypeKind.Delegate&&creation.ArgumentList?.Arguments.Count==1)return Converted(creation.ArgumentList.Arguments[0].Expression,ctor.ContainingType);
                 if(externalMethods.TryGetValue(Id(ctor),out var externalCtor))return OrderedCall(ctor,creation.ArgumentList?.Arguments.Select(a=>a.Expression).ToList()??new(),creation,null,true,externalCtor);
                 if(ctor.ContainingType.SpecialType==SpecialType.System_String&&ctor.Parameters.Length==1&&ctor.Parameters[0].Type is IArrayTypeSymbol{ElementType.SpecialType:SpecialType.System_Char})return "cs_string_from_chars("+Expr(creation.ArgumentList!.Arguments[0].Expression)+")";
-                if(SystemList(ctor.ContainingType)) {
-                    if(ctor.Parameters.Any(p=>p.Type.SpecialType!=SpecialType.System_Int32))throw new Unsupported(creation,"List constructor overload not lowered");
+                if(SystemList(ctor.ContainingType)||SystemDictionary(ctor.ContainingType)) {
+                    if(SystemList(ctor.ContainingType)&&ctor.Parameters.Length==1&&creation.ArgumentList?.Arguments.Count==1&&model.GetTypeInfo(creation.ArgumentList.Arguments[0].Expression).Type is IArrayTypeSymbol sourceArray&&SymbolEqualityComparer.Default.Equals(sourceArray.ElementType,ctor.ContainingType.TypeArguments[0]))return "([&](){auto cs_values="+Expr(creation.ArgumentList.Arguments[0].Expression)+";if(cs_values.is_null())throw pls::cs::ArgumentNullException();auto cs_list="+Type(ctor.ContainingType,creation)+"::make(cs_values.length());cs_list.AddRange(cs_values);return cs_list;}())";
+                    if(ctor.Parameters.Any(p=>p.Type.SpecialType!=SpecialType.System_Int32))throw new Unsupported(creation,"collection constructor overload not lowered");
                     var values=creation.ArgumentList!.Arguments.Select(a=>Expr(a.Expression)).ToArray();return Type(ctor.ContainingType,creation)+"::make("+String.Join(",",values)+")";
+                }
+                if(ExceptionClass(ctor.ContainingType)&&ctor.ContainingType.DeclaringSyntaxReferences.Length==0){
+                    if(ctor.Parameters.Length>2||ctor.Parameters.Where((p,i)=>i==0?p.Type.SpecialType!=SpecialType.System_String:!ExceptionClass(p.Type)).Any())throw new Unsupported(creation,"exception constructor overload not lowered");
+                    var b=new StringBuilder("([&](){ ");var args=creation.ArgumentList!.Arguments;
+                    for(int i=0;i<args.Count;i++)b.Append("auto cs_arg"+i+" = "+Converted(args[i].Expression,ctor.Parameters[i].Type)+"; ");
+                    return b+"return pls::cs::make_exception(\""+ctor.ContainingType.ToDisplayString()+"\""+String.Concat(Enumerable.Range(0,args.Count).Select(i=>",cs_arg"+i))+");}())";
                 }
                 if(FrameworkClass(ctor.ContainingType) is string nativeClass) {
                     if(nativeClass=="pls::cs::Random"&&(ctor.Parameters.Length!=1||ctor.Parameters[0].Type.SpecialType!=SpecialType.System_Int32))throw new Unsupported(creation,"Random constructor requires explicit Int32 seed");
@@ -365,24 +532,53 @@ sealed class Lowerer {
                 return OrderedCall(ctor,creation.ArgumentList?.Arguments.Select(a=>a.Expression).ToList()??new(),creation,null);
             case ElementAccessExpressionSyntax access:
                 if(access.ArgumentList.Arguments.Count!=1)throw new Unsupported(access,"multi-index access not lowered");
+                if(model.GetTypeInfo(access.Expression).Type?.ToDisplayString() is "System.Text.RegularExpressions.MatchCollection" or "System.Text.RegularExpressions.GroupCollection")return "([&](){auto cs_receiver="+Expr(access.Expression)+";auto cs_index="+Expr(access.ArgumentList.Arguments[0].Expression)+";return cs_require(cs_receiver)->get_Item(cs_index);}())";
                 if(model.GetTypeInfo(access.Expression).Type?.ToDisplayString()=="System.Text.StringBuilder")return "([&]() { auto cs_receiver = "+Expr(access.Expression)+"; auto cs_index = "+Expr(access.ArgumentList.Arguments[0].Expression)+"; return cs_require(cs_receiver)->get_Chars(cs_index); }())";
-                return "([&]() { auto cs_array = "+Expr(access.Expression)+"; auto cs_index = "+Expr(access.ArgumentList.Arguments[0].Expression)+"; return cs_array."+(SystemList(model.GetTypeInfo(access.Expression).Type)?"get_Item":"at")+"(cs_index); }())";
+                return "([&]() { auto cs_array = "+Expr(access.Expression)+"; auto cs_index = "+Expr(access.ArgumentList.Arguments[0].Expression)+"; return cs_array."+(SystemList(model.GetTypeInfo(access.Expression).Type)||SystemDictionary(model.GetTypeInfo(access.Expression).Type)?"get_Item":"at")+"(cs_index); }())";
+            case TypeOfExpressionSyntax typeOf:return "pls::cs::runtime_type_of<"+Type(model.GetTypeInfo(typeOf.Type).Type,typeOf)+">()";
             case DefaultExpressionSyntax defaultValue:return Type(model.GetTypeInfo(defaultValue).Type,defaultValue)+"{}";
             case ArrayCreationExpressionSyntax array:
                 var at=model.GetTypeInfo(array).Type as IArrayTypeSymbol;
                 if(at==null||at.Rank!=1)throw new Unsupported(array,"rectangular array creation not lowered");
-                if(array.Initializer!=null)return Type(at,array)+"::from({"+String.Join(",",array.Initializer.Expressions.Select(e=>Converted(e,at.ElementType)))+"})";
+                if(array.Initializer!=null)return ArrayInitializer(array.Initializer,at,array);
                 var sizes=array.Type.RankSpecifiers[0].Sizes;
                 if(sizes.Count!=1||sizes[0] is OmittedArraySizeExpressionSyntax)throw new Unsupported(array,"array length missing");
                 return Type(at,array)+"::make("+Expr(sizes[0])+")";
             case InitializerExpressionSyntax initializer:
                 var it=model.GetTypeInfo(initializer).ConvertedType as IArrayTypeSymbol;
                 if(it==null)throw new Unsupported(initializer,"initializer type is not an array");
-                return Type(it,initializer)+"::from({"+String.Join(",",initializer.Expressions.Select(e=>Converted(e,it.ElementType)))+"})";
+                return ArrayInitializer(initializer,it,initializer);
+            case ImplicitArrayCreationExpressionSyntax implicitArray:
+                var implicitType=model.GetTypeInfo(implicitArray).Type as IArrayTypeSymbol;
+                if(implicitType==null||implicitType.Rank!=1)throw new Unsupported(implicitArray,"implicit rectangular array is not lowered");
+                return ArrayInitializer(implicitArray.Initializer,implicitType,implicitArray);
             default:throw new Unsupported(n,"expression lowering not implemented");
         }
     }
+    string ArrayInitializer(InitializerExpressionSyntax initializer,IArrayTypeSymbol type,SyntaxNode site){
+        var name="cs_initial_array_"+temporary++;var body=new StringBuilder("([&](){auto "+name+"="+Type(type,site)+"::make("+initializer.Expressions.Count+");");
+        for(int index=0;index<initializer.Expressions.Count;index++)body.Append(name+".at("+index+")="+Converted(initializer.Expressions[index],type.ElementType)+";");
+        return body+"return "+name+";}())";
+    }
+    string StringValue(string value,ITypeSymbol? type,SyntaxNode site){
+        if(type?.SpecialType==SpecialType.System_String)return value;
+        if(type?.SpecialType==SpecialType.System_Char)return "cs_char_string("+value+")";
+        if(Integral(type)&&type?.TypeKind!=TypeKind.Enum)return "cs_integer_string("+value+")";
+        if(type?.SpecialType==SpecialType.System_Boolean)return "pls::cs::String("+value+"?u\"True\":u\"False\")";
+        if(type?.IsReferenceType==true||type?.SpecialType==SpecialType.System_Object)return "cs_object_string(pls::cs::box("+value+"))";
+        throw new Unsupported(site,"string formatting requires exact ToString contract for this value type");
+    }
     string Binary(BinaryExpressionSyntax b) {
+        if(b.IsKind(SyntaxKind.IsExpression)||b.IsKind(SyntaxKind.AsExpression)){
+            var target=model.GetTypeInfo(b.Right).Type;if(target==null)throw new Unsupported(b,"type test target is not bound");
+            var value="pls::cs::box("+Expr(b.Left)+")";var cpp=Type(target,b);
+            if(b.IsKind(SyntaxKind.IsExpression))return "cs_is<"+cpp+">("+value+")";
+            if(!target.IsReferenceType)throw new Unsupported(b,"as requires nullable/reference target lowering");
+            if(target.SpecialType==SpecialType.System_Object)return value;
+            if(target is INamedTypeSymbol named&&(PlainClass(named)||named.TypeKind==TypeKind.Interface||FrameworkClass(named)!=null||externalTypes.ContainsKey(Id(named))))return "std::dynamic_pointer_cast<"+NativeClass(named)+">("+value+")";
+            throw new Unsupported(b,"as target wrapper requires nonthrowing cast lowering");
+        }
+
         if(b.IsKind(SyntaxKind.IsExpression)) {
             var target=model.GetTypeInfo(b.Right).Type;
             if(target is INamedTypeSymbol named&&PlainClass(named)){RequireClass(named,b);return "bool(std::dynamic_pointer_cast<"+ClassName(named)+">(pls::cs::box("+Expr(b.Left)+")))";}
@@ -392,21 +588,21 @@ sealed class Lowerer {
         var operation=model.GetOperation(b) as IBinaryOperation;
         if(operation?.OperatorMethod is IMethodSymbol custom&&methods.ContainsKey(Id(custom))) {
             dependencies[current].Add(Id(custom));
-            return "([&]() { auto cs_left = "+Converted(b.Left,custom.Parameters[0].Type)+"; auto cs_right = "+Converted(b.Right,custom.Parameters[1].Type)+"; return "+Name(custom)+"(cs_left,cs_right); }())";
+            return "([&]() { "+Type(custom.Parameters[0].Type,b)+" cs_left = "+Converted(b.Left,custom.Parameters[0].Type)+"; "+Type(custom.Parameters[1].Type,b)+" cs_right = "+Converted(b.Right,custom.Parameters[1].Type)+"; return "+Name(custom)+"(cs_left,cs_right); }())";
         }
         if(b.IsKind(SyntaxKind.LogicalAndExpression)||b.IsKind(SyntaxKind.LogicalOrExpression))return "("+Expr(b.Left)+(b.IsKind(SyntaxKind.LogicalAndExpression)?" && ":" || ")+Expr(b.Right)+")";
         if(b.IsKind(SyntaxKind.AddExpression)&&model.GetTypeInfo(b).Type?.SpecialType==SpecialType.System_String) {
             string StringOperand(ExpressionSyntax e) {
                 var type=model.GetTypeInfo(e).Type;
-                if(type?.SpecialType==SpecialType.System_String||e.IsKind(SyntaxKind.NullLiteralExpression))return Converted(e,compilation.GetSpecialType(SpecialType.System_String));
-                if(type?.SpecialType==SpecialType.System_Char)return "cs_char_string("+Expr(e)+")";
-                if(Integral(type)&&type?.TypeKind!=TypeKind.Enum)return "cs_integer_string("+Expr(e)+")";
-                if(type?.SpecialType==SpecialType.System_Boolean)return "pls::cs::String("+Expr(e)+"?u\"True\":u\"False\")";
-                throw new Unsupported(e,"string concatenation requires exact operand ToString contract");
+                if(e.IsKind(SyntaxKind.NullLiteralExpression))return "pls::cs::String{}";
+                return StringValue(Expr(e),type,e);
             }
             return "([&]() { auto cs_left = "+StringOperand(b.Left)+"; auto cs_right = "+StringOperand(b.Right)+"; return pls::cs::String::concat(cs_left,cs_right); }())";
         }
         if(b.IsKind(SyntaxKind.EqualsExpression)||b.IsKind(SyntaxKind.NotEqualsExpression)) {
+            var delegateOperand=model.GetTypeInfo(b.Left).Type as INamedTypeSymbol??model.GetTypeInfo(b.Right).Type as INamedTypeSymbol;
+            if(delegateOperand?.TypeKind!=TypeKind.Delegate&&model.GetTypeInfo(b.Right).Type is INamedTypeSymbol{TypeKind:TypeKind.Delegate} rightDelegate)delegateOperand=rightDelegate;
+            if(delegateOperand?.TypeKind==TypeKind.Delegate)return "([&](){auto cs_left="+(b.Left.IsKind(SyntaxKind.NullLiteralExpression)?Type(delegateOperand,b)+"{}":Expr(b.Left))+";auto cs_right="+(b.Right.IsKind(SyntaxKind.NullLiteralExpression)?Type(delegateOperand,b)+"{}":Expr(b.Right))+";return cs_left"+b.OperatorToken.Text+"cs_right;}())";
             var leftType=model.GetTypeInfo(b.Left).Type;var rightType=model.GetTypeInfo(b.Right).Type;
             var other=b.Left.IsKind(SyntaxKind.NullLiteralExpression)?b.Right:b.Right.IsKind(SyntaxKind.NullLiteralExpression)?b.Left:null;
             if(other!=null&&model.GetTypeInfo(other).Type is ITypeParameterSymbol)return "(pls::cs::box("+Expr(other)+") "+b.OperatorToken.Text+" pls::cs::Ref<pls::cs::Object>{})";
@@ -440,17 +636,22 @@ sealed class Lowerer {
     string Increment(ExpressionSyntax n,bool add,bool prefix) {
         var symbol=model.GetSymbolInfo(n).Symbol;var type=model.GetTypeInfo(n).Type;
         string setup="",target;
-        if(symbol is IFieldSymbol{IsStatic:false} field) {
+        if(n is ElementAccessExpressionSyntax element&&model.GetTypeInfo(element.Expression).Type is IArrayTypeSymbol&&element.ArgumentList.Arguments.Count==1) {
+            setup="auto cs_array = "+Expr(element.Expression)+"; auto cs_index = "+Expr(element.ArgumentList.Arguments[0].Expression)+"; ";target="cs_array.at(cs_index)";
+        } else if(symbol is IFieldSymbol{IsStatic:false} field) {
             RequireClass(field.ContainingType,n);var receiver=n is MemberAccessExpressionSyntax member?Expr(member.Expression):"cs_this";
             setup="auto cs_target = "+receiver+"; ";target="cs_require(cs_target)->"+Name(field);
         } else {if(!(symbol is ILocalSymbol||symbol is IParameterSymbol||symbol is IFieldSymbol{IsStatic:true}))throw new Unsupported(n,"increment of storage requires reference-preserving evaluation");target=Expr(n);}
         var suffix=NumericSuffix(type);
-        if(suffix=="")throw new Unsupported(n,"increment type not lowered");
-        return "([&]() { "+setup+"auto cs_old = "+target+"; auto cs_new = pls::cs::"+(add?"add_":"sub_")+suffix+"(cs_old,1); "+target+" = cs_new; return "+(prefix?"cs_new":"cs_old")+"; }())";
+        if(suffix==""&&!Integral(type))throw new Unsupported(n,"increment type not lowered");
+        var narrow=suffix=="";if(narrow)suffix="i32";
+        var calculation="pls::cs::"+(add?"add_":"sub_")+suffix+"(cs_old,1)";
+        if(narrow)calculation="pls::cs::cast_integral<"+Type(type,n)+">("+calculation+")";
+        return "([&]() { "+setup+"auto cs_old = "+target+"; auto cs_new = "+calculation+"; "+target+" = cs_new; return "+(prefix?"cs_new":"cs_old")+"; }())";
     }
     string Assignment(AssignmentExpressionSyntax a) {
         var type=model.GetTypeInfo(a.Left).Type;var simple=a.IsKind(SyntaxKind.SimpleAssignmentExpression);
-        if(model.GetSymbolInfo(a.Left).Symbol is IPropertySymbol property&&property.SetMethod!=null&&!SystemList(property.ContainingType)) {
+        if(model.GetSymbolInfo(a.Left).Symbol is IPropertySymbol property&&property.SetMethod!=null&&!SystemList(property.ContainingType)&&!SystemDictionary(property.ContainingType)) {
             var receiver=property.IsStatic?null:a.Left is MemberAccessExpressionSyntax member?Expr(member.Expression):"cs_this";
             var setup=receiver==null?"":"auto cs_receiver = "+receiver+"; ";var args=new List<string>();
             if(a.Left is ElementAccessExpressionSyntax indexer) {
@@ -475,7 +676,7 @@ sealed class Lowerer {
         if(a.Left is ElementAccessExpressionSyntax e) {
             if(e.ArgumentList.Arguments.Count!=1)throw new Unsupported(e,"multi-index assignment");
             prefix="auto cs_target = "+Expr(e.Expression)+"; auto cs_index = "+Expr(e.ArgumentList.Arguments[0].Expression)+"; ";
-            if(SystemList(model.GetTypeInfo(e.Expression).Type)) {
+            if(SystemList(model.GetTypeInfo(e.Expression).Type)||SystemDictionary(model.GetTypeInfo(e.Expression).Type)) {
                 if(!simple)throw new Unsupported(a,"compound List index assignment requires operator promotion lowering");
                 return "([&]() { "+prefix+"auto cs_value = "+Converted(a.Right,type)+"; cs_target.set_Item(cs_index,cs_value); return cs_value; }())";
             }
@@ -483,6 +684,7 @@ sealed class Lowerer {
         } else {
             var symbol=model.GetSymbolInfo(a.Left).Symbol;
             if(symbol is IFieldSymbol{IsStatic:false} instanceField) {
+                if(RecordStruct(instanceField.ContainingType)&&methods[current].MethodKind!=MethodKind.Constructor)throw new Unsupported(a,"struct field assignment requires managed-address lowering");
                 RequireClass(instanceField.ContainingType,a.Left);
                 var receiver=a.Left is MemberAccessExpressionSyntax member?Expr(member.Expression):"cs_this";
                 prefix="auto cs_target = "+receiver+"; ";target="cs_require(cs_target)->"+Name(instanceField);
@@ -511,12 +713,25 @@ sealed class Lowerer {
         var symbol=model.GetSymbolInfo(n).Symbol as IMethodSymbol;
         if(symbol==null)throw new Unsupported(n,"invocation symbol unresolved");
         var args=n.ArgumentList.Arguments.Select(a=>a.Expression).ToList();
+        if(symbol.ContainingType.SpecialType==SpecialType.System_String&&symbol.Name is "Split" or "Trim"&&symbol.Parameters.Length==1&&symbol.Parameters[0].IsParams&&symbol.Parameters[0].Type is IArrayTypeSymbol{ElementType.SpecialType:SpecialType.System_Char}&&n.Expression is MemberAccessExpressionSyntax splitAccess&&(args.Count!=1||model.GetTypeInfo(args[0]).Type is not IArrayTypeSymbol)){
+            if(args.Any(a=>model.GetTypeInfo(a).Type?.SpecialType!=SpecialType.System_Char))throw new Unsupported(n,"String.Split expanded argument is not Char");
+            var split=new StringBuilder("([&](){auto cs_text="+Expr(splitAccess.Expression)+";auto cs_separators=pls::cs::Array<char16_t>::make("+args.Count+");");for(int index=0;index<args.Count;index++)split.Append("cs_separators.at("+index+")="+Expr(args[index])+";");return split+"return pls::cs::"+(symbol.Name=="Split"?"string_split":"string_trim")+"(cs_text,cs_separators);}())";
+        }
+        if(symbol.ReducedFrom?.ContainingType.ToDisplayString()=="System.Linq.Enumerable"&&symbol.Name=="Contains"&&n.Expression is MemberAccessExpressionSyntax containsAccess&&model.GetTypeInfo(containsAccess.Expression).Type?.SpecialType==SpecialType.System_String&&args.Count==1&&model.GetTypeInfo(args[0]).Type?.SpecialType==SpecialType.System_Char)return "([&](){auto cs_text="+Expr(containsAccess.Expression)+";auto cs_char="+Expr(args[0])+";return cs_index_char1(cs_text,cs_char)!=-1;}())";
+        if(SystemDictionary(symbol.ContainingType)&&symbol.Name=="TryGetValue"&&args.Count==2&&n.ArgumentList.Arguments[1].RefKindKeyword.IsKind(SyntaxKind.OutKeyword)&&args[1] is IdentifierNameSyntax&&n.Expression is MemberAccessExpressionSyntax dictionaryAccess){return "([&](){auto cs_dictionary="+Expr(dictionaryAccess.Expression)+";auto cs_key="+Converted(args[0],symbol.Parameters[0].Type)+";return cs_dictionary.TryGetValue(cs_key,"+Expr(args[1])+");}())";}
         if(n.ArgumentList.Arguments.Any(a=>a.RefKindKeyword!=default||a.NameColon!=null))throw new Unsupported(n,"ref/out/named argument lowering not implemented");
         if(symbol.ReducedFrom!=null) {
             if(!(n.Expression is MemberAccessExpressionSyntax access))throw new Unsupported(n,"extension method receiver missing");
             args.Insert(0,access.Expression);symbol=symbol.ReducedFrom;
         }
         var id=Id(symbol);var owner=symbol.ContainingType.ToDisplayString();
+        if(symbol.MethodKind==MethodKind.DelegateInvoke){
+            if(args.Count!=symbol.Parameters.Length)throw new Unsupported(n,"delegate invocation arity differs");
+            var delegateBody=new StringBuilder("([&](){auto cs_delegate="+Expr(n.Expression)+";");
+            for(int index=0;index<args.Count;index++)delegateBody.Append("auto cs_arg"+index+"="+Converted(args[index],symbol.Parameters[index].Type)+";");
+            return delegateBody+(symbol.ReturnsVoid?"":"return ")+"cs_delegate("+String.Join(",",Enumerable.Range(0,args.Count).Select(index=>"cs_arg"+index))+");}())";
+        }
+        if(!symbol.IsStatic&&symbol.Name=="GetType"&&args.Count==0&&n.Expression is MemberAccessExpressionSyntax typeMember)return "([&](){auto cs_receiver=pls::cs::box("+Expr(typeMember.Expression)+");return pls::cs::RuntimeType::for_name(cs_require(cs_receiver)->managed_type_name());}())";
         if(!symbol.IsStatic&&FrameworkValue(symbol.ContainingType)!=null&&n.Expression is MemberAccessExpressionSyntax valueMember) {
             var allowed=new[]{"ToUniversalTime","AddMilliseconds","AddDays","AddHours","AddMinutes","AddSeconds","AddMonths","AddYears","AddTicks"};
             if(!allowed.Contains(symbol.Name)||args.Count!=symbol.Parameters.Length)throw new Unsupported(n,"framework value method/overload not lowered");
@@ -528,25 +743,33 @@ sealed class Lowerer {
             var receiver=symbol.IsStatic?null:n.Expression is MemberAccessExpressionSyntax em?Expr(em.Expression):"cs_this";
             return OrderedCall(symbol,args,n,receiver,true,externalMethod);
         }
+        if(owner=="UnityEngine.Resources"&&methods[current].ContainingType.ToDisplayString()=="kairo.unity.io.AssetReader"&&symbol.Name is "Load" or "UnloadAsset"&&args.Count==1)return OrderedCall(symbol,args,n,null,true,symbol.Name=="Load"?"pls::kairo::load_text_asset":"pls::kairo::unload_text_asset");
         if(!symbol.IsStatic&&FrameworkClass(symbol.ContainingType)!=null&&n.Expression is MemberAccessExpressionSyntax frameworkMember) {
-            var allowed=owner=="System.Random"?new[]{"Next","NextDouble","NextBytes"}:owner is "System.IO.Stream" or "System.IO.MemoryStream"?new[]{"Read","ReadByte","Write","WriteByte","Close","Flush","Dispose","Seek","SetLength","ToArray","GetBuffer"}:new[]{"Append","ToString","EnsureCapacity"};
+            var allowed=owner=="System.IO.StreamReader"?new[]{"ReadLine","ReadToEnd","Close","Dispose"}:owner=="System.Text.Encoding"?new[]{"GetString","GetBytes"}:ExceptionClass(symbol.ContainingType)?new[]{"ToString","GetBaseException"}:owner=="System.Threading.Thread"?new[]{"Start","Interrupt","Join"}:owner=="System.Reflection.Assembly"?new[]{"GetType"}:owner=="System.Random"?new[]{"Next","NextDouble","NextBytes"}:owner=="System.IO.BinaryReader"?new[]{"Read","ReadBoolean","ReadByte","ReadSByte","ReadInt16","ReadInt32","ReadInt64","ReadUInt16","ReadUInt32","ReadUInt64","ReadSingle","ReadDouble","Close","Dispose"}:owner is "System.IO.Stream" or "System.IO.MemoryStream"?new[]{"Read","ReadByte","Write","WriteByte","Close","Flush","Dispose","Seek","SetLength","ToArray","GetBuffer"}:new[]{"Append","ToString","EnsureCapacity"};
             if(!allowed.Contains(symbol.Name)||args.Count!=symbol.Parameters.Length)throw new Unsupported(n,"framework class method/overload not lowered");
             var call=new StringBuilder("([&]() -> "+Type(symbol.ReturnType,n)+" { auto cs_receiver = "+Expr(frameworkMember.Expression)+"; ");
             for(int i=0;i<args.Count;i++)call.Append("auto cs_arg"+i+" = "+Converted(args[i],symbol.Parameters[i].Type)+"; ");
             call.Append(symbol.ReturnsVoid?"":"return ");return call+"cs_require(cs_receiver)->"+symbol.Name+"("+String.Join(",",Enumerable.Range(0,args.Count).Select(i=>"cs_arg"+i))+"); }())";
         }
+        if(!symbol.IsStatic&&symbol.ContainingType.SpecialType==SpecialType.System_String&&symbol.Name=="Equals"&&args.Count==2&&symbol.Parameters[1].Type.ToDisplayString()=="System.StringComparison"&&model.GetConstantValue(args[1]).Value is int comparison&&comparison==1&&n.Expression is MemberAccessExpressionSyntax cultureEquals)return "([&](){auto cs_receiver="+Expr(cultureEquals.Expression)+";auto cs_argument="+Converted(args[0],compilation.GetSpecialType(SpecialType.System_String))+";cs_receiver.length();return pls::cs::culture_equals_ignore_case(cs_receiver,cs_argument);}())";
+        if(!symbol.IsStatic&&symbol.ContainingType.SpecialType==SpecialType.System_Object&&symbol.Name=="GetHashCode"&&args.Count==0&&n.Expression is MemberAccessExpressionSyntax hashMember)return "([&](){auto cs_receiver=pls::cs::box("+Expr(hashMember.Expression)+");return cs_require(cs_receiver)->"+(hashMember.Expression is BaseExpressionSyntax?"pls::cs::Object::":"")+"GetHashCode();}())";
+        if(!symbol.IsStatic&&symbol.Name=="ToString"&&args.Count==0&&n.Expression is MemberAccessExpressionSyntax objectStringMember&&model.GetTypeInfo(objectStringMember.Expression).Type?.SpecialType==SpecialType.System_Object)return "([&](){auto cs_receiver = "+Expr(objectStringMember.Expression)+";return cs_require(cs_receiver)->"+(objectStringMember.Expression is BaseExpressionSyntax?"pls::cs::Object::":"")+"ToString();}())";
         if(!symbol.IsStatic&&symbol.Name=="Equals"&&args.Count==1&&n.Expression is MemberAccessExpressionSyntax equalsMember&&(model.GetTypeInfo(equalsMember.Expression).Type is ITypeParameterSymbol||model.GetTypeInfo(equalsMember.Expression).Type?.SpecialType==SpecialType.System_Object)) {
-            return "([&]() { auto cs_receiver = pls::cs::box("+Expr(equalsMember.Expression)+"); auto cs_argument = "+Converted(args[0],compilation.GetSpecialType(SpecialType.System_Object))+"; return cs_require(cs_receiver)->Equals(cs_argument); }())";
+            return "([&]() { auto cs_receiver = pls::cs::box("+Expr(equalsMember.Expression)+"); auto cs_argument = "+Converted(args[0],compilation.GetSpecialType(SpecialType.System_Object))+"; return cs_require(cs_receiver)->"+(equalsMember.Expression is BaseExpressionSyntax?"pls::cs::Object::":"")+"Equals(cs_argument); }())";
         }
-        if(!symbol.IsStatic&&SystemList(symbol.ContainingType)&&n.Expression is MemberAccessExpressionSyntax listMember) {
-            var allowed=new[]{"Add","Clear","Contains","IndexOf","LastIndexOf","Insert","RemoveAt","Remove","RemoveRange","ToArray","TrimExcess"};
+        if(!symbol.IsStatic&&symbol.Name=="ToString"&&args.Count==0&&n.Expression is MemberAccessExpressionSyntax collectionString&&(SystemList(model.GetTypeInfo(collectionString.Expression).Type)||SystemDictionary(model.GetTypeInfo(collectionString.Expression).Type)))return "([&](){auto cs_value=pls::cs::box("+Expr(collectionString.Expression)+");return cs_require(cs_value)->ToString();}())";
+        if(!symbol.IsStatic&&(SystemList(symbol.ContainingType)||SystemDictionary(symbol.ContainingType))&&n.Expression is MemberAccessExpressionSyntax listMember) {
+            if(SystemList(symbol.ContainingType)&&symbol.Name is "InsertRange" or "AddRange"&&args.Count==(symbol.Name=="InsertRange"?2:1)&&(model.GetTypeInfo(args.Last()).Type is IArrayTypeSymbol||SystemList(model.GetTypeInfo(args.Last()).Type))){
+                var range=new StringBuilder("([&](){auto cs_list="+Expr(listMember.Expression)+";");for(int index=0;index<args.Count;index++)range.Append("auto cs_arg"+index+"="+Expr(args[index])+";");return range+"cs_list."+symbol.Name+"("+String.Join(",",Enumerable.Range(0,args.Count).Select(index=>"cs_arg"+index))+");}())";
+            }
+            var allowed=new[]{"ContainsKey","ContainsValue","Add","Clear","Contains","IndexOf","LastIndexOf","Insert","RemoveAt","Remove","RemoveRange","ToArray","TrimExcess"};
             if(!allowed.Contains(symbol.Name)||symbol.Parameters.Any(p=>p.RefKind!=RefKind.None)||args.Count!=symbol.Parameters.Length)throw new Unsupported(n,"List overload not lowered");
             var listCall=new StringBuilder("([&]() -> "+Type(symbol.ReturnType,n)+" { auto cs_receiver = "+Expr(listMember.Expression)+"; ");
             for(int i=0;i<args.Count;i++)listCall.Append("auto cs_arg"+i+" = "+Converted(args[i],symbol.Parameters[i].Type)+"; ");
             listCall.Append(symbol.ReturnsVoid?"":"return ");listCall.Append("cs_receiver."+symbol.Name+"("+String.Join(",",Enumerable.Range(0,args.Count).Select(i=>"cs_arg"+i))+"); }())");return listCall.ToString();
         }
         if(!symbol.IsStatic&&methods.ContainsKey(id)) {
-            RequireClass(symbol.ContainingType,n);dependencies[current].Add(id);
+            RequireClass(symbol.ContainingType,n);if(symbol.ContainingType.TypeKind!=TypeKind.Interface)dependencies[current].Add(id);
             var receiver=n.Expression is MemberAccessExpressionSyntax member?Expr(member.Expression):"cs_this";
             return OrderedCall(symbol,args,n,receiver,!(n.Expression is MemberAccessExpressionSyntax baseCall&&baseCall.Expression is BaseExpressionSyntax));
         }
@@ -557,10 +780,22 @@ sealed class Lowerer {
             var receiverType=model.GetTypeInfo(member.Expression).Type;
             if(receiverType?.SpecialType==SpecialType.System_String) {
                 intrinsic=symbol.Name switch {
+                    "IndexOf" when symbol.Parameters[0].Type.SpecialType==SpecialType.System_String&&args.Count>=1&&args.Count<=3=>"pls::cs::culture_index_of",
+                    "LastIndexOf" when symbol.Parameters[0].Type.SpecialType==SpecialType.System_String&&args.Count>=1&&args.Count<=3=>"pls::cs::culture_last_index_of",
+                    "Trim" when args.Count==0||args.Count==1&&symbol.Parameters[0].Type is IArrayTypeSymbol{ElementType.SpecialType:SpecialType.System_Char}=>"pls::cs::string_trim",
+                    "Split" when args.Count==1&&symbol.Parameters.Length==1&&symbol.Parameters[0].Type is IArrayTypeSymbol{ElementType.SpecialType:SpecialType.System_Char}=>"pls::cs::string_split",
+                    "Replace" when args.Count==2&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_String)||symbol.Name=="Replace"&&args.Count==2&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_Char)=>"pls::cs::string_replace",
+                    "Contains" when args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_String=>"cs_contains_string",
+                    "StartsWith" when args.Count==1=>"pls::cs::culture_starts_with", "EndsWith" when args.Count==1=>"pls::cs::culture_ends_with",
+                    "ToLower" when args.Count==0=>"pls::cs::culture_to_lower", "ToUpper" when args.Count==0=>"pls::cs::culture_to_upper",
+                    "LastIndexOf" when args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_Char=>"cs_last_index_char1",
+                    "ToString" when args.Count==0=>"cs_string_identity", "GetHashCode" when args.Count==0=>"cs_value_hash",
                     "Equals" when args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_String=>"cs_string_equals",
                     "Substring" when args.Count==1=>"cs_substring1", "Substring" when args.Count==2=>"cs_substring2",
                     "ToCharArray" when args.Count==0=>"cs_to_chars", "IndexOf" when symbol.Parameters[0].Type.SpecialType==SpecialType.System_Char&&args.Count==1=>"cs_index_char1",
                     "IndexOf" when symbol.Parameters[0].Type.SpecialType==SpecialType.System_Char&&args.Count==2=>"cs_index_char2",_=>null};
+            } else if(receiverType?.ToDisplayString()=="System.Array"&&symbol.Name=="SetValue"&&args.Count==2&&symbol.Parameters[1].Type.SpecialType==SpecialType.System_Int32){intrinsic="pls::cs::runtime_array_set_value";
+            } else if(Integral(receiverType)&&symbol.Name=="GetHashCode"&&args.Count==0){intrinsic="cs_value_hash";
             } else if(Integral(receiverType)&&symbol.Name=="ToString"&&args.Count==0) {
                 intrinsic=receiverType!.SpecialType==SpecialType.System_Char?"cs_char_string":"cs_integer_string";
             } else if(receiverType is IArrayTypeSymbol&&symbol.Name=="Clone"&&args.Count==0) {
@@ -573,17 +808,24 @@ sealed class Lowerer {
         if(utf8Receiver&&((args.Count==1&&(symbol.Name=="GetBytes"||symbol.Name=="GetString"))||(args.Count==3&&symbol.Name=="GetString")))callee=symbol.Name=="GetBytes"?"pls::cs::encoding_utf8_get_bytes":"pls::cs::encoding_utf8_get_string";
         else if(utf8Receiver)throw new Unsupported(n,"UTF8 encoding overload not lowered");
         else if(intrinsic!=null)callee=intrinsic;
+        else if(owner=="System.IO.Path"&&symbol.IsStatic&&symbol.Name is "GetExtension" or "ChangeExtension" or "GetFileName" or "GetFileNameWithoutExtension"&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_String))callee="pls::cs::RuntimePath::"+symbol.Name;
+        else if(owner=="System.Text.RegularExpressions.Regex"&&symbol.IsStatic&&new[]{"Matches","Match","IsMatch","Replace"}.Contains(symbol.Name)&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_String))callee="pls::cs::RuntimeRegex::"+symbol.Name;
+        else if(owner=="System.Text.Encoding"&&symbol.Name=="GetEncoding"&&args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_String)callee="pls::cs::RuntimeEncoding::GetEncoding";
         else if(owner=="System.Convert"&&symbol.Name=="ToBase64String"&&args.Count==1)callee="pls::cs::convert_to_base64_string";
         else if(owner=="System.Convert"&&symbol.Name=="FromBase64String"&&args.Count==1)callee="pls::cs::convert_from_base64_string";
+        else if(owner=="System.Threading.Thread"&&symbol.Name=="Sleep"&&args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_Int32)callee="pls::cs::Thread::Sleep";
         else if(owner=="System.GC"&&symbol.Name=="Collect"&&args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_Int32)callee="pls::cs::gc_collect";
         else if(owner=="System.TimeZoneInfo"&&symbol.IsStatic&&new[]{"CreateCustomTimeZone","FindSystemTimeZoneById","ConvertTimeToUtc"}.Contains(symbol.Name))callee="pls::cs::TimeZoneInfo::"+symbol.Name;
         else if(owner=="string"&&symbol.Name=="Concat"&&args.Count==2&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_String))callee="pls::cs::String::concat";
         else if((owner=="int"||owner=="long"||owner=="System.Int32"||owner=="System.Int64")&&symbol.Name=="Parse"&&args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_String)callee=(symbol.ReturnType.SpecialType==SpecialType.System_Int32)?"pls::cs::int32_parse":"pls::cs::int64_parse";
+        else if(symbol.ReturnType.SpecialType==SpecialType.System_Int32&&symbol.Name=="Parse"&&symbol.ContainingType.SpecialType==SpecialType.System_Int32&&args.Count==2&&model.GetConstantValue(args[1]) is {HasValue:true,Value:int style}&&style==515)return "([&](){auto cs_value="+Expr(args[0])+";return pls::cs::int32_parse_hex_number(cs_value);}())";
+        else if(owner=="System.Array"&&symbol.Name=="CreateInstance"&&args.Count==2&&symbol.Parameters[1].Type.SpecialType==SpecialType.System_Int32)callee="pls::cs::runtime_create_array";
         else if(owner=="System.Array"&&symbol.Name=="Copy"&&args.Count==3) {
             if(!(model.GetTypeInfo(args[0]).Type is IArrayTypeSymbol src)||!(model.GetTypeInfo(args[1]).Type is IArrayTypeSymbol dst)||!SymbolEqualityComparer.Default.Equals(src,dst))throw new Unsupported(n,"Array.Copy requires equal concrete one-dimensional array types");
             return "([&]() { auto cs_source = "+Expr(args[0])+"; auto cs_dest = "+Expr(args[1])+"; auto cs_count = "+Expr(args[2])+"; "+Type(src,n)+"::copy(cs_source,0,cs_dest,0,cs_count); }())";
         }
         else if(owner=="System.Array"&&symbol.Name=="Copy"&&args.Count==5)callee="pls::cs::array_copy";
+        else if(owner=="System.Net.IPAddress"&&symbol.Name=="NetworkToHostOrder"&&args.Count==1&&new[]{SpecialType.System_Int16,SpecialType.System_Int32,SpecialType.System_Int64}.Contains(symbol.Parameters[0].Type.SpecialType))callee="cs_network_to_host<"+Type(symbol.ReturnType,n)+">";
         else if(owner=="System.BitConverter") {
             if(symbol.Name=="GetBytes")callee="cs_bit_bytes";
             else if(new[]{"ToInt64","ToInt32","ToInt16","ToUInt64","ToUInt32","ToUInt16","ToSingle","ToDouble"}.Contains(symbol.Name))callee="cs_bits_from<"+Type(symbol.ReturnType,n)+">";
@@ -600,20 +842,28 @@ sealed class Lowerer {
             ITypeSymbol? parameter=intrinsic!=null?(i==0?model.GetTypeInfo(args[i]).Type:symbol.Parameters[i-1].Type):symbol.Parameters[Math.Min(i,symbol.Parameters.Length-1)].Type;
             body.Append("auto cs_arg"+i+" = "+Converted(args[i],parameter)+"; ");
         }
-        body.Append(symbol.ReturnsVoid?"":"return ");body.Append(callee+"("+String.Join(",",Enumerable.Range(0,args.Count).Select(i=>"cs_arg"+i))+"); }())");
+        var expectedArguments=symbol.Parameters.Length+(intrinsic!=null?1:0);
+        if(args.Count>expectedArguments)throw new Unsupported(n,"expanded params argument lowering requires an array construction");
+        for(int i=args.Count;i<expectedArguments;i++){
+            var parameter=symbol.Parameters[i-(intrinsic!=null?1:0)];if(!parameter.HasExplicitDefaultValue)throw new Unsupported(n,"missing required argument");
+            body.Append("auto cs_arg"+i+" = "+Constant(parameter.ExplicitDefaultValue,parameter.Type,n)+"; ");
+        }
+        body.Append(symbol.ReturnsVoid?"":"return ");body.Append(callee+"("+String.Join(",",Enumerable.Range(0,expectedArguments).Select(i=>"cs_arg"+i))+"); }())");
         return body.ToString();
     }
     string OrderedCall(IMethodSymbol method,List<ExpressionSyntax> args,SyntaxNode site,string? receiver,bool dispatch=true,string? nativeCallee=null) {
-        if(args.Count!=method.Parameters.Length)throw new Unsupported(site,"optional/params/named constructor or instance arguments not lowered");
+        if(args.Count>method.Parameters.Length||method.Parameters.Skip(args.Count).Any(p=>!p.HasExplicitDefaultValue))throw new Unsupported(site,"expanded params/named constructor or instance arguments not lowered");
+        if(nativeCallee=="native")nativeCallee=method.MethodKind==MethodKind.Constructor?"pls::cs::make_ref<"+NativeClass(method.ContainingType)+">":method.IsStatic?NativeClass(method.ContainingType)+"::"+method.Name:"member:"+method.Name;
         var result=method.MethodKind==MethodKind.Constructor?Type(method.ContainingType,site):Type(method.ReturnType,site);
         var b=new StringBuilder("([&]() -> "+result+" { ");
         if(receiver!=null)b.Append("auto cs_receiver = static_cast<"+Type(method.ContainingType,site)+">("+receiver+"); ");
         for(int i=0;i<args.Count;i++)b.Append("auto cs_arg"+i+" = "+Converted(args[i],method.Parameters[i].Type)+"; ");
+        for(int i=args.Count;i<method.Parameters.Length;i++)b.Append("auto cs_arg"+i+" = "+Constant(method.Parameters[i].ExplicitDefaultValue,method.Parameters[i].Type,site)+"; ");
         if(receiver!=null)b.Append("if(!cs_receiver)throw pls::cs::NullReferenceException(); ");
         var nativeMember=nativeCallee?.StartsWith("member:",StringComparison.Ordinal)??false;
         var virtualCall=dispatch&&!nativeMember&&receiver!=null&&(method.IsVirtual||method.IsOverride||method.IsAbstract);
-        var values=Enumerable.Range(0,args.Count).Select(i=>"cs_arg"+i).ToList();if(receiver!=null&&!virtualCall&&!nativeMember)values.Insert(0,"cs_receiver");
-        var callee=nativeCallee??Name(method);if(method.MethodKind==MethodKind.Constructor&&method.ContainingType.TypeArguments.Length!=0)callee+="<"+String.Join(",",method.ContainingType.TypeArguments.Select(t=>Type(t,site)))+">";
+        var values=Enumerable.Range(0,method.Parameters.Length).Select(i=>"cs_arg"+i).ToList();if(receiver!=null&&!virtualCall&&!nativeMember)values.Insert(0,"cs_receiver");
+        var callee=nativeCallee??Name(method);if(method.IsGenericMethod&&nativeCallee!=null&&!nativeMember)callee+="<"+String.Join(",",method.TypeArguments.Select(t=>Type(t,site)))+">";if(method.MethodKind==MethodKind.Constructor&&method.ContainingType.TypeArguments.Length!=0)callee+="<"+String.Join(",",method.ContainingType.TypeArguments.Select(t=>Type(t,site)))+">";
         if(nativeMember)callee="cs_receiver->"+nativeCallee!.Substring("member:".Length);
         if(virtualCall)callee="cs_receiver->"+Slot(method);
         b.Append(result=="void"?"":"return ");b.Append(callee+"("+String.Join(",",values)+"); }())");return b.ToString();
@@ -632,9 +882,15 @@ sealed class Lowerer {
                 var declaration=f.Declaration==null?String.Join(",",f.Initializers.Select(Expr)):Declare(f.Declaration);
                 return "for ("+declaration+"; "+(f.Condition==null?"true":Expr(f.Condition))+"; "+String.Join(",",f.Incrementors.Select(Expr))+") "+Statement(f.Statement,method);
             case ForEachStatementSyntax f:
-                if(!(model.GetTypeInfo(f.Expression).Type is IArrayTypeSymbol))throw new Unsupported(f,"foreach non-array requires enumerator/disposal protocol");
+                if(SystemList(model.GetTypeInfo(f.Expression).Type)){
+                    var listUnique=temporary++;var listLocal=model.GetDeclaredSymbol(f)!;var listCaptured=capturedVariables.Contains(listLocal);var name="cs_list_enum"+listUnique;
+                    var listDeclaration=(listCaptured?CellType(listLocal,f):Type(listLocal.Type,f))+" "+Local(listLocal)+(listCaptured?"_cell":"")+"="+(listCaptured?CellAllocation(listLocal,name+".get_Current()",f):name+".get_Current()")+";";
+                    return "{auto "+name+"=("+Expr(f.Expression)+").GetEnumerator();struct cs_list_scope"+listUnique+"{decltype("+name+")&e;~cs_list_scope"+listUnique+"(){e.Dispose();}} cs_scope"+listUnique+"{"+name+"};while("+name+".MoveNext()){ "+listDeclaration+Statement(f.Statement,method)+"}}";
+                }
+                if(!(model.GetTypeInfo(f.Expression).Type is IArrayTypeSymbol))throw new Unsupported(f,"foreach non-array/list requires enumerator/disposal protocol");
                 var unique=temporary++;var local=model.GetDeclaredSymbol(f)!;
-                return "{ auto cs_each"+unique+" = "+Expr(f.Expression)+"; for (std::int32_t cs_i"+unique+"=0; cs_i"+unique+"<cs_each"+unique+".length(); ++cs_i"+unique+") { "+Type(local.Type,f)+" "+Local(local)+" = cs_each"+unique+".at(cs_i"+unique+"); "+Statement(f.Statement,method)+" } }";
+                var capturedEach=capturedVariables.Contains(local);
+                return "{ auto cs_each"+unique+" = "+Expr(f.Expression)+"; for (std::int32_t cs_i"+unique+"=0; cs_i"+unique+"<cs_each"+unique+".length(); ++cs_i"+unique+") { "+(capturedEach?CellType(local,f):Type(local.Type,f))+" "+Local(local)+(capturedEach?"_cell":"")+" = "+(capturedEach?CellAllocation(local,"cs_each"+unique+".at(cs_i"+unique+")",f):"cs_each"+unique+".at(cs_i"+unique+")")+"; "+Statement(f.Statement,method)+" } }";
             case BreakStatementSyntax _:return "break;";
             case ContinueStatementSyntax _:return "continue;";
             case EmptyStatementSyntax _:return ";";
@@ -643,6 +899,7 @@ sealed class Lowerer {
             case ThrowStatementSyntax thrown:
                 if(thrown.Expression==null)return "throw;";
                 if(thrown.Expression.IsKind(SyntaxKind.NullLiteralExpression))return "throw pls::cs::NullReferenceException();";
+                if(model.GetTypeInfo(thrown.Expression).Type is INamedTypeSymbol managedException&&ExceptionClass(managedException)&&(thrown.Expression is not ObjectCreationExpressionSyntax||managedException.DeclaringSyntaxReferences.Length!=0))return "pls::cs::throw_exception("+Expr(thrown.Expression)+");";
                 if(thrown.Expression is ObjectCreationExpressionSyntax exception&&model.GetTypeInfo(exception).Type is INamedTypeSymbol et) {
                     var runtime=ExceptionType(et,exception);
                     if(exception.ArgumentList?.Arguments.Count==0)return "throw "+runtime+"();";
@@ -653,14 +910,21 @@ sealed class Lowerer {
                 string Protected() {
                     var text=Statement(tr.Block,method);
                     if(tr.Catches.Count==0)return text;
-                    var b=new StringBuilder("try "+text);
-                    foreach(var clause in tr.Catches) {
-                        Used(clause);if(clause.Filter!=null)throw new Unsupported(clause,"catch filters require first-pass CLR filter dispatch");
+                    var catchIndex=temporary++;var caught="cs_caught_"+catchIndex;var managed="cs_exception_"+catchIndex;
+                    var b=new StringBuilder("try "+text+" catch(const pls::cs::Exception& "+caught+") {auto "+managed+"=pls::cs::capture_exception("+caught+");\n");
+                    for(int index=0;index<tr.Catches.Count;index++){
+                        var clause=tr.Catches[index];Used(clause);if(clause.Filter!=null)throw new Unsupported(clause,"catch filters require first-pass CLR filter dispatch");
                         var type=clause.Declaration==null?compilation.GetTypeByMetadataName("System.Exception"):model.GetTypeInfo(clause.Declaration.Type).Type;
+                        if(!ExceptionClass(type))throw new Unsupported(clause,"catch type is not a known exception hierarchy");
                         var catchSymbol=clause.Declaration==null?null:model.GetDeclaredSymbol(clause.Declaration) as ILocalSymbol;
-                        var variable=catchSymbol==null?"":Local(catchSymbol);
-                        b.Append(" catch (const "+ExceptionType(type,clause)+"& "+variable+") "+Statement(clause.Block,method));
+                        var variable=catchSymbol==null?null:Local(catchSymbol);
+                        var source=type!.DeclaringSyntaxReferences.Length!=0;
+                        var condition=source?"std::dynamic_pointer_cast<"+NativeClass((INamedTypeSymbol)type)+">("+managed+")":"pls::cs::exception_is("+managed+",\""+type.ToDisplayString()+"\")";
+                        b.Append((index==0?"if":"else if")+"("+condition+") {");
+                        if(variable!=null)b.Append("auto "+variable+"="+(source?"std::dynamic_pointer_cast<"+NativeClass((INamedTypeSymbol)type)+">("+managed+")":managed)+";");
+                        b.Append(Statement(clause.Block,method)+"}\n");
                     }
+                    b.Append("else {throw;} }");
                     return b.ToString();
                 }
                 if(tr.Finally==null)return Protected();
@@ -707,9 +971,10 @@ sealed class Lowerer {
         foreach(var d in n.Variables) {
             var symbol=model.GetDeclaredSymbol(d) as ILocalSymbol;
             if(symbol==null)throw new Unsupported(d,"local declaration symbol not found");
-            var t=Type(symbol.Type,d);if(type!=null&&type!=t)throw new Unsupported(n,"mixed declaration types");
+            var captured=capturedVariables.Contains(symbol);var t=captured?CellType(symbol,d):Type(symbol.Type,d);if(type!=null&&type!=t)throw new Unsupported(n,"mixed declaration types");
             builder.Append(type==null?(hoistLocals?"":t+" "):", ");type=t;
-            builder.Append(Local(symbol)+" = "+(d.Initializer==null?t+"{}":Converted(d.Initializer.Value,symbol.Type)));
+            var value=d.Initializer==null?Type(symbol.Type,d)+"{}":Converted(d.Initializer.Value,symbol.Type);
+            builder.Append(Local(symbol)+(captured?"_cell":"")+" = "+(captured?CellAllocation(symbol,value,d):value));
         }
         return builder.ToString();
     }
@@ -721,17 +986,26 @@ sealed class Lowerer {
             if(method==null){rejected[id]=new{kind="Declaration",reason="member is not a source method declaration"};return false;}
             methods[id]=method;syntax[id]=method.ContainingType.DeclaringSyntaxReferences[0].GetSyntax();
         }
-        var declaration=syntax[id];var oldModel=model;var oldCurrent=current;var oldHoist=hoistLocals;current=id;model=compilation.GetSemanticModel(declaration.SyntaxTree);hoistLocals=declaration.DescendantNodes().OfType<GotoStatementSyntax>().Any();
+        var declaration=syntax[id];var oldModel=model;var oldCurrent=current;var oldHoist=hoistLocals;var oldCaptured=capturedVariables;current=id;model=compilation.GetSemanticModel(declaration.SyntaxTree);hoistLocals=declaration.DescendantNodes().OfType<GotoStatementSyntax>().Any();capturedVariables=new(SymbolEqualityComparer.Default);
         dependencies[id]=new();fieldDependencies[id]=new();classDependencies[id]=new();methodKinds[id]=new();active.Add(id);
         try {
+            if(externalTypes.ContainsKey(Id(method.ContainingType)))throw new Unsupported(declaration,"native class member requires an exact external API binding");
             if(method.IsAbstract)throw new Unsupported(declaration,"abstract method has no emitted body");
+            if(method.MethodKind==MethodKind.UserDefinedOperator&&method.Name is "op_Equality" or "op_Inequality"){
+                var partner=method.Name=="op_Equality"?"op_Inequality":"op_Equality";
+                foreach(var other in method.ContainingType.GetMembers(partner).OfType<IMethodSymbol>().Where(other=>other.Parameters.Length==method.Parameters.Length&&other.Parameters.Zip(method.Parameters).All(pair=>SymbolEqualityComparer.Default.Equals(pair.First.Type,pair.Second.Type))))dependencies[id].Add(Id(other));
+            }
             if(!method.IsStatic)RequireClass(method.ContainingType,declaration);
-            if(method.ContainingType.GetMembers().OfType<IMethodSymbol>().Any(m=>m.MethodKind==MethodKind.StaticConstructor&&!m.IsImplicitlyDeclared))throw new Unsupported(declaration,"explicit type initializer requires once-per-type initialization lowering");
-            if(method.Parameters.Any(p=>p.RefKind!=RefKind.None||p.IsParams))throw new Unsupported(declaration,"ref/out/params signature not lowered");
+            if(method.MethodKind==MethodKind.StaticConstructor)throw new Unsupported(declaration,"type initializer emitted through once-per-type initialization, not a callable source method");
+            EnsureTypeInitializer(method.ContainingType,declaration);
+            if(method.Parameters.Any(p=>p.RefKind!=RefKind.None))throw new Unsupported(declaration,"ref/out/params signature not lowered");
             var sourceMethod=declaration as BaseMethodDeclarationSyntax;
             var sourceBlock=sourceMethod?.Body??(declaration as AccessorDeclarationSyntax)?.Body;
             var sourceArrow=sourceMethod?.ExpressionBody??(declaration as AccessorDeclarationSyntax)?.ExpressionBody??(declaration as PropertyDeclarationSyntax)?.ExpressionBody??(declaration as IndexerDeclarationSyntax)?.ExpressionBody;
             if(sourceBlock==null&&sourceArrow==null&&method.MethodKind!=MethodKind.Constructor)throw new Unsupported(declaration,"declaration has no body or requires auto-property synthesis");
+            var captureFlow=sourceBlock!=null?model.AnalyzeDataFlow(sourceBlock):sourceArrow!=null?model.AnalyzeDataFlow(sourceArrow.Expression):null;
+            if(captureFlow?.Succeeded??false)capturedVariables.UnionWith(captureFlow.Captured.Where(s=>s is ILocalSymbol||s is IParameterSymbol));
+            if(hoistLocals&&capturedVariables.Count!=0)throw new Unsupported(declaration,"captured variables with goto require scope-lifetime lowering");
             var constructor=method.MethodKind==MethodKind.Constructor;
             var result=constructor?Type(method.ContainingType,declaration):Type(method.ReturnType,declaration);
             var parameterList=method.Parameters.Select(p=>Type(p.Type,declaration)+" "+Local(p)).ToList();
@@ -739,6 +1013,8 @@ sealed class Lowerer {
             var parameters=String.Join(",",parameterList);
             string template=Template(TypeParameters(method));
             var body=sourceBlock!=null?Statement(sourceBlock,method):sourceArrow!=null?(method.ReturnsVoid?"{ "+Expr(sourceArrow.Expression)+"; }":"{ return "+Converted(sourceArrow.Expression,method.ReturnType)+"; }"):"{}";
+            var parameterCells=String.Concat(method.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,declaration)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),declaration)+";\n"));
+            if(parameterCells.Length!=0)body="{\n"+parameterCells+body+"\n}";
             if(hoistLocals) {
                 var locals=declaration.DescendantNodes().OfType<VariableDeclaratorSyntax>().Select(v=>model.GetDeclaredSymbol(v)).OfType<ILocalSymbol>().ToArray();
                 body="{\n"+String.Join("\n",locals.Select(l=>Type(l.Type,declaration)+" "+Local(l)+"{};"))+"\n"+body+"\n}";
@@ -755,39 +1031,74 @@ sealed class Lowerer {
                 IMethodSymbol? target=null;var initArgs=new List<ExpressionSyntax>();
                 if(ctor?.Initializer!=null){target=model.GetSymbolInfo(ctor.Initializer).Symbol as IMethodSymbol;initArgs=ctor.Initializer.ArgumentList.Arguments.Select(a=>a.Expression).ToList();}
                 else target=method.ContainingType.BaseType?.InstanceConstructors.FirstOrDefault(c=>c.Parameters.Length==0);
-                if(target!=null&&target.ContainingType.SpecialType!=SpecialType.System_Object&&FrameworkClass(target.ContainingType)==null&&!externalCompleteBases.Contains(Id(target.ContainingType))) {
+                if(target!=null&&ExceptionClass(target.ContainingType)&&target.ContainingType.DeclaringSyntaxReferences.Length==0){
+                    init.Append("([&](){ ");for(int i=0;i<initArgs.Count;i++)init.Append("auto cs_arg"+i+" = "+Converted(initArgs[i],target.Parameters[i].Type)+"; ");
+                    init.Append("cs_this->source_ctor(\""+target.ContainingType.ToDisplayString()+"\""+String.Concat(Enumerable.Range(0,initArgs.Count).Select(i=>",cs_arg"+i))+");}());\n");
+                }
+                if(target!=null&&externalMethods.TryGetValue(Id(target),out var nativeBaseCtor)&&nativeBaseCtor.StartsWith("base:",StringComparison.Ordinal)){
+                    init.Append("([&]() { ");for(int i=0;i<initArgs.Count;i++)init.Append("auto cs_arg"+i+" = "+Converted(initArgs[i],target.Parameters[i].Type)+"; ");
+                    init.Append("std::static_pointer_cast<"+NativeClass(target.ContainingType)+">(cs_this)->"+nativeBaseCtor.Substring(5)+"("+String.Join(",",Enumerable.Range(0,initArgs.Count).Select(i=>"cs_arg"+i))+"); }());\n");
+                }
+                if(!RecordStruct(method.ContainingType)&&target!=null&&target.ContainingType.SpecialType!=SpecialType.System_Object&&FrameworkClass(target.ContainingType)==null&&!externalCompleteBases.Contains(Id(target.ContainingType))) {
                     RequireClass(target.ContainingType,declaration);dependencies[id].Add(Id(target));
                     init.Append("([&]() { ");for(int i=0;i<initArgs.Count;i++)init.Append("auto cs_arg"+i+" = "+Converted(initArgs[i],target.Parameters[i].Type)+"; ");
                     var callArgs=new[]{"std::static_pointer_cast<"+ClassName(target.ContainingType)+">(cs_this)"}.Concat(Enumerable.Range(0,initArgs.Count).Select(i=>"cs_arg"+i));
                     init.Append(Name(target)+"_init("+String.Join(",",callArgs)+"); }());\n");
                 }
                 var initBody=init+body+"\n}";
-                var initParameters=Type(method.ContainingType,declaration)+" cs_this"+(parameters.Length==0?"":","+parameters);
+                var initParameters=Type(method.ContainingType,declaration)+(RecordStruct(method.ContainingType)?"* cs_this":" cs_this")+(parameters.Length==0?"":","+parameters);
                 var factory="{ auto cs_this = pls::cs::make_ref<"+ClassName(method.ContainingType)+">(); "+Name(method)+"_init(cs_this"+(method.Parameters.Length==0?"":","+String.Join(",",method.Parameters.Select(Local)))+"); return cs_this; }";
-                body=factory;
+                if(RecordStruct(method.ContainingType))factory="{ "+ClassName(method.ContainingType)+" cs_this{}; "+Name(method)+"_init(&cs_this"+(method.Parameters.Length==0?"":","+String.Join(",",method.Parameters.Select(Local)))+");return cs_this;}";
+
+                body=method.ContainingType.TypeParameters.Length==0?"{ "+TypeInitName(method.ContainingType)+"();\n"+factory+"\n}":factory;
                 body+="\n"+template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
             } else if(!method.IsStatic) body="{ if(!cs_this)throw pls::cs::NullReferenceException();\n"+body+"\n}";
-            var source=template+result+" "+Name(method)+"("+parameters+") "+body;
+            if(!constructor&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0)body="{ "+TypeInitName(method.ContainingType)+"();\n"+body+"\n}";
+            var source=QualifyHelpers(template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
             foreach(var dependency in dependencies[id].ToArray())if(!Emit(dependency))throw new Unsupported(declaration,"dependency not lowered: "+dependency);
             emitted[id]=source;return true;
         } catch(Unsupported e) {
             var span=declaration.GetLocation().GetLineSpan();
-            rejected[id]=new{kind=e.Kind,reason=e.Message,source=span.Path,line=span.StartLinePosition.Line+1};return false;
-        } finally{active.Remove(id);model=oldModel;current=oldCurrent;hoistLocals=oldHoist;}
+            rejected[id]=new{kind=e.Kind,reason=e.Message,site=e.Site,source=span.Path,line=span.StartLinePosition.Line+1};return false;
+        } finally{active.Remove(id);model=oldModel;current=oldCurrent;hoistLocals=oldHoist;capturedVariables=oldCaptured;}
     }
     public object Generate(Request input) {
-        if(input.select_all_source_methods)input.selected=methods.Keys.OrderBy(x=>x).ToArray();
+        if(input.select_all_source_methods)input.selected=methods.Keys.Where(id=>input.select_source_prefix.Length==0||Path.GetRelativePath(input.source_root,syntax[id].SyntaxTree.FilePath).Replace('\\','/').StartsWith(input.select_source_prefix,StringComparison.Ordinal)).OrderBy(x=>x).ToArray();
         foreach(var id in input.selected.Where(id=>id.StartsWith("M:",StringComparison.Ordinal)))Emit(id);
         // Keep only dependency-closed emitted methods; recursion is legal but a
         // strongly-connected component with any rejected dependency is not.
+        bool LayoutValid(ITypeSymbol? symbol,HashSet<string> visiting){
+            if(symbol is IArrayTypeSymbol array)return LayoutValid(array.ElementType,visiting);
+            if(symbol is not INamedTypeSymbol type)return true;if(externalTypes.ContainsKey(Id(type)))return type.TypeArguments.All(argument=>LayoutValid(argument,visiting));
+            if(SystemList(type)||SystemDictionary(type))return type.TypeArguments.All(argument=>LayoutValid(argument,visiting));
+            if(!PlainClass(type)&&!RecordStruct(type))return true;
+            var key=Id(type);if(!visiting.Add(key))return true;if(!classes.ContainsKey(key))return false;
+            return LayoutValid(type.BaseType,visiting)&&type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst).All(field=>LayoutValid(field.Type,visiting));
+        }
+        foreach(var id in emitted.Keys.ToArray())if(classDependencies[id].Any(key=>!classes.ContainsKey(key)||!LayoutValid(classes[key],new()))){emitted.Remove(id);rejected[id]=new{kind="ClassLayoutDependency",reason="class layout closure contains an unsupported member"};}
         bool changed=true;
         while(changed){changed=false;foreach(var id in emitted.Keys.ToArray())if(dependencies[id].Any(d=>!emitted.ContainsKey(d))) {emitted.Remove(id);rejected[id]=new{kind="Dependency",reason="dependency closure contains an unsupported member"};changed=true;}}
         var usedFields=new HashSet<string>(emitted.Keys.SelectMany(id=>fieldDependencies[id]));
         var usedClasses=new HashSet<string>(emitted.Keys.SelectMany(id=>classDependencies[id]));
+        var usedTypes=emitted.Keys.Select(id=>Id(methods[id].ContainingType)).Where(typeInitializers.ContainsKey).ToHashSet();
+        bool expanded=true;while(expanded){expanded=false;foreach(var field in usedFields.ToArray())if(usedTypes.Add(Id(fieldSymbols[field].ContainingType)))expanded=true;foreach(var type in usedTypes.ToArray()){foreach(var field in initializerFields[type])if(usedFields.Add(field))expanded=true;usedClasses.UnionWith(initializerClasses[type]);}}
+
+        void AddLayout(ITypeSymbol? symbol){
+            if(symbol is IArrayTypeSymbol array){AddLayout(array.ElementType);return;}
+            if(symbol is not INamedTypeSymbol type)return;
+            if(externalTypes.ContainsKey(Id(type))){foreach(var argument in type.TypeArguments)AddLayout(argument);return;}
+            if(SystemList(type)||SystemDictionary(type)){foreach(var argument in type.TypeArguments)AddLayout(argument);return;}
+            if(!PlainClass(type)&&!RecordStruct(type)&&!(type.TypeKind==TypeKind.Interface&&type.DeclaringSyntaxReferences.Length!=0))return;
+            type=type.OriginalDefinition;if(!usedClasses.Add(Id(type)))return;
+            foreach(var iface in type.Interfaces)AddLayout(iface);AddLayout(type.BaseType);foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))AddLayout(field.Type);
+        }
+        foreach(var field in usedFields)AddLayout(fieldSymbols[field].Type);
+        foreach(var method in emitted.Keys.Select(id=>methods[id])){if(!method.IsStatic)AddLayout(method.ContainingType);AddLayout(method.ReturnType);foreach(var parameter in method.Parameters)AddLayout(parameter.Type);}
+        foreach(var id in usedClasses.ToArray()){var type=classes[id];foreach(var iface in type.Interfaces)AddLayout(iface);AddLayout(type.BaseType);foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))AddLayout(field.Type);}
         foreach(var id in usedClasses.ToArray())if(!classes.ContainsKey(id))throw new InvalidOperationException("incomplete generated class dependency: "+id);
         Directory.CreateDirectory(input.output);
         var game=input.assembly=="Assembly-CSharp";var ns=game?"pls::game":"pls::generated";var basename=game?"game_generated":"portable_generated";
-        var header=new StringBuilder("// GENERATED by translator/Translator.cs. Do not edit.\n#pragma once\n#include \"semantic_runtime.hpp\"\n#include \"managed_text.hpp\"\n#include \"managed_random.hpp\"\n#include \"managed_time.hpp\"\n#include \"managed_streams.hpp\"\n"+(game?"#include \"generated/portable_generated.hpp\"\n":"")+String.Join("",input.native_includes.Select(n=>"#include \""+n+"\"\n"))+"#include <cmath>\n#include <cstring>\nnamespace "+ns+" {\n");
+        var header=new StringBuilder("// GENERATED by translator/Translator.cs. Do not edit.\n#pragma once\n#include \"semantic_runtime.hpp\"\n#include \"managed_text.hpp\"\n#include \"managed_random.hpp\"\n#include \"managed_time.hpp\"\n#include \"managed_streams.hpp\"\n#include \"managed_dictionary.hpp\"\n#include \"managed_type_init.hpp\"\n#include \"managed_reflection.hpp\"\n#include \"managed_exceptions.hpp\"\n#include \"managed_thread.hpp\"\n#include \"managed_collation.hpp\"\n#include \"managed_encoding.hpp\"\n#include \"managed_regex.hpp\"\n#include \"managed_stream_reader.hpp\"\n#include \"managed_path.hpp\"\n#include \"managed_string_ops.hpp\"\n"+(game?"#include \"generated/portable_generated.hpp\"\n":"")+String.Join("",input.native_includes.Select(n=>"#include \""+n+"\"\n"))+"#include <cmath>\n#include <cstring>\nnamespace "+ns+" {\n");
         header.Append("[[maybe_unused]] static float cs_f32(std::uint32_t bits) { float value; std::memcpy(&value,&bits,sizeof(value)); return value; }\n[[maybe_unused]] static double cs_f64(std::uint64_t bits) { double value; std::memcpy(&value,&bits,sizeof(value)); return value; }\n");
         header.Append(FrameworkHelpers.Replace("\nstatic ","\n[[maybe_unused]] static "));
         foreach(var id in usedClasses.OrderBy(x=>x))header.Append(Template(classes[id].TypeParameters)+"struct "+Name(classes[id])+";\n");
@@ -796,36 +1107,55 @@ sealed class Lowerer {
             var baseType=ExceptionType(type.BaseType,type.DeclaringSyntaxReferences[0].GetSyntax());
             header.Append("struct "+Name(type)+" : "+baseType+" { explicit "+Name(type)+"(std::string message) : "+baseType+"(std::move(message)) {} const char* type_name()const noexcept override {return \""+type.ToDisplayString()+"\";} };\n");
         }
-        foreach(var id in usedClasses.OrderBy(id=>ClassDepth(classes[id])).ThenBy(x=>x)) {
+        foreach(var id in usedClasses.OrderBy(id=>classes[id].TypeKind==TypeKind.Interface?0:1).ThenBy(id=>ClassDepth(classes[id])).ThenBy(x=>x)) {
+            if(classes[id].TypeKind==TypeKind.Interface){
+                header.Append("struct "+Name(classes[id])+" {virtual ~"+Name(classes[id])+"()=default;\n");
+                foreach(var m in InterfaceMethods(classes[id]))header.Append("virtual "+TypeName(m.ReturnType)+" "+Slot(m)+"("+String.Join(",",m.Parameters.Select(p=>TypeName(p.Type)+" "+Local(p)))+")=0;\n");
+                header.Append("};\n");continue;
+            }
+            if(RecordStruct(classes[id])){
+                header.Append("struct "+Name(classes[id])+" {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();\n");
+                foreach(var field in classes[id].GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append(TypeName(field.Type)+" "+Name(field)+"{};\n");
+                header.Append("};\n");continue;
+            }
             var baseType=classes[id].BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
-            header.Append(Template(classes[id].TypeParameters)+"struct "+Name(classes[id])+" : "+baseName+" {\n");
+            header.Append(Template(classes[id].TypeParameters)+"struct "+Name(classes[id])+" : "+baseName+String.Concat(classes[id].Interfaces.Where(t=>t.DeclaringSyntaxReferences.Length!=0).Select(t=>", "+NativeClass(t)))+" {\n");
             header.Append("void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;\nvoid release_edges()override;\n");
+            header.Append("std::string managed_delegate_method_id(const std::string&slot)const override{");
+            foreach(var member in methods.Values.Where(m=>SymbolEqualityComparer.Default.Equals(m.ContainingType,classes[id])))foreach(var slot in MethodSlots(member))header.Append("if(slot==\""+slot+"\")return \""+Id(member)+"\";");
+            header.Append("return "+baseName+"::managed_delegate_method_id(slot);}\n");
+
+            var names=new Stack<string>();for(var currentType=classes[id];currentType!=null;currentType=currentType.ContainingType)names.Push(currentType.MetadataName);var managedName=classes[id].ContainingNamespace.ToDisplayString()+"."+String.Join("+",names);var genericName=classes[id].ContainingNamespace.ToDisplayString()+"."+classes[id].Name+(char)96+classes[id].TypeParameters.Length;
+            header.Append("std::string managed_type_name()const override{return "+(classes[id].TypeParameters.Length==0?"\""+managedName+"\"":"std::string(\""+genericName+"[\")+"+String.Join("+std::string(\",\")+",classes[id].TypeParameters.Select(p=>"pls::cs::managed_type_name_traits<T_"+p.Name+">::name()"))+"+\"]\"")+";}\n");
+
             foreach(var field in classes[id].GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append(TypeName(field.Type)+" "+Name(field)+"{};\n");
-            foreach(var m in methods.Values.Where(m=>(m.IsVirtual||m.IsOverride)&&SymbolEqualityComparer.Default.Equals(m.ContainingType,classes[id])&&(emitted.ContainsKey(Id(m))||externalSlots.ContainsKey(Id(SlotRoot(m)))))) {
+            foreach(var m in methods.Values.Where(m=>MethodSlots(m).Any()&&SymbolEqualityComparer.Default.Equals(m.ContainingType,classes[id]))) {
                 var ps=m.Parameters.Select(p=>TypeName(p.Type)+(SlotRoot(m).ContainingType.SpecialType==SpecialType.System_Object&&m.Name=="Equals"?" const& ":" ")+Local(p));
-                header.Append("virtual "+TypeName(m.ReturnType)+" "+Slot(m)+"("+String.Join(",",ps)+");\n");
+                foreach(var slot in MethodSlots(m))header.Append("virtual "+TypeName(m.ReturnType)+" "+slot+"("+String.Join(",",ps)+");\n");
             }
             header.Append("};\n");
         }
+        foreach(var type in usedTypes.Select(id=>initializedTypes[id]).OrderBy(t=>Id(t)))header.Append("void "+TypeInitName(type)+"();\n");
+        foreach(var id in usedFields.OrderBy(x=>x))header.Append(TypeName(fieldSymbols[id].Type)+"& "+Name(fieldSymbols[id])+"();\n");
         foreach(var pair in emitted.OrderBy(p=>p.Key)) {
             var method=methods[pair.Key];
             var ctor=method.MethodKind==MethodKind.Constructor;var parameters=method.Parameters.Select(p=>TypeName(p.Type)+" "+Local(p)).ToList();
             if(!method.IsStatic&&!ctor)parameters.Insert(0,TypeName(method.ContainingType)+" cs_this");
             header.Append(Template(TypeParameters(method))+TypeName(ctor?method.ContainingType:method.ReturnType)+" "+Name(method)+"("+String.Join(",",parameters)+");\n");
-            if(ctor)header.Append(Template(TypeParameters(method))+"void "+Name(method)+"_init("+TypeName(method.ContainingType)+" cs_this"+(parameters.Count==0?"":","+String.Join(",",parameters))+");\n");
+            if(ctor)header.Append(Template(TypeParameters(method))+"void "+Name(method)+"_init("+TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"* cs_this":" cs_this")+(parameters.Count==0?"":","+String.Join(",",parameters))+");\n");
         }
         foreach(var pair in emitted.OrderBy(p=>p.Key))if(TypeParameters(methods[pair.Key]).Length!=0)header.Append("// "+pair.Key+"\n"+pair.Value+"\n");
         foreach(var id in usedClasses.OrderBy(x=>x)) {
-            var type=classes[id];var baseType=type.BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
-            header.Append(Template(type.TypeParameters)+"inline void "+ClassName(type)+"::trace_edges(const pls::cs::EdgeVisitor&visitor)const {"+baseName+"::trace_edges(visitor);");
+            var type=classes[id];if(type.TypeKind==TypeKind.Interface)continue;var baseType=type.BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
+            header.Append(Template(type.TypeParameters)+"inline void "+ClassName(type)+"::trace_edges(const pls::cs::EdgeVisitor&visitor)const {"+(RecordStruct(type)?"":baseName+"::trace_edges(visitor);"));
             foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append("pls::cs::trace_value("+Name(field)+",visitor);");
-            header.Append("}\n"+Template(type.TypeParameters)+"inline void "+ClassName(type)+"::release_edges(){"+baseName+"::release_edges();");
+            header.Append("}\n"+Template(type.TypeParameters)+"inline void "+ClassName(type)+"::release_edges(){"+(RecordStruct(type)?"":baseName+"::release_edges();"));
             foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append("pls::cs::release_value("+Name(field)+");");
             header.Append("}\n");
         }
-        foreach(var m in emitted.Keys.Select(k=>methods[k]).Where(m=>m.IsVirtual||m.IsOverride)) {
+        foreach(var m in emitted.Keys.Select(k=>methods[k]).Where(m=>MethodSlots(m).Any()))foreach(var slot in MethodSlots(m)) {
             var ps=m.Parameters.Select(p=>TypeName(p.Type)+(SlotRoot(m).ContainingType.SpecialType==SpecialType.System_Object&&m.Name=="Equals"?" const& ":" ")+Local(p));
-            header.Append(Template(m.ContainingType.TypeParameters)+"inline "+TypeName(m.ReturnType)+" "+ClassName(m.ContainingType)+"::"+Slot(m)+"("+String.Join(",",ps)+") {");
+            header.Append(Template(m.ContainingType.TypeParameters)+"inline "+TypeName(m.ReturnType)+" "+ClassName(m.ContainingType)+"::"+slot+"("+String.Join(",",ps)+") {");
             header.Append(m.ReturnsVoid?"":"return ");header.Append(Name(m)+"(std::static_pointer_cast<"+ClassName(m.ContainingType)+">(shared_from_this())"+(m.Parameters.Length==0?"":","+String.Join(",",m.Parameters.Select(Local)))+");}\n");
         }
         IMethodSymbol? bootstrap=input.bootstrap_method.Length==0?null:DocumentationCommentId.GetSymbolsForDeclarationId(input.bootstrap_method,compilation).OfType<IMethodSymbol>().FirstOrDefault();
@@ -835,6 +1165,9 @@ sealed class Lowerer {
         header.Append("}\n");
         var cpp=new StringBuilder("// GENERATED by translator/Translator.cs. Do not edit.\n#include \""+basename+".hpp\"\n#include <cmath>\n#include <cstring>\n#include <cstdint>\nnamespace "+ns+" {\n");
         foreach(var id in usedFields.OrderBy(x=>x))if(fields.TryGetValue(id,out var field))cpp.Append("static "+field+"\n");
+        foreach(var type in usedTypes.Select(id=>initializedTypes[id]).OrderBy(t=>Id(t)))cpp.Append("void "+TypeInitName(type)+"(){static pls::cs::TypeInitState state;state.run(\""+type.ToDisplayString()+"\",[](){\n"+QualifyHelpers(typeInitializers[Id(type)],game)+"\n});}\n");
+        foreach(var id in usedFields.OrderBy(x=>x)){var field=fieldSymbols[id];cpp.Append(TypeName(field.Type)+"& "+Name(field)+"(){"+TypeInitName(field.ContainingType)+"();return "+Name(field)+"_value;}\n");}
+
         foreach(var pair in emitted.OrderBy(p=>p.Key)) {
             var m=methods[pair.Key];var tp=TypeParameters(m);
             if(tp.Length==0)cpp.Append("// "+pair.Key+"\n"+pair.Value+"\n");
@@ -843,19 +1176,20 @@ sealed class Lowerer {
                 var parameters=m.Parameters.Select(p=>Concrete(TypeName(p.Type),tp,true)).ToList();
                 if(!m.IsStatic&&!ctor)parameters.Insert(0,Concrete(TypeName(m.ContainingType),tp,true));
                 cpp.Append("// Concrete compile receipt: "+pair.Key+" [int]\n");
-                cpp.Append("template "+Concrete(TypeName(ctor?m.ContainingType:m.ReturnType),tp,true)+" "+Name(m)+"<"+String.Join(",",tp.Select(t=>"std::int32_t"))+">("+String.Join(",",parameters)+");\n");
+                cpp.Append("template "+Concrete(TypeName(ctor?m.ContainingType:m.ReturnType),tp,true)+" "+Name(m)+"<"+String.Join(",",tp.Select(ConcreteCpp))+">("+String.Join(",",parameters)+");\n");
             }
         }
         if(bootstrap!=null&&emitted.ContainsKey(input.bootstrap_method))cpp.Append("pls::cs::Ref<pls::kairo::IApplication> create_application(){return "+Name(bootstrap)+"();}\n");
         cpp.Append("}\n");
         var generatedChunks=WriteGenerated(input.output,basename+".hpp",header.ToString(),input.chunk_bytes).Concat(WriteGenerated(input.output,basename+".cpp",cpp.ToString(),input.chunk_bytes)).ToArray();
+        var oracleMethods=new HashSet<string>();
+        if(!game){
         var oracle=new StringBuilder("// GENERATED source-only oracle; no original game/Unity binary loaded.\nusing System;\npublic static class SourceOracle {\n");
         foreach(var id in usedFields.OrderBy(x=>x)) {
-            var field=fieldSymbols[id];var declaration=(VariableDeclaratorSyntax)field.DeclaringSyntaxReferences[0].GetSyntax();
-            var rewriter=new OracleRewriter(compilation.GetSemanticModel(declaration.SyntaxTree));
-            oracle.Append("public static "+field.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)+" "+Name(field)+" = "+(declaration.Initializer==null?"default("+field.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)+")":rewriter.Visit(declaration.Initializer.Value)!.ToString())+";\n");
+            var field=fieldSymbols[id];var type=field.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            oracle.Append("public static "+type+" "+Name(field)+" {get=>"+OracleStatics(field.ContainingType)+"."+Name(field)+";set=>"+OracleStatics(field.ContainingType)+"."+Name(field)+"=value;}\n");
         }
-        var oracleMethods=new HashSet<string>(emitted.Keys.Where(id=>methods[id].IsStatic&&syntax[id] is MethodDeclarationSyntax));
+        oracleMethods=new HashSet<string>(emitted.Keys.Where(id=>methods[id].IsStatic&&syntax[id] is MethodDeclarationSyntax));
         foreach(var id in oracleMethods.OrderBy(x=>x)) {
             var method=syntax[id];var rewriter=new OracleRewriter(compilation.GetSemanticModel(method.SyntaxTree));
             var rewritten=(MethodDeclarationSyntax)rewriter.Visit(method)!;
@@ -863,12 +1197,24 @@ sealed class Lowerer {
             oracle.Append(rewritten.NormalizeWhitespace().ToFullString()+"\n");
         }
         oracle.Append("}\n");
+        foreach(var type in usedTypes.Select(id=>initializedTypes[id]).OrderBy(t=>Id(t))){
+            oracle.Append("public static class "+OracleStatics(type)+" {\n");
+            foreach(var field in OrderedStaticFields(type)){
+                var d=(VariableDeclaratorSyntax)field.DeclaringSyntaxReferences[0].GetSyntax();var rw=new OracleRewriter(compilation.GetSemanticModel(d.SyntaxTree));
+                oracle.Append("public static "+field.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)+" "+Name(field)+(d.Initializer==null?"":" = "+rw.Visit(d.Initializer.Value))+";\n");
+            }
+            var cctor=type.GetMembers().OfType<IMethodSymbol>().FirstOrDefault(m=>m.MethodKind==MethodKind.StaticConstructor&&!m.IsImplicitlyDeclared);
+            if(cctor!=null){var d=(ConstructorDeclarationSyntax)cctor.DeclaringSyntaxReferences[0].GetSyntax();var rw=new OracleRewriter(compilation.GetSemanticModel(d.SyntaxTree));oracle.Append("static "+OracleStatics(type)+"() "+rw.Visit(d.Body!)+"\n");}
+            else oracle.Append("static "+OracleStatics(type)+"() {}\n");
+            oracle.Append("}\n");
+        }
         foreach(var type in usedExceptions) {
             var declaration=(ClassDeclarationSyntax)type.DeclaringSyntaxReferences[0].GetSyntax();var rw=new OracleRewriter(compilation.GetSemanticModel(declaration.SyntaxTree));
             oracle.Append("namespace "+type.ContainingNamespace.ToDisplayString()+" {\n"+rw.Visit(declaration)!.NormalizeWhitespace().ToFullString()+"\n}\n");
         }
         foreach(var id in usedClasses.OrderBy(x=>x)) {
-            var type=classes[id];oracle.Append("namespace "+type.ContainingNamespace.ToDisplayString()+" { public class "+type.Name+(type.TypeParameters.Length==0?"":"<"+String.Join(",",type.TypeParameters.Select(p=>p.Name))+">")+(type.BaseType!=null&&(PlainClass(type.BaseType)||FrameworkClass(type.BaseType)!=null)?" : "+type.BaseType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat):"")+" {\n");
+            if(classes[id].TypeKind==TypeKind.Interface){var original=classes[id].DeclaringSyntaxReferences[0].GetSyntax();var rw=new OracleRewriter(compilation.GetSemanticModel(original.SyntaxTree));oracle.Append("namespace "+classes[id].ContainingNamespace.ToDisplayString()+" { "+rw.Visit(original)!.NormalizeWhitespace().ToFullString()+" }\n");continue;}
+            var type=classes[id];var oracleBases=new List<string>();if(type.BaseType!=null&&(PlainClass(type.BaseType)||FrameworkClass(type.BaseType)!=null))oracleBases.Add(type.BaseType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));oracleBases.AddRange(type.Interfaces.Where(t=>t.DeclaringSyntaxReferences.Length!=0).Select(t=>t.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)));oracle.Append("namespace "+type.ContainingNamespace.ToDisplayString()+" { ");var outers=new Stack<INamedTypeSymbol>();for(var outer=type.ContainingType;outer!=null;outer=outer.ContainingType)outers.Push(outer);foreach(var outer in outers)oracle.Append("public partial class "+outer.Name+" { ");oracle.Append("public partial "+(RecordStruct(type)?"struct ":"class ")+type.Name+(type.TypeParameters.Length==0?"":"<"+String.Join(",",type.TypeParameters.Select(p=>p.Name))+">")+(oracleBases.Count==0?"":" : "+String.Join(",",oracleBases))+" {\n");
             foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst)) {
                 var d=(VariableDeclaratorSyntax)field.DeclaringSyntaxReferences[0].GetSyntax();var rw=new OracleRewriter(compilation.GetSemanticModel(d.SyntaxTree));
                 oracle.Append("public "+field.Type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)+" "+field.Name+(d.Initializer==null?"":" = "+rw.Visit(d.Initializer.Value))+";\n");
@@ -888,29 +1234,47 @@ sealed class Lowerer {
                 rewritten=rewritten.WithModifiers(SyntaxFactory.TokenList(new[]{SyntaxFactory.Token(SyntaxKind.PublicKeyword)}.Concat(rewritten.Modifiers.Where(t=>t.IsKind(SyntaxKind.StaticKeyword)||t.IsKind(SyntaxKind.VirtualKeyword)||t.IsKind(SyntaxKind.OverrideKeyword)||t.IsKind(SyntaxKind.SealedKeyword)||t.IsKind(SyntaxKind.NewKeyword))))).WithAttributeLists(default);
                 oracle.Append(rewritten.NormalizeWhitespace().ToFullString()+"\n");
             }
-            oracle.Append("} }\n");
+            oracle.Append("} "+String.Concat(outers.Select(_=>"} "))+"}\n");
         }
+        if(!game)oracle.Append(input.oracle_support+"\n");
+        if(!game)oracle.Append("namespace UnityEngine { public static class Debug { public static void Log(object value){global::System.Console.Error.WriteLine(value==null?\"Null\":value.ToString());} } }\n");
         if(!game)File.WriteAllText(Path.Combine(input.output,"source_oracle.cs"),oracle.ToString().Replace("\r\n","\n"),new UTF8Encoding(false));
+        }
         var selectedMethods=input.selected.Where(id=>id.StartsWith("M:",StringComparison.Ordinal)).ToArray();
         var usedKinds=new Dictionary<string,int>();
         foreach(var id in emitted.Keys)foreach(var pair in methodKinds[id])usedKinds[pair.Key]=usedKinds.GetValueOrDefault(pair.Key)+pair.Value;
+        var emittedMetadata=emitted.Keys.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(methods[id]),name=methods[id].Name,identity_hash_result=IdentityHash(methods[id]),kind=methods[id].MethodKind.ToString(),root=selectedMethods.Contains(id),source=syntax[id].SyntaxTree.FilePath,line=syntax[id].GetLocation().GetLineSpan().StartLinePosition.Line+1,return_type=Concrete((methods[id].MethodKind==MethodKind.Constructor?methods[id].ContainingType:methods[id].ReturnType).ToDisplayString(),TypeParameters(methods[id])),is_static=methods[id].IsStatic,is_constructor=methods[id].MethodKind==MethodKind.Constructor,is_indexer=(methods[id].AssociatedSymbol as IPropertySymbol)?.IsIndexer??false,containing_type=Concrete(methods[id].ContainingType.ToDisplayString(),TypeParameters(methods[id])),concrete_cpp_type_arguments=TypeParameters(methods[id]).Select(ConcreteCpp).ToArray(),concrete_cs_type_arguments=TypeParameters(methods[id]).Select(ConcreteCs).ToArray(),parameters=methods[id].Parameters.Select(p=>new{name=p.Name,type=Concrete(p.Type.ToDisplayString(),TypeParameters(methods[id]))}).ToArray()}).ToArray();
+        var reportedMethods=game?emittedMetadata.Where(m=>Path.GetRelativePath(input.source_root,m.source).Replace(Path.DirectorySeparatorChar,'/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)).ToArray():emittedMetadata;
+        var gameForeachCaptures=new List<object>();
+        foreach(var method in methods.Values.Where(m=>m.DeclaringSyntaxReferences.Length!=0)){
+            var site=syntax[Id(method)];if(input.source_root.Length==0||!Path.GetRelativePath(input.source_root,site.SyntaxTree.FilePath).Replace('\\','/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal))continue;
+            var semantic=compilation.GetSemanticModel(site.SyntaxTree);
+            foreach(var each in site.DescendantNodes().OfType<ForEachStatementSyntax>()){
+                var variable=semantic.GetDeclaredSymbol(each);var flow=semantic.AnalyzeDataFlow(each.Statement);
+                if(variable!=null&&(flow?.Succeeded??false)&&flow.Captured.Any(s=>SymbolEqualityComparer.Default.Equals(s,variable)))gameForeachCaptures.Add(new{method=Id(method),variable=variable.Name,line=each.GetLocation().GetLineSpan().StartLinePosition.Line+1});
+            }
+        }
         return new { operation="roslyn-source-to-cpp17-translation", assembly=input.assembly,
             requested_symbols=input.selected.Length,requested_methods=selectedMethods.Length,
-            emitted_methods=emitted.Keys.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(methods[id]),name=methods[id].Name,kind=methods[id].MethodKind.ToString(),root=selectedMethods.Contains(id),source=syntax[id].SyntaxTree.FilePath,line=syntax[id].GetLocation().GetLineSpan().StartLinePosition.Line+1,return_type=Concrete((methods[id].MethodKind==MethodKind.Constructor?methods[id].ContainingType:methods[id].ReturnType).ToDisplayString(),TypeParameters(methods[id])),is_static=methods[id].IsStatic,is_constructor=methods[id].MethodKind==MethodKind.Constructor,is_indexer=(methods[id].AssociatedSymbol as IPropertySymbol)?.IsIndexer??false,containing_type=Concrete(methods[id].ContainingType.ToDisplayString(),TypeParameters(methods[id])),concrete_cpp_type_arguments=TypeParameters(methods[id]).Select(p=>"std::int32_t").ToArray(),parameters=methods[id].Parameters.Select(p=>new{name=p.Name,type=Concrete(p.Type.ToDisplayString(),TypeParameters(methods[id]))}).ToArray()}).ToArray(),
-            generated_classes=usedClasses.OrderBy(x=>x).Select(id=>new{id,type=Concrete(classes[id].ToDisplayString(),classes[id].TypeParameters),cpp_name=Name(classes[id])+(classes[id].TypeParameters.Length==0?"":"<"+String.Join(",",classes[id].TypeParameters.Select(p=>"std::int32_t"))+">"),fields=InstanceFields(classes[id]).Select(f=>new{id=Id(f),name=f.Name,cpp_name=Name(f),type=Concrete(f.Type.ToDisplayString(),classes[id].TypeParameters),declaring_type=Concrete(f.ContainingType.ToDisplayString(),classes[id].TypeParameters)}).ToArray()}).ToArray(),
+            emitted_methods=reportedMethods,
+            emitted_kairo_dependencies=emittedMetadata.Except(reportedMethods).ToArray(),
+            cpp_body_count=emitted.Count,
+            game_foreach_capture_sites=gameForeachCaptures,
+            generated_classes=usedClasses.OrderBy(x=>x).Select(id=>new{id,is_value_type=RecordStruct(classes[id]),is_interface=classes[id].TypeKind==TypeKind.Interface,type=Concrete(classes[id].ToDisplayString(),classes[id].TypeParameters),cpp_name=Name(classes[id])+(classes[id].TypeParameters.Length==0?"":"<"+String.Join(",",classes[id].TypeParameters.Select(p=>"std::int32_t"))+">"),fields=InstanceFields(classes[id]).Select(f=>new{id=Id(f),name=f.Name,cpp_name=Name(f),type=Concrete(f.Type.ToDisplayString(),classes[id].TypeParameters),declaring_type=Concrete(f.ContainingType.ToDisplayString(),classes[id].TypeParameters)}).ToArray()}).ToArray(),
             oracle_static_methods=oracleMethods.OrderBy(x=>x).ToArray(),
             bootstrap=input.bootstrap_method.Length==0?null:new{id=input.bootstrap_method,cpp_name=bootstrap==null?null:Name(bootstrap),defined=emitted.ContainsKey(input.bootstrap_method),required_base=bootstrap?.ContainingType.BaseType?.ToDisplayString(),diagnostic=rejected.GetValueOrDefault(input.bootstrap_method)},
             missing_virtual_definitions=methods.Values.Where(m=>m.IsOverride&&!emitted.ContainsKey(Id(m))&&usedClasses.Contains(Id(m.ContainingType))&&externalSlots.ContainsKey(Id(SlotRoot(m)))).Select(m=>new{id=Id(m),cpp_class=ClassName(m.ContainingType),slot=Slot(m),diagnostic=rejected.GetValueOrDefault(Id(m))}).ToArray(),
             baked_array_ids=bakedUsed.Where(id=>cpp.ToString().Contains("\""+id+"\"",StringComparison.Ordinal)||header.ToString().Contains("\""+id+"\"",StringComparison.Ordinal)).OrderBy(x=>x).ToArray(),
             generated_exception_types=usedExceptions.Select(t=>new{id=Id(t),native_type=Name(t),pattern="source-validated empty string-constructor forwarding to known base"}).ToArray(),
             generated_chunks=generatedChunks.Select(f=>new{file=f,bytes=new FileInfo(Path.Combine(input.output,f)).Length}).ToArray(),
+            oracle_native_setup=input.oracle_native_setup,
             chunking="textual include chunks retain a single translation unit; globals and explicit template instantiations are defined exactly once",
             rejected_methods=rejected.OrderBy(p=>p.Key).ToDictionary(p=>p.Key,p=>p.Value),
-            emitted_method_count=emitted.Count,root_methods_emitted=selectedMethods.Count(emitted.ContainsKey),
-            static_fields=usedFields.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(fieldSymbols[id]),type=fieldSymbols[id].Type.ToDisplayString()}).ToArray(),
+            emitted_method_count=reportedMethods.Length,root_methods_emitted=selectedMethods.Count(emitted.ContainsKey),
+            static_fields=usedFields.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(fieldSymbols[id]),cpp_accessor=Name(fieldSymbols[id])+"()",type=fieldSymbols[id].Type.ToDisplayString()}).ToArray(),
             emitted_kind_occurrences=usedKinds, compiled=false, executed_methods=0,
             game_binary_emitted=false,original_IL_read=false,
-            limitations=new[]{"Generic source classes are concretely instantiated with Int32 for compile/execution receipts; other type arguments require their own receipts. Custom source inheritance and explicit base/this initialization are lowered. Virtual source slots are generated for emitted method bodies; interface and full closed-world dispatch coverage remain pending.","Finally supports proven return/fallthrough cases; protected branch propagation, delegates, reflection and source properties remain explicitly diagnosed. A native compile receipt and differential runner are required before compiled/verified states."}};
+            limitations=new[]{"Generic source classes have concrete compile/execution instances recorded per method; unexercised type arguments have no behavior receipt. Custom inheritance, source/interface slots, properties, per-type lazy initialization, method groups and closures use typed generated classes. Missing virtual bodies remain link errors rather than stubs.","Anonymous functions capture shared cells with GC tracing; captured foreach variables use C#6 fresh-per-iteration semantics. Game foreach-capture sites are inventoried separately because historical smcs C#3 differs. Goto with captured locals and unsupported protected-branch propagation remain rejected. Reflection is closed-world only; native compile and source differential receipts are separate evidence."}};
     }
     public object Diagnose(Request input) {
         foreach(var id in methods.Keys.ToArray())Emit(id);
@@ -924,10 +1288,18 @@ sealed class Lowerer {
             note="Diagnostic pass only. No C++ output or ledger promotion; constants/tables require content classification before emission."};
     }
     const string FrameworkHelpers=@"
+template<class T>bool cs_is(const pls::cs::Ref<pls::cs::Object>&value){if(!value)return false;if constexpr(pls::cs::is_shared_ref<T>::value)return bool(std::dynamic_pointer_cast<typename pls::cs::is_shared_ref<T>::element_type>(value));else{try{(void)pls::cs::unbox<T>(value);return true;}catch(const pls::cs::InvalidCastException&){return false;}}}
+template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(value);if(!object)throw pls::cs::NullReferenceException();return object->GetHashCode();}
+static pls::cs::String cs_string_identity(const pls::cs::String&value){value.length();return value;}
+static pls::cs::String cs_object_string(const pls::cs::Ref<pls::cs::Object>&value){return value?value->ToString():pls::cs::String(u"""");}
+static bool cs_contains_string(const pls::cs::String&source,const pls::cs::String&value){return pls::cs::culture_index_of(source,value)>=0;}
 static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)throw pls::cs::NullReferenceException();return value;}
 static pls::cs::String cs_string_from_chars(pls::cs::Array<char16_t> chars){if(chars.is_null())throw pls::cs::ArgumentNullException();std::u16string out;for(std::int32_t i=0;i<chars.length();++i)out.push_back(chars.at(i));return pls::cs::String(std::move(out));}
 static bool cs_is_little_endian(){const std::uint16_t value=1;std::uint8_t first;std::memcpy(&first,&value,1);return first==1;}
+template<class T> static T cs_network_to_host(T value){
+ if(!cs_is_little_endian())return value;using U=std::make_unsigned_t<T>;U bits{};std::memcpy(&bits,&value,sizeof(T));U result=0;for(std::size_t i=0;i<sizeof(T);++i){result=static_cast<U>((result<<8)|(bits&255));bits>>=8;}T out{};std::memcpy(&out,&result,sizeof(T));return out;
+}
 static pls::cs::String cs_substring2(const pls::cs::String& source,std::int32_t start,std::int32_t count) {
  const auto n=source.length(); if(start<0||count<0||static_cast<std::int64_t>(start)+count>n)throw pls::cs::ArgumentOutOfRangeException();
  std::u16string value;for(std::int32_t i=0;i<count;++i)value.push_back(source.at(start+i));return pls::cs::String(std::move(value));
@@ -939,6 +1311,7 @@ static pls::cs::Array<char16_t> cs_to_chars(const pls::cs::String& source) {
 static std::int32_t cs_index_char2(const pls::cs::String& source,char16_t value,std::int32_t start) {
  auto n=source.length();if(start<0||start>n)throw pls::cs::ArgumentOutOfRangeException();for(auto i=start;i<n;++i)if(source.at(i)==value)return i;return -1;
 }
+static std::int32_t cs_last_index_char1(const pls::cs::String& source,char16_t value){for(auto i=source.length();i>0;--i)if(source.at(i-1)==value)return i-1;return -1;}
 static std::int32_t cs_index_char1(const pls::cs::String& source,char16_t value){return cs_index_char2(source,value,0);}
 static pls::cs::String cs_char_string(char16_t value){return pls::cs::String(std::u16string(1,value));}
 template<class T> pls::cs::String cs_integer_string(T value) {
@@ -973,10 +1346,12 @@ template<class T> T cs_bits_from(pls::cs::Array<std::uint8_t> source,std::int32_
             if(method?.ReducedFrom!=null&&node.Expression is MemberAccessExpressionSyntax member) {
                 var args=node.ArgumentList.Arguments.Select(a=>(ArgumentSyntax)Visit(a)!).ToList();
                 args.Insert(0,SyntaxFactory.Argument((ExpressionSyntax)Visit(member.Expression)!));
-                return SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression("SourceOracle."+Name(method.ReducedFrom)),SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(args)));
+                var callee=method.ReducedFrom.DeclaringSyntaxReferences.Length!=0?"SourceOracle."+Name(method.ReducedFrom):method.ReducedFrom.ContainingType.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)+"."+method.Name+(method.IsGenericMethod?"<"+String.Join(",",method.TypeArguments.Select(t=>t.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)))+">":"");
+                return SyntaxFactory.InvocationExpression(SyntaxFactory.ParseExpression(callee),SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(args)));
             }
+            if(method!=null&&method.IsStatic&&oracleExternalMethods.TryGetValue(Id(method),out var oracleCallee))return node.WithExpression(SyntaxFactory.ParseExpression(oracleCallee)).WithArgumentList((ArgumentListSyntax)Visit(node.ArgumentList)!);
             if(method!=null&&method.IsStatic&&method.DeclaringSyntaxReferences.Length!=0) {
-                return node.WithExpression(SyntaxFactory.ParseExpression("SourceOracle."+Name(method))).WithArgumentList((ArgumentListSyntax)Visit(node.ArgumentList)!);
+                return node.WithExpression(SyntaxFactory.ParseExpression("SourceOracle."+Name(method)+(method.IsGenericMethod?"<"+String.Join(",",method.TypeArguments.Select(t=>t.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat)))+">":""))).WithArgumentList((ArgumentListSyntax)Visit(node.ArgumentList)!);
             }
             return base.VisitInvocationExpression(node);
         }

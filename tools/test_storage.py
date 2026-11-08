@@ -85,9 +85,9 @@ def main():
     monoenv=dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
     old=folder/'StorageOracle-mono.exe'
     run([mono,smcs,'-nologo','-noconfig','-optimize+','-r:'+str(unity/'Editor/Data/Mono/lib/mono/2.0/System.Core.dll'),'-out:'+str(old),source,*original],folder,'mono-compile',monoenv)
-    cpp_sources=[ROOT/p for p in ['tests/kairo/storage_fixtures.cpp','src/kairo/common/storage.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
+    cpp_sources=[ROOT/p for p in ['tests/kairo/storage_fixtures.cpp','src/kairo/common/storage.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp','src/kairo/common/managed_collation.cpp','src/kairo/common/managed_mono_character_data.cpp']]
     cpp=folder/'storage-fixtures.exe';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
-    run([cl,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/O2','/utf-8','/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src/kairo/common'),'/Fe:'+str(cpp),'/Fo:'+str(folder)+'\\',*cpp_sources],folder,'cpp-compile',environment())
+    run([cl,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/O2','/utf-8','/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'build/generated/mono-collation'),'/Fe:'+str(cpp),'/Fo:'+str(folder)+'\\',*cpp_sources],folder,'cpp-compile',environment())
     cases=[]
     with tempfile.TemporaryDirectory(prefix='run-',dir=folder) as temp:
         base=Path(temp);assets=base/'synthetic-catalog';synthetic_catalog(assets)
@@ -115,6 +115,7 @@ def main():
         resource_readback['catalog_receipt_sha256']=sha(ROOT/'config/phase2-resource-catalog.json')
     passed=all(r['passed'] for r in cases)
     inputs=cpp_sources+[source,ROOT/'src/kairo/api/storage.hpp',ROOT/'tools/test_storage.py',ROOT/'tools/native_api_proof.py',ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/asset_catalog.hpp',ROOT/'src/kairo/common/sha256.hpp']
+    inputs += [ROOT/'src/kairo/common/managed_collation.hpp',ROOT/'src/kairo/common/mono_collator_methods.inc',ROOT/'tools/generate_mono_collator.py',ROOT/'tools/setup_mono_collation.py']
     report=dict(verified_boundary_ids=storage_ids(),operation='original-source-storage-recordstore-differential',status='PASS' if passed else 'FAIL',cases=cases,
                 fixture_cases=len(cases),passed=sum(r['passed'] for r in cases),native_platform_policy=policy,resource_readback=resource_readback,
                 native_executable=dict(path=cpp.relative_to(ROOT).as_posix(),sha256=sha(cpp)),
@@ -123,6 +124,8 @@ def main():
                 original_binaries_used=False,actual_game_key_used=False,source_oracle_game_assets_used=False,
                 game_assets_used=resource_readback is not None,user_saves_used=False,game_boot=False,
                 original_PlayerPrefs_storage='UNKNOWN; native byte preference facade only',
+                heap_name_comparison='Historical Mono CurrentCulture String.CompareTo; invariant culture in fixture, host default supplied separately',
+                collation_tables={p.name:sha(p) for p in (ROOT/'build/generated/mono-collation').glob('*.inc')},
                 filesystem_order='Unspecified; tested outcomes do not require cross-platform enumeration order')
     (ROOT/'config/phase2-storage-tests.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(dict(status=report['status'],fixture_cases=report['fixture_cases'],passed=report['passed'])))

@@ -1,0 +1,173 @@
+{
+  "operation": "official-Mono-BMP-data-versus-authenticated-Android-ELF",
+  "status": "PASS",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "official_source_revision": "f08f8a27bfe3aafda4e430ee2365dec73c1070d7",
+  "official_source_sha256": "b73fbd2efc19dc6e6104448383e3859595264f210e5e0dbdd19e691712477d83",
+  "producer_sha256": "a3601471307e128ea308b4af53c21ec0595764e02fbbb1717d22c0fb4508be2d",
+  "variants": [
+    {
+      "abi": "x86",
+      "member": "lib/x86/libmono.so",
+      "library_sha256": "ab27eaa4cb508bfde5cf906cb318f9e9e6d4a6d5cc4c677f74cc86af2314ccf2",
+      "arrays": [
+        {
+          "name": "CategoryData",
+          "bytes": 65536,
+          "sha256": "fbc0e13de969887a3bbc7d01bed96a9f8b81ba4a3dd4add67bdc56f82622ecf6",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 2672896,
+              "address": 2672896
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToLowerDataLow",
+          "bytes": 18848,
+          "sha256": "10770de7b5f044d190b7a3e94095da11ddae4606d85151d225f7d809d33db80b",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 2751872,
+              "address": 2751872
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToLowerDataHigh",
+          "bytes": 446,
+          "sha256": "325237f0dd45cbf5d8d2a8aa77ffa65864f2d9c3fa9dc8b0dbb2e6796454ee80",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 2770720,
+              "address": 2770720
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToUpperDataLow",
+          "bytes": 18900,
+          "sha256": "72956457e6c37c5204d744ad857d6a6a4041454c37bb7f274c040abd6e047338",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 2771168,
+              "address": 2771168
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToUpperDataHigh",
+          "bytes": 446,
+          "sha256": "73a604954d85e2714e94243c80ddc34169392be05c035cbd58a38edd29b86c0e",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 2790080,
+              "address": 2790080
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        }
+      ]
+    },
+    {
+      "abi": "armeabi-v7a",
+      "member": "lib/armeabi-v7a/libmono.so",
+      "library_sha256": "3ac02e3aee5c4ad2044732c6aec2f8f22bd02db251a3775f51da1d38e2cfa3c1",
+      "arrays": [
+        {
+          "name": "CategoryData",
+          "bytes": 65536,
+          "sha256": "fbc0e13de969887a3bbc7d01bed96a9f8b81ba4a3dd4add67bdc56f82622ecf6",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 3017060,
+              "address": 3017060
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToLowerDataLow",
+          "bytes": 18848,
+          "sha256": "10770de7b5f044d190b7a3e94095da11ddae4606d85151d225f7d809d33db80b",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 3096000,
+              "address": 3096000
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToLowerDataHigh",
+          "bytes": 446,
+          "sha256": "325237f0dd45cbf5d8d2a8aa77ffa65864f2d9c3fa9dc8b0dbb2e6796454ee80",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 3114848,
+              "address": 3114848
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToUpperDataLow",
+          "bytes": 18900,
+          "sha256": "72956457e6c37c5204d744ad857d6a6a4041454c37bb7f274c040abd6e047338",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 3115296,
+              "address": 3115296
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        },
+        {
+          "name": "ToUpperDataHigh",
+          "bytes": 446,
+          "sha256": "73a604954d85e2714e94243c80ddc34169392be05c035cbd58a38edd29b86c0e",
+          "matches": 1,
+          "locations": [
+            {
+              "section": ".rodata",
+              "file_offset": 3134196,
+              "address": 3134196
+            }
+          ],
+          "identity": "UNIQUE_READONLY_MATCH"
+        }
+      ]
+    }
+  ],
+  "matched_arrays": 10,
+  "total_arrays": 10,
+  "malformed_elf_tests": 2,
+  "original_library_written": false,
+  "original_library_executed": false,
+  "original_table_bytes_saved": false,
+  "limitations": [
+    "Proves exact official table presence in read-only Android ELF sections, not every runtime path."
+  ]
+}

@@ -9,6 +9,18 @@ class ProbeForm:FormBase {
  public override bool ProcessEvent(AppEvent e){trace+="E"+GetId()+",";return GetId()==2;}
  public override bool CheckMainWindow(){return GetId()!=2;}
 }
+class ConstructorProbe:FormBase {
+ public static string trace="";int value=Mark("field");
+ public ConstructorProbe():base(Mark("basearg")){Mark("body");}
+ public static int Mark(string phase){trace+=phase+",";return phase=="basearg"?23:17;}
+ public int Value(){return value;}
+}
+class TouchProbe:FormBase {
+ public int receivedType,receivedValue;public TouchProbe():base(42){}
+ public override int GetTouchValue(int type,int index){return unchecked(type*31+index+receivedType+receivedValue);}
+ public override void SetTouchValue(int type,int value){receivedType=type;receivedValue=value;}
+ public int BaseValue(){return base.GetTouchValue(3,4);}public void BaseSet(){base.SetTouchValue(5,6);}
+}
 class FormsOracle {
  static FormManagerBase m=new FormManagerBase();
  static string S(){string s="";for(int i=0;i<m.GetFormsNum();i++){var f=m.GetForm(i);s+=f.GetId()+":"+f.GetProcessMode()+",";}return s;}
@@ -44,6 +56,10 @@ class FormsOracle {
  P("back-show-dialog",delegate{m.Pop();m.ProcessBackKey();return T(m.CheckShowTerminationDialog());});
  P("index",delegate{return m.GetFormIndex(a)+":"+m.GetFormIndex(b);});
  P("app-event-default",delegate{var e=new AppEvent(AppEventType.Exit,null);return ((int)e.Type)+":"+e.Args.Length;});
+ P("constructor-order",delegate{ConstructorProbe.trace="";var p=new ConstructorProbe();return ConstructorProbe.trace+"/"+p.GetId()+":"+p.Value()+":"+p.GetLeftSoftLabel();});
+ P("touch-base-default",delegate{kairo.unity.surface.TouchValueAccessor touch=new FormBase(9);touch.SetTouchValue(1,2);return touch.GetTouchValue(3,4)+":"+T(touch is FormBase);});
+ P("touch-derived-dispatch",delegate{var p=new TouchProbe();kairo.unity.surface.TouchValueAccessor touch=p;touch.SetTouchValue(5,7);p.BaseSet();return touch.GetTouchValue(3,4)+":"+p.BaseValue()+":"+p.receivedType+":"+p.receivedValue;});
+ P("touch-object-identity",delegate{var p=new TouchProbe();kairo.unity.surface.TouchValueAccessor touch=p;object boxed=touch;return T(Object.ReferenceEquals(boxed,p))+":"+T(Object.ReferenceEquals((TouchProbe)boxed,touch));});
  return 0;
  }
 }

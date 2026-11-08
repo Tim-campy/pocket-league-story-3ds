@@ -16,11 +16,12 @@ cs::Ref<Image> Image::CreateImage(std::int32_t width,std::int32_t height,Format 
     result->format=format==Format::Default?Format::RGB24:format;result->filter=filter==Filter::Default?DEFAULT_FILTER:filter;
     try{result->rgba_.resize(std::size_t(width)*height*4);}catch(const std::bad_alloc&){throw cs::OutOfMemoryException();}
     if(!alpha_format(result->format))for(std::size_t i=3;i<result->rgba_.size();i+=4)result->rgba_[i]=255;
+    result->alive_=true;track_created(result,true);
     return result;
 }
 cs::Ref<Image> Image::FromRgba(std::int32_t width,std::int32_t height,std::vector<std::uint8_t> rgba){
     if(width<=0||height<=0||std::uint64_t(width)*height*4!=rgba.size())throw cs::ArgumentException("Invalid RGBA8 extent");
-    auto result=cs::make_ref<Image>();result->width_=width;result->height_=height;result->rgba_=std::move(rgba);return result;
+    auto result=cs::make_ref<Image>();result->width_=width;result->height_=height;result->rgba_=std::move(rgba);result->alive_=true;track_created(result,false);return result;
 }
 cs::Ref<Image> Image::Load(cs::Array<std::uint8_t> bytes,Format format,Filter filter){
     if(!catalog)throw cs::InvalidOperationException("Host asset catalog is not installed");
@@ -30,7 +31,6 @@ cs::Ref<Image> Image::Load(cs::Array<std::uint8_t> bytes,Format format,Filter fi
     auto result=FromRgba(std::int32_t(image->width),std::int32_t(image->height),catalog->read(*image));
     result->format=format==Format::Default?Format::ARGB32:format;result->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return result;
 }
-void Image::Dispose(){alive_=false;std::vector<std::uint8_t>().swap(rgba_);}
 const std::vector<std::uint8_t>& Image::pixels()const{if(!alive_)throw cs::ObjectDisposedException();return rgba_;}
 cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(std::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
 void Image::SetAlpha(std::int32_t alpha){
@@ -155,6 +155,7 @@ void Graphics::DrawImage(cs::Ref<Image> image,float x,float y){if(image)DrawScal
 void Graphics::DrawImage(cs::Ref<Image> image,float x,float y,std::int32_t sx,std::int32_t sy,std::int32_t w,std::int32_t h){if(image)DrawScaledImage(image,x,y,float(w),float(h),sx,sy,w,h);}
 void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,float h,std::int32_t sx,std::int32_t sy,std::int32_t sw,std::int32_t sh){
     if(!image)return;auto a=point(x,y),end=point(x+w,y+h);w=end[0]-a[0];h=end[1]-a[1];if(w==0||h==0||!std::isfinite(a[0]+a[1]+w+h))return;
+    image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
     auto source=image->pixels(); // Snapshot preserves overlap when drawing an image onto itself.
     auto l=int(std::clamp(std::ceil(std::min(a[0],end[0])-0.5f),0.0f,float(target_->width_))),t=int(std::clamp(std::ceil(std::min(a[1],end[1])-0.5f),0.0f,float(target_->height_)));
@@ -164,5 +165,6 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
         u=std::clamp<std::int64_t>(u,0,image->width_-1);v=std::clamp<std::int64_t>(v,0,image->height_-1);auto i=(std::size_t(v)*image->width_+std::size_t(u))*4;
         pixel(xx,yy,{source[i],source[i+1],source[i+2],source[i+3]});
     }
+    image->source_drawn();
 }
 }

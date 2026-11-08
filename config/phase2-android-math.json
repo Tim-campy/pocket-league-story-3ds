@@ -1,0 +1,63 @@
+{
+  "operation": "static-Android-Math-Sin-provenance",
+  "status": "PASS",
+  "producer_sha256": "83d155267aa016a6d72c494bd73aed313a10683d89a779b0e346c2551535f98d",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mono/metadata/sysmath.c",
+      "revision": "f08f8a27bfe3aafda4e430ee2365dec73c1070d7",
+      "sha256": "d351166f89fc03c2712971acfec19073f1df254bbf231bc7983b5d961b2e85b4",
+      "line": 102,
+      "finding": "return sin (x);"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mono/metadata/icall-def.h",
+      "revision": "f08f8a27bfe3aafda4e430ee2365dec73c1070d7",
+      "sha256": "2b6e68c19819da0cf44099d4be4edfcd3187f5e7cb2519156978391b976d9fda",
+      "line": 372,
+      "finding": "ICALL(MATH_14, \"Sin\", ves_icall_System_Math_Sin)"
+    }
+  ],
+  "variants": [
+    {
+      "abi": "x86",
+      "member": "lib/x86/libmono.so",
+      "library_sha256": "ab27eaa4cb508bfde5cf906cb318f9e9e6d4a6d5cc4c677f74cc86af2314ccf2",
+      "native_import": {
+        "name": "sin",
+        "symbol_index": 1020,
+        "value": 0,
+        "section_index": 0,
+        "relocations": [
+          {
+            "address": 3608100,
+            "type": 7
+          }
+        ]
+      }
+    },
+    {
+      "abi": "armeabi-v7a",
+      "member": "lib/armeabi-v7a/libmono.so",
+      "library_sha256": "3ac02e3aee5c4ad2044732c6aec2f8f22bd02db251a3775f51da1d38e2cfa3c1",
+      "native_import": {
+        "name": "sin",
+        "symbol_index": 1020,
+        "value": 0,
+        "section_index": 0,
+        "relocations": [
+          {
+            "address": 3743256,
+            "type": 22
+          }
+        ]
+      }
+    }
+  ],
+  "original_libraries_extracted": false,
+  "original_libraries_executed": false,
+  "android_negative_zero_result": "UNKNOWN",
+  "interpretation": "Pinned upstream icall forwards to C sin; both APK runtimes import sin. This does not prove the stripped internal wrapper matches source or execute Android libm.",
+  "windows_fixture_discrepancy": "Unity SDK Mono Math.Sin(-0.0) observed +0.0, native std::sin and modern CLR observed -0.0; no signed-zero normalization adopted."
+}

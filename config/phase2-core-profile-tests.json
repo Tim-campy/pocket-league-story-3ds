@@ -1,0 +1,41 @@
+{
+  "operation": "own-SDK-Mono-effective-core-profile",
+  "status": "MEASURED",
+  "profiles": [
+    {
+      "requested_mono_path": "2.0",
+      "effective_core": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\2.0\\mscorlib.dll",
+      "effective_core_sha256": "9380de48b4f19ee5d125f84ac1ce2644175e2490ad265ef12c444eba6916e047",
+      "observations": {
+        "trim_il": "e0a3e25b2ffd269a46c66b35a1a78c027332941a25db74a6d1e0de9046280202",
+        "find_not_white_space_il": "e5859bdae3c15c1789b17e6fd5c02363dbef1ee7b4165c811cf0831fa45f5777",
+        "trim-8239": "3",
+        "trim-8287": "3",
+        "trim-8203": "1",
+        "trim-65279": "1"
+      },
+      "trim_entry_raw_il_matches_apk": true,
+      "find_not_white_space_raw_il_matches_apk": false
+    },
+    {
+      "requested_mono_path": "unity",
+      "effective_core": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\mscorlib.dll",
+      "effective_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+      "observations": {
+        "trim_il": "e0a3e25b2ffd269a46c66b35a1a78c027332941a25db74a6d1e0de9046280202",
+        "find_not_white_space_il": "bb741c76a76c6181854f6a08c10eda79423356001a6bc3c30a823b1c51df2b65",
+        "trim-8239": "1",
+        "trim-8287": "1",
+        "trim-8203": "1",
+        "trim-65279": "1"
+      },
+      "trim_entry_raw_il_matches_apk": true,
+      "find_not_white_space_raw_il_matches_apk": true
+    }
+  ],
+  "producer_sha256": "bf728658d995fd60d4f69259c4dc6743f60df4c4d98690046ae49b9d6b5278c3",
+  "inputs_sha256": {
+    "tests/translator/CoreProfileProbe.cs": "a75ed6ac8c5fa518af14c17a42b1590e27921fbd1df91d910bf16dddab44dd9e"
+  },
+  "original_game_binary_loaded": false
+}

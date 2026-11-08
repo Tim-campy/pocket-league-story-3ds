@@ -1,0 +1,808 @@
+{
+  "operation": "historical-Mono-collation-own-source-differential",
+  "status": "PASS",
+  "cases": 615648,
+  "passed": 615648,
+  "original_120_cases": {
+    "cases": 120,
+    "passed": 120,
+    "results": [
+      {
+        "case": "c0p0index",
+        "expected": "0",
+        "actual": "0",
+        "passed": true
+      },
+      {
+        "case": "c0p0indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p0starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p0ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p0equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p1index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p1indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p1starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p1ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p1equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p2index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p2indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p2starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p2ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p2equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p3index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p3indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p3starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p3ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p3equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p4index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p4indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p4starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p4ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p4equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p5index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p5indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p5starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p5ends",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p5equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p6index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p6indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p6starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p6ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p6equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p7index",
+        "expected": "0",
+        "actual": "0",
+        "passed": true
+      },
+      {
+        "case": "c0p7indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c0p7starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c0p7ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c0p7equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p0index",
+        "expected": "0",
+        "actual": "0",
+        "passed": true
+      },
+      {
+        "case": "c1p0indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p0starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p0ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p0equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p1index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p1indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p1starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p1ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p1equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p2index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p2indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p2starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p2ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p2equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p3index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p3indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p3starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p3ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p3equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p4index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p4indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p4starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p4ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p4equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p5index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p5indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p5starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p5ends",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p5equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p6index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p6indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p6starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p6ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p6equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p7index",
+        "expected": "0",
+        "actual": "0",
+        "passed": true
+      },
+      {
+        "case": "c1p7indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c1p7starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c1p7ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c1p7equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p0index",
+        "expected": "0",
+        "actual": "0",
+        "passed": true
+      },
+      {
+        "case": "c2p0indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p0starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p0ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p0equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p1index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p1indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p1starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p1ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p1equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p2index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p2indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p2starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p2ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p2equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p3index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p3indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p3starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p3ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p3equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p4index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p4indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p4starts",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p4ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p4equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p5index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p5indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p5starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p5ends",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p5equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p6index",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p6indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p6starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p6ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p6equalsCI",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p7index",
+        "expected": "0",
+        "actual": "0",
+        "passed": true
+      },
+      {
+        "case": "c2p7indexStart",
+        "expected": "-1",
+        "actual": "-1",
+        "passed": true
+      },
+      {
+        "case": "c2p7starts",
+        "expected": "True",
+        "actual": "True",
+        "passed": true
+      },
+      {
+        "case": "c2p7ends",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      },
+      {
+        "case": "c2p7equalsCI",
+        "expected": "False",
+        "actual": "False",
+        "passed": true
+      }
+    ]
+  },
+  "edge_cases": {
+    "cases": 25704,
+    "passed": 25704,
+    "mismatch_count": 0,
+    "mismatches": [],
+    "profile_differences": 4226,
+    "cultures": 8,
+    "mono_stdout_sha256": "299e5c22d454d7b4346b717fb6428288bd41739ca59f415dc7e12edd3c81257b",
+    "modern_stdout_sha256": "ab584c3bfe72131615e50dc0881f8e2ab71debece13ad19512a04ab23fb4a65f",
+    "native_stdout_sha256": "299e5c22d454d7b4346b717fb6428288bd41739ca59f415dc7e12edd3c81257b"
+  },
+  "bmp": {
+    "cases": 589824,
+    "passed": 589824,
+    "mismatch_count": 0,
+    "mismatches": [],
+    "profile_differences": 10739,
+    "vectors": 9,
+    "code_units_per_vector": 65536,
+    "mono_stdout_sha256": "9292ca737565c360f62eb3fc24cd99b4b75bbc930fa0466a073f6a6809a27083",
+    "modern_stdout_sha256": "fc62478a04e2170b464877c06f1e626a8c1a47b4b49056cb5bc54fbc446205f4",
+    "native_stdout_sha256": "9292ca737565c360f62eb3fc24cd99b4b75bbc930fa0466a073f6a6809a27083"
+  },
+  "existing_oracle_profiles": {
+    "DotNet": 120,
+    "UnityMono265": 120
+  },
+  "producer_sha256": "76fa757378fb6e139b5a6a0a49486d23e07c3cb81bc4c621406606b90561c575",
+  "inputs_sha256": {
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
+    "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+    "tests/translator/mono_collation_fixtures.cpp": "28f32a9539bcfdca03319b3d60bd28db0cc96b50ad2d631cf59c8627e7b578f0",
+    "src/kairo/common/managed_collation.hpp": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
+    "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
+    "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0",
+    "tools/setup_mono_collation.py": "3c2dff27fe1a098cdc68f6ee710f8e18bf5792ba1493106aa5ecdb7dafc745a6",
+    "tests/translator/StringCultureProbe.cs": "9492a85b5975b662290256481a36ed3d45f72a24ee0b004e249b7b2cc38b8ac4",
+    "tests/translator/MonoCollationEdgeFixtures.cs": "c9d2194017cfe7dff3dda4d34e06da210dafc7c1bf28365979c5dd3ed3a03195",
+    "tests/translator/mono_collation_edge_fixtures.cpp": "116cc94ef9de17f26cb0380c4067c702b759905d4a723ea0e078ef340b51bbe6",
+    "tests/translator/MonoBmpFixtures.cs": "4b9fad070c34e3c5ed85d7474a60b47988c0d7e4431b961a702f2de666ec911d",
+    "tests/translator/mono_bmp_fixtures.cpp": "10e3f86b90f951f793ffcf7b23f14a67e0088463db10e53ee6aeb1e50456138a",
+    "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
+    "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a"
+  },
+  "native_executable": {
+    "path": "build/mono-collation-fixtures/mono-collation-fixtures.exe",
+    "sha256": "0d24755d3f0d55a1e950e19614463de986dc7d437cffe7b7be37fd1bf8d865f8"
+  },
+  "edge_native_executable": {
+    "path": "build/mono-collation-fixtures/mono-collation-edge-fixtures.exe",
+    "sha256": "bf1e4b1b402a5d251963f21a53d4ad87ba7cf59a9f5d367cf30cae6a6f26f245"
+  },
+  "bmp_native_executable": {
+    "path": "build/mono-collation-fixtures/mono-bmp-fixtures.exe",
+    "sha256": "0e74363ee8268b2c0415ef935dd84641a80573ddc6cc096d3ef5f32b7f15d8c1"
+  },
+  "compiler": {
+    "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "official_resource_bytes": 337358,
+  "character_data_bytes": 46832,
+  "logical_table_payload_bytes": 384190,
+  "ctr_binary_footprint": "NOT_MEASURED; Phase4 toolchain not installed",
+  "character_provider": "PRODUCTION historical official Mono BMP tables, separate GNU Library GPLv2",
+  "production_methods_promoted": 0,
+  "original_binary_copied": false,
+  "original_game_binary_executed": false,
+  "limitations": [
+    "Differential corpus is synthetic and does not imply all Unicode combinations have been executed.",
+    "CurrentCulture must be supplied explicitly by the host; no default language/culture inference.",
+    "Android collation resource identity verified, Android CLR method execution is not verified."
+  ]
+}

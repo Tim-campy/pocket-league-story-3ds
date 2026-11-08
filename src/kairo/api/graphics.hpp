@@ -6,10 +6,20 @@ namespace pls::kairo {
 class Graphics;
 class Font;
 void install_asset_catalog(const assets::Catalog*);
+struct ImageRuntimeBindings {
+    cs::Delegate<std::int32_t()> check_count;
+    cs::Delegate<bool()> count_enabled;
+    cs::Delegate<void(std::int32_t)> adjust_create_area;
+};
+void install_image_runtime(ImageRuntimeBindings);
 class Image : public cs::Object {
     std::int32_t width_{},height_{},transparent_{},alpha_{255};
-    bool alive_{true};
+    bool alive_{},disposed_{},created_image_{},lock_expiration_{};
+    std::int32_t check_count_{},validate_frames_{-1};
+    cs::Array<std::uint8_t> source_bytes_;
+    cs::Delegate<cs::Array<std::uint8_t>()> source_loader_;
     std::vector<std::uint8_t> rgba_;
+    static void track_created(const cs::Ref<Image>&,bool generated);
     friend class Graphics;
 public:
     enum class Format:std::int32_t { Default=-1,ARGB32=5,ARGB4444=2,RGB24=3,RGB565=7 };
@@ -19,6 +29,8 @@ public:
     static cs::Ref<Image> CreateImage(std::int32_t,std::int32_t,Format=Format::RGB24,Filter=Filter::Default);
     static cs::Ref<Image> Load(cs::Array<std::uint8_t>,Format=Format::Default,Filter=Filter::Default);
     static cs::Ref<Image> FromRgba(std::int32_t,std::int32_t,std::vector<std::uint8_t>);
+    static cs::Ref<Image> FromSource(cs::Array<std::uint8_t>,Format=Format::Default,Filter=Filter::Default);
+    static cs::Ref<Image> FromLoader(cs::Delegate<cs::Array<std::uint8_t>()>,Format=Format::Default,Filter=Filter::Default);
     std::int32_t GetWidth()const{return width_;}
     std::int32_t GetHeight()const{return height_;}
     std::int32_t GetAlpha()const{return alpha_;}
@@ -28,6 +40,19 @@ public:
     void SetTransparentEnabled(bool);
     cs::Ref<Graphics> GetGraphics();
     void Dispose();
+    void Use();void Unuse();
+    bool get_IsDisposed()const{return disposed_;}
+    bool native_resident()const{return alive_;}
+    void SetExpiration(bool yes,std::int32_t frames=-1){lock_expiration_=!yes;validate_frames_=frames;}
+    bool IsExpiration()const{return !lock_expiration_;}
+    static void SetSourceImageMaxCount(std::int32_t);
+    static void SetSourceImageMaxPixels(std::int32_t);
+    static void SetSourceImageValidateFrames(std::int32_t);
+    static void UnuseExpirationImages();
+    static std::array<std::int32_t,2> native_cache_size();
+    static std::int32_t native_releases();
+    void source_drawn();
+    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
     const std::vector<std::uint8_t>& pixels()const;
 };
 class Graphics : public cs::Object {

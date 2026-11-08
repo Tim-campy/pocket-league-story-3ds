@@ -104,6 +104,10 @@ def main():
         for identity,text in text_lookup.items():
             obj=next(o for f in private['files'] if f['entry']==identity[0] for o in f['metadata']['objects'] if o['path_id']==identity[1])
             source=archive.read(identity[0]);data=source[obj['payload_offset']:obj['payload_offset']+obj['payload_size']]
+            # AssetReader performs the original Decode itself. Keep original
+            # TextAsset bytes separate from the already-decoded storage view.
+            raw_path=output/'resources-raw'/(sha(data)+'.bytes');raw_path.parent.mkdir(exist_ok=True);raw_path.write_bytes(data)
+            for name in resource_names.get(identity,[]):add(8,name,raw_path)
             if text['encrypted'] is True:data=xor(data,key);parse_jar(data)
             path=output/'resources'/(sha(data)+'.bytes');path.parent.mkdir(exist_ok=True);path.write_bytes(data)
             for name in resource_names.get(identity,[]):add(1,name,path)
@@ -158,6 +162,7 @@ def main():
     report=dict(operation='private-native-resource-catalog',apk_sha256=EXPECTED,source_resource_entries=count,
         source_resource_all_pptrs_resolved=True,resource_manager_tail_bytes_not_used=tail,
         records_by_kind=dict(Counter(str(r['kind']) for r in records)),records=len(records),
+        raw_textasset_view='kind8 preserves original payload before XOR; kind1 remains decoded storage view',
         catalog_sha256=sha(catalog.read_bytes()),manifest_sha256=sha(manifest_path.read_bytes()),
         producer_sha256=sha(Path(__file__).read_bytes()),asset_values_published=False)
     (ROOT/'config/phase2-resource-catalog.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')

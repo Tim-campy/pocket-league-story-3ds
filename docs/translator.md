@@ -53,6 +53,15 @@ As 72 observações diferenciais de encoding cobrem NUL, astral, surrogates isol
 
 Interning, observação da identidade física de strings, comparação cultural, Unicode case folding e regras específicas de parsing/formatting não são presumidos equivalentes apenas por usar `std::u16string`. Precisam de implementações/fixtures próprias quando usados.
 
+As folhas culturais medidas agora usam o componente histórico Mono, com
+proveniência e licenças separadas. [Censo por método e dado](culture-usage.md),
+[colação](notes/phase2-mono-collation.md) e
+[Trim/Replace/Split/HexNumber](notes/managed-string-ops.md) registram os limites
+e diferenças preservadas. O oráculo de produção executa sobre o perfil SDK
+`unity`, cujo mscorlib é integralmente idêntico ao do APK; o perfil `2.0` não
+é intercambiável. O `IndexOf(string)` de um argumento é ordinal nesse core,
+enquanto os overloads com início/contagem são culturais.
+
 O hash ordinal histórico de String usa acumulação UTF-16 de fator 31, conferida por sonda e pelo [fonte String.cs da Unity, revisão fixada, linhas 2596–2610](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/String.cs#L2596-L2610). Não usar `std::hash` nem assumir o hash aleatorizado de .NET moderno.
 
 ## Ordem de avaliação e comandos
@@ -74,6 +83,19 @@ Exceções C++ mantêm herança, tipo dinâmico e rethrow sem slicing. A hierarq
 `run_finally(body, cleanup)` executa cleanup fora do unwinding ativo do C++. Assim, uma exceção de finally substitui a pendente, e retorno é calculado antes de finally. Um destrutor RAII que lança durante outra exceção terminaria o processo, portanto não é a tradução válida. Return/break/continue/goto saindo de regiões protegidas ainda precisam da representação de continuação do emissor; possuir o helper não comprova todo esse lowering.
 
 Capturas são classes explicitamente geradas, com células compartilhadas para variáveis e lifetimes preservados após o retorno do método externo. A fixture nativa possui uma classe sintética de closure; não usa uma lambda C++ como substituto silencioso da classe C# gerada. `Delegate<Signature>` fornece lista multicast, identidade por target/método e remoção da última subsequência igual. A lista de invocação é snapshot durante uma chamada.
+
+O emissor de produção também gera essas classes e seus hooks de GC. As
+fixtures compiladas cobrem células compartilhadas, parâmetros, this, closures
+aninhadas, method groups e interfaces. Captura com goto permanece recusada por
+exigir outra representação de lifetime. A semântica foreach C#6 da Kairo não
+é presumida para o Game smcs: o censo atual do jogo encontrou zero capturas
+do símbolo foreach. Ver o diário e o recibo do emissor para cobertura atual.
+
+Threads reais expõem outra obrigação: campos lidos/escritos em UI e worker
+precisam evitar data races C++. O [inventário do boot](notes/phase2-boot-fields.md)
+e [SharedField](notes/managed-shared-fields.md) distinguem cargas/stores de RMW.
+A fundação está testada; os acessos do Game ainda não foram reescritos nesse
+marco. As fixtures de Thread/GC não justificam promover execução do jogo.
 
 O gerenciamento usa ownership compartilhado com coleta explícita de ciclos por tracing cooperativo, descrita abaixo. Finalizadores, WeakReference como API gerada, compactação, LOH e equivalência exata de timing/lifetime CLR ainda não estão implementados. Não declarar equivalência de memória para o jogo inteiro com base nas fixtures de captura.
 

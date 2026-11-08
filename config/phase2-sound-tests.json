@@ -463,8 +463,8 @@
     "game_boot": false,
     "full_track_pcm": false,
     "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-    "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
-    "catalog_receipt_sha256": "f130db0a1797d23b991a0520141c45a00ca99dae868b079458182383aedeb8d3",
+    "catalog_sha256": "f6de1542c2f7b60e73a0d4697f1bec363d461e0f678231d2cbafe6ff7750cc19",
+    "catalog_receipt_sha256": "60efc6acc17338c6e52986868fb88ef5e00bfc98358dcca25197324302bb8f75",
     "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b"
   },
   "verified_boundary_ids": [
@@ -481,17 +481,17 @@
   "inputs": {
     "tests/kairo/sound_fixtures.cpp": "21f963e1d6ca012cf87689ecb05ffeec3d8737528e0883e4bdf44660076966d2",
     "src/kairo/common/sound.cpp": "0fdac91ca3ca0497f390b0e83d793e91c75fbcb4b75b2036706b12477957f183",
-    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
-    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/platform/sdl/audio.cpp": "8f2837c8409e84500d95e46175f89467cd7776beb1c70756041ccadd766bb42a",
     "tests/kairo/SoundOracle.cs": "5d757a87cf431f11467c414a1ba4932d83d41eb6e5adcc70044b63863a46f7b6",
     "tools/test_sound.py": "5ec3ec1bce505e889b110a884a7ee699a53d89d142a36d1933375a744352894c",
     "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
-    "src/kairo/api/application.hpp": "6ed7c969bc376084e3098d011c9dc7b1af2788b238cbf934d3b78ef5ad0bb8bc",
-    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
-    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
+    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/platform/sdl/audio.hpp": "3924ab5bdad7e14e2ea50b1578ac9780bc4e111649424ae0988a4631378c0ad8"
   },
@@ -511,16 +511,16 @@
   ],
   "native_executable": {
     "path": "build/sound-tests/sound-fixtures.exe",
-    "sha256": "1fce79e707344799565807feafb7842df7caad2e363504f34728034bf68f088e"
+    "sha256": "c7a5731452a763c5b528402301832416d37889b6669a4396b929ae46010f584a"
   },
   "oracle_binaries": [
     {
       "path": "build/sound-tests/SoundOracle.dll",
-      "sha256": "59aa27e9bb76887cf2d60e961b43da5d036c542e05371ba4c890114debf11b77"
+      "sha256": "5d2f8d6e17d53f23a4840bcd5ef7c33c4ffaa471fd09688a6fe528b20b9fc4fb"
     },
     {
       "path": "build/sound-tests/SoundOracle-mono.exe",
-      "sha256": "a4f53319abf26cbad825505471942b907d95b8d5b1b76da558d01ab3d184d5f0"
+      "sha256": "57906f666af31473e534b3f6208961a08a0bddc71222b04c20e413c336374cc4"
     }
   ],
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",

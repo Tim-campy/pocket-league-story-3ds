@@ -1,0 +1,30 @@
+{
+  "operation": "managed-offline-registration-adapter",
+  "status": "PASS",
+  "assertions": 12,
+  "exact_registration_wire": true,
+  "persistent_device_identity": true,
+  "fresh_managed_array_per_call": true,
+  "account_identity_not_modified": true,
+  "game_boot": false,
+  "inputs": {
+    "tests/kairo/managed_services.cpp": "251ebc8f14918a9924ce1e9f139bd5243275aecca3a6b27f31ddb15905b0ef35",
+    "src/kairo/common/services.cpp": "62ab4911f93cc8af666196088b869b441d709fd28e50d632d6e8171cb48ee16f",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/api/services_managed.hpp": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5",
+    "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "tools/test_managed_services.py": "2f9fe5f0344e226dc77855b1133f298655967a1f9832f1a450b61adbf3ceb6e9",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602"
+  },
+  "native_executable": {
+    "path": "build/managed-services-tests/managed-services.exe",
+    "sha256": "65237626826ae7392ef8d0bdfeda35ff8c7256f038c5cd931aa98a45132f54c8"
+  },
+  "policy_sha256": "5cae069aaeec0532d744bae1b6575fb539e9d189f12f28dc73631f1eda133514",
+  "intended_symbol": "M:main.AppData.CgiRegist(System.String,System.String)",
+  "native_hook": "pls::services::managed::register_local",
+  "integration_status": "ADAPTER_TESTED; generated caller binding is separate evidence",
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

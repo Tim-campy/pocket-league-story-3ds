@@ -1,4 +1,5 @@
 #include "storage.hpp"
+#include "managed_collation.hpp"
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -132,7 +133,9 @@ const assets::Entry* resource_file(cs::String filename) {
     const auto dot=candidate.rfind('.');
     return dot==std::string::npos?nullptr:locate(candidate.substr(0,dot));
 }
-auto heap_file(cs::String name){const auto value=key(name);return std::find_if(state.heap.begin(),state.heap.end(),[&](const auto& item){return item.first==value;});}
+// Storage.HeapFile uses String.CompareTo, unlike PlayerPrefs' ordinal keys.
+// Keep the historical CurrentCulture comparison and the first inserted name.
+auto heap_file(cs::String name){(void)key(name);return std::find_if(state.heap.begin(),state.heap.end(),[&](const auto& item){return cs::culture_compare(name,cs::String(item.first))==0;});}
 std::filesystem::path file_path(cs::String folder,cs::String filename) {
     const auto name=key(filename);
     if(name.find(u':')!=std::u16string::npos)return std::filesystem::path(name);

@@ -1,0 +1,369 @@
+{
+  "operation": "authenticated-bootstrap-CLI-inventory",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "assemblies": [
+    {
+      "assembly": "KairoLibrary.dll",
+      "sha256": "bb553d341eecd9b900f772486bf4a5c289aa2f09566d9d402a3eb70268f4b3ee",
+      "type_definitions": 337
+    },
+    {
+      "assembly": "Assembly-CSharp.dll",
+      "sha256": "3620ed91bd3a99cba9901cea111e6f6e489474e5c0b97b99676e5d4623817949",
+      "type_definitions": 129
+    }
+  ],
+  "direct_derived_types": [
+    {
+      "assembly": "KairoLibrary.dll",
+      "type": "kfw.panel.MainPanel",
+      "parent": "kairo.unity.panel.FepPanel"
+    }
+  ],
+  "save_recorder_constructor_calls": [],
+  "save_recorder_singleton_writes": [
+    {
+      "assembly": "KairoLibrary.dll",
+      "caller": "kairo.unity.ui.SaveRecorder::.ctor",
+      "offset": 42
+    }
+  ],
+  "fep_current_writes": [
+    {
+      "assembly": "KairoLibrary.dll",
+      "caller": "kairo.unity.panel.FepPanel::Start",
+      "offset": 1
+    },
+    {
+      "assembly": "KairoLibrary.dll",
+      "caller": "kairo.unity.panel.FepPanel::Start_iOS",
+      "offset": 1
+    },
+    {
+      "assembly": "KairoLibrary.dll",
+      "caller": "kairo.unity.panel.FepPanel::Update",
+      "offset": 39
+    }
+  ],
+  "config_copy_plan": [
+    {
+      "source": "F:cfg.MyConfig.DEBUG",
+      "target": "F:kairo.common.cfg.Config.DEBUG",
+      "source_token": 67108867,
+      "target_token": 67110306,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.PTW",
+      "target": "F:kairo.common.cfg.Config.PTW",
+      "source_token": 67108868,
+      "target_token": 67110307,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.COUNT_ENABLE",
+      "target": "F:kairo.common.cfg.Config.COUNT_ENABLE",
+      "source_token": 67108869,
+      "target_token": 67110312,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.PRINT",
+      "target": "F:kairo.common.cfg.Config.PRINT",
+      "source_token": 67108870,
+      "target_token": 67110313,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.USE_UNUSE_CHECK",
+      "target": "F:kairo.common.cfg.Config.USE_UNUSE_CHECK",
+      "source_token": 67108871,
+      "target_token": 67110314,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.LANGUAGE",
+      "target": "F:kairo.common.cfg.Config.LANGUAGE",
+      "source_token": 67108872,
+      "target_token": 67110317,
+      "primitive_signature": "0608"
+    },
+    {
+      "source": "F:cfg.MyConfig.LOWDEPTH_TEST",
+      "target": "F:kairo.common.cfg.Config.LOWDEPTH_TEST",
+      "source_token": 67108873,
+      "target_token": 67110325,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.FULLSCREEN",
+      "target": "F:kairo.common.cfg.Config.FULLSCREEN",
+      "source_token": 67108874,
+      "target_token": 67110322,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.AD_SIZE",
+      "target": "F:kairo.common.cfg.Config.AD_SIZE",
+      "source_token": 67108875,
+      "target_token": 67110321,
+      "primitive_signature": "0608"
+    },
+    {
+      "source": "F:cfg.MyConfig.LOCALIZE_FONT_SCALE",
+      "target": "F:kairo.common.cfg.Config.LOCALIZE_FONT_SCALE",
+      "source_token": 67108876,
+      "target_token": 67110324,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.ICLOUD",
+      "target": "F:kairo.common.cfg.Config.ICLOUD",
+      "source_token": 67108877,
+      "target_token": 67110323,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.BASE64_PUBLIC_KEY",
+      "target": "F:kairo.common.cfg.Config.BASE64_PUBLIC_KEY",
+      "source_token": 67108878,
+      "target_token": 67110318,
+      "primitive_signature": "060e"
+    },
+    {
+      "source": "F:cfg.MyConfig.AD_UNIT_ID",
+      "target": "F:kairo.common.cfg.Config.AD_UNIT_ID",
+      "source_token": 67108879,
+      "target_token": 67110320,
+      "primitive_signature": "060e"
+    },
+    {
+      "source": "F:cfg.MyConfig.TRACE_URL",
+      "target": "F:kairo.common.cfg.Config.TRACE_URL",
+      "source_token": 67108880,
+      "target_token": 67110327,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.DEBUG_UID",
+      "target": "F:kairo.common.cfg.Config.DEBUG_UID",
+      "source_token": 67108881,
+      "target_token": 67110328,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.UID",
+      "target": "F:kairo.common.cfg.Config.UID",
+      "source_token": 67108882,
+      "target_token": 67110329,
+      "primitive_signature": "060e"
+    },
+    {
+      "source": "F:cfg.MyConfig.REGIST_ENABLE",
+      "target": "F:kairo.common.cfg.Config.REGIST_ENABLE",
+      "source_token": 67108883,
+      "target_token": 67110330,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.TRIAL_VERSION",
+      "target": "F:kairo.common.cfg.Config.TRIAL_VERSION",
+      "source_token": 67108884,
+      "target_token": 67110331,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.ADMOB_ENABLE",
+      "target": "F:kairo.common.cfg.Config.ADMOB_ENABLE",
+      "source_token": 67108885,
+      "target_token": 67110332,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.DEBUG_CMD",
+      "target": "F:kairo.common.cfg.Config.DEBUG_CMD",
+      "source_token": 67108886,
+      "target_token": 67110333,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.SHOW_DEBUG",
+      "target": "F:kairo.common.cfg.Config.SHOW_DEBUG",
+      "source_token": 67108887,
+      "target_token": 67110336,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.SHOW_FPS",
+      "target": "F:kairo.common.cfg.Config.SHOW_FPS",
+      "source_token": 67108888,
+      "target_token": 67110337,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.SHOW_MEM",
+      "target": "F:kairo.common.cfg.Config.SHOW_MEM",
+      "source_token": 67108889,
+      "target_token": 67110338,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.UNITY_EDITOR",
+      "target": "F:kairo.common.cfg.Config.UNITY_EDITOR",
+      "source_token": 67108890,
+      "target_token": 67110319,
+      "primitive_signature": "0602"
+    },
+    {
+      "source": "F:cfg.MyConfig.PID",
+      "target": "F:kairo.common.cfg.Config.PID",
+      "source_token": 67108891,
+      "target_token": 67110352,
+      "primitive_signature": "0608"
+    },
+    {
+      "source": "F:cfg.MyConfig.APPLI_NAME",
+      "target": "F:kairo.common.cfg.Config.APPLI_NAME",
+      "source_token": 67108892,
+      "target_token": 67110355,
+      "primitive_signature": "060e"
+    },
+    {
+      "source": "F:cfg.MyConfig.OUTPUT_CSV_NAME",
+      "target": "F:kairo.common.cfg.Config.OUTPUT_CSV_NAME",
+      "source_token": 67108893,
+      "target_token": 67110356,
+      "primitive_signature": "060e"
+    }
+  ],
+  "config_skipped_fields": [
+    {
+      "source": "F:cfg.MyConfig.APPLI_TYPE",
+      "reason": "explicit source exclusion"
+    },
+    {
+      "source": "F:cfg.MyConfig.GOOGLE_PLAY",
+      "reason": "Config.GetField returned null"
+    },
+    {
+      "source": "F:cfg.MyConfig.AMAZON",
+      "reason": "Config.GetField returned null"
+    },
+    {
+      "source": "F:cfg.MyConfig.SMART_PASS",
+      "reason": "Config.GetField returned null"
+    }
+  ],
+  "save_recorder_null_proof": {
+    "proven": true,
+    "scope": "The two complete managed assemblies; no target code loaded/executed",
+    "evidence": [
+      "No type derives directly from abstract SaveRecorder, so there is no derived chain.",
+      "No call/newobj targets SaveRecorder constructor.",
+      "The singleton has one compiled store, solely within that uncalled constructor."
+    ],
+    "exceptions": "Runtime type injection/reflection emission or external code outside the authenticated corpus is outside the port scope"
+  },
+  "config_plan_status": "READY_FOR_GENERATED_SPECIALIZATION; no hand-coded MyConfig values",
+  "source_copy_oracle": [
+    {
+      "profile": "dotnet",
+      "copied_fields": [
+        "DEBUG",
+        "PTW",
+        "COUNT_ENABLE",
+        "PRINT",
+        "USE_UNUSE_CHECK",
+        "LANGUAGE",
+        "LOWDEPTH_TEST",
+        "FULLSCREEN",
+        "AD_SIZE",
+        "LOCALIZE_FONT_SCALE",
+        "ICLOUD",
+        "BASE64_PUBLIC_KEY",
+        "AD_UNIT_ID",
+        "TRACE_URL",
+        "DEBUG_UID",
+        "UID",
+        "REGIST_ENABLE",
+        "TRIAL_VERSION",
+        "ADMOB_ENABLE",
+        "DEBUG_CMD",
+        "SHOW_DEBUG",
+        "SHOW_FPS",
+        "SHOW_MEM",
+        "UNITY_EDITOR",
+        "PID",
+        "APPLI_NAME",
+        "OUTPUT_CSV_NAME"
+      ],
+      "matched_fields": 27,
+      "APPLI_TYPE_excluded": true,
+      "executable_sha256": "f359868405cbebca189a2bea047ac4c15a369da7b13b721ebf58db260aa5be73"
+    },
+    {
+      "profile": "mono",
+      "copied_fields": [
+        "DEBUG",
+        "PTW",
+        "COUNT_ENABLE",
+        "PRINT",
+        "USE_UNUSE_CHECK",
+        "LANGUAGE",
+        "LOWDEPTH_TEST",
+        "FULLSCREEN",
+        "AD_SIZE",
+        "LOCALIZE_FONT_SCALE",
+        "ICLOUD",
+        "BASE64_PUBLIC_KEY",
+        "AD_UNIT_ID",
+        "TRACE_URL",
+        "DEBUG_UID",
+        "UID",
+        "REGIST_ENABLE",
+        "TRIAL_VERSION",
+        "ADMOB_ENABLE",
+        "DEBUG_CMD",
+        "SHOW_DEBUG",
+        "SHOW_FPS",
+        "SHOW_MEM",
+        "UNITY_EDITOR",
+        "PID",
+        "APPLI_NAME",
+        "OUTPUT_CSV_NAME"
+      ],
+      "matched_fields": 27,
+      "APPLI_TYPE_excluded": true,
+      "executable_sha256": "fc41419ab08e7dc774e59e5575beb80af79ea83a83723ba95435167f598b104f"
+    }
+  ],
+  "inputs": {
+    "tools/BootstrapMetadata.cs": "ce43d8a2ed8ee01ba238bd16730a4b41c62a834afbef9fcbab198e74c0f8bcc0",
+    "tools/inventory_bootstrap.py": "3d74411d1cbdb3fe410e5e471560f88a4fa4928b9ba1ff30ed3ed570bc67ba7e",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/common/cfg/Config.cs",
+      "sha256": "175484bb6b67505e5dff7624c0bab04850ea71be1e1357263bfba3fef202324d"
+    },
+    {
+      "path": "src/Assembly-CSharp/cfg/MyConfig.cs",
+      "sha256": "a6b024a6d36a552a65d6950a2043810bbf3349eeeb437b55bafe935e91de2c77"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/IApplication.cs",
+      "sha256": "3e9fd412628d295c4132ae08fa09c8bcfa19c923e08e0deb904073e857b8d2c0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SaveRecorder.cs",
+      "sha256": "d51995037f251ce555ac3fe8b4989d4835f45dad44b5fe7cc347d8bf054ac23c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/panel/FepPanel.cs",
+      "sha256": "7d0dcfdfaf8052998b6406560bd4e8fbdd61831093852f48961c2a52175e1f18"
+    }
+  ],
+  "native_game_boot": false,
+  "original_binaries_executed": false
+}

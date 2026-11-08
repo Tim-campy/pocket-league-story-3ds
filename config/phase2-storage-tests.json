@@ -88,6 +88,27 @@
     },
     {
       "profile": "dotnet",
+      "case": "heap-cultural-composed",
+      "expected": "heap-cultural-composed=3d",
+      "actual": "heap-cultural-composed=3d",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-cultural-replace",
+      "expected": "heap-cultural-replace=3e:0",
+      "actual": "heap-cultural-replace=3e:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-cultural-delete",
+      "expected": "heap-cultural-delete=False",
+      "actual": "heap-cultural-delete=False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
       "case": "resource",
       "expected": "resource=090807:True",
       "actual": "resource=090807:True",
@@ -368,6 +389,27 @@
     },
     {
       "profile": "mono",
+      "case": "heap-cultural-composed",
+      "expected": "heap-cultural-composed=3d",
+      "actual": "heap-cultural-composed=3d",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-cultural-replace",
+      "expected": "heap-cultural-replace=3e:0",
+      "actual": "heap-cultural-replace=3e:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-cultural-delete",
+      "expected": "heap-cultural-delete=False",
+      "actual": "heap-cultural-delete=False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
       "case": "resource",
       "expected": "resource=090807:True",
       "actual": "resource=090807:True",
@@ -584,8 +626,8 @@
       "passed": true
     }
   ],
-  "fixture_cases": 80,
-  "passed": 80,
+  "fixture_cases": 86,
+  "passed": 86,
   "native_platform_policy": {
     "native_policy_assertions": 53,
     "UTF16_keys_preserved": true,
@@ -599,25 +641,31 @@
     "resource_alias_checks": 63,
     "game_boot": false,
     "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-    "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
-    "catalog_receipt_sha256": "f130db0a1797d23b991a0520141c45a00ca99dae868b079458182383aedeb8d3"
+    "catalog_sha256": "f6de1542c2f7b60e73a0d4697f1bec363d461e0f678231d2cbafe6ff7750cc19",
+    "catalog_receipt_sha256": "60efc6acc17338c6e52986868fb88ef5e00bfc98358dcca25197324302bb8f75"
   },
   "native_executable": {
     "path": "build/storage-tests/storage-fixtures.exe",
-    "sha256": "e2b084e0676ff6924adf9fb9211ba34b9367914a0988b270682e5100038bc737"
+    "sha256": "a2dcda963a20a3ca0903f5b81db081b9dd8f570d9d2a7262b71b0744068b4b54"
   },
   "inputs": {
-    "tests/kairo/storage_fixtures.cpp": "d737d1a02ab35f778194f7472ecb254a1d7600f72cd7d0acfcef20681498099f",
-    "src/kairo/common/storage.cpp": "abcba6e2482267c35be36e6f28b98fdffc765baf4923bd02ab9a1996b79056cf",
-    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
-    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
-    "tests/kairo/StorageOracle.cs": "ad18f6de28ef99c1bd2747d8732aa965ade88f1d715b89067e162198e9f50b47",
+    "tests/kairo/storage_fixtures.cpp": "4eaf89f3f426286e3aaf3d9d6d9e48e10cdf00f84a61be0a94e700ed3c6ca4a2",
+    "src/kairo/common/storage.cpp": "877f8898170328a10786e879e981d00b317025a0c6284595411a5c233cf7c4fa",
+    "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
+    "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+    "tests/kairo/StorageOracle.cs": "da85e24ecd68a7e19b1ba21f98ecc69c71077fcdacef2d94d3cc86aedbe4a5cd",
     "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
-    "tools/test_storage.py": "3f983ab85c37c1e11fdda81ef5dd795a5d6ab77d5940b9af9704df775fd1f1fb",
+    "tools/test_storage.py": "534a7258153f6afd94d28f3e266c293f63a45304fe49dfbb56ab3bf7fc489d1e",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
-    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
-    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c"
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
+    "src/kairo/common/managed_collation.hpp": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d",
+    "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
+    "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0",
+    "tools/setup_mono_collation.py": "3c2dff27fe1a098cdc68f6ee710f8e18bf5792ba1493106aa5ecdb7dafc745a6"
   },
   "source_manifest": [
     {
@@ -656,5 +704,11 @@
   "user_saves_used": false,
   "game_boot": false,
   "original_PlayerPrefs_storage": "UNKNOWN; native byte preference facade only",
+  "heap_name_comparison": "Historical Mono CurrentCulture String.CompareTo; invariant culture in fixture, host default supplied separately",
+  "collation_tables": {
+    "mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
+    "mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
+    "mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e"
+  },
   "filesystem_order": "Unspecified; tested outcomes do not require cross-platform enumeration order"
 }

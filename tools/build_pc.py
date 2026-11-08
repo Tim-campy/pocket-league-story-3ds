@@ -14,6 +14,14 @@ APK_SHA='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def source_snapshot(root=ROOT):
+    """Bind included chunks/headers too; a top-level .cpp hash is insufficient."""
+    paths={p for p in (root/'src').rglob('*') if p.is_file() and p.suffix.lower() in {'.cpp','.hpp','.inc'}}
+    paths|={p for p in (root/'build/generated/mono-collation').glob('*.inc') if p.is_file()}
+    paths|={root/p for p in ['CMakeLists.txt','tools/build_pc.py','tools/pc_compiler.py'] if (root/p).is_file()}
+    return {p.relative_to(root).as_posix():digest(p) for p in sorted(paths)}
+
+
 def image_readback(folder,apk,env):
     if not apk or not apk.is_file() or digest(apk)!=APK_SHA:
         raise ValueError('Image readback requires the authenticated local APK via --apk')
@@ -69,6 +77,11 @@ def main():
         attempt_folder=folder/'attempts'/str(attempt['number'])
         attempt_folder.mkdir(parents=True,exist_ok=False)
         attempt['logs']=[]
+        inputs_before=source_snapshot()
+        manifest=attempt_folder/'source-inputs.before.json'
+        manifest.write_text(json.dumps(inputs_before,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
+        attempt['source_inputs']=dict(path=manifest.relative_to(ROOT).as_posix(),sha256=digest(manifest),files=len(inputs_before))
+        attempt['generated_game_sources']=[dict(path=p,sha256=h) for p,h in inputs_before.items() if p.startswith('src/game/')]
     for index,command in enumerate(commands):
         result=subprocess.run([str(p) for p in command],cwd=ROOT,env=env,capture_output=True)
         log=folder/f'step-{index}.log'
@@ -85,6 +98,12 @@ def main():
                 history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
     if not args.fixtures_only:
+        inputs_after=source_snapshot()
+        if inputs_before!=inputs_after:
+            changed=sorted(p for p in set(inputs_before)|set(inputs_after) if inputs_before.get(p)!=inputs_after.get(p))
+            attempt.update(stage='concurrent-source-change',exit_code=0,changed_inputs=changed,game_boot=False)
+            history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
+            raise RuntimeError('Native inputs changed during compilation; no process was launched. Retry after the producers are stable.')
         attempt.update(stage='linked',exit_code=0)
         if args.run:
             exe=folder/'pc_game.exe'

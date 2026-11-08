@@ -1,5 +1,6 @@
 #include "system.hpp"
 #include <iostream>
+#include <sstream>
 int main(){
     using namespace pls::kairo;
     int cases=0;
@@ -19,5 +20,8 @@ int main(){
     UnityApplication::set_targetFrameRate(100);
     auto start=std::chrono::steady_clock::now();UnityApplication::pace(start);
     check(std::chrono::steady_clock::now()-start>=std::chrono::milliseconds(9));
+    std::ostringstream diagnostics;auto* previous=std::cerr.rdbuf(diagnostics.rdbuf());
+    debug_log(pls::cs::String(u"fixture-log"));debug_log(pls::cs::Ref<pls::cs::Object>{});
+    std::cerr.rdbuf(previous);check(diagnostics.str()=="fixture-log\nNull\n");
     std::cout<<"{\"status\":\"PASS\",\"native_assertions\":"<<cases<<",\"game_boot\":false}\n";
 }

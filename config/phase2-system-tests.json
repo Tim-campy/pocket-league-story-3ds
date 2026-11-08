@@ -1,17 +1,17 @@
 {
   "status": "PASS",
-  "native_assertions": 12,
+  "native_assertions": 13,
   "game_boot": false,
   "operation": "PC-native-frame-control-and-service-platform-leaves",
   "inputs": {
-    "tests/kairo/system_fixtures.cpp": "b55f0ae9a223a6f451fe4fc3927896bb055d0c6541f2e7b371995096d0b03b42",
-    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "tests/kairo/system_fixtures.cpp": "fe11809e76a23620e63b8a7697c0a520757ad500d1a9efcd80c589e51fa60f4c",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
     "tools/test_system.py": "459c62d9adee04c4f34ab5dc46bb07b223c630b53482906d55c78ab0ae20fa20",
-    "src/kairo/api/system.hpp": "e195566c253f4febf6a6131a52f64ed13d40e3ed8a333e9d8ca457ed934e7543",
-    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509"
+    "src/kairo/api/system.hpp": "f2d26bb21b6ff604ea00841cea34d4893333d827b45ed9876440e60265117fa2",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
   },
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
-  "executable_sha256": "67be81eca584f08d61fb3db7c326ba09441d0ea13020d9db81e10243ecd6b700",
+  "executable_sha256": "ebf6f35082d0c1bd8ec8dbebec621fe5c06f12b6f5c5462c1c7114efc4ca6c43",
   "original_source_methods": [
     "main.Main.OnCreate",
     "main.Main.OnUpdate",

@@ -1,0 +1,944 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 134,
+  "passed": 134,
+  "expected_lines": 67,
+  "actual_lines": 67,
+  "native_collector_tests": null,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\RuntimeEncodingFixtures.cs": "b5d04c1808049cf74e1baaa0980e009922b157077577bb7e1af6d9d53d3d9cbe",
+    "tests\\translator\\runtime_encoding_fixtures.cpp": "b8886042882d0417e60651e12895d1b9e4ccee02e296739ba3ea25205a9b454a",
+    "src\\kairo\\common\\semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src\\kairo\\common\\semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src\\kairo\\common\\managed_collections.hpp": "daee4c23611a2658e1de478fd4062476832588d04dd959a1f4ff932dd9894560",
+    "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97",
+    "src\\kairo\\common\\managed_encoding.cpp": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20",
+    "tools\\test_runtime_encoding.py": "a2de2b214a108af60fe97eef5dc8c99e95380a4de4a7696b5e80931151152752",
+    "src\\kairo\\common\\managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "framework_reference": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\System.Core.dll",
+    "framework_reference_sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "round0_0",
+      "expected": "round0_0=,",
+      "actual": "round0_0=,",
+      "passed": true
+    },
+    {
+      "case": "round0_1",
+      "expected": "round0_1=61-00-7A,00610000007a",
+      "actual": "round0_1=61-00-7A,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round0_2",
+      "expected": "round0_2=C3-A9-E3-81-82,00e93042",
+      "actual": "round0_2=C3-A9-E3-81-82,00e93042",
+      "passed": true
+    },
+    {
+      "case": "round0_3",
+      "expected": "round0_3=F0-9F-98-80,d83dde00",
+      "actual": "round0_3=F0-9F-98-80,d83dde00",
+      "passed": true
+    },
+    {
+      "case": "round0_4",
+      "expected": "round0_4=EF-BF-BD-78-EF-BF-BD,fffd0078fffd",
+      "actual": "round0_4=EF-BF-BD-78-EF-BF-BD,fffd0078fffd",
+      "passed": true
+    },
+    {
+      "case": "round0_5",
+      "expected": "round0_5=EF-BF-BD-F0-90-80-80,fffdd800dc00",
+      "actual": "round0_5=EF-BF-BD-F0-90-80-80,fffdd800dc00",
+      "passed": true
+    },
+    {
+      "case": "round1_0",
+      "expected": "round1_0=,",
+      "actual": "round1_0=,",
+      "passed": true
+    },
+    {
+      "case": "round1_1",
+      "expected": "round1_1=61-00-00-00-7A-00,00610000007a",
+      "actual": "round1_1=61-00-00-00-7A-00,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round1_2",
+      "expected": "round1_2=E9-00-42-30,00e93042",
+      "actual": "round1_2=E9-00-42-30,00e93042",
+      "passed": true
+    },
+    {
+      "case": "round1_3",
+      "expected": "round1_3=3D-D8-00-DE,d83dde00",
+      "actual": "round1_3=3D-D8-00-DE,d83dde00",
+      "passed": true
+    },
+    {
+      "case": "round1_4",
+      "expected": "round1_4=FD-FF-78-00-FD-FF,fffd0078fffd",
+      "actual": "round1_4=FD-FF-78-00-FD-FF,fffd0078fffd",
+      "passed": true
+    },
+    {
+      "case": "round1_5",
+      "expected": "round1_5=FD-FF-00-D8-00-DC,fffdd800dc00",
+      "actual": "round1_5=FD-FF-00-D8-00-DC,fffdd800dc00",
+      "passed": true
+    },
+    {
+      "case": "round2_0",
+      "expected": "round2_0=,",
+      "actual": "round2_0=,",
+      "passed": true
+    },
+    {
+      "case": "round2_1",
+      "expected": "round2_1=00-61-00-00-00-7A,00610000007a",
+      "actual": "round2_1=00-61-00-00-00-7A,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round2_2",
+      "expected": "round2_2=00-E9-30-42,00e93042",
+      "actual": "round2_2=00-E9-30-42,00e93042",
+      "passed": true
+    },
+    {
+      "case": "round2_3",
+      "expected": "round2_3=D8-3D-DE-00,d83dde00",
+      "actual": "round2_3=D8-3D-DE-00,d83dde00",
+      "passed": true
+    },
+    {
+      "case": "round2_4",
+      "expected": "round2_4=FF-FD-00-78-FF-FD,fffd0078fffd",
+      "actual": "round2_4=FF-FD-00-78-FF-FD,fffd0078fffd",
+      "passed": true
+    },
+    {
+      "case": "round2_5",
+      "expected": "round2_5=FF-FD-D8-00-DC-00,fffdd800dc00",
+      "actual": "round2_5=FF-FD-D8-00-DC-00,fffdd800dc00",
+      "passed": true
+    },
+    {
+      "case": "round3_0",
+      "expected": "round3_0=,",
+      "actual": "round3_0=,",
+      "passed": true
+    },
+    {
+      "case": "round3_1",
+      "expected": "round3_1=61-00-7A,00610000007a",
+      "actual": "round3_1=61-00-7A,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round3_2",
+      "expected": "round3_2=3F-3F,003f003f",
+      "actual": "round3_2=3F-3F,003f003f",
+      "passed": true
+    },
+    {
+      "case": "round3_3",
+      "expected": "round3_3=3F-3F,003f003f",
+      "actual": "round3_3=3F-3F,003f003f",
+      "passed": true
+    },
+    {
+      "case": "round3_4",
+      "expected": "round3_4=3F-78-3F,003f0078003f",
+      "actual": "round3_4=3F-78-3F,003f0078003f",
+      "passed": true
+    },
+    {
+      "case": "round3_5",
+      "expected": "round3_5=3F-3F-3F,003f003f003f",
+      "actual": "round3_5=3F-3F-3F,003f003f003f",
+      "passed": true
+    },
+    {
+      "case": "decode1_0",
+      "expected": "decode1_0=feff0041",
+      "actual": "decode1_0=feff0041",
+      "passed": true
+    },
+    {
+      "case": "decode1_1",
+      "expected": "decode1_1=fffd",
+      "actual": "decode1_1=fffd",
+      "passed": true
+    },
+    {
+      "case": "decode1_2",
+      "expected": "decode1_2=fffd",
+      "actual": "decode1_2=fffd",
+      "passed": true
+    },
+    {
+      "case": "decode1_3",
+      "expected": "decode1_3=fffd0041",
+      "actual": "decode1_3=fffd0041",
+      "passed": true
+    },
+    {
+      "case": "decode1_4",
+      "expected": "decode1_4=d800dc00",
+      "actual": "decode1_4=d800dc00",
+      "passed": true
+    },
+    {
+      "case": "decode1_5",
+      "expected": "decode1_5=fffdfffd",
+      "actual": "decode1_5=fffdfffd",
+      "passed": true
+    },
+    {
+      "case": "decode1_6",
+      "expected": "decode1_6=ff80fffd",
+      "actual": "decode1_6=ff80fffd",
+      "passed": true
+    },
+    {
+      "case": "decode1_7",
+      "expected": "decode1_7=fffd",
+      "actual": "decode1_7=fffd",
+      "passed": true
+    },
+    {
+      "case": "decode2_0",
+      "expected": "decode2_0=fffe4100",
+      "actual": "decode2_0=fffe4100",
+      "passed": true
+    },
+    {
+      "case": "decode2_1",
+      "expected": "decode2_1=00d8",
+      "actual": "decode2_1=00d8",
+      "passed": true
+    },
+    {
+      "case": "decode2_2",
+      "expected": "decode2_2=00dc",
+      "actual": "decode2_2=00dc",
+      "passed": true
+    },
+    {
+      "case": "decode2_3",
+      "expected": "decode2_3=00d84100",
+      "actual": "decode2_3=00d84100",
+      "passed": true
+    },
+    {
+      "case": "decode2_4",
+      "expected": "decode2_4=00d800dc",
+      "actual": "decode2_4=00d800dc",
+      "passed": true
+    },
+    {
+      "case": "decode2_5",
+      "expected": "decode2_5=00d8fffd",
+      "actual": "decode2_5=00d8fffd",
+      "passed": true
+    },
+    {
+      "case": "decode2_6",
+      "expected": "decode2_6=80fffffd",
+      "actual": "decode2_6=80fffffd",
+      "passed": true
+    },
+    {
+      "case": "decode2_7",
+      "expected": "decode2_7=fffd",
+      "actual": "decode2_7=fffd",
+      "passed": true
+    },
+    {
+      "case": "decode3_0",
+      "expected": "decode3_0=003f003f00410000",
+      "actual": "decode3_0=003f003f00410000",
+      "passed": true
+    },
+    {
+      "case": "decode3_1",
+      "expected": "decode3_1=0000003f",
+      "actual": "decode3_1=0000003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_2",
+      "expected": "decode3_2=0000003f",
+      "actual": "decode3_2=0000003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_3",
+      "expected": "decode3_3=0000003f00410000",
+      "actual": "decode3_3=0000003f00410000",
+      "passed": true
+    },
+    {
+      "case": "decode3_4",
+      "expected": "decode3_4=0000003f0000003f",
+      "actual": "decode3_4=0000003f0000003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_5",
+      "expected": "decode3_5=0000003f003f",
+      "actual": "decode3_5=0000003f003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_6",
+      "expected": "decode3_6=003f003f007f",
+      "actual": "decode3_6=003f003f007f",
+      "passed": true
+    },
+    {
+      "case": "decode3_7",
+      "expected": "decode3_7=0001",
+      "actual": "decode3_7=0001",
+      "passed": true
+    },
+    {
+      "case": "slice",
+      "expected": "slice=00410042",
+      "actual": "slice=00410042",
+      "passed": true
+    },
+    {
+      "case": "name0",
+      "expected": "name0=41",
+      "actual": "name0=41",
+      "passed": true
+    },
+    {
+      "case": "name1",
+      "expected": "name1=System.ArgumentException",
+      "actual": "name1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name2",
+      "expected": "name2=41-00",
+      "actual": "name2=41-00",
+      "passed": true
+    },
+    {
+      "case": "name3",
+      "expected": "name3=41-00",
+      "actual": "name3=41-00",
+      "passed": true
+    },
+    {
+      "case": "name4",
+      "expected": "name4=00-41",
+      "actual": "name4=00-41",
+      "passed": true
+    },
+    {
+      "case": "name5",
+      "expected": "name5=00-41",
+      "actual": "name5=00-41",
+      "passed": true
+    },
+    {
+      "case": "name6",
+      "expected": "name6=41",
+      "actual": "name6=41",
+      "passed": true
+    },
+    {
+      "case": "name7",
+      "expected": "name7=41",
+      "actual": "name7=41",
+      "passed": true
+    },
+    {
+      "case": "name8",
+      "expected": "name8=System.ArgumentException",
+      "actual": "name8=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name9",
+      "expected": "name9=System.ArgumentException",
+      "actual": "name9=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name10",
+      "expected": "name10=System.ArgumentException",
+      "actual": "name10=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name11",
+      "expected": "name11=System.ArgumentException",
+      "actual": "name11=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name12",
+      "expected": "name12=System.ArgumentException",
+      "actual": "name12=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "bad0",
+      "expected": "bad0=System.ArgumentNullException",
+      "actual": "bad0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "bad1",
+      "expected": "bad1=System.ArgumentNullException",
+      "actual": "bad1=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "bad2",
+      "expected": "bad2=System.ArgumentOutOfRangeException",
+      "actual": "bad2=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "bad3",
+      "expected": "bad3=System.ArgumentOutOfRangeException",
+      "actual": "bad3=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "bad4",
+      "expected": "bad4=System.ArgumentNullException",
+      "actual": "bad4=System.ArgumentNullException",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "round0_0",
+      "expected": "round0_0=,",
+      "actual": "round0_0=,",
+      "passed": true
+    },
+    {
+      "case": "round0_1",
+      "expected": "round0_1=61-00-7A,00610000007a",
+      "actual": "round0_1=61-00-7A,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round0_2",
+      "expected": "round0_2=C3-A9-E3-81-82,00e93042",
+      "actual": "round0_2=C3-A9-E3-81-82,00e93042",
+      "passed": true
+    },
+    {
+      "case": "round0_3",
+      "expected": "round0_3=F0-9F-98-80,d83dde00",
+      "actual": "round0_3=F0-9F-98-80,d83dde00",
+      "passed": true
+    },
+    {
+      "case": "round0_4",
+      "expected": "round0_4=ED-A0-80-78-ED-B0-80,fffdfffdfffd0078fffdfffdfffd",
+      "actual": "round0_4=ED-A0-80-78-ED-B0-80,fffdfffdfffd0078fffdfffdfffd",
+      "passed": true
+    },
+    {
+      "case": "round0_5",
+      "expected": "round0_5=ED-A0-80-F0-90-80-80,fffdfffdfffdd800dc00",
+      "actual": "round0_5=ED-A0-80-F0-90-80-80,fffdfffdfffdd800dc00",
+      "passed": true
+    },
+    {
+      "case": "round1_0",
+      "expected": "round1_0=,",
+      "actual": "round1_0=,",
+      "passed": true
+    },
+    {
+      "case": "round1_1",
+      "expected": "round1_1=61-00-00-00-7A-00,00610000007a",
+      "actual": "round1_1=61-00-00-00-7A-00,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round1_2",
+      "expected": "round1_2=E9-00-42-30,00e93042",
+      "actual": "round1_2=E9-00-42-30,00e93042",
+      "passed": true
+    },
+    {
+      "case": "round1_3",
+      "expected": "round1_3=3D-D8-00-DE,d83dde00",
+      "actual": "round1_3=3D-D8-00-DE,d83dde00",
+      "passed": true
+    },
+    {
+      "case": "round1_4",
+      "expected": "round1_4=00-D8-78-00-00-DC,d8000078dc00",
+      "actual": "round1_4=00-D8-78-00-00-DC,d8000078dc00",
+      "passed": true
+    },
+    {
+      "case": "round1_5",
+      "expected": "round1_5=00-D8-00-D8-00-DC,d800d800dc00",
+      "actual": "round1_5=00-D8-00-D8-00-DC,d800d800dc00",
+      "passed": true
+    },
+    {
+      "case": "round2_0",
+      "expected": "round2_0=,",
+      "actual": "round2_0=,",
+      "passed": true
+    },
+    {
+      "case": "round2_1",
+      "expected": "round2_1=00-61-00-00-00-7A,00610000007a",
+      "actual": "round2_1=00-61-00-00-00-7A,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round2_2",
+      "expected": "round2_2=00-E9-30-42,00e93042",
+      "actual": "round2_2=00-E9-30-42,00e93042",
+      "passed": true
+    },
+    {
+      "case": "round2_3",
+      "expected": "round2_3=D8-3D-DE-00,d83dde00",
+      "actual": "round2_3=D8-3D-DE-00,d83dde00",
+      "passed": true
+    },
+    {
+      "case": "round2_4",
+      "expected": "round2_4=D8-00-00-78-DC-00,d8000078dc00",
+      "actual": "round2_4=D8-00-00-78-DC-00,d8000078dc00",
+      "passed": true
+    },
+    {
+      "case": "round2_5",
+      "expected": "round2_5=D8-00-D8-00-DC-00,d800d800dc00",
+      "actual": "round2_5=D8-00-D8-00-DC-00,d800d800dc00",
+      "passed": true
+    },
+    {
+      "case": "round3_0",
+      "expected": "round3_0=,",
+      "actual": "round3_0=,",
+      "passed": true
+    },
+    {
+      "case": "round3_1",
+      "expected": "round3_1=61-00-7A,00610000007a",
+      "actual": "round3_1=61-00-7A,00610000007a",
+      "passed": true
+    },
+    {
+      "case": "round3_2",
+      "expected": "round3_2=3F-3F,003f003f",
+      "actual": "round3_2=3F-3F,003f003f",
+      "passed": true
+    },
+    {
+      "case": "round3_3",
+      "expected": "round3_3=3F-3F,003f003f",
+      "actual": "round3_3=3F-3F,003f003f",
+      "passed": true
+    },
+    {
+      "case": "round3_4",
+      "expected": "round3_4=3F-78-3F,003f0078003f",
+      "actual": "round3_4=3F-78-3F,003f0078003f",
+      "passed": true
+    },
+    {
+      "case": "round3_5",
+      "expected": "round3_5=3F-3F-3F,003f003f003f",
+      "actual": "round3_5=3F-3F-3F,003f003f003f",
+      "passed": true
+    },
+    {
+      "case": "decode1_0",
+      "expected": "decode1_0=feff0041",
+      "actual": "decode1_0=feff0041",
+      "passed": true
+    },
+    {
+      "case": "decode1_1",
+      "expected": "decode1_1=d800",
+      "actual": "decode1_1=d800",
+      "passed": true
+    },
+    {
+      "case": "decode1_2",
+      "expected": "decode1_2=dc00",
+      "actual": "decode1_2=dc00",
+      "passed": true
+    },
+    {
+      "case": "decode1_3",
+      "expected": "decode1_3=d8000041",
+      "actual": "decode1_3=d8000041",
+      "passed": true
+    },
+    {
+      "case": "decode1_4",
+      "expected": "decode1_4=d800dc00",
+      "actual": "decode1_4=d800dc00",
+      "passed": true
+    },
+    {
+      "case": "decode1_5",
+      "expected": "decode1_5=d800",
+      "actual": "decode1_5=d800",
+      "passed": true
+    },
+    {
+      "case": "decode1_6",
+      "expected": "decode1_6=ff80",
+      "actual": "decode1_6=ff80",
+      "passed": true
+    },
+    {
+      "case": "decode1_7",
+      "expected": "decode1_7=",
+      "actual": "decode1_7=",
+      "passed": true
+    },
+    {
+      "case": "decode2_0",
+      "expected": "decode2_0=fffe4100",
+      "actual": "decode2_0=fffe4100",
+      "passed": true
+    },
+    {
+      "case": "decode2_1",
+      "expected": "decode2_1=00d8",
+      "actual": "decode2_1=00d8",
+      "passed": true
+    },
+    {
+      "case": "decode2_2",
+      "expected": "decode2_2=00dc",
+      "actual": "decode2_2=00dc",
+      "passed": true
+    },
+    {
+      "case": "decode2_3",
+      "expected": "decode2_3=00d84100",
+      "actual": "decode2_3=00d84100",
+      "passed": true
+    },
+    {
+      "case": "decode2_4",
+      "expected": "decode2_4=00d800dc",
+      "actual": "decode2_4=00d800dc",
+      "passed": true
+    },
+    {
+      "case": "decode2_5",
+      "expected": "decode2_5=00d8",
+      "actual": "decode2_5=00d8",
+      "passed": true
+    },
+    {
+      "case": "decode2_6",
+      "expected": "decode2_6=80ff",
+      "actual": "decode2_6=80ff",
+      "passed": true
+    },
+    {
+      "case": "decode2_7",
+      "expected": "decode2_7=",
+      "actual": "decode2_7=",
+      "passed": true
+    },
+    {
+      "case": "decode3_0",
+      "expected": "decode3_0=003f003f00410000",
+      "actual": "decode3_0=003f003f00410000",
+      "passed": true
+    },
+    {
+      "case": "decode3_1",
+      "expected": "decode3_1=0000003f",
+      "actual": "decode3_1=0000003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_2",
+      "expected": "decode3_2=0000003f",
+      "actual": "decode3_2=0000003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_3",
+      "expected": "decode3_3=0000003f00410000",
+      "actual": "decode3_3=0000003f00410000",
+      "passed": true
+    },
+    {
+      "case": "decode3_4",
+      "expected": "decode3_4=0000003f0000003f",
+      "actual": "decode3_4=0000003f0000003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_5",
+      "expected": "decode3_5=0000003f003f",
+      "actual": "decode3_5=0000003f003f",
+      "passed": true
+    },
+    {
+      "case": "decode3_6",
+      "expected": "decode3_6=003f003f007f",
+      "actual": "decode3_6=003f003f007f",
+      "passed": true
+    },
+    {
+      "case": "decode3_7",
+      "expected": "decode3_7=0001",
+      "actual": "decode3_7=0001",
+      "passed": true
+    },
+    {
+      "case": "slice",
+      "expected": "slice=00410042",
+      "actual": "slice=00410042",
+      "passed": true
+    },
+    {
+      "case": "name0",
+      "expected": "name0=41",
+      "actual": "name0=41",
+      "passed": true
+    },
+    {
+      "case": "name1",
+      "expected": "name1=System.ArgumentException",
+      "actual": "name1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name2",
+      "expected": "name2=41-00",
+      "actual": "name2=41-00",
+      "passed": true
+    },
+    {
+      "case": "name3",
+      "expected": "name3=41-00",
+      "actual": "name3=41-00",
+      "passed": true
+    },
+    {
+      "case": "name4",
+      "expected": "name4=00-41",
+      "actual": "name4=00-41",
+      "passed": true
+    },
+    {
+      "case": "name5",
+      "expected": "name5=00-41",
+      "actual": "name5=00-41",
+      "passed": true
+    },
+    {
+      "case": "name6",
+      "expected": "name6=41",
+      "actual": "name6=41",
+      "passed": true
+    },
+    {
+      "case": "name7",
+      "expected": "name7=41",
+      "actual": "name7=41",
+      "passed": true
+    },
+    {
+      "case": "name8",
+      "expected": "name8=System.ArgumentException",
+      "actual": "name8=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name9",
+      "expected": "name9=System.ArgumentException",
+      "actual": "name9=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name10",
+      "expected": "name10=System.ArgumentException",
+      "actual": "name10=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name11",
+      "expected": "name11=System.ArgumentException",
+      "actual": "name11=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "name12",
+      "expected": "name12=System.ArgumentException",
+      "actual": "name12=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "bad0",
+      "expected": "bad0=System.ArgumentNullException",
+      "actual": "bad0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "bad1",
+      "expected": "bad1=System.ArgumentNullException",
+      "actual": "bad1=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "bad2",
+      "expected": "bad2=System.ArgumentOutOfRangeException",
+      "actual": "bad2=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "bad3",
+      "expected": "bad3=System.ArgumentOutOfRangeException",
+      "actual": "bad3=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "bad4",
+      "expected": "bad4=System.ArgumentNullException",
+      "actual": "bad4=System.ArgumentNullException",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "round0_4",
+      "dotnet": "round0_4=EF-BF-BD-78-EF-BF-BD,fffd0078fffd",
+      "unity_mono": "round0_4=ED-A0-80-78-ED-B0-80,fffdfffdfffd0078fffdfffdfffd"
+    },
+    {
+      "case": "round0_5",
+      "dotnet": "round0_5=EF-BF-BD-F0-90-80-80,fffdd800dc00",
+      "unity_mono": "round0_5=ED-A0-80-F0-90-80-80,fffdfffdfffdd800dc00"
+    },
+    {
+      "case": "round1_4",
+      "dotnet": "round1_4=FD-FF-78-00-FD-FF,fffd0078fffd",
+      "unity_mono": "round1_4=00-D8-78-00-00-DC,d8000078dc00"
+    },
+    {
+      "case": "round1_5",
+      "dotnet": "round1_5=FD-FF-00-D8-00-DC,fffdd800dc00",
+      "unity_mono": "round1_5=00-D8-00-D8-00-DC,d800d800dc00"
+    },
+    {
+      "case": "round2_4",
+      "dotnet": "round2_4=FF-FD-00-78-FF-FD,fffd0078fffd",
+      "unity_mono": "round2_4=D8-00-00-78-DC-00,d8000078dc00"
+    },
+    {
+      "case": "round2_5",
+      "dotnet": "round2_5=FF-FD-D8-00-DC-00,fffdd800dc00",
+      "unity_mono": "round2_5=D8-00-D8-00-DC-00,d800d800dc00"
+    },
+    {
+      "case": "decode1_1",
+      "dotnet": "decode1_1=fffd",
+      "unity_mono": "decode1_1=d800"
+    },
+    {
+      "case": "decode1_2",
+      "dotnet": "decode1_2=fffd",
+      "unity_mono": "decode1_2=dc00"
+    },
+    {
+      "case": "decode1_3",
+      "dotnet": "decode1_3=fffd0041",
+      "unity_mono": "decode1_3=d8000041"
+    },
+    {
+      "case": "decode1_5",
+      "dotnet": "decode1_5=fffdfffd",
+      "unity_mono": "decode1_5=d800"
+    },
+    {
+      "case": "decode1_6",
+      "dotnet": "decode1_6=ff80fffd",
+      "unity_mono": "decode1_6=ff80"
+    },
+    {
+      "case": "decode1_7",
+      "dotnet": "decode1_7=fffd",
+      "unity_mono": "decode1_7="
+    },
+    {
+      "case": "decode2_5",
+      "dotnet": "decode2_5=00d8fffd",
+      "unity_mono": "decode2_5=00d8"
+    },
+    {
+      "case": "decode2_6",
+      "dotnet": "decode2_6=80fffffd",
+      "unity_mono": "decode2_6=80ff"
+    },
+    {
+      "case": "decode2_7",
+      "dotnet": "decode2_7=fffd",
+      "unity_mono": "decode2_7="
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

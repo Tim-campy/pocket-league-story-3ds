@@ -13,6 +13,10 @@ import subprocess
 import sys
 
 ROOT=Path(__file__).resolve().parents[2]
+EXTRA_NATIVE_SOURCES={}
+EXTRA_INPUTS={}
+EXTRA_CSHARP_REFERENCES={}
+EXTRA_MONO_REFERENCES={}
 sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
 from inventory import compiler_paths
 FIXTURES={
@@ -71,6 +75,7 @@ def main():
     cs_source=ROOT/('tests/translator/'+args.fixture+'.cs')
     oracle=folder/(args.fixture+'.dll')
     refs=[framework/(n+'.dll') for n in ('System.Private.CoreLib','System.Runtime','System.Console','System.Collections')]
+    refs += [framework/(n+'.dll') for n in EXTRA_CSHARP_REFERENCES.get(args.fixture,[])]
     parameters=['/nologo','/nostdlib+','/target:exe','/optimize+','/checked-','/out:'+str(oracle)]
     parameters+=['/r:'+str(p) for p in refs]+[str(cs_source)]
     rsp=folder/'oracle.rsp';rsp.write_text('\n'.join('"'+p+'"' for p in parameters)+'\n',encoding='utf-8',newline='\n')
@@ -82,7 +87,7 @@ def main():
     runtime=ROOT/'src/kairo/common/semantic_runtime.cpp'
     binary=folder/'semantic-fixtures.exe'
     command=[compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/utf-8',
-             '/I'+str(runtime.parent),'/Fe:'+str(binary),source,runtime]
+             '/I'+str(runtime.parent),'/Fe:'+str(binary),source,runtime,*EXTRA_NATIVE_SOURCES.get(args.fixture,[])]
     execute(command,folder,'cpp-compile',env)
     actual=execute([binary,'dotnet'],folder,'cpp-run',env)
     unity=Path(os.environ.get('UNITY_ROOT',str(Path.home()/'AppData/Local/Programs/Unity/5.3.4f1')))
@@ -92,7 +97,8 @@ def main():
     mono_env=dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
     old_oracle=folder/(args.fixture+'-mono.exe')
     mono_core=smcs.parent/'System.Core.dll'
-    execute([mono,smcs,'-nologo','-noconfig','-target:exe','-optimize+','-r:'+str(mono_core),'-out:'+str(old_oracle),cs_source],folder,'mono-compile',mono_env)
+    mono_extra=['-r:'+str(smcs.parent/(n+'.dll')) for n in EXTRA_MONO_REFERENCES.get(args.fixture,[])]
+    execute([mono,smcs,'-nologo','-noconfig','-target:exe','-optimize+','-r:'+str(mono_core),*mono_extra,'-out:'+str(old_oracle),cs_source],folder,'mono-compile',mono_env)
     mono_expected=execute([mono,old_oracle],folder,'mono-run',mono_env).replace('\r\n','\n').replace('\r','')
     mono_actual=execute([binary,'mono'],folder,'cpp-mono-run',env)
     native_collector_tests=json.loads(execute([binary,'native-only'],folder,'cpp-native-collector-tests',env)) if args.fixture=='GcFixtures' else None
@@ -106,7 +112,7 @@ def main():
         fixture_cases=len(rows)+len(mono_rows),passed=sum(r['passed'] for r in rows+mono_rows),expected_lines=len(expected.splitlines()),actual_lines=len(actual.splitlines()),
         native_collector_tests=native_collector_tests,production_methods_translated=0,production_translator_exercised=False,game_assets_used=False,game_binary_executed=False,
         compiler=dict(csharp=str(csc),csharp_sha256=sha(csc),cpp=str(compiler),cpp_sha256=sha(compiler)),
-        inputs={str(p.relative_to(ROOT)):sha(p) for p in [cs_source,source,runtime,runtime.parent/'semantic_runtime.hpp',runtime.parent/'managed_collections.hpp',runtime.parent/'managed_random.hpp',runtime.parent/'managed_text.hpp',runtime.parent/'managed_dictionary.hpp',runtime.parent/'managed_time.hpp',Path(__file__)]},
+        inputs={str(p.relative_to(ROOT)):sha(p) for p in [cs_source,source,runtime,runtime.parent/'semantic_runtime.hpp',runtime.parent/'managed_collections.hpp',runtime.parent/'managed_random.hpp',runtime.parent/'managed_text.hpp',runtime.parent/'managed_dictionary.hpp',runtime.parent/'managed_time.hpp',Path(__file__),*EXTRA_NATIVE_SOURCES.get(args.fixture,[]),*EXTRA_INPUTS.get(args.fixture,[])]},
         historical_oracle=dict(runtime=str(mono),runtime_sha256=sha(mono),compiler=str(smcs),compiler_sha256=sha(smcs),framework_reference=str(mono_core),framework_reference_sha256=sha(mono_core),original_binaries_copied=False),
         default_runtime_profile='UnityMono265',cpp_flags=command[2:10],cases=rows,historical_cases=mono_rows,
         historical_profile_differences=[dict(case=a['case'],dotnet=a['expected'],unity_mono=b['expected'])

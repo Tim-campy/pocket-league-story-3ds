@@ -1,0 +1,298 @@
+{
+  "operation": "own-Java-versus-native-globalization-platform-leaves",
+  "status": "PASS",
+  "cases": 39,
+  "passed": 39,
+  "results": [
+    {
+      "case": "zone-0",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-1",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-2",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-3",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-4",
+      "expected": "32400000",
+      "actual": "32400000",
+      "passed": true
+    },
+    {
+      "case": "zone-5",
+      "expected": "-32400000",
+      "actual": "-32400000",
+      "passed": true
+    },
+    {
+      "case": "zone-6",
+      "expected": "32400000",
+      "actual": "32400000",
+      "passed": true
+    },
+    {
+      "case": "zone-7",
+      "expected": "32400000",
+      "actual": "32400000",
+      "passed": true
+    },
+    {
+      "case": "zone-8",
+      "expected": "34200000",
+      "actual": "34200000",
+      "passed": true
+    },
+    {
+      "case": "zone-9",
+      "expected": "34200000",
+      "actual": "34200000",
+      "passed": true
+    },
+    {
+      "case": "zone-10",
+      "expected": "-12600000",
+      "actual": "-12600000",
+      "passed": true
+    },
+    {
+      "case": "zone-11",
+      "expected": "60000",
+      "actual": "60000",
+      "passed": true
+    },
+    {
+      "case": "zone-12",
+      "expected": "-60000",
+      "actual": "-60000",
+      "passed": true
+    },
+    {
+      "case": "zone-13",
+      "expected": "86340000",
+      "actual": "86340000",
+      "passed": true
+    },
+    {
+      "case": "zone-14",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-15",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-16",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-17",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-18",
+      "expected": "300000",
+      "actual": "300000",
+      "passed": true
+    },
+    {
+      "case": "zone-19",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-20",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-21",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-22",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "zone-23",
+      "expected": "0",
+      "actual": "0",
+      "passed": true
+    },
+    {
+      "case": "language-0",
+      "expected": "iw",
+      "actual": "iw",
+      "passed": true
+    },
+    {
+      "case": "language-1",
+      "expected": "iw",
+      "actual": "iw",
+      "passed": true
+    },
+    {
+      "case": "language-2",
+      "expected": "in",
+      "actual": "in",
+      "passed": true
+    },
+    {
+      "case": "language-3",
+      "expected": "in",
+      "actual": "in",
+      "passed": true
+    },
+    {
+      "case": "language-4",
+      "expected": "ji",
+      "actual": "ji",
+      "passed": true
+    },
+    {
+      "case": "language-5",
+      "expected": "ji",
+      "actual": "ji",
+      "passed": true
+    },
+    {
+      "case": "language-6",
+      "expected": "pt",
+      "actual": "pt",
+      "passed": true
+    },
+    {
+      "case": "language-7",
+      "expected": "zh",
+      "actual": "zh",
+      "passed": true
+    },
+    {
+      "case": "language-8",
+      "expected": "fil",
+      "actual": "fil",
+      "passed": true
+    },
+    {
+      "case": "language-9",
+      "expected": "",
+      "actual": "",
+      "passed": true
+    },
+    {
+      "case": "language-10",
+      "expected": "xx",
+      "actual": "xx",
+      "passed": true
+    },
+    {
+      "case": "language-11",
+      "expected": "en",
+      "actual": "en",
+      "passed": true
+    },
+    {
+      "case": "live-language",
+      "expected": "pt",
+      "actual": "pt",
+      "passed": true
+    },
+    {
+      "case": "live-country",
+      "expected": "BR",
+      "actual": "BR",
+      "passed": true
+    },
+    {
+      "case": "live-raw_offset",
+      "expected": "-10800000",
+      "actual": "-10800000",
+      "passed": true
+    }
+  ],
+  "native_assertions": {
+    "status": "PASS",
+    "assertions": 12
+  },
+  "live": {
+    "java": {
+      "language": "pt",
+      "country": "BR",
+      "timezone_id": "America/Sao_Paulo",
+      "raw_offset": "-10800000",
+      "format_locale": "pt-BR",
+      "display_locale": "pt-BR"
+    },
+    "native": {
+      "language": "pt",
+      "country": "BR",
+      "timezone_id": "E. South America Standard Time",
+      "raw_offset": "-10800000"
+    },
+    "timezone_id_namespace_difference": true
+  },
+  "java": {
+    "path": "C:\\Program Files\\Microsoft\\jdk-21.0.12.101-hotspot\\bin\\java.EXE",
+    "sha256": "1f41cc782de7ddd8824376568f9011413d710cf225047906106d2a01a0e3f7a9",
+    "javac_sha256": "00ff52b49ba8cb2de4718fade93f411549d704eb869641eaa69986608a452a26",
+    "version": "openjdk 21.0.12.1 2026-08-18 LTS\nOpenJDK Runtime Environment Microsoft-14941484 (build 21.0.12.1+1-LTS)\nOpenJDK 64-Bit Server VM Microsoft-14941484 (build 21.0.12.1+1-LTS, mixed mode, sharing)"
+  },
+  "producer_sha256": "09c4872acdbac392cfa8b8dd978ffbf81019f695e4b0ac15ab12aadbdb3eefb8",
+  "inputs_sha256": {
+    "tests/kairo/globalization_fixtures.cpp": "cac7ae9461d4edc1060e238f480bac6f326278caffba9661a6b80d746497de76",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/platform/sdl/globalization.cpp": "0eb2305b34557c51d9a3b71d46ffa1261defb9193a8d647576de2238dafa1d99",
+    "tests/kairo/GlobalizationOracle.java": "37fe6bb5231185ea26462622cfb1975a1263935f7cc70db69e30d6d3d590ee2e",
+    "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
+    "src/kairo/platform/sdl/globalization.hpp": "55d55a042962dbd585e3f1e049343754ecd838fef21217b5c5a31d0c4719bcda",
+    "src/kairo/common/managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
+  },
+  "compiler": {
+    "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "native_executable": {
+    "path": "build/globalization-fixtures/globalization-fixtures.exe",
+    "sha256": "ba75af7b0d201d7a093fe8ad28eecc071ebf2e4f8cd7a1241de4558131e0f512"
+  },
+  "production_methods_promoted": 0,
+  "original_game_binary_executed": false,
+  "original_java_code_loaded": false,
+  "limitations": [
+    "Windows timezone ID is a Windows key name, while Java default ID is IANA; no Game call observes GetID in the inspected source.",
+    "General IANA lookup is explicitly unsupported; GMT custom IDs and Windows ID roundtrip are supported.",
+    "Raw offset excludes DST, matching getRawOffset; this is not a full historical timezone database.",
+    "Locale platform data is independent of CLR CurrentCulture.",
+    "JDK21 with legacy ISO-code property is an own platform oracle, not execution of the Android VM or APK."
+  ]
+}

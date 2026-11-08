@@ -27,6 +27,7 @@ class IApplication : public cs::Object {
     std::deque<std::function<void()>> ui_tasks_,update_tasks_;
     std::function<void()> termination_handler_;
     ApplicationInitializationBridge initialization_;
+    cs::Ref<cs::Object> initialization_owner_;
     cs::String data_path_;
     void drain(std::deque<std::function<void()>>& tasks){
         for(;;){std::function<void()> task;{std::lock_guard<std::mutex> lock(tasks_mutex_);if(tasks.empty())break;task=std::move(tasks.front());tasks.pop_front();}try{task();}catch(const cs::Exception&){}}
@@ -66,23 +67,26 @@ public:
     std::int32_t GetTotalFrames()const{return frames_;}
     std::int64_t GetRenderTime()const{return render_ms_;}std::int64_t GetUpdateTime()const{return update_ms_;}
     cs::String GetDataPath()const{return data_path_;}
-    void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::Object::trace_edges(visitor);cs::trace_value(data_path_,visitor);}
-    void release_edges()override{cs::Object::release_edges();cs::release_value(data_path_);}
+    void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::Object::trace_edges(visitor);cs::trace_value(data_path_,visitor);cs::trace_value(initialization_owner_,visitor);}
+    void release_edges()override{cs::Object::release_edges();cs::release_value(data_path_);cs::release_value(initialization_owner_);initialization_={};}
     void Terminate(){if(termination_)return;if(!termination_handler_)throw cs::InvalidOperationException("Termination event/finish bridge is not installed");termination_=true;termination_handler_();}
     static void Sleep(std::int32_t ms){if(ms<-1)throw cs::ArgumentOutOfRangeException();if(ms==-1)throw cs::NotSupportedException("Infinite app sleep needs a cancellation host");std::this_thread::sleep_for(std::chrono::milliseconds(ms));}
     void RunOnUiThread(cs::Delegate<void()> method,bool wait=false){
         if(CheckUiThread()){try{method();}catch(const cs::Exception&){if(wait)throw;}return;}
         auto task=std::make_shared<std::packaged_task<void()>>([method]{method();});auto done=task->get_future();
-        {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}if(wait)done.get();
+        {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
+        if(wait){{cs::GcNativeBlockingScope parked;done.wait();}done.get();}
     }
     cs::Ref<cs::Object> RunOnUiThread(UIMethod method,bool wait=false){
         if(CheckUiThread()){try{return method();}catch(const cs::Exception&){if(wait)throw;return {};}}
         auto task=std::make_shared<std::packaged_task<cs::Ref<cs::Object>()>>([method]{return method();});auto done=task->get_future();
-        {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}return wait?done.get():nullptr;
+        {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
+        if(!wait)return nullptr;
+        {cs::GcNativeBlockingScope parked;done.wait();}return done.get();
     }
     bool RunOnUpdate(cs::Delegate<void()> method){if(updating_){method();return true;}std::lock_guard<std::mutex> lock(tasks_mutex_);update_tasks_.push_back([method]{method();});return false;}
     void host_configure(std::int32_t w,std::int32_t h,cs::String data_path,std::function<void()> terminate){screen_width_=w;screen_height_=h;data_path_=std::move(data_path);termination_handler_=std::move(terminate);}
-    void host_initialization(ApplicationInitializationBridge bridge){initialization_=std::move(bridge);}
+    void host_initialization(ApplicationInitializationBridge bridge,cs::Ref<cs::Object> owner={}){initialization_=std::move(bridge);initialization_owner_=std::move(owner);}
     void host_start(){
         if(!initialization_.before_create||!initialization_.after_create)throw cs::InvalidOperationException("Original Config/Awake/Language initialization bridge is not installed");
         ui_thread_=std::this_thread::get_id();initialization_.before_create();created_=true;OnCreate();initialization_.after_create();OnStart();visible_=true;

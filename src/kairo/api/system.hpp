@@ -1,0 +1,48 @@
+#pragma once
+#include "semantic_runtime.hpp"
+#include <atomic>
+#include <chrono>
+#include <mutex>
+#include <thread>
+
+namespace pls::kairo {
+// Platform replacements for the two Unity setters reached by Main.OnUpdate.
+// The host paces explicit positive target rates. A non-positive rate leaves
+// pacing to the platform; it does not silently substitute a game frame rate.
+class UnityApplication {
+    inline static std::atomic<std::int32_t> target_{-1};
+public:
+    static void set_targetFrameRate(std::int32_t value){target_.store(value);}
+    static std::int32_t get_targetFrameRate(){return target_.load();}
+    static void pace(std::chrono::steady_clock::time_point frame_start){
+        const auto rate=target_.load();
+        if(rate>0){
+            const auto period=std::chrono::duration<double>(1.0/static_cast<double>(rate));
+            std::this_thread::sleep_until(frame_start+std::chrono::duration_cast<std::chrono::steady_clock::duration>(period));
+        }
+    }
+};
+class QualitySettings {
+public:
+    static void set_vSyncCount(std::int32_t value){
+        // Main sets zero: SDL presentation is software-driven and the explicit
+        // target rate above controls this PC development backend.
+        if(value!=0)throw cs::NotSupportedException("Nonzero vsync is not implemented by the PC software backend");
+    }
+    static std::int32_t get_vSyncCount(){return 0;}
+};
+struct NativePluginContext {std::int32_t language{};bool logging{};bool initialized{};};
+inline std::mutex native_plugin_mutex;
+inline NativePluginContext native_plugin_context;
+inline void native_plugin_init(std::int32_t language,bool logging,const cs::String& license_key){
+    // Licensing is removed by the user's service policy. The provided key is
+    // neither retained, logged nor interpreted, and no success token is minted.
+    (void)license_key;
+    std::lock_guard<std::mutex> guard(native_plugin_mutex);
+    native_plugin_context={language,logging,true};
+}
+inline NativePluginContext native_plugin_state(){
+    std::lock_guard<std::mutex> guard(native_plugin_mutex);
+    return native_plugin_context;
+}
+} // namespace pls::kairo

@@ -3,7 +3,7 @@ from collections import Counter
 import csv
 import json
 from pathlib import Path
-from update_phase2_progress import refresh
+from update_phase2_progress import refresh,EvidencePending
 
 ROOT=Path(__file__).resolve().parents[1]
 csv.field_size_limit(2_000_000)
@@ -156,13 +156,17 @@ def assets_document(asset,phase2=None):
         lines += ['', '## Estado medido da Fase 2','',
             f"Os {phase2['rgba8_files']} arquivos RGBA8 únicos ocupam **{phase2['rgba8_bytes']} bytes** sem padding de textura. Todos foram carregados no backend SDL e cada canal/pixel foi comparado ao payload convertido: **{phase2['rgba8_files']}/{phase2['rgba8_files']} passam**. Isso corresponde às 718 ocorrências PNG dos containers, sem duplicar hashes.",
             f"O teste sequencial teve pico de payload de textura de **{phase2['texture_readback_peak_payload_bytes']} bytes**, com uma textura por vez. Não é memória residente do jogo nem orçamento do 3DS.", '',
-            f"Assets atuais por estado: **{phase2['asset_states']}**. Fontes: {phase2['ttf_files']} TTF extraídos, rasterização pendente. Áudio: {phase2['ogg_files']} Ogg convertidos, streaming de runtime pendente. Demais dados de containers foram extraídos com SHA-256 conferido e aguardam seus consumidores traduzidos.", '',
+            f"Assets atuais por estado: **{phase2['asset_states']}**. Fontes: {phase2['ttf_files']} TTF; áudio: {phase2['ogg_files']} Ogg. "+('Os dois corpora foram exercitados nos consumidores nativos SDL: rasterização e streaming com buffers limitados, sem boot do jogo. Isso promove os grupos de assets para loads; não promove símbolos arbitrários da API Kairo.' if phase2['media_runtime_verified'] else 'Rasterização e streaming nativos ainda não possuem prova atual.')+' Demais dados de containers foram extraídos com SHA-256 conferido e aguardam seus consumidores traduzidos.', '',
+            f"Arrays numéricos incorporados: **{phase2['baked_numeric_arrays']}** extrações comprovadas do APK; **{phase2['baked_numeric_arrays_unknown']}** não comprovadas. Payloads e hashes individuais ficam no manifesto privado; o índice público contém somente forma/proveniência e sua âncora global. Não são literais de dados inseridos manualmente no C++.", '',
             'A geração dos estados exige hashes atuais dos fontes/produtores/gerados/recibos, manifest local, outputs e readback. Nenhum método do jogo foi executado por essa comparação de imagens. APK e conteúdos permanecem exclusivamente locais.']
     (ROOT/'docs/assets.md').write_text('\n'.join(lines)+'\n',encoding='utf-8',newline='\n')
 
 
 def main():
-    phase2=refresh()
+    try:phase2=refresh()
+    except EvidencePending as error:
+        print(json.dumps(dict(status='PENDING',reason=str(error),ledgers_and_documents_published=False)))
+        return
     boundary=rows('config/boundary.csv');translation=rows('config/translation.csv');assets=rows('config/assets.csv')
     b=load('config/boundary-summary.json');a=load('config/asset-summary.json')
     if len(boundary)!=b['kairo']['unique_symbols']:raise ValueError('Boundary summary differs from ledger')
@@ -182,7 +186,8 @@ def main():
         ('**Fase 2 parcial:** '+str(len(phase2['verified_boundary_ids']))+' membros reais da fronteira verificados por diferencial de fonte; '
          +str(phase2['compiled_methods'])+' métodos portáveis gerados/compilados, '+str(phase2['emitted_root_methods'])+' raízes entre '
          +str(phase2['requested_root_methods'])+' métodos requisitados e '+str(phase2['emitted_dependency_methods'])+' dependências. '
-         'Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 0/1958 traduzidos/compilados/executados.**'
+         'Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: '
+         +str(phase2['game_translated_methods'])+'/1958 identidades originais com C++ compilado; 0 executadas/verificadas em jogo.**'
          if phase2 else '**Preparação: zero membros verificados e zero métodos traduzidos.** Ainda sem recibos de implementação.'),'',
         '## Preparação e medições','',
         '- Repositório separado e submódulo fixado; política de conteúdo no CI (formatos proibidos e limite 2.000.000 bytes).',
@@ -212,12 +217,17 @@ def main():
         lines=[replace.get(line,line) for line in lines]
         lines += ['## Evidência atual da Fase 2','',
             f"- Portáveis: {phase2['requested_portable_symbols']} símbolos requisitados correspondem a {phase2['requested_root_methods']} raízes de método. {phase2['emitted_root_methods']} raízes + {phase2['emitted_dependency_methods']} dependências emitidas/compiladas; {phase2['executed_methods']} métodos exercitados em {phase2['differential_cases']} casos diferenciais de fonte, todos aprovados.",
-            f"- Fronteira: {len(phase2['verified_boundary_ids'])}/{len(boundary)} símbolos verificados; não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.",
+            f"- Fronteira: {len(phase2['verified_boundary_ids'])}/{len(boundary)} símbolos verificados: {len(phase2['verified_portable_boundary_ids'])} portáveis e {len(phase2['verified_platform_boundary_ids'])} de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.",
+            f"- Assembly-CSharp: {phase2['game_emitted_cpp_methods']} corpos emitidos, {phase2['game_compiled_cpp_methods']} compilados em objeto C++; {phase2['game_translated_methods']}/1958 ({phase2['game_translated_methods']/1958*100:.2f}%) associados unicamente à assinatura IL original. {len(phase2['game_mapping_unknown'])} DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou {phase2['game_source_method_declarations'] if phase2['game_source_method_declarations'] is not None else 'UNKNOWN'} identidades declaradas; o pedido atual inclui {phase2['game_requested_method_identities']} identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.",
             f"- Sintaxe: {phase2['syntax_kinds_observed_in_emitted_bodies']}/{phase2['measured_syntax_kinds']} SyntaxKinds observados em corpos emitidos; observação não comprova cobertura semântica integral de cada construção.",
             f"- Serviços: {phase2['service_contracts']} contratos explícitos e {phase2['service_native_assertions']} assertions nativas; hooks não integrados, nenhum símbolo da fronteira promovido por essas fixtures.",
-            f"- Assets: {phase2['rgba8_files']} RGBA8 únicos ({phase2['rgba8_bytes']} bytes) com readback integral; {phase2['ttf_files']} TTF extraídos; {phase2['ogg_files']} Ogg convertidos. Rasterizador e streaming de runtime pendentes.",
+            f"- Assets: {phase2['rgba8_files']} RGBA8 únicos ({phase2['rgba8_bytes']} bytes) com readback integral; {phase2['ttf_files']} TTF e {phase2['ogg_files']} Ogg "+('exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.' if phase2['media_runtime_verified'] else 'ainda sem prova atual de rasterização/streaming.'),
             '- Backend SDL e fixtures C++/C# foram executados. Título, menu, partida, frame time e memória residente por categoria do jogo permanecem UNKNOWN; não houve primeiro boot do jogo.',
-            '- Próxima integração: ampliar tradução das classes/coleções/streams e sua fronteira, fontes TTF e áudio streaming antes de armazenamento/entrada/UI. Nenhuma decisão de telas 3DS foi tomada.',
+            '- Próxima integração: ampliar tradução e bindings de plataforma até o título/menu e a partida completa. Nenhuma decisão de telas 3DS foi tomada.',
+            '', '## Limites das contagens e dos bindings','',
+            'translated significa apenas que o corpo C++ gerado compilou em objeto, com produtor, fontes, headers, compilador e objeto ancorados por hash. Não comprova link completo, bootstrap executado, chamada de todas as APIs ou comportamento em aparelho. runs/verified do jogo permanecem zero até prova de execução apropriada.',
+            'O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e retorno; construtores retornam System.Void. Não há vínculo só por aridade. Correspondências ambíguas, assinaturas abertas e DocIDs sem identidade IL única ficam registrados como UNKNOWN no recibo. Métodos gerados/auxiliares do IL não são contados como traduzidos por haver uma declaração fonte relacionada.',
+            'Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.',
             '', 'Recibos e hashes conferidos pelo gerador: [resumo](config/phase2-progress.json), [portáveis](config/phase2-translation.json), [diferencial](config/phase2-portable-differential.json), [imagens](config/phase2-image-tests.json).', '']
     assets_document(a,phase2)
     (ROOT/'PROGRESS.md').write_text('\n'.join(lines),encoding='utf-8',newline='\n')
@@ -225,4 +235,6 @@ def main():
                           boundary_states=dict(Counter(r['estado'] for r in boundary)),translation_states=dict(Counter(r['estado'] for r in translation)))))
 
 
-if __name__=='__main__':main()
+if __name__=='__main__':
+    try:main()
+    except EvidencePending as error:print(json.dumps(dict(status='PENDING',reason=str(error),ledgers_and_documents_published=False)))

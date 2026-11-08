@@ -1,0 +1,58 @@
+{
+  "operation": "native-Kairo-graphics-and-source-oracles",
+  "status": "PASS",
+  "source_oracle_cases": 550,
+  "native_assertions": 7955,
+  "png_occurrences_loaded": 718,
+  "text_frames": 6,
+  "catalog_records_verified": 3006,
+  "game_boot": false,
+  "original_renderrect_exception_preserved": true,
+  "android_raster_comparison": "UNKNOWN",
+  "sources": {
+    "tools/test_graphics.py": "bdb309cfd63cf0a01be5c0bea3a3ad7248787ff764e31d39c8038e2501eede44",
+    "src/kairo/api/graphics.hpp": "af7af8a6032982b53f18fdbb3f08f7e19e35c282bef0994cccc7727b88c04d73",
+    "src/kairo/common/graphics.cpp": "98f41b7cdd00e8f66d8a60ffb3b7155e0aa3aa85ee3026863a29d42614cb897a",
+    "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
+    "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
+    "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd",
+    "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
+    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
+    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
+    "tests/kairo/graphics_api_test.cpp": "407533c4b29f1130ae0f3d1d9e6b2ea1d3027b0eec41cea419d0b22dc4b5dc11",
+    "tests/kairo/asset_catalog_test.cpp": "0efc2d090923c15c60c655f868102bc8fe95d23ecea2727f5cd52b1486cc5d34",
+    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src/kairo/common/managed_collections.hpp": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b",
+    "src/kairo/common/managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src/kairo/common/managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src/kairo/common/managed_streams.hpp": "ef93cc1d080d67a78c4718efd2ea260e31ecf4bdf41b4db1191cd398077d6c7d",
+    "src/kairo/common/managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src/kairo/common/managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1"
+  },
+  "original_source_sha256": "c1dd3a966f1a9d39db525daa2953cc54728fce3624c74b9e15101a08ba12b6a6",
+  "font_original_source_sha256": "01144881acbf350f90af70a7ff3757aae361478816af3e83142fd8f608f1975b",
+  "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
+  "original_sources": {
+    "reference/src/KairoLibrary/kairo/unity/ui/Graphics.cs": "c1dd3a966f1a9d39db525daa2953cc54728fce3624c74b9e15101a08ba12b6a6",
+    "reference/src/KairoLibrary/kairo/unity/ui/Font.cs": "01144881acbf350f90af70a7ff3757aae361478816af3e83142fd8f608f1975b"
+  },
+  "oracle_artifacts": {
+    "build/graphics-tests/GraphicsOracle.cs": "01bb71e3d533ab26e27b020e8224321b85233aa35f84393ed7fff21e70276d24",
+    "build/graphics-tests/GraphicsOracle.dll": "afc1172cf993eac6ee1f72f86195d765d25eb60d767f7be4ccebd5fd4c750a7e",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "def99a96376bf2b044d944c7e480c870fa3c7950d508f269d25a52fc620ef296"
+  },
+  "executable_sha256": "95c5d81283fd6cf36d03ef525fdcc2476f69f97aec813ff57611420a26107dc7",
+  "oracle_sha256": "01bb71e3d533ab26e27b020e8224321b85233aa35f84393ed7fff21e70276d24",
+  "trace_sha256": "de08db96c4a568921d3c3ca7cfd0f775ee205706e5c062ce28622e723b374fd2",
+  "verified_source_ids": [
+    "M:kairo.unity.ui.Graphics.GetColorOfRGB(System.Int32,System.Int32,System.Int32)",
+    "M:kairo.unity.ui.Graphics.GetColorOfRGB(System.Int32,System.Int32,System.Int32,System.Int32)",
+    "M:kairo.unity.ui.Graphics.GetAnchorPosition(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
+    "M:kairo.unity.ui.Graphics.GetRenderRect",
+    "M:kairo.unity.ui.Font.GetSize",
+    "M:kairo.unity.ui.Font.GetHeight",
+    "M:kairo.unity.ui.Font.SetSize(System.Int32,System.Boolean)"
+  ]
+}

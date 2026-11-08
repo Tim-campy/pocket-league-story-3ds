@@ -1,0 +1,1127 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 160,
+  "passed": 160,
+  "expected_lines": 80,
+  "actual_lines": 80,
+  "native_collector_tests": null,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\FloatingCastFixtures.cs": "6b022f822232c9ff70d6ca0fb08cb4c1b631c67b07860b41c29a57468b832cb1",
+    "tests\\translator\\floating_cast_fixtures.cpp": "098a58855d5e8ac3b2dff9e4a662d48d71be7089dccad2e34dce77c4bcb1cb26",
+    "src\\kairo\\common\\semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src\\kairo\\common\\managed_collections.hpp": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b",
+    "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "tests\\translator\\run_semantic_fixtures.py": "d7aa3b76fcd4427314e5dc8de1b54c6cfc7773f4d55b294ea97a6308256573b0"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "framework_reference": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\System.Core.dll",
+    "framework_reference_sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "double-i32-0",
+      "expected": "double-i32-0=0",
+      "actual": "double-i32-0=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-0",
+      "expected": "double-i64-0=0",
+      "actual": "double-i64-0=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-1",
+      "expected": "double-i32-1=0",
+      "actual": "double-i32-1=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-1",
+      "expected": "double-i64-1=0",
+      "actual": "double-i64-1=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-2",
+      "expected": "double-i32-2=1",
+      "actual": "double-i32-2=1",
+      "passed": true
+    },
+    {
+      "case": "double-i64-2",
+      "expected": "double-i64-2=1",
+      "actual": "double-i64-2=1",
+      "passed": true
+    },
+    {
+      "case": "double-i32-3",
+      "expected": "double-i32-3=-1",
+      "actual": "double-i32-3=-1",
+      "passed": true
+    },
+    {
+      "case": "double-i64-3",
+      "expected": "double-i64-3=-1",
+      "actual": "double-i64-3=-1",
+      "passed": true
+    },
+    {
+      "case": "double-i32-4",
+      "expected": "double-i32-4=0",
+      "actual": "double-i32-4=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-4",
+      "expected": "double-i64-4=0",
+      "actual": "double-i64-4=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-5",
+      "expected": "double-i32-5=2147483647",
+      "actual": "double-i32-5=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-5",
+      "expected": "double-i64-5=9223372036854775807",
+      "actual": "double-i64-5=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "double-i32-6",
+      "expected": "double-i32-6=-2147483648",
+      "actual": "double-i32-6=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-6",
+      "expected": "double-i64-6=-9223372036854775808",
+      "actual": "double-i64-6=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-7",
+      "expected": "double-i32-7=2147483647",
+      "actual": "double-i32-7=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-7",
+      "expected": "double-i64-7=2147483647",
+      "actual": "double-i64-7=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i32-8",
+      "expected": "double-i32-8=2147483647",
+      "actual": "double-i32-8=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-8",
+      "expected": "double-i64-8=2147483648",
+      "actual": "double-i64-8=2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i32-9",
+      "expected": "double-i32-9=-2147483648",
+      "actual": "double-i32-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-9",
+      "expected": "double-i64-9=-2147483648",
+      "actual": "double-i64-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i32-10",
+      "expected": "double-i32-10=-2147483648",
+      "actual": "double-i32-10=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-10",
+      "expected": "double-i64-10=-2147483649",
+      "actual": "double-i64-10=-2147483649",
+      "passed": true
+    },
+    {
+      "case": "double-i32-11",
+      "expected": "double-i32-11=2147483647",
+      "actual": "double-i32-11=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-11",
+      "expected": "double-i64-11=4294967295",
+      "actual": "double-i64-11=4294967295",
+      "passed": true
+    },
+    {
+      "case": "double-i32-12",
+      "expected": "double-i32-12=2147483647",
+      "actual": "double-i32-12=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-12",
+      "expected": "double-i64-12=9223372036854775807",
+      "actual": "double-i64-12=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "double-i32-13",
+      "expected": "double-i32-13=-2147483648",
+      "actual": "double-i32-13=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-13",
+      "expected": "double-i64-13=-9223372036854775808",
+      "actual": "double-i64-13=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-14",
+      "expected": "double-i32-14=2147483647",
+      "actual": "double-i32-14=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-14",
+      "expected": "double-i64-14=9223372036854775807",
+      "actual": "double-i64-14=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "double-i32-15",
+      "expected": "double-i32-15=-2147483648",
+      "actual": "double-i32-15=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-15",
+      "expected": "double-i64-15=-9223372036854775808",
+      "actual": "double-i64-15=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-16",
+      "expected": "double-i32-16=2147483647",
+      "actual": "double-i32-16=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-16",
+      "expected": "double-i64-16=9223372036854774784",
+      "actual": "double-i64-16=9223372036854774784",
+      "passed": true
+    },
+    {
+      "case": "double-i32-17",
+      "expected": "double-i32-17=-2147483648",
+      "actual": "double-i32-17=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-17",
+      "expected": "double-i64-17=-9223372036854775808",
+      "actual": "double-i64-17=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-18",
+      "expected": "double-i32-18=0",
+      "actual": "double-i32-18=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-18",
+      "expected": "double-i64-18=0",
+      "actual": "double-i64-18=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-19",
+      "expected": "double-i32-19=0",
+      "actual": "double-i32-19=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-19",
+      "expected": "double-i64-19=0",
+      "actual": "double-i64-19=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-20",
+      "expected": "double-i32-20=2147483647",
+      "actual": "double-i32-20=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-20",
+      "expected": "double-i64-20=2147483647",
+      "actual": "double-i64-20=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i32-21",
+      "expected": "double-i32-21=-2147483648",
+      "actual": "double-i32-21=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-21",
+      "expected": "double-i64-21=-2147483648",
+      "actual": "double-i64-21=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i32-0",
+      "expected": "float-i32-0=0",
+      "actual": "float-i32-0=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-0",
+      "expected": "float-i64-0=0",
+      "actual": "float-i64-0=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-1",
+      "expected": "float-i32-1=0",
+      "actual": "float-i32-1=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-1",
+      "expected": "float-i64-1=0",
+      "actual": "float-i64-1=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-2",
+      "expected": "float-i32-2=1",
+      "actual": "float-i32-2=1",
+      "passed": true
+    },
+    {
+      "case": "float-i64-2",
+      "expected": "float-i64-2=1",
+      "actual": "float-i64-2=1",
+      "passed": true
+    },
+    {
+      "case": "float-i32-3",
+      "expected": "float-i32-3=-1",
+      "actual": "float-i32-3=-1",
+      "passed": true
+    },
+    {
+      "case": "float-i64-3",
+      "expected": "float-i64-3=-1",
+      "actual": "float-i64-3=-1",
+      "passed": true
+    },
+    {
+      "case": "float-i32-4",
+      "expected": "float-i32-4=0",
+      "actual": "float-i32-4=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-4",
+      "expected": "float-i64-4=0",
+      "actual": "float-i64-4=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-5",
+      "expected": "float-i32-5=2147483647",
+      "actual": "float-i32-5=2147483647",
+      "passed": true
+    },
+    {
+      "case": "float-i64-5",
+      "expected": "float-i64-5=9223372036854775807",
+      "actual": "float-i64-5=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "float-i32-6",
+      "expected": "float-i32-6=-2147483648",
+      "actual": "float-i32-6=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-6",
+      "expected": "float-i64-6=-9223372036854775808",
+      "actual": "float-i64-6=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-7",
+      "expected": "float-i32-7=2147483520",
+      "actual": "float-i32-7=2147483520",
+      "passed": true
+    },
+    {
+      "case": "float-i64-7",
+      "expected": "float-i64-7=2147483520",
+      "actual": "float-i64-7=2147483520",
+      "passed": true
+    },
+    {
+      "case": "float-i32-8",
+      "expected": "float-i32-8=2147483647",
+      "actual": "float-i32-8=2147483647",
+      "passed": true
+    },
+    {
+      "case": "float-i64-8",
+      "expected": "float-i64-8=2147483648",
+      "actual": "float-i64-8=2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i32-9",
+      "expected": "float-i32-9=-2147483648",
+      "actual": "float-i32-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-9",
+      "expected": "float-i64-9=-2147483648",
+      "actual": "float-i64-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i32-10",
+      "expected": "float-i32-10=-2147483648",
+      "actual": "float-i32-10=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-10",
+      "expected": "float-i64-10=-2147483904",
+      "actual": "float-i64-10=-2147483904",
+      "passed": true
+    },
+    {
+      "case": "float-i32-11",
+      "expected": "float-i32-11=2147483647",
+      "actual": "float-i32-11=2147483647",
+      "passed": true
+    },
+    {
+      "case": "float-i64-11",
+      "expected": "float-i64-11=4294967296",
+      "actual": "float-i64-11=4294967296",
+      "passed": true
+    },
+    {
+      "case": "float-i32-12",
+      "expected": "float-i32-12=2147483647",
+      "actual": "float-i32-12=2147483647",
+      "passed": true
+    },
+    {
+      "case": "float-i64-12",
+      "expected": "float-i64-12=9223372036854775807",
+      "actual": "float-i64-12=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "float-i32-13",
+      "expected": "float-i32-13=-2147483648",
+      "actual": "float-i32-13=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-13",
+      "expected": "float-i64-13=-9223372036854775808",
+      "actual": "float-i64-13=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-14",
+      "expected": "float-i32-14=2147483647",
+      "actual": "float-i32-14=2147483647",
+      "passed": true
+    },
+    {
+      "case": "float-i64-14",
+      "expected": "float-i64-14=9223372036854775807",
+      "actual": "float-i64-14=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "float-i32-15",
+      "expected": "float-i32-15=-2147483648",
+      "actual": "float-i32-15=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-15",
+      "expected": "float-i64-15=-9223372036854775808",
+      "actual": "float-i64-15=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-16",
+      "expected": "float-i32-16=0",
+      "actual": "float-i32-16=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-16",
+      "expected": "float-i64-16=0",
+      "actual": "float-i64-16=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-17",
+      "expected": "float-i32-17=0",
+      "actual": "float-i32-17=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-17",
+      "expected": "float-i64-17=0",
+      "actual": "float-i64-17=0",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "double-i32-0",
+      "expected": "double-i32-0=0",
+      "actual": "double-i32-0=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-0",
+      "expected": "double-i64-0=0",
+      "actual": "double-i64-0=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-1",
+      "expected": "double-i32-1=0",
+      "actual": "double-i32-1=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-1",
+      "expected": "double-i64-1=0",
+      "actual": "double-i64-1=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-2",
+      "expected": "double-i32-2=1",
+      "actual": "double-i32-2=1",
+      "passed": true
+    },
+    {
+      "case": "double-i64-2",
+      "expected": "double-i64-2=1",
+      "actual": "double-i64-2=1",
+      "passed": true
+    },
+    {
+      "case": "double-i32-3",
+      "expected": "double-i32-3=-1",
+      "actual": "double-i32-3=-1",
+      "passed": true
+    },
+    {
+      "case": "double-i64-3",
+      "expected": "double-i64-3=-1",
+      "actual": "double-i64-3=-1",
+      "passed": true
+    },
+    {
+      "case": "double-i32-4",
+      "expected": "double-i32-4=-2147483648",
+      "actual": "double-i32-4=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-4",
+      "expected": "double-i64-4=-9223372036854775808",
+      "actual": "double-i64-4=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-5",
+      "expected": "double-i32-5=-2147483648",
+      "actual": "double-i32-5=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-5",
+      "expected": "double-i64-5=-9223372036854775808",
+      "actual": "double-i64-5=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-6",
+      "expected": "double-i32-6=-2147483648",
+      "actual": "double-i32-6=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-6",
+      "expected": "double-i64-6=-9223372036854775808",
+      "actual": "double-i64-6=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-7",
+      "expected": "double-i32-7=2147483647",
+      "actual": "double-i32-7=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-7",
+      "expected": "double-i64-7=2147483647",
+      "actual": "double-i64-7=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i32-8",
+      "expected": "double-i32-8=-2147483648",
+      "actual": "double-i32-8=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-8",
+      "expected": "double-i64-8=2147483648",
+      "actual": "double-i64-8=2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i32-9",
+      "expected": "double-i32-9=-2147483648",
+      "actual": "double-i32-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-9",
+      "expected": "double-i64-9=-2147483648",
+      "actual": "double-i64-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i32-10",
+      "expected": "double-i32-10=-2147483648",
+      "actual": "double-i32-10=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-10",
+      "expected": "double-i64-10=-2147483649",
+      "actual": "double-i64-10=-2147483649",
+      "passed": true
+    },
+    {
+      "case": "double-i32-11",
+      "expected": "double-i32-11=-2147483648",
+      "actual": "double-i32-11=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-11",
+      "expected": "double-i64-11=4294967295",
+      "actual": "double-i64-11=4294967295",
+      "passed": true
+    },
+    {
+      "case": "double-i32-12",
+      "expected": "double-i32-12=-2147483648",
+      "actual": "double-i32-12=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-12",
+      "expected": "double-i64-12=-9223372036854775808",
+      "actual": "double-i64-12=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-13",
+      "expected": "double-i32-13=-2147483648",
+      "actual": "double-i32-13=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-13",
+      "expected": "double-i64-13=-9223372036854775808",
+      "actual": "double-i64-13=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-14",
+      "expected": "double-i32-14=-2147483648",
+      "actual": "double-i32-14=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-14",
+      "expected": "double-i64-14=-9223372036854775808",
+      "actual": "double-i64-14=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-15",
+      "expected": "double-i32-15=-2147483648",
+      "actual": "double-i32-15=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-15",
+      "expected": "double-i64-15=-9223372036854775808",
+      "actual": "double-i64-15=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-16",
+      "expected": "double-i32-16=-2147483648",
+      "actual": "double-i32-16=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-16",
+      "expected": "double-i64-16=9223372036854774784",
+      "actual": "double-i64-16=9223372036854774784",
+      "passed": true
+    },
+    {
+      "case": "double-i32-17",
+      "expected": "double-i32-17=-2147483648",
+      "actual": "double-i32-17=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-17",
+      "expected": "double-i64-17=-9223372036854775808",
+      "actual": "double-i64-17=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "double-i32-18",
+      "expected": "double-i32-18=0",
+      "actual": "double-i32-18=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-18",
+      "expected": "double-i64-18=0",
+      "actual": "double-i64-18=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-19",
+      "expected": "double-i32-19=0",
+      "actual": "double-i32-19=0",
+      "passed": true
+    },
+    {
+      "case": "double-i64-19",
+      "expected": "double-i64-19=0",
+      "actual": "double-i64-19=0",
+      "passed": true
+    },
+    {
+      "case": "double-i32-20",
+      "expected": "double-i32-20=2147483647",
+      "actual": "double-i32-20=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i64-20",
+      "expected": "double-i64-20=2147483647",
+      "actual": "double-i64-20=2147483647",
+      "passed": true
+    },
+    {
+      "case": "double-i32-21",
+      "expected": "double-i32-21=-2147483648",
+      "actual": "double-i32-21=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "double-i64-21",
+      "expected": "double-i64-21=-2147483648",
+      "actual": "double-i64-21=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i32-0",
+      "expected": "float-i32-0=0",
+      "actual": "float-i32-0=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-0",
+      "expected": "float-i64-0=0",
+      "actual": "float-i64-0=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-1",
+      "expected": "float-i32-1=0",
+      "actual": "float-i32-1=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-1",
+      "expected": "float-i64-1=0",
+      "actual": "float-i64-1=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-2",
+      "expected": "float-i32-2=1",
+      "actual": "float-i32-2=1",
+      "passed": true
+    },
+    {
+      "case": "float-i64-2",
+      "expected": "float-i64-2=1",
+      "actual": "float-i64-2=1",
+      "passed": true
+    },
+    {
+      "case": "float-i32-3",
+      "expected": "float-i32-3=-1",
+      "actual": "float-i32-3=-1",
+      "passed": true
+    },
+    {
+      "case": "float-i64-3",
+      "expected": "float-i64-3=-1",
+      "actual": "float-i64-3=-1",
+      "passed": true
+    },
+    {
+      "case": "float-i32-4",
+      "expected": "float-i32-4=-2147483648",
+      "actual": "float-i32-4=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-4",
+      "expected": "float-i64-4=-9223372036854775808",
+      "actual": "float-i64-4=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-5",
+      "expected": "float-i32-5=-2147483648",
+      "actual": "float-i32-5=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-5",
+      "expected": "float-i64-5=-9223372036854775808",
+      "actual": "float-i64-5=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-6",
+      "expected": "float-i32-6=-2147483648",
+      "actual": "float-i32-6=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-6",
+      "expected": "float-i64-6=-9223372036854775808",
+      "actual": "float-i64-6=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-7",
+      "expected": "float-i32-7=2147483520",
+      "actual": "float-i32-7=2147483520",
+      "passed": true
+    },
+    {
+      "case": "float-i64-7",
+      "expected": "float-i64-7=2147483520",
+      "actual": "float-i64-7=2147483520",
+      "passed": true
+    },
+    {
+      "case": "float-i32-8",
+      "expected": "float-i32-8=-2147483648",
+      "actual": "float-i32-8=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-8",
+      "expected": "float-i64-8=2147483648",
+      "actual": "float-i64-8=2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i32-9",
+      "expected": "float-i32-9=-2147483648",
+      "actual": "float-i32-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-9",
+      "expected": "float-i64-9=-2147483648",
+      "actual": "float-i64-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i32-10",
+      "expected": "float-i32-10=-2147483648",
+      "actual": "float-i32-10=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-10",
+      "expected": "float-i64-10=-2147483904",
+      "actual": "float-i64-10=-2147483904",
+      "passed": true
+    },
+    {
+      "case": "float-i32-11",
+      "expected": "float-i32-11=-2147483648",
+      "actual": "float-i32-11=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-11",
+      "expected": "float-i64-11=4294967296",
+      "actual": "float-i64-11=4294967296",
+      "passed": true
+    },
+    {
+      "case": "float-i32-12",
+      "expected": "float-i32-12=-2147483648",
+      "actual": "float-i32-12=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-12",
+      "expected": "float-i64-12=-9223372036854775808",
+      "actual": "float-i64-12=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-13",
+      "expected": "float-i32-13=-2147483648",
+      "actual": "float-i32-13=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-13",
+      "expected": "float-i64-13=-9223372036854775808",
+      "actual": "float-i64-13=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-14",
+      "expected": "float-i32-14=-2147483648",
+      "actual": "float-i32-14=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-14",
+      "expected": "float-i64-14=-9223372036854775808",
+      "actual": "float-i64-14=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-15",
+      "expected": "float-i32-15=-2147483648",
+      "actual": "float-i32-15=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "float-i64-15",
+      "expected": "float-i64-15=-9223372036854775808",
+      "actual": "float-i64-15=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "float-i32-16",
+      "expected": "float-i32-16=0",
+      "actual": "float-i32-16=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-16",
+      "expected": "float-i64-16=0",
+      "actual": "float-i64-16=0",
+      "passed": true
+    },
+    {
+      "case": "float-i32-17",
+      "expected": "float-i32-17=0",
+      "actual": "float-i32-17=0",
+      "passed": true
+    },
+    {
+      "case": "float-i64-17",
+      "expected": "float-i64-17=0",
+      "actual": "float-i64-17=0",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "double-i32-4",
+      "dotnet": "double-i32-4=0",
+      "unity_mono": "double-i32-4=-2147483648"
+    },
+    {
+      "case": "double-i64-4",
+      "dotnet": "double-i64-4=0",
+      "unity_mono": "double-i64-4=-9223372036854775808"
+    },
+    {
+      "case": "double-i32-5",
+      "dotnet": "double-i32-5=2147483647",
+      "unity_mono": "double-i32-5=-2147483648"
+    },
+    {
+      "case": "double-i64-5",
+      "dotnet": "double-i64-5=9223372036854775807",
+      "unity_mono": "double-i64-5=-9223372036854775808"
+    },
+    {
+      "case": "double-i32-8",
+      "dotnet": "double-i32-8=2147483647",
+      "unity_mono": "double-i32-8=-2147483648"
+    },
+    {
+      "case": "double-i32-11",
+      "dotnet": "double-i32-11=2147483647",
+      "unity_mono": "double-i32-11=-2147483648"
+    },
+    {
+      "case": "double-i32-12",
+      "dotnet": "double-i32-12=2147483647",
+      "unity_mono": "double-i32-12=-2147483648"
+    },
+    {
+      "case": "double-i64-12",
+      "dotnet": "double-i64-12=9223372036854775807",
+      "unity_mono": "double-i64-12=-9223372036854775808"
+    },
+    {
+      "case": "double-i32-14",
+      "dotnet": "double-i32-14=2147483647",
+      "unity_mono": "double-i32-14=-2147483648"
+    },
+    {
+      "case": "double-i64-14",
+      "dotnet": "double-i64-14=9223372036854775807",
+      "unity_mono": "double-i64-14=-9223372036854775808"
+    },
+    {
+      "case": "double-i32-16",
+      "dotnet": "double-i32-16=2147483647",
+      "unity_mono": "double-i32-16=-2147483648"
+    },
+    {
+      "case": "float-i32-4",
+      "dotnet": "float-i32-4=0",
+      "unity_mono": "float-i32-4=-2147483648"
+    },
+    {
+      "case": "float-i64-4",
+      "dotnet": "float-i64-4=0",
+      "unity_mono": "float-i64-4=-9223372036854775808"
+    },
+    {
+      "case": "float-i32-5",
+      "dotnet": "float-i32-5=2147483647",
+      "unity_mono": "float-i32-5=-2147483648"
+    },
+    {
+      "case": "float-i64-5",
+      "dotnet": "float-i64-5=9223372036854775807",
+      "unity_mono": "float-i64-5=-9223372036854775808"
+    },
+    {
+      "case": "float-i32-8",
+      "dotnet": "float-i32-8=2147483647",
+      "unity_mono": "float-i32-8=-2147483648"
+    },
+    {
+      "case": "float-i32-11",
+      "dotnet": "float-i32-11=2147483647",
+      "unity_mono": "float-i32-11=-2147483648"
+    },
+    {
+      "case": "float-i32-12",
+      "dotnet": "float-i32-12=2147483647",
+      "unity_mono": "float-i32-12=-2147483648"
+    },
+    {
+      "case": "float-i64-12",
+      "dotnet": "float-i64-12=9223372036854775807",
+      "unity_mono": "float-i64-12=-9223372036854775808"
+    },
+    {
+      "case": "float-i32-14",
+      "dotnet": "float-i32-14=2147483647",
+      "unity_mono": "float-i32-14=-2147483648"
+    },
+    {
+      "case": "float-i64-14",
+      "dotnet": "float-i64-14=9223372036854775807",
+      "unity_mono": "float-i64-14=-9223372036854775808"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

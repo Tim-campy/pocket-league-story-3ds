@@ -1,0 +1,538 @@
+{
+  "operation": "original-source-SoundBase-OGG-Player-control-differential",
+  "status": "PASS",
+  "fixture_cases": 64,
+  "passed": 64,
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "defaults",
+      "expected": "defaults=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "defaults=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "play-one",
+      "expected": "play-one=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "play-one=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "change-global-oneshot",
+      "expected": "change-global-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "change-global-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "restart-muted-oneshot",
+      "expected": "restart-muted-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "restart-muted-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "stop-one",
+      "expected": "stop-one=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "stop-one=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "muted-new-oneshot",
+      "expected": "muted-new-oneshot=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "muted-new-oneshot=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "unmute-and-play",
+      "expected": "unmute-and-play=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "unmute-and-play=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "loop-one-on-play",
+      "expected": "loop-one-on-play=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "loop-one-on-play=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "setloop-one-while-playing",
+      "expected": "setloop-one-while-playing=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "setloop-one-while-playing=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "restart-retains-loop-flag",
+      "expected": "restart-retains-loop-flag=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "restart-retains-loop-flag=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "setloop-infinity",
+      "expected": "setloop-infinity=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "setloop-infinity=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "global-loop-volume",
+      "expected": "global-loop-volume=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3f800000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "global-loop-volume=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3f800000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "global-loop-mute",
+      "expected": "global-loop-mute=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "global-loop-mute=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "reflect-muted",
+      "expected": "reflect-muted=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "reflect-muted=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "suspend-resume-no-pause",
+      "expected": "suspend-resume-no-pause=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "suspend-resume-no-pause=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "bgm-muted-gets-port",
+      "expected": "bgm-muted-gets-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,-:0:0:3f800000:0,",
+      "actual": "bgm-muted-gets-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "fourth-port",
+      "expected": "fourth-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "fourth-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "full-no-preemption",
+      "expected": "full-no-preemption=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,:-1",
+      "actual": "full-no-preemption=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,:-1",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "ended-port-reused",
+      "expected": "ended-port-reused=a:3:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:2:-1:1,/2/e:1:1:3f800000:1,b:1:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "ended-port-reused=a:3:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:2:-1:1,/2/e:1:1:3f800000:1,b:1:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "stopall-loop-only",
+      "expected": "stopall-loop-only=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "stopall-loop-only=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "gain-upper-clamp",
+      "expected": "gain-upper-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:3f800000:0,d:1:0:00000000:0,",
+      "actual": "gain-upper-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:3f800000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "gain-lower-clamp",
+      "expected": "gain-lower-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "gain-lower-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "invalid-volume-type",
+      "expected": "invalid-volume-type=!System.IndexOutOfRangeException",
+      "actual": "invalid-volume-type=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "invalid-mute-type",
+      "expected": "invalid-mute-type=!System.IndexOutOfRangeException",
+      "actual": "invalid-mute-type=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "null-sound",
+      "expected": "null-sound=!System.NullReferenceException",
+      "actual": "null-sound=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "missing-data",
+      "expected": "missing-data=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "missing-data=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "null-file",
+      "expected": "null-file=!System.NullReferenceException",
+      "actual": "null-file=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "binary-load-unsupported",
+      "expected": "binary-load-unsupported=!System.Exception",
+      "actual": "binary-load-unsupported=!System.Exception",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "dispose",
+      "expected": "dispose=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "dispose=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "dispose-repeat",
+      "expected": "dispose-repeat=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "dispose-repeat=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "silent-other-audio",
+      "expected": "silent-other-audio=0:0:4",
+      "actual": "silent-other-audio=0:0:4",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "stale-list-after-loop-zero",
+      "expected": "stale-list-after-loop-zero=a:0:0:0,b:3:0:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/1/-:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "stale-list-after-loop-zero=a:0:0:0,b:3:0:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/1/-:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "defaults",
+      "expected": "defaults=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "defaults=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "play-one",
+      "expected": "play-one=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "play-one=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "change-global-oneshot",
+      "expected": "change-global-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "change-global-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3efefeff:0,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "restart-muted-oneshot",
+      "expected": "restart-muted-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "restart-muted-oneshot=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "stop-one",
+      "expected": "stop-one=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "stop-one=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "muted-new-oneshot",
+      "expected": "muted-new-oneshot=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "muted-new-oneshot=a:3:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/-:0:0:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "unmute-and-play",
+      "expected": "unmute-and-play=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "unmute-and-play=a:2:0:1,b:3:0:1,c:3:0:1,d:3:0:1,e:3:0:1,/0/a:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "loop-one-on-play",
+      "expected": "loop-one-on-play=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "loop-one-on-play=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "setloop-one-while-playing",
+      "expected": "setloop-one-while-playing=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "setloop-one-while-playing=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:0,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "restart-retains-loop-flag",
+      "expected": "restart-retains-loop-flag=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "restart-retains-loop-flag=a:2:0:1,b:2:1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:0:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "setloop-infinity",
+      "expected": "setloop-infinity=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "setloop-infinity=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3e048485:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "global-loop-volume",
+      "expected": "global-loop-volume=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3f800000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "global-loop-volume=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:3f800000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "global-loop-mute",
+      "expected": "global-loop-mute=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "global-loop-mute=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "reflect-muted",
+      "expected": "reflect-muted=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "reflect-muted=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "suspend-resume-no-pause",
+      "expected": "suspend-resume-no-pause=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "actual": "suspend-resume-no-pause=a:2:0:1,b:2:-1:1,c:3:0:1,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,-:0:0:3f800000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "bgm-muted-gets-port",
+      "expected": "bgm-muted-gets-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,-:0:0:3f800000:0,",
+      "actual": "bgm-muted-gets-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:3:0:1,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,-:0:0:3f800000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "fourth-port",
+      "expected": "fourth-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "fourth-port=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:0:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "full-no-preemption",
+      "expected": "full-no-preemption=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,:-1",
+      "actual": "full-no-preemption=a:2:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/1/a:1:0:3e048485:1,b:1:1:00000000:1,c:1:0:00000000:0,d:1:0:00000000:0,:-1",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "ended-port-reused",
+      "expected": "ended-port-reused=a:3:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:2:-1:1,/2/e:1:1:3f800000:1,b:1:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "ended-port-reused=a:3:0:1,b:2:-1:1,c:2:0:0,d:2:0:0,e:2:-1:1,/2/e:1:1:3f800000:1,b:1:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "stopall-loop-only",
+      "expected": "stopall-loop-only=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "stopall-loop-only=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "gain-upper-clamp",
+      "expected": "gain-upper-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:3f800000:0,d:1:0:00000000:0,",
+      "actual": "gain-upper-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:3f800000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "gain-lower-clamp",
+      "expected": "gain-lower-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "gain-lower-clamp=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,/0/-:0:1:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "invalid-volume-type",
+      "expected": "invalid-volume-type=!System.IndexOutOfRangeException",
+      "actual": "invalid-volume-type=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "invalid-mute-type",
+      "expected": "invalid-mute-type=!System.IndexOutOfRangeException",
+      "actual": "invalid-mute-type=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "null-sound",
+      "expected": "null-sound=!System.NullReferenceException",
+      "actual": "null-sound=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "missing-data",
+      "expected": "missing-data=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "missing-data=a:3:0:1,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "null-file",
+      "expected": "null-file=!System.NullReferenceException",
+      "actual": "null-file=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "binary-load-unsupported",
+      "expected": "binary-load-unsupported=!System.Exception",
+      "actual": "binary-load-unsupported=!System.Exception",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "dispose",
+      "expected": "dispose=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "dispose=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "dispose-repeat",
+      "expected": "dispose-repeat=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "dispose-repeat=a:0:0:0,b:3:-1:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/0/missing:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "silent-other-audio",
+      "expected": "silent-other-audio=0:0:4",
+      "actual": "silent-other-audio=0:0:4",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "stale-list-after-loop-zero",
+      "expected": "stale-list-after-loop-zero=a:0:0:0,b:3:0:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/1/-:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "actual": "stale-list-after-loop-zero=a:0:0:0,b:3:0:1,c:2:0:0,d:2:0:0,e:3:-1:1,missing:0:0:1,/1/-:0:0:3f800000:1,-:0:1:3f800000:1,c:1:0:00000000:0,d:1:0:00000000:0,",
+      "passed": true
+    }
+  ],
+  "native_streaming": {
+    "streaming_assertions": 75,
+    "catalog_audio_bindings": 27,
+    "max_simultaneous_voices": 4,
+    "ring_bytes": 32768,
+    "scratch_bytes": 16384,
+    "shortest_duration_seconds": 0.27263,
+    "game_boot": false,
+    "full_track_pcm": false,
+    "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+    "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
+    "catalog_receipt_sha256": "f130db0a1797d23b991a0520141c45a00ca99dae868b079458182383aedeb8d3",
+    "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b"
+  },
+  "verified_boundary_ids": [
+    "M:kairo.unity.ui.SoundBase.GetState",
+    "M:kairo.unity.ui.SoundBase.SetLoop(System.Int32)",
+    "M:kairo.unity.ui.SoundBase.SetSoundType(System.Int32)",
+    "M:kairo.unity.ui.SoundBase.Stop",
+    "M:kairo.unity.ui.SoundPlayer.GetInstance",
+    "M:kairo.unity.ui.SoundPlayer.Play(kairo.unity.ui.SoundBase)",
+    "M:kairo.unity.ui.SoundPlayer.ReflectVolumeAndMute",
+    "M:kairo.unity.ui.SoundPlayer.SetMute(System.Int32,System.Boolean)",
+    "M:kairo.unity.ui.SoundPlayer.SetVolume(System.Int32,System.Int32)"
+  ],
+  "inputs": {
+    "tests/kairo/sound_fixtures.cpp": "21f963e1d6ca012cf87689ecb05ffeec3d8737528e0883e4bdf44660076966d2",
+    "src/kairo/common/sound.cpp": "0fdac91ca3ca0497f390b0e83d793e91c75fbcb4b75b2036706b12477957f183",
+    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
+    "src/kairo/platform/sdl/audio.cpp": "8f2837c8409e84500d95e46175f89467cd7776beb1c70756041ccadd766bb42a",
+    "tests/kairo/SoundOracle.cs": "5d757a87cf431f11467c414a1ba4932d83d41eb6e5adcc70044b63863a46f7b6",
+    "tools/test_sound.py": "5ec3ec1bce505e889b110a884a7ee699a53d89d142a36d1933375a744352894c",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
+    "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
+    "src/kairo/api/application.hpp": "6ed7c969bc376084e3098d011c9dc7b1af2788b238cbf934d3b78ef5ad0bb8bc",
+    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
+    "src/kairo/platform/sdl/audio.hpp": "3924ab5bdad7e14e2ea50b1578ac9780bc4e111649424ae0988a4631378c0ad8"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SoundBase.cs",
+      "sha256": "250bee5a2b62d4a0cd4e8662fad800a1c66abfe9c0fb027479ce2b4ea6c50648"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SoundOGG.cs",
+      "sha256": "27410af735b41c46e3826f78525381f6011196d9596a804d4f5bcb5b9933ab00"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SoundPlayer.cs",
+      "sha256": "776bcf7800433152186b425dc5bc1069e2abb756fc6b0f18cbbbe99d29eb8ac0"
+    }
+  ],
+  "native_executable": {
+    "path": "build/sound-tests/sound-fixtures.exe",
+    "sha256": "1fce79e707344799565807feafb7842df7caad2e363504f34728034bf68f088e"
+  },
+  "oracle_binaries": [
+    {
+      "path": "build/sound-tests/SoundOracle.dll",
+      "sha256": "59aa27e9bb76887cf2d60e961b43da5d036c542e05371ba4c890114debf11b77"
+    },
+    {
+      "path": "build/sound-tests/SoundOracle-mono.exe",
+      "sha256": "a4f53319abf26cbad825505471942b907d95b8d5b1b76da558d01ab3d184d5f0"
+    }
+  ],
+  "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "source_compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+  "limits": [
+    "Source oracle uses synthetic AudioSource/Resources, not Unity timing or decoder behavior.",
+    "Native backend supports the original four ports; expanding beyond four explicitly rejects.",
+    "StopAll stale-list hang after SetLoop(0) is preserved and observed without invoking the infinite loop.",
+    "Multiple SoundPlayer.Init generations with still-playing one-shot Unity components are not reproduced by the four-voice backend."
+  ],
+  "original_binaries_executed": false,
+  "source_oracle_game_assets_used": false,
+  "game_assets_used": true,
+  "game_boot": false
+}

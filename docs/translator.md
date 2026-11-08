@@ -4,7 +4,11 @@ Decisões vigentes da Fase 2, fornecidas pelo usuário: a lógica é preservada;
 
 ## Conteúdo e procedência
 
-O usuário autorizou expressamente manter no C++ gerado os literais presentes no C# reconstruído publicado. Essa decisão posterior substitui a exigência anterior de externalização desses literais. Ela não permite copiar para o código textos, tabelas, imagens, áudio, fontes, sprites, nomes ou outros dados extraídos dos assets. `Language._translateText` conserva sua lógica e recebe as tabelas do APK próprio. Fontes rasterizadas e quaisquer saídas de conversão ficam em `assets/`, ignorado pelo Git.
+O usuário autorizou expressamente manter no C++ gerado os literais de texto presentes no C# reconstruído publicado. Essa decisão posterior substitui a exigência anterior de externalização desses textos. Ela não permite copiar para o código textos, tabelas, imagens, áudio, fontes, sprites, nomes ou outros dados extraídos dos assets. `Language._translateText` conserva sua lógica e recebe as tabelas do APK próprio. Fontes rasterizadas e quaisquer saídas de conversão ficam em `assets/`, ignorado pelo Git.
+
+Vetores numéricos constantes que carregam dados são externalizados por `tools/inventory_baked_arrays.py`: o APK é autenticado, o assembly é lido em memória, e cada payload precisa coincidir com FieldRVA ou com um literal de IL verificado. O scanner não executa a DLL nem interpreta comandos gerais do jogo. Aceita somente comprimento constante, inicialização por constantes/conv/neg/stelem ou InitializeArray comprovado; recusa valores dinâmicos e entradas de controle ambíguas. A igualdade do payload não prova um vínculo único entre ocorrências de fonte e IL, limitação registrada na proveniência.
+
+O índice público contém 965 IDs/formatos/proveniências, sem valores nem hashes individuais. Os bytes e seus hashes ficam em `assets/baked/`, ignorado; o índice ancora apenas o hash do manifesto privado completo. A indexação verifica manifesto e cada payload, recusando alterações. O código gerado usa IDs e carrega o dado local. Os testes próprios do scanner (18 casos) e da integridade (3 casos) não contam como métodos do tradutor ou como execução do jogo.
 
 Todo fonte gerado identifica entrada, hash e produtor. A referência é a tag `v1.0.0-csharp-reconstruction`, commit `c7d097a847ca1f1a8e5fb7141ff11d338f5915c4`. O compilador usa símbolos e tipos Roslyn: grafia, heurística de nome ou resultado plausível não bastam para decidir uma operação. Sintaxe suportada, dependências não resolvidas, API indisponível e implementação testada são relatadas separadamente. Uma construção ainda sem lowering fiel é recusada com diagnóstico; não é convertida em retorno inventado ou sucesso fictício.
 
@@ -21,7 +25,7 @@ Todo fonte gerado identifica entrada, hash e produtor. A referência é a tag `v
 | Classes | Identidade de objeto preservada por referências; não copiar um objeto ao atribuir sua referência. Herança e dispatch virtual devem corresponder aos símbolos |
 | Structs | Cópia de valor; não podem ser tratados como referências apenas porque há acesso por ponto |
 
-O runtime está em `src/kairo/common/semantic_runtime.hpp/.cpp`, namespace `pls::cs`. Os helpers expostos são `add/sub/mul/neg/div/mod/shl/shr/ushr` com sufixos `i32`, `i64`, `u32`, `u64`; `cast_integral<To>` faz narrowing/wrap integral sem cast signed fora da faixa. Casts float→inteiro fora da faixa, decimal, covariance/nullable e outros caminhos não são implicitamente aprovados por estes helpers: precisam de lowering e fixture específicos antes de adoção.
+O runtime está em `src/kairo/common/semantic_runtime.hpp/.cpp`, namespace `pls::cs`. Os helpers expostos são `add/sub/mul/neg/div/mod/shl/shr/ushr` com sufixos `i32`, `i64`, `u32`, `u64`; `cast_integral<To>` faz narrowing/wrap integral sem cast signed fora da faixa. `conv_i32` e `conv_i64`, com overloads float/double, verificam a faixa antes de converter e evitam UB. Seus 160 casos diferenciais incluem NaN, infinitos, limiares signed e frações. Mono Windows retorna signedMin nas bordas não representáveis; .NET10 usa NaN→0/saturação. **Essas bordas permanecem UNKNOWN no Android.** Conversões unsigned a partir de float, decimal, covariance/nullable e outros caminhos continuam exigindo suporte específico.
 
 ## Perfil histórico e contraste com .NET moderno
 
@@ -63,23 +67,53 @@ As fixtures confirmaram uma distinção importante: em `array[index()] = rhs()`,
 
 `Array<T>` é uma referência a storage, com tamanho imutável, inicialização default e null separado de array vazio. Atribuir a referência preserva alias; clone é shallow. O índice é verificado. `Array<T>::from({})` cria vazio não null; não confundir isso com o construtor default. Arrays de arrays preservam a nulidade/referência de cada elemento. Copy sobreposto conserva a semântica de memmove por direção. Rank multidimensional, covariance e casts de arrays ainda exigem suporte adicional; não são aprovados pelas fixtures de rank1.
 
+Storage deriva de `ArrayBase`. `array_cast` conserva null e recusa objetos não-array; `array_copy` implementa cópia apagando tipo quando os elementos têm o mesmo tipo C++, com 42 casos diferenciais incluindo bounds, overlap, referências, structs numéricos e jagged shallow. Há prova específica de `float[] → int[]`: count positivo lança ArrayTypeMismatchException nos dois oráculos; count zero passa no Mono e lança no .NET10. Esse comportamento preserva o bug de `Graphics.GetRenderRect`, sem converter números manualmente. Outros casos cross-element, inclusive widening/boxing/covariance, ainda lançam NotSupported explícito, em vez de fingir uma cópia fiel.
+
 Exceções C++ mantêm herança, tipo dinâmico e rethrow sem slicing. A hierarquia inicial inclui Exception/SystemException, Arithmetic/DivideByZero/Overflow, Argument/ArgumentNull/ArgumentOutOfRange, NullReference, IndexOutOfRange, InvalidCast, IO/EndOfStream e outros tipos básicos. Mensagens localizadas/stack traces não foram declaradas idênticas ao CLR. Catch filters precisam avaliar antes de unwinding conforme CLR; não se substituem cegamente por catches C++.
 
 `run_finally(body, cleanup)` executa cleanup fora do unwinding ativo do C++. Assim, uma exceção de finally substitui a pendente, e retorno é calculado antes de finally. Um destrutor RAII que lança durante outra exceção terminaria o processo, portanto não é a tradução válida. Return/break/continue/goto saindo de regiões protegidas ainda precisam da representação de continuação do emissor; possuir o helper não comprova todo esse lowering.
 
 Capturas são classes explicitamente geradas, com células compartilhadas para variáveis e lifetimes preservados após o retorno do método externo. A fixture nativa possui uma classe sintética de closure; não usa uma lambda C++ como substituto silencioso da classe C# gerada. `Delegate<Signature>` fornece lista multicast, identidade por target/método e remoção da última subsequência igual. A lista de invocação é snapshot durante uma chamada.
 
-O gerenciamento inicial usa ownership compartilhado. **Coleta de ciclos equivalente ao GC, finalizadores e weak references ainda não estão implementados**. Não declarar equivalência de memória/lifetime para o jogo inteiro com base nas fixtures simples de captura.
+O gerenciamento usa ownership compartilhado com coleta explícita de ciclos por tracing cooperativo, descrita abaixo. Finalizadores, WeakReference como API gerada, compactação, LOH e equivalência exata de timing/lifetime CLR ainda não estão implementados. Não declarar equivalência de memória para o jogo inteiro com base nas fixtures de captura.
+
+## Coleta cooperativa de ciclos
+
+`make_ref` registra uma referência fraca de Object. `trace_edges` deve enumerar exatamente cada referência forte dos campos, uma vez por slot; `release_edges` remove essas referências somente de objetos considerados inalcançáveis. O emissor gera os hooks de campos não estáticos e chama a base. Campos estáticos e referências de frames C++ continuam como raízes externas por contagem de ownership. Array/List/Dictionary/enumeradores/Box/Cell/delegates/MemoryStream/TimeZoneInfo possuem hooks no runtime. Fábricas nativas fora de make_ref precisam chamar `register_managed_object` e fornecer hooks para seus campos gerenciados.
+
+O coletor cria um snapshot forte, conta arestas internas e considera raízes os objetos com owners além das arestas e da referência do snapshot. Marca os alcançáveis e quebra as arestas dos demais. Capturas opacas de std::function são raízes conservadoras: preservam segurança, mas podem reter ciclos. Um binding com alvo forte e lambda que captura alvo fraco permite coleta. Hooks incorretos que duplicam/omitem slots não constituem suporte fiel; devem ser gerados e testados, não inferidos por RTTI.
+
+O fonte de `JRuntime.Gc` chama **GC.Collect(0)**. O oráculo Mono Unity Windows mediu MaxGeneration=0; nesse perfil toda coleta não negativa abrange o heap. A análise estática autenticada dos dois `libmono.so` do APK também comprovou que `mono_gc_max_generation` retorna zero em x86 e armeabi-v7a, sem extrair/executar a biblioteca: [recibo](../config/phase2-android-gc.json). O contraste .NET10 usa idades 0/1/2, protege gerações mais antigas que a solicitada e promove sobreviventes. O modelo não comprova todos os detalhes geracionais/LOH do CLR; timing e demais comportamentos do coletor Android continuam UNKNOWN.
+
+Cada worker que acessa objetos gerenciados precisa permanecer em `GcMutatorScope`, criado antes de seus locais, e cooperar com `gc_safepoint` nas entradas/backedges. Registro de novas alocações também é safepoint. A coleta solicita estacionamento, sem suspender threads do sistema; um worker registrado que não coopere dentro de um segundo provoca NotSupported antes de quebrar arestas. A disciplina não é garantida para threads nativas não registradas. Integrar JThread requer o adapter e os safepoints do emissor; possuir gc_collect não prova o jogo multithread.
+
+São **26 casos diferenciais** de preservação de raízes, callbacks, arrays/coleções, gerações e validação; **21 invariantes nativos separados** comprovam coleta real de ciclos, preservação de ciclos enraizados, geração antiga protegida, captura opaca conservadora, worker cooperativo, alocação como safepoint, coletores concorrentes e recusa de worker não cooperativo. Não se compara o instante em que um weak reference sem raiz desaparece entre runtimes conservadores diferentes.
 
 ## Objetos, boxing e coleções
 
 `Object` tem identidade e herda `enable_shared_from_this<Object>`. `Ref<T>`, `make_ref`, `nonnull`, `as<T>` e `cast<T>` representam referências, teste e cast de tipo. Classes geradas recebem uma única base Object; interfaces são bases polimórficas sem outra subinstância Object. Construtores gerados precisam alocar o objeto antes de executar o corpo traduzido para permitir a observação de `this` e shared ownership. Isso não é autorização para substituir construtores por corpos vazios.
+
+Os aliases virtuais Pascal `Equals`, `GetHashCode` e `ToString` não são const: overrides C# podem alterar o objeto. Os helpers internos `equals`/`get_hash_code` permanecem const. `managed_type_name` fornece o nome qualificado para Object.ToString; o emissor deve sobrescrevê-lo nas classes geradas. Os 40 casos de dispatch incluem efeitos mutáveis via Object/List/Dictionary, identidade do String.ToString boxed e formatting de bool/char/integrais com sinal cultural. Boxed float/double/enum/struct ToString ainda exige lowering próprio e lança NotSupported; não retorna texto inventado.
 
 `box`/`unbox` cobrem valores primitivos e referências, incluindo crosscast via interface e wrappers String, Array e List com storage Object. Unboxing numérico exige o tipo exato, null para tipo valor lança NullReference e tipo incompatível lança InvalidCast. Equals de double/float trata NaN como igual a NaN, conforme a API .NET Equals, diferentemente de `==`. Equals de String boxed compara conteúdo ordinal. Equals/hash de structs arbitrárias, covariance e todo reflection continuam sem implementação geral.
 
 `managed_collections.hpp` implementa `List<T>` com alias, Count, Capacity, indexer, Add/Insert/Remove/Clear, ranges, ToArray, TrimExcess e enumerador genérico/não genérico. O construtor default representa null; `List<T>::make()` cria lista vazia. A atribuição ao indexer usa `set`/`set_Item`, porque ela afeta o versionamento conforme o perfil; não pode ser traduzida como store direto em Array.
 
 Os 60 casos de coleções medem capacidade/crescimento, aliases, cópia, auto-inserção, boxed Equals, NaN, casts via interface e fail-fast de enumerador. Diferenças medidas: Mono não incrementa versão ao alterar indexer; incrementa ao AddRange vazio; Current genérico conserva o último valor depois do fim; Dispose do enumerador limpa a referência e MoveNext passa a lançar ObjectDisposedException. O .NET10 possui resultados diferentes nesses quatro casos. O [fonte histórico List.cs, linhas 754–815](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System.Collections.Generic/List.cs#L754-L815) confirma o lifetime/Current do enumerador. Sort/Reverse e outras APIs não recebem suporte por inferência.
+
+`managed_dictionary.hpp` fornece Dictionary nullable com Add, indexer, ContainsKey/Value, TryGetValue/out, Remove, Clear e enumerador. Seus 54 casos cobrem chaves null, duplicação, default do out, aliases, NaN, slots reutilizados e diferenças de versionamento/lifetime. Hash e Equals são consultados; a ordem de slots/free-list é conservada. O lookup atual varre os entries filtrando por hash; complexidade/performance equivalente a uma tabela de buckets não foi demonstrada. Keys/Values, comparers customizados e interface não genérica ainda não são suportados.
+
+`managed_text.hpp` fornece StringBuilder como objeto, construtores básico/capacidade/string, Append de char/string/fatia/repetição, Length/Capacity/indexer e ToString. Os 48 casos medem conteúdo UTF-16, snapshot, capacidade e exceções. O modelo conserva os efeitos observáveis do cache/copy-on-write histórico; o contraste moderno modela chunks para os casos medidos. Não substituir o comportamento por std::string. Append(object), formatting geral e a API completa de Insert/Remove/Replace ainda não foram implementados. [Fonte histórico StringBuilder.cs](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System.Text/StringBuilder.cs).
+
+## Aleatoriedade, datas e relógio
+
+`managed_random.hpp` implementa Random com seed explícita, Next e overloads de faixa, NextBytes e NextDouble. Seus 68 casos verificam sequências de dez seeds, bits de doubles, consumo em faixas vazias/unitárias, ranges grandes e bytes. O perfil histórico usa a sequência do [Random.cs da Unity](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/Random.cs); o moderno contrasta o PRNG compatível de seed explícita do [.NET10](https://github.com/dotnet/runtime/blob/v10.0.0/src/libraries/System.Private.CoreLib/src/System/Random.CompatImpl.cs). Seed int.MinValue lança Overflow no histórico. Não usar std::random. O construtor sem seed não existe no runtime: `JRandom()` deve continuar chamando o relógio pelo C# gerado e depois o construtor explícito.
+
+`managed_time.hpp` fornece DateTime/DateTimeKind e TimeSpan como valores. Suporta calendário gregoriano, ticks de 100 ns, partes, TimeOfDay, subtração, adição de ticks/unidades/meses/anos e UTC. Os 106 casos medem datas limites/leap, partes, overflow, tipos de exceção, arredondamento e TimeSpan. O Mono histórico arredonda AddMilliseconds em **ticks**, com ties-to-even; AddDays arredonda primeiro em milissegundos. Isso difere de regras modernas e foi confirmado pelo [DateTime.cs original](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/DateTime.cs#L583-L630). [TimeSpan.cs](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/TimeSpan.cs) também contém overflow intermediário histórico de componentes, preservado pelos helpers wrap.
+
+UtcNow chama `utc_clock_ticks`, cujo padrão usa system_clock e acrescenta a época .NET. Fixtures injetam ticks sintéticos no lado nativo e constroem o mesmo valor no C# próprio; elas **não demonstram sincronização de chamadas reais UtcNow em dois processos**. O host configura providers antes dos workers. ToUniversalTime com Kind Utc conserva o valor; Kind Local/Unspecified exige `local_to_utc_ticks`. Sem regras locais fornecidas, lança NotSupported; nunca assume Local=UTC.
+
+TimeZoneInfo é uma referência com CreateCustomTimeZone de offset fixo, BaseUtcOffset/Id/nomes, Utc e conversão UTC. Seus 32 casos medem validações, limites e os nomes null (Mono usa id; moderno usa vazio). `get_Local` exige `local_timezone_provider`; lookup de IDs fora UTC exige `timezone_lookup_provider`. Ajustes DST gerais e banco de fusos não estão implementados nesta fundação. O C# original de `JTimeZone` usa JavaPlugin.GetDefaultTimeZone/GetUtcOffset e cria um fuso customizado de offset bruto; esses hooks precisam da camada de plataforma. Isso não autoriza escolher Asia/Tokyo ou UTC como substituição genérica do aparelho.
 
 ## Conversões de dados e parsing
 
@@ -97,11 +131,20 @@ python tests/translator/run_semantic_fixtures.py --fixture CollectionFixtures
 python tests/translator/run_semantic_fixtures.py --fixture EncodingFixtures
 python tests/translator/run_semantic_fixtures.py --fixture ConversionFixtures
 python tests/translator/run_semantic_fixtures.py --fixture IntegerParseFixtures
+python tests/translator/run_semantic_fixtures.py --fixture ArrayBridgeFixtures
+python tests/translator/run_semantic_fixtures.py --fixture RandomFixtures
+python tests/translator/run_semantic_fixtures.py --fixture StringBuilderFixtures
+python tests/translator/run_semantic_fixtures.py --fixture DictionaryFixtures
+python tests/translator/run_semantic_fixtures.py --fixture FloatingCastFixtures
+python tests/translator/run_semantic_fixtures.py --fixture TimeFixtures
+python tests/translator/run_semantic_fixtures.py --fixture ObjectDispatchFixtures
+python tests/translator/run_semantic_fixtures.py --fixture TimeZoneFixtures
+python tests/translator/run_semantic_fixtures.py --fixture GcFixtures
 ```
 
 O script usa Roslyn/.NET10 e smcs/Mono Unity já existentes para compilar somente o C# sintético selecionado de `tests/translator/`. Usa MSVC C++17 existente com `/EHsc /fp:strict /permissive- /W4 /WX /utf-8`. Nenhuma DLL/player do jogo/Unity é copiada para build; os executáveis de compilador/runtime existentes são apenas ferramentas externas. Cada fixture tem sua saída em um subdiretório de `build/`, ignorado.
 
-Foram obtidos **582/582 casos diferenciais**: semântica 60, coleções 60, encoding 72, Base64 76 e parsing 314, divididos igualmente entre os dois oráculos/perfis. Os primeiros 60 cobrem overflow/wrap, divisão/resto de negativos/bordas, casts integrais, shifts, avaliação de argumentos/array stores, UTF-16/null/ordinal, arrays/alias/bounds, hierarquia/rethrow/finally, capturas, evento, propriedades, switch, goto e bits/larguras float/double. Streams têm seu contrato e recibo separados em `docs/notes/managed-streams.md`.
+Foram obtidos **1.158/1.158 casos diferenciais**, divididos igualmente entre os dois oráculos/perfis. Os primeiros 60 cobrem overflow/wrap, divisão/resto de negativos/bordas, casts integrais, shifts, avaliação de argumentos/array stores, UTF-16/null/ordinal, arrays/alias/bounds, hierarquia/rethrow/finally, capturas, evento, propriedades, switch, goto e bits/larguras float/double. Streams têm seu contrato e recibo separados em `docs/notes/managed-streams.md`.
 
 | Recibo sintético | .NET10 | Mono Unity | Casos com resultado diferente entre oráculos |
 |---|---:|---:|---:|
@@ -110,10 +153,17 @@ Foram obtidos **582/582 casos diferenciais**: semântica 60, coleções 60, enco
 | encoding | 36/36 | 36/36 | 10 |
 | conversion | 38/38 | 38/38 | 5 |
 | integer-parse | 157/157 | 157/157 | 41 |
-| Total | 291/291 | 291/291 | 62 |
+| array-bridge | 21/21 | 21/21 | 1 |
+| random | 34/34 | 34/34 | 31 |
+| string-builder | 24/24 | 24/24 | 8 |
+| dictionary | 27/27 | 27/27 | 6 |
+| floating-cast | 80/80 | 80/80 | 21 |
+| time | 53/53 | 53/53 | 7 |
+| object-dispatch | 20/20 | 20/20 | 0 |
+| timezone | 16/16 | 16/16 | 3 |
+| gc | 13/13 | 13/13 | 3 |
+| Total | 579/579 | 579/579 | 142 |
 
-Os 62 são observações de fixtures, não 62 famílias de bugs nem diferenças provadas no jogo Android. Cada recibo contém `historical_profile_differences` com os resultados dos dois oráculos. Os perfis nativos correspondentes passaram todos os casos.
+Os 142 são observações de fixtures, não 142 famílias de bugs nem diferenças provadas no jogo Android. Cada recibo contém `historical_profile_differences` com os resultados dos dois oráculos. Os perfis nativos correspondentes passaram todos os casos. Os 21 invariantes nativos de GC são contados separadamente dos diferenciais.
 
-Recibos gerados: `config/phase2-{runtime,collections,encoding,conversion,integer-parse}-fixtures.json`, com hashes dos fontes/helpers, runner, compiladores e traces sintéticos. A sonda `HistoricalSemanticProfile.cs` registra diferenças sem confundi-las com fixtures do jogo. **O C++ dessas fixtures é uma implementação de teste independente: esses recibos não medem cobertura do emissor de produção, métodos traduzidos do jogo ou primeiro boot.** Esses números vêm dos recibos separados do tradutor/build/execução.
-
-`System.Random` ainda é **UNSUPPORTED** pelo runtime. O [fonte histórico Random.cs](https://github.com/Unity-Technologies/mono/blob/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/Random.cs) usa sequência e inicialização distintas de bibliotecas modernas; não substituí-lo por std::random ou por um stub. `java.util.JRandom` dependerá de implementação e fixtures próprias antes de ser marcado como traduzido/validado.
+Recibos gerados: `config/phase2-<linha da tabela>-fixtures.json`, com hashes dos fontes/helpers, runner, compiladores e traces sintéticos. O oráculo histórico referencia System.Core.dll externamente do perfil Unity para TimeZoneInfo; nenhuma DLL é copiada para o port/build do jogo. Runner/fontes/JSONs usam LF para conservar hashes em clone. A sonda `HistoricalSemanticProfile.cs` registra diferenças sem confundi-las com fixtures do jogo. **O C++ dessas fixtures é uma implementação de teste independente: esses recibos não medem cobertura do emissor de produção, métodos traduzidos do jogo ou primeiro boot.** Esses números vêm dos recibos separados do tradutor/build/execução.

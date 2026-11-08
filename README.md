@@ -44,7 +44,9 @@ python tools/build-pc --fixtures-only
 python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK'
 ```
 
-Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e recusa explicitamente um alvo de jogo ainda incompleto. Fontes ainda não foram rasterizadas; reprodução Vorbis e boot aguardam implementação. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
+Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e tenta compilar e ligar o jogo gerado; os callbacks ainda sem corpo impedem o link, sem stubs de menu. FreeType e o mixer Vorbis já rasterizam as fontes e reproduzem áudio em streaming nos testes nativos; o boot continua pendente. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
+
+FreeType, libogg e libvorbis foram autorizados e preparados localmente, sem instalação global. O [catálogo privado](docs/notes/phase2-private-catalog.md) associa recursos a identificadores e mantém os inicializadores numéricos classificados fora do C++ público. Armazenamento, entrada, formulários e som têm [provas separadas](docs/notes/phase2-storage-input-ui.md); isso não comprova sua execução dentro do jogo.
 
 ## Conteúdo e distribuição
 

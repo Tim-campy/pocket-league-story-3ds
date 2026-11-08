@@ -133,6 +133,8 @@ Dados públicos: config/assets.csv, asset-summary.json, texture-dimensions.csv, 
 Os 654 arquivos RGBA8 únicos ocupam **16933248 bytes** sem padding de textura. Todos foram carregados no backend SDL e cada canal/pixel foi comparado ao payload convertido: **654/654 passam**. Isso corresponde às 718 ocorrências PNG dos containers, sem duplicar hashes.
 O teste sequencial teve pico de payload de textura de **1179648 bytes**, com uma textura por vez. Não é memória residente do jogo nem orçamento do 3DS.
 
-Assets atuais por estado: **{'converts': 1, 'inventoried': 35, 'extracts': 7, 'loads': 1}**. Fontes: 2 TTF extraídos, rasterização pendente. Áudio: 27 Ogg convertidos, streaming de runtime pendente. Demais dados de containers foram extraídos com SHA-256 conferido e aguardam seus consumidores traduzidos.
+Assets atuais por estado: **{'loads': 3, 'inventoried': 35, 'extracts': 6}**. Fontes: 2 TTF; áudio: 27 Ogg. Os dois corpora foram exercitados nos consumidores nativos SDL: rasterização e streaming com buffers limitados, sem boot do jogo. Isso promove os grupos de assets para loads; não promove símbolos arbitrários da API Kairo. Demais dados de containers foram extraídos com SHA-256 conferido e aguardam seus consumidores traduzidos.
+
+Arrays numéricos incorporados: **965** extrações comprovadas do APK; **0** não comprovadas. Payloads e hashes individuais ficam no manifesto privado; o índice público contém somente forma/proveniência e sua âncora global. Não são literais de dados inseridos manualmente no C++.
 
 A geração dos estados exige hashes atuais dos fontes/produtores/gerados/recibos, manifest local, outputs e readback. Nenhum método do jogo foi executado por essa comparação de imagens. APK e conteúdos permanecem exclusivamente locais.

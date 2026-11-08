@@ -2,7 +2,7 @@
 using System;
 public static class LoweringFixtures {
     private static int trace_;
-    private static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
+    public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
     private static int Pair(int a, int b) { return a * 100 + b; }
     public static int Overflow(int a, int b) { return a + b; }
     public static int Divide(int a, int b) { return a / b; }
@@ -31,6 +31,18 @@ public static class LoweringFixtures {
         int result = values.Count * 100 + values[0] * 10 + values[1];
         values.RemoveAt(0); return result + values.Count;
     }
+    public static int ConstructorOrder(int seed) { trace_ = seed; var value = new Synthetic.DerivedCtor(); return trace_ + value.baseValue; }
+    public static int ConstructorVirtualDispatch() { var value = new Synthetic.VirtualDerived(); Synthetic.VirtualBase b = value; return value.seen * 10 + b.Read(); }
     // Negative control: this remains explicitly unsupported until closure lowering exists.
     public static int UnsupportedClosure(int value) { Func<int> f = () => value; return f(); }
+}
+namespace Synthetic {
+    public class BaseCtor { public int baseValue; public BaseCtor(int value) { baseValue = LoweringFixtures.Stamp(value); } }
+    public class DerivedCtor : BaseCtor {
+        public int first = LoweringFixtures.Stamp(1);
+        public DerivedCtor() : this(2) { LoweringFixtures.Stamp(4); }
+        public DerivedCtor(int value) : base(value) { LoweringFixtures.Stamp(3); }
+    }
+    public class VirtualBase { public int seen; public VirtualBase() { seen = Read(); } public virtual int Read() { return 1; } }
+    public class VirtualDerived : VirtualBase { public int field = 9; public VirtualDerived() { } public override int Read() { return field; } }
 }

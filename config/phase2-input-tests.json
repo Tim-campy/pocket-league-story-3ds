@@ -1,0 +1,470 @@
+{
+  "verified_boundary_ids": [
+    "M:kairo.unity.ui.Canvas.CheckKeyPulse(System.Int32)",
+    "M:kairo.unity.ui.Canvas.CheckKeyRepeat(System.Int32)",
+    "M:kairo.unity.ui.Canvas.CheckKeyState(System.Int32)",
+    "M:kairo.unity.ui.Canvas.GetKeypadState",
+    "M:kairo.unity.ui.Canvas.KeyClick(System.Int32)",
+    "M:kairo.unity.ui.Canvas.KeyDown(System.Int32,System.Boolean)",
+    "M:kairo.unity.ui.Canvas.KeyUp(System.Int32)",
+    "M:kairo.unity.ui.Canvas.SetKeyDoubleInterval(System.Int32)",
+    "M:kairo.unity.ui.Canvas.SetKeyRepeatInterval(System.Int32)"
+  ],
+  "operation": "original-source-event-Canvas-key-state-differential",
+  "status": "PASS",
+  "fixture_cases": 56,
+  "passed": 56,
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "initial",
+      "expected": "initial=0:0:10:4",
+      "actual": "initial=0:0:10:4",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "down-pulse",
+      "expected": "down-pulse=131072:131072:True:False:True",
+      "actual": "down-pulse=131072:131072:True:False:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "hold-repeat-history",
+      "expected": "hold-repeat-history=000000000111",
+      "actual": "hold-repeat-history=000000000111",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "other-key-blocks-repeat",
+      "expected": "other-key-blocks-repeat=True",
+      "actual": "other-key-blocks-repeat=True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release",
+      "expected": "release=0:0",
+      "actual": "release=0:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "clear",
+      "expected": "clear=0:0",
+      "actual": "clear=0:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "double-first",
+      "expected": "double-first=False",
+      "actual": "double-first=False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "double-second",
+      "expected": "double-second=True",
+      "actual": "double-second=True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "click-latched",
+      "expected": "click-latched=2:0:True",
+      "actual": "click-latched=2:0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "click-release-frame",
+      "expected": "click-release-frame=0:0",
+      "actual": "click-release-frame=0:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "down-then-up-latched",
+      "expected": "down-then-up-latched=4:0:True",
+      "actual": "down-then-up-latched=4:0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "pulse-invalid",
+      "expected": "pulse-invalid=8:8:False",
+      "actual": "pulse-invalid=8:8:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "soft-one-frame",
+      "expected": "soft-one-frame=2097152:0",
+      "actual": "soft-one-frame=2097152:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "soft-next-frame",
+      "expected": "soft-next-frame=0:0",
+      "actual": "soft-next-frame=0:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "ignored-minus-one",
+      "expected": "ignored-minus-one=0:0",
+      "actual": "ignored-minus-one=0:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "configured-intervals",
+      "expected": "configured-intervals=3:2",
+      "actual": "configured-intervals=3:2",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "history-wrap",
+      "expected": "history-wrap=True:False",
+      "actual": "history-wrap=True:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "oversized-repeat",
+      "expected": "oversized-repeat=!System.IndexOutOfRangeException",
+      "actual": "oversized-repeat=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "negative-repeat",
+      "expected": "negative-repeat=True",
+      "actual": "negative-repeat=True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "key-id-default",
+      "expected": "key-id-default=21:22:-1:17:20",
+      "actual": "key-id-default=21:22:-1:17:20",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "key-id-debug",
+      "expected": "key-id-debug=6:6:4",
+      "actual": "key-id-debug=6:6:4",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "motion-fields",
+      "expected": "motion-fields=517:2:9:7.5:8.5:False",
+      "actual": "motion-fields=517:2:9:7.5:8.5:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "motion-alias",
+      "expected": "motion-alias=11.5:12:0.75",
+      "actual": "motion-alias=11.5:12:0.75",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "motion-deltas",
+      "expected": "motion-deltas=3:4:0.5",
+      "actual": "motion-deltas=3:4:0.5",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "motion-bounds",
+      "expected": "motion-bounds=!System.IndexOutOfRangeException",
+      "actual": "motion-bounds=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "motion-index-wrap",
+      "expected": "motion-index-wrap=11.5",
+      "actual": "motion-index-wrap=11.5",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "motion-null-delta",
+      "expected": "motion-null-delta=0:0:0:True",
+      "actual": "motion-null-delta=0:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "key-event",
+      "expected": "key-event=1:27:0",
+      "actual": "key-event=1:27:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "initial",
+      "expected": "initial=0:0:10:4",
+      "actual": "initial=0:0:10:4",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "down-pulse",
+      "expected": "down-pulse=131072:131072:True:False:True",
+      "actual": "down-pulse=131072:131072:True:False:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "hold-repeat-history",
+      "expected": "hold-repeat-history=000000000111",
+      "actual": "hold-repeat-history=000000000111",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "other-key-blocks-repeat",
+      "expected": "other-key-blocks-repeat=True",
+      "actual": "other-key-blocks-repeat=True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "release",
+      "expected": "release=0:0",
+      "actual": "release=0:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "clear",
+      "expected": "clear=0:0",
+      "actual": "clear=0:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "double-first",
+      "expected": "double-first=False",
+      "actual": "double-first=False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "double-second",
+      "expected": "double-second=True",
+      "actual": "double-second=True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "click-latched",
+      "expected": "click-latched=2:0:True",
+      "actual": "click-latched=2:0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "click-release-frame",
+      "expected": "click-release-frame=0:0",
+      "actual": "click-release-frame=0:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "down-then-up-latched",
+      "expected": "down-then-up-latched=4:0:True",
+      "actual": "down-then-up-latched=4:0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "pulse-invalid",
+      "expected": "pulse-invalid=8:8:False",
+      "actual": "pulse-invalid=8:8:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "soft-one-frame",
+      "expected": "soft-one-frame=2097152:0",
+      "actual": "soft-one-frame=2097152:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "soft-next-frame",
+      "expected": "soft-next-frame=0:0",
+      "actual": "soft-next-frame=0:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "ignored-minus-one",
+      "expected": "ignored-minus-one=0:0",
+      "actual": "ignored-minus-one=0:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "configured-intervals",
+      "expected": "configured-intervals=3:2",
+      "actual": "configured-intervals=3:2",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "history-wrap",
+      "expected": "history-wrap=True:False",
+      "actual": "history-wrap=True:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "oversized-repeat",
+      "expected": "oversized-repeat=!System.IndexOutOfRangeException",
+      "actual": "oversized-repeat=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "negative-repeat",
+      "expected": "negative-repeat=True",
+      "actual": "negative-repeat=True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "key-id-default",
+      "expected": "key-id-default=21:22:-1:17:20",
+      "actual": "key-id-default=21:22:-1:17:20",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "key-id-debug",
+      "expected": "key-id-debug=6:6:4",
+      "actual": "key-id-debug=6:6:4",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "motion-fields",
+      "expected": "motion-fields=517:2:9:7.5:8.5:False",
+      "actual": "motion-fields=517:2:9:7.5:8.5:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "motion-alias",
+      "expected": "motion-alias=11.5:12:0.75",
+      "actual": "motion-alias=11.5:12:0.75",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "motion-deltas",
+      "expected": "motion-deltas=3:4:0.5",
+      "actual": "motion-deltas=3:4:0.5",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "motion-bounds",
+      "expected": "motion-bounds=!System.IndexOutOfRangeException",
+      "actual": "motion-bounds=!System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "motion-index-wrap",
+      "expected": "motion-index-wrap=11.5",
+      "actual": "motion-index-wrap=11.5",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "motion-null-delta",
+      "expected": "motion-null-delta=0:0:0:True",
+      "actual": "motion-null-delta=0:0:0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "key-event",
+      "expected": "key-event=1:27:0",
+      "actual": "key-event=1:27:0",
+      "passed": true
+    }
+  ],
+  "native_adapter_policy": {
+    "adapter_assertions": 19,
+    "game_boot": false
+  },
+  "native_executable": {
+    "path": "build/input-tests/input-fixtures.exe",
+    "sha256": "29f93d5cee6c5872c05c6e04962675a8a079df0eaed94a45558712365478435c"
+  },
+  "inputs": {
+    "tests/kairo/input_fixtures.cpp": "b48622181efbba52109242fc16481f44270a74a0d9fe2a118ac293039fb7e862",
+    "src/kairo/platform/sdl/input.cpp": "b8f9c7b9cad5eb0d83f9c2aeaad4ecf3c39dfed98b0cc6915ebd96c701029680",
+    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src/kairo/api/input.hpp": "f54d520710f8adc4335b54f1666c11b1ab78c7f607b4b9213dae525046769d09",
+    "tests/kairo/InputOracle.cs": "5edd0d0ada599a6b7f8190bd26bce61d81aa9a837925ef0f3c44dd1458b5b991",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
+    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src/kairo/platform/sdl/backend.hpp": "81cf34cc2fc084428aef4eb4ea6f080bbe98047e429de15b9f35955105281d1e"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Canvas.cs",
+      "sha256": "c658562b9e0335d3206529286c330dfc797ec72c3fb14b5aa819e21472cbe0b9"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/MotionEvent.cs",
+      "sha256": "f12ed7f17840c5ceff2776b4b2b15300c913aef0c07a40ab388525e9c4c1675c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/KeyEvent.cs",
+      "sha256": "1acd398870143abc279e55a533eea0efe012fb91c872fe14eeec09a7eb4040eb"
+    }
+  ],
+  "keycode_metadata_sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
+  "checked_Unity_KeyCode_constants": {
+    "Home": 278,
+    "Escape": 27,
+    "LeftWindows": 311,
+    "Keypad0": 256,
+    "Keypad9": 265,
+    "KeypadMultiply": 268,
+    "KeypadDivide": 267,
+    "KeypadEnter": 271,
+    "UpArrow": 273,
+    "DownArrow": 274,
+    "RightArrow": 275,
+    "LeftArrow": 276,
+    "LeftShift": 304,
+    "RightShift": 303,
+    "LeftControl": 306,
+    "RightControl": 305
+  },
+  "source_path_limits": [
+    "Canvas key-state bodies only; physical polling and full touch routing are not differential-tested.",
+    "ClearKeyBuffer tested with zero active touch pointers; no cancellation callback path asserted."
+  ],
+  "original_binaries_executed": false,
+  "game_assets_used": false,
+  "game_boot": false
+}

@@ -5,6 +5,7 @@
   "passed": 60,
   "expected_lines": 30,
   "actual_lines": 30,
+  "native_collector_tests": null,
   "production_methods_translated": 0,
   "production_translator_exercised": false,
   "game_assets_used": false,
@@ -18,16 +19,22 @@
   "inputs": {
     "tests\\translator\\CollectionFixtures.cs": "28e2cd187e33c4eb72c6308542d527bc09d27d246a73292f499734776829602b",
     "tests\\translator\\collection_fixtures.cpp": "378abefa04d67aed5840293ad6ef5a5f07ed877a3b6f9144a78b212ae3427909",
-    "src\\kairo\\common\\semantic_runtime.cpp": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2",
-    "src\\kairo\\common\\semantic_runtime.hpp": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d",
-    "src\\kairo\\common\\managed_collections.hpp": "2dfb3c5ae2e67cd549d2ec757912708ecef08de3f2d2c015ee6bb04ec6fc5228",
-    "tests\\translator\\run_semantic_fixtures.py": "0f521ca812ee73a347aee5b3a4206e0d790854474a5781edfc4050149818d235"
+    "src\\kairo\\common\\semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src\\kairo\\common\\managed_collections.hpp": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b",
+    "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "tests\\translator\\run_semantic_fixtures.py": "d7aa3b76fcd4427314e5dc8de1b54c6cfc7773f4d55b294ea97a6308256573b0"
   },
   "historical_oracle": {
     "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
     "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
     "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
     "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "framework_reference": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\System.Core.dll",
+    "framework_reference_sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c",
     "original_binaries_copied": false
   },
   "default_runtime_profile": "UnityMono265",

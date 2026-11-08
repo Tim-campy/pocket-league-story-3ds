@@ -1,0 +1,529 @@
+{
+  "verified_boundary_ids": [
+    "M:kairo.unity.form.FormBase.#ctor(System.Int32)",
+    "M:kairo.unity.form.FormBase.CheckUsable",
+    "M:kairo.unity.form.FormBase.GetId",
+    "M:kairo.unity.form.FormBase.GetLeftSoftLabel",
+    "M:kairo.unity.form.FormBase.IsAlive",
+    "M:kairo.unity.form.FormBase.Pop",
+    "M:kairo.unity.form.FormBase.Push(kairo.unity.form.FormBase)",
+    "M:kairo.unity.form.FormBase.SetSoftLabel(System.String,System.String,System.String,System.String)",
+    "M:kairo.unity.form.FormManagerBase.#ctor",
+    "M:kairo.unity.form.FormManagerBase.Draw(kairo.unity.ui.Graphics)",
+    "M:kairo.unity.form.FormManagerBase.DrawAllForms",
+    "M:kairo.unity.form.FormManagerBase.GetCurrentForm",
+    "M:kairo.unity.form.FormManagerBase.GetForm(System.Int32)",
+    "M:kairo.unity.form.FormManagerBase.GetFormsNum",
+    "M:kairo.unity.form.FormManagerBase.GetTopForm",
+    "M:kairo.unity.form.FormManagerBase.Pop",
+    "M:kairo.unity.form.FormManagerBase.Pop(kairo.unity.form.FormBase)",
+    "M:kairo.unity.form.FormManagerBase.Push(kairo.unity.form.FormBase)",
+    "M:kairo.unity.form.FormManagerBase.Push(kairo.unity.form.FormBase,kairo.unity.form.FormBase)",
+    "M:kairo.unity.ui.Canvas.GetSoftLabel(System.Int32)",
+    "M:kairo.unity.ui.Canvas.GetSoftLabelL",
+    "M:kairo.unity.ui.Canvas.GetSoftLabelR",
+    "M:kairo.unity.ui.Canvas.SetSoftLabel(System.Int32,System.String)",
+    "M:kairo.unity.ui.Canvas.SetSoftLabel(System.String,System.String,System.String,System.String)",
+    "M:kairo.unity.ui.Canvas.UpdateSoftLabel"
+  ],
+  "operation": "original-source-FormBase-stack-Canvas-label-differential",
+  "status": "PASS",
+  "fixture_cases": 56,
+  "passed": 56,
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "empty",
+      "expected": "empty=0:True:False:False:True",
+      "actual": "empty=0:True:False:False:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "labels-before",
+      "expected": "labels-before=:",
+      "actual": "labels-before=:",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "labels-publish",
+      "expected": "labels-publish=L:R:True",
+      "actual": "labels-publish=L:R:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "labels-index",
+      "expected": "labels-index=L:r2",
+      "actual": "labels-index=L:r2",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "push",
+      "expected": "push=1:0,:True:1",
+      "actual": "push=1:0,:True:1",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "init",
+      "expected": "init=1:1,:I1,",
+      "actual": "init=1:1,:I1,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "form-label",
+      "expected": "form-label=a:a",
+      "actual": "form-label=a:a",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "push-after",
+      "expected": "push-after=1:1,2:0,",
+      "actual": "push-after=1:1,2:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "push-before",
+      "expected": "push-before=3:0,1:1,2:0,",
+      "actual": "push-before=3:0,1:1,2:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "init-more",
+      "expected": "init-more=3:1,1:1,2:1,:I1,I3,I2,",
+      "actual": "init-more=3:1,1:1,2:1,:I1,I3,I2,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "event-stop",
+      "expected": "event-stop=E2,",
+      "actual": "event-stop=E2,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "exit-once",
+      "expected": "exit-once=E2,",
+      "actual": "exit-once=E2,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "form-bounds",
+      "expected": "form-bounds=!System.ArgumentOutOfRangeException",
+      "actual": "form-bounds=!System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "pop-reactivate",
+      "expected": "pop-reactivate=3:1,1:1,2:4,:False",
+      "actual": "pop-reactivate=3:1,1:1,2:4,:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "finish",
+      "expected": "finish=3:1,1:1,:E2,F2,",
+      "actual": "finish=3:1,1:1,:E2,F2,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "finished-label",
+      "expected": "finished-label=:False",
+      "actual": "finished-label=:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "move-top",
+      "expected": "move-top=1:1,3:1,",
+      "actual": "move-top=1:1,3:1,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "move-down",
+      "expected": "move-down=3:1,1:1,:1:3",
+      "actual": "move-down=3:1,1:1,:1:3",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "reinsert-alive",
+      "expected": "reinsert-alive=1:1,3:1,",
+      "actual": "reinsert-alive=1:1,3:1,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "change-existing",
+      "expected": "change-existing=3:4,1:1,",
+      "actual": "change-existing=3:4,1:1,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "finish-old",
+      "expected": "finish-old=1:1,:E2,F2,F3,",
+      "actual": "finish-old=1:1,:E2,F2,F3,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "change-new",
+      "expected": "change-new=1:4,2:0,",
+      "actual": "change-new=1:4,2:0,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "init-finish-change",
+      "expected": "init-finish-change=2:1,:E2,F2,F3,F1,I2,",
+      "actual": "init-finish-change=2:1,:E2,F2,F3,F1,I2,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "draw",
+      "expected": "draw=2:1,:E2,F2,F3,F1,I2,D2,",
+      "actual": "draw=2:1,:E2,F2,F3,F1,I2,D2,",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "back-intercept",
+      "expected": "back-intercept=False",
+      "actual": "back-intercept=False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "back-show-dialog",
+      "expected": "back-show-dialog=True",
+      "actual": "back-show-dialog=True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "index",
+      "expected": "index=-1:0",
+      "actual": "index=-1:0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "app-event-default",
+      "expected": "app-event-default=3:0",
+      "actual": "app-event-default=3:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "empty",
+      "expected": "empty=0:True:False:False:True",
+      "actual": "empty=0:True:False:False:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "labels-before",
+      "expected": "labels-before=:",
+      "actual": "labels-before=:",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "labels-publish",
+      "expected": "labels-publish=L:R:True",
+      "actual": "labels-publish=L:R:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "labels-index",
+      "expected": "labels-index=L:r2",
+      "actual": "labels-index=L:r2",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "push",
+      "expected": "push=1:0,:True:1",
+      "actual": "push=1:0,:True:1",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "init",
+      "expected": "init=1:1,:I1,",
+      "actual": "init=1:1,:I1,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "form-label",
+      "expected": "form-label=a:a",
+      "actual": "form-label=a:a",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "push-after",
+      "expected": "push-after=1:1,2:0,",
+      "actual": "push-after=1:1,2:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "push-before",
+      "expected": "push-before=3:0,1:1,2:0,",
+      "actual": "push-before=3:0,1:1,2:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "init-more",
+      "expected": "init-more=3:1,1:1,2:1,:I1,I3,I2,",
+      "actual": "init-more=3:1,1:1,2:1,:I1,I3,I2,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "event-stop",
+      "expected": "event-stop=E2,",
+      "actual": "event-stop=E2,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "exit-once",
+      "expected": "exit-once=E2,",
+      "actual": "exit-once=E2,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "form-bounds",
+      "expected": "form-bounds=!System.ArgumentOutOfRangeException",
+      "actual": "form-bounds=!System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "pop-reactivate",
+      "expected": "pop-reactivate=3:1,1:1,2:4,:False",
+      "actual": "pop-reactivate=3:1,1:1,2:4,:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "finish",
+      "expected": "finish=3:1,1:1,:E2,F2,",
+      "actual": "finish=3:1,1:1,:E2,F2,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "finished-label",
+      "expected": "finished-label=:False",
+      "actual": "finished-label=:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "move-top",
+      "expected": "move-top=1:1,3:1,",
+      "actual": "move-top=1:1,3:1,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "move-down",
+      "expected": "move-down=3:1,1:1,:1:3",
+      "actual": "move-down=3:1,1:1,:1:3",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "reinsert-alive",
+      "expected": "reinsert-alive=1:1,3:1,",
+      "actual": "reinsert-alive=1:1,3:1,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "change-existing",
+      "expected": "change-existing=3:4,1:1,",
+      "actual": "change-existing=3:4,1:1,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "finish-old",
+      "expected": "finish-old=1:1,:E2,F2,F3,",
+      "actual": "finish-old=1:1,:E2,F2,F3,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "change-new",
+      "expected": "change-new=1:4,2:0,",
+      "actual": "change-new=1:4,2:0,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "init-finish-change",
+      "expected": "init-finish-change=2:1,:E2,F2,F3,F1,I2,",
+      "actual": "init-finish-change=2:1,:E2,F2,F3,F1,I2,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "draw",
+      "expected": "draw=2:1,:E2,F2,F3,F1,I2,D2,",
+      "actual": "draw=2:1,:E2,F2,F3,F1,I2,D2,",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "back-intercept",
+      "expected": "back-intercept=False",
+      "actual": "back-intercept=False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "back-show-dialog",
+      "expected": "back-show-dialog=True",
+      "actual": "back-show-dialog=True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "index",
+      "expected": "index=-1:0",
+      "actual": "index=-1:0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "app-event-default",
+      "expected": "app-event-default=3:0",
+      "actual": "app-event-default=3:0",
+      "passed": true
+    }
+  ],
+  "native_platform_policy": {
+    "policy_assertions": 16,
+    "unbound_effects_rejected": true,
+    "native_form_cycle_collected": true,
+    "game_boot": false
+  },
+  "inputs": {
+    "tests/kairo/forms_fixtures.cpp": "2616dc1f8818b6d21cabf65961303b1e51b2f721523484890c286a10c9802e50",
+    "src/kairo/common/canvas.cpp": "53dfee74af792cf91ab1ffbb56771f1e3b477e65d1134c3b8957c97261a9c989",
+    "src/kairo/common/forms.cpp": "5ee8b9002f7ecc3ad94a753afdbe356db05a02767bd920a224b05a69a05fa8fc",
+    "src/kairo/platform/sdl/input.cpp": "b8f9c7b9cad5eb0d83f9c2aeaad4ecf3c39dfed98b0cc6915ebd96c701029680",
+    "src/kairo/common/graphics.cpp": "98f41b7cdd00e8f66d8a60ffb3b7155e0aa3aa85ee3026863a29d42614cb897a",
+    "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
+    "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
+    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
+    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "tests/kairo/FormsOracle.cs": "633b8b9dbc17c659a2c3b5a6818856acd797cb3c068649ec68084aba57267cef",
+    "tools/test_forms.py": "0f127acba3c1f96d78916ef7df8fee30d4f18ee2fd4347c812cb97420387e138",
+    "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
+    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "src/kairo/api/canvas.hpp": "70279bd5f9b03f3dee73449245395f82c90bba88750db0ef58b54592658de106",
+    "src/kairo/api/forms.hpp": "9e2a512468322622718349909a604510cca295dbeb0537ab2e69fa05e2266d7b",
+    "src/kairo/api/input.hpp": "f54d520710f8adc4335b54f1666c11b1ab78c7f607b4b9213dae525046769d09",
+    "src/kairo/api/graphics.hpp": "af7af8a6032982b53f18fdbb3f08f7e19e35c282bef0994cccc7727b88c04d73",
+    "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
+    "src/kairo/api/application.hpp": "6ed7c969bc376084e3098d011c9dc7b1af2788b238cbf934d3b78ef5ad0bb8bc",
+    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
+    "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/form/FormManagerBase.cs",
+      "sha256": "3b230f8a79aafeddd3820f9f3a5cda16ba0477bdb5f58e6c571be0856911c34a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Canvas.cs",
+      "sha256": "c658562b9e0335d3206529286c330dfc797ec72c3fb14b5aa819e21472cbe0b9"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/form/FormBase.cs",
+      "sha256": "b64565a7ca7cd1ca20aa390d80792db9c6f3f0bfd9ac64c6db7903814e58a09e"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/AppEvent.cs",
+      "sha256": "56829f5af20dc5d603290088261965fa3ad218e6da194c053cc7c3c807111bf7"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/AppEventType.cs",
+      "sha256": "bdfc9a171aab83ab4f8650d50b849fc0f9ae023150fd71d6785ffe78b99326c4"
+    }
+  ],
+  "original_methods": {
+    "FormManagerBase": [
+      "public FormBase GetForm(int index)",
+      "public int GetFormIndex(FormBase form)",
+      "public bool ChangeCurrentForm(FormBase form)",
+      "public bool Push(FormBase form)",
+      "public bool Push(FormBase position, FormBase form)",
+      "public bool Push(FormBase position, FormBase form, bool before)",
+      "public bool Pop()",
+      "public bool Pop(FormBase form)",
+      "private void ExecuteInitAndFinish()",
+      "public void DrawAllForms()",
+      "public void DrawAllForms(bool flush)",
+      "public void DrawSkip()",
+      "public bool IsDrawSkip()",
+      "public int GetFormsNum()",
+      "public FormBase GetTopForm()",
+      "public FormBase GetDownForm()",
+      "public FormBase GetCurrentForm()",
+      "public void MoveToTop(FormBase form)",
+      "public void MoveToDown(FormBase form)",
+      "public bool CheckUsable(FormBase form)",
+      "public void Draw(kairo.unity.ui.Graphics g)",
+      "public void ShowTerminationDialog()",
+      "public bool CheckShowTerminationDialog()",
+      "internal void ProcessBackKey()",
+      "internal void ProcessEvent(AppEvent evt)"
+    ],
+    "Canvas": [
+      "public void SetSoftLabel(string sk1, string sk2, string sk3 = null, string sk4 = null)",
+      "public void SetSoftLabel(int type, string label)",
+      "public string GetSoftLabelL()",
+      "public string GetSoftLabelR()",
+      "public string GetSoftLabel(int id)",
+      "public void UpdateSoftLabel()"
+    ],
+    "FormBase": "entire original class"
+  },
+  "native_executable": {
+    "path": "build/forms-tests/forms-fixtures.exe",
+    "sha256": "caa3007aaf7c4d3e1143d5c13c9655fd7c384f9abafe0f953137c5efbf50ac1b"
+  },
+  "limits": [
+    "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",
+    "No game boot, no SurfaceManager render routing, no capture/loading thread, no Android warning toast.",
+    "Draw has CPU-immediate GL-equivalent commands; tests only instrument form order and skip state."
+  ],
+  "game_boot": false,
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

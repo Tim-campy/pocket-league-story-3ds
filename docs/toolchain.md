@@ -1,6 +1,6 @@
 # Ferramentas do port — inventário do ambiente
 
-Inventário inicial e atualização da Fase 2. Caminhos refletem esta máquina. `NOT_FOUND_WITHIN_SEARCH` significa não encontrada nos limites consultados, não uma busca universal do disco. O SDL2 SDK foi preparado localmente após autorização; as demais ferramentas abaixo já existiam ou tiveram autorização na Fase 1.
+Inventário inicial e atualização da Fase 2. Caminhos refletem esta máquina. `NOT_FOUND_WITHIN_SEARCH` significa não encontrada nos limites consultados, não uma busca universal do disco. SDL2 e as bibliotecas FreeType/Ogg/Vorbis foram preparados localmente após as respectivas autorizações; as demais ferramentas abaixo já existiam ou tiveram autorização na Fase 1.
 
 | Ferramenta | Estado | Versão medida | Papel |
 |---|---|---|---|
@@ -17,6 +17,9 @@ Inventário inicial e atualização da Fase 2. Caminhos refletem esta máquina. 
 | SDL2 runtime only | PRESENT | 2.0.14.0 | runtime of another program; not an SDL2 development SDK |
 | SDL2 runtime only | PRESENT | 2.26.3.0 | runtime of another program; not an SDL2 development SDK |
 | SDL2 development SDK | PRESENT | 2.32.10, VC x64 | build/deps/SDL2-2.32.10; compilação, link e readback testados |
+| FreeType development | BUILT_LOCAL | 2.15.0, MSVC x64 estático | build/deps/native-media; TTF local e rasterização testados |
+| libogg development | BUILT_LOCAL | 1.3.6, MSVC x64 estático | build/deps/native-media; framing do Vorbis |
+| libvorbis / libvorbisfile | BUILT_LOCAL | 1.3.7, MSVC x64 estático | build/deps/native-media; decode incremental e mixer SDL testados |
 | FFmpeg / FFprobe | PRESENT | 7.1.1 | conversão PNG→RGBA8 e inspeção de Vorbis; já instalado em C:\ffmpeg\bin |
 | devkitPro pacman | NOT_FOUND_WITHIN_SEARCH | UNKNOWN | development tool |
 | devkitARM | NOT_FOUND_WITHIN_SEARCH | UNKNOWN | development tool |
@@ -72,13 +75,24 @@ python tools/test_services.py
 python tools/progress
 ```
 
-Para repetir a verificação completa deste checkpoint (18 etapas, sem instalar dependências nem iniciar o jogo):
+Para repetir a verificação completa do checkpoint atual (etapas enumeradas pelo script, sem instalar dependências nem iniciar o jogo):
 
 ```powershell
 python tools/verify_phase2.py --apk 'CAMINHO_DO_SEU_APK' --original-managed 'DIRETORIO_EXTERNO_DAS_APIS_DO_APK'
 ```
 
 O resultado fica em `config/phase2-verification.json`; logs privados ficam em `build/phase2-verification/`. A conversão local e o inventário AssetRipper devem estar preparados antes. O gerador de progresso recusa recibos obsoletos; não ajuste estados à mão para contornar uma falha.
+
+O runner atual recompila as 14 suítes semânticas, streams/BinaryReader, os métodos portáveis, o subconjunto emitido do jogo e suas provas; executa os testes nativos de desenho/fontes, streaming, armazenamento, entrada, formulários, som e serviços. A compilação parcial de métodos em objeto não equivale ao link de um jogo executável. Tentativas reais de link ficam em `config/phase2-boot-attempts.json`; a partir da tentativa 3, seus logs privados são preservados por número em `build/pc/attempts/`, sem sobrescrita pelas fixtures.
+
+```powershell
+python tools/inventory_baked_arrays.py --apk 'CAMINHO_DO_SEU_APK' --original-managed 'DIRETORIO_EXTERNO_DAS_APIS_DO_APK'
+python tools/build_asset_catalog.py --apk 'CAMINHO_DO_SEU_APK'
+python tools/translate --assembly Assembly-CSharp --bootstrap-main --compile --original-managed 'DIRETORIO_EXTERNO_DAS_APIS_DO_APK'
+python tools/build-pc --apk 'CAMINHO_DO_SEU_APK' --run
+```
+
+Esses comandos requerem os inventários privados já preparados, descritos em [catálogo](notes/phase2-private-catalog.md). O último só inicia o programa depois de um link bem-sucedido; não conta um processo lançado como título/menu aprovado. As diferenças culturais das strings são medidas por `python tools/probe_string_culture.py`, sem alterar o contrato do jogo; [evidência e dependência pendente](notes/phase2-string-culture.md). `python tools/inspect_android_gc.py --apk 'CAMINHO_DO_SEU_APK'` verifica o export de GC de ambas as bibliotecas Android em memória, sem extrair nem executar o runtime.
 
 Roslyn moderno e .NET10 são ferramentas de desenvolvimento; o programa nativo não incorpora CLR, Mono ou Unity. As sondas sintéticas históricas usam o smcs/Mono da instalação Unity 5.3.4f1 já existente, fora do port, somente como oráculo de testes próprios. [Contrato semântico e limites](translator.md); [streams](notes/managed-streams.md). Compatibilidade observada no Mono Windows não comprova o Mono Android nos casos de borda.
 
@@ -94,4 +108,33 @@ python tools/convert-assets --apk 'CAMINHO_DO_SEU_APK'
 
 O conversor requer os 27 links de áudio do inventário AssetRipper local. Consulte [auditoria](notes/assetripper-inventory.md) para reproduzi-lo. `--without-audio` serve apenas para diagnosticar a etapa de imagens/fontes e não conta como conversão completa.
 
-FreeType, libogg e libvorbis de desenvolvimento não foram preparados. A autorização específica para prepará-los localmente em `build/deps/` foi solicitada e está pendente; nenhuma instalação dessas dependências foi executada. São a rota proposta para rasterizar o TTF próprio e decodificar Vorbis durante a reprodução em buffers limitados. Enquanto isso, rasterização, reprodução, memória/frame time do boot permanecem **UNKNOWN / NOT_RUN**. Não há instalação automática de outras ferramentas.
+A autorização posterior do usuário permitiu preparar FreeType, libogg e libvorbis dos fontes oficiais, somente em `build/deps/`. As três bibliotecas foram compiladas e testadas. Não houve instalação global, package manager ou download implícito por CMake. zlib/libpng/HarfBuzz/Brotli/BZip2 não foram necessários: os formatos usados nesta etapa são TTF e Ogg, e os adaptadores opcionais do FreeType foram desativados. Não se instala automaticamente outra ferramenta.
+
+## FreeType, Ogg e Vorbis locais
+
+`python tools/setup_media_deps.py` baixa somente os três arquivos HTTPS fixados abaixo, verifica seus SHA-256 publicados e verifica cada arquivo da árvore extraída contra o tar original antes de compilar. Uma árvore em cache alterada ou com arquivos extras é recusada. Os fontes ficam em `build/deps/sources/`, builds em `build/deps/media-build/` e o prefixo de desenvolvimento em `build/deps/native-media/`.
+
+| Fonte oficial fixado | SHA-256 do arquivo |
+|---|---|
+| [FreeType 2.15.0 tar.xz](https://download.savannah.gnu.org/releases/freetype/freetype-2.15.0.tar.xz) | `93cd47eb719c325107f2d3cf087d06299e944c3b48a40b55537302304dea1dd5` |
+| [libogg 1.3.6 tar.xz](https://downloads.xiph.org/releases/ogg/libogg-1.3.6.tar.xz) | `5c8253428e181840cd20d41f3ca16557a9cc04bad4a3d04cce84808677fa1061` |
+| [libvorbis 1.3.7 tar.xz](https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.7.tar.xz) | `b33cc4934322bcbf6efcbacf49e3ca01aadbea4114ec9589d1b1e9d20f72954b` |
+
+Os checksums foram conferidos nas páginas primárias do [release FreeType](https://sourceforge.net/projects/freetype/files/freetype2/2.15.0/) e [downloads Xiph](https://xiph.org/downloads/). Não se verificou assinatura PGP; a identidade usada é o digest publicado via HTTPS. O Python local recusou o certificado de um mirror Xiph; o download pelo curl existente, com validação TLS do Windows mantida, funcionou e os digests coincidiram. Não se desativou validação de certificado.
+
+O build usa CMake/Ninja/MSVC existentes, Release, `BUILD_SHARED_LIBS=OFF`, runtime MSVC `/MD` (`CMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL`), `FETCHCONTENT_FULLY_DISCONNECTED=ON`, sem registry de pacotes CMake. FreeType usa `FT_DISABLE_ZLIB/BZIP2/PNG/HARFBUZZ/BROTLI=ON`. O CMake recebe `CMAKE_POLICY_VERSION_MINIMUM=3.5` para aceitar os arquivos da libvorbis 1.3.7 no CMake 4.3.1. Todos os flags, contagens/hashes das árvores de fonte, hashes das bibliotecas/headers/configurações e do compilador/produtor estão em [config/media-sdk.json](../config/media-sdk.json). As licenças FTL/FreeType e BSD de Ogg/Vorbis ficam no prefixo local `share/licenses/`; uma futura distribuição vinculada deve conservá-las.
+
+Targets exportados: `Freetype::Freetype`, `Ogg::ogg`, `Vorbis::vorbis` e `Vorbis::vorbisfile`. Includes no prefixo: `include/` e `include/freetype2/`. O host e seus adaptadores devem usar o mesmo runtime `/MD`; misturar `/MT` com essas bibliotecas causou erro de link e foi corrigido no runner próprio.
+
+```powershell
+python tools/setup_media_deps.py
+python tools/test_media.py --apk 'CAMINHO_DO_SEU_APK'
+```
+
+O segundo comando autentica o APK e cada TTF/Ogg local pelo manifest; compila `font.cpp`, `audio.cpp`, backend e fixture próprios com `/std:c++17 /EHsc /fp:strict /permissive- /W4 /WX /O2 /MD`; rasters/prefixos PCM permanecem em memória limitada ou sob `build/`, ignorados. O teste usa drivers SDL dummy e não inicia o jogo. O recibo [config/phase2-media-tests.json](../config/phase2-media-tests.json) registra fontes/produtor/binário/manifest e as comparações; não promove automaticamente APIs não integradas ao jogo.
+
+Foram carregados os **dois TTF**, rasterizados **126 glifos/estilos/tamanhos** e comparados todos os canais ao readback SDL. O cache de pixels é limitado, com descarte LRU, e sua política não altera o TTF. Os **27 Ogg** foram percorridos em blocos de 2.048 frames, sem buffer alocado pelo comprimento da faixa. Prefixos de 512 frames foram comparados à decodificação independente do FFmpeg: 27/27 passaram com erro absoluto float máximo de `2.086162567138672e-7` (limite do teste `2e-5`). Isso não prova identidade com o decoder Android.
+
+O mixer usa **um dispositivo SDL e quatro vozes**, conforme o default `SoundPlayer.Init`, `reference/src/KairoLibrary/kairo/unity/ui/SoundPlayer.cs:69–74`. Por voz há ring de 8.192 frames estéreo float e bloco de entrada/saída de 2.048 frames; as taxas nativas 24.000/32.000/44.100 Hz passam pelo resampler incremental SDL. As quatro vozes reservaram 262.144 bytes de rings e 131.072 bytes de scratch, e o pico somado observado de saída disponível dos resamplers foi 85.448 bytes. A memória interna dos codebooks/libvorbis/FreeType/SDL não foi contabilizada nesses números. Nenhuma música é decodificada num buffer dimensionado pelo total da faixa.
+
+Loop, término, pausa/retomada, stop, mute, volume zero e consumo simultâneo foram exercitados no callback dummy; medição de memória/frame time do **boot**, fidelidade visual à Unity/Android, resampling equivalente à Unity e reprodução audível em hardware permanecem **UNKNOWN / NOT_RUN**. A integração exige construir o Backend antes do mixer e destruir o mixer antes do Backend, porque o Backend encerra SDL ao sair.

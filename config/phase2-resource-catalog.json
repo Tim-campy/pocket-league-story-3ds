@@ -1,0 +1,21 @@
+{
+  "operation": "private-native-resource-catalog",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "source_resource_entries": 1212,
+  "source_resource_all_pptrs_resolved": true,
+  "resource_manager_tail_bytes_not_used": 1748,
+  "records_by_kind": {
+    "1": 21,
+    "2": 1337,
+    "3": 654,
+    "4": 1,
+    "5": 27,
+    "6": 1,
+    "7": 965
+  },
+  "records": 3006,
+  "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
+  "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
+  "producer_sha256": "cae7e3cead1d685302e69fd8cc996c386738ebbbce12dffeef9a6f9f2ff5d445",
+  "asset_values_published": false
+}

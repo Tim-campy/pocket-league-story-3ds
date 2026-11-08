@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "native_assertions": 12,
+  "game_boot": false,
+  "operation": "PC-native-frame-control-and-service-platform-leaves",
+  "inputs": {
+    "tests/kairo/system_fixtures.cpp": "b55f0ae9a223a6f451fe4fc3927896bb055d0c6541f2e7b371995096d0b03b42",
+    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "tools/test_system.py": "459c62d9adee04c4f34ab5dc46bb07b223c630b53482906d55c78ab0ae20fa20",
+    "src/kairo/api/system.hpp": "e195566c253f4febf6a6131a52f64ed13d40e3ed8a333e9d8ca457ed934e7543",
+    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509"
+  },
+  "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "executable_sha256": "67be81eca584f08d61fb3db7c326ba09441d0ea13020d9db81e10243ecd6b700",
+  "original_source_methods": [
+    "main.Main.OnCreate",
+    "main.Main.OnUpdate",
+    "native.AppPlugin.Init"
+  ],
+  "limitations": [
+    "Native platform contract tests; not an Android frame scheduling comparison.",
+    "Nonzero vsync explicitly unsupported; Main requests zero.",
+    "No license key retained; licensing removed by the user decision."
+  ]
+}

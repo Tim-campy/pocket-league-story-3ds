@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import re
 from pc_compiler import CMAKE,NINJA,environment
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -50,21 +51,52 @@ def main():
     parser.add_argument('--fixtures-only',action='store_true')
     parser.add_argument('--asset-readback',action='store_true',help='Check all converted local images; requires --apk')
     parser.add_argument('--apk',type=Path)
+    parser.add_argument('--run',action='store_true',help='Run only a successfully linked generated game, for up to 20 seconds')
     args=parser.parse_args()
     if not args.fixtures_only:
         if not args.apk or not args.apk.is_file():parser.error('Forneça seu próprio APK local com --apk. Nenhum jogo é baixado.')
         if hashlib.sha256(args.apk.read_bytes()).hexdigest()!=APK_SHA:parser.error('APK diferente; confirme a versão no pipeline antes de compilar.')
-        parser.error('Game target not ready: native fixtures are not counted as game boot.')
     sdk=ROOT/'build/deps/SDL2-2.32.10/cmake'
     if not sdk.is_dir():parser.error('SDL2 development SDK missing; no dependency is installed automatically.')
     env=environment();folder=ROOT/'build/pc';folder.mkdir(parents=True,exist_ok=True)
     commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE=Debug','-DSDL2_DIR='+str(sdk)],
-              [CMAKE,'--build',folder,'--clean-first'],
-              [CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure']]
+              [CMAKE,'--build',folder,*(['--clean-first'] if args.fixtures_only else ['--target','pc_game'])]]
+    if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
+    if not args.fixtures_only:
+        attempts=ROOT/'config/phase2-boot-attempts.json'
+        history=json.loads(attempts.read_text(encoding='utf-8')) if attempts.exists() else dict(operation='generated-game-build-and-boot-attempts',attempts=[])
+        attempt=dict(number=len(history['attempts'])+1,apk_sha256=APK_SHA,generated_game_sources=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))],game_boot=False,title_verified=False,menu_verified=False)
+        attempt_folder=folder/'attempts'/str(attempt['number'])
+        attempt_folder.mkdir(parents=True,exist_ok=False)
+        attempt['logs']=[]
     for index,command in enumerate(commands):
         result=subprocess.run([str(p) for p in command],cwd=ROOT,env=env,capture_output=True)
-        (folder/f'step-{index}.log').write_bytes(result.stdout+result.stderr)
-        if result.returncode:raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
+        log=folder/f'step-{index}.log'
+        log.write_bytes(result.stdout+result.stderr)
+        if not args.fixtures_only:
+            retained=attempt_folder/log.name
+            retained.write_bytes(log.read_bytes())
+            attempt['logs'].append(dict(path=retained.relative_to(ROOT).as_posix(),sha256=digest(retained)))
+        if result.returncode:
+            if not args.fixtures_only:
+                messages=(result.stdout+result.stderr).decode('utf-8',errors='replace')
+                diagnostics=[line for line in messages.splitlines() if re.search(r'(error [A-Z]+\d+|fatal error|undefined reference)',line)]
+                attempt.update(stage='configure-failed' if index==0 else 'compile-or-link-failed',exit_code=result.returncode,diagnostics=diagnostics[:8],log_sha256=digest(folder/f'step-{index}.log'))
+                history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
+            raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
+    if not args.fixtures_only:
+        attempt.update(stage='linked',exit_code=0)
+        if args.run:
+            exe=folder/'pc_game.exe'
+            process=subprocess.Popen([str(exe),str(ROOT/'assets')],cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            try:stdout,stderr=process.communicate(timeout=20)
+            except subprocess.TimeoutExpired:process.terminate();stdout,stderr=process.communicate(timeout=10);attempt['stopped_at_timeout']=True
+            for name,data in [('game-run.stdout',stdout),('game-run.stderr',stderr)]:
+                log=attempt_folder/name;log.write_bytes(data)
+                attempt['logs'].append(dict(path=log.relative_to(ROOT).as_posix(),sha256=digest(log)))
+            attempt.update(stage='process-executed',process_exit_code=process.returncode,executable_sha256=digest(exe))
+        history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
+        print(json.dumps(attempt));return
     result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,
                 compiler='existing MSVC',sdl2='2.32.10',game_assets_used=False)
     (ROOT/'config/phase2-sdl-verification.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')

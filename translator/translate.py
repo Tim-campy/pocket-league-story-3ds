@@ -32,7 +32,7 @@ def prepare():
     folder=ROOT/'build/translator';folder.mkdir(parents=True,exist_ok=True)
     libraries=['System.Private.CoreLib','System.Runtime','System.Console','System.Linq','System.Collections',
                'System.Text.Json','System.Reflection.Metadata','System.Collections.Immutable','System.Memory',
-               'System.Security.Cryptography','netstandard']
+               'System.Security.Cryptography','System.Text.RegularExpressions','netstandard']
     references=[framework/(name+'.dll') for name in libraries]+[compiler.parent/name for name in ['Microsoft.CodeAnalysis.dll','Microsoft.CodeAnalysis.CSharp.dll']]
     target=folder/'Translator.dll'
     args=['/nologo','/noconfig','/nostdlib+','/nullable:enable','/target:exe','/out:'+str(target)]
@@ -52,6 +52,7 @@ def main():
     parser.add_argument('--compile',action='store_true')
     parser.add_argument('--diagnostics-only',action='store_true',help='Bind and attempt every source body, without writing C++ or promoting any status')
     parser.add_argument('--output',type=Path)
+    parser.add_argument('--bootstrap-main',action='store_true',help='Declare Main factory even when its body remains unsupported, without emitting a stub')
     args=parser.parse_args()
     folder,runtime,target,producer=prepare()
     reference=ROOT/'reference'
@@ -69,9 +70,30 @@ def main():
         refs=[args.original_managed/n for n in ['mscorlib.dll','KairoLibrary.dll','UnityEngine.dll','System.Core.dll','System.dll']]
         # Translation metadata uses original full signatures; Roslyn selectors are
         # taken from its bound source methods rather than hand-edited ledgers.
-        selected=[];output=args.output or ROOT/'build/translation/game-diagnostics'
+        selected=[];output=args.output or ROOT/'src/game'
     policies=json.loads((ROOT/'config/service-overrides.json').read_text(encoding='utf-8'))
     request=dict(assembly=args.assembly,sources=[str(reference/p) for p in source_names],references=[str(p.resolve()) for p in refs],selected=selected,output=str(output.resolve()),diagnostics_only=args.diagnostics_only,check_symbols=[p['symbol'] for p in policies['overrides']])
+    request['source_root']=str(reference)
+    if args.assembly=='Assembly-CSharp':
+        portable=json.loads((ROOT/'config/phase2-translation.json').read_text(encoding='utf-8'))
+        request.update(select_all_source_methods=True,
+            external_types={c['id']:'pls::generated::'+c['cpp_name'].split('<')[0] for c in portable['generated_classes']},
+            external_methods={m['id']:'pls::generated::'+m['cpp_name'] for m in portable['emitted_methods']},
+            external_fields={f['id']:f['cpp_name'] for c in portable['generated_classes'] for f in c['fields'] if 'id' in f},
+            bootstrap_method='M:main.Main.#ctor' if args.bootstrap_main else '')
+        request['external_complete_bases']=list(request['external_types'])
+        request['external_types']['T:kairo.unity.ui.IApplication']='pls::kairo::IApplication'
+        request['external_types']['T:kairo.unity.form.FormManagerBase']='pls::kairo::FormManagerBase'
+        request['external_complete_bases'].append('T:kairo.unity.ui.IApplication')
+        request['native_includes']=['application.hpp','baked_arrays.hpp']
+        baked=json.loads((ROOT/'config/baked-array-index.json').read_text(encoding='utf-8'))
+        request['baked_arrays']={b['id']:b for b in baked['matched']}
+        app='M:kairo.unity.ui.IApplication.'
+        request['external_methods'].update({app+'Init(kairo.unity.ui.IApplication)':'member:source_Init',app+'GetCurrentApp':'pls::kairo::IApplication::GetCurrentApp',app+'SetViewport(System.Int32,System.Int32)':'member:SetViewport'})
+        slots=['OnCreate','OnStart','OnRestart','OnStop','OnResume','OnSuspend','OnUpdate','OnDraw','OnRender','OnDestroy','GetFormManager']
+        request['external_slots']={app+n:n for n in slots}
+        request['external_methods'].update({app+n:'member:source_'+n for n in ['OnCreate','OnResume','OnSuspend','OnDestroy']})
+        request['external_methods']['M:native.AppPlugin.Finish']='pls::kairo::request_host_finish'
     input_path=folder/(args.assembly+'-input.json');raw_path=folder/(args.assembly+'-translation.json')
     input_path.write_text(json.dumps(request,indent=2)+'\n',encoding='utf-8',newline='\n')
     run([runtime,target,input_path,raw_path],folder/(args.assembly+'-translator.log'))
@@ -84,25 +106,38 @@ def main():
         return
     # The source-only oracle is a test artifact, not public game output.
     oracle=output/'source_oracle.cs'
-    if oracle.exists():shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
-    compiled=False
+    if args.assembly=='Assembly-CSharp':
+        # Game constant data comes from authenticated local assets, never from
+        # a duplicated source-oracle initializer or a C++ literal payload.
+        oracle.unlink(missing_ok=True)
+        (folder/'Assembly-CSharp-source-oracle.cs').unlink(missing_ok=True)
+    elif oracle.exists():shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
+    compiled=False;compile_evidence=None
     if args.compile and report['emitted_method_count']:
         env=environment();native=folder/'native';native.mkdir(exist_ok=True)
         command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/fp:strict','/utf-8','/W4','/c',
-            '/I'+str(ROOT/'src/kairo/common'),'/Fo'+str(native/'portable_generated.obj'),str(output/'portable_generated.cpp')]
-        run(command,folder/'native-compile.log',env);compiled=True
+            '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/Fo'+str(native/(args.assembly+'.obj')),str(output/('game_generated.cpp' if args.assembly=='Assembly-CSharp' else 'portable_generated.cpp'))]
+        inputs=sorted(set((ROOT/'src/kairo/common').rglob('*.hpp'))|set((ROOT/'src/kairo/common').rglob('*.inc'))|set((ROOT/'src/kairo/api').rglob('*.hpp'))|set(output.glob('*.?pp'))|set(output.glob('*.inc')))
+        before={p.relative_to(ROOT).as_posix():digest(p) for p in inputs}
+        run(command,folder/('native-'+args.assembly+'-compile.log'),env)
+        after={p.relative_to(ROOT).as_posix():digest(p) for p in inputs}
+        if before!=after:raise RuntimeError('Native compile inputs changed concurrently; rerun translation before publishing a receipt')
+        compiled=True
+        object_file=native/(args.assembly+'.obj')
+        compile_evidence=dict(compiler=dict(path=str(command[0]),sha256=digest(command[0])),object=dict(path=object_file.relative_to(ROOT).as_posix(),sha256=digest(object_file)),command=[str(c) for c in command],inputs=after)
     report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],
         reference_commit='c7d097a847ca1f1a8e5fb7141ff11d338f5915c4',
-        reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs],compiled=compiled,
+        reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs],compiled=compiled,compile_evidence=compile_evidence,
         compiled_method_count=report['emitted_method_count'] if compiled else 0,
-        game_translated_methods=0,game_compiled_methods=0,game_executed_methods=0,
-        generated_files=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in output.glob('*.?pp')])
-    (ROOT/'config/phase2-translation.json').write_text(json.dumps(report,indent=2,ensure_ascii=True)+'\n',encoding='utf-8',newline='\n')
+        game_translated_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_compiled_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_executed_methods=0,
+        generated_files=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted(set(output.glob('*.?pp'))|set(output.glob('*.inc')))])
+    report_target=ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
+    report_target.write_text(json.dumps(report,indent=2,ensure_ascii=True)+'\n',encoding='utf-8',newline='\n')
     measured=list(csv.DictReader((ROOT/'config/csharp-syntax.csv').open(encoding='utf-8')))
     covered=set(report['emitted_kind_occurrences'])
     syntax=[dict(kind=r['kind'],measured_count=r['count'],observed_in_emitted_body=r['kind'] in covered,
                  status='observed-in-emitted-body' if r['kind'] in covered else 'NOT_YET_VALIDATED') for r in measured]
-    with (ROOT/'config/translator-syntax.csv').open('w',encoding='utf-8',newline='') as f:
+    with (ROOT/'config'/('game-translator-syntax.csv' if args.assembly=='Assembly-CSharp' else 'translator-syntax.csv')).open('w',encoding='utf-8',newline='') as f:
         w=csv.DictWriter(f,fieldnames=list(syntax[0]),lineterminator='\n');w.writeheader();w.writerows(syntax)
     print(json.dumps({k:report[k] for k in ['requested_symbols','requested_methods','emitted_method_count','root_methods_emitted','compiled_method_count','executed_methods']}))
 

@@ -1,0 +1,74 @@
+#pragma once
+#include "graphics.hpp"
+#include "input.hpp"
+namespace pls::kairo {
+class IApplication;
+// A native surface bridge must implement these routes; defaults deliberately
+// reject calls instead of silently dropping game events.
+class CanvasSurface : public cs::Object {
+public:
+    virtual void RawKeyDown(std::int32_t,cs::Ref<KeyEvent>)=0;
+    virtual void KeyDown(std::int32_t)=0;
+    virtual void KeyUp(std::int32_t)=0;
+    virtual void Touch(cs::Ref<MotionEvent>)=0;
+    virtual void ClearTouch()=0;
+    virtual void ClearGameTouch()=0; // Init/Finish clear game surfaces only.
+};
+class Canvas : public cs::Object {
+    inline static cs::Ref<Canvas> instance_;
+    cs::Ref<Image> display_;
+    cs::Ref<Graphics> graphics_;
+    cs::Ref<Font> default_font_;
+    cs::Ref<CanvasSurface> surface_;
+    cs::Array<cs::String> labels_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
+    cs::Array<cs::String> shown_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
+    std::int32_t background_{};
+    float aspect_=std::numeric_limits<float>::quiet_NaN();
+    CanvasKeyState keys_;
+    PcInputAdapter input_{keys_};
+public:
+    static constexpr std::int32_t KEY_LEFT=65536,KEY_RIGHT=262144,KEY_UP=131072,KEY_DOWN=524288,KEY_SELECT=1048576,KEY_SOFT1=2097152,KEY_SOFT2=4194304;
+    Canvas();
+    static cs::Ref<Canvas> GetInstance(bool make=true);
+    // Explicit PC display dependency, not an alternative game screen design.
+    void host_display(cs::Ref<Image>,cs::Ref<Font>);
+    void host_event(const platform::Input& event){input_.feed(event);}
+    void SetDisplayCurrent(cs::Ref<IApplication>){} // Original body is empty.
+    void SetSurfaceManager(cs::Ref<CanvasSurface> value){surface_=std::move(value);}
+    cs::Ref<CanvasSurface> GetSurfaceManager(){return surface_;}
+    cs::Ref<Graphics> GetGraphicsInstance(){return graphics_;}
+    cs::Ref<Graphics> BeginPaint();
+    cs::Ref<Graphics> BeginPaint(cs::Ref<Graphics>);
+    void EndPaint();
+    void SetBackground(std::int32_t c){SetBackColor(c);}
+    void SetBackColor(std::int32_t c){background_=c;}
+    std::int32_t GetBackColor(){return background_;}
+    std::int32_t GetWidth();std::int32_t GetHeight();
+    std::int32_t GetWidth2(){return GetWidth();}std::int32_t GetHeight2(){return GetHeight();}
+    void SetAspectRatio(std::int32_t width,std::int32_t height){aspect_=static_cast<float>(height)*100.0f/static_cast<float>(width);}
+    void SetAspectRatio(){aspect_=std::numeric_limits<float>::quiet_NaN();}
+    void SetSoftLabel(cs::String,cs::String,cs::String={},cs::String={});
+    void SetSoftLabel(std::int32_t,cs::String);
+    cs::String GetSoftLabelL(){return shown_.at(0);}cs::String GetSoftLabelR(){return shown_.at(1);}
+    cs::String GetSoftLabel(std::int32_t id){return shown_.at(id);}
+    void UpdateSoftLabel();
+    CanvasKeyState& key_state(){return keys_;}
+    void DecideKeyState(){input_.decide_frame();}
+    void ClearKeyBuffer();
+    std::int32_t GetKeyState(){return keys_.GetKeyState();}std::int32_t GetKeypadState(){return keys_.GetKeypadState();}
+    bool CheckKeyState(std::int32_t k){return keys_.CheckKeyState(k);}bool CheckKeyPulse(std::int32_t k){return keys_.CheckKeyPulse(k);}
+    bool CheckKeyRepeat(std::int32_t k){return keys_.CheckKeyRepeat(k);}bool CheckKeyRepeat(std::int32_t k,std::int32_t i){return keys_.CheckKeyRepeat(k,i);}
+    bool CheckKeyDouble(std::int32_t k){return keys_.CheckKeyDouble(k);}bool CheckKeyDouble(std::int32_t k,std::int32_t i){return keys_.CheckKeyDouble(k,i);}
+    void SetKeyRepeatInterval(std::int32_t i){keys_.SetKeyRepeatInterval(i);}std::int32_t GetKeyRepeatInterval(){return keys_.GetKeyRepeatInterval();}
+    void SetKeyDoubleInterval(std::int32_t i){keys_.SetKeyDoubleInterval(i);}std::int32_t GetKeyDoubleInterval(){return keys_.GetKeyDoubleInterval();}
+    void KeyDown(std::int32_t k,bool p=true){keys_.KeyDown(k,p);}void KeyUp(std::int32_t k){keys_.KeyUp(k);}void KeyClick(std::int32_t k){keys_.KeyClick(k);}
+    bool OnKeyDown(std::int32_t,cs::Ref<KeyEvent>);bool OnKeyUp(std::int32_t,cs::Ref<KeyEvent>);
+    bool OnTouchEvent(cs::Ref<MotionEvent>);
+    // Escape handling requires Language/soft-key/back-label comparison. The host
+    // cannot claim this route until that source-derived bridge is installed.
+    std::function<void()> on_back;
+    std::int32_t GetSyncMillSecound(std::int32_t){return 0;} // Original spelling/body.
+    void trace_edges(const cs::EdgeVisitor&)const override;
+    void release_edges()override;
+};
+}

@@ -1,0 +1,962 @@
+{
+  "operation": "official-source-local-media-sdk",
+  "status": "PASS",
+  "packages": [
+    {
+      "name": "freetype",
+      "version": "2.15.0",
+      "archive": "freetype-2.15.0.tar.xz",
+      "url": "https://download.savannah.gnu.org/releases/freetype/freetype-2.15.0.tar.xz",
+      "sha256": "93cd47eb719c325107f2d3cf087d06299e944c3b48a40b55537302304dea1dd5",
+      "checksum_source": "https://sourceforge.net/projects/freetype/files/freetype2/2.15.0/",
+      "directory": "freetype-2.15.0",
+      "options": [
+        "-DFT_DISABLE_ZLIB=ON",
+        "-DFT_DISABLE_BZIP2=ON",
+        "-DFT_DISABLE_PNG=ON",
+        "-DFT_DISABLE_HARFBUZZ=ON",
+        "-DFT_DISABLE_BROTLI=ON"
+      ],
+      "archive_bytes": 2716928,
+      "cmake_options": [
+        "-DBUILD_SHARED_LIBS=OFF",
+        "-DBUILD_TESTING=OFF",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\deps\\native-media",
+        "-DCMAKE_PREFIX_PATH=C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\deps\\native-media",
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF",
+        "-DFETCHCONTENT_FULLY_DISCONNECTED=ON",
+        "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL",
+        "-DFT_DISABLE_ZLIB=ON",
+        "-DFT_DISABLE_BZIP2=ON",
+        "-DFT_DISABLE_PNG=ON",
+        "-DFT_DISABLE_HARFBUZZ=ON",
+        "-DFT_DISABLE_BROTLI=ON"
+      ],
+      "source_file_count": 886,
+      "source_tree_sha256": "ba4921ca37107551bf5bc5297ad14ca747da1fd636b18412954269b63d1b7b01"
+    },
+    {
+      "name": "ogg",
+      "version": "1.3.6",
+      "archive": "libogg-1.3.6.tar.xz",
+      "url": "https://downloads.xiph.org/releases/ogg/libogg-1.3.6.tar.xz",
+      "sha256": "5c8253428e181840cd20d41f3ca16557a9cc04bad4a3d04cce84808677fa1061",
+      "checksum_source": "https://xiph.org/downloads/",
+      "directory": "libogg-1.3.6",
+      "options": [],
+      "archive_bytes": 439952,
+      "cmake_options": [
+        "-DBUILD_SHARED_LIBS=OFF",
+        "-DBUILD_TESTING=OFF",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\deps\\native-media",
+        "-DCMAKE_PREFIX_PATH=C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\deps\\native-media",
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF",
+        "-DFETCHCONTENT_FULLY_DISCONNECTED=ON",
+        "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL"
+      ],
+      "source_file_count": 135,
+      "source_tree_sha256": "31ff3181b9fc05cb8f45b58435eb42907ea40d0cd5da74f12ee7559ca339fd4c"
+    },
+    {
+      "name": "vorbis",
+      "version": "1.3.7",
+      "archive": "libvorbis-1.3.7.tar.xz",
+      "url": "https://downloads.xiph.org/releases/vorbis/libvorbis-1.3.7.tar.xz",
+      "sha256": "b33cc4934322bcbf6efcbacf49e3ca01aadbea4114ec9589d1b1e9d20f72954b",
+      "checksum_source": "https://xiph.org/downloads/",
+      "directory": "libvorbis-1.3.7",
+      "options": [
+        "-DBUILD_TESTING=OFF"
+      ],
+      "archive_bytes": 1203792,
+      "cmake_options": [
+        "-DBUILD_SHARED_LIBS=OFF",
+        "-DBUILD_TESTING=OFF",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DCMAKE_INSTALL_PREFIX=C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\deps\\native-media",
+        "-DCMAKE_PREFIX_PATH=C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\deps\\native-media",
+        "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+        "-DCMAKE_FIND_USE_PACKAGE_REGISTRY=OFF",
+        "-DFETCHCONTENT_FULLY_DISCONNECTED=ON",
+        "-DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreadedDLL",
+        "-DBUILD_TESTING=OFF"
+      ],
+      "source_file_count": 428,
+      "source_tree_sha256": "7c623f6ac38be060291761b28eea038700a9475f26eda1c3e9f7628d8b57dea9"
+    }
+  ],
+  "prefix": "build/deps/native-media",
+  "files": [
+    {
+      "path": "build/deps/native-media/include/freetype2/dlg/dlg.h",
+      "sha256": "d4b983841fd8810f4e26912a8122956d07d48ce43f07b40e7f3042be5f706925",
+      "bytes": 12449
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/dlg/output.h",
+      "sha256": "d659aad12eea8c26d317ad2601bb9d2ceabff1f7dcb0fbf8ab3038f6d1c457d1",
+      "bytes": 7229
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/ftconfig.h",
+      "sha256": "b2937487ea8246da86c5eea95c69ac40834bb0b3ab1b502acd0d1ada6b064def",
+      "bytes": 1665
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/ftheader.h",
+      "sha256": "0b099b85a787ef6a20774dad096bb74e6cbb89e244f198baad8b135709123d0b",
+      "bytes": 23919
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/ftmodule.h",
+      "sha256": "f695657e4a8b02427296414d144d9dafc5b073538718d5e0c4290ba9d318c579",
+      "bytes": 1497
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/ftoption.h",
+      "sha256": "89dc8ce93cd46bf53781c966e6b10f5ec513f1dfd00a426e6147624ebaacdef5",
+      "bytes": 44139
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/ftstdlib.h",
+      "sha256": "de81744697b6f9f7fe3a49ca320f2a7ea8f2ae905bb96ff161b5b2d1eed25fe2",
+      "bytes": 4576
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/integer-types.h",
+      "sha256": "0aeaf74f638d1584ccae37f580076a7ac24ef89049749839c3c90dcdda148d5b",
+      "bytes": 7450
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/mac-support.h",
+      "sha256": "be37d3886a1a1ab1bcf894259d6a50d90b5fc71e3284b12e818c57710a9c945d",
+      "bytes": 1645
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/config/public-macros.h",
+      "sha256": "7557630cb407f98fbc003300c507ae444b0f7449cab99d80c13f5c343710d06e",
+      "bytes": 4240
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/freetype.h",
+      "sha256": "7a343a0240598631b53adea94284d376979f42cf215e6ad7cfe932d96762497b",
+      "bytes": 177194
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftadvanc.h",
+      "sha256": "6f0c22af9c16eb0459736db8c60e27269db6b774addd196a845e417c851d3813",
+      "bytes": 5470
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftbbox.h",
+      "sha256": "4389ec87328ba568415fe4919b9399ff38fa766956b0940e494fbccd1427a6da",
+      "bytes": 2638
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftbdf.h",
+      "sha256": "d394c0d427d75efbb04ee06d55e2793bfab969d6ca94dba9f743707b109adbcd",
+      "bytes": 5654
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftbitmap.h",
+      "sha256": "92b63e93b151d96fd985cfaba4ec60e47204bbc922f3bee82412ae2fc426fb03",
+      "bytes": 9051
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftbzip2.h",
+      "sha256": "be324bc70ad4b355d7a2ae78a540019db17146a140cdcc59676079afc174ca38",
+      "bytes": 2786
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftcache.h",
+      "sha256": "ba20c0391cc39373474ce3d57adb65559e3954d413d98c2100d77d40bf82bf07",
+      "bytes": 34179
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftchapters.h",
+      "sha256": "c7d1c2ca13903fb6d0b3b37850344d805280856fb87c7597087ce2352573f752",
+      "bytes": 2933
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftcid.h",
+      "sha256": "e71180811abd5f87bb9c5eb058904b32c037ed29f8666e8a9b3561936b5b6ecc",
+      "bytes": 4022
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftcolor.h",
+      "sha256": "217af290dc25ceba7b77ed62bf7710e17d6396d6a20438072ab3a0685f4b2137",
+      "bytes": 50791
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftdriver.h",
+      "sha256": "459e4688340c8fc66545768e360b7fa126a4939c8de33d729181ca23572cf695",
+      "bytes": 50570
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/fterrdef.h",
+      "sha256": "376e05cbda2fe270031ef19722c6f9d76b9c4c444ff9e0e9c97cf9e3a016111f",
+      "bytes": 12559
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/fterrors.h",
+      "sha256": "a7547172143ce6309f89492b47ab0e6e69c7fb7f7caa8c81635811fd42673050",
+      "bytes": 9301
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftfntfmt.h",
+      "sha256": "54f23d9c103f0c485e837ea1a9db5f0736372b7d781d1adafb8cff6aa950d4d1",
+      "bytes": 2213
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftgasp.h",
+      "sha256": "a1453a8faeba8845c7b35bcdbbfc43afcc51bfaea89470f813e344a5c9fb06af",
+      "bytes": 4138
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftglyph.h",
+      "sha256": "79a94788388fee750f7cb1deac0c2dfe23d6a6232f29eb9bc056ca4d5a74f137",
+      "bytes": 20912
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftgxval.h",
+      "sha256": "06bb3bd9450ac2534f738849df72de6e618313a61d4b4866bc0bdf44ecefdbcf",
+      "bytes": 10625
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftgzip.h",
+      "sha256": "75f54dfef82233d9a9a1f9d4b4560a258b052784aff9859137cc232f468805df",
+      "bytes": 4211
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftimage.h",
+      "sha256": "779afe61188e7b91dca89a3b9665b8db2d70e57b7bf1c2ec322c5a5fcc1c6816",
+      "bytes": 42366
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftincrem.h",
+      "sha256": "073a9dd3b7585989ee68540b3688a1e11bbd3498dd8210809b0869529861df05",
+      "bytes": 10696
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftlcdfil.h",
+      "sha256": "462073b97096be0c7e485d802fee6e6046f1aa36050c14f7771c31b99bab30fa",
+      "bytes": 11257
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftlist.h",
+      "sha256": "fea6f521193148308630725ae5de0ec736c135910704239967c541c8ab3e0cd1",
+      "bytes": 7100
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftlogging.h",
+      "sha256": "3c353c71c09de36f847cdc209f6e7d92dd92304b1d11c1d8d7300d439a24ef88",
+      "bytes": 4130
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftlzw.h",
+      "sha256": "fd8b72704427c0d8d4c6f2efdd30fdbfc55a7d1246a3c627dcb82661b324aae3",
+      "bytes": 2768
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftmac.h",
+      "sha256": "4203c770c57d3f09ea16e1dd6535da3a1bda62673cb9bedaacab90ac4b736bad",
+      "bytes": 7771
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftmm.h",
+      "sha256": "5d134d486b89d9a3dbaa54e581168be3868d04951c1ec3260542d852a14dddb1",
+      "bytes": 27783
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftmodapi.h",
+      "sha256": "1e526ff1f741cce96bf8d5e935bd9f1ba8db4afdd5c76f387ac54964b25d3fde",
+      "bytes": 22544
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftmoderr.h",
+      "sha256": "27a2a1aabbc9f2a99d77c65292272151f12626d10a37ad29571e1847984c4ad6",
+      "bytes": 6724
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftotval.h",
+      "sha256": "da5bfb9e509556bfc16ce899a161ea26555cc3ff019cdcc67e6b3af3723f6361",
+      "bytes": 5346
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftoutln.h",
+      "sha256": "db0585ea338debdb9b721adc5f6d138ec7f88df30ff44cf6fb3cac79a70982f8",
+      "bytes": 17403
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftparams.h",
+      "sha256": "4db8f53c9b62aa5adfd2f89877a96c522198e9a780402be7aafba9fdace5f485",
+      "bytes": 5847
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftpfr.h",
+      "sha256": "dd40f7a041f345c8ae12664f52d2def53ec5dd2a49e65aba2b95bdef5b63a1d0",
+      "bytes": 4908
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftrender.h",
+      "sha256": "9579d3d9ff09e98ee09a49c8588d97a910c8fe698fe465a3f33965921fea77ec",
+      "bytes": 6625
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftsizes.h",
+      "sha256": "2afecd7a4dabbf89e9f76d373829b4e8e70a5c593ecccb7646e190c47a2b398e",
+      "bytes": 4288
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftsnames.h",
+      "sha256": "621faad855dfd4cc5e9a90b5a4554b706767653c5c2d41acd1b03d2e118b52dd",
+      "bytes": 7730
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftstroke.h",
+      "sha256": "ba4ed8f81ac66e9e6a2cdf772b69da02a0085fc5576cd233e4da661c6fb1967c",
+      "bytes": 21773
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftsynth.h",
+      "sha256": "f75aa75f8cb754c37db6ac16e1c9648997e06d280d8b28490d502838e6c649ca",
+      "bytes": 4483
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftsystem.h",
+      "sha256": "9a41ef1877a9f5f7e5debbf0d701bd393e53e2ae36fb6c34faebf26b8cbc43f2",
+      "bytes": 8502
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/fttrigon.h",
+      "sha256": "924526c9b662973f64eb5b4f5034ae897684cb08b9cca7262aba097e49471ade",
+      "bytes": 7411
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/fttypes.h",
+      "sha256": "dcaa79e39c7495d8f622555bd64b2ea87d6ddcfb8c9bbe9f8c33befcdda4eb9b",
+      "bytes": 14714
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ftwinfnt.h",
+      "sha256": "a2d77ef372f2c874d61179687b71a2d034e1d51430266c46ec0854593d02b779",
+      "bytes": 7949
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/otsvg.h",
+      "sha256": "3f7b2484cf4980c5dfb568e8f57b687d3add3b7cc499054f46164ca6d2690e53",
+      "bytes": 10457
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/t1tables.h",
+      "sha256": "3bf63affe3fd88daa017ee7fcd894e37e961be9abdcd168b39a328ad3e6db3ba",
+      "bytes": 21529
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/ttnameid.h",
+      "sha256": "c7f9f5b9d7f90bb77f0b5e5fb643039f47ded753130b9c4521d6070fe7dcd7ce",
+      "bytes": 58844
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/tttables.h",
+      "sha256": "7fd1ce25de661e802dbff67ad5e9927bcdef1730527a5d453120586f13698280",
+      "bytes": 25422
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/freetype/tttags.h",
+      "sha256": "7b177ab5c05aa1ed60e23649745242886e2587f8c1a34f31dae5ea00ef4835e8",
+      "bytes": 5781
+    },
+    {
+      "path": "build/deps/native-media/include/freetype2/ft2build.h",
+      "sha256": "1e8028d455a85db4dd19b2019a721d56409f802c2223e78ab5199c22f8b33397",
+      "bytes": 990
+    },
+    {
+      "path": "build/deps/native-media/include/ogg/config_types.h",
+      "sha256": "2200f7d8664cdf27cd7d007f22fc70d1168e842f2af4d541b2ddaf7659375e95",
+      "bytes": 564
+    },
+    {
+      "path": "build/deps/native-media/include/ogg/ogg.h",
+      "sha256": "aad86109c1fdb377738675a63e0b19859e06ada25ae5c59c290ca7263d1dc4ca",
+      "bytes": 8373
+    },
+    {
+      "path": "build/deps/native-media/include/ogg/os_types.h",
+      "sha256": "3bbab6a5d31e3c25c6080252b042afb87028e3ffff100e3e0285648b250b70f4",
+      "bytes": 4781
+    },
+    {
+      "path": "build/deps/native-media/include/vorbis/codec.h",
+      "sha256": "1d031e3cbae7defe966426e33802450a56388a1323eec1ec629e6d4095c676c5",
+      "bytes": 8387
+    },
+    {
+      "path": "build/deps/native-media/include/vorbis/vorbisenc.h",
+      "sha256": "d2aba0527252dc265ffc40bc9b1955d5ac0dc8d5e16d9376fa366c05fa27dc7f",
+      "bytes": 16990
+    },
+    {
+      "path": "build/deps/native-media/include/vorbis/vorbisfile.h",
+      "sha256": "7d98264e57b0190ef0a2701a0bea5f982e82fc1bedd93cd9408a2fff7790f803",
+      "bytes": 7990
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/freetype/freetype-config-release.cmake",
+      "sha256": "9a22d28bfaa42f2162cffcd3de565df05870e526d90f1ddf7b3df7beb395f112",
+      "bytes": 835
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/freetype/freetype-config-version.cmake",
+      "sha256": "e308c9c8df3775dc5ce6812b58d5c29843b0b77f6c4032e736551af004e907de",
+      "bytes": 2830
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/freetype/freetype-config.cmake",
+      "sha256": "9db9c8014c593c93e0fb3689e517d3a94df9b037d8245546605e626d3bf9e768",
+      "bytes": 4424
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Ogg/OggConfig.cmake",
+      "sha256": "239742193eff9debec89f4db6cf62ab2beb6c216cd7976662f3558118bd79ab3",
+      "bytes": 1342
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Ogg/OggConfigVersion.cmake",
+      "sha256": "59e69599961d1dd8a4b8b62af1007f9b8b16d9c6c5863b4e8cfdad13bef15c30",
+      "bytes": 2827
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Ogg/OggTargets-release.cmake",
+      "sha256": "a7beb4eed94342d577b59473b90aa8bc15ace511530870343b75d005cfe6c149",
+      "bytes": 822
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Ogg/OggTargets.cmake",
+      "sha256": "d1eb38302a15195a9cd861a1803a84f2001ecc75eef41043e194b41c5662ee56",
+      "bytes": 4194
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Vorbis/VorbisConfig.cmake",
+      "sha256": "ff8f60597ecb362cdac26e9b590811ffa468fd594b1e30a585673877493b46c0",
+      "bytes": 1303
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Vorbis/VorbisConfigVersion.cmake",
+      "sha256": "02dce07a4e1c37145c3f835ddef8d22ca9a0d84fe0cadb67df8d46e8f29616fb",
+      "bytes": 2827
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Vorbis/VorbisTargets-release.cmake",
+      "sha256": "34f45dbfa16a02027ced9ffb8511d66718b6cf8230516040bfeefbb5eecdfe72",
+      "bytes": 1849
+    },
+    {
+      "path": "build/deps/native-media/lib/cmake/Vorbis/VorbisTargets.cmake",
+      "sha256": "031431c8b67e86b46ae9b512e220c4e998d5b26c963fa1fb4241f576e31b8c07",
+      "bytes": 4848
+    },
+    {
+      "path": "build/deps/native-media/lib/freetype.lib",
+      "sha256": "226f702d4c711b6c0ecd1e83b2a85dc36f2830b5f2a20aaff1ed182b03117d3b",
+      "bytes": 2279136
+    },
+    {
+      "path": "build/deps/native-media/lib/ogg.lib",
+      "sha256": "bbad159944e7f19c50e9ac7051a40f766154d98e1082ee2fec1f93db55a06fe7",
+      "bytes": 50364
+    },
+    {
+      "path": "build/deps/native-media/lib/pkgconfig/freetype2.pc",
+      "sha256": "1ead3cbea255b17cef4d3a94c48d4b2649a1639e5bc8c477958738b4e51211c6",
+      "bytes": 407
+    },
+    {
+      "path": "build/deps/native-media/lib/pkgconfig/ogg.pc",
+      "sha256": "e31dfff13272b8264bafe5fae3df86073c18974ff2c55029227598b10311c305",
+      "bytes": 575
+    },
+    {
+      "path": "build/deps/native-media/lib/pkgconfig/vorbis.pc",
+      "sha256": "d1e0f9f11c606beb193c655181446a420fe8439ee5c105524d2b50818dd3bd52",
+      "bytes": 615
+    },
+    {
+      "path": "build/deps/native-media/lib/pkgconfig/vorbisenc.pc",
+      "sha256": "00c6447a3523c82f0c1b2827db75f77eb73eb11972f2907a99f34b0e7f74afd2",
+      "bytes": 678
+    },
+    {
+      "path": "build/deps/native-media/lib/pkgconfig/vorbisfile.pc",
+      "sha256": "df5a3f72b767452404db54843730990c61848d46d9109c569e5596d9b99458f2",
+      "bytes": 704
+    },
+    {
+      "path": "build/deps/native-media/lib/vorbis.lib",
+      "sha256": "1c75dbf0b109dafee204fcbd5de43f08f5f2320ff9a740a95a900c4fb16d56c8",
+      "bytes": 1069268
+    },
+    {
+      "path": "build/deps/native-media/lib/vorbisenc.lib",
+      "sha256": "52a4e0ca43b9b91d1d2bc422dcb4da6646120c319d1f881ac29fb7d3c5395024",
+      "bytes": 700090
+    },
+    {
+      "path": "build/deps/native-media/lib/vorbisfile.lib",
+      "sha256": "50d40cc732d5abe741bc5ef60cb81d2614ec1acd33059ecc10ff0054834ca758",
+      "bytes": 67388
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/fish_xiph_org.png",
+      "sha256": "d9d43ccd360e8a2b5785d0b21061141cbca284c7fc378202fc139c47670ce0d9",
+      "bytes": 2536
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/framing.html",
+      "sha256": "f1f021228e4d5acc28c9029f254278402493fefb50e3f936ddd7dda8ee632d96",
+      "bytes": 14507
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/index.html",
+      "sha256": "2321a15771c7ce3714d3599e0e0c9363f4cabc4c2c9d5663e46008cbb4397ac7",
+      "bytes": 1839
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/bitpacking.html",
+      "sha256": "7c9e448dd207d11db87e7ad65e5fa90fe3ac7e0637f4626ded6025399799e015",
+      "bytes": 3388
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/datastructures.html",
+      "sha256": "67273252ade0ea8279f0424cdbcd2ba246590ac1870bf64a544bffd866c4c50d",
+      "bytes": 1722
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/decoding.html",
+      "sha256": "b5652081479c964f89675d064b1859c75222b6471d53b5167a79435b5ce8cc68",
+      "bytes": 4016
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/encoding.html",
+      "sha256": "af7285c90711fec185c32a0c421a333a7ab1da4696e182227d01a27de61578d3",
+      "bytes": 2889
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/general.html",
+      "sha256": "a129ecd97f54a16e5e71c7c1c2e7f2c21b0379b181c962e43e1aa5ecff12f8df",
+      "bytes": 3678
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/index.html",
+      "sha256": "67ea2c0694b5b1843710e106400aab079be04a3cde9f72a99e35ce07aa4ffb3b",
+      "bytes": 1063
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/Makefile.in",
+      "sha256": "0b04359a9216e4465f6837ebb02fd9763323925ac307eaf7f82456de2db46435",
+      "bytes": 16788
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_iovec_t.html",
+      "sha256": "57d6d6e76e8ea17f73ac587eaa5bacef6887619374667f36bd3a9da315c1f6b8",
+      "bytes": 1395
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_packet.html",
+      "sha256": "7e751b37cd7bcbf8325a60fa0cd5391278ad7e1324c131034ecc3829ddc293d2",
+      "bytes": 2259
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_packet_clear.html",
+      "sha256": "eb8c2521165ab2c752180fc9463ecc9c3302bee2ced1b2caa5be62613a7463c2",
+      "bytes": 1431
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page.html",
+      "sha256": "a052b6f0bd3b717918a8180b2181ca036e48165954f59489cce8f37318fd96ce",
+      "bytes": 2219
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_bos.html",
+      "sha256": "349adf43f70c91c8ee0fc90b3932132bbf11b0a51e9d2579584fcf5f6429b90e",
+      "bytes": 1383
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_checksum_set.html",
+      "sha256": "5f48d96a724216380667abacef7860e829ef4e8d5418906e92b8719b0e2cfeba",
+      "bytes": 1218
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_continued.html",
+      "sha256": "0bf4432cdbdd656293c268c1e7ca71dab5f5c8fb3a2d7c713d24989bb31037bc",
+      "bytes": 1415
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_eos.html",
+      "sha256": "6feba15468adc5392a089f7bdbe6122d81d4167541d4a22f52e8477bd98a0df3",
+      "bytes": 1380
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_granulepos.html",
+      "sha256": "29ec8668e8eb6337a11c482e793c4c56bc96f56644346c5843eb1dc54ddbcd56",
+      "bytes": 1567
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_packets.html",
+      "sha256": "7f02f5fe4e89f8300caf1fc29dbafe216d899888c1800be9baa84a1818d99c06",
+      "bytes": 1851
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_pageno.html",
+      "sha256": "88df27e63eed897cbb1b2cf7d252337c69a8d886a806c69fd515331654f450b3",
+      "bytes": 1345
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_serialno.html",
+      "sha256": "56232ac33406c7c594309bf81496f4a89536702a2af654b6f9328c0904c25df3",
+      "bytes": 1398
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_page_version.html",
+      "sha256": "8bdc3052493756c6b7d0519eca9f63683ba00ff1d4f35f99c4888d2b07d7c7d6",
+      "bytes": 1519
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_check.html",
+      "sha256": "58e1c89765a20675f02018be1dbc3ac6b955f8804062e1b6a9311becdb8ef3eb",
+      "bytes": 2311
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_clear.html",
+      "sha256": "afe54010df2c7c85f977437ad2db8c92e22cef964c9278f75fdaced919fad006",
+      "bytes": 1470
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_destroy.html",
+      "sha256": "44ef6c97ad17216e8c316d23bf366c7e4e6035e79054831f08de9fb0ea71a483",
+      "bytes": 1726
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_eos.html",
+      "sha256": "cc9020248ef11120a5b48d609108677b56722794b313266879a710a8adeb1816",
+      "bytes": 1405
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_flush.html",
+      "sha256": "87a91fea47a540bf59c3973544b72f1f7a8630033c7dc63db9f81ee99fedd13a",
+      "bytes": 2631
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_flush_fill.html",
+      "sha256": "4c674bbe73a332c93b43d18741a355b3a9cb62b177aa75cf1856353ac9618413",
+      "bytes": 2785
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_init.html",
+      "sha256": "93abb93ffbce5db3c8456e0bf623ce4036a397d9fd979e94b2aadfa5d43822b7",
+      "bytes": 1627
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_iovecin.html",
+      "sha256": "0118689b95c436ab194f60839d384db7aaa66b91dc1874825a7c8383cce6d92b",
+      "bytes": 2421
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_packetin.html",
+      "sha256": "92d7bfe0439dc467c0d49050380cf414ad55356a5484fad600468d3c4b93fa5c",
+      "bytes": 1887
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_packetout.html",
+      "sha256": "cc1f98bb3e37316b64b5521636082bf4aadee51e4c71a85f65e9b30cd4caa42c",
+      "bytes": 2954
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_packetpeek.html",
+      "sha256": "0e7e941d56152c408e85ea8888abb4419f7ba3a95b03bfa87f3038793dfc0418",
+      "bytes": 2313
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_pagein.html",
+      "sha256": "1f0d808aa6884ef5e444e1827e9c42e4a1d67b95bd3500b7dd8182c262c96e25",
+      "bytes": 2184
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_pageout.html",
+      "sha256": "179b77441063c3f44f910529fac2445b72adea2f287466ef260d554b9a92da3b",
+      "bytes": 2758
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_pageout_fill.html",
+      "sha256": "7fc9195bd9a1ea0efe74ce28aedc571518fa708f8900b994ebe6cfe429ebf7da",
+      "bytes": 2986
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_reset.html",
+      "sha256": "1de45eede412c812d5a7767303993d91e21d9102ab463ffa2dbd884f487b58b2",
+      "bytes": 1385
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_reset_serialno.html",
+      "sha256": "bcd3b24bc68ba88f366ab4b043fe1b04e397c82eb9f2be58dff7ed4c486bcf44",
+      "bytes": 1604
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_stream_state.html",
+      "sha256": "9dbd1fa1aeb397e6bc5869a67d3f87b8f1a00a57b5435b243c4ad95278fac8e1",
+      "bytes": 4367
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_buffer.html",
+      "sha256": "bde5f36f4c7111a489845760c1b455d83f32f64861dbd9b4cbd373ab09d80f57",
+      "bytes": 2074
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_check.html",
+      "sha256": "8ca50f091b0cf6bd1493bfa8d69d1bb8997095b9ce611ac3f5295dd475f3c9bb",
+      "bytes": 2271
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_clear.html",
+      "sha256": "f3f8820e5ddeea0a3b7eb6b2222e398481215c743406929060270acdaa22b245",
+      "bytes": 1724
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_destroy.html",
+      "sha256": "e36b596a151f32b72004b81bd68462606be67cdba56b8605002ca90e0ff4754f",
+      "bytes": 1738
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_init.html",
+      "sha256": "d554cc10e93e65c2ecf9a6678d909bdddb2470fbec41e4d48f61831a271dfc03",
+      "bytes": 1626
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_pageout.html",
+      "sha256": "5392e22e49276daab939dbd8d2fd74a073b6eb4f91010fe140bbe3d6b062aecb",
+      "bytes": 2532
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_pageseek.html",
+      "sha256": "daf47db679385719be084019c75431693305e7a79d3e9dc624d0de9fcb61de86",
+      "bytes": 2006
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_reset.html",
+      "sha256": "93060e040463523daa7ff8728e6d68dd2b89ea0a71fbc6360430d4d78778e659",
+      "bytes": 1499
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_state.html",
+      "sha256": "cf943e825fa77667f2060b252e83de2d2c64d2645a8e220dfdf4dbc455a5a559",
+      "bytes": 2245
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/ogg_sync_wrote.html",
+      "sha256": "e69b2253100d01d7072296b1c741991182b676b09ce29c98c7831cad4e9dfe80",
+      "bytes": 2026
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_adv.html",
+      "sha256": "ce315810385f298c8647e7ab7a796cdb6c78fcb9cb1c1ca492f94b7c610d955d",
+      "bytes": 1371
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_adv1.html",
+      "sha256": "3c6c599e490d06299acde5891257bf9111bb10eb06e9d25365839e37ef97dc69",
+      "bytes": 1287
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_bits.html",
+      "sha256": "91ab4b3db752fd2ecfb582b67c6fa0a450b207828d7a417c0153ec2b10c1daa0",
+      "bytes": 1436
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_buffer.html",
+      "sha256": "2229acfc89cae73da7558ab72ef3651385e963c37ae20b24f92716501db98695",
+      "bytes": 1504
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_bytes.html",
+      "sha256": "19c04707cce8e4a2429ae0e767a0d437d9ccb338546a8311eae0a513a5d8f539",
+      "bytes": 1732
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_get_buffer.html",
+      "sha256": "3c15c4ebd62ed9d18871224514da0eb984d1e632ab14a1425b5686232a9c2fe5",
+      "bytes": 1426
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_look.html",
+      "sha256": "b948b934edc7452ce437b46bd243a46f708cb170b32aeac9a05f7dc595343441",
+      "bytes": 1636
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_look1.html",
+      "sha256": "a46fb06250caf1b39a62c0da56547ed7a723f3022386afcaf76304d87314ac34",
+      "bytes": 1449
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_read.html",
+      "sha256": "7324b265de44c5b36c9c7c8d8f8ccd83efa0640860290745ab3eea8f2f8ab425",
+      "bytes": 1564
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_read1.html",
+      "sha256": "4f221908fc617ce6e2b0ce77b0739c7c493c1b077c32be96eb578cb1e99c2959",
+      "bytes": 1541
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_readinit.html",
+      "sha256": "c509d81b536686347bfb3c95ec6bce847b894e3b83d509eca58dd8fe7dae8e2a",
+      "bytes": 1701
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_reset.html",
+      "sha256": "4a8b0a79aac75278c83c6c14cd5df3bc49db9d3b12dc6a6c00743c46a3e34a4f",
+      "bytes": 1375
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_write.html",
+      "sha256": "52721baf00383d675bbf2694ab7e7bc36d38ab94d4cca795c5d82a0e58f74474",
+      "bytes": 1663
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_writealign.html",
+      "sha256": "edca62a3ca2b162179ed63457327805282c9f1d2e35664d4379d230014f80084",
+      "bytes": 1504
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_writecheck.html",
+      "sha256": "52c04624728bf46ef756eef37a02cbeff8d72592e1d91fdda9d41b317b0c7ba9",
+      "bytes": 2595
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_writeclear.html",
+      "sha256": "2011e860ce9849071b2d96ca7a25d731cd46602c909120b1d80d75421042443e",
+      "bytes": 1392
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_writecopy.html",
+      "sha256": "fe316c7e2da8e7d27d6e0616c839f6c8772c46eacf285c3ae8307a39a6217b5f",
+      "bytes": 1699
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_writeinit.html",
+      "sha256": "23ef3b1261d55dc7b748849fe0f21de143fadd952b216fc29df04553891e52a3",
+      "bytes": 1647
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/oggpack_writetrunc.html",
+      "sha256": "2db98c5703d3340017b2b64b4542bc0cba118a51d00af0c4a285301b3221f884",
+      "bytes": 1539
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/overview.html",
+      "sha256": "5b25881844008eb39019c11559e94265868bf7d9ef78072fcefc33c679b28a38",
+      "bytes": 1135
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/reference.html",
+      "sha256": "965cdd80325d4422da070e81937390d991c607fe6b5bfc3341d7685cbcdf187f",
+      "bytes": 4209
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/libogg/style.css",
+      "sha256": "dce5d3639396566c572515801a5e5599a894bdfe875796c26d44000187840e7d",
+      "bytes": 279
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/multiplex1.png",
+      "sha256": "758b4c95cf431c5b5f5803c56a2eb5c6f8311656ac253e6e7546a1d3515fa177",
+      "bytes": 54409
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/ogg-multiplex.html",
+      "sha256": "4e0b75ca7d9361246fb873852b757de605dcbc80373f928ce877aabfc8968b57",
+      "bytes": 18925
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/oggstream.html",
+      "sha256": "3065106753f215ed765f0155145417b2c33ddfe049207843f63d01c5e5bba239",
+      "bytes": 23737
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/packets.png",
+      "sha256": "47bb12b97020c711cfce816f409a2305ca6b8df3141b8f321262f9885e04d49c",
+      "bytes": 19776
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/pages.png",
+      "sha256": "6d39711e662b28c990516b88fa23c0f71791881f421dcd158e15ee9280a4cbfd",
+      "bytes": 43547
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/rfc3533.txt",
+      "sha256": "f170265303dd32d026611f7e080338d15d5456643d1d4c22f2c32046860c5476",
+      "bytes": 32045
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/rfc5334.txt",
+      "sha256": "de42494701e2acb01585d3c2668c7057238a573d4d0dbc482f8a3a853079950d",
+      "bytes": 27018
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/skeleton.html",
+      "sha256": "587c2d528014a7acf2b7e0003e70194872deb562a63918d1edf8df8e9e219a71",
+      "bytes": 15166
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/stream.png",
+      "sha256": "7aef2906fe37b86abe53a3aa668be1881d73ef3b8efc7762a9e354e5edf6a63a",
+      "bytes": 2254
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/vorbisword2.png",
+      "sha256": "f97e4fdc963779b4bbcf1c86ae9cf586d69010f11aa0d142ee0f4b6955d1635e",
+      "bytes": 1394
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/white-ogg.png",
+      "sha256": "a8cd12b9700b2e503261cef7529e3c7f3b27b433b90f3b5f14636aba602ab2a8",
+      "bytes": 2652
+    },
+    {
+      "path": "build/deps/native-media/share/doc/ogg/html/white-xifish.png",
+      "sha256": "393224c5730de09be8a1c9a8a0a6d53add3d77caebc8603e8e033eb527b15a35",
+      "bytes": 965
+    },
+    {
+      "path": "build/deps/native-media/share/licenses/freetype/FTL.TXT",
+      "sha256": "5a5ee54c5001bbad1cdc1a57cc3dd4c42199b2da09d39c7ee41fab002d02967f",
+      "bytes": 6743
+    },
+    {
+      "path": "build/deps/native-media/share/licenses/freetype/LICENSE.TXT",
+      "sha256": "bd36c8b474855fa294c2ec5c184544478ef3720aad37d65a6296a4f264fd2d3b",
+      "bytes": 2149
+    },
+    {
+      "path": "build/deps/native-media/share/licenses/ogg/COPYING",
+      "sha256": "d2ab5758336489da61c12cc5bb757da5339c4ae9001f9bb0562b4370249af814",
+      "bytes": 1466
+    },
+    {
+      "path": "build/deps/native-media/share/licenses/vorbis/COPYING",
+      "sha256": "ec1815db59fcd302846df949d7424876cb2e2dc5ed1606c5fb0b36787b1cf43a",
+      "bytes": 1470
+    }
+  ],
+  "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "cmake_sha256": "87fafbe6507d4b23c38ccaf72a1859219d070acb57ef0160332df10945d2dfac",
+  "ninja_sha256": "9546466f0feca6d62d7d4ea9b7fbc381f8e302cb7f02f4ce327a39d8577bb293",
+  "producer_sha256": "84d770c80f77f10e79663a30ad063e2a3524227febe1049a4ba20d635d0a66d0",
+  "global_install": false,
+  "build_autofetch": false,
+  "game_assets_used": false
+}

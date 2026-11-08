@@ -1,0 +1,660 @@
+{
+  "verified_boundary_ids": [
+    "M:kairo.unity.io.RecordStore.AddRecord(System.Byte[])",
+    "M:kairo.unity.io.RecordStore.AddRecord(System.Int32)",
+    "M:kairo.unity.io.RecordStore.CloseRecordStore",
+    "M:kairo.unity.io.RecordStore.CreateRecordStore",
+    "M:kairo.unity.io.RecordStore.GetNumRecords",
+    "M:kairo.unity.io.RecordStore.GetRecordSize(System.Int32)",
+    "M:kairo.unity.io.RecordStore.OpenRecordStore(System.Int32)",
+    "M:kairo.unity.io.RecordStore.PreferencesToFile",
+    "M:kairo.unity.io.RecordStore.ReadRecord(System.Int32)",
+    "M:kairo.unity.io.RecordStore.ReadRecord(System.Int32,System.Int32)",
+    "M:kairo.unity.io.RecordStore.RemoveAllRecord",
+    "M:kairo.unity.io.RecordStore.RemoveLastRecord",
+    "M:kairo.unity.io.RecordStore.SetResourceFiles(System.String[])",
+    "M:kairo.unity.io.RecordStore.Setup",
+    "M:kairo.unity.io.RecordStore.WriteRecord(System.Int32,System.Byte[])",
+    "M:kairo.unity.io.RecordStore.WriteRecord(System.Int32,System.Int32,System.Byte[])",
+    "M:kairo.unity.io.Storage.Exists(System.Int32,System.String)",
+    "M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)",
+    "M:kairo.unity.io.Storage.Setup(System.Int32,System.Int32,System.String)"
+  ],
+  "operation": "original-source-storage-recordstore-differential",
+  "status": "PASS",
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "invalid-media",
+      "expected": "invalid-media=null",
+      "actual": "invalid-media=null",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-alias",
+      "expected": "heap-alias=040203",
+      "actual": "heap-alias=040203",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-order",
+      "expected": "heap-order=b.png|a",
+      "actual": "heap-order=b.png|a",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-size",
+      "expected": "heap-size=3",
+      "actual": "heap-size=3",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-missing",
+      "expected": "heap-missing=null:False:-1",
+      "actual": "heap-missing=null:False:-1",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-null-value",
+      "expected": "heap-null-value=True:null",
+      "actual": "heap-null-value=True:null",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-null-size",
+      "expected": "heap-null-size=!System.NullReferenceException",
+      "actual": "heap-null-size=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "heap-delete",
+      "expected": "heap-delete=a|nil",
+      "actual": "heap-delete=a|nil",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "null-filename",
+      "expected": "null-filename=!System.NullReferenceException",
+      "actual": "null-filename=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "resource",
+      "expected": "resource=090807:True",
+      "actual": "resource=090807:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "resource-missing",
+      "expected": "resource-missing=null:False",
+      "actual": "resource-missing=null:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "resource-readonly",
+      "expected": "resource-readonly=090807",
+      "actual": "resource-readonly=090807",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-roundtrip",
+      "expected": "file-roundtrip=00ff010007:5",
+      "actual": "file-roundtrip=00ff010007:5",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-null",
+      "expected": "file-null=True:",
+      "actual": "file-null=True:",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-missing",
+      "expected": "file-missing=null:-1",
+      "actual": "file-missing=null:-1",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-delete",
+      "expected": "file-delete=False",
+      "actual": "file-delete=False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "setup",
+      "expected": "setup=True",
+      "actual": "setup=True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "add-ignore-size",
+      "expected": "add-ignore-size=0:0:",
+      "actual": "add-ignore-size=0:0:",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "write-envelope",
+      "expected": "write-envelope=0107ff017c671e7bff007800",
+      "actual": "write-envelope=0107ff017c671e7bff007800",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "read-record",
+      "expected": "read-record=00017fff:12:1",
+      "actual": "read-record=00017fff:12:1",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "write-jagged",
+      "expected": "write-jagged=True:040302",
+      "actual": "write-jagged=True:040302",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "missing-record",
+      "expected": "missing-record=",
+      "actual": "missing-record=",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "short-record",
+      "expected": "short-record=!System.ArgumentException",
+      "actual": "short-record=!System.ArgumentException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "corrupt-record",
+      "expected": "corrupt-record=!kairo.unity.util.IllegalFileException",
+      "actual": "corrupt-record=!kairo.unity.util.IllegalFileException",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "holes-count",
+      "expected": "holes-count=6",
+      "actual": "holes-count=6",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "remove-last",
+      "expected": "remove-last=2",
+      "actual": "remove-last=2",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "rs10-prefix",
+      "expected": "rs10-prefix=0",
+      "actual": "rs10-prefix=0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "resource-record-store",
+      "expected": "resource-record-store=-1:True:0:0:090807",
+      "actual": "resource-record-store=-1:True:0:0:090807",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "resource-record-write",
+      "expected": "resource-record-write=090807",
+      "actual": "resource-record-write=090807",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "remove-all-source-scope",
+      "expected": "remove-all-source-scope=0:False",
+      "actual": "remove-all-source-scope=0:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "capacity",
+      "expected": "capacity=1048576:0:1048576:33",
+      "actual": "capacity=1048576:0:1048576:33",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "pref-record",
+      "expected": "pref-record=0b0c:1:10",
+      "actual": "pref-record=0b0c:1:10",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "pref-raw-envelope",
+      "expected": "pref-raw-envelope=0107ff01124294e7f40d",
+      "actual": "pref-raw-envelope=0107ff01124294e7f40d",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "pref-remove-last",
+      "expected": "pref-remove-last=0",
+      "actual": "pref-remove-last=0",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-to-prefs-under-four",
+      "expected": "file-to-prefs-under-four=0:True",
+      "actual": "file-to-prefs-under-four=0:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "file-to-prefs-four",
+      "expected": "file-to-prefs-four=4:False:04",
+      "actual": "file-to-prefs-four=4:False:04",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "prefs-to-file-four",
+      "expected": "prefs-to-file-four=0:03",
+      "actual": "prefs-to-file-four=0:03",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "closed-record",
+      "expected": "closed-record=03",
+      "actual": "closed-record=03",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "static-read-write",
+      "expected": "static-read-write=0700ff",
+      "actual": "static-read-write=0700ff",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "add-byte-record",
+      "expected": "add-byte-record=8:0605",
+      "actual": "add-byte-record=8:0605",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "invalid-media",
+      "expected": "invalid-media=null",
+      "actual": "invalid-media=null",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-alias",
+      "expected": "heap-alias=040203",
+      "actual": "heap-alias=040203",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-order",
+      "expected": "heap-order=b.png|a",
+      "actual": "heap-order=b.png|a",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-size",
+      "expected": "heap-size=3",
+      "actual": "heap-size=3",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-missing",
+      "expected": "heap-missing=null:False:-1",
+      "actual": "heap-missing=null:False:-1",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-null-value",
+      "expected": "heap-null-value=True:null",
+      "actual": "heap-null-value=True:null",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-null-size",
+      "expected": "heap-null-size=!System.NullReferenceException",
+      "actual": "heap-null-size=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "heap-delete",
+      "expected": "heap-delete=a|nil",
+      "actual": "heap-delete=a|nil",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "null-filename",
+      "expected": "null-filename=!System.NullReferenceException",
+      "actual": "null-filename=!System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "resource",
+      "expected": "resource=090807:True",
+      "actual": "resource=090807:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "resource-missing",
+      "expected": "resource-missing=null:False",
+      "actual": "resource-missing=null:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "resource-readonly",
+      "expected": "resource-readonly=090807",
+      "actual": "resource-readonly=090807",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-roundtrip",
+      "expected": "file-roundtrip=00ff010007:5",
+      "actual": "file-roundtrip=00ff010007:5",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-null",
+      "expected": "file-null=True:",
+      "actual": "file-null=True:",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-missing",
+      "expected": "file-missing=null:-1",
+      "actual": "file-missing=null:-1",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-delete",
+      "expected": "file-delete=False",
+      "actual": "file-delete=False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "setup",
+      "expected": "setup=True",
+      "actual": "setup=True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "add-ignore-size",
+      "expected": "add-ignore-size=0:0:",
+      "actual": "add-ignore-size=0:0:",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "write-envelope",
+      "expected": "write-envelope=0107ff017c671e7bff007800",
+      "actual": "write-envelope=0107ff017c671e7bff007800",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "read-record",
+      "expected": "read-record=00017fff:12:1",
+      "actual": "read-record=00017fff:12:1",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "write-jagged",
+      "expected": "write-jagged=True:040302",
+      "actual": "write-jagged=True:040302",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "missing-record",
+      "expected": "missing-record=",
+      "actual": "missing-record=",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "short-record",
+      "expected": "short-record=!System.ArgumentException",
+      "actual": "short-record=!System.ArgumentException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "corrupt-record",
+      "expected": "corrupt-record=!kairo.unity.util.IllegalFileException",
+      "actual": "corrupt-record=!kairo.unity.util.IllegalFileException",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "holes-count",
+      "expected": "holes-count=6",
+      "actual": "holes-count=6",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "remove-last",
+      "expected": "remove-last=2",
+      "actual": "remove-last=2",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "rs10-prefix",
+      "expected": "rs10-prefix=0",
+      "actual": "rs10-prefix=0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "resource-record-store",
+      "expected": "resource-record-store=-1:True:0:0:090807",
+      "actual": "resource-record-store=-1:True:0:0:090807",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "resource-record-write",
+      "expected": "resource-record-write=090807",
+      "actual": "resource-record-write=090807",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "remove-all-source-scope",
+      "expected": "remove-all-source-scope=0:False",
+      "actual": "remove-all-source-scope=0:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "capacity",
+      "expected": "capacity=1048576:0:1048576:33",
+      "actual": "capacity=1048576:0:1048576:33",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "pref-record",
+      "expected": "pref-record=0b0c:1:10",
+      "actual": "pref-record=0b0c:1:10",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "pref-raw-envelope",
+      "expected": "pref-raw-envelope=0107ff01124294e7f40d",
+      "actual": "pref-raw-envelope=0107ff01124294e7f40d",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "pref-remove-last",
+      "expected": "pref-remove-last=0",
+      "actual": "pref-remove-last=0",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-to-prefs-under-four",
+      "expected": "file-to-prefs-under-four=0:True",
+      "actual": "file-to-prefs-under-four=0:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "file-to-prefs-four",
+      "expected": "file-to-prefs-four=4:False:04",
+      "actual": "file-to-prefs-four=4:False:04",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "prefs-to-file-four",
+      "expected": "prefs-to-file-four=0:03",
+      "actual": "prefs-to-file-four=0:03",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "closed-record",
+      "expected": "closed-record=03",
+      "actual": "closed-record=03",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "static-read-write",
+      "expected": "static-read-write=0700ff",
+      "actual": "static-read-write=0700ff",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "add-byte-record",
+      "expected": "add-byte-record=8:0605",
+      "actual": "add-byte-record=8:0605",
+      "passed": true
+    }
+  ],
+  "fixture_cases": 80,
+  "passed": 80,
+  "native_platform_policy": {
+    "native_policy_assertions": 53,
+    "UTF16_keys_preserved": true,
+    "unknown_preference_entries_preserved": true,
+    "opaque_save_bytes_preserved": true,
+    "game_boot": false
+  },
+  "resource_readback": {
+    "resources": 21,
+    "resource_bytes": 3275098,
+    "resource_alias_checks": 63,
+    "game_boot": false,
+    "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+    "catalog_sha256": "3fbc6f74b90dbe11515d6519e641e8612cbf1a46d70d6c6d7f07505d46fcc28a",
+    "catalog_receipt_sha256": "f130db0a1797d23b991a0520141c45a00ca99dae868b079458182383aedeb8d3"
+  },
+  "native_executable": {
+    "path": "build/storage-tests/storage-fixtures.exe",
+    "sha256": "e2b084e0676ff6924adf9fb9211ba34b9367914a0988b270682e5100038bc737"
+  },
+  "inputs": {
+    "tests/kairo/storage_fixtures.cpp": "d737d1a02ab35f778194f7472ecb254a1d7600f72cd7d0acfcef20681498099f",
+    "src/kairo/common/storage.cpp": "abcba6e2482267c35be36e6f28b98fdffc765baf4923bd02ab9a1996b79056cf",
+    "src/kairo/common/asset_catalog.cpp": "3edb2d2ff7e3cc5a7c9bc57fb88f08239e3d6d10abf8b985911d5b0c6f563bcf",
+    "src/kairo/common/semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "tests/kairo/StorageOracle.cs": "ad18f6de28ef99c1bd2747d8732aa965ade88f1d715b89067e162198e9f50b47",
+    "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
+    "tools/test_storage.py": "3f983ab85c37c1e11fdda81ef5dd795a5d6ab77d5940b9af9704df775fd1f1fb",
+    "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
+    "src/kairo/common/semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src/kairo/common/asset_catalog.hpp": "b3483df2432f2477815407dda5e7e49968d37fc1b48d4882a601aaf039edea26",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/Storage.cs",
+      "sha256": "e96472ff52deb2f181a9aa904901e900a6d114a2629118f8face59f64d0c1f9f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/RecordStore.cs",
+      "sha256": "96d98e2d8db2c6a0be8ec68bbd6b6b20a315d800df7d5aed5afee9f5fcce8a63"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/RecordStoreListener.cs",
+      "sha256": "9591972ac50aac1ca91b234988e99b0a6702a7f57c33a5ed6060a447a3f92d65"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/CRC64.cs",
+      "sha256": "6ebb806332bfecacc40013049d3096d09ee0385686ac32c79daa2b5489129b31"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Encrypter.cs",
+      "sha256": "9f12074cff754c03ffd104853818ca86f17c6f08bb355723cadeeabcf46adb07"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/EncodeUtil.cs",
+      "sha256": "670c3634579a1fca0697f4348f508c89f46f8a12da0d5ef92c363a72e43fa4bd"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/IllegalFileException.cs",
+      "sha256": "d68f828613db2d7e07e810bc34002023c48dc26b3ab7978f3b1b0f4fe465a6ed"
+    }
+  ],
+  "original_binaries_used": false,
+  "actual_game_key_used": false,
+  "source_oracle_game_assets_used": false,
+  "game_assets_used": true,
+  "user_saves_used": false,
+  "game_boot": false,
+  "original_PlayerPrefs_storage": "UNKNOWN; native byte preference facade only",
+  "filesystem_order": "Unspecified; tested outcomes do not require cross-platform enumeration order"
+}

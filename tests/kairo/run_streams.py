@@ -5,6 +5,7 @@ All programs are compiled from this repository's own synthetic fixture source.
 Existing external runtimes are invoked in place; no original binary is copied.
 """
 import hashlib
+import argparse
 import json
 import os
 from pathlib import Path
@@ -32,18 +33,21 @@ def execute(command, folder, label, env=None):
 
 
 def main():
-    folder = ROOT/'build/streams-fixtures'
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--fixture',choices=['ManagedStreams','BinaryReaderFixtures'],default='ManagedStreams')
+    options=parser.parse_args();reader=options.fixture=='BinaryReaderFixtures'
+    folder = ROOT/('build/binary-reader-fixtures' if reader else 'build/streams-fixtures')
     folder.mkdir(parents=True, exist_ok=True)
-    source = ROOT/'tests/kairo/ManagedStreams.cs'
+    source = ROOT/('tests/kairo/'+options.fixture+'.cs')
     csc, dotnet, framework = compiler_paths()
-    oracle = folder/'ManagedStreams.dll'
+    oracle = folder/(options.fixture+'.dll')
     refs = [framework/(n+'.dll') for n in ['System.Private.CoreLib','System.Runtime','System.Console','System.IO']]
     args = ['/nologo','/nostdlib+','/target:exe','/optimize+','/out:'+str(oracle)]
     args += ['/r:'+str(p) for p in refs]+[str(source)]
     rsp = folder/'oracle.rsp'
     rsp.write_text('\n'.join('"'+a+'"' for a in args)+'\n',encoding='utf-8',newline='\n')
     execute([csc,'/noconfig','@'+str(rsp)],folder,'dotnet-compile')
-    (folder/'ManagedStreams.runtimeconfig.json').write_text(json.dumps(dict(runtimeOptions=dict(tfm='net10.0',framework=dict(name='Microsoft.NETCore.App',version='10.0.10')))),encoding='utf-8',newline='\n')
+    (folder/(options.fixture+'.runtimeconfig.json')).write_text(json.dumps(dict(runtimeOptions=dict(tfm='net10.0',framework=dict(name='Microsoft.NETCore.App',version='10.0.10')))),encoding='utf-8',newline='\n')
     modern = execute([dotnet,oracle],folder,'dotnet-run')
     unity = Path(os.environ.get('UNITY_ROOT',str(Path.home()/'AppData/Local/Programs/Unity/5.3.4f1')))
     mono = unity/'Editor/Data/Mono/bin/mono.exe'
@@ -51,12 +55,12 @@ def main():
     if not mono.is_file() or not smcs.is_file():
         raise RuntimeError('Existing historical oracle is missing; nothing is installed')
     mono_env = dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
-    old_oracle = folder/'ManagedStreams-mono.exe'
+    old_oracle = folder/(options.fixture+'-mono.exe')
     execute([mono,smcs,'-nologo','-noconfig','-optimize+','-out:'+str(old_oracle),source],folder,'mono-compile',mono_env)
     historical = execute([mono,old_oracle],folder,'mono-run',mono_env)
     runtime = ROOT/'src/kairo/common/semantic_runtime.cpp'
     impl = ROOT/'src/kairo/common/managed_streams.cpp'
-    cpp_source = ROOT/'tests/kairo/managed_streams_fixtures.cpp'
+    cpp_source = ROOT/('tests/kairo/binary_reader_fixtures.cpp' if reader else 'tests/kairo/managed_streams_fixtures.cpp')
     compiler = VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
     native = folder/'managed-streams.exe'
     command = [compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/utf-8',
@@ -74,7 +78,7 @@ def main():
     differences = [dict(case=a.split('=',1)[0],dotnet=a,mono=b) for a,b in zip(modern.splitlines(),historical.splitlines()) if a!=b]
     passed = all(r['passed'] for cases in results.values() for r in cases)
     inputs = [source,cpp_source,impl,impl.with_suffix('.hpp'),runtime,runtime.with_suffix('.hpp'),Path(__file__)]
-    report = dict(operation='own-source-SystemIO-Stream-MemoryStream-differential',status='PASS' if passed else 'FAIL',
+    report = dict(operation='own-source-SystemIO-BinaryReader-differential' if reader else 'own-source-SystemIO-Stream-MemoryStream-differential',status='PASS' if passed else 'FAIL',
         fixture_cases=sum(len(rows) for rows in results.values()),passed=sum(r['passed'] for rows in results.values() for r in rows),
         default_profile='UnityMono265',profiles=results,measured_runtime_differences=differences,
         inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},
@@ -85,7 +89,7 @@ def main():
         game_executed=False,production_emitter_exercised=False,android_behavior='UNKNOWN',
         limitations=['Own source oracle/native foundation only; emitted java.io and game call sites require separate tests.',
                      'Capacity allocations near Int32 limits are not exercised; platform out-of-memory behavior is not measured.'])
-    output = ROOT/'config/phase2-streams-fixtures.json'
+    output = ROOT/('config/phase2-binary-reader-fixtures.json' if reader else 'config/phase2-streams-fixtures.json')
     output.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(dict(status=report['status'],fixture_cases=report['fixture_cases'],passed=report['passed'],runtime_differences=len(differences))))
     if not passed:

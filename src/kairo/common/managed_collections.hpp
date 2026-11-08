@@ -2,10 +2,6 @@
 #include "semantic_runtime.hpp"
 
 namespace pls::cs {
-template<class T>struct is_shared_ref : std::false_type {};
-template<class T>struct is_shared_ref<std::shared_ptr<T>> : std::true_type {using element_type=T;};
-template<class T,class=void>struct has_managed_object : std::false_type {};
-template<class T>struct has_managed_object<T,std::void_t<decltype(std::declval<T>().as_object())>> : std::true_type {};
 template<class T,class=void>struct has_equal_operator : std::false_type {};
 template<class T>struct has_equal_operator<T,std::void_t<decltype(std::declval<T>()==std::declval<T>())>> : std::true_type {};
 
@@ -25,6 +21,18 @@ template<class T>bool default_equal(const T&a,const T&b) {
 template<class T>struct Box : Object {
     T value;
     explicit Box(T item):value(std::move(item)){}
+    void trace_edges(const EdgeVisitor&visitor)const override{trace_value(value,visitor);}
+    void release_edges()override{release_value(value);}
+    String ToString()override {
+        if constexpr(std::is_same_v<T,bool>)return String(value?u"True":u"False");
+        else if constexpr(std::is_same_v<T,char16_t>)return String(std::u16string{value});
+        else if constexpr(std::is_integral_v<T>){
+            auto text=std::to_string(value);
+            if(!text.empty()&&text[0]=='-')return String::concat(integer_number_format.negative_sign,String::from_utf8(text.substr(1)));
+            return String::from_utf8(text);
+        }
+        else throw NotSupportedException("Boxed value formatting requires measured type-specific implementation");
+    }
     bool equals(const Ref<Object>&other)const override {
         auto typed=std::dynamic_pointer_cast<Box<T>>(other);return typed&&default_equal(value,typed->value);
     }
@@ -70,6 +78,8 @@ template<class T>class List {
         Array<T> items=Array<T>::make(0);
         std::int32_t size=0;
         std::uint32_t version=0;
+        void trace_edges(const EdgeVisitor&visitor)const override{trace_value(items,visitor);}
+        void release_edges()override{release_value(items);}
     };
     Ref<Storage>data_;
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
@@ -143,12 +153,16 @@ public:
         void reset(){verify();next=0;if(runtime_profile==RuntimeProfile::DotNet)value=T{};}
         void dispose(){if(runtime_profile==RuntimeProfile::UnityMono265)data.reset();}
         bool MoveNext(){return move_next();}T get_Current()const{return current();}void Reset(){reset();}void Dispose(){dispose();}
+        void trace_edges(const EdgeVisitor&visitor)const{trace_value(data,visitor);trace_value(value,visitor);}
+        void release_edges(){release_value(data);release_value(value);}
     };
     Enumerator get_enumerator()const{auto&data=require();return Enumerator{data_,data.version,0,T{}};}
     class EnumeratorObject : public IEnumerator {
         Enumerator state_;
     public:
         explicit EnumeratorObject(Enumerator state):state_(std::move(state)){}
+        void trace_edges(const EdgeVisitor&visitor)const override{state_.trace_edges(visitor);}
+        void release_edges()override{state_.release_edges();}
         bool MoveNext()override{return state_.move_next();}
         Ref<Object>get_Current()const override{return state_.current_object();}
         void Reset()override{state_.reset();}void Dispose()override{state_.dispose();}

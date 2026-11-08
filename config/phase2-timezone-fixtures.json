@@ -1,0 +1,269 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 32,
+  "passed": 32,
+  "expected_lines": 16,
+  "actual_lines": 16,
+  "native_collector_tests": null,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\TimeZoneFixtures.cs": "3397cfdf4bf77ad84dfc2b21869c8c445c80812e19f5cddf01bee7d11201fd64",
+    "tests\\translator\\timezone_fixtures.cpp": "0ca22ea251f760fa3452f724701fafe80009b36e0462d7f8eae41df445816d95",
+    "src\\kairo\\common\\semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src\\kairo\\common\\managed_collections.hpp": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b",
+    "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "tests\\translator\\run_semantic_fixtures.py": "d7aa3b76fcd4427314e5dc8de1b54c6cfc7773f4d55b294ea97a6308256573b0"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "framework_reference": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\System.Core.dll",
+    "framework_reference_sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "offset-0",
+      "expected": "offset-0=9,0,display,standard,False",
+      "actual": "offset-0=9,0,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-1",
+      "expected": "offset-1=System.ArgumentException",
+      "actual": "offset-1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "offset-2",
+      "expected": "offset-2=System.ArgumentException",
+      "actual": "offset-2=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "offset-3",
+      "expected": "offset-3=9,600000000,display,standard,False",
+      "actual": "offset-3=9,600000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-4",
+      "expected": "offset-4=9,-600000000,display,standard,False",
+      "actual": "offset-4=9,-600000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-5",
+      "expected": "offset-5=9,504000000000,display,standard,False",
+      "actual": "offset-5=9,504000000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-6",
+      "expected": "offset-6=9,-504000000000,display,standard,False",
+      "actual": "offset-6=9,-504000000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-7",
+      "expected": "offset-7=System.ArgumentOutOfRangeException",
+      "actual": "offset-7=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "offset-8",
+      "expected": "offset-8=System.ArgumentOutOfRangeException",
+      "actual": "offset-8=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "id-0",
+      "expected": "id-0=System.ArgumentNullException",
+      "actual": "id-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "id-1",
+      "expected": "id-1=System.ArgumentException",
+      "actual": "id-1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "id-2",
+      "expected": "id-2=1,0,,,False",
+      "actual": "id-2=1,0,,,False",
+      "passed": true
+    },
+    {
+      "case": "id-3",
+      "expected": "id-3=3,0,,,False",
+      "actual": "id-3=3,0,,,False",
+      "passed": true
+    },
+    {
+      "case": "id-4",
+      "expected": "id-4=300,0,,,False",
+      "actual": "id-4=300,0,,,False",
+      "passed": true
+    },
+    {
+      "case": "utc",
+      "expected": "utc=UTC,0,False",
+      "actual": "utc=UTC,0,False",
+      "passed": true
+    },
+    {
+      "case": "utc-convert",
+      "expected": "utc-convert=621355968000000000",
+      "actual": "utc-convert=621355968000000000",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "offset-0",
+      "expected": "offset-0=9,0,display,standard,False",
+      "actual": "offset-0=9,0,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-1",
+      "expected": "offset-1=System.ArgumentException",
+      "actual": "offset-1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "offset-2",
+      "expected": "offset-2=System.ArgumentException",
+      "actual": "offset-2=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "offset-3",
+      "expected": "offset-3=9,600000000,display,standard,False",
+      "actual": "offset-3=9,600000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-4",
+      "expected": "offset-4=9,-600000000,display,standard,False",
+      "actual": "offset-4=9,-600000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-5",
+      "expected": "offset-5=9,504000000000,display,standard,False",
+      "actual": "offset-5=9,504000000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-6",
+      "expected": "offset-6=9,-504000000000,display,standard,False",
+      "actual": "offset-6=9,-504000000000,display,standard,False",
+      "passed": true
+    },
+    {
+      "case": "offset-7",
+      "expected": "offset-7=System.ArgumentOutOfRangeException",
+      "actual": "offset-7=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "offset-8",
+      "expected": "offset-8=System.ArgumentOutOfRangeException",
+      "actual": "offset-8=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "id-0",
+      "expected": "id-0=System.ArgumentNullException",
+      "actual": "id-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "id-1",
+      "expected": "id-1=System.ArgumentException",
+      "actual": "id-1=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "id-2",
+      "expected": "id-2=1,0,x,x,False",
+      "actual": "id-2=1,0,x,x,False",
+      "passed": true
+    },
+    {
+      "case": "id-3",
+      "expected": "id-3=3,0,a\u0000b,a\u0000b,False",
+      "actual": "id-3=3,0,a\u0000b,a\u0000b,False",
+      "passed": true
+    },
+    {
+      "case": "id-4",
+      "expected": "id-4=300,0,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,False",
+      "actual": "id-4=300,0,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,False",
+      "passed": true
+    },
+    {
+      "case": "utc",
+      "expected": "utc=UTC,0,False",
+      "actual": "utc=UTC,0,False",
+      "passed": true
+    },
+    {
+      "case": "utc-convert",
+      "expected": "utc-convert=621355968000000000",
+      "actual": "utc-convert=621355968000000000",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "id-2",
+      "dotnet": "id-2=1,0,,,False",
+      "unity_mono": "id-2=1,0,x,x,False"
+    },
+    {
+      "case": "id-3",
+      "dotnet": "id-3=3,0,,,False",
+      "unity_mono": "id-3=3,0,a\u0000b,a\u0000b,False"
+    },
+    {
+      "case": "id-4",
+      "dotnet": "id-4=300,0,,,False",
+      "unity_mono": "id-4=300,0,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,False"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

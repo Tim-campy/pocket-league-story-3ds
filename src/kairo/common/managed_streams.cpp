@@ -14,6 +14,34 @@ std::int32_t Stream::ReadByte() {
 }
 void Stream::WriteByte(std::uint8_t value) { Write(Array<std::uint8_t>::from({value}), 0, 1); }
 
+BinaryReader::BinaryReader(Ref<Stream>stream):stream_(std::move(stream)){
+    if(!stream_)throw ArgumentNullException();if(!stream_->get_CanRead())throw ArgumentException();
+    buffer_=Array<std::uint8_t>::make(32);
+}
+void BinaryReader::require_open()const{if(closed_)throw ObjectDisposedException();}
+Array<std::uint8_t>BinaryReader::fill(std::int32_t count){
+    require_open();std::int32_t offset=0;
+    while(offset<count){const auto read=stream_->Read(buffer_,offset,count-offset);if(read==0)throw EndOfStreamException();if(read<0||read>count-offset)throw IOException("Stream.Read returned an invalid count");offset+=read;}
+    return buffer_;
+}
+std::uint8_t BinaryReader::ReadByte(){require_open();const auto value=stream_->ReadByte();if(value== -1)throw EndOfStreamException();return static_cast<std::uint8_t>(value);}
+std::int8_t BinaryReader::ReadSByte(){return cast_integral<std::int8_t>(historical()?ReadByte():BinaryReader::ReadByte());}
+bool BinaryReader::ReadBoolean(){return (historical()?ReadByte():BinaryReader::ReadByte())!=0;}
+std::uint64_t BinaryReader::read_bits(std::int32_t count){auto bytes=fill(count);std::uint64_t value=0;for(std::int32_t i=0;i<count;++i)value|=static_cast<std::uint64_t>(bytes.at(i))<<(i*8);return value;}
+std::uint16_t BinaryReader::ReadUInt16(){return static_cast<std::uint16_t>(read_bits(2));}
+std::int16_t BinaryReader::ReadInt16(){return cast_integral<std::int16_t>(read_bits(2));}
+std::uint32_t BinaryReader::ReadUInt32(){return static_cast<std::uint32_t>(read_bits(4));}
+std::int32_t BinaryReader::ReadInt32(){return cast_integral<std::int32_t>(read_bits(4));}
+std::uint64_t BinaryReader::ReadUInt64(){return read_bits(8);}
+std::int64_t BinaryReader::ReadInt64(){return cast_integral<std::int64_t>(read_bits(8));}
+float BinaryReader::ReadSingle(){return bit_copy<float>(static_cast<std::uint32_t>(read_bits(4)));}
+double BinaryReader::ReadDouble(){return bit_copy<double>(read_bits(8));}
+std::int32_t BinaryReader::Read(Array<std::uint8_t>buffer,std::int32_t offset,std::int32_t count){
+    if(historical())require_open();if(buffer.is_null())throw ArgumentNullException();if(offset<0||count<0)throw ArgumentOutOfRangeException();if(static_cast<std::int64_t>(offset)+count>buffer.length())throw ArgumentException();
+    require_open();return stream_->Read(buffer,offset,count);
+}
+void BinaryReader::Close(){if(closed_)return;stream_->Close();closed_=true;if(historical()){stream_.reset();buffer_={};}}
+
 MemoryStream::MemoryStream() : MemoryStream(0) {}
 MemoryStream::MemoryStream(std::int32_t capacity) {
     if (capacity < 0) throw ArgumentOutOfRangeException();

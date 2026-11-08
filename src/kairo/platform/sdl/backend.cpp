@@ -57,7 +57,7 @@ std::vector<platform::Input> Backend::events() {
         using Kind=platform::Input::Kind;
         if(event.type==SDL_QUIT) result.push_back({Kind::quit});
         else if(event.type==SDL_MOUSEMOTION) result.push_back({Kind::pointer_move,event.motion.x,event.motion.y});
-        else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP) result.push_back({event.type==SDL_MOUSEBUTTONDOWN?Kind::pointer_down:Kind::pointer_up,event.button.x,event.button.y});
+        else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP) result.push_back({event.type==SDL_MOUSEBUTTONDOWN?Kind::pointer_down:Kind::pointer_up,event.button.x,event.button.y,event.button.button});
         else if(event.type==SDL_KEYDOWN||event.type==SDL_KEYUP) result.push_back({event.type==SDL_KEYDOWN?Kind::key_down:Kind::key_up,0,0,event.key.keysym.sym});
     }
     return result;

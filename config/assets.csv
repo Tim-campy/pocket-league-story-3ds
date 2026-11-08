@@ -1,5 +1,5 @@
 tipo,quantidade,formato_origem,formato_alvo,estado,notas
-Unity/AudioClip,27,Unity serialized v15,Ogg Vorbis compressed; runtime streaming pending,converts,object_bytes=3224; phase2: 27 Ogg files SHA256 checked; no whole-PCM decode
+Unity/AudioClip,27,Unity serialized v15,Bounded streaming Vorbis on SDL; CTR pending,loads,object_bytes=3224; phase2: 27 Ogg files SHA256 checked; all native streams exercised; prefixes compared with FFmpeg; no whole-track PCM buffer; no game boot
 Unity/Camera,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=234
 Unity/ClassID_11,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=40
 Unity/ClassID_116,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=2004
@@ -22,7 +22,7 @@ Unity/ClassID_81,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,ob
 Unity/ClassID_92,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=16
 Unity/ClassID_94,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=55733
 Unity/ClassID_98,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=0
-Unity/Font,2,Unity serialized v15,Original embedded TTF; rasterization pending,extracts,object_bytes=1971548; phase2: 2 TTF SHA256 checked; no rasterizer yet
+Unity/Font,2,Unity serialized v15,User TTF rasterized by FreeType on SDL; CTR pending,loads,object_bytes=1971548; phase2: 2 TTF SHA256 checked; all native rasterizers exercised; Android shape/hinting UNKNOWN; no game boot
 Unity/GameObject,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=174
 Unity/LightmapSettings,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=68
 Unity/Material,4,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=564

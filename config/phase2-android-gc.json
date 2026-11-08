@@ -1,0 +1,55 @@
+{
+  "operation": "authenticated-APK-static-Android-GC-export-analysis",
+  "status": "PASS",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "producer_sha256": "f88e7b06447865e755e93fb7b79325a6cdc81157343e7daf49c5bd3b626ca4e9",
+  "variants": [
+    {
+      "abi": "x86",
+      "member": "lib/x86/libmono.so",
+      "library_sha256": "ab27eaa4cb508bfde5cf906cb318f9e9e6d4a6d5cc4c677f74cc86af2314ccf2",
+      "symbol": "mono_gc_max_generation",
+      "address": 1266389,
+      "file_offset": 1266389,
+      "function_size": 10,
+      "function_sha256": "6955954fc726032c150f5927b27b3b0cf126d8410d92de2c5f7f6acaaf62c37e",
+      "complete_function_decoded": true,
+      "instructions": [
+        "push ebp",
+        "mov ebp, esp",
+        "mov eax, immediate 0",
+        "pop ebp",
+        "ret"
+      ],
+      "return_value": 0
+    },
+    {
+      "abi": "armeabi-v7a",
+      "member": "lib/armeabi-v7a/libmono.so",
+      "library_sha256": "3ac02e3aee5c4ad2044732c6aec2f8f22bd02db251a3775f51da1d38e2cfa3c1",
+      "symbol": "mono_gc_max_generation",
+      "address": 1283844,
+      "file_offset": 1283844,
+      "function_size": 28,
+      "function_sha256": "6b56c0f93a3d8936c75fe048023e38090d5454b269897cb758df7bf09c3adcd3",
+      "complete_function_decoded": true,
+      "instructions": [
+        "push fp",
+        "add fp, sp, #0",
+        "mov r3, immediate 0",
+        "mov r0, r3",
+        "sub sp, fp, #0",
+        "pop fp",
+        "bx lr"
+      ],
+      "return_value": 0
+    }
+  ],
+  "rejected_unknown_instruction_test": true,
+  "original_library_extracted": false,
+  "original_library_executed": false,
+  "limitations": [
+    "Establishes max generation zero on these two APK runtimes only; not all collector behavior.",
+    "REA native ELF analysis unavailable on this Windows provider; bounded ELF symbol and tiny ISA decoders used."
+  ]
+}

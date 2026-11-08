@@ -1,4 +1,4 @@
-"""Reproduce the Phase 2 checkpoint without installing dependencies or running the game."""
+"""Reproduce Phase 2 proofs locally, without installing dependencies or claiming game boot."""
 import argparse
 import hashlib
 import json
@@ -28,9 +28,11 @@ def main():
         ('portable-compile',['tools/translate','--original-managed',str(managed),'--compile']),
         ('portable-differential',['translator/test_portable.py']),
         ('lowering-differential',['translator/test_lowering.py']),
-        ('game-diagnostics',['tools/translate','--assembly','Assembly-CSharp','--diagnostics-only','--original-managed',str(managed)]),
+        ('game-partial-compile',['tools/translate','--assembly','Assembly-CSharp','--bootstrap-main','--compile','--original-managed',str(managed)]),
     ]
-    for fixture in ('SemanticFixtures','CollectionFixtures','EncodingFixtures','ConversionFixtures','IntegerParseFixtures'):
+    for fixture in ('SemanticFixtures','CollectionFixtures','EncodingFixtures','ConversionFixtures','IntegerParseFixtures',
+                    'ArrayBridgeFixtures','RandomFixtures','StringBuilderFixtures','DictionaryFixtures',
+                    'FloatingCastFixtures','TimeFixtures','ObjectDispatchFixtures','TimeZoneFixtures','GcFixtures'):
         commands.append(('runtime-'+fixture,['tests/translator/run_semantic_fixtures.py','--fixture',fixture]))
     commands += [
         ('streams',['tests/kairo/run_streams.py']),
@@ -38,6 +40,15 @@ def main():
         ('services',['tools/test_services.py']),
         ('legacy-assets',['tools/inventory_legacy_assets.py','--apk',str(args.apk.resolve())]),
         ('sdl-and-assets',['tools/build-pc','--fixtures-only','--asset-readback','--apk',str(args.apk.resolve())]),
+        ('graphics-and-font',['tools/test_graphics.py']),
+        ('streaming-media',['tools/test_media.py','--apk',str(args.apk.resolve())]),
+        ('storage',['tools/test_storage.py','--apk',str(args.apk.resolve())]),
+        ('input',['tools/test_input.py']),
+        ('forms',['tools/test_forms.py']),
+        ('sound-API',['tools/test_sound.py','--apk',str(args.apk.resolve())]),
+        ('native-system-leaves',['tools/test_system.py']),
+        ('android-GC-static',['tools/inspect_android_gc.py','--apk',str(args.apk.resolve())]),
+        ('culture-characterization',['tools/probe_string_culture.py']),
         ('progress',['tools/progress']),
     ]
     folder=ROOT/'build/phase2-verification';folder.mkdir(parents=True,exist_ok=True)

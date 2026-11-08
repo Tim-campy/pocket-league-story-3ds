@@ -1,0 +1,1809 @@
+{
+  "operation": "culture-sensitive-string-characterization",
+  "status": "PASS",
+  "profiles": {
+    "DotNet": {
+      "cases": [
+        {
+          "case": "c0p0index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c0p0indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p0starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p0ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p0equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p1index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p1indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p1starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p1ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p1equalsCI",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p2index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p2indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p2starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p2ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p2equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p3index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c0p3indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p3starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p3ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p3equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p4index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c0p4indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p4starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p4ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p4equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p5index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c0p5indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p5starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p5ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p5equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p6index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c0p6indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p6starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p6ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p6equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p7index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c0p7indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p7starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p7ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p7equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p0index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c1p0indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p0starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p0ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p0equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p1index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p1indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p1starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p1ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p1equalsCI",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p2index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p2indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p2starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p2ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p2equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p3index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c1p3indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p3starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p3ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p3equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p4index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c1p4indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p4starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p4ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p4equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p5index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c1p5indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p5starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p5ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p5equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p6index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c1p6indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p6starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p6ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p6equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p7index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c1p7indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p7starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p7ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p7equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p0index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c2p0indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p0starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c2p0ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p0equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p1index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p1indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p1starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p1ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p1equalsCI",
+          "actual": "False",
+          "ordinal": "True",
+          "differs": true
+        },
+        {
+          "case": "c2p2index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p2indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p2starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p2ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p2equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p3index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c2p3indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p3starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p3ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p3equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p4index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c2p4indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p4starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p4ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p4equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p5index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c2p5indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p5starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p5ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p5equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p6index",
+          "actual": "0",
+          "ordinal": "-1",
+          "differs": true
+        },
+        {
+          "case": "c2p6indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p6starts",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p6ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p6equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p7index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c2p7indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p7starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c2p7ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p7equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        }
+      ],
+      "differences_from_ordinal": 50,
+      "runtime_metadata": {
+        "initialCulture": "pt-BR",
+        "managedCollation": "UNKNOWN"
+      }
+    },
+    "UnityMono265": {
+      "cases": [
+        {
+          "case": "c0p0index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c0p0indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p0starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p0ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p0equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p1index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p1indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p1starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p1ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p1equalsCI",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p2index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p2indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p2starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p2ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p2equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p3index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p3indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p3starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p3ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p3equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p4index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p4indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p4starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p4ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p4equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p5index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p5indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p5starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p5ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p5equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p6index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p6indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p6starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p6ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p6equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c0p7index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c0p7indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c0p7starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c0p7ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c0p7equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p0index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c1p0indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p0starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p0ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p0equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p1index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p1indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p1starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p1ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p1equalsCI",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p2index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p2indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p2starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p2ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p2equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p3index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p3indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p3starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p3ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p3equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p4index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p4indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p4starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p4ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p4equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p5index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p5indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p5starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p5ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p5equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p6index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p6indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p6starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p6ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p6equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c1p7index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c1p7indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c1p7starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c1p7ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c1p7equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p0index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c2p0indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p0starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c2p0ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p0equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p1index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p1indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p1starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p1ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p1equalsCI",
+          "actual": "False",
+          "ordinal": "True",
+          "differs": true
+        },
+        {
+          "case": "c2p2index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p2indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p2starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p2ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p2equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p3index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p3indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p3starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p3ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p3equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p4index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p4indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p4starts",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p4ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p4equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p5index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p5indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p5starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c2p5ends",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p5equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p6index",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p6indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p6starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c2p6ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p6equalsCI",
+          "actual": "True",
+          "ordinal": "False",
+          "differs": true
+        },
+        {
+          "case": "c2p7index",
+          "actual": "0",
+          "ordinal": "0",
+          "differs": false
+        },
+        {
+          "case": "c2p7indexStart",
+          "actual": "-1",
+          "ordinal": "-1",
+          "differs": false
+        },
+        {
+          "case": "c2p7starts",
+          "actual": "True",
+          "ordinal": "True",
+          "differs": false
+        },
+        {
+          "case": "c2p7ends",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        },
+        {
+          "case": "c2p7equalsCI",
+          "actual": "False",
+          "ordinal": "False",
+          "differs": false
+        }
+      ],
+      "differences_from_ordinal": 11,
+      "runtime_metadata": {
+        "initialCulture": "en-US",
+        "managedCollation": "True"
+      }
+    }
+  },
+  "windows_nls": {
+    "status": "MEASURED",
+    "policies": {
+      "1": {
+        "cases": 120,
+        "differences_from_mono": 26,
+        "mismatches": [
+          {
+            "case": "c0p3equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p4index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c0p4starts",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p4ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p4equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p5index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c0p6index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c0p6ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p2equalsCI",
+            "actual": "False",
+            "mono": "True",
+            "differs": true
+          },
+          {
+            "case": "c1p3equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p4index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c1p4starts",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p4ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p4equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p5index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c1p6index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c1p6ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p1equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p3equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p4index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c2p4starts",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p4ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p4equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p5index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c2p6index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c2p6ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          }
+        ]
+      },
+      "134217729": {
+        "cases": 120,
+        "differences_from_mono": 26,
+        "mismatches": [
+          {
+            "case": "c0p3equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p4index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c0p4starts",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p4ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p4equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c0p5index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c0p6index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c0p6ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p2equalsCI",
+            "actual": "False",
+            "mono": "True",
+            "differs": true
+          },
+          {
+            "case": "c1p3equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p4index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c1p4starts",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p4ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p4equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c1p5index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c1p6index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c1p6ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p2equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p3equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p4index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c2p4starts",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p4ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p4equalsCI",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          },
+          {
+            "case": "c2p5index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c2p6index",
+            "actual": "0",
+            "mono": "-1",
+            "differs": true
+          },
+          {
+            "case": "c2p6ends",
+            "actual": "True",
+            "mono": "False",
+            "differs": true
+          }
+        ]
+      }
+    },
+    "replacement_accepted": false
+  },
+  "source_sha256": "9492a85b5975b662290256481a36ed3d45f72a24ee0b004e249b7b2cc38b8ac4",
+  "producer_sha256": "a37c8b1ebeaefc1492c3bd785d27203ddfd7729b013c76de631a73cbd953453b",
+  "tools": {
+    "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\dotnet\\net10.0\\runtime\\dotnet.exe": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+    "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0"
+  },
+  "game_binary_executed": false,
+  "game_assets_used": false,
+  "production_methods_promoted": 0,
+  "limitations": [
+    "Synthetic BCL evidence on Windows; Android Mono culture tables are not verified.",
+    "This probe does not select or implement a replacement policy."
+  ]
+}

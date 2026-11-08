@@ -56,6 +56,8 @@ public:
     void Dispose() override { Close(); }
     Array<std::uint8_t> ToArray() const;
     Array<std::uint8_t> GetBuffer() const;
+    void trace_edges(const EdgeVisitor&visitor)const override{trace_value(buffer_,visitor);}
+    void release_edges()override{release_value(buffer_);}
 private:
     Array<std::uint8_t> buffer_;
     std::int32_t origin_ = 0, position_ = 0, length_ = 0, capacity_ = 0;
@@ -64,5 +66,28 @@ private:
     void ensure_writable() const;
     void ensure_capacity(std::int32_t capacity);
     void validate_buffer(const Array<std::uint8_t>& buffer, std::int32_t offset, std::int32_t count) const;
+};
+
+// Primitive binary reads are little-endian, independent of host endianness.
+// Array Read delegates once to Stream.Read, deliberately allowing short reads.
+class BinaryReader : public Object {
+    Ref<Stream>stream_;Array<std::uint8_t>buffer_;bool closed_=false;
+    void require_open()const;
+    Array<std::uint8_t>fill(std::int32_t count);
+    std::uint64_t read_bits(std::int32_t bytes);
+public:
+    explicit BinaryReader(Ref<Stream>stream);
+    virtual Ref<Stream>get_BaseStream()const{return stream_;}
+    virtual std::uint8_t ReadByte();
+    virtual std::int8_t ReadSByte();
+    virtual bool ReadBoolean();
+    virtual std::int16_t ReadInt16();virtual std::uint16_t ReadUInt16();
+    virtual std::int32_t ReadInt32();virtual std::uint32_t ReadUInt32();
+    virtual std::int64_t ReadInt64();virtual std::uint64_t ReadUInt64();
+    virtual float ReadSingle();virtual double ReadDouble();
+    virtual std::int32_t Read(Array<std::uint8_t>buffer,std::int32_t offset,std::int32_t count);
+    virtual void Close();virtual void Dispose(){Close();}
+    void trace_edges(const EdgeVisitor&visitor)const override{trace_value(stream_,visitor);trace_value(buffer_,visitor);}
+    void release_edges()override{release_value(stream_);release_value(buffer_);}
 };
 } // namespace pls::cs

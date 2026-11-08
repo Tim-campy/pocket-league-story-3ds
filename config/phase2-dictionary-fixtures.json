@@ -1,0 +1,416 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 54,
+  "passed": 54,
+  "expected_lines": 27,
+  "actual_lines": 27,
+  "native_collector_tests": null,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\DictionaryFixtures.cs": "8c861cc7345f237101f9c085f6de9dd60aca334f5804f9a160c466fc444d757c",
+    "tests\\translator\\dictionary_fixtures.cpp": "c686ad3609360668cccaf937af76fe20a339ca4fdf18dfdef3652369fd07f99d",
+    "src\\kairo\\common\\semantic_runtime.cpp": "95d2eced61ce860cb29a4ae02eb73290c29ebcf6009d53c73644d5d6649e5cbd",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8f614758f3f688a8ce3d0c7badd7dc324391e44b0738c2d08ae1c72d3d363509",
+    "src\\kairo\\common\\managed_collections.hpp": "10e91c379bfcef85eaf6a4ea0b00211db0b35fb3d335091a698bc56149d7142b",
+    "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
+    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",
+    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "tests\\translator\\run_semantic_fixtures.py": "d7aa3b76fcd4427314e5dc8de1b54c6cfc7773f4d55b294ea97a6308256573b0"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "framework_reference": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\System.Core.dll",
+    "framework_reference_sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "empty",
+      "expected": "empty=0",
+      "actual": "empty=0",
+      "passed": true
+    },
+    {
+      "case": "insert",
+      "expected": "insert=a:1,b:2,c:3",
+      "actual": "insert=a:1,b:2,c:3",
+      "passed": true
+    },
+    {
+      "case": "set",
+      "expected": "set=a:1,b:4,c:3",
+      "actual": "set=a:1,b:4,c:3",
+      "passed": true
+    },
+    {
+      "case": "reuse",
+      "expected": "reuse=a:1,d:5,c:3",
+      "actual": "reuse=a:1,d:5,c:3",
+      "passed": true
+    },
+    {
+      "case": "missing-out",
+      "expected": "missing-out=False,0",
+      "actual": "missing-out=False,0",
+      "passed": true
+    },
+    {
+      "case": "found-out",
+      "expected": "found-out=True,5",
+      "actual": "found-out=True,5",
+      "passed": true
+    },
+    {
+      "case": "duplicate",
+      "expected": "duplicate=System.ArgumentException",
+      "actual": "duplicate=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "expected": "missing=System.Collections.Generic.KeyNotFoundException",
+      "actual": "missing=System.Collections.Generic.KeyNotFoundException",
+      "passed": true
+    },
+    {
+      "case": "null-key",
+      "expected": "null-key=System.ArgumentNullException",
+      "actual": "null-key=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "null-add",
+      "expected": "null-add=System.ArgumentNullException",
+      "actual": "null-add=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "null-set",
+      "expected": "null-set=System.ArgumentNullException",
+      "actual": "null-set=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "null-remove",
+      "expected": "null-remove=System.ArgumentNullException",
+      "actual": "null-remove=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "contains",
+      "expected": "contains=True,True,False",
+      "actual": "contains=True,True,False",
+      "passed": true
+    },
+    {
+      "case": "mutation-set",
+      "expected": "mutation-set=True",
+      "actual": "mutation-set=True",
+      "passed": true
+    },
+    {
+      "case": "mutation-add",
+      "expected": "mutation-add=System.InvalidOperationException",
+      "actual": "mutation-add=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "mutation-remove",
+      "expected": "mutation-remove=True",
+      "actual": "mutation-remove=True",
+      "passed": true
+    },
+    {
+      "case": "mutation-remove-missing",
+      "expected": "mutation-remove-missing=True",
+      "actual": "mutation-remove-missing=True",
+      "passed": true
+    },
+    {
+      "case": "mutation-clear",
+      "expected": "mutation-clear=False",
+      "actual": "mutation-clear=False",
+      "passed": true
+    },
+    {
+      "case": "clear-empty",
+      "expected": "clear-empty=False",
+      "actual": "clear-empty=False",
+      "passed": true
+    },
+    {
+      "case": "before",
+      "expected": "before=True,0",
+      "actual": "before=True,0",
+      "passed": true
+    },
+    {
+      "case": "after",
+      "expected": "after=True,0",
+      "actual": "after=True,0",
+      "passed": true
+    },
+    {
+      "case": "disposed",
+      "expected": "disposed=True",
+      "actual": "disposed=True",
+      "passed": true
+    },
+    {
+      "case": "alias",
+      "expected": "alias=8",
+      "actual": "alias=8",
+      "passed": true
+    },
+    {
+      "case": "clear-reuse",
+      "expected": "clear-reuse=z:9",
+      "actual": "clear-reuse=z:9",
+      "passed": true
+    },
+    {
+      "case": "float-equal",
+      "expected": "float-equal=True,z",
+      "actual": "float-equal=True,z",
+      "passed": true
+    },
+    {
+      "case": "null-value",
+      "expected": "null-value=True,True",
+      "actual": "null-value=True,True",
+      "passed": true
+    },
+    {
+      "case": "negative-cap",
+      "expected": "negative-cap=System.ArgumentOutOfRangeException",
+      "actual": "negative-cap=System.ArgumentOutOfRangeException",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "empty",
+      "expected": "empty=0",
+      "actual": "empty=0",
+      "passed": true
+    },
+    {
+      "case": "insert",
+      "expected": "insert=a:1,b:2,c:3",
+      "actual": "insert=a:1,b:2,c:3",
+      "passed": true
+    },
+    {
+      "case": "set",
+      "expected": "set=a:1,b:4,c:3",
+      "actual": "set=a:1,b:4,c:3",
+      "passed": true
+    },
+    {
+      "case": "reuse",
+      "expected": "reuse=a:1,d:5,c:3",
+      "actual": "reuse=a:1,d:5,c:3",
+      "passed": true
+    },
+    {
+      "case": "missing-out",
+      "expected": "missing-out=False,0",
+      "actual": "missing-out=False,0",
+      "passed": true
+    },
+    {
+      "case": "found-out",
+      "expected": "found-out=True,5",
+      "actual": "found-out=True,5",
+      "passed": true
+    },
+    {
+      "case": "duplicate",
+      "expected": "duplicate=System.ArgumentException",
+      "actual": "duplicate=System.ArgumentException",
+      "passed": true
+    },
+    {
+      "case": "missing",
+      "expected": "missing=System.Collections.Generic.KeyNotFoundException",
+      "actual": "missing=System.Collections.Generic.KeyNotFoundException",
+      "passed": true
+    },
+    {
+      "case": "null-key",
+      "expected": "null-key=System.ArgumentNullException",
+      "actual": "null-key=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "null-add",
+      "expected": "null-add=System.ArgumentNullException",
+      "actual": "null-add=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "null-set",
+      "expected": "null-set=System.ArgumentNullException",
+      "actual": "null-set=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "null-remove",
+      "expected": "null-remove=System.ArgumentNullException",
+      "actual": "null-remove=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "contains",
+      "expected": "contains=True,True,False",
+      "actual": "contains=True,True,False",
+      "passed": true
+    },
+    {
+      "case": "mutation-set",
+      "expected": "mutation-set=System.InvalidOperationException",
+      "actual": "mutation-set=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "mutation-add",
+      "expected": "mutation-add=System.InvalidOperationException",
+      "actual": "mutation-add=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "mutation-remove",
+      "expected": "mutation-remove=System.InvalidOperationException",
+      "actual": "mutation-remove=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "mutation-remove-missing",
+      "expected": "mutation-remove-missing=True",
+      "actual": "mutation-remove-missing=True",
+      "passed": true
+    },
+    {
+      "case": "mutation-clear",
+      "expected": "mutation-clear=System.InvalidOperationException",
+      "actual": "mutation-clear=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "clear-empty",
+      "expected": "clear-empty=System.InvalidOperationException",
+      "actual": "clear-empty=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "before",
+      "expected": "before=True,0",
+      "actual": "before=True,0",
+      "passed": true
+    },
+    {
+      "case": "after",
+      "expected": "after=False,3",
+      "actual": "after=False,3",
+      "passed": true
+    },
+    {
+      "case": "disposed",
+      "expected": "disposed=System.ObjectDisposedException",
+      "actual": "disposed=System.ObjectDisposedException",
+      "passed": true
+    },
+    {
+      "case": "alias",
+      "expected": "alias=8",
+      "actual": "alias=8",
+      "passed": true
+    },
+    {
+      "case": "clear-reuse",
+      "expected": "clear-reuse=z:9",
+      "actual": "clear-reuse=z:9",
+      "passed": true
+    },
+    {
+      "case": "float-equal",
+      "expected": "float-equal=True,z",
+      "actual": "float-equal=True,z",
+      "passed": true
+    },
+    {
+      "case": "null-value",
+      "expected": "null-value=True,True",
+      "actual": "null-value=True,True",
+      "passed": true
+    },
+    {
+      "case": "negative-cap",
+      "expected": "negative-cap=System.ArgumentOutOfRangeException",
+      "actual": "negative-cap=System.ArgumentOutOfRangeException",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "mutation-set",
+      "dotnet": "mutation-set=True",
+      "unity_mono": "mutation-set=System.InvalidOperationException"
+    },
+    {
+      "case": "mutation-remove",
+      "dotnet": "mutation-remove=True",
+      "unity_mono": "mutation-remove=System.InvalidOperationException"
+    },
+    {
+      "case": "mutation-clear",
+      "dotnet": "mutation-clear=False",
+      "unity_mono": "mutation-clear=System.InvalidOperationException"
+    },
+    {
+      "case": "clear-empty",
+      "dotnet": "clear-empty=False",
+      "unity_mono": "clear-empty=System.InvalidOperationException"
+    },
+    {
+      "case": "after",
+      "dotnet": "after=True,0",
+      "unity_mono": "after=False,3"
+    },
+    {
+      "case": "disposed",
+      "dotnet": "disposed=True",
+      "unity_mono": "disposed=System.ObjectDisposedException"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

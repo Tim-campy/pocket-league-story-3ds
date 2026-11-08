@@ -178,6 +178,10 @@ Só depois do New 3DS funcionar. Meça onde o tempo vai (perfil), otimize o que 
 
 ## 9. Regras de trabalho
 
+**Decisão posterior sobre strings:** preservar a semântica cultural original nos métodos que a solicitam explicitamente ou pelos overloads culturais do .NET; manter comparação ordinal nas comparações comuns. Não substituir `CurrentCultureIgnoreCase`, `IndexOf(string)`, `StartsWith` ou `EndsWith` por ordinal sem prova. A aprovação dessa semântica não autoriza automaticamente uma dependência nova.
+
+**Autorização posterior do usuário, continuidade da Fase 2 após 7982970:** preparar FreeType, libogg e libvorbis a partir dos fontes oficiais, somente em `build/deps/`, com hashes em `docs/toolchain.md` e sem instalação no sistema. Nas mesmas condições, zlib, libpng, stb_image, stb_truetype, stb_vorbis e miniaudio estão pré-autorizados se necessários. Outras dependências exigem consulta. SDK 3DS e emulador permanecem para a Fase 4. Não repetir a consulta para as bibliotecas já autorizadas. A continuidade só para por decisão de design, possível conflito com a seção 2, dependência fora dessa lista ou dez rodadas sem avanço no tradutor nem na API; registrar as rodadas e as evidências. Tentar o boot assim que houver um alvo executável, sem esperar a API inteira estar pronta.
+
 1. **A lógica do jogo não é "melhorada".** Bugs do original são preservados, a menos que o usuário decida o contrário caso a caso. O que muda é a camada de plataforma.
 2. **O C++ do jogo é gerado, não editado.** Se o tradutor erra, corrija o tradutor e regenere. Edições manuais em `src/game/` são proibidas; se um caso exigir exceção, ela vive no tradutor como regra explícita e documentada.
 3. **Fato ou hipótese.** Afirmações sobre o comportamento do jogo citam o método do fonte reconstruído. O que não foi verificado é `UNKNOWN`.

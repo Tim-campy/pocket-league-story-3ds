@@ -1,0 +1,13 @@
+# Strings culturais: diagnóstico e decisão
+
+O usuário confirmou preservar cultura nos métodos específicos e manter ordinal nas comparações comuns. `StringEx.EqualsIgnoreCase` solicita `CurrentCultureIgnoreCase`; `StringUtil.Replace/Split` e `SecureString` usam overloads culturais de busca/prefixo/sufixo. Isso é distinto de igualdade comum entre strings, que continua ordinal, e da indexação UTF-16 por code unit.
+
+`tools/probe_string_culture.py` compila e executa uma fixture própria de Unicode, sem binário ou dados do jogo. São **120 observações por perfil** em cultura invariável, en-US e tr-TR. Contra a alternativa ordinal, o Mono histórico diverge em **11/120** e o .NET10 em **50/120**. Não são 11 ou 50 métodos do jogo. O probe mede e não promove membros da fronteira.
+
+O runtime Mono Unity Windows reportou `UseManagedCollation=True` e cultura inicial en-US. O fonte oficial de [CompareInfo na série Mono 2.6](https://github.com/mono/mono/blob/mono-2-6/mcs/class/corlib/System.Globalization/CompareInfo.cs), linhas 44–46 e 132–143, seleciona `SimpleCollator` quando as tabelas estão disponíveis. Isso explica por que usar apenas as funções culturais atuais do SO não é prova de equivalência. A correspondência exata desse fonte oficial com o fork Unity instalado e com as tabelas Android permanece **UNKNOWN**.
+
+Foram testadas também as APIs Windows [CompareStringEx](https://learn.microsoft.com/en-us/windows/win32/api/stringapiset/nf-stringapiset-comparestringex) e [FindNLSStringEx](https://learn.microsoft.com/en-us/windows/win32/api/winnls/nf-winnls-findnlsstringex). Tanto `NORM_IGNORECASE` quanto sua combinação com `NORM_LINGUISTIC_CASING` deixaram **26/120 diferenças** contra o Mono no corpus. Nenhuma dessas alternativas foi adotada. As opções modernas de cultura e a comparação ordinal não substituem silenciosamente o contrato histórico.
+
+**Dependência pendente:** autorização para preparar o componente oficial de colação do Mono em `build/deps/`, com versão, hashes e licença registrados, para produzir código C++ sem runtime Mono. A solicitação é exigida pela lista de dependências autorizadas pelo usuário. Nenhuma biblioteca ou tabela desse componente foi instalada ou incorporada. Ler o código para diagnóstico não comprova que ele já tenha sido portado.
+
+O recibo `config/phase2-string-culture-probe.json` contém os casos sintéticos, diferenças, hashes dos produtores/ferramentas e a medição NLS. Esta evidência é de Windows; equivalência de todas as culturas e do Android continua pendente. A aprovação dessa nova dependência não dispensará testes de equivalência nem autoriza copiar qualquer binário Unity para o build.

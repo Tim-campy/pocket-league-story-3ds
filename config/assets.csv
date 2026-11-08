@@ -1,0 +1,45 @@
+tipo,quantidade,formato_origem,formato_alvo,estado,notas
+Unity/AudioClip,27,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=3224
+Unity/Camera,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=234
+Unity/ClassID_11,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=40
+Unity/ClassID_116,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=2004
+Unity/ClassID_124,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=16
+Unity/ClassID_126,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=284
+Unity/ClassID_129,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=325
+Unity/ClassID_13,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=1416
+Unity/ClassID_141,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=8012
+Unity/ClassID_147,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=64144
+Unity/ClassID_149,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=40
+Unity/ClassID_155,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=0
+Unity/ClassID_19,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=208
+Unity/ClassID_30,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=132
+Unity/ClassID_300,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=164
+Unity/ClassID_47,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=612
+Unity/ClassID_5,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=12
+Unity/ClassID_55,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=176
+Unity/ClassID_78,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=208
+Unity/ClassID_81,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=16
+Unity/ClassID_92,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=16
+Unity/ClassID_94,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=55733
+Unity/ClassID_98,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=0
+Unity/Font,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=1971548
+Unity/GameObject,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=174
+Unity/LightmapSettings,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=68
+Unity/Material,4,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=564
+Unity/Mesh,13,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=152632
+Unity/MonoBehaviour,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=7792
+Unity/MonoScript,156,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=14972
+Unity/PreloadData,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=204
+Unity/RenderSettings,1,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=300
+Unity/Shader,1078,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=1261300
+Unity/Sprite,56,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=11884
+Unity/TextAsset,21,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=3275584
+Unity/Texture2D,99,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=104867520
+Unity/Transform,2,Unity serialized v15,UNKNOWN; inventoried only,inventoried,object_bytes=136
+Jar/.csv,3,.csv,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/
+Jar/.gmap,4,.gmap,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/
+Jar/.inf,24,.inf,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/
+Jar/.map,4,.map,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/
+Jar/.png,718,.png,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/
+Jar/.seb,532,.seb,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/
+Jar/.txt,52,.txt,PICA texture if PNG; otherwise UNKNOWN,inventoried,Measured decoded members; content stays under assets/

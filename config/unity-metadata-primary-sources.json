@@ -1,0 +1,86 @@
+{
+  "operation": "primary-source-layout-cross-reference",
+  "AssetStudio": {
+    "commit": "d158e864b556b5970709c2a52e47944d53aa98a2",
+    "files": [
+      {
+        "path": "AssetStudio/SerializedFile.cs",
+        "sha256": "7c1e2c285c8fcdceb92dd0e11d585a3db4e163f0a7e6a4a80227d633ea81772c",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/SerializedFile.cs"
+      },
+      {
+        "path": "AssetStudio/SerializedFileFormatVersion.cs",
+        "sha256": "320c1d954322781728de03ee648ea795cc16068a5cfc123357b7c62a49538aa5",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/SerializedFileFormatVersion.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/Object.cs",
+        "sha256": "6bf0a973242208d74ccb23dfbf20304f5c4896794d1bb3762eb51971ae7b3dae",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/Object.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/EditorExtension.cs",
+        "sha256": "f8bb6a43fe5c7b49432ed6cb73a3b44e90271968ca3d9b75da13002626ec03f7",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/EditorExtension.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/NamedObject.cs",
+        "sha256": "414785c7f3ad6897fee401f83aa54496666a0273f4cb67a0a1df4454e5fb6f8d",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/NamedObject.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/Texture.cs",
+        "sha256": "396d03d4c6ad280713e8a60fcfb086fc0f64f0e549f8a0baa361c475fd73f2fc",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/Texture.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/Texture2D.cs",
+        "sha256": "e3633e049e0592135d4801099c741aa7023e268aa101413f7813bfab434d24d0",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/Texture2D.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/AudioClip.cs",
+        "sha256": "557a26957542382fa2764571df63568899257974067364e0247e7dfa888d8fa1",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/AudioClip.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/TextAsset.cs",
+        "sha256": "12b482ff965d31c93354fc1f7ca8d2b2eb994c47415601a8aa55b1940ce292b9",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/TextAsset.cs"
+      },
+      {
+        "path": "AssetStudio/Classes/Font.cs",
+        "sha256": "67e086a7e298102334030d214e3c26534bd82dd010e77beb93b1e784a45143a6",
+        "url": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/Font.cs"
+      }
+    ]
+  },
+  "AssetRipper": {
+    "commit": "b946b919a5fbf46bb1f0812a7c1b02c55fffec66",
+    "tree": "b946b919a5fbf46bb1f0812a7c1b02c55fffec66",
+    "files": [
+      {
+        "path": "Source/AssetRipper.IO.Files/SerializedFiles/Parser/ObjectInfo.cs",
+        "sha256": "66d343b5fb44a275b37051899fa8b4aa580f1c5dcaff6819a3d4b1a756f7284f",
+        "url": "https://github.com/AssetRipper/AssetRipper/blob/b946b919a5fbf46bb1f0812a7c1b02c55fffec66/Source/AssetRipper.IO.Files/SerializedFiles/Parser/ObjectInfo.cs"
+      },
+      {
+        "path": "Source/AssetRipper.IO.Files/SerializedFiles/SerializedFile.cs",
+        "sha256": "9bc21c6032e9d4b7fbf20e285f4ddfadb9dea8202c463b02df49a1c122cf1e19",
+        "url": "https://github.com/AssetRipper/AssetRipper/blob/b946b919a5fbf46bb1f0812a7c1b02c55fffec66/Source/AssetRipper.IO.Files/SerializedFiles/SerializedFile.cs"
+      },
+      {
+        "path": "Source/AssetRipper.IO.Files/SerializedFiles/Parser/SerializedFileHeader.cs",
+        "sha256": "363e7e4924b03038d8dcb489856d991d9153e04598b465ccca5de51aae48b997",
+        "url": "https://github.com/AssetRipper/AssetRipper/blob/b946b919a5fbf46bb1f0812a7c1b02c55fffec66/Source/AssetRipper.IO.Files/SerializedFiles/Parser/SerializedFileHeader.cs"
+      },
+      {
+        "path": "Source/AssetRipper.IO.Files/SerializedFiles/Parser/SerializedFileMetadata.cs",
+        "sha256": "0b379eda25348269f7231fd0ba92a792f0413969ff808da4abbad1201e810b20",
+        "url": "https://github.com/AssetRipper/AssetRipper/blob/b946b919a5fbf46bb1f0812a7c1b02c55fffec66/Source/AssetRipper.IO.Files/SerializedFiles/Parser/SerializedFileMetadata.cs"
+      }
+    ]
+  },
+  "tools_installed": false,
+  "game_content_included": false
+}

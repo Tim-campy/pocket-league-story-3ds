@@ -1,0 +1,278 @@
+{
+  "operation": "local-APK-asset-metadata-and-custom-container-inventory",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "expected_apk": true,
+  "zip_asset_entries": 1189,
+  "zip_asset_bytes": 117861037,
+  "zip_asset_compressed_bytes": 8083154,
+  "serialized_files": 1160,
+  "serialized_objects": 1489,
+  "unity_versions": {
+    "5.3.4f1": 1159,
+    "5.3.2p3": 1
+  },
+  "standalone_pngs": [
+    {
+      "width": 1024,
+      "height": 2048,
+      "bit_depth": 8,
+      "color_type": 2,
+      "interlace": 0,
+      "has_alpha": false,
+      "stored_bytes": 34074
+    }
+  ],
+  "loose_xml_files": 1,
+  "resource_sidecars": 27,
+  "unity_types": {
+    "AudioClip": {
+      "count": 27,
+      "object_bytes": 3224
+    },
+    "Camera": {
+      "count": 2,
+      "object_bytes": 234
+    },
+    "ClassID_11": {
+      "count": 1,
+      "object_bytes": 40
+    },
+    "ClassID_116": {
+      "count": 1,
+      "object_bytes": 2004
+    },
+    "ClassID_124": {
+      "count": 1,
+      "object_bytes": 16
+    },
+    "ClassID_126": {
+      "count": 1,
+      "object_bytes": 284
+    },
+    "ClassID_129": {
+      "count": 1,
+      "object_bytes": 325
+    },
+    "ClassID_13": {
+      "count": 1,
+      "object_bytes": 1416
+    },
+    "ClassID_141": {
+      "count": 1,
+      "object_bytes": 8012
+    },
+    "ClassID_147": {
+      "count": 1,
+      "object_bytes": 64144
+    },
+    "ClassID_149": {
+      "count": 1,
+      "object_bytes": 40
+    },
+    "ClassID_155": {
+      "count": 1,
+      "object_bytes": 0
+    },
+    "ClassID_19": {
+      "count": 1,
+      "object_bytes": 208
+    },
+    "ClassID_30": {
+      "count": 1,
+      "object_bytes": 132
+    },
+    "ClassID_300": {
+      "count": 1,
+      "object_bytes": 164
+    },
+    "ClassID_47": {
+      "count": 1,
+      "object_bytes": 612
+    },
+    "ClassID_5": {
+      "count": 1,
+      "object_bytes": 12
+    },
+    "ClassID_55": {
+      "count": 1,
+      "object_bytes": 176
+    },
+    "ClassID_78": {
+      "count": 1,
+      "object_bytes": 208
+    },
+    "ClassID_81": {
+      "count": 1,
+      "object_bytes": 16
+    },
+    "ClassID_92": {
+      "count": 1,
+      "object_bytes": 16
+    },
+    "ClassID_94": {
+      "count": 1,
+      "object_bytes": 55733
+    },
+    "ClassID_98": {
+      "count": 1,
+      "object_bytes": 0
+    },
+    "Font": {
+      "count": 2,
+      "object_bytes": 1971548
+    },
+    "GameObject": {
+      "count": 2,
+      "object_bytes": 174
+    },
+    "LightmapSettings": {
+      "count": 1,
+      "object_bytes": 68
+    },
+    "Material": {
+      "count": 4,
+      "object_bytes": 564
+    },
+    "Mesh": {
+      "count": 13,
+      "object_bytes": 152632
+    },
+    "MonoBehaviour": {
+      "count": 2,
+      "object_bytes": 7792
+    },
+    "MonoScript": {
+      "count": 156,
+      "object_bytes": 14972
+    },
+    "PreloadData": {
+      "count": 2,
+      "object_bytes": 204
+    },
+    "RenderSettings": {
+      "count": 1,
+      "object_bytes": 300
+    },
+    "Shader": {
+      "count": 1078,
+      "object_bytes": 1261300
+    },
+    "Sprite": {
+      "count": 56,
+      "object_bytes": 11884
+    },
+    "TextAsset": {
+      "count": 21,
+      "object_bytes": 3275584
+    },
+    "Texture2D": {
+      "count": 99,
+      "object_bytes": 104867520
+    },
+    "Transform": {
+      "count": 2,
+      "object_bytes": 136
+    }
+  },
+  "text_assets": 21,
+  "custom_containers": 16,
+  "encrypted_containers": 15,
+  "opaque_or_list_text_assets": 5,
+  "container_member_count": 1337,
+  "container_member_bytes": 2967362,
+  "member_formats": {
+    ".inf": 24,
+    ".png": 718,
+    ".seb": 532,
+    ".txt": 52,
+    ".gmap": 4,
+    ".map": 4,
+    ".csv": 3
+  },
+  "game_png_occurrences": 718,
+  "game_png_unique": 654,
+  "game_png_alpha_occurrences": 631,
+  "oversized_png_occurrences": 0,
+  "unity_texture_formats": {
+    "RGB24": 30,
+    "ARGB32": 23,
+    "ETC_RGB4": 6,
+    "RGBA32": 4,
+    "Alpha8": 1,
+    "RGBA4444": 34,
+    "RGB565": 1
+  },
+  "audio_formats": {
+    "Vorbis": 27
+  },
+  "font_formats": {
+    "TrueType": 2
+  },
+  "font_data_bytes": 1971132,
+  "png_stored_bytes": 2205372,
+  "png_bit_depths": {
+    "8": 718
+  },
+  "png_color_types": {
+    "6": 630,
+    "2": 40,
+    "3": 48
+  },
+  "png_dimension_range": {
+    "min_width": 1,
+    "max_width": 768,
+    "min_height": 1,
+    "max_height": 480
+  },
+  "audio_frequencies": {
+    "44100": 25,
+    "24000": 1,
+    "32000": 1
+  },
+  "audio_channels": {
+    "2": 27
+  },
+  "memory": {
+    "game_png_occurrences": {
+      "RGBA8": 27899136,
+      "RGBA4": 13949568,
+      "ETC1A4": 6974784,
+      "ETC1": 3487392
+    },
+    "game_png_unique": {
+      "RGBA8": 27537920,
+      "RGBA4": 13768960,
+      "ETC1A4": 6884480,
+      "ETC1": 3442240
+    },
+    "unity_texture_objects": {
+      "RGBA8": 161299712,
+      "RGBA4": 80649856,
+      "ETC1A4": 40324928,
+      "ETC1": 20162464
+    },
+    "audio_pcm16_bytes": 36175860,
+    "audio_duration_seconds": 206.17563989758492,
+    "audio_stream_example_bytes": 262144
+  },
+  "serialized_errors": 0,
+  "unsupported_object_metadata": 0,
+  "source_methods": [
+    "main.AppData.Init",
+    "kairo.unity.io.AssetReader.GetData",
+    "kairo.unity.util.Encrypter.Encode",
+    "kairo.unity.util.JarInflater._load",
+    "kairo.unity.util.JarInflater.GetInputStream"
+  ],
+  "content_in_published_outputs": false,
+  "key_in_published_outputs": false,
+  "original_binaries_copied": false,
+  "texture_conversion_performed": false,
+  "audio_decoding_performed": false,
+  "game_executed": false,
+  "limitations": [
+    "Whole-corpus storage estimates are not runtime residency or a measured peak.",
+    "RGBA4 and ETC1/A4 are size scenarios, not an approved fidelity/conversion choice.",
+    "ETC1 does not retain alpha. Font runtime atlas and data-model/save allocations remain UNKNOWN."
+  ]
+}

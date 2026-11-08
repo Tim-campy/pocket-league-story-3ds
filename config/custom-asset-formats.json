@@ -1,0 +1,209 @@
+{
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "asset_payloads_exported": false,
+  "data_formats": {
+    ".csv": {
+      "count": 3,
+      "stored_bytes": 316974,
+      "total_lines": 7542,
+      "utf8_count": 3
+    },
+    ".gmap": {
+      "count": 4,
+      "stored_bytes": 10372
+    },
+    ".inf": {
+      "count": 24,
+      "stored_bytes": 24576,
+      "total_lines": 1350,
+      "utf8_count": 24
+    },
+    ".map": {
+      "count": 4,
+      "stored_bytes": 119652
+    },
+    ".seb": {
+      "count": 532,
+      "stored_bytes": 35756
+    },
+    ".txt": {
+      "count": 52,
+      "stored_bytes": 254660,
+      "total_lines": 2584,
+      "utf8_count": 52
+    }
+  },
+  "font_source_reference": "https://github.com/Perfare/AssetStudio/blob/d158e864b556b5970709c2a52e47944d53aa98a2/AssetStudio/Classes/Font.cs",
+  "fonts": [
+    {
+      "character_rects": 0,
+      "embedded_font_bytes": 1920344,
+      "format": "TrueType-sfnt",
+      "glyph_count": 15563,
+      "kerning_pairs": 0,
+      "table_count": 18,
+      "table_directory_bounds_valid": true,
+      "texture_reference_is_local_empty_placeholder": true,
+      "units_per_em": 1024,
+      "unparsed_trailing_object_bytes": 36
+    },
+    {
+      "character_rects": 0,
+      "embedded_font_bytes": 50788,
+      "format": "TrueType-sfnt",
+      "glyph_count": 346,
+      "kerning_pairs": 21,
+      "table_count": 16,
+      "table_directory_bounds_valid": true,
+      "texture_reference_is_local_empty_placeholder": true,
+      "units_per_em": 2048,
+      "unparsed_trailing_object_bytes": 56
+    }
+  ],
+  "game_literal_values_emitted": false,
+  "key_values_emitted": false,
+  "limitations": [
+    "MAP payload semantics remain UNKNOWN where no matching C# reader was proved.",
+    "Font trailing fields are not parsed; family names and text values are not emitted.",
+    "Data text is counted as UTF8; no universal RFC4180 CSV schema is assumed."
+  ],
+  "main_inventory_producer_sha256": "35f2b2b4da424f1bb6e405c4a1e7ca15087df76d9cc17257a60f52d03f381205",
+  "map_layouts": {
+    ".gmap:game.Map.LoadMap": 3,
+    ".gmap:game.MapMain.LoadMap": 1,
+    ".map:UNKNOWN": 4
+  },
+  "operation": "local-custom-format-and-font-metadata-inventory",
+  "outside_jar_textassets": [
+    {
+      "NUL_characters": 0,
+      "field_count_histogram": {
+        "1": 27
+      },
+      "file_extension_counts": {
+        ".ogg": 27
+      },
+      "kind": "audio-resource-identifier-list",
+      "lines": 27,
+      "nonempty_lines": 27,
+      "resolved_identifier_counts": {
+        "AudioClip": 27
+      },
+      "source_bindings": [],
+      "stored_bytes": 548,
+      "utf8": true
+    },
+    {
+      "NUL_characters": 0,
+      "field_count_histogram": {
+        "4": 2364,
+        "5": 106,
+        "6": 18,
+        "7": 12,
+        "8": 4,
+        "9": 3
+      },
+      "file_extension_counts": {},
+      "kind": "language-position-and-text-manifest",
+      "lines": 2507,
+      "nonempty_lines": 2507,
+      "resolved_identifier_counts": {},
+      "source_bindings": [
+        {
+          "line": 1427,
+          "path": "reference/src/KairoLibrary/kairo/unity/util/Language.cs"
+        },
+        {
+          "line": 2050,
+          "path": "reference/src/KairoLibrary/kairo/unity/util/Language.cs"
+        }
+      ],
+      "stored_bytes": 113754,
+      "utf8": true
+    },
+    {
+      "NUL_characters": 0,
+      "field_count_histogram": {
+        "1": 48
+      },
+      "file_extension_counts": {
+        ".bytes": 16,
+        ".ogg": 27,
+        ".txt": 5
+      },
+      "kind": "union-resource-identifier-list",
+      "lines": 48,
+      "nonempty_lines": 48,
+      "resolved_identifier_counts": {
+        "AudioClip": 27,
+        "TextAsset": 21
+      },
+      "source_bindings": [
+        {
+          "line": 244,
+          "path": "reference/src/KairoLibrary/kairo/unity/io/AssetReader.cs"
+        }
+      ],
+      "stored_bytes": 1050,
+      "utf8": true
+    },
+    {
+      "NUL_characters": 0,
+      "field_count_histogram": {
+        "3": 25
+      },
+      "file_extension_counts": {},
+      "kind": "language-delimiter-format-table",
+      "lines": 25,
+      "nonempty_lines": 25,
+      "resolved_identifier_counts": {},
+      "source_bindings": [
+        {
+          "line": 689,
+          "path": "reference/src/KairoLibrary/kairo/unity/util/Language.cs"
+        }
+      ],
+      "stored_bytes": 395,
+      "utf8": true
+    },
+    {
+      "NUL_characters": 0,
+      "field_count_histogram": {
+        "4": 2497,
+        "6": 9,
+        "8": 1
+      },
+      "file_extension_counts": {},
+      "kind": "language-position-and-text-manifest",
+      "lines": 2507,
+      "nonempty_lines": 2507,
+      "resolved_identifier_counts": {},
+      "source_bindings": [
+        {
+          "line": 1681,
+          "path": "reference/src/KairoLibrary/kairo/unity/util/Language.cs"
+        },
+        {
+          "line": 2050,
+          "path": "reference/src/KairoLibrary/kairo/unity/util/Language.cs"
+        }
+      ],
+      "stored_bytes": 148028,
+      "utf8": true
+    }
+  ],
+  "private_inventory_sha256": "cf67dc544154caa15cd0fd154f648c149a03e37fc3f5b12899ddc989d55f273b",
+  "producer_sha256": "c4ae1b7cdc56900a55b90e64562f01742fb3a52f775e834c1eb121ca0bf124dc",
+  "reference_commit": "c7d097a847ca1f1a8e5fb7141ff11d338f5915c4",
+  "resource_identifiers_emitted": false,
+  "seb": {
+    "embedded_png_signature": 0,
+    "extent_exact": 532,
+    "frame_count": 1559,
+    "layers": 532,
+    "sprite_records": 1575,
+    "version_0": 532
+  },
+  "target_executed": false,
+  "tools_installed": false
+}

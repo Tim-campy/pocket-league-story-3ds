@@ -1,0 +1,4 @@
+#!/usr/bin/env python3
+"""Local-only inventory/extraction entry point; user supplies --apk."""
+from inventory_assets import main
+raise SystemExit(main())

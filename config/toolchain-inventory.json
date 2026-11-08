@@ -1,0 +1,170 @@
+{
+  "operation": "existing-tools-inventory",
+  "tools": [
+    {
+      "name": "Python",
+      "status": "PRESENT",
+      "path": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Python\\Python312\\python.exe",
+      "sha256": "4d6f5f81a4bca11191c4c7c6b43632694d0a4ce74e068619d8fdc161d469859a",
+      "role": "development tool",
+      "version": "Python 3.12.10"
+    },
+    {
+      "name": "Git",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\Git\\cmd\\git.EXE",
+      "sha256": "7b7971dd13f0c3a284e538601f2f9770b3a87dfaccb5fb52d68141c67ed22364",
+      "role": "development tool",
+      "version": "git version 2.55.0.windows.3"
+    },
+    {
+      "name": "Node",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\nodejs\\node.EXE",
+      "sha256": "3602f2bb1a10f2cbab4c36886218a33c1ab3db87290e73b033c46c77147d0237",
+      "role": "development tool",
+      "version": "v24.19.0"
+    },
+    {
+      "name": "REA",
+      "status": "PRESENT",
+      "path": "C:\\Users\\l_abn\\AppData\\Roaming\\npm\\node_modules\\rea-agents\\scripts\\rea.mjs",
+      "sha256": "526105418604cc6e5a202a6275b700814e27450bfaffd45e7510530ba669de8d",
+      "role": "development tool",
+      "version": "6.5.0"
+    },
+    {
+      "name": "Roslyn csc",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+      "sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+      "role": "development tool",
+      "version": "5.8.0-1.26319.2 (375c93f06396eff88a355bc473d1586bf71befb5)"
+    },
+    {
+      "name": "CMake",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\Common7\\IDE\\CommonExtensions\\Microsoft\\CMake\\CMake\\bin\\cmake.exe",
+      "sha256": "87fafbe6507d4b23c38ccaf72a1859219d070acb57ef0160332df10945d2dfac",
+      "role": "development tool",
+      "version": "cmake version 4.3.1-msvc1\n\nCMake suite maintained and supported by Kitware (kitware.com/cmake)."
+    },
+    {
+      "name": "MSVC C++",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+      "sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+      "role": "development tool",
+      "version": "19.51.36252.0"
+    },
+    {
+      "name": ".NET private VS runtime",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\dotnet\\net10.0\\runtime\\dotnet.exe",
+      "sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+      "role": "development tool",
+      "version": "Microsoft.AspNetCore.App 10.0.10 [C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\dotnet\\net10.0\\runtime\\shared\\Microsoft.AspNetCore.App]\nMicrosoft.NETCore.App 10.0.10 [C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\dotnet\\net10.0\\runtime\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 10.0.10 [C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\dotnet\\net10.0\\runtime\\shared\\Microsoft.WindowsDesktop.App]"
+    },
+    {
+      "name": ".NET PATH runtime",
+      "status": "PRESENT",
+      "path": "C:\\Program Files\\dotnet\\dotnet.EXE",
+      "sha256": "d4401f5fbdea869bb7211b00594746ef6962b7dd2bfceb749889b920070c3f9f",
+      "role": "development tool",
+      "version": "Microsoft.NETCore.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.NETCore.App]\nMicrosoft.WindowsDesktop.App 6.0.36 [C:\\Program Files\\dotnet\\shared\\Microsoft.WindowsDesktop.App]"
+    },
+    {
+      "name": ".NET SDK on PATH",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "not needed by inventory; pinned csc + private runtime used"
+    },
+    {
+      "name": "SDL2 runtime only",
+      "status": "PRESENT",
+      "path": "C:\\Users\\l_abn\\Downloads\\QuiverLauncher-win-Portable\\current\\SDL2.dll",
+      "sha256": "4678d0bdc05034b5d6aef7b8b98cbf083293e4773b599e466ea8490721da43a7",
+      "role": "runtime of another program; not an SDL2 development SDK",
+      "version": "2.0.14.0"
+    },
+    {
+      "name": "SDL2 runtime only",
+      "status": "PRESENT",
+      "path": "C:\\Users\\l_abn\\Downloads\\ConkerRecompiled-V0.1.4-Windows\\SDL2.dll",
+      "sha256": "0dd1ea6a6bf86a01a9ef0cff4247c446760f955e276e874a9db8e51ab8afe99f",
+      "role": "runtime of another program; not an SDL2 development SDK",
+      "version": "2.26.3.0"
+    },
+    {
+      "name": "SDL2 development headers",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "header detection only; linkage/build still unverified"
+    },
+    {
+      "name": "devkitPro pacman",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "devkitARM",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "libctru",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "citro2d",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "citro3d",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "tex3ds",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "makerom",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "bannertool",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    },
+    {
+      "name": "AssetRipper",
+      "status": "PRESENT",
+      "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\tools\\assetripper\\AssetRipper.GUI.Free.exe",
+      "sha256": "58bb4c6a78507d77ea115db236ae7286b097979fba7f77aa247c16a471499fff",
+      "role": "development tool",
+      "version": "2.0.0.0"
+    },
+    {
+      "name": "Azahar",
+      "status": "NOT_FOUND_WITHIN_SEARCH",
+      "version": "UNKNOWN",
+      "role": "development tool"
+    }
+  ],
+  "installed_by_this_script": false,
+  "search_scope": "PATH, environment overrides, VS18 Community, bounded common devkitPro/SDL2/AssetRipper/Azahar paths; initial rg searches also covered Downloads, Local Programs, Program Files and project tools",
+  "limitation": "NOT_FOUND_WITHIN_SEARCH is a bounded negative result, not proof that a tool exists nowhere on disk."
+}

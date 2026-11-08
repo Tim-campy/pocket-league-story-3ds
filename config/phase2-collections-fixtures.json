@@ -1,0 +1,435 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 60,
+  "passed": 60,
+  "expected_lines": 30,
+  "actual_lines": 30,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\CollectionFixtures.cs": "28e2cd187e33c4eb72c6308542d527bc09d27d246a73292f499734776829602b",
+    "tests\\translator\\collection_fixtures.cpp": "378abefa04d67aed5840293ad6ef5a5f07ed877a3b6f9144a78b212ae3427909",
+    "src\\kairo\\common\\semantic_runtime.cpp": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2",
+    "src\\kairo\\common\\semantic_runtime.hpp": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d",
+    "src\\kairo\\common\\managed_collections.hpp": "2dfb3c5ae2e67cd549d2ec757912708ecef08de3f2d2c015ee6bb04ec6fc5228",
+    "tests\\translator\\run_semantic_fixtures.py": "0f521ca812ee73a347aee5b3a4206e0d790854474a5781edfc4050149818d235"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "capacity0",
+      "expected": "capacity0=0",
+      "actual": "capacity0=0",
+      "passed": true
+    },
+    {
+      "case": "capacity1",
+      "expected": "capacity1=4",
+      "actual": "capacity1=4",
+      "passed": true
+    },
+    {
+      "case": "before",
+      "expected": "before=0,none",
+      "actual": "before=0,none",
+      "passed": true
+    },
+    {
+      "case": "after",
+      "expected": "after=0,none",
+      "actual": "after=0,none",
+      "passed": true
+    },
+    {
+      "case": "boxed-before",
+      "expected": "boxed-before=System.InvalidOperationException",
+      "actual": "boxed-before=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "set",
+      "expected": "set=System.InvalidOperationException",
+      "actual": "set=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "capacity-set",
+      "expected": "capacity-set=none",
+      "actual": "capacity-set=none",
+      "passed": true
+    },
+    {
+      "case": "remove-missing",
+      "expected": "remove-missing=none",
+      "actual": "remove-missing=none",
+      "passed": true
+    },
+    {
+      "case": "add-empty",
+      "expected": "add-empty=none",
+      "actual": "add-empty=none",
+      "passed": true
+    },
+    {
+      "case": "remove-empty",
+      "expected": "remove-empty=none",
+      "actual": "remove-empty=none",
+      "passed": true
+    },
+    {
+      "case": "clear-empty",
+      "expected": "clear-empty=System.InvalidOperationException",
+      "actual": "clear-empty=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "disposed",
+      "expected": "disposed=none",
+      "actual": "disposed=none",
+      "passed": true
+    },
+    {
+      "case": "nan",
+      "expected": "nan=True",
+      "actual": "nan=True",
+      "passed": true
+    },
+    {
+      "case": "boxed-equality",
+      "expected": "boxed-equality=True,False,True,True,True",
+      "actual": "boxed-equality=True,False,True,True,True",
+      "passed": true
+    },
+    {
+      "case": "unbox",
+      "expected": "unbox=3,System.InvalidCastException,System.NullReferenceException",
+      "actual": "unbox=3,System.InvalidCastException,System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "string-identity",
+      "expected": "string-identity=True,True",
+      "actual": "string-identity=True,True",
+      "passed": true
+    },
+    {
+      "case": "array-identity",
+      "expected": "array-identity=True,2",
+      "actual": "array-identity=True,2",
+      "passed": true
+    },
+    {
+      "case": "list-alias",
+      "expected": "list-alias=9,4",
+      "actual": "list-alias=9,4",
+      "passed": true
+    },
+    {
+      "case": "list-search",
+      "expected": "list-search=9,7,4,7,1,3",
+      "actual": "list-search=9,7,4,7,1,3",
+      "passed": true
+    },
+    {
+      "case": "list-remove",
+      "expected": "list-remove=7,7",
+      "actual": "list-remove=7,7",
+      "passed": true
+    },
+    {
+      "case": "list-range",
+      "expected": "list-range=7,1,2,7",
+      "actual": "list-range=7,1,2,7",
+      "passed": true
+    },
+    {
+      "case": "self-range",
+      "expected": "self-range=1,1,2,2",
+      "actual": "self-range=1,1,2,2",
+      "passed": true
+    },
+    {
+      "case": "to-array-copy",
+      "expected": "to-array-copy=7,99",
+      "actual": "to-array-copy=7,99",
+      "passed": true
+    },
+    {
+      "case": "bounds",
+      "expected": "bounds=System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException",
+      "actual": "bounds=System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "clear-capacity",
+      "expected": "clear-capacity=0,True",
+      "actual": "clear-capacity=0,True",
+      "passed": true
+    },
+    {
+      "case": "list-object",
+      "expected": "list-object=True",
+      "actual": "list-object=True",
+      "passed": true
+    },
+    {
+      "case": "string-list",
+      "expected": "string-list=0,2",
+      "actual": "string-list=0,2",
+      "passed": true
+    },
+    {
+      "case": "reset-copy",
+      "expected": "reset-copy=0",
+      "actual": "reset-copy=0",
+      "passed": true
+    },
+    {
+      "case": "interface-object",
+      "expected": "interface-object=True",
+      "actual": "interface-object=True",
+      "passed": true
+    },
+    {
+      "case": "interface-equality",
+      "expected": "interface-equality=True",
+      "actual": "interface-equality=True",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "capacity0",
+      "expected": "capacity0=0",
+      "actual": "capacity0=0",
+      "passed": true
+    },
+    {
+      "case": "capacity1",
+      "expected": "capacity1=4",
+      "actual": "capacity1=4",
+      "passed": true
+    },
+    {
+      "case": "before",
+      "expected": "before=0,none",
+      "actual": "before=0,none",
+      "passed": true
+    },
+    {
+      "case": "after",
+      "expected": "after=9,none",
+      "actual": "after=9,none",
+      "passed": true
+    },
+    {
+      "case": "boxed-before",
+      "expected": "boxed-before=System.InvalidOperationException",
+      "actual": "boxed-before=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "set",
+      "expected": "set=none",
+      "actual": "set=none",
+      "passed": true
+    },
+    {
+      "case": "capacity-set",
+      "expected": "capacity-set=none",
+      "actual": "capacity-set=none",
+      "passed": true
+    },
+    {
+      "case": "remove-missing",
+      "expected": "remove-missing=none",
+      "actual": "remove-missing=none",
+      "passed": true
+    },
+    {
+      "case": "add-empty",
+      "expected": "add-empty=System.InvalidOperationException",
+      "actual": "add-empty=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "remove-empty",
+      "expected": "remove-empty=none",
+      "actual": "remove-empty=none",
+      "passed": true
+    },
+    {
+      "case": "clear-empty",
+      "expected": "clear-empty=System.InvalidOperationException",
+      "actual": "clear-empty=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "disposed",
+      "expected": "disposed=System.ObjectDisposedException",
+      "actual": "disposed=System.ObjectDisposedException",
+      "passed": true
+    },
+    {
+      "case": "nan",
+      "expected": "nan=True",
+      "actual": "nan=True",
+      "passed": true
+    },
+    {
+      "case": "boxed-equality",
+      "expected": "boxed-equality=True,False,True,True,True",
+      "actual": "boxed-equality=True,False,True,True,True",
+      "passed": true
+    },
+    {
+      "case": "unbox",
+      "expected": "unbox=3,System.InvalidCastException,System.NullReferenceException",
+      "actual": "unbox=3,System.InvalidCastException,System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "string-identity",
+      "expected": "string-identity=True,True",
+      "actual": "string-identity=True,True",
+      "passed": true
+    },
+    {
+      "case": "array-identity",
+      "expected": "array-identity=True,2",
+      "actual": "array-identity=True,2",
+      "passed": true
+    },
+    {
+      "case": "list-alias",
+      "expected": "list-alias=9,4",
+      "actual": "list-alias=9,4",
+      "passed": true
+    },
+    {
+      "case": "list-search",
+      "expected": "list-search=9,7,4,7,1,3",
+      "actual": "list-search=9,7,4,7,1,3",
+      "passed": true
+    },
+    {
+      "case": "list-remove",
+      "expected": "list-remove=7,7",
+      "actual": "list-remove=7,7",
+      "passed": true
+    },
+    {
+      "case": "list-range",
+      "expected": "list-range=7,1,2,7",
+      "actual": "list-range=7,1,2,7",
+      "passed": true
+    },
+    {
+      "case": "self-range",
+      "expected": "self-range=1,1,2,2",
+      "actual": "self-range=1,1,2,2",
+      "passed": true
+    },
+    {
+      "case": "to-array-copy",
+      "expected": "to-array-copy=7,99",
+      "actual": "to-array-copy=7,99",
+      "passed": true
+    },
+    {
+      "case": "bounds",
+      "expected": "bounds=System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException",
+      "actual": "bounds=System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException,System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "clear-capacity",
+      "expected": "clear-capacity=0,True",
+      "actual": "clear-capacity=0,True",
+      "passed": true
+    },
+    {
+      "case": "list-object",
+      "expected": "list-object=True",
+      "actual": "list-object=True",
+      "passed": true
+    },
+    {
+      "case": "string-list",
+      "expected": "string-list=0,2",
+      "actual": "string-list=0,2",
+      "passed": true
+    },
+    {
+      "case": "reset-copy",
+      "expected": "reset-copy=0",
+      "actual": "reset-copy=0",
+      "passed": true
+    },
+    {
+      "case": "interface-object",
+      "expected": "interface-object=True",
+      "actual": "interface-object=True",
+      "passed": true
+    },
+    {
+      "case": "interface-equality",
+      "expected": "interface-equality=True",
+      "actual": "interface-equality=True",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "after",
+      "dotnet": "after=0,none",
+      "unity_mono": "after=9,none"
+    },
+    {
+      "case": "set",
+      "dotnet": "set=System.InvalidOperationException",
+      "unity_mono": "set=none"
+    },
+    {
+      "case": "add-empty",
+      "dotnet": "add-empty=none",
+      "unity_mono": "add-empty=System.InvalidOperationException"
+    },
+    {
+      "case": "disposed",
+      "dotnet": "disposed=none",
+      "unity_mono": "disposed=System.ObjectDisposedException"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

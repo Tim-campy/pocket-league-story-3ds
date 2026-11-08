@@ -1,0 +1,24 @@
+{
+  "operation": "native-offline-services-policy-fixtures",
+  "status": "PASS",
+  "policy_assertions": 49,
+  "real_process_restart_identity_equal": true,
+  "account_getter_unchanged_and_empty_account_stays_empty": true,
+  "account_fixture_is_synthetic": true,
+  "original_account_source_contract_checked": true,
+  "account_override_absent": true,
+  "invalid_identity_rejected_without_replacement": true,
+  "synthetic_save_unchanged": true,
+  "native_binary_sha256": "e1e0a99d613004c481f5fa70059cfa06c831df19c0be0db2f983b2f3377d67fb",
+  "policy_sha256": "5cae069aaeec0532d744bae1b6575fb539e9d189f12f28dc73631f1eda133514",
+  "sources": {
+    "src/kairo/common/services.cpp": "62ab4911f93cc8af666196088b869b441d709fd28e50d632d6e8171cb48ee16f",
+    "tests/kairo/offline_services.cpp": "b8fcbed652dd390601dc21d8d8c309176f3ba22fbfeafcbfd1f50e81a58ecaa2",
+    "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0"
+  },
+  "original_game_executed": false,
+  "reference_modified": false,
+  "game_save_model_reimplemented": false,
+  "integration_into_translated_game": "PENDING",
+  "producer_sha256": "fd3a091c681eccdecc7d3f887d39e841cfda0b4885c52dd046903f194a23e76a"
+}

@@ -1,0 +1,537 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 72,
+  "passed": 72,
+  "expected_lines": 36,
+  "actual_lines": 36,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\EncodingFixtures.cs": "3a0ba628e9d1ca15aae53f86fda24fb7a8f205e08f684052969cb036bae2f9bc",
+    "tests\\translator\\encoding_fixtures.cpp": "e106ac4028ff9c19a04239320d25c49bab78a335d09619c0819e42b3a5c485e0",
+    "src\\kairo\\common\\semantic_runtime.cpp": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2",
+    "src\\kairo\\common\\semantic_runtime.hpp": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d",
+    "src\\kairo\\common\\managed_collections.hpp": "2dfb3c5ae2e67cd549d2ec757912708ecef08de3f2d2c015ee6bb04ec6fc5228",
+    "tests\\translator\\run_semantic_fixtures.py": "0f521ca812ee73a347aee5b3a4206e0d790854474a5781edfc4050149818d235"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "encode-0",
+      "expected": "encode-0=",
+      "actual": "encode-0=",
+      "passed": true
+    },
+    {
+      "case": "encode-1",
+      "expected": "encode-1=41,00,5A",
+      "actual": "encode-1=41,00,5A",
+      "passed": true
+    },
+    {
+      "case": "encode-2",
+      "expected": "encode-2=F0,9F,98,80",
+      "actual": "encode-2=F0,9F,98,80",
+      "passed": true
+    },
+    {
+      "case": "encode-3",
+      "expected": "encode-3=EF,BF,BD",
+      "actual": "encode-3=EF,BF,BD",
+      "passed": true
+    },
+    {
+      "case": "encode-4",
+      "expected": "encode-4=EF,BF,BD",
+      "actual": "encode-4=EF,BF,BD",
+      "passed": true
+    },
+    {
+      "case": "encode-5",
+      "expected": "encode-5=EF,BF,BD,EF,BF,BD",
+      "actual": "encode-5=EF,BF,BD,EF,BF,BD",
+      "passed": true
+    },
+    {
+      "case": "encode-6",
+      "expected": "encode-6=EF,BF,BD,41",
+      "actual": "encode-6=EF,BF,BD,41",
+      "passed": true
+    },
+    {
+      "case": "encode-7",
+      "expected": "encode-7=EF,BF,BD,EF,BF,BD",
+      "actual": "encode-7=EF,BF,BD,EF,BF,BD",
+      "passed": true
+    },
+    {
+      "case": "encode-8",
+      "expected": "encode-8=F0,9F,98,80,EF,BF,BD",
+      "actual": "encode-8=F0,9F,98,80,EF,BF,BD",
+      "passed": true
+    },
+    {
+      "case": "encode-9",
+      "expected": "encode-9=EF,BF,BF",
+      "actual": "encode-9=EF,BF,BF",
+      "passed": true
+    },
+    {
+      "case": "decode-0",
+      "expected": "decode-0=",
+      "actual": "decode-0=",
+      "passed": true
+    },
+    {
+      "case": "decode-1",
+      "expected": "decode-1=0041,0000,005A",
+      "actual": "decode-1=0041,0000,005A",
+      "passed": true
+    },
+    {
+      "case": "decode-2",
+      "expected": "decode-2=00A9",
+      "actual": "decode-2=00A9",
+      "passed": true
+    },
+    {
+      "case": "decode-3",
+      "expected": "decode-3=20AC",
+      "actual": "decode-3=20AC",
+      "passed": true
+    },
+    {
+      "case": "decode-4",
+      "expected": "decode-4=D83D,DE00",
+      "actual": "decode-4=D83D,DE00",
+      "passed": true
+    },
+    {
+      "case": "decode-5",
+      "expected": "decode-5=FFFD,FFFD",
+      "actual": "decode-5=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-6",
+      "expected": "decode-6=FFFD,FFFD,FFFD",
+      "actual": "decode-6=FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-7",
+      "expected": "decode-7=FFFD,FFFD,FFFD,FFFD",
+      "actual": "decode-7=FFFD,FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-8",
+      "expected": "decode-8=FFFD,FFFD",
+      "actual": "decode-8=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-9",
+      "expected": "decode-9=FFFD",
+      "actual": "decode-9=FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-10",
+      "expected": "decode-10=FFFD",
+      "actual": "decode-10=FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-11",
+      "expected": "decode-11=FFFD",
+      "actual": "decode-11=FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-12",
+      "expected": "decode-12=FFFD",
+      "actual": "decode-12=FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-13",
+      "expected": "decode-13=FFFD,0028,FFFD",
+      "actual": "decode-13=FFFD,0028,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-14",
+      "expected": "decode-14=FFFD,FFFD,FFFD",
+      "actual": "decode-14=FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-15",
+      "expected": "decode-15=FFFD,FFFD,FFFD,FFFD",
+      "actual": "decode-15=FFFD,FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-16",
+      "expected": "decode-16=FEFF",
+      "actual": "decode-16=FEFF",
+      "passed": true
+    },
+    {
+      "case": "decode-17",
+      "expected": "decode-17=FFFD,0041",
+      "actual": "decode-17=FFFD,0041",
+      "passed": true
+    },
+    {
+      "case": "decode-18",
+      "expected": "decode-18=FFFD,0041",
+      "actual": "decode-18=FFFD,0041",
+      "passed": true
+    },
+    {
+      "case": "encode-null",
+      "expected": "encode-null=System.ArgumentNullException",
+      "actual": "encode-null=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "decode-null",
+      "expected": "decode-null=System.ArgumentNullException",
+      "actual": "decode-null=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "slice-valid",
+      "expected": "slice-valid=20AC",
+      "actual": "slice-valid=20AC",
+      "passed": true
+    },
+    {
+      "case": "slice-middle",
+      "expected": "slice-middle=FFFD,FFFD",
+      "actual": "slice-middle=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "slice-negative",
+      "expected": "slice-negative=System.ArgumentOutOfRangeException",
+      "actual": "slice-negative=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "slice-outside",
+      "expected": "slice-outside=System.ArgumentOutOfRangeException",
+      "actual": "slice-outside=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "slice-overflow",
+      "expected": "slice-overflow=System.ArgumentOutOfRangeException",
+      "actual": "slice-overflow=System.ArgumentOutOfRangeException",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "encode-0",
+      "expected": "encode-0=",
+      "actual": "encode-0=",
+      "passed": true
+    },
+    {
+      "case": "encode-1",
+      "expected": "encode-1=41,00,5A",
+      "actual": "encode-1=41,00,5A",
+      "passed": true
+    },
+    {
+      "case": "encode-2",
+      "expected": "encode-2=F0,9F,98,80",
+      "actual": "encode-2=F0,9F,98,80",
+      "passed": true
+    },
+    {
+      "case": "encode-3",
+      "expected": "encode-3=ED,A0,80",
+      "actual": "encode-3=ED,A0,80",
+      "passed": true
+    },
+    {
+      "case": "encode-4",
+      "expected": "encode-4=ED,B0,80",
+      "actual": "encode-4=ED,B0,80",
+      "passed": true
+    },
+    {
+      "case": "encode-5",
+      "expected": "encode-5=ED,A0,80,ED,A0,80",
+      "actual": "encode-5=ED,A0,80,ED,A0,80",
+      "passed": true
+    },
+    {
+      "case": "encode-6",
+      "expected": "encode-6=ED,A0,80,41",
+      "actual": "encode-6=ED,A0,80,41",
+      "passed": true
+    },
+    {
+      "case": "encode-7",
+      "expected": "encode-7=ED,B0,80,ED,A0,80",
+      "actual": "encode-7=ED,B0,80,ED,A0,80",
+      "passed": true
+    },
+    {
+      "case": "encode-8",
+      "expected": "encode-8=F0,9F,98,80,ED,A0,80",
+      "actual": "encode-8=F0,9F,98,80,ED,A0,80",
+      "passed": true
+    },
+    {
+      "case": "encode-9",
+      "expected": "encode-9=EF,BF,BF",
+      "actual": "encode-9=EF,BF,BF",
+      "passed": true
+    },
+    {
+      "case": "decode-0",
+      "expected": "decode-0=",
+      "actual": "decode-0=",
+      "passed": true
+    },
+    {
+      "case": "decode-1",
+      "expected": "decode-1=0041,0000,005A",
+      "actual": "decode-1=0041,0000,005A",
+      "passed": true
+    },
+    {
+      "case": "decode-2",
+      "expected": "decode-2=00A9",
+      "actual": "decode-2=00A9",
+      "passed": true
+    },
+    {
+      "case": "decode-3",
+      "expected": "decode-3=20AC",
+      "actual": "decode-3=20AC",
+      "passed": true
+    },
+    {
+      "case": "decode-4",
+      "expected": "decode-4=D83D,DE00",
+      "actual": "decode-4=D83D,DE00",
+      "passed": true
+    },
+    {
+      "case": "decode-5",
+      "expected": "decode-5=FFFD,FFFD",
+      "actual": "decode-5=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-6",
+      "expected": "decode-6=FFFD,FFFD,FFFD",
+      "actual": "decode-6=FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-7",
+      "expected": "decode-7=FFFD,FFFD,FFFD,FFFD",
+      "actual": "decode-7=FFFD,FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-8",
+      "expected": "decode-8=FFFD,FFFD",
+      "actual": "decode-8=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-9",
+      "expected": "decode-9=FFFD",
+      "actual": "decode-9=FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-10",
+      "expected": "decode-10=FFFD",
+      "actual": "decode-10=FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-11",
+      "expected": "decode-11=FFFD,FFFD",
+      "actual": "decode-11=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-12",
+      "expected": "decode-12=FFFD,FFFD,FFFD",
+      "actual": "decode-12=FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-13",
+      "expected": "decode-13=FFFD,0028,FFFD",
+      "actual": "decode-13=FFFD,0028,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-14",
+      "expected": "decode-14=FFFD,FFFD,FFFD",
+      "actual": "decode-14=FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-15",
+      "expected": "decode-15=FFFD,FFFD,FFFD,FFFD",
+      "actual": "decode-15=FFFD,FFFD,FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "decode-16",
+      "expected": "decode-16=FEFF",
+      "actual": "decode-16=FEFF",
+      "passed": true
+    },
+    {
+      "case": "decode-17",
+      "expected": "decode-17=FFFD,FFFD,0041",
+      "actual": "decode-17=FFFD,FFFD,0041",
+      "passed": true
+    },
+    {
+      "case": "decode-18",
+      "expected": "decode-18=FFFD,FFFD,FFFD,0041",
+      "actual": "decode-18=FFFD,FFFD,FFFD,0041",
+      "passed": true
+    },
+    {
+      "case": "encode-null",
+      "expected": "encode-null=System.ArgumentNullException",
+      "actual": "encode-null=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "decode-null",
+      "expected": "decode-null=System.ArgumentNullException",
+      "actual": "decode-null=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "slice-valid",
+      "expected": "slice-valid=20AC",
+      "actual": "slice-valid=20AC",
+      "passed": true
+    },
+    {
+      "case": "slice-middle",
+      "expected": "slice-middle=FFFD,FFFD",
+      "actual": "slice-middle=FFFD,FFFD",
+      "passed": true
+    },
+    {
+      "case": "slice-negative",
+      "expected": "slice-negative=System.ArgumentOutOfRangeException",
+      "actual": "slice-negative=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "slice-outside",
+      "expected": "slice-outside=System.ArgumentOutOfRangeException",
+      "actual": "slice-outside=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "slice-overflow",
+      "expected": "slice-overflow=System.ArgumentOutOfRangeException",
+      "actual": "slice-overflow=System.ArgumentOutOfRangeException",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "encode-3",
+      "dotnet": "encode-3=EF,BF,BD",
+      "unity_mono": "encode-3=ED,A0,80"
+    },
+    {
+      "case": "encode-4",
+      "dotnet": "encode-4=EF,BF,BD",
+      "unity_mono": "encode-4=ED,B0,80"
+    },
+    {
+      "case": "encode-5",
+      "dotnet": "encode-5=EF,BF,BD,EF,BF,BD",
+      "unity_mono": "encode-5=ED,A0,80,ED,A0,80"
+    },
+    {
+      "case": "encode-6",
+      "dotnet": "encode-6=EF,BF,BD,41",
+      "unity_mono": "encode-6=ED,A0,80,41"
+    },
+    {
+      "case": "encode-7",
+      "dotnet": "encode-7=EF,BF,BD,EF,BF,BD",
+      "unity_mono": "encode-7=ED,B0,80,ED,A0,80"
+    },
+    {
+      "case": "encode-8",
+      "dotnet": "encode-8=F0,9F,98,80,EF,BF,BD",
+      "unity_mono": "encode-8=F0,9F,98,80,ED,A0,80"
+    },
+    {
+      "case": "decode-11",
+      "dotnet": "decode-11=FFFD",
+      "unity_mono": "decode-11=FFFD,FFFD"
+    },
+    {
+      "case": "decode-12",
+      "dotnet": "decode-12=FFFD",
+      "unity_mono": "decode-12=FFFD,FFFD,FFFD"
+    },
+    {
+      "case": "decode-17",
+      "dotnet": "decode-17=FFFD,0041",
+      "unity_mono": "decode-17=FFFD,FFFD,0041"
+    },
+    {
+      "case": "decode-18",
+      "dotnet": "decode-18=FFFD,0041",
+      "unity_mono": "decode-18=FFFD,FFFD,FFFD,0041"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

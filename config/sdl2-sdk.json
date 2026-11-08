@@ -1,0 +1,15 @@
+{
+  "operation": "authorized-local-SDL2-development-SDK-preparation",
+  "version": "2.32.10",
+  "sdk": "build/deps/SDL2-2.32.10",
+  "package_sha256": "af347939395a58b365846aaea27391e69f9ec9d4dd650d6ac40802159b418a6e",
+  "source": "https://github.com/libsdl-org/SDL/releases/download/release-2.32.10/SDL2-devel-2.32.10-VC.zip",
+  "files": {
+    "include/SDL.h": "952e89e1dc4e0dd1a7bea6a153df632b8cdb6e433a9b3b0702c5ffe15b9b9360",
+    "lib/x64/SDL2.lib": "361cceac30f75ee01e1aeeff5ce31a66b38eca037d03305d1202dd5b1d9355f0",
+    "lib/x64/SDL2.dll": "b37740a72a7a9706216df9f0134894bb7a850b356fd149398c67d874cbcfacb4",
+    "cmake/sdl2-config.cmake": "9c8778c087171513c357a3f70834edf0b1c3eb686460d666567d26950243da64"
+  },
+  "global_install": false,
+  "other_dependencies_installed": false
+}

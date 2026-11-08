@@ -10,6 +10,8 @@ O C# não roda no 3DS: não há runtime .NET utilizável no homebrew, e o suport
 
 ## 2. Regras de conteúdo (invioláveis)
 
+**Decisão posterior do usuário para a Fase 2:** os literais de texto já presentes no C# reconstruído podem permanecer no C++ gerado, como parte do código de engenharia reversa. Essa autorização específica prevalece sobre a restrição de literais dos itens 2/8 e da Fase 1 abaixo. Ela não autoriza copiar textos, tabelas, fontes, imagens ou qualquer conteúdo dos assets para o código ou repositório. `Language._translateText` conserva sua lógica e recebe as tabelas dos assets locais. Demais regras mantidas.
+
 Estas regras definem o que pode existir no repositório e no que é distribuído. Elas prevalecem sobre qualquer conveniência técnica.
 
 1. **O repositório contém apenas código obtido por engenharia reversa e código novo escrito para o port.** Isso inclui: o C# reconstruído, o código C++ traduzido dele, a reimplementação da KairoLibrary, o tradutor, as ferramentas de extração e conversão de assets, scripts de build e documentação.

@@ -12,7 +12,7 @@ import sys
 LIMIT = 2_000_000
 EXPECTED_REFERENCE = 'c7d097a847ca1f1a8e5fb7141ff11d338f5915c4'
 BLOCKED_DIRECTORIES = {'assets', 'build', 'data', 'original'}
-BLOCKED_SUFFIXES = set('apk dll so dex exe pdb mdb 3dsx cia smdh t3x bclim bcwav bcstm wav ogg mp3 flac aac m4a pcm adpcm bin dat bytes ress resource unity3d bundle unity prefab asset png jpg jpeg gif bmp tga dds ktx pvr ttf otf woff woff2 zip 7z nupkg seb gmap map inf ttc dfont fnt'.split())
+BLOCKED_SUFFIXES = set('apk dll so dex exe pdb mdb 3dsx cia smdh t3x bclim bcwav bcstm wav ogg mp3 flac aac m4a pcm adpcm bin dat bytes ress resource unity3d bundle unity prefab asset png jpg jpeg gif bmp tga dds ktx pvr ttf otf woff woff2 zip 7z nupkg seb gmap map inf ttc dfont fnt rgba8'.split())
 
 
 def violation(path, size, mode='100644', object_id=''):

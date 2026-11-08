@@ -1,0 +1,100 @@
+{
+  "operation": "differential-generated-portable-method-source-oracle",
+  "cases": 350,
+  "passed": 350,
+  "methods": 50,
+  "executed_method_ids": [
+    "M:java.lang.JInteger.#ctor(System.Int32)",
+    "M:java.lang.JInteger.IntValue",
+    "M:java.lang.JInteger.op_Implicit(java.lang.JInteger)~System.Int32",
+    "M:java.lang.JInteger.ParseInt(System.String)",
+    "M:java.lang.JInteger.ValueOf(System.String)",
+    "M:java.lang.JLong.ParseLong(System.String)",
+    "M:java.lang.JMath.Abs(System.Int32)",
+    "M:java.lang.JMath.Abs(System.Int64)",
+    "M:java.lang.JMath.Abs(System.Single)",
+    "M:java.lang.JMath.Cos(System.Double)",
+    "M:java.lang.JMath.Sin(System.Double)",
+    "M:java.lang.JMath.Sqrt(System.Double)",
+    "M:java.lang.JMath.ToRadians(System.Double)",
+    "M:java.lang.JString.New(System.Byte[])",
+    "M:java.lang.JString.New(System.String)",
+    "M:java.lang.JString.ValueOf(System.Char)",
+    "M:java.lang.JString.ValueOf(System.Int32)",
+    "M:java.lang.JString.ValueOf(System.Int64)",
+    "M:java.lang.StringEx.CharAt(System.String,System.Int32)",
+    "M:java.lang.StringEx.GetBytes(System.String)",
+    "M:java.lang.StringEx.Length(System.String)",
+    "M:java.lang.StringEx.SubstringJ(System.String,System.Int32,System.Int32)",
+    "M:java.lang.StringEx.SubstringJ(System.String,System.Int32)",
+    "M:kairo.common.cfg.Config.#ctor",
+    "M:kairo.unity.m3d4.util3d.Vector3D.#ctor",
+    "M:kairo.unity.m3d4.util3d.Vector3D.#ctor(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Add(kairo.unity.m3d4.util3d.Vector3D)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Add(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Set(kairo.unity.m3d4.util3d.Vector3D)",
+    "M:kairo.unity.m3d4.util3d.Vector3D.Set(System.Single,System.Single,System.Single)",
+    "M:kairo.unity.util.Base64.Decode(System.String)",
+    "M:kairo.unity.util.Base64.Encode(System.Byte[])",
+    "M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.Join(System.Int16,System.Int16)",
+    "M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.Split(System.Int32)",
+    "M:kairo.unity.util.CRC64.GetValue(System.Byte[])",
+    "M:kairo.unity.util.CRC64.MakeCrcTable",
+    "M:kairo.unity.util.CRC64.Update(System.Int64,System.Byte[],System.Int32)",
+    "M:kairo.unity.util.EncodeUtil.ByteAryToLong(System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ConvertEndian(System.Byte[],System.Int32)",
+    "M:kairo.unity.util.EncodeUtil.LongToByteAry(System.Int64,System.Boolean)",
+    "M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.Encode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.SetEncryptionKey(System.Byte[])",
+    "M:kairo.unity.util.Property.#ctor",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32)"
+  ],
+  "failures": [],
+  "scalar_float_comparison": "exact IEEE bits",
+  "post_state_compared": true,
+  "original_binaries_used": false,
+  "game_executed": false,
+  "runtime_profile": "DotNet; fixture input selected operations do not exercise documented Mono-specific divergences",
+  "source_oracle_sha256": "df742adc4a738473b1156f094136193b5cd68d507cbddfadaaeca67d2e4abb96",
+  "cpp_generated_sha256": "e30437d91eefc0eccbd3d6cbd2cc336671a179d7921c0ce1bfe8202367bb16e2",
+  "hpp_generated_sha256": "5f558262dc889efd5d73b7c1e80d8224044f591d9e84b79f90429f873a15bdd9",
+  "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "native_executable": {
+    "path": "build/translator/differential/Harness.exe",
+    "sha256": "5794da712cc9a2d5230ba64bee72993642f75c040c4c91d46dd595171b8ae4d8"
+  },
+  "source_oracle_executable": {
+    "path": "build/translator/differential/Harness.dll",
+    "sha256": "d768c8a432ac3731ba8b64c71e333298e349fb19ddcfb3a6950cedcc9108dfd1"
+  },
+  "differential_runner_sha256": "4087d6f0a63c046ec78f30abe79ea24d8fe2b0cca3e02d03900ebbec09f981c4",
+  "runtime_sources": [
+    {
+      "path": "src/kairo/common/semantic_runtime.hpp",
+      "sha256": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d"
+    },
+    {
+      "path": "src/kairo/common/semantic_runtime.cpp",
+      "sha256": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2"
+    },
+    {
+      "path": "src/kairo/common/managed_collections.hpp",
+      "sha256": "2dfb3c5ae2e67cd549d2ec757912708ecef08de3f2d2c015ee6bb04ec6fc5228"
+    },
+    {
+      "path": "src/kairo/common/managed_streams.hpp",
+      "sha256": "144f9f9c017d137670cf3e41fe7b4323f3983c20a31a5d0b8d323861d7526d76"
+    },
+    {
+      "path": "src/kairo/common/managed_streams.cpp",
+      "sha256": "c22a3800528ed00564c938506f618260b0e2aae0a2be5674fedf7eb2e54352bb"
+    }
+  ],
+  "comparison_profile": "Standalone source oracle compiled with current Roslyn/.NET10; native profile DotNet. Historical divergences require separate runtime-oracle receipts."
+}

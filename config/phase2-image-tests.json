@@ -1,0 +1,35 @@
+{
+  "rgba8_files": 654,
+  "rgba8_bytes": 16933248,
+  "peak_texture_payload_bytes": 1179648,
+  "game_boot": false,
+  "operation": "native-SDL2-private-RGBA8-readback",
+  "assets_published": false,
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
+  "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
+  "executable_sha256": "ffd0f23ee51f9392a11b49173820c0d28389bbd512cf8638b8533c7dd6c2d14d",
+  "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
+  "sources": [
+    {
+      "path": "tools/build_pc.py",
+      "sha256": "0bc24ecfeacde664895d0478e13a707d2ad60162bf2cf7610f66f975033d5c91"
+    },
+    {
+      "path": "tests/kairo/asset_roundtrip.cpp",
+      "sha256": "98e60afca94680587363218660e80d51827e7c1ded0c92f5aa765e5419f4f5a7"
+    },
+    {
+      "path": "src/kairo/platform/sdl/backend.cpp",
+      "sha256": "3b27238aceb7e67a9578ebca4574b2ce6109ce4882bae1e0bbc0978ab312bdd9"
+    },
+    {
+      "path": "src/kairo/platform/sdl/backend.hpp",
+      "sha256": "81cf34cc2fc084428aef4eb4ea6f080bbe98047e429de15b9f35955105281d1e"
+    },
+    {
+      "path": "src/kairo/api/platform.hpp",
+      "sha256": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1"
+    }
+  ]
+}

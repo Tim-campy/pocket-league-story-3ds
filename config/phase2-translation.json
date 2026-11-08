@@ -1,0 +1,2684 @@
+{
+  "operation": "roslyn-source-to-cpp17-translation",
+  "assembly": "KairoLibrary",
+  "requested_symbols": 254,
+  "requested_methods": 172,
+  "emitted_methods": [
+    {
+      "id": "M:java.lang.JInteger.#ctor(System.Int32)",
+      "cpp_name": "cs_6ebf505bf86af890",
+      "name": ".ctor",
+      "kind": "Constructor",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JInteger.cs",
+      "line": 24,
+      "return_type": "java.lang.JInteger",
+      "is_static": false,
+      "is_constructor": true,
+      "containing_type": "java.lang.JInteger",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JInteger.IntValue",
+      "cpp_name": "cs_b1fe1ec0a394cd44",
+      "name": "IntValue",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JInteger.cs",
+      "line": 29,
+      "return_type": "int",
+      "is_static": false,
+      "is_constructor": false,
+      "containing_type": "java.lang.JInteger",
+      "parameters": []
+    },
+    {
+      "id": "M:java.lang.JInteger.op_Implicit(java.lang.JInteger)~System.Int32",
+      "cpp_name": "cs_9c23d908aa6dc449",
+      "name": "op_Implicit",
+      "kind": "Conversion",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JInteger.cs",
+      "line": 14,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JInteger",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "java.lang.JInteger"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JInteger.ParseInt(System.String)",
+      "cpp_name": "cs_2dbfed27c63e8b3d",
+      "name": "ParseInt",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JInteger.cs",
+      "line": 78,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JInteger",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JInteger.ValueOf(System.String)",
+      "cpp_name": "cs_908687d09e1c5f78",
+      "name": "ValueOf",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JInteger.cs",
+      "line": 34,
+      "return_type": "java.lang.JInteger",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JInteger",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JLong.ParseLong(System.String)",
+      "cpp_name": "cs_fbdffc982daddb52",
+      "name": "ParseLong",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JLong.cs",
+      "line": 53,
+      "return_type": "long",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JLong",
+      "parameters": [
+        {
+          "name": "s",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.Abs(System.Int32)",
+      "cpp_name": "cs_2913a1bf47038615",
+      "name": "Abs",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 29,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.Abs(System.Int64)",
+      "cpp_name": "cs_6e4be89b36f8db0c",
+      "name": "Abs",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 38,
+      "return_type": "long",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "long"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.Abs(System.Single)",
+      "cpp_name": "cs_918aee83eb36fe79",
+      "name": "Abs",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 20,
+      "return_type": "float",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.Cos(System.Double)",
+      "cpp_name": "cs_3e87ea623e33347e",
+      "name": "Cos",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 129,
+      "return_type": "double",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.Sin(System.Double)",
+      "cpp_name": "cs_458102b5e16b47b0",
+      "name": "Sin",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 134,
+      "return_type": "double",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.Sqrt(System.Double)",
+      "cpp_name": "cs_6d9bf6060a3effca",
+      "name": "Sqrt",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 144,
+      "return_type": "double",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JMath.ToRadians(System.Double)",
+      "cpp_name": "cs_562cc36bcf840cbd",
+      "name": "ToRadians",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JMath.cs",
+      "line": 154,
+      "return_type": "double",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JMath",
+      "parameters": [
+        {
+          "name": "angdeg",
+          "type": "double"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JString.New(System.Byte[])",
+      "cpp_name": "cs_0062608f682073ef",
+      "name": "New",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JString.cs",
+      "line": 1170,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JString",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "byte[]"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JString.New(System.String)",
+      "cpp_name": "cs_b5c18ae6a6b66a78",
+      "name": "New",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JString.cs",
+      "line": 1198,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JString",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JString.ValueOf(System.Char)",
+      "cpp_name": "cs_f8c13f883911de4b",
+      "name": "ValueOf",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JString.cs",
+      "line": 1208,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JString",
+      "parameters": [
+        {
+          "name": "c",
+          "type": "char"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JString.ValueOf(System.Int32)",
+      "cpp_name": "cs_420fb62b9e208a96",
+      "name": "ValueOf",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JString.cs",
+      "line": 1233,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JString",
+      "parameters": [
+        {
+          "name": "i",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.JString.ValueOf(System.Int64)",
+      "cpp_name": "cs_45bf8972ccfd60d6",
+      "name": "ValueOf",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JString.cs",
+      "line": 1238,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.JString",
+      "parameters": [
+        {
+          "name": "l",
+          "type": "long"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.StringEx.CharAt(System.String,System.Int32)",
+      "cpp_name": "cs_b5d1dc3a4e215d09",
+      "name": "CharAt",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\StringEx.cs",
+      "line": 8,
+      "return_type": "char",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.StringEx",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "index",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.StringEx.GetBytes(System.String)",
+      "cpp_name": "cs_a8e45b955b78e04d",
+      "name": "GetBytes",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\StringEx.cs",
+      "line": 22,
+      "return_type": "byte[]",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.StringEx",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.StringEx.Length(System.String)",
+      "cpp_name": "cs_8eed6765a32617b7",
+      "name": "Length",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\StringEx.cs",
+      "line": 52,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.StringEx",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.StringEx.SubstringJ(System.String,System.Int32,System.Int32)",
+      "cpp_name": "cs_c8a33d0ecbcf0b78",
+      "name": "SubstringJ",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\StringEx.cs",
+      "line": 80,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.StringEx",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "beginIndex",
+          "type": "int"
+        },
+        {
+          "name": "endIndex",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:java.lang.StringEx.SubstringJ(System.String,System.Int32)",
+      "cpp_name": "cs_51d6c186b8b049a1",
+      "name": "SubstringJ",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\StringEx.cs",
+      "line": 85,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "java.lang.StringEx",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        },
+        {
+          "name": "beginIndex",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.common.cfg.Config.#ctor",
+      "cpp_name": "cs_6b6e33fd4eab08cf",
+      "name": ".ctor",
+      "kind": "Constructor",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\common\\cfg\\Config.cs",
+      "line": 157,
+      "return_type": "kairo.common.cfg.Config",
+      "is_static": false,
+      "is_constructor": true,
+      "containing_type": "kairo.common.cfg.Config",
+      "parameters": []
+    },
+    {
+      "id": "M:kairo.unity.m3d4.util3d.Vector3D.#ctor",
+      "cpp_name": "cs_f0250768de698879",
+      "name": ".ctor",
+      "kind": "Constructor",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\m3d4\\util3d\\Vector3D.cs",
+      "line": 15,
+      "return_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "is_static": false,
+      "is_constructor": true,
+      "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "parameters": []
+    },
+    {
+      "id": "M:kairo.unity.m3d4.util3d.Vector3D.#ctor(System.Single,System.Single,System.Single)",
+      "cpp_name": "cs_4df100a3a5400345",
+      "name": ".ctor",
+      "kind": "Constructor",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\m3d4\\util3d\\Vector3D.cs",
+      "line": 20,
+      "return_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "is_static": false,
+      "is_constructor": true,
+      "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        },
+        {
+          "name": "y",
+          "type": "float"
+        },
+        {
+          "name": "z",
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.m3d4.util3d.Vector3D.Add(kairo.unity.m3d4.util3d.Vector3D)",
+      "cpp_name": "cs_b222f1bce980230f",
+      "name": "Add",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\m3d4\\util3d\\Vector3D.cs",
+      "line": 37,
+      "return_type": "void",
+      "is_static": false,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "kairo.unity.m3d4.util3d.Vector3D"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.m3d4.util3d.Vector3D.Add(System.Single,System.Single,System.Single)",
+      "cpp_name": "cs_c44a23edacd04c43",
+      "name": "Add",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\m3d4\\util3d\\Vector3D.cs",
+      "line": 30,
+      "return_type": "void",
+      "is_static": false,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        },
+        {
+          "name": "y",
+          "type": "float"
+        },
+        {
+          "name": "z",
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.m3d4.util3d.Vector3D.Set(kairo.unity.m3d4.util3d.Vector3D)",
+      "cpp_name": "cs_cdf43d81dba1e3fb",
+      "name": "Set",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\m3d4\\util3d\\Vector3D.cs",
+      "line": 100,
+      "return_type": "void",
+      "is_static": false,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "kairo.unity.m3d4.util3d.Vector3D"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.m3d4.util3d.Vector3D.Set(System.Single,System.Single,System.Single)",
+      "cpp_name": "cs_eab8c2f1c1ba14e9",
+      "name": "Set",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\m3d4\\util3d\\Vector3D.cs",
+      "line": 93,
+      "return_type": "void",
+      "is_static": false,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
+      "parameters": [
+        {
+          "name": "x",
+          "type": "float"
+        },
+        {
+          "name": "y",
+          "type": "float"
+        },
+        {
+          "name": "z",
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.Base64.Decode(System.String)",
+      "cpp_name": "cs_45659d3497c243a5",
+      "name": "Decode",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Base64.cs",
+      "line": 17,
+      "return_type": "byte[]",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.Base64",
+      "parameters": [
+        {
+          "name": "str",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.Base64.Encode(System.Byte[])",
+      "cpp_name": "cs_7f8edd4d76f97c06",
+      "name": "Encode",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Base64.cs",
+      "line": 29,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.Base64",
+      "parameters": [
+        {
+          "name": "bytes",
+          "type": "byte[]"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32)",
+      "cpp_name": "cs_0bb436a75579d50a",
+      "name": "Check",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\BitUtil.cs",
+      "line": 30,
+      "return_type": "bool",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.BitUtil",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "int"
+        },
+        {
+          "name": "bit",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.BitUtil.Join(System.Int16,System.Int16)",
+      "cpp_name": "cs_959570d45f7028be",
+      "name": "Join",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\BitUtil.cs",
+      "line": 92,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.BitUtil",
+      "parameters": [
+        {
+          "name": "high",
+          "type": "short"
+        },
+        {
+          "name": "low",
+          "type": "short"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)",
+      "cpp_name": "cs_14daf94c5cc9a117",
+      "name": "Off",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\BitUtil.cs",
+      "line": 40,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.BitUtil",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "int"
+        },
+        {
+          "name": "bit",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)",
+      "cpp_name": "cs_239ce9a0914fe00b",
+      "name": "On",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\BitUtil.cs",
+      "line": 35,
+      "return_type": "int",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.BitUtil",
+      "parameters": [
+        {
+          "name": "v",
+          "type": "int"
+        },
+        {
+          "name": "bit",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.BitUtil.Split(System.Int32)",
+      "cpp_name": "cs_ba020c0b5c680349",
+      "name": "Split",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\BitUtil.cs",
+      "line": 97,
+      "return_type": "short[]",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.BitUtil",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.CRC64.GetValue(System.Byte[])",
+      "cpp_name": "cs_4d36dd315e2118af",
+      "name": "GetValue",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\CRC64.cs",
+      "line": 42,
+      "return_type": "long",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.CRC64",
+      "parameters": [
+        {
+          "name": "buf",
+          "type": "byte[]"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.CRC64.MakeCrcTable",
+      "cpp_name": "cs_6d14bc0d20253aa7",
+      "name": "MakeCrcTable",
+      "kind": "Ordinary",
+      "root": false,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\CRC64.cs",
+      "line": 13,
+      "return_type": "void",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.CRC64",
+      "parameters": []
+    },
+    {
+      "id": "M:kairo.unity.util.CRC64.Update(System.Int64,System.Byte[],System.Int32)",
+      "cpp_name": "cs_cb749cec81c9fbdd",
+      "name": "Update",
+      "kind": "Ordinary",
+      "root": false,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\CRC64.cs",
+      "line": 28,
+      "return_type": "long",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.CRC64",
+      "parameters": [
+        {
+          "name": "crc",
+          "type": "long"
+        },
+        {
+          "name": "buf",
+          "type": "byte[]"
+        },
+        {
+          "name": "len",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.EncodeUtil.ByteAryToLong(System.Byte[],System.Boolean)",
+      "cpp_name": "cs_a02a33f2a801ef0d",
+      "name": "ByteAryToLong",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\EncodeUtil.cs",
+      "line": 217,
+      "return_type": "long",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.EncodeUtil",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "byte[]"
+        },
+        {
+          "name": "endian",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.EncodeUtil.ConvertEndian(System.Byte[],System.Int32)",
+      "cpp_name": "cs_95c81bd3d12349d3",
+      "name": "ConvertEndian",
+      "kind": "Ordinary",
+      "root": false,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\EncodeUtil.cs",
+      "line": 271,
+      "return_type": "byte[]",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.EncodeUtil",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "byte[]"
+        },
+        {
+          "name": "length",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.EncodeUtil.LongToByteAry(System.Int64,System.Boolean)",
+      "cpp_name": "cs_afc3ba06e9b75538",
+      "name": "LongToByteAry",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\EncodeUtil.cs",
+      "line": 55,
+      "return_type": "byte[]",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.EncodeUtil",
+      "parameters": [
+        {
+          "name": "data",
+          "type": "long"
+        },
+        {
+          "name": "endian",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[])",
+      "cpp_name": "cs_33fd658d45a27eb0",
+      "name": "Decode",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Encrypter.cs",
+      "line": 44,
+      "return_type": "void",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.Encrypter",
+      "parameters": [
+        {
+          "name": "src",
+          "type": "byte[]"
+        },
+        {
+          "name": "key",
+          "type": "byte[]"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.Encrypter.Encode(System.Byte[],System.Byte[])",
+      "cpp_name": "cs_17e1939c126befd5",
+      "name": "Encode",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Encrypter.cs",
+      "line": 31,
+      "return_type": "void",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.Encrypter",
+      "parameters": [
+        {
+          "name": "src",
+          "type": "byte[]"
+        },
+        {
+          "name": "key",
+          "type": "byte[]"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.Encrypter.SetEncryptionKey(System.Byte[])",
+      "cpp_name": "cs_a232dc3a48dd6d41",
+      "name": "SetEncryptionKey",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Encrypter.cs",
+      "line": 12,
+      "return_type": "void",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.Encrypter",
+      "parameters": [
+        {
+          "name": "key",
+          "type": "byte[]"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.Property.#ctor",
+      "cpp_name": "cs_7a9ac0812c6bac9b",
+      "name": ".ctor",
+      "kind": "Constructor",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Property.cs",
+      "line": 31,
+      "return_type": "kairo.unity.util.Property",
+      "is_static": false,
+      "is_constructor": true,
+      "containing_type": "kairo.unity.util.Property",
+      "parameters": []
+    },
+    {
+      "id": "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean)",
+      "cpp_name": "cs_b1be14b163e17dea",
+      "name": "FormatString",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 204,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.StringUtil",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "len",
+          "type": "int"
+        },
+        {
+          "name": "padding",
+          "type": "char"
+        },
+        {
+          "name": "left",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char)",
+      "cpp_name": "cs_c6a612f36129f54a",
+      "name": "FormatString",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 199,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.StringUtil",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "len",
+          "type": "int"
+        },
+        {
+          "name": "padding",
+          "type": "char"
+        }
+      ]
+    },
+    {
+      "id": "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32)",
+      "cpp_name": "cs_17904ea55a78170d",
+      "name": "FormatString",
+      "kind": "Ordinary",
+      "root": true,
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 194,
+      "return_type": "string",
+      "is_static": true,
+      "is_constructor": false,
+      "containing_type": "kairo.unity.util.StringUtil",
+      "parameters": [
+        {
+          "name": "value",
+          "type": "string"
+        },
+        {
+          "name": "len",
+          "type": "int"
+        }
+      ]
+    }
+  ],
+  "generated_classes": [
+    {
+      "id": "T:java.lang.JInteger",
+      "type": "java.lang.JInteger",
+      "cpp_name": "cs_7de6788b61a5af56",
+      "fields": [
+        {
+          "name": "value_",
+          "cpp_name": "cs_159529d7b41663da",
+          "type": "int"
+        }
+      ]
+    },
+    {
+      "id": "T:kairo.common.cfg.Config",
+      "type": "kairo.common.cfg.Config",
+      "cpp_name": "cs_e7d772862db62924",
+      "fields": []
+    },
+    {
+      "id": "T:kairo.unity.m3d4.util3d.Vector3D",
+      "type": "kairo.unity.m3d4.util3d.Vector3D",
+      "cpp_name": "cs_3c64e1d398f2e00f",
+      "fields": [
+        {
+          "name": "x_",
+          "cpp_name": "cs_5940b7db44d7fcc3",
+          "type": "float"
+        },
+        {
+          "name": "y_",
+          "cpp_name": "cs_3f971496b3e90e07",
+          "type": "float"
+        },
+        {
+          "name": "z_",
+          "cpp_name": "cs_992193a3ad58af68",
+          "type": "float"
+        }
+      ]
+    },
+    {
+      "id": "T:kairo.unity.util.Property",
+      "type": "kairo.unity.util.Property",
+      "cpp_name": "cs_8c57b816bbc8fd6e",
+      "fields": [
+        {
+          "name": "pros",
+          "cpp_name": "cs_4fa0b3a7eea3a844",
+          "type": "kairo.unity.util.Property[]"
+        },
+        {
+          "name": "ints",
+          "cpp_name": "cs_72da38f2b646e254",
+          "type": "int[]"
+        },
+        {
+          "name": "lngs",
+          "cpp_name": "cs_cfccd28f4d6b847a",
+          "type": "long[]"
+        },
+        {
+          "name": "strs",
+          "cpp_name": "cs_d5b37f60e20607b6",
+          "type": "string[]"
+        },
+        {
+          "name": "bins",
+          "cpp_name": "cs_ba76615c0cb37783",
+          "type": "byte[][]"
+        }
+      ]
+    }
+  ],
+  "oracle_static_methods": [
+    "M:java.lang.JInteger.ParseInt(System.String)",
+    "M:java.lang.JInteger.ValueOf(System.String)",
+    "M:java.lang.JLong.ParseLong(System.String)",
+    "M:java.lang.JMath.Abs(System.Int32)",
+    "M:java.lang.JMath.Abs(System.Int64)",
+    "M:java.lang.JMath.Abs(System.Single)",
+    "M:java.lang.JMath.Cos(System.Double)",
+    "M:java.lang.JMath.Sin(System.Double)",
+    "M:java.lang.JMath.Sqrt(System.Double)",
+    "M:java.lang.JMath.ToRadians(System.Double)",
+    "M:java.lang.JString.New(System.Byte[])",
+    "M:java.lang.JString.New(System.String)",
+    "M:java.lang.JString.ValueOf(System.Char)",
+    "M:java.lang.JString.ValueOf(System.Int32)",
+    "M:java.lang.JString.ValueOf(System.Int64)",
+    "M:java.lang.StringEx.CharAt(System.String,System.Int32)",
+    "M:java.lang.StringEx.GetBytes(System.String)",
+    "M:java.lang.StringEx.Length(System.String)",
+    "M:java.lang.StringEx.SubstringJ(System.String,System.Int32,System.Int32)",
+    "M:java.lang.StringEx.SubstringJ(System.String,System.Int32)",
+    "M:kairo.unity.util.Base64.Decode(System.String)",
+    "M:kairo.unity.util.Base64.Encode(System.Byte[])",
+    "M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.Join(System.Int16,System.Int16)",
+    "M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)",
+    "M:kairo.unity.util.BitUtil.Split(System.Int32)",
+    "M:kairo.unity.util.CRC64.GetValue(System.Byte[])",
+    "M:kairo.unity.util.CRC64.MakeCrcTable",
+    "M:kairo.unity.util.CRC64.Update(System.Int64,System.Byte[],System.Int32)",
+    "M:kairo.unity.util.EncodeUtil.ByteAryToLong(System.Byte[],System.Boolean)",
+    "M:kairo.unity.util.EncodeUtil.ConvertEndian(System.Byte[],System.Int32)",
+    "M:kairo.unity.util.EncodeUtil.LongToByteAry(System.Int64,System.Boolean)",
+    "M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.Encode(System.Byte[],System.Byte[])",
+    "M:kairo.unity.util.Encrypter.SetEncryptionKey(System.Byte[])",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char)",
+    "M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32)"
+  ],
+  "rejected_methods": {
+    "M:java.io.ByteArrayInputStream.#ctor(System.Byte[])": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.io.ByteArrayInputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\ByteArrayInputStream.cs",
+      "line": 7
+    },
+    "M:java.io.ByteArrayInputStream.Available": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\ByteArrayInputStream.cs",
+      "line": 17
+    },
+    "M:java.io.ByteArrayOutputStream.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.io.ByteArrayOutputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\ByteArrayOutputStream.cs",
+      "line": 8
+    },
+    "M:java.io.ByteArrayOutputStream.Close": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\ByteArrayOutputStream.cs",
+      "line": 28
+    },
+    "M:java.io.ByteArrayOutputStream.ToByteArray": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.io.ByteArrayOutputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\ByteArrayOutputStream.cs",
+      "line": 23
+    },
+    "M:java.io.DataInputStream.#ctor(java.io.InputStream)": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.io.DataInputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\DataInputStream.cs",
+      "line": 12
+    },
+    "M:java.io.DataInputStream.Close": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\DataInputStream.cs",
+      "line": 102
+    },
+    "M:java.io.DataInputStream.ReadInt": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.io.DataInputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\DataInputStream.cs",
+      "line": 48
+    },
+    "M:java.io.InputStream.Available": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\InputStream.cs",
+      "line": 24
+    },
+    "M:java.io.InputStream.Close": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\InputStream.cs",
+      "line": 33
+    },
+    "M:java.io.InputStream.Read(System.Byte[])": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\InputStream.cs",
+      "line": 85
+    },
+    "M:java.io.InputStream.Skip(System.Int64)": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\io\\InputStream.cs",
+      "line": 132
+    },
+    "M:java.lang.JRuntime.Gc": {
+      "kind": "InvocationExpression",
+      "reason": "external invocation not implemented: M:System.GC.Collect(System.Int32)",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JRuntime.cs",
+      "line": 34
+    },
+    "M:java.lang.JString.ValueOf(System.Object)": {
+      "kind": "NullLiteralExpression",
+      "reason": "type not lowered: ",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JString.cs",
+      "line": 1243
+    },
+    "M:java.lang.JSystem.Arraycopy(System.Object,System.Int32,System.Object,System.Int32,System.Int32)": {
+      "kind": "InvocationExpression",
+      "reason": "external invocation not implemented: M:System.Array.Copy(System.Array,System.Int32,System.Array,System.Int32,System.Int32)",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JSystem.cs",
+      "line": 9
+    },
+    "M:java.lang.JSystem.CurrentTimeMillis": {
+      "kind": "SimpleMemberAccessExpression",
+      "reason": "member/property requires platform or object implementation",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JSystem.cs",
+      "line": 14
+    },
+    "M:java.lang.JSystem.Gc": {
+      "kind": "MethodDeclaration",
+      "reason": "dependency not lowered: M:java.lang.JRuntime.Gc",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\JSystem.cs",
+      "line": 24
+    },
+    "M:java.lang.StringEx.EqualsIgnoreCase(System.String,System.String)": {
+      "kind": "InvocationExpression",
+      "reason": "instance invocation requires object layout dispatch or exact framework intrinsic",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\lang\\StringEx.cs",
+      "line": 13
+    },
+    "M:java.util.JCalendar.Get(System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.DateTime",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JCalendar.cs",
+      "line": 136
+    },
+    "M:java.util.JCalendar.GetInstance": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.DateTime",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JCalendar.cs",
+      "line": 89
+    },
+    "M:java.util.JCalendar.SetTime(java.util.JDate)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.DateTime",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JCalendar.cs",
+      "line": 259
+    },
+    "M:java.util.JCalendar.SetTimeInMillis(System.Int64)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.DateTime",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JCalendar.cs",
+      "line": 274
+    },
+    "M:java.util.JDate.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "type not lowered: System.DateTime",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JDate.cs",
+      "line": 11
+    },
+    "M:java.util.JDate.#ctor(System.Int64)": {
+      "kind": "ConstructorDeclaration",
+      "reason": "type not lowered: System.DateTime",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JDate.cs",
+      "line": 16
+    },
+    "M:java.util.JRandom.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "type not lowered: System.Random",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JRandom.cs",
+      "line": 10
+    },
+    "M:java.util.JRandom.NextInt": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Random",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JRandom.cs",
+      "line": 20
+    },
+    "M:java.util.JTool.MakeArray``1(System.Int32[])": {
+      "kind": "MethodDeclaration",
+      "reason": "ref/out/params signature not lowered",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\JTool.cs",
+      "line": 7
+    },
+    "M:java.util.Vector.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector.cs",
+      "line": 5
+    },
+    "M:java.util.Vector`1.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 46
+    },
+    "M:java.util.Vector`1.Add(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 66
+    },
+    "M:java.util.Vector`1.AddElement(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 61
+    },
+    "M:java.util.Vector`1.Clear": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 162
+    },
+    "M:java.util.Vector`1.ElementAt(System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 104
+    },
+    "M:java.util.Vector`1.FirstElement": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 117
+    },
+    "M:java.util.Vector`1.IndexOf(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 122
+    },
+    "M:java.util.Vector`1.InsertElementAt(`0,System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 132
+    },
+    "M:java.util.Vector`1.op_Equality(java.util.Vector{`0},java.util.Vector)": {
+      "kind": "OperatorDeclaration",
+      "reason": "type not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 26
+    },
+    "M:java.util.Vector`1.op_Inequality(java.util.Vector{`0},java.util.Vector)": {
+      "kind": "OperatorDeclaration",
+      "reason": "type not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 21
+    },
+    "M:java.util.Vector`1.RemoveAllElements": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 157
+    },
+    "M:java.util.Vector`1.RemoveElement(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 172
+    },
+    "M:java.util.Vector`1.RemoveElementAt(System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 188
+    },
+    "M:java.util.Vector`1.SetElementAt(`0,System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 198
+    },
+    "M:java.util.Vector`1.Size": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: java.util.Vector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\java\\util\\Vector`1.cs",
+      "line": 215
+    },
+    "M:kairo.common.cfg.Config.Init(System.String)": {
+      "kind": "InvocationExpression",
+      "reason": "instance invocation requires object layout dispatch or exact framework intrinsic",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\common\\cfg\\Config.cs",
+      "line": 182
+    },
+    "M:kairo.unity.io.ByteListOutputStream.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.io.ByteListOutputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\io\\ByteListOutputStream.cs",
+      "line": 19
+    },
+    "M:kairo.unity.io.ByteListOutputStream.Size": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.io.ByteListOutputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\io\\ByteListOutputStream.cs",
+      "line": 59
+    },
+    "M:kairo.unity.io.ByteListOutputStream.ToByteArray(System.Int32,System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.io.ByteListOutputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\io\\ByteListOutputStream.cs",
+      "line": 84
+    },
+    "M:kairo.unity.io.ConnectionException.GetStatus": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.io.ConnectionException",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\io\\ConnectionException.cs",
+      "line": 7
+    },
+    "M:kairo.unity.util.Compressor.Compress(System.Byte[])": {
+      "kind": "VariableDeclarator",
+      "reason": "type not lowered: kairo.unity.util.FastVector",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Compressor.cs",
+      "line": 54
+    },
+    "M:kairo.unity.util.Compressor.Expand(System.Byte[])": {
+      "kind": "VariableDeclarator",
+      "reason": "type not lowered: kairo.unity.util.Compressor.Node",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Compressor.cs",
+      "line": 164
+    },
+    "M:kairo.unity.util.FastVector.#ctor": {
+      "kind": "Declaration",
+      "reason": "member is not a source method declaration"
+    },
+    "M:kairo.unity.util.FastVector`1.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 16
+    },
+    "M:kairo.unity.util.FastVector`1.Add(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 55
+    },
+    "M:kairo.unity.util.FastVector`1.Contains(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 87
+    },
+    "M:kairo.unity.util.FastVector`1.ElementAt(System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 73
+    },
+    "M:kairo.unity.util.FastVector`1.FirstElement": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 82
+    },
+    "M:kairo.unity.util.FastVector`1.InsertElementAt(`0,System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 194
+    },
+    "M:kairo.unity.util.FastVector`1.LastElement": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 219
+    },
+    "M:kairo.unity.util.FastVector`1.RemoveAllElements": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 264
+    },
+    "M:kairo.unity.util.FastVector`1.RemoveAllElementsKeep": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 288
+    },
+    "M:kairo.unity.util.FastVector`1.RemoveElement(`0)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 248
+    },
+    "M:kairo.unity.util.FastVector`1.RemoveElementAt(System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 293
+    },
+    "M:kairo.unity.util.FastVector`1.Size": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.FastVector<T>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\FastVector`1.cs",
+      "line": 338
+    },
+    "M:kairo.unity.util.JarInflater.#ctor(System.Byte[])": {
+      "kind": "ConstructorDeclaration",
+      "reason": "type not lowered: System.Collections.Generic.Dictionary<string, kairo.unity.util.JarInflater.FileInfo>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\JarInflater.cs",
+      "line": 33
+    },
+    "M:kairo.unity.util.JarInflater.Close": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Collections.Generic.Dictionary<string, kairo.unity.util.JarInflater.FileInfo>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\JarInflater.cs",
+      "line": 143
+    },
+    "M:kairo.unity.util.JarInflater.GetData(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Collections.Generic.Dictionary<string, kairo.unity.util.JarInflater.FileInfo>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\JarInflater.cs",
+      "line": 230
+    },
+    "M:kairo.unity.util.JarInflater.GetInputStream(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Collections.Generic.Dictionary<string, kairo.unity.util.JarInflater.FileInfo>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\JarInflater.cs",
+      "line": 154
+    },
+    "M:kairo.unity.util.JarInflater.GetSize(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Collections.Generic.Dictionary<string, kairo.unity.util.JarInflater.FileInfo>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\JarInflater.cs",
+      "line": 201
+    },
+    "M:kairo.unity.util.Log.Info(System.Exception)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Exception",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Log.cs",
+      "line": 55
+    },
+    "M:kairo.unity.util.Log.Info(System.String,System.Exception)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Exception",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Log.cs",
+      "line": 34
+    },
+    "M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property[],System.Int32[],System.Int64[],System.String[],System.Byte[][])": {
+      "kind": "ConstructorDeclaration",
+      "reason": "dependency not lowered: M:kairo.unity.util.Property.SetData(System.Int32[])",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Property.cs",
+      "line": 35
+    },
+    "M:kairo.unity.util.Property.Load(System.Byte[])": {
+      "kind": "VariableDeclarator",
+      "reason": "type not lowered: java.io.ByteArrayInputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Property.cs",
+      "line": 119
+    },
+    "M:kairo.unity.util.Property.SetData(System.Int32[])": {
+      "kind": "MethodDeclaration",
+      "reason": "dependency not lowered: M:java.lang.JSystem.Arraycopy(System.Object,System.Int32,System.Object,System.Int32,System.Int32)",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Property.cs",
+      "line": 57
+    },
+    "M:kairo.unity.util.Property.ToByteArray": {
+      "kind": "VariableDeclarator",
+      "reason": "type not lowered: java.io.ByteArrayOutputStream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\Property.cs",
+      "line": 148
+    },
+    "M:kairo.unity.util.SecureInt.#ctor": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureInt.cs",
+      "line": 47
+    },
+    "M:kairo.unity.util.SecureInt.#ctor(kairo.unity.util.SecureInt)": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureInt.cs",
+      "line": 56
+    },
+    "M:kairo.unity.util.SecureInt.#ctor(System.Int32)": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureInt.cs",
+      "line": 51
+    },
+    "M:kairo.unity.util.SecureInt.Get": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureInt.cs",
+      "line": 73
+    },
+    "M:kairo.unity.util.SecureInt.op_Implicit(kairo.unity.util.SecureInt)~System.Int32": {
+      "kind": "ConversionOperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureInt.cs",
+      "line": 7
+    },
+    "M:kairo.unity.util.SecureInt.op_Implicit(System.Int32)~kairo.unity.util.SecureInt": {
+      "kind": "ConversionOperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureInt.cs",
+      "line": 12
+    },
+    "M:kairo.unity.util.SecureLong.op_Implicit(kairo.unity.util.SecureLong)~System.Int64": {
+      "kind": "ConversionOperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureLong",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureLong.cs",
+      "line": 7
+    },
+    "M:kairo.unity.util.SecureLong.op_Implicit(System.Int64)~kairo.unity.util.SecureLong": {
+      "kind": "ConversionOperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureLong",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureLong.cs",
+      "line": 12
+    },
+    "M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty[],System.Int32[],System.Int64[],System.String[],System.Byte[][])": {
+      "kind": "ConstructorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureProperty.cs",
+      "line": 35
+    },
+    "M:kairo.unity.util.SecureProperty.Load(System.Byte[])": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureProperty.cs",
+      "line": 170
+    },
+    "M:kairo.unity.util.SecureProperty.ToByteArray": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureInt",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureProperty.cs",
+      "line": 199
+    },
+    "M:kairo.unity.util.SecureString.#ctor(System.String)": {
+      "kind": "ConstructorDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 54
+    },
+    "M:kairo.unity.util.SecureString.EndsWith(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 256
+    },
+    "M:kairo.unity.util.SecureString.Equals(kairo.unity.util.SecureString)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 229
+    },
+    "M:kairo.unity.util.SecureString.Equals(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 224
+    },
+    "M:kairo.unity.util.SecureString.Get": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 123
+    },
+    "M:kairo.unity.util.SecureString.IndexOf(System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 261
+    },
+    "M:kairo.unity.util.SecureString.Length": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 195
+    },
+    "M:kairo.unity.util.SecureString.op_Addition(kairo.unity.util.SecureString,System.String)": {
+      "kind": "OperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 34
+    },
+    "M:kairo.unity.util.SecureString.op_Implicit(kairo.unity.util.SecureString)~System.String": {
+      "kind": "ConversionOperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 20
+    },
+    "M:kairo.unity.util.SecureString.op_Implicit(System.String)~kairo.unity.util.SecureString": {
+      "kind": "ConversionOperatorDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 25
+    },
+    "M:kairo.unity.util.SecureString.StartsWith(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "class inheritance/generic layout not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 251
+    },
+    "M:kairo.unity.util.SecureString.ToString": {
+      "kind": "MethodDeclaration",
+      "reason": "virtual/interface method requires generated dispatch slots",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 152
+    },
+    "M:kairo.unity.util.SecureString.ToString(kairo.unity.util.SecureString)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 394
+    },
+    "M:kairo.unity.util.SecureString.ValueOf(System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: kairo.unity.util.SecureString",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\SecureString.cs",
+      "line": 376
+    },
+    "M:kairo.unity.util.StreamUtil.Read(java.io.InputStream,System.Boolean)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 69
+    },
+    "M:kairo.unity.util.StreamUtil.Read(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 78
+    },
+    "M:kairo.unity.util.StreamUtil.ReadBoolean(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 152
+    },
+    "M:kairo.unity.util.StreamUtil.ReadByte(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 97
+    },
+    "M:kairo.unity.util.StreamUtil.ReadFloat(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 157
+    },
+    "M:kairo.unity.util.StreamUtil.ReadInt(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 122
+    },
+    "M:kairo.unity.util.StreamUtil.ReadLong(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 137
+    },
+    "M:kairo.unity.util.StreamUtil.ReadShort(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 107
+    },
+    "M:kairo.unity.util.StreamUtil.ReadString(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 190
+    },
+    "M:kairo.unity.util.StreamUtil.ReadVector3D(java.io.InputStream)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 172
+    },
+    "M:kairo.unity.util.StreamUtil.Write(java.io.OutputStream,System.Byte[],System.Boolean)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 230
+    },
+    "M:kairo.unity.util.StreamUtil.WriteBoolean(java.io.OutputStream,System.Boolean)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 316
+    },
+    "M:kairo.unity.util.StreamUtil.WriteByte(java.io.OutputStream,System.Byte)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 251
+    },
+    "M:kairo.unity.util.StreamUtil.WriteByte(java.io.OutputStream,System.SByte)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 246
+    },
+    "M:kairo.unity.util.StreamUtil.WriteFloat(java.io.OutputStream,System.Single)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 321
+    },
+    "M:kairo.unity.util.StreamUtil.WriteInt(java.io.OutputStream,System.Int32)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 276
+    },
+    "M:kairo.unity.util.StreamUtil.WriteLong(java.io.OutputStream,System.Int64)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 296
+    },
+    "M:kairo.unity.util.StreamUtil.WriteShort(java.io.OutputStream,System.Int16)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 256
+    },
+    "M:kairo.unity.util.StreamUtil.WriteString(java.io.OutputStream,kairo.unity.util.SecureString)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 348
+    },
+    "M:kairo.unity.util.StreamUtil.WriteString(java.io.OutputStream,System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 353
+    },
+    "M:kairo.unity.util.StreamUtil.WriteVector3D(java.io.OutputStream,kairo.unity.m3d4.util3d.Vector3D)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.IO.Stream",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StreamUtil.cs",
+      "line": 341
+    },
+    "M:kairo.unity.util.StringUtil.Escape(System.String)": {
+      "kind": "VariableDeclarator",
+      "reason": "type not lowered: System.Text.StringBuilder",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 160
+    },
+    "M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "type not lowered: System.Collections.Generic.Dictionary<string, kairo.unity.util.JarInflater.FileInfo>",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 220
+    },
+    "M:kairo.unity.util.StringUtil.Replace(System.String,System.String,System.String)": {
+      "kind": "InvocationExpression",
+      "reason": "instance invocation requires object layout dispatch or exact framework intrinsic",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 25
+    },
+    "M:kairo.unity.util.StringUtil.Replace(System.String,System.String)": {
+      "kind": "IdentifierName",
+      "reason": "string concatenation requires exact operand ToString contract",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 15
+    },
+    "M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)": {
+      "kind": "VariableDeclarator",
+      "reason": "type not lowered: kairo.unity.util.FastVector",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 49
+    },
+    "M:kairo.unity.util.StringUtil.Split(System.String,System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "dependency not lowered: M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 39
+    },
+    "M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)": {
+      "kind": "MethodDeclaration",
+      "reason": "dependency not lowered: M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)",
+      "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\reference\\src\\KairoLibrary\\kairo\\unity\\util\\StringUtil.cs",
+      "line": 269
+    }
+  },
+  "emitted_method_count": 50,
+  "root_methods_emitted": 47,
+  "static_fields": [
+    {
+      "id": "F:kairo.unity.util.BitUtil.split_tmpS",
+      "cpp_name": "cs_4854f02f058c4f7b",
+      "type": "short[]"
+    },
+    {
+      "id": "F:kairo.unity.util.CRC64.crcTable_",
+      "cpp_name": "cs_f9196b08a328bd32",
+      "type": "long[]"
+    },
+    {
+      "id": "F:kairo.unity.util.Encrypter.key_",
+      "cpp_name": "cs_1c11d615d9916ed8",
+      "type": "byte[]"
+    }
+  ],
+  "emitted_kind_occurrences": {
+    "Block": 69,
+    "ExpressionStatement": 31,
+    "SimpleAssignmentExpression": 23,
+    "IdentifierName": 160,
+    "ReturnStatement": 42,
+    "InvocationExpression": 33,
+    "ObjectCreationExpression": 2,
+    "IfStatement": 10,
+    "LessThanExpression": 7,
+    "NumericLiteralExpression": 41,
+    "UnaryMinusExpression": 3,
+    "LogicalNotExpression": 1,
+    "ParenthesizedExpression": 18,
+    "GreaterThanOrEqualExpression": 2,
+    "DivideExpression": 2,
+    "MultiplyExpression": 1,
+    "SimpleMemberAccessExpression": 18,
+    "ElementAccessExpression": 7,
+    "SubtractExpression": 7,
+    "AddAssignmentExpression": 5,
+    "TryStatement": 1,
+    "CatchClause": 1,
+    "NullLiteralExpression": 2,
+    "NotEqualsExpression": 2,
+    "BitwiseAndExpression": 7,
+    "BitwiseOrExpression": 2,
+    "LeftShiftExpression": 1,
+    "AndAssignmentExpression": 1,
+    "BitwiseNotExpression": 1,
+    "ArrayCreationExpression": 4,
+    "CastExpression": 6,
+    "RightShiftExpression": 4,
+    "LocalDeclarationStatement": 8,
+    "VariableDeclaration": 14,
+    "ForStatement": 6,
+    "PostIncrementExpression": 4,
+    "EqualsExpression": 2,
+    "ExclusiveOrExpression": 5,
+    "PostDecrementExpression": 1,
+    "ModuloExpression": 1,
+    "StringLiteralExpression": 1,
+    "AddExpression": 2,
+    "FalseLiteralExpression": 2,
+    "CharacterLiteralExpression": 1
+  },
+  "compiled": true,
+  "executed_methods": 0,
+  "game_binary_emitted": false,
+  "original_IL_read": false,
+  "limitations": [
+    "Typed source classes are currently restricted to non-generic direct subclasses of System.Object; virtual/interface dispatch, custom inheritance, exception/finally, delegate and property lowering are explicitly rejected, not stubs.",
+    "A native compile receipt and differential runner are required before compiled/verified states."
+  ],
+  "producer": {
+    "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+    "translator_source_sha256": "b1c2655dd408626f5b358c372d2f97351f516007ef5382ef9b059bdf8b375ced",
+    "driver_sha256": "0894d9e7052ed2a470516be5e9c3983296c44b2932278b38253d8540e3b9dbf5"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/java/io/ByteArrayInputStream.cs",
+      "sha256": "907c0c16090363884e839049728e9c4880e48bbc315c390c9aced8353325461d"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/ByteArrayOutputStream.cs",
+      "sha256": "b460f78d79f622c5d53603b1ff6df324d5669ab5de641a0756441ff743e85c1c"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/DataInputStream.cs",
+      "sha256": "e31bbf06888002ab9c985f556a743870b12644b91b12b44482d1ceaeaf85feab"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/DataOutputStream.cs",
+      "sha256": "a2c31bdb6bacbc38663400bd322a74cd52787d590afac1a6bfd4ddf058403898"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/EOFException.cs",
+      "sha256": "1cf062baa378e019a0f24e8224bb3138921f116bbee1971ec13d5e325ce42d26"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/InputStream.cs",
+      "sha256": "3d18b4ecce2c617bf3426227db0615ca6d3176ac16170e742c10be91b9c0049a"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/OutputStream.cs",
+      "sha256": "baba0db0930d931e6301d6a48394507c8feb6a0fe8715de95fdb516323bb29e7"
+    },
+    {
+      "path": "src/KairoLibrary/java/io/WrappedSystemStream.cs",
+      "sha256": "3723847fa05a5fba0f4daa0c65273bb3df2906ad03df04ae9763d63f1368f3d6"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JBoolean.cs",
+      "sha256": "3cc4c09a7b604fce2f15bb67c4895ddc4352786e375e123641616f8090ce1277"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JByte.cs",
+      "sha256": "9cab625c39053aff87faf01895877d3cbc17386f4a89da3dac9612dc504ae726"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JCharacter.cs",
+      "sha256": "9b7db9b9df76f8d231df1f1f7522e782e55b32506959a0500b456af717c81750"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JDouble.cs",
+      "sha256": "b8d04f4c5b3f672324d7280232c7d0ae3207854394e6c9ccd5712fd004257067"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JFloat.cs",
+      "sha256": "b4ba75b2726a68c7c74a0eca350203f32477fd8c59ad0776dae044c3891fe89b"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JInteger.cs",
+      "sha256": "b61db8182968c22a33828645d1cd19959886b9ad308352bad1ca8cace1babbb8"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JLong.cs",
+      "sha256": "2d925f85b6e3531da56b4423925382c2835c7e1ff3afec7b20bd0495fdbb0788"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JMath.cs",
+      "sha256": "d3011ec07bac0cffdb3450aa05dc155cbfe6ff60614744c671094f946202c9d1"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JRunnable.cs",
+      "sha256": "9a84b2e5f50cdedf99b64934bf1271ecbf5be2dbaf6f5a28b00ec2597511f895"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JRuntime.cs",
+      "sha256": "04f6b8befa52c302af45b97e5bda0628ad4526155dab6c3821cfc8b890fa5752"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JShort.cs",
+      "sha256": "85c02ab85435565515dfa448f8bbad1de47c0a73f1b3cbd9e04d387e83f32dae"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JString.cs",
+      "sha256": "f751f6af3114e8f5429dae1383fd4e39300649a99475fbb8cc488e476f5530af"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JSystem.cs",
+      "sha256": "7877b2705bb5e4089b5c1dba9f90e5c2df95057fe964266a11871d5e8d40b602"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JThread.cs",
+      "sha256": "c27d5d4251e21f4b791447f86873856128e0370925232cba331be372a0555f46"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/StringEx.cs",
+      "sha256": "bd1689384db4e57a29a9ea32fce7a1bf95884ebf88759b9c0383fc52d32f2142"
+    },
+    {
+      "path": "src/KairoLibrary/java/native/JavaPlugin.cs",
+      "sha256": "b60d1c50fadeef1b50c751be085a1a1341b3cab58364fdd46653e065183874a9"
+    },
+    {
+      "path": "src/KairoLibrary/java/native/PluginBase.cs",
+      "sha256": "cafa7e85b5e68632dbdcc9465957531293a55cb16e3aca1eee45e002ee7a9ecb"
+    },
+    {
+      "path": "src/KairoLibrary/java/net/URLDecoder.cs",
+      "sha256": "dac8dae112c0bf0a9613a90b1103bcf576c14c8fd0617c4b28ed3af13b38bbf3"
+    },
+    {
+      "path": "src/KairoLibrary/java/net/URLEncoder.cs",
+      "sha256": "426c7d5c461d333401099e6f8a451958776b1ca258449059a2d5f4fc4a0bee31"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/JCalendar.cs",
+      "sha256": "a3a258e70006c3acbad44f9995d196822f087b20ec2a2bf1fa233075afaeb482"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/JDate.cs",
+      "sha256": "1586489c5132091b0204d8a5c8f553dd832afda0bdcfaf89c4553653d766d6fc"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/JLocale.cs",
+      "sha256": "22cf0e4de553540d14a8ea64ac0e44f3cad2d542b9be6f6e9516f15f57ffe751"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/JRandom.cs",
+      "sha256": "88cd8edf3b698c0c66a19d4a7bf576ed5e44fc3901856c4d8b52268db06842e1"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/JTimeZone.cs",
+      "sha256": "560b497bcfa819c1d38ce28b48fd254c3499ad16d51614673c3ff4564ba161e7"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/JTool.cs",
+      "sha256": "4afb02548450339ff820881d51cc4dd7fb4dc547fddbaee332913637614f0064"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/IVector.cs",
+      "sha256": "479053f72859c449287aac17b4692ad263a064c8487ea8149f48a38575a76537"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/Vector.cs",
+      "sha256": "03467c113fd52cbc515c87d7598e82218c4fca42e541ab530d13753cf9943def"
+    },
+    {
+      "path": "src/KairoLibrary/java/util/Vector`1.cs",
+      "sha256": "41cf876331a8be340696bbbc9313e27680d070e328803242ca26a9a692df437d"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/common/cfg/Config.cs",
+      "sha256": "175484bb6b67505e5dff7624c0bab04850ea71be1e1357263bfba3fef202324d"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ad/AdSize.cs",
+      "sha256": "595cdb17a619a0b6e9409e78f68dc439d99ab3ea07f45becdb3513f85cdab88e"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ad/AdMobView.cs",
+      "sha256": "b142c86937153aac949ab3299503bf341a9306b038aeb8c70eca1d827e8f783f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ad/InterstitialAd.cs",
+      "sha256": "33227ff8bf71c7322ef716077a75cecd0d7f7538b1f16c0a6c3996af24bc20f0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/analytics/AnalyticsTracker.cs",
+      "sha256": "93424ad0970a6ca219df686f8cf979e1b7e62448a966d61c3c29943ac1b1b2c8"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/form/FormBase.cs",
+      "sha256": "b64565a7ca7cd1ca20aa390d80792db9c6f3f0bfd9ac64c6db7903814e58a09e"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/form/FormManagerBase.cs",
+      "sha256": "3b230f8a79aafeddd3820f9f3a5cda16ba0477bdb5f58e6c571be0856911c34a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/Material.cs",
+      "sha256": "b4c8d0f548a7179524f5bface83de179dae44acd9f663a7ef3cd00e3d671036f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/MaterialManager.cs",
+      "sha256": "b9740c8b0be69c033fb25257378f2a85073aaaa288e30c297ef37c4120e71796"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/MeshBuilder.cs",
+      "sha256": "468a4f9177f077825db851fcf1a2485e8b2625c14db448c4b79f54a4f4d97608"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/MeshManager.cs",
+      "sha256": "b047e2bf83fdcf76aab77696bb97bc9b71a0a8c9e0834de149ed04a374f6bdf0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/MeshRecord.cs",
+      "sha256": "9d8fe79a5387e3ff33fe9eb6c8a1f7a57b3c668f753c09814dde46dd31ab48f6"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/Offscreen.cs",
+      "sha256": "4bcf7151bf4c2749f88d7c123f26f22699bf8379d080b0c830d0446f054cc464"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/Point.cs",
+      "sha256": "6c07a11029f3bff072013c936294c7969e178d5bc7d7265353d6837f5613990f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/Rectangle.cs",
+      "sha256": "76d39fc62f0e990563cb3613fb396b6339d84f797dc836e86a2cb78ebf576dd4"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/RectangleF.cs",
+      "sha256": "6e0415f284f13522db260620f93268e7ef4c243c182538bc4b0468645bc5a8be"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/ShaderBuilder.cs",
+      "sha256": "ec5f918018a2619ef9e43c04a34dc65f93ff0375d83c8b80c307657b0b9f5ccb"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graphics/ShaderManager.cs",
+      "sha256": "3412c9ad2db3d528e2bc918e9f32e31ad1779f660bdccc38f69f93ea60ea6d49"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/graph/Graph.cs",
+      "sha256": "3481df1729cd886f45edf68b0c10d3ea070ceede34cd2204704d18b4bd085914"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/iOSsupport/DeviceUtil.cs",
+      "sha256": "cfd95fa2e5eeaf073bf3184f33c88ef054699c1a1ea207e2eca3e4f82143fec5"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/iOSsupport/RecordUtil.cs",
+      "sha256": "780c06d1538c4bac5254bedac877eba8d3af0a9a4a2564fe8a177ea987d0828b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/AssetReader.cs",
+      "sha256": "dc4416bdc8ec7df4ffbe46688e6bd996b5e909a4ab240c2a4b23e1c2c4962cc6"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/BitArrayInputStream.cs",
+      "sha256": "c0dd1c98074e6de06877b17906ffbe4f0bb9162349f326d183983ea7dd6d8d4e"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/BitArrayOutputStream.cs",
+      "sha256": "5047fa1e63153cfd2f236d7d2bbd30f4ccb9afb7641cc42cf0fe81f387d9b0b5"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/ByteListOutputStream.cs",
+      "sha256": "e5d4af810e310f894d014c714490f96fc9e38b37e0e8f4b8d15155366d1aede7"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/ConnectionException.cs",
+      "sha256": "952744d1c902f93fd15e20edcb7a68999d899ba387dd546d51ffe9685208b011"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/HttpObject.cs",
+      "sha256": "5cc7223951d082a54bdfcde63213bf32cf4680f7d8da81e5339560af3ead602a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/Http.cs",
+      "sha256": "5a416f33437ec631df96b2f538d900c711ebd5bb6e1b727a6f44908fd567a149"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/RecordStore.cs",
+      "sha256": "96d98e2d8db2c6a0be8ec68bbd6b6b20a315d800df7d5aed5afee9f5fcce8a63"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/RecordStoreListener.cs",
+      "sha256": "9591972ac50aac1ca91b234988e99b0a6702a7f57c33a5ed6060a447a3f92d65"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/ScratchPad.cs",
+      "sha256": "39b24c7839a8eafc10ff78efd93f655f6b04a808f41fe879e0b188032debcd6c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/io/Storage.cs",
+      "sha256": "e96472ff52deb2f181a9aa904901e900a6d114a2629118f8face59f64d0c1f9f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/licensing/LicenseChecker.cs",
+      "sha256": "98c11585b9d30c993f485cc20e40adf913a540928b60d1239312a1aadb28558e"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/m3d4/util3d/FastMath.cs",
+      "sha256": "adf8218dbc37b19d2305c52f448f867ee4e8d4a126524d8b6ee387980d4325c1"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/m3d4/util3d/Transform.cs",
+      "sha256": "0701e602080e73ed9bbf61f8cf80ae9de3a2629a2018cbd4ae0069c0a83bdb70"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/m3d4/util3d/Vector3D.cs",
+      "sha256": "6d100dacdbc5db8750b77e64a1b08c65656ce1fda7bde0387cd059ab4de5f89c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/math/KairoMath.cs",
+      "sha256": "c18c4858636c57a6666bd5597f99baf7e2b9ba8ad47a5bf4b078c7ea3f4a6f31"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/native/AdMobPlugin.cs",
+      "sha256": "b077c76a88ce70389994aff01bbd6a81792a998b5a1c5716c5c94c1a43196336"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/native/KairoPlugin.cs",
+      "sha256": "3dbf814492effa03c87a3e4befa1f7eabcac85cfacf455d821133a7de9d64df0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/native/util/AsyncThread.cs",
+      "sha256": "be56a6aba3baa322e847d18bbefc570a8d6a72334ab70a314e0aa3da3b9ff2ed"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/native/util/Dialog.cs",
+      "sha256": "bcd358b81e9e26cecccced0000d453264a9ab9c9a23700bb05ba5cf1cb13a13a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/native/util/StringUtil.cs",
+      "sha256": "be663a13f8748c485e07fa14512dffb717202d9a3857d610ffc538e5dc308ea5"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/panel/Button.cs",
+      "sha256": "04c24c0460ac9532edff5027a5844ca9167075d03ee15eeee527097710f64e75"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/panel/Component.cs",
+      "sha256": "03f35a6be704196ed5bbd99d3f49b34e064055eca7d5701438a542905bb39d61"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/panel/FepPanel.cs",
+      "sha256": "7d0dcfdfaf8052998b6406560bd4e8fbdd61831093852f48961c2a52175e1f18"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/panel/Label.cs",
+      "sha256": "e7bdfc67e747186a6f0a0e2dfe8ea60a27bcd9ee520fc06dd484ba0f35e80fd6"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/panel/TextBox.cs",
+      "sha256": "c8f5f9023574e405a06e9146a359946031a8ba7fb98de9920c16c53728be32a5"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/MotionEvent.cs",
+      "sha256": "f12ed7f17840c5ceff2776b4b2b15300c913aef0c07a40ab388525e9c4c1675c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs",
+      "sha256": "29afc46a2294c1b8d497f14a0b307d2ed2a26b4ca9dcd4ae6961460184e2eb87"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/SurfaceManagerBase.cs",
+      "sha256": "eef5edc4f3f3a337d26c74d9ecd3487745a610006f01181244b75355a4371825"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/TouchComponent.cs",
+      "sha256": "e4f70b6faccb9092a0b8b48cadc9299488b4be28ffd4a6b5bbbedadc81a9680d"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/TouchEvent.cs",
+      "sha256": "be4ab5a5cb085645830d546a597447837311061d70a4771fe0da7902e4588709"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/TouchOption.cs",
+      "sha256": "48136717b3899f577d9b1d8165fd72c53bb9551bd278d4d339091670a7d1b65b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/TouchValueAccessor.cs",
+      "sha256": "81bfcc13e2793e6aedfdf1a9239c0befc9e601e6f61a3e8c50435b90c9eda732"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/ErrorCode.cs",
+      "sha256": "e6d760e8fc3b9bb63d003d722c5f0ef56ddc61887e6c0c94cdaa7960c1204a2b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/GameDataRecord.cs",
+      "sha256": "7a178ef0a6d84311405be9dcb9fc92d6d90cd89979fe453215e25ead5d878ce1"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/KairoBase.cs",
+      "sha256": "21a6264fcc53b57917bb85346836184aa17acf69bdc7f83e755a12b15b49953d"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/KairoClub.cs",
+      "sha256": "0540e0199c553fc93e911e0b4997ec0f1d868c87552878a6cffab8a50f853305"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/appli/GameAppli.cs",
+      "sha256": "6c21dbb3f2c09b237eed1374d5c51f3100ad381bcc25c43237961d27a6080c2a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/lineup/ui/LineupData.cs",
+      "sha256": "e1f8e19286d21d61a1b2a0532b48ca4ffabe0d75be9268f0b1ff9b79b1f96095"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/lineup/ui/LineupManager.cs",
+      "sha256": "a4d9ca886e24cff6b267864cae1dfa8732c52c32a78e9623d8fa290b09920f2f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/lobi/LobiManager.cs",
+      "sha256": "5933c267cae2f162c81393c87893359ca2c401aca860861da5a2b28868be6a98"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/notification/ui/NotifyManager.cs",
+      "sha256": "7ba60147d3196ff09078d002cbee390f8ad20ad3e1f989123d523fe4f30f570b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/payment/IllegalPurchaseException.cs",
+      "sha256": "075838b0ff5f4cef81cb6160e60aea6b862f6a0f7e22616fe75638009e7da0ee"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/payment/PaymentDataRecord.cs",
+      "sha256": "3cda9f444a33b250173f1b0246fcf10c9a51b45a6475672328d709a17d9bb0ef"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/system/tapjoy/ui/ITapjoy.cs",
+      "sha256": "de97667e3f55e066817b15e9223b9097c11f4e6db39dbe80dce98ad9bd9a8532"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Canvas.cs",
+      "sha256": "c658562b9e0335d3206529286c330dfc797ec72c3fb14b5aa819e21472cbe0b9"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/DepthInfo.cs",
+      "sha256": "a2d242264615553a5f82dac6b889ecbe1e061dce88b4a8ba03fa97e229ec70f0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Dialog.cs",
+      "sha256": "6111117dd0c33cde8bfb2dbe209255f8f59e8856df763d8e4329f95cbd4ca24e"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/AppEventType.cs",
+      "sha256": "bdfc9a171aab83ab4f8650d50b849fc0f9ae023150fd71d6785ffe78b99326c4"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/AppEvent.cs",
+      "sha256": "56829f5af20dc5d603290088261965fa3ad218e6da194c053cc7c3c807111bf7"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Font.cs",
+      "sha256": "01144881acbf350f90af70a7ff3757aae361478816af3e83142fd8f608f1975b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Graphics.cs",
+      "sha256": "c1dd3a966f1a9d39db525daa2953cc54728fce3624c74b9e15101a08ba12b6a6"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Handler.cs",
+      "sha256": "f6053382463eb5c0349a4b3e78c3ce7ddc8c0ba022d5fbdb3a70e648a9ae1f33"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/IApplication.cs",
+      "sha256": "3e9fd412628d295c4132ae08fa09c8bcfa19c923e08e0deb904073e857b8d2c0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Image.cs",
+      "sha256": "7bdaf432a70d5c38e2635d3c3e9b76c19915f3060c19f604183e74d9f7933a72"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/ImageAtlasManager.cs",
+      "sha256": "3bf16183972c42feaf9ff25459e3fa9ffa021194b5a36d4d2b2396aa98c6bf60"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/ImageAtlas.cs",
+      "sha256": "fe5fec01a06b43e974fd4b8925a7f4cebbd09a88f32168fd3d2ebb4261be38dc"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/ImageTransform.cs",
+      "sha256": "0c8c559d5f7ae3138833d055b5e6d6da03a7ba9ca5b4f31efa6907be9a695f57"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/KeyEvent.cs",
+      "sha256": "1acd398870143abc279e55a533eea0efe012fb91c872fe14eeec09a7eb4040eb"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Matrix.cs",
+      "sha256": "fff3d3f73888a1f44d89c6e48437b4564640f838de0f79ced5557cc478e09f0c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Pictograph.cs",
+      "sha256": "0f9f4164614e025cc40aa15df6a8c4d03dac72eeb775a1e3e4a8e0ece8990d6b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/ResourceManager.cs",
+      "sha256": "adef9c9855cb54d3d438dbc793926e6265063e4a5f4bf46211bc6190c94fc969"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SaveRecorder.cs",
+      "sha256": "d51995037f251ce555ac3fe8b4989d4835f45dad44b5fe7cc347d8bf054ac23c"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Seb.cs",
+      "sha256": "0accb0d03c0c5baa6281bcef111a95f3c1882e33308e0c57a33513659e12b3ed"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SoundBase.cs",
+      "sha256": "250bee5a2b62d4a0cd4e8662fad800a1c66abfe9c0fb027479ce2b4ea6c50648"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SoundOGG.cs",
+      "sha256": "27410af735b41c46e3826f78525381f6011196d9596a804d4f5bcb5b9933ab00"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/SoundPlayer.cs",
+      "sha256": "776bcf7800433152186b425dc5bc1069e2abb756fc6b0f18cbbbe99d29eb8ac0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/TextFormat.cs",
+      "sha256": "82abb420e97dc96c85253c8967edb5c78b46d75ca3b0e8a0889193ea5d59909a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/TextLayout.cs",
+      "sha256": "8f8b686e816acb564e9c6b4ac5af32cccedb725f1d4451f3af34856a4958da40"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/UIException.cs",
+      "sha256": "fb6f21b2421f71aa16ce5049484b29d0ba58882f8fd1b6d0cf593ad36391afc3"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Balloon.cs",
+      "sha256": "92ca9786d261fa25534659e82751ebff248c258c8034d37b8924bc59af43c9b5"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Base64.cs",
+      "sha256": "31d1a25061cc883adfe42200034e2a5029731e98b0444301f2700dd6a758665f"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/BitUtil.cs",
+      "sha256": "39ac36294e74797ac7c96971c5858158d93666fe449a0d698bc2d8196caa0b89"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/ClockTime.cs",
+      "sha256": "808ac1a2b960e47c4a9dd008fa3202a8bada17a4fe36251ee938b86254aa0641"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Compressor.cs",
+      "sha256": "4a1b70558ecc1b00515f95db31376231b732990d635ecab8fa188779339c2080"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/CRC64.cs",
+      "sha256": "6ebb806332bfecacc40013049d3096d09ee0385686ac32c79daa2b5489129b31"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/DisplayMetrics.cs",
+      "sha256": "89561058be397fe78b859faefebe4b0bea6a6a4c51761ad01b86a2616a0ffdd3"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/EncodeUtil.cs",
+      "sha256": "670c3634579a1fca0697f4348f508c89f46f8a12da0d5ef92c363a72e43fa4bd"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Encrypter.cs",
+      "sha256": "9f12074cff754c03ffd104853818ca86f17c6f08bb355723cadeeabcf46adb07"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/FastVector.cs",
+      "sha256": "c1541e6717f2471265d01c8faeb68e444d591042ef8fab49da74bcbd10c2f88a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/FastVector`1.cs",
+      "sha256": "3df93f5e0732f789f8fd921031dfa736ff0d03f8c628533a59a5ea4694fdfca6"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/IllegalFileException.cs",
+      "sha256": "d68f828613db2d7e07e810bc34002023c48dc26b3ab7978f3b1b0f4fe465a6ed"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/IntentUtil.cs",
+      "sha256": "96d4043ddeadfb0a45b26ca48730811a5118bb06d3b524ca841e195d291699ff"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/ISerializable.cs",
+      "sha256": "8655dcef258a32716904b3b7220f788cacafe57716c6f618a54b5df34092d943"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/JarFormatException.cs",
+      "sha256": "7d927e2d9625107846220c3869318c81e0a17109f8ff6c74b5d9ac7d0dd99679"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/JarInflater.cs",
+      "sha256": "1c780f1963522256efcb2b1b87cee800358582af5048c7eb92afc9d4a674b2f0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/KairoException.cs",
+      "sha256": "2ba531241af45e717a14e87cae47bbce761e67857f8a96d92ac9c1f0921f5dcb"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Language.cs",
+      "sha256": "b7935d77937c9e237f727aee24abe2481d9bbec55ec6386c6fc7ca4b02587e36"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Log.cs",
+      "sha256": "1d4ff343c8e02ba276433ccc82131612c376334f395f6fcb3c290ee057f4f5e5"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/LogListener.cs",
+      "sha256": "3e80abdbf1d55b57b5ad77be39073bccaadeb08175d1e36beb39c76ee0b3c0c4"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/MD5.cs",
+      "sha256": "d510cf264cdde3b0e3fff2b541cc8e8b6b4153044c2635a60c791396197fa5a0"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/NotPermitException.cs",
+      "sha256": "a06048ff5ba037694e00ed6b6a0f61c9fee4bd34f0bd5b4f44c691b896d6617a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/Property.cs",
+      "sha256": "8173b917045aecdc129468a91849b5b7036d71d95420b998ba7b0e080ea6336a"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureByte.cs",
+      "sha256": "cfb033af804bfba987ceed1672c2485124943cbd30632db13dc6f76b51712663"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureByteArray.cs",
+      "sha256": "3ca2e3f45aa8bca6b9fa050def9f5076b7d91862ccff1e41522092595b28c87b"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureChar.cs",
+      "sha256": "6db66f6187645586e8053e1cc8a87daa3b88b804ba1348e6b896e830315a4534"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureInt.cs",
+      "sha256": "efce6709759ad617ec70a21531b7304b2388951060030fa455220b050240624d"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureLong.cs",
+      "sha256": "673bb28db8c01d6c1efa2b9cee1921faa91e500488db6c37dcd34583d03dd802"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureNumber.cs",
+      "sha256": "f7e5c92d0c9feccbc674ce8cdb6888920a8500f7b0a13f76f69ddf5bd5adc209"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureProperty.cs",
+      "sha256": "ec117ef8b27faf89e946dd6c1b14bcc0d603956e6bc51216c2255e45d83f1678"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureShort.cs",
+      "sha256": "e37e6d6f62ee48ae0a9e17ec335c8370c869dbc2cefd7b5a4089a586dd139edd"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/SecureString.cs",
+      "sha256": "64ea325ac95e55088133848a7b78b0e51aa670e78798dcf53454e6c9fb9c89e4"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/StreamUtil.cs",
+      "sha256": "22d649b09b38df1a2422fc6427bd55ee6897a260e672612d8457843fcb978ba4"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/util/StringUtil.cs",
+      "sha256": "78c8239e6c93ebddb0f9d12f9083856d5a061473ad2405ecba1d6325800a72ed"
+    },
+    {
+      "path": "src/KairoLibrary/kfw/panel/MainPanel.cs",
+      "sha256": "3456d7a817d5e24deee157480344752961a9eb8d0a554f54122e4df6217e0668"
+    },
+    {
+      "path": "src/KairoLibrary/AssemblyInfo.cs",
+      "sha256": "0c8ca238cdf41c717ed3df1a3d8552f378081decd5c60c4257779d343558c91f"
+    }
+  ],
+  "reference_commit": "c7d097a847ca1f1a8e5fb7141ff11d338f5915c4",
+  "reference_metadata": [
+    {
+      "filename": "mscorlib.dll",
+      "sha256": "c4729c6fc2279933fa9638f60775ab2f7eb731d5b04f9e04c15187afbdf94558"
+    },
+    {
+      "filename": "System.Core.dll",
+      "sha256": "4998eda31c3d7bebf606f98cef77ad697f9e82e629efc37c06517019c2c2c271"
+    },
+    {
+      "filename": "UnityEngine.dll",
+      "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421"
+    },
+    {
+      "filename": "System.dll",
+      "sha256": "c2225d7ba58a12e22c266384d3c1e4e882ab4e42449b91b721c21b5f1fcd63be"
+    }
+  ],
+  "compiled_method_count": 50,
+  "game_translated_methods": 0,
+  "game_compiled_methods": 0,
+  "game_executed_methods": 0,
+  "generated_files": [
+    {
+      "path": "src/kairo/common/generated/portable_generated.cpp",
+      "sha256": "e30437d91eefc0eccbd3d6cbd2cc336671a179d7921c0ce1bfe8202367bb16e2"
+    },
+    {
+      "path": "src/kairo/common/generated/portable_generated.hpp",
+      "sha256": "5f558262dc889efd5d73b7c1e80d8224044f591d9e84b79f90429f873a15bdd9"
+    }
+  ]
+}

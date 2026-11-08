@@ -1,0 +1,2144 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 314,
+  "passed": 314,
+  "expected_lines": 157,
+  "actual_lines": 157,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\IntegerParseFixtures.cs": "210d9d6ffa587f75b49e63e9fc86f68ec2707b74c1044e1a7a21033d16047af5",
+    "tests\\translator\\integer_parse_fixtures.cpp": "eae4e38b13ba415a76a8596575253b9d99cc0aa66669d420baf98759c112ccde",
+    "src\\kairo\\common\\semantic_runtime.cpp": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2",
+    "src\\kairo\\common\\semantic_runtime.hpp": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d",
+    "src\\kairo\\common\\managed_collections.hpp": "2dfb3c5ae2e67cd549d2ec757912708ecef08de3f2d2c015ee6bb04ec6fc5228",
+    "tests\\translator\\run_semantic_fixtures.py": "0f521ca812ee73a347aee5b3a4206e0d790854474a5781edfc4050149818d235"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "parse32-0",
+      "expected": "parse32-0=System.ArgumentNullException",
+      "actual": "parse32-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "parse64-0",
+      "expected": "parse64-0=System.ArgumentNullException",
+      "actual": "parse64-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "parse32-1",
+      "expected": "parse32-1=System.FormatException",
+      "actual": "parse32-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-1",
+      "expected": "parse64-1=System.FormatException",
+      "actual": "parse64-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-2",
+      "expected": "parse32-2=System.FormatException",
+      "actual": "parse32-2=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-2",
+      "expected": "parse64-2=System.FormatException",
+      "actual": "parse64-2=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-3",
+      "expected": "parse32-3=0",
+      "actual": "parse32-3=0",
+      "passed": true
+    },
+    {
+      "case": "parse64-3",
+      "expected": "parse64-3=0",
+      "actual": "parse64-3=0",
+      "passed": true
+    },
+    {
+      "case": "parse32-4",
+      "expected": "parse32-4=0",
+      "actual": "parse32-4=0",
+      "passed": true
+    },
+    {
+      "case": "parse64-4",
+      "expected": "parse64-4=0",
+      "actual": "parse64-4=0",
+      "passed": true
+    },
+    {
+      "case": "parse32-5",
+      "expected": "parse32-5=42",
+      "actual": "parse32-5=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-5",
+      "expected": "parse64-5=42",
+      "actual": "parse64-5=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-6",
+      "expected": "parse32-6=-42",
+      "actual": "parse32-6=-42",
+      "passed": true
+    },
+    {
+      "case": "parse64-6",
+      "expected": "parse64-6=-42",
+      "actual": "parse64-6=-42",
+      "passed": true
+    },
+    {
+      "case": "parse32-7",
+      "expected": "parse32-7=42",
+      "actual": "parse32-7=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-7",
+      "expected": "parse64-7=42",
+      "actual": "parse64-7=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-8",
+      "expected": "parse32-8=2147483647",
+      "actual": "parse32-8=2147483647",
+      "passed": true
+    },
+    {
+      "case": "parse64-8",
+      "expected": "parse64-8=2147483647",
+      "actual": "parse64-8=2147483647",
+      "passed": true
+    },
+    {
+      "case": "parse32-9",
+      "expected": "parse32-9=-2147483648",
+      "actual": "parse32-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "parse64-9",
+      "expected": "parse64-9=-2147483648",
+      "actual": "parse64-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "parse32-10",
+      "expected": "parse32-10=System.OverflowException",
+      "actual": "parse32-10=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-10",
+      "expected": "parse64-10=2147483648",
+      "actual": "parse64-10=2147483648",
+      "passed": true
+    },
+    {
+      "case": "parse32-11",
+      "expected": "parse32-11=System.OverflowException",
+      "actual": "parse32-11=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-11",
+      "expected": "parse64-11=-2147483649",
+      "actual": "parse64-11=-2147483649",
+      "passed": true
+    },
+    {
+      "case": "parse32-12",
+      "expected": "parse32-12=System.OverflowException",
+      "actual": "parse32-12=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-12",
+      "expected": "parse64-12=9223372036854775807",
+      "actual": "parse64-12=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "parse32-13",
+      "expected": "parse32-13=System.OverflowException",
+      "actual": "parse32-13=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-13",
+      "expected": "parse64-13=-9223372036854775808",
+      "actual": "parse64-13=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "parse32-14",
+      "expected": "parse32-14=System.OverflowException",
+      "actual": "parse32-14=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-14",
+      "expected": "parse64-14=System.OverflowException",
+      "actual": "parse64-14=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse32-15",
+      "expected": "parse32-15=System.OverflowException",
+      "actual": "parse32-15=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-15",
+      "expected": "parse64-15=System.OverflowException",
+      "actual": "parse64-15=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse32-16",
+      "expected": "parse32-16=System.FormatException",
+      "actual": "parse32-16=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-16",
+      "expected": "parse64-16=System.FormatException",
+      "actual": "parse64-16=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-17",
+      "expected": "parse32-17=1",
+      "actual": "parse32-17=1",
+      "passed": true
+    },
+    {
+      "case": "parse64-17",
+      "expected": "parse64-17=1",
+      "actual": "parse64-17=1",
+      "passed": true
+    },
+    {
+      "case": "parse32-18",
+      "expected": "parse32-18=System.FormatException",
+      "actual": "parse32-18=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-18",
+      "expected": "parse64-18=System.FormatException",
+      "actual": "parse64-18=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-19",
+      "expected": "parse32-19=System.FormatException",
+      "actual": "parse32-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-19",
+      "expected": "parse64-19=System.FormatException",
+      "actual": "parse64-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-20",
+      "expected": "parse32-20=System.FormatException",
+      "actual": "parse32-20=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-20",
+      "expected": "parse64-20=System.FormatException",
+      "actual": "parse64-20=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-21",
+      "expected": "parse32-21=System.FormatException",
+      "actual": "parse32-21=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-21",
+      "expected": "parse64-21=System.FormatException",
+      "actual": "parse64-21=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-22",
+      "expected": "parse32-22=System.FormatException",
+      "actual": "parse32-22=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-22",
+      "expected": "parse64-22=System.FormatException",
+      "actual": "parse64-22=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-23",
+      "expected": "parse32-23=System.FormatException",
+      "actual": "parse32-23=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-23",
+      "expected": "parse64-23=System.FormatException",
+      "actual": "parse64-23=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-24",
+      "expected": "parse32-24=42",
+      "actual": "parse32-24=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-24",
+      "expected": "parse64-24=42",
+      "actual": "parse64-24=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-25",
+      "expected": "parse32-25=42",
+      "actual": "parse32-25=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-25",
+      "expected": "parse64-25=42",
+      "actual": "parse64-25=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-26",
+      "expected": "parse32-26=System.FormatException",
+      "actual": "parse32-26=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-26",
+      "expected": "parse64-26=System.FormatException",
+      "actual": "parse64-26=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-27",
+      "expected": "parse32-27=System.FormatException",
+      "actual": "parse32-27=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-27",
+      "expected": "parse64-27=System.FormatException",
+      "actual": "parse64-27=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-28",
+      "expected": "parse32-28=System.FormatException",
+      "actual": "parse32-28=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-28",
+      "expected": "parse64-28=System.FormatException",
+      "actual": "parse64-28=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-29",
+      "expected": "parse32-29=System.FormatException",
+      "actual": "parse32-29=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-29",
+      "expected": "parse64-29=System.FormatException",
+      "actual": "parse64-29=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-30",
+      "expected": "parse32-30=System.FormatException",
+      "actual": "parse32-30=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-30",
+      "expected": "parse64-30=System.FormatException",
+      "actual": "parse64-30=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-31",
+      "expected": "parse32-31=System.FormatException",
+      "actual": "parse32-31=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-31",
+      "expected": "parse64-31=System.FormatException",
+      "actual": "parse64-31=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-32",
+      "expected": "parse32-32=System.FormatException",
+      "actual": "parse32-32=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-32",
+      "expected": "parse64-32=System.FormatException",
+      "actual": "parse64-32=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-33",
+      "expected": "parse32-33=System.FormatException",
+      "actual": "parse32-33=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-33",
+      "expected": "parse64-33=System.FormatException",
+      "actual": "parse64-33=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-34",
+      "expected": "parse32-34=System.FormatException",
+      "actual": "parse32-34=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-34",
+      "expected": "parse64-34=System.FormatException",
+      "actual": "parse64-34=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-35",
+      "expected": "parse32-35=System.FormatException",
+      "actual": "parse32-35=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-35",
+      "expected": "parse64-35=System.FormatException",
+      "actual": "parse64-35=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-36",
+      "expected": "parse32-36=42",
+      "actual": "parse32-36=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-36",
+      "expected": "parse64-36=42",
+      "actual": "parse64-36=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-37",
+      "expected": "parse32-37=System.FormatException",
+      "actual": "parse32-37=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-37",
+      "expected": "parse64-37=System.FormatException",
+      "actual": "parse64-37=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-38",
+      "expected": "parse32-38=System.FormatException",
+      "actual": "parse32-38=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-38",
+      "expected": "parse64-38=System.FormatException",
+      "actual": "parse64-38=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-39",
+      "expected": "parse32-39=System.FormatException",
+      "actual": "parse32-39=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-39",
+      "expected": "parse64-39=System.FormatException",
+      "actual": "parse64-39=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-40",
+      "expected": "parse32-40=System.FormatException",
+      "actual": "parse32-40=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-40",
+      "expected": "parse64-40=System.FormatException",
+      "actual": "parse64-40=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-41",
+      "expected": "parse32-41=System.FormatException",
+      "actual": "parse32-41=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-41",
+      "expected": "parse64-41=System.FormatException",
+      "actual": "parse64-41=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-0",
+      "expected": "hex32-0=System.ArgumentNullException",
+      "actual": "hex32-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "hex64-0",
+      "expected": "hex64-0=System.ArgumentNullException",
+      "actual": "hex64-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "hex32-1",
+      "expected": "hex32-1=System.FormatException",
+      "actual": "hex32-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-1",
+      "expected": "hex64-1=System.FormatException",
+      "actual": "hex64-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-2",
+      "expected": "hex32-2=0",
+      "actual": "hex32-2=0",
+      "passed": true
+    },
+    {
+      "case": "hex64-2",
+      "expected": "hex64-2=0",
+      "actual": "hex64-2=0",
+      "passed": true
+    },
+    {
+      "case": "hex32-3",
+      "expected": "hex32-3=2147483647",
+      "actual": "hex32-3=2147483647",
+      "passed": true
+    },
+    {
+      "case": "hex64-3",
+      "expected": "hex64-3=2147483647",
+      "actual": "hex64-3=2147483647",
+      "passed": true
+    },
+    {
+      "case": "hex32-4",
+      "expected": "hex32-4=-2147483648",
+      "actual": "hex32-4=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "hex64-4",
+      "expected": "hex64-4=2147483648",
+      "actual": "hex64-4=2147483648",
+      "passed": true
+    },
+    {
+      "case": "hex32-5",
+      "expected": "hex32-5=-1",
+      "actual": "hex32-5=-1",
+      "passed": true
+    },
+    {
+      "case": "hex64-5",
+      "expected": "hex64-5=4294967295",
+      "actual": "hex64-5=4294967295",
+      "passed": true
+    },
+    {
+      "case": "hex32-6",
+      "expected": "hex32-6=System.OverflowException",
+      "actual": "hex32-6=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-6",
+      "expected": "hex64-6=4294967296",
+      "actual": "hex64-6=4294967296",
+      "passed": true
+    },
+    {
+      "case": "hex32-7",
+      "expected": "hex32-7=System.OverflowException",
+      "actual": "hex32-7=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-7",
+      "expected": "hex64-7=9223372036854775807",
+      "actual": "hex64-7=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "hex32-8",
+      "expected": "hex32-8=System.OverflowException",
+      "actual": "hex32-8=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-8",
+      "expected": "hex64-8=-9223372036854775808",
+      "actual": "hex64-8=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "hex32-9",
+      "expected": "hex32-9=System.OverflowException",
+      "actual": "hex32-9=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-9",
+      "expected": "hex64-9=-1",
+      "actual": "hex64-9=-1",
+      "passed": true
+    },
+    {
+      "case": "hex32-10",
+      "expected": "hex32-10=System.OverflowException",
+      "actual": "hex32-10=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-10",
+      "expected": "hex64-10=System.OverflowException",
+      "actual": "hex64-10=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex32-11",
+      "expected": "hex32-11=System.FormatException",
+      "actual": "hex32-11=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-11",
+      "expected": "hex64-11=System.FormatException",
+      "actual": "hex64-11=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-12",
+      "expected": "hex32-12=System.FormatException",
+      "actual": "hex32-12=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-12",
+      "expected": "hex64-12=System.FormatException",
+      "actual": "hex64-12=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-13",
+      "expected": "hex32-13=System.FormatException",
+      "actual": "hex32-13=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-13",
+      "expected": "hex64-13=System.FormatException",
+      "actual": "hex64-13=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-14",
+      "expected": "hex32-14=System.FormatException",
+      "actual": "hex32-14=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-14",
+      "expected": "hex64-14=System.FormatException",
+      "actual": "hex64-14=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-15",
+      "expected": "hex32-15=System.FormatException",
+      "actual": "hex32-15=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-15",
+      "expected": "hex64-15=System.FormatException",
+      "actual": "hex64-15=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-16",
+      "expected": "hex32-16=255",
+      "actual": "hex32-16=255",
+      "passed": true
+    },
+    {
+      "case": "hex64-16",
+      "expected": "hex64-16=255",
+      "actual": "hex64-16=255",
+      "passed": true
+    },
+    {
+      "case": "hex32-17",
+      "expected": "hex32-17=255",
+      "actual": "hex32-17=255",
+      "passed": true
+    },
+    {
+      "case": "hex64-17",
+      "expected": "hex64-17=255",
+      "actual": "hex64-17=255",
+      "passed": true
+    },
+    {
+      "case": "hex32-18",
+      "expected": "hex32-18=255",
+      "actual": "hex32-18=255",
+      "passed": true
+    },
+    {
+      "case": "hex64-18",
+      "expected": "hex64-18=255",
+      "actual": "hex64-18=255",
+      "passed": true
+    },
+    {
+      "case": "hex32-19",
+      "expected": "hex32-19=System.FormatException",
+      "actual": "hex32-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-19",
+      "expected": "hex64-19=System.FormatException",
+      "actual": "hex64-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-0",
+      "expected": "space-0=42",
+      "actual": "space-0=42",
+      "passed": true
+    },
+    {
+      "case": "space-1",
+      "expected": "space-1=42",
+      "actual": "space-1=42",
+      "passed": true
+    },
+    {
+      "case": "space-2",
+      "expected": "space-2=42",
+      "actual": "space-2=42",
+      "passed": true
+    },
+    {
+      "case": "space-3",
+      "expected": "space-3=42",
+      "actual": "space-3=42",
+      "passed": true
+    },
+    {
+      "case": "space-4",
+      "expected": "space-4=42",
+      "actual": "space-4=42",
+      "passed": true
+    },
+    {
+      "case": "space-5",
+      "expected": "space-5=System.FormatException",
+      "actual": "space-5=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-6",
+      "expected": "space-6=42",
+      "actual": "space-6=42",
+      "passed": true
+    },
+    {
+      "case": "space-7",
+      "expected": "space-7=System.FormatException",
+      "actual": "space-7=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-8",
+      "expected": "space-8=System.FormatException",
+      "actual": "space-8=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-9",
+      "expected": "space-9=System.FormatException",
+      "actual": "space-9=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-10",
+      "expected": "space-10=System.FormatException",
+      "actual": "space-10=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-11",
+      "expected": "space-11=System.FormatException",
+      "actual": "space-11=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-12",
+      "expected": "space-12=System.FormatException",
+      "actual": "space-12=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-13",
+      "expected": "space-13=System.FormatException",
+      "actual": "space-13=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-14",
+      "expected": "space-14=System.FormatException",
+      "actual": "space-14=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-15",
+      "expected": "space-15=System.FormatException",
+      "actual": "space-15=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-16",
+      "expected": "space-16=System.FormatException",
+      "actual": "space-16=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-17",
+      "expected": "space-17=System.FormatException",
+      "actual": "space-17=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-18",
+      "expected": "space-18=System.FormatException",
+      "actual": "space-18=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-19",
+      "expected": "space-19=System.FormatException",
+      "actual": "space-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-20",
+      "expected": "space-20=System.FormatException",
+      "actual": "space-20=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-21",
+      "expected": "space-21=System.FormatException",
+      "actual": "space-21=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-22",
+      "expected": "space-22=System.FormatException",
+      "actual": "space-22=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-23",
+      "expected": "space-23=System.FormatException",
+      "actual": "space-23=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-24",
+      "expected": "space-24=System.FormatException",
+      "actual": "space-24=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-25",
+      "expected": "space-25=System.FormatException",
+      "actual": "space-25=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-26",
+      "expected": "space-26=System.FormatException",
+      "actual": "space-26=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-27",
+      "expected": "space-27=System.FormatException",
+      "actual": "space-27=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-28",
+      "expected": "space-28=System.FormatException",
+      "actual": "space-28=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-29",
+      "expected": "space-29=System.FormatException",
+      "actual": "space-29=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "custom-positive",
+      "expected": "custom-positive=42",
+      "actual": "custom-positive=42",
+      "passed": true
+    },
+    {
+      "case": "custom-negative",
+      "expected": "custom-negative=-42",
+      "actual": "custom-negative=-42",
+      "passed": true
+    },
+    {
+      "case": "custom-old-sign",
+      "expected": "custom-old-sign=System.FormatException",
+      "actual": "custom-old-sign=System.FormatException",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "parse32-0",
+      "expected": "parse32-0=System.ArgumentNullException",
+      "actual": "parse32-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "parse64-0",
+      "expected": "parse64-0=System.ArgumentNullException",
+      "actual": "parse64-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "parse32-1",
+      "expected": "parse32-1=System.FormatException",
+      "actual": "parse32-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-1",
+      "expected": "parse64-1=System.FormatException",
+      "actual": "parse64-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-2",
+      "expected": "parse32-2=System.FormatException",
+      "actual": "parse32-2=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-2",
+      "expected": "parse64-2=System.FormatException",
+      "actual": "parse64-2=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-3",
+      "expected": "parse32-3=0",
+      "actual": "parse32-3=0",
+      "passed": true
+    },
+    {
+      "case": "parse64-3",
+      "expected": "parse64-3=0",
+      "actual": "parse64-3=0",
+      "passed": true
+    },
+    {
+      "case": "parse32-4",
+      "expected": "parse32-4=0",
+      "actual": "parse32-4=0",
+      "passed": true
+    },
+    {
+      "case": "parse64-4",
+      "expected": "parse64-4=0",
+      "actual": "parse64-4=0",
+      "passed": true
+    },
+    {
+      "case": "parse32-5",
+      "expected": "parse32-5=42",
+      "actual": "parse32-5=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-5",
+      "expected": "parse64-5=42",
+      "actual": "parse64-5=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-6",
+      "expected": "parse32-6=-42",
+      "actual": "parse32-6=-42",
+      "passed": true
+    },
+    {
+      "case": "parse64-6",
+      "expected": "parse64-6=-42",
+      "actual": "parse64-6=-42",
+      "passed": true
+    },
+    {
+      "case": "parse32-7",
+      "expected": "parse32-7=42",
+      "actual": "parse32-7=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-7",
+      "expected": "parse64-7=42",
+      "actual": "parse64-7=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-8",
+      "expected": "parse32-8=2147483647",
+      "actual": "parse32-8=2147483647",
+      "passed": true
+    },
+    {
+      "case": "parse64-8",
+      "expected": "parse64-8=2147483647",
+      "actual": "parse64-8=2147483647",
+      "passed": true
+    },
+    {
+      "case": "parse32-9",
+      "expected": "parse32-9=-2147483648",
+      "actual": "parse32-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "parse64-9",
+      "expected": "parse64-9=-2147483648",
+      "actual": "parse64-9=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "parse32-10",
+      "expected": "parse32-10=System.OverflowException",
+      "actual": "parse32-10=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-10",
+      "expected": "parse64-10=2147483648",
+      "actual": "parse64-10=2147483648",
+      "passed": true
+    },
+    {
+      "case": "parse32-11",
+      "expected": "parse32-11=System.OverflowException",
+      "actual": "parse32-11=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-11",
+      "expected": "parse64-11=-2147483649",
+      "actual": "parse64-11=-2147483649",
+      "passed": true
+    },
+    {
+      "case": "parse32-12",
+      "expected": "parse32-12=System.OverflowException",
+      "actual": "parse32-12=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-12",
+      "expected": "parse64-12=9223372036854775807",
+      "actual": "parse64-12=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "parse32-13",
+      "expected": "parse32-13=System.OverflowException",
+      "actual": "parse32-13=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-13",
+      "expected": "parse64-13=-9223372036854775808",
+      "actual": "parse64-13=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "parse32-14",
+      "expected": "parse32-14=System.OverflowException",
+      "actual": "parse32-14=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-14",
+      "expected": "parse64-14=System.OverflowException",
+      "actual": "parse64-14=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse32-15",
+      "expected": "parse32-15=System.OverflowException",
+      "actual": "parse32-15=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-15",
+      "expected": "parse64-15=System.OverflowException",
+      "actual": "parse64-15=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse32-16",
+      "expected": "parse32-16=System.OverflowException",
+      "actual": "parse32-16=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-16",
+      "expected": "parse64-16=System.OverflowException",
+      "actual": "parse64-16=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse32-17",
+      "expected": "parse32-17=1",
+      "actual": "parse32-17=1",
+      "passed": true
+    },
+    {
+      "case": "parse64-17",
+      "expected": "parse64-17=1",
+      "actual": "parse64-17=1",
+      "passed": true
+    },
+    {
+      "case": "parse32-18",
+      "expected": "parse32-18=System.FormatException",
+      "actual": "parse32-18=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-18",
+      "expected": "parse64-18=System.FormatException",
+      "actual": "parse64-18=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-19",
+      "expected": "parse32-19=System.FormatException",
+      "actual": "parse32-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-19",
+      "expected": "parse64-19=System.FormatException",
+      "actual": "parse64-19=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-20",
+      "expected": "parse32-20=System.FormatException",
+      "actual": "parse32-20=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-20",
+      "expected": "parse64-20=System.FormatException",
+      "actual": "parse64-20=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-21",
+      "expected": "parse32-21=System.FormatException",
+      "actual": "parse32-21=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-21",
+      "expected": "parse64-21=System.FormatException",
+      "actual": "parse64-21=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-22",
+      "expected": "parse32-22=System.FormatException",
+      "actual": "parse32-22=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-22",
+      "expected": "parse64-22=System.FormatException",
+      "actual": "parse64-22=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-23",
+      "expected": "parse32-23=System.FormatException",
+      "actual": "parse32-23=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-23",
+      "expected": "parse64-23=System.FormatException",
+      "actual": "parse64-23=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-24",
+      "expected": "parse32-24=42",
+      "actual": "parse32-24=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-24",
+      "expected": "parse64-24=42",
+      "actual": "parse64-24=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-25",
+      "expected": "parse32-25=42",
+      "actual": "parse32-25=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-25",
+      "expected": "parse64-25=42",
+      "actual": "parse64-25=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-26",
+      "expected": "parse32-26=42",
+      "actual": "parse32-26=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-26",
+      "expected": "parse64-26=42",
+      "actual": "parse64-26=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-27",
+      "expected": "parse32-27=42",
+      "actual": "parse32-27=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-27",
+      "expected": "parse64-27=42",
+      "actual": "parse64-27=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-28",
+      "expected": "parse32-28=42",
+      "actual": "parse32-28=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-28",
+      "expected": "parse64-28=42",
+      "actual": "parse64-28=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-29",
+      "expected": "parse32-29=42",
+      "actual": "parse32-29=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-29",
+      "expected": "parse64-29=42",
+      "actual": "parse64-29=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-30",
+      "expected": "parse32-30=42",
+      "actual": "parse32-30=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-30",
+      "expected": "parse64-30=42",
+      "actual": "parse64-30=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-31",
+      "expected": "parse32-31=System.FormatException",
+      "actual": "parse32-31=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-31",
+      "expected": "parse64-31=System.FormatException",
+      "actual": "parse64-31=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-32",
+      "expected": "parse32-32=System.FormatException",
+      "actual": "parse32-32=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-32",
+      "expected": "parse64-32=System.FormatException",
+      "actual": "parse64-32=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-33",
+      "expected": "parse32-33=System.FormatException",
+      "actual": "parse32-33=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-33",
+      "expected": "parse64-33=System.FormatException",
+      "actual": "parse64-33=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-34",
+      "expected": "parse32-34=System.FormatException",
+      "actual": "parse32-34=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-34",
+      "expected": "parse64-34=System.FormatException",
+      "actual": "parse64-34=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-35",
+      "expected": "parse32-35=42",
+      "actual": "parse32-35=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-35",
+      "expected": "parse64-35=System.FormatException",
+      "actual": "parse64-35=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-36",
+      "expected": "parse32-36=42",
+      "actual": "parse32-36=42",
+      "passed": true
+    },
+    {
+      "case": "parse64-36",
+      "expected": "parse64-36=42",
+      "actual": "parse64-36=42",
+      "passed": true
+    },
+    {
+      "case": "parse32-37",
+      "expected": "parse32-37=System.OverflowException",
+      "actual": "parse32-37=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-37",
+      "expected": "parse64-37=System.FormatException",
+      "actual": "parse64-37=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-38",
+      "expected": "parse32-38=System.OverflowException",
+      "actual": "parse32-38=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse64-38",
+      "expected": "parse64-38=System.OverflowException",
+      "actual": "parse64-38=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "parse32-39",
+      "expected": "parse32-39=System.FormatException",
+      "actual": "parse32-39=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-39",
+      "expected": "parse64-39=System.FormatException",
+      "actual": "parse64-39=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-40",
+      "expected": "parse32-40=System.FormatException",
+      "actual": "parse32-40=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-40",
+      "expected": "parse64-40=System.FormatException",
+      "actual": "parse64-40=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse32-41",
+      "expected": "parse32-41=System.FormatException",
+      "actual": "parse32-41=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "parse64-41",
+      "expected": "parse64-41=System.FormatException",
+      "actual": "parse64-41=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-0",
+      "expected": "hex32-0=System.ArgumentNullException",
+      "actual": "hex32-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "hex64-0",
+      "expected": "hex64-0=System.ArgumentNullException",
+      "actual": "hex64-0=System.ArgumentNullException",
+      "passed": true
+    },
+    {
+      "case": "hex32-1",
+      "expected": "hex32-1=System.FormatException",
+      "actual": "hex32-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-1",
+      "expected": "hex64-1=System.FormatException",
+      "actual": "hex64-1=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-2",
+      "expected": "hex32-2=0",
+      "actual": "hex32-2=0",
+      "passed": true
+    },
+    {
+      "case": "hex64-2",
+      "expected": "hex64-2=0",
+      "actual": "hex64-2=0",
+      "passed": true
+    },
+    {
+      "case": "hex32-3",
+      "expected": "hex32-3=2147483647",
+      "actual": "hex32-3=2147483647",
+      "passed": true
+    },
+    {
+      "case": "hex64-3",
+      "expected": "hex64-3=2147483647",
+      "actual": "hex64-3=2147483647",
+      "passed": true
+    },
+    {
+      "case": "hex32-4",
+      "expected": "hex32-4=-2147483648",
+      "actual": "hex32-4=-2147483648",
+      "passed": true
+    },
+    {
+      "case": "hex64-4",
+      "expected": "hex64-4=2147483648",
+      "actual": "hex64-4=2147483648",
+      "passed": true
+    },
+    {
+      "case": "hex32-5",
+      "expected": "hex32-5=-1",
+      "actual": "hex32-5=-1",
+      "passed": true
+    },
+    {
+      "case": "hex64-5",
+      "expected": "hex64-5=4294967295",
+      "actual": "hex64-5=4294967295",
+      "passed": true
+    },
+    {
+      "case": "hex32-6",
+      "expected": "hex32-6=System.OverflowException",
+      "actual": "hex32-6=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-6",
+      "expected": "hex64-6=4294967296",
+      "actual": "hex64-6=4294967296",
+      "passed": true
+    },
+    {
+      "case": "hex32-7",
+      "expected": "hex32-7=System.OverflowException",
+      "actual": "hex32-7=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-7",
+      "expected": "hex64-7=9223372036854775807",
+      "actual": "hex64-7=9223372036854775807",
+      "passed": true
+    },
+    {
+      "case": "hex32-8",
+      "expected": "hex32-8=System.OverflowException",
+      "actual": "hex32-8=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-8",
+      "expected": "hex64-8=-9223372036854775808",
+      "actual": "hex64-8=-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "hex32-9",
+      "expected": "hex32-9=System.OverflowException",
+      "actual": "hex32-9=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-9",
+      "expected": "hex64-9=-1",
+      "actual": "hex64-9=-1",
+      "passed": true
+    },
+    {
+      "case": "hex32-10",
+      "expected": "hex32-10=System.OverflowException",
+      "actual": "hex32-10=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-10",
+      "expected": "hex64-10=System.OverflowException",
+      "actual": "hex64-10=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex32-11",
+      "expected": "hex32-11=System.FormatException",
+      "actual": "hex32-11=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-11",
+      "expected": "hex64-11=System.FormatException",
+      "actual": "hex64-11=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-12",
+      "expected": "hex32-12=System.FormatException",
+      "actual": "hex32-12=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-12",
+      "expected": "hex64-12=System.FormatException",
+      "actual": "hex64-12=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-13",
+      "expected": "hex32-13=System.FormatException",
+      "actual": "hex32-13=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-13",
+      "expected": "hex64-13=System.FormatException",
+      "actual": "hex64-13=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-14",
+      "expected": "hex32-14=System.FormatException",
+      "actual": "hex32-14=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-14",
+      "expected": "hex64-14=System.FormatException",
+      "actual": "hex64-14=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-15",
+      "expected": "hex32-15=System.FormatException",
+      "actual": "hex32-15=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex64-15",
+      "expected": "hex64-15=System.FormatException",
+      "actual": "hex64-15=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "hex32-16",
+      "expected": "hex32-16=255",
+      "actual": "hex32-16=255",
+      "passed": true
+    },
+    {
+      "case": "hex64-16",
+      "expected": "hex64-16=255",
+      "actual": "hex64-16=255",
+      "passed": true
+    },
+    {
+      "case": "hex32-17",
+      "expected": "hex32-17=255",
+      "actual": "hex32-17=255",
+      "passed": true
+    },
+    {
+      "case": "hex64-17",
+      "expected": "hex64-17=255",
+      "actual": "hex64-17=255",
+      "passed": true
+    },
+    {
+      "case": "hex32-18",
+      "expected": "hex32-18=255",
+      "actual": "hex32-18=255",
+      "passed": true
+    },
+    {
+      "case": "hex64-18",
+      "expected": "hex64-18=255",
+      "actual": "hex64-18=255",
+      "passed": true
+    },
+    {
+      "case": "hex32-19",
+      "expected": "hex32-19=System.OverflowException",
+      "actual": "hex32-19=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "hex64-19",
+      "expected": "hex64-19=System.OverflowException",
+      "actual": "hex64-19=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "space-0",
+      "expected": "space-0=42",
+      "actual": "space-0=42",
+      "passed": true
+    },
+    {
+      "case": "space-1",
+      "expected": "space-1=42",
+      "actual": "space-1=42",
+      "passed": true
+    },
+    {
+      "case": "space-2",
+      "expected": "space-2=42",
+      "actual": "space-2=42",
+      "passed": true
+    },
+    {
+      "case": "space-3",
+      "expected": "space-3=42",
+      "actual": "space-3=42",
+      "passed": true
+    },
+    {
+      "case": "space-4",
+      "expected": "space-4=42",
+      "actual": "space-4=42",
+      "passed": true
+    },
+    {
+      "case": "space-5",
+      "expected": "space-5=System.FormatException",
+      "actual": "space-5=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-6",
+      "expected": "space-6=42",
+      "actual": "space-6=42",
+      "passed": true
+    },
+    {
+      "case": "space-7",
+      "expected": "space-7=42",
+      "actual": "space-7=42",
+      "passed": true
+    },
+    {
+      "case": "space-8",
+      "expected": "space-8=42",
+      "actual": "space-8=42",
+      "passed": true
+    },
+    {
+      "case": "space-9",
+      "expected": "space-9=42",
+      "actual": "space-9=42",
+      "passed": true
+    },
+    {
+      "case": "space-10",
+      "expected": "space-10=System.FormatException",
+      "actual": "space-10=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-11",
+      "expected": "space-11=42",
+      "actual": "space-11=42",
+      "passed": true
+    },
+    {
+      "case": "space-12",
+      "expected": "space-12=42",
+      "actual": "space-12=42",
+      "passed": true
+    },
+    {
+      "case": "space-13",
+      "expected": "space-13=42",
+      "actual": "space-13=42",
+      "passed": true
+    },
+    {
+      "case": "space-14",
+      "expected": "space-14=42",
+      "actual": "space-14=42",
+      "passed": true
+    },
+    {
+      "case": "space-15",
+      "expected": "space-15=42",
+      "actual": "space-15=42",
+      "passed": true
+    },
+    {
+      "case": "space-16",
+      "expected": "space-16=42",
+      "actual": "space-16=42",
+      "passed": true
+    },
+    {
+      "case": "space-17",
+      "expected": "space-17=42",
+      "actual": "space-17=42",
+      "passed": true
+    },
+    {
+      "case": "space-18",
+      "expected": "space-18=42",
+      "actual": "space-18=42",
+      "passed": true
+    },
+    {
+      "case": "space-19",
+      "expected": "space-19=42",
+      "actual": "space-19=42",
+      "passed": true
+    },
+    {
+      "case": "space-20",
+      "expected": "space-20=42",
+      "actual": "space-20=42",
+      "passed": true
+    },
+    {
+      "case": "space-21",
+      "expected": "space-21=42",
+      "actual": "space-21=42",
+      "passed": true
+    },
+    {
+      "case": "space-22",
+      "expected": "space-22=42",
+      "actual": "space-22=42",
+      "passed": true
+    },
+    {
+      "case": "space-23",
+      "expected": "space-23=42",
+      "actual": "space-23=42",
+      "passed": true
+    },
+    {
+      "case": "space-24",
+      "expected": "space-24=42",
+      "actual": "space-24=42",
+      "passed": true
+    },
+    {
+      "case": "space-25",
+      "expected": "space-25=42",
+      "actual": "space-25=42",
+      "passed": true
+    },
+    {
+      "case": "space-26",
+      "expected": "space-26=42",
+      "actual": "space-26=42",
+      "passed": true
+    },
+    {
+      "case": "space-27",
+      "expected": "space-27=System.FormatException",
+      "actual": "space-27=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "space-28",
+      "expected": "space-28=42",
+      "actual": "space-28=42",
+      "passed": true
+    },
+    {
+      "case": "space-29",
+      "expected": "space-29=System.FormatException",
+      "actual": "space-29=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "custom-positive",
+      "expected": "custom-positive=System.FormatException",
+      "actual": "custom-positive=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "custom-negative",
+      "expected": "custom-negative=System.FormatException",
+      "actual": "custom-negative=System.FormatException",
+      "passed": true
+    },
+    {
+      "case": "custom-old-sign",
+      "expected": "custom-old-sign=-42",
+      "actual": "custom-old-sign=-42",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "parse32-16",
+      "dotnet": "parse32-16=System.FormatException",
+      "unity_mono": "parse32-16=System.OverflowException"
+    },
+    {
+      "case": "parse64-16",
+      "dotnet": "parse64-16=System.FormatException",
+      "unity_mono": "parse64-16=System.OverflowException"
+    },
+    {
+      "case": "parse32-26",
+      "dotnet": "parse32-26=System.FormatException",
+      "unity_mono": "parse32-26=42"
+    },
+    {
+      "case": "parse64-26",
+      "dotnet": "parse64-26=System.FormatException",
+      "unity_mono": "parse64-26=42"
+    },
+    {
+      "case": "parse32-27",
+      "dotnet": "parse32-27=System.FormatException",
+      "unity_mono": "parse32-27=42"
+    },
+    {
+      "case": "parse64-27",
+      "dotnet": "parse64-27=System.FormatException",
+      "unity_mono": "parse64-27=42"
+    },
+    {
+      "case": "parse32-28",
+      "dotnet": "parse32-28=System.FormatException",
+      "unity_mono": "parse32-28=42"
+    },
+    {
+      "case": "parse64-28",
+      "dotnet": "parse64-28=System.FormatException",
+      "unity_mono": "parse64-28=42"
+    },
+    {
+      "case": "parse32-29",
+      "dotnet": "parse32-29=System.FormatException",
+      "unity_mono": "parse32-29=42"
+    },
+    {
+      "case": "parse64-29",
+      "dotnet": "parse64-29=System.FormatException",
+      "unity_mono": "parse64-29=42"
+    },
+    {
+      "case": "parse32-30",
+      "dotnet": "parse32-30=System.FormatException",
+      "unity_mono": "parse32-30=42"
+    },
+    {
+      "case": "parse64-30",
+      "dotnet": "parse64-30=System.FormatException",
+      "unity_mono": "parse64-30=42"
+    },
+    {
+      "case": "parse32-35",
+      "dotnet": "parse32-35=System.FormatException",
+      "unity_mono": "parse32-35=42"
+    },
+    {
+      "case": "parse32-37",
+      "dotnet": "parse32-37=System.FormatException",
+      "unity_mono": "parse32-37=System.OverflowException"
+    },
+    {
+      "case": "parse32-38",
+      "dotnet": "parse32-38=System.FormatException",
+      "unity_mono": "parse32-38=System.OverflowException"
+    },
+    {
+      "case": "parse64-38",
+      "dotnet": "parse64-38=System.FormatException",
+      "unity_mono": "parse64-38=System.OverflowException"
+    },
+    {
+      "case": "hex32-19",
+      "dotnet": "hex32-19=System.FormatException",
+      "unity_mono": "hex32-19=System.OverflowException"
+    },
+    {
+      "case": "hex64-19",
+      "dotnet": "hex64-19=System.FormatException",
+      "unity_mono": "hex64-19=System.OverflowException"
+    },
+    {
+      "case": "space-7",
+      "dotnet": "space-7=System.FormatException",
+      "unity_mono": "space-7=42"
+    },
+    {
+      "case": "space-8",
+      "dotnet": "space-8=System.FormatException",
+      "unity_mono": "space-8=42"
+    },
+    {
+      "case": "space-9",
+      "dotnet": "space-9=System.FormatException",
+      "unity_mono": "space-9=42"
+    },
+    {
+      "case": "space-11",
+      "dotnet": "space-11=System.FormatException",
+      "unity_mono": "space-11=42"
+    },
+    {
+      "case": "space-12",
+      "dotnet": "space-12=System.FormatException",
+      "unity_mono": "space-12=42"
+    },
+    {
+      "case": "space-13",
+      "dotnet": "space-13=System.FormatException",
+      "unity_mono": "space-13=42"
+    },
+    {
+      "case": "space-14",
+      "dotnet": "space-14=System.FormatException",
+      "unity_mono": "space-14=42"
+    },
+    {
+      "case": "space-15",
+      "dotnet": "space-15=System.FormatException",
+      "unity_mono": "space-15=42"
+    },
+    {
+      "case": "space-16",
+      "dotnet": "space-16=System.FormatException",
+      "unity_mono": "space-16=42"
+    },
+    {
+      "case": "space-17",
+      "dotnet": "space-17=System.FormatException",
+      "unity_mono": "space-17=42"
+    },
+    {
+      "case": "space-18",
+      "dotnet": "space-18=System.FormatException",
+      "unity_mono": "space-18=42"
+    },
+    {
+      "case": "space-19",
+      "dotnet": "space-19=System.FormatException",
+      "unity_mono": "space-19=42"
+    },
+    {
+      "case": "space-20",
+      "dotnet": "space-20=System.FormatException",
+      "unity_mono": "space-20=42"
+    },
+    {
+      "case": "space-21",
+      "dotnet": "space-21=System.FormatException",
+      "unity_mono": "space-21=42"
+    },
+    {
+      "case": "space-22",
+      "dotnet": "space-22=System.FormatException",
+      "unity_mono": "space-22=42"
+    },
+    {
+      "case": "space-23",
+      "dotnet": "space-23=System.FormatException",
+      "unity_mono": "space-23=42"
+    },
+    {
+      "case": "space-24",
+      "dotnet": "space-24=System.FormatException",
+      "unity_mono": "space-24=42"
+    },
+    {
+      "case": "space-25",
+      "dotnet": "space-25=System.FormatException",
+      "unity_mono": "space-25=42"
+    },
+    {
+      "case": "space-26",
+      "dotnet": "space-26=System.FormatException",
+      "unity_mono": "space-26=42"
+    },
+    {
+      "case": "space-28",
+      "dotnet": "space-28=System.FormatException",
+      "unity_mono": "space-28=42"
+    },
+    {
+      "case": "custom-positive",
+      "dotnet": "custom-positive=42",
+      "unity_mono": "custom-positive=System.FormatException"
+    },
+    {
+      "case": "custom-negative",
+      "dotnet": "custom-negative=-42",
+      "unity_mono": "custom-negative=System.FormatException"
+    },
+    {
+      "case": "custom-old-sign",
+      "dotnet": "custom-old-sign=System.FormatException",
+      "unity_mono": "custom-old-sign=-42"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

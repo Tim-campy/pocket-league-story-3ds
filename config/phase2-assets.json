@@ -1,0 +1,18 @@
+{
+  "operation": "local-lossless-asset-conversion",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "rgba8_files": 654,
+  "png_occurrences": 718,
+  "rgba8_payload_bytes": 16933248,
+  "ttf_files": 2,
+  "ttf_bytes": 1971132,
+  "vorbis_files": 27,
+  "audio_fully_decoded_in_memory": false,
+  "font_rasterized": false,
+  "game_boot": false,
+  "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
+  "assets_published": false,
+  "new_tools_installed": false,
+  "producer_sha256": "bbbf6e1bea9009dfc18764a6a402ec2595152f4d59fcc3b5d6a50b0b22acf829",
+  "private_inventory_sha256": "cf67dc544154caa15cd0fd154f648c149a03e37fc3f5b12899ddc989d55f273b"
+}

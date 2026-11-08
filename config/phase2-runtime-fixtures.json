@@ -1,0 +1,425 @@
+{
+  "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
+  "status": "PASS",
+  "fixture_cases": 60,
+  "passed": 60,
+  "expected_lines": 30,
+  "actual_lines": 30,
+  "production_methods_translated": 0,
+  "production_translator_exercised": false,
+  "game_assets_used": false,
+  "game_binary_executed": false,
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "inputs": {
+    "tests\\translator\\SemanticFixtures.cs": "709c4514098eb6cf805fa7739eece4bfcf63a54e355032e46ed2981de9d82de4",
+    "tests\\translator\\semantic_fixtures.cpp": "f3f73627c127ddd0a1e528f82294c4cef869ac27d3a4b644db30974c91d4654f",
+    "src\\kairo\\common\\semantic_runtime.cpp": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2",
+    "src\\kairo\\common\\semantic_runtime.hpp": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d",
+    "src\\kairo\\common\\managed_collections.hpp": "2dfb3c5ae2e67cd549d2ec757912708ecef08de3f2d2c015ee6bb04ec6fc5228",
+    "tests\\translator\\run_semantic_fixtures.py": "0f521ca812ee73a347aee5b3a4206e0d790854474a5781edfc4050149818d235"
+  },
+  "historical_oracle": {
+    "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+    "runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+    "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+    "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+    "original_binaries_copied": false
+  },
+  "default_runtime_profile": "UnityMono265",
+  "cpp_flags": [
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common"
+  ],
+  "cases": [
+    {
+      "case": "i32",
+      "expected": "i32=-2147483648,2147483647,2147483645,-2147483648",
+      "actual": "i32=-2147483648,2147483647,2147483645,-2147483648",
+      "passed": true
+    },
+    {
+      "case": "i64",
+      "expected": "i64=-9223372036854775808,9223372036854775807,9223372036854775805,-9223372036854775808",
+      "actual": "i64=-9223372036854775808,9223372036854775807,9223372036854775805,-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "unsigned",
+      "expected": "unsigned=4294967295,18446744073709551615",
+      "actual": "unsigned=4294967295,18446744073709551615",
+      "passed": true
+    },
+    {
+      "case": "casts",
+      "expected": "casts=-1,-1,-1",
+      "actual": "casts=-1,-1,-1",
+      "passed": true
+    },
+    {
+      "case": "division",
+      "expected": "division=-2,-1,-2,1",
+      "actual": "division=-2,-1,-2,1",
+      "passed": true
+    },
+    {
+      "case": "min-div",
+      "expected": "min-div=System.OverflowException",
+      "actual": "min-div=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "min-rem",
+      "expected": "min-rem=System.OverflowException",
+      "actual": "min-rem=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "divide-zero",
+      "expected": "divide-zero=System.DivideByZeroException",
+      "actual": "divide-zero=System.DivideByZeroException",
+      "passed": true
+    },
+    {
+      "case": "shifts",
+      "expected": "shifts=-1,2147483647,1,-2147483648",
+      "actual": "shifts=-1,2147483647,1,-2147483648",
+      "passed": true
+    },
+    {
+      "case": "arguments",
+      "expected": "arguments=ABC,123",
+      "actual": "arguments=ABC,123",
+      "passed": true
+    },
+    {
+      "case": "array-store",
+      "expected": "array-store=IR,System.NullReferenceException",
+      "actual": "array-store=IR,System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "array-bounds-store",
+      "expected": "array-bounds-store=IR,System.IndexOutOfRangeException",
+      "actual": "array-bounds-store=IR,System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "array-compound",
+      "expected": "array-compound=I,System.IndexOutOfRangeException",
+      "actual": "array-compound=I,System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "utf16",
+      "expected": "utf16=5,55357,56832,0",
+      "actual": "utf16=5,55357,56832,0",
+      "passed": true
+    },
+    {
+      "case": "ordinal",
+      "expected": "ordinal=-1,-1,-1,False",
+      "actual": "ordinal=-1,-1,-1,False",
+      "passed": true
+    },
+    {
+      "case": "concat",
+      "expected": "concat=x,0",
+      "actual": "concat=x,0",
+      "passed": true
+    },
+    {
+      "case": "string-null",
+      "expected": "string-null=System.NullReferenceException",
+      "actual": "string-null=System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "string-bounds",
+      "expected": "string-bounds=System.IndexOutOfRangeException",
+      "actual": "string-bounds=System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "array-alias",
+      "expected": "array-alias=8,8,2,3",
+      "actual": "array-alias=8,8,2,3",
+      "passed": true
+    },
+    {
+      "case": "array-null",
+      "expected": "array-null=System.NullReferenceException",
+      "actual": "array-null=System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "array-negative",
+      "expected": "array-negative=System.OverflowException",
+      "actual": "array-negative=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "exception",
+      "expected": "exception=CFO",
+      "actual": "exception=CFO",
+      "passed": true
+    },
+    {
+      "case": "finally-replace",
+      "expected": "finally-replace=System.InvalidOperationException",
+      "actual": "finally-replace=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "finally-return",
+      "expected": "finally-return=2,7",
+      "actual": "finally-return=2,7",
+      "passed": true
+    },
+    {
+      "case": "closure",
+      "expected": "closure=7,10",
+      "actual": "closure=7,10",
+      "passed": true
+    },
+    {
+      "case": "event",
+      "expected": "event=AB",
+      "actual": "event=AB",
+      "passed": true
+    },
+    {
+      "case": "property",
+      "expected": "property=SGS,7",
+      "actual": "property=SGS,7",
+      "passed": true
+    },
+    {
+      "case": "switch",
+      "expected": "switch=11,22,33",
+      "actual": "switch=11,22,33",
+      "passed": true
+    },
+    {
+      "case": "goto",
+      "expected": "goto=13",
+      "actual": "goto=13",
+      "passed": true
+    },
+    {
+      "case": "float-width",
+      "expected": "float-width=0,0,1036831949,4591870180066957722",
+      "actual": "float-width=0,0,1036831949,4591870180066957722",
+      "passed": true
+    }
+  ],
+  "historical_cases": [
+    {
+      "case": "i32",
+      "expected": "i32=-2147483648,2147483647,2147483645,-2147483648",
+      "actual": "i32=-2147483648,2147483647,2147483645,-2147483648",
+      "passed": true
+    },
+    {
+      "case": "i64",
+      "expected": "i64=-9223372036854775808,9223372036854775807,9223372036854775805,-9223372036854775808",
+      "actual": "i64=-9223372036854775808,9223372036854775807,9223372036854775805,-9223372036854775808",
+      "passed": true
+    },
+    {
+      "case": "unsigned",
+      "expected": "unsigned=4294967295,18446744073709551615",
+      "actual": "unsigned=4294967295,18446744073709551615",
+      "passed": true
+    },
+    {
+      "case": "casts",
+      "expected": "casts=-1,-1,-1",
+      "actual": "casts=-1,-1,-1",
+      "passed": true
+    },
+    {
+      "case": "division",
+      "expected": "division=-2,-1,-2,1",
+      "actual": "division=-2,-1,-2,1",
+      "passed": true
+    },
+    {
+      "case": "min-div",
+      "expected": "min-div=System.ArithmeticException",
+      "actual": "min-div=System.ArithmeticException",
+      "passed": true
+    },
+    {
+      "case": "min-rem",
+      "expected": "min-rem=System.ArithmeticException",
+      "actual": "min-rem=System.ArithmeticException",
+      "passed": true
+    },
+    {
+      "case": "divide-zero",
+      "expected": "divide-zero=System.DivideByZeroException",
+      "actual": "divide-zero=System.DivideByZeroException",
+      "passed": true
+    },
+    {
+      "case": "shifts",
+      "expected": "shifts=-1,2147483647,1,-2147483648",
+      "actual": "shifts=-1,2147483647,1,-2147483648",
+      "passed": true
+    },
+    {
+      "case": "arguments",
+      "expected": "arguments=ABC,123",
+      "actual": "arguments=ABC,123",
+      "passed": true
+    },
+    {
+      "case": "array-store",
+      "expected": "array-store=IR,System.NullReferenceException",
+      "actual": "array-store=IR,System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "array-bounds-store",
+      "expected": "array-bounds-store=IR,System.IndexOutOfRangeException",
+      "actual": "array-bounds-store=IR,System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "array-compound",
+      "expected": "array-compound=I,System.IndexOutOfRangeException",
+      "actual": "array-compound=I,System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "utf16",
+      "expected": "utf16=5,55357,56832,0",
+      "actual": "utf16=5,55357,56832,0",
+      "passed": true
+    },
+    {
+      "case": "ordinal",
+      "expected": "ordinal=-1,-1,-1,False",
+      "actual": "ordinal=-1,-1,-1,False",
+      "passed": true
+    },
+    {
+      "case": "concat",
+      "expected": "concat=x,0",
+      "actual": "concat=x,0",
+      "passed": true
+    },
+    {
+      "case": "string-null",
+      "expected": "string-null=System.NullReferenceException",
+      "actual": "string-null=System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "string-bounds",
+      "expected": "string-bounds=System.IndexOutOfRangeException",
+      "actual": "string-bounds=System.IndexOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "array-alias",
+      "expected": "array-alias=8,8,2,3",
+      "actual": "array-alias=8,8,2,3",
+      "passed": true
+    },
+    {
+      "case": "array-null",
+      "expected": "array-null=System.NullReferenceException",
+      "actual": "array-null=System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "case": "array-negative",
+      "expected": "array-negative=System.OverflowException",
+      "actual": "array-negative=System.OverflowException",
+      "passed": true
+    },
+    {
+      "case": "exception",
+      "expected": "exception=CFO",
+      "actual": "exception=CFO",
+      "passed": true
+    },
+    {
+      "case": "finally-replace",
+      "expected": "finally-replace=System.InvalidOperationException",
+      "actual": "finally-replace=System.InvalidOperationException",
+      "passed": true
+    },
+    {
+      "case": "finally-return",
+      "expected": "finally-return=2,7",
+      "actual": "finally-return=2,7",
+      "passed": true
+    },
+    {
+      "case": "closure",
+      "expected": "closure=7,10",
+      "actual": "closure=7,10",
+      "passed": true
+    },
+    {
+      "case": "event",
+      "expected": "event=AB",
+      "actual": "event=AB",
+      "passed": true
+    },
+    {
+      "case": "property",
+      "expected": "property=SGS,7",
+      "actual": "property=SGS,7",
+      "passed": true
+    },
+    {
+      "case": "switch",
+      "expected": "switch=11,22,33",
+      "actual": "switch=11,22,33",
+      "passed": true
+    },
+    {
+      "case": "goto",
+      "expected": "goto=13",
+      "actual": "goto=13",
+      "passed": true
+    },
+    {
+      "case": "float-width",
+      "expected": "float-width=0,0,1036831949,4591870180066957722",
+      "actual": "float-width=0,0,1036831949,4591870180066957722",
+      "passed": true
+    }
+  ],
+  "historical_profile_differences": [
+    {
+      "case": "min-div",
+      "dotnet": "min-div=System.OverflowException",
+      "unity_mono": "min-div=System.ArithmeticException"
+    },
+    {
+      "case": "min-rem",
+      "dotnet": "min-rem=System.OverflowException",
+      "unity_mono": "min-rem=System.ArithmeticException"
+    }
+  ],
+  "limitations": [
+    "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
+    "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
+    "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
+  ]
+}

@@ -1,56 +1,61 @@
-# Pocket League Story — preparação do port para Nintendo 3DS
+# Pocket League Story — port para Nintendo 3DS
 
-**Port não oficial, não afiliado à Kairosoft. Requer que o usuário possua o jogo e forneça o próprio APK. Este repositório não distribui assets nem binários originais do jogo ou do Unity.**
+**Port não oficial, não afiliado à Kairosoft. Requer que o usuário possua o jogo e forneça o próprio APK. Não distribui assets nem binários originais do jogo ou do Unity.**
 
-Alvo principal: **New Nintendo 3DS XL**. O 3DS original é uma meta secundária, sujeita a medições futuras. O port ainda não é jogável: esta etapa prepara o repositório e inventaria código e assets. Nenhum tradutor, reimplementação, backend, layout de telas ou pacote 3DS foi feito.
+Alvo principal: **New Nintendo 3DS XL**. O 3DS original é uma meta secundária, sujeita a medições. A Fase 2 começou com o tradutor Roslyn, runtime C++17, contratos offline, conversão local de assets e primitivas SDL2. **O port ainda não é jogável: título, menu e partida não foram executados.** Os números atuais e suas provas estão em [PROGRESS.md](PROGRESS.md); testes de infraestrutura não contam como boot.
 
 ## Referência imutável
 
-`reference/` é um submódulo somente leitura de [pocket-league-story-reconstruction](https://github.com/Tim-campy/pocket-league-story-reconstruction), fixado à tag **v1.0.0-csharp-reconstruction**, commit **c7d097a847ca1f1a8e5fb7141ff11d338f5915c4**. Os 5.245 métodos dos dois assemblies foram concluídos na etapa anterior. Esse número não mede progresso de tradução do port.
+`reference/` é um submódulo somente leitura de [pocket-league-story-reconstruction](https://github.com/Tim-campy/pocket-league-story-reconstruction), fixado à tag **v1.0.0-csharp-reconstruction**, commit **c7d097a847ca1f1a8e5fb7141ff11d338f5915c4**. Os 5.245 métodos reconstruídos não medem a tradução do port.
 
 ```powershell
 git clone --recurse-submodules https://github.com/Tim-campy/pocket-league-story-3ds.git
 Set-Location pocket-league-story-3ds
 git submodule update --init --checkout
-git -C reference diff --exit-code
+python tools/check_reference.py
 ```
 
-Não editar nem regenerar os fontes da referência. Corrigir o futuro tradutor e regenerar `src/game/`, nunca editar o C++ gerado à mão. A referência contém o fonte reconstruído histórico; antes de qualquer tradução, os dados e textos incorporados nele deverão ser separados do código para não entrarem no C++ publicado.
+Corrigir o tradutor e regenerar seus arquivos; nunca editar `src/game/` ou os fontes gerados da KairoLibrary à mão. Por decisão explícita do usuário, literais do C# reconstruído podem permanecer no C++ gerado. Textos e demais conteúdos dos assets continuam vindo exclusivamente do pipeline local. A lógica de `Language._translateText` será preservada.
 
-## Resultado desta preparação
+## Inventários e implementação
 
-- [Fronteira](docs/boundary.md): 775 símbolos KairoLibrary — 254 portáveis, 452 a reimplementar e 69 a remover — e 18 símbolos diretos UnityEngine, todos com proposta de tratamento.
-- [Subconjunto C#](docs/csharp-subset.md): 97 fontes, 448.825 nós AST e 123 SyntaxKinds; sem erros semânticos. Os 1.958 métodos do jogo estão cadastrados como `todo`, sem C++ gerado.
-- [Assets](docs/assets.md): inventário local do APK, objetos Unity, contêineres próprios, imagens, áudio, fontes e estimativas de memória. Nenhum conteúdo está nos CSVs ou relatórios publicados.
-- [Comportamento offline](docs/notes/offline-behavior.md): remover serviços exige preservar contratos, máquinas de estado e saves; não basta retornar null.
-- [Ferramentas](docs/toolchain.md) e [progresso gerado](PROGRESS.md).
+- [Fronteira](docs/boundary.md): 775 símbolos KairoLibrary — 254 portáveis, 452 a reimplementar, 69 a remover — e 18 símbolos UnityEngine diretos. Os 254 símbolos portáveis incluem tipos/campos/propriedades: não são 254 métodos.
+- [Contrato do tradutor](docs/translator.md): UTF-16, overflow definido, avaliação ordenada, exceções, classes, capturas e limites atuais. Os 123 SyntaxKinds medidos não estão todos implementados.
+- [Serviços offline](docs/design/services.md): registro local com identificador de aparelho persistente; cobrança indisponível preservando saves, sem concessões; anúncios, licenciamento e notificações removidos. Contratos testados ainda aguardam integração ao jogo traduzido.
+- [Assets](docs/assets.md): inventário, formatos e estimativas; [MAP/CSV](docs/notes/phase2-legacy-assets.md) identificados sem publicar conteúdo.
+- [Toolchain e reprodução](docs/toolchain.md). Não há backend 3DS nem decisão sobre telas/controles nesta fase.
 
-## APK e inventário local
+## Pipeline local e testes
 
-A identidade esperada está em [docs/apk.md](docs/apk.md). As ferramentas nunca baixam, procuram ou indicam onde obter o APK. Após fornecer sua própria cópia:
+A identidade do APK está em [docs/apk.md](docs/apk.md). As ferramentas nunca baixam, procuram ou indicam onde obter o jogo. Forneça a própria cópia:
 
 ```powershell
 python tools/extract-assets --apk 'CAMINHO_DO_SEU_APK' --extract
-python tools/progress
+python tools/convert-assets --apk 'CAMINHO_DO_SEU_APK'
 ```
 
-O comando confere SHA-256, mede os assets e pode extrair os membros dos contêineres para **assets/**, ignorado pelo Git. Outra versão exige confirmação explícita com seu hash completo. A chave de transformação é obtida em tempo de execução da referência, nunca duplicada no pipeline ou nos relatórios. Os dados publicados são somente contagens, dimensões, formatos e evidências; as saídas completas permanecem locais. Não há conversão de texturas/áudio nesta etapa.
+As saídas ficam em `assets/`, ignorado pelo Git: imagens RGBA8 sem perda, TTF do APK e Vorbis comprimido. O áudio não é convertido integralmente para PCM. A conversão usa FFmpeg já presente e AssetRipper portátil autorizado; consulte a toolchain para preparar seus pré-requisitos e o inventário AssetRipper. Não há instalação automática de outras dependências.
 
-AssetRipper 2.0.0 portátil foi usado localmente, com autorização, para conferir os objetos Unity. A ferramenta fica em `build/`, não acompanha o repositório. O processo e as limitações estão em [sua auditoria](docs/notes/assetripper-inventory.md).
+O SDK de desenvolvimento SDL2 deve ser preparado com a autorização apropriada. Nesta máquina sua preparação local foi autorizada pelo usuário:
 
-Os inventários semânticos podem ser repetidos pelas ferramentas `tools/inventory_boundary.py` e `tools/csharp_subset/inventory.py`, fornecendo referências de API externas da cópia própria na opção `--original-managed`. Nenhuma DLL é copiada para o port nem vinculada a ele. A localização e o uso de Roslyn sem SDK estão documentados na toolchain.
+```powershell
+python tools/setup_sdl2.py --fetch
+python tools/build-pc --fixtures-only
+python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK'
+```
+
+Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e recusa explicitamente um alvo de jogo ainda incompleto. Fontes ainda não foram rasterizadas; reprodução Vorbis e boot aguardam implementação. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
 
 ## Conteúdo e distribuição
 
-`assets/`, `build/`, `data/`, formatos originais/convertidos e binários são ignorados e recusados pelo teste de conteúdo. Arquivos acima de **2.000.000 bytes** também são recusados. O CI confere os blobs Git, incluindo adições forçadas que o `.gitignore` sozinho não impediria.
+`assets/`, `build/`, `data/`, formatos originais/convertidos e binários são ignorados e recusados pelo CI. Arquivos acima de **2.000.000 bytes** também são recusados, inclusive se adicionados à força. O submódulo é conferido pelo commit fixado.
 
 ```powershell
 python -m unittest discover -s tests/repository -p 'test_*.py'
 python tools/csharp_subset/test_inventory.py
+python tools/progress
 git add .
 python tools/check_repository.py --staged
 ```
 
-Textos, nomes, tabelas, fontes, imagens, áudio, cenas e prefabs do jogo são assets, inclusive quando convertidos ou incorporados em código. Não incluir capturas como fonte de arte, logos ou assinatura originais. DEX/Java não será portado. Um eventual `.3dsx`/`.cia` distribuído deverá conter só o programa, com ícone/banner próprios de port não oficial, e carregar os assets gerados pelo usuário no SD. Nenhum pacote pronto com assets será distribuído.
-
-A Fase 2 depende das decisões registradas no relatório e da preparação das ferramentas faltantes. Telas e controles ficam para a decisão do usuário na Fase 3; esta rodada não os propõe.
+Nenhum asset, logo, captura como fonte de arte, assinatura original ou binário Unity acompanha o repositório. DEX/Java não será portado. Um futuro `.3dsx`/`.cia` distribuído conterá apenas o programa e arte própria de port não oficial; os assets serão gerados pelo usuário para seu SD. Toolchain 3DS, emulador, telas e controles ficam para as fases seguintes.

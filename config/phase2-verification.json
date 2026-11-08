@@ -1,0 +1,117 @@
+{
+  "operation": "phase2-checkpoint-full-verification",
+  "status": "PASS",
+  "checks": [
+    {
+      "name": "repository-tests",
+      "exit_code": 0,
+      "log_sha256": "191004137022c94351150bb999c033068a9d706f58e85082c343bf083a3ab67a"
+    },
+    {
+      "name": "syntax-inventory-tests",
+      "exit_code": 0,
+      "log_sha256": "9ff1ce131c41a0fa016875654ceecd2ba178d9e8de011450fa5e41b3890734e5"
+    },
+    {
+      "name": "reference",
+      "exit_code": 0,
+      "log_sha256": "6c28d69d2f1fceb7dc3c459b7a734e6c8c7ac2cbc64a0af962ef07ee339997cf"
+    },
+    {
+      "name": "portable-compile",
+      "exit_code": 0,
+      "log_sha256": "f694fc90243b7041014afd836ec54f704d7b7dc280e142e01d4fbf8948604223"
+    },
+    {
+      "name": "portable-differential",
+      "exit_code": 0,
+      "log_sha256": "60b6e87c92cc30859ea73a96519ada8ae6a8abfa961a0969b7b5558452510b28"
+    },
+    {
+      "name": "lowering-differential",
+      "exit_code": 0,
+      "log_sha256": "f2797cc4d7384c09d5b76a6bee19b109ee708b74b694b42e294fd1748ac8aba9"
+    },
+    {
+      "name": "game-diagnostics",
+      "exit_code": 0,
+      "log_sha256": "83c708c072dba31febb441298399e599460f11056a8687442523231a65800084"
+    },
+    {
+      "name": "runtime-SemanticFixtures",
+      "exit_code": 0,
+      "log_sha256": "465a31b35c7004d249f48dbd4fadc71830f44b2fcf3f800692f03b320f1f7050"
+    },
+    {
+      "name": "runtime-CollectionFixtures",
+      "exit_code": 0,
+      "log_sha256": "858d6ca4103d8e38e6e1c4c2dafd0b6be7121ce4e89aa0616bafca8882060277"
+    },
+    {
+      "name": "runtime-EncodingFixtures",
+      "exit_code": 0,
+      "log_sha256": "fda00757b9eee391e17d8cff132e4f37d2132575b693191bbf40a76900b5a2bd"
+    },
+    {
+      "name": "runtime-ConversionFixtures",
+      "exit_code": 0,
+      "log_sha256": "a622706f2825918db46186ce8a75f8108d334ae8a374f068cb6f2266e02eeb11"
+    },
+    {
+      "name": "runtime-IntegerParseFixtures",
+      "exit_code": 0,
+      "log_sha256": "b2047e33339c342c926b74c65d31b326405d1634ce5f4bbfc8d8b7e0976cb013"
+    },
+    {
+      "name": "streams",
+      "exit_code": 0,
+      "log_sha256": "662bef6f414f07035a0c627a6a08d61895254c8aac348f93fc8295b4cf3e0a07"
+    },
+    {
+      "name": "service-policy",
+      "exit_code": 0,
+      "log_sha256": "fcec5e1312c61d0e25a2c85c2ed05cccd83b25ae7ae621863a05c0d8901b8b0e"
+    },
+    {
+      "name": "services",
+      "exit_code": 0,
+      "log_sha256": "a1ee19d5745517faabe5893507d6daa22d1882b994eb392dc0276c3f9a804999"
+    },
+    {
+      "name": "legacy-assets",
+      "exit_code": 0,
+      "log_sha256": "7ac1da73c5b43230ec8b10bd75919d72015ea8451e594f7f4a56d4efc74f023a"
+    },
+    {
+      "name": "sdl-and-assets",
+      "exit_code": 0,
+      "log_sha256": "7e1f46f36fba00cc07f6c8fdc46b5c56fd0f1c55af6289c726d9c1e15f6d210e"
+    },
+    {
+      "name": "progress",
+      "exit_code": 0,
+      "log_sha256": "18fbef37738181b10ef12b2ddfd589dba22000c0475949d20c3af2d050a350f7"
+    }
+  ],
+  "producer_sha256": "85d7a16cce7ea98ac152bca3818ef81063c8b471d45d605c54a3592e7af16016",
+  "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+  "game_boot": false,
+  "receipts": {
+    "phase2-assets.json": "6008f5229566e0d45d83c0c1d1ea6f1c44246fa66c8afaed8aab9863663bddd8",
+    "phase2-collections-fixtures.json": "e6219c4d696a070aefb398387ee0e4be5571ebf762bad39b173e4865ba901a79",
+    "phase2-conversion-fixtures.json": "9e37a98ce000e8e0ef23771f043a66ff40762a051a1262637790794c2ee0c159",
+    "phase2-encoding-fixtures.json": "c082ff1216a2eb98dc004e28d940e4967299a5461ea1d124464d2bf212edf7b7",
+    "phase2-game-diagnostics.json": "9e461c0516eeab6c9bb9f7603fbe09e0061baa019c35238cd1717ca0c08d2beb",
+    "phase2-image-tests.json": "87bad36c7316c47e26902462b1a82fccdbd8c8b617c5fa96ff4740028499302c",
+    "phase2-integer-parse-fixtures.json": "b9e6f2ab591b0b0bc83f8b0c486785b21195ff0af8a6e4dbe90d5637c88621d5",
+    "phase2-legacy-assets.json": "0c886fda78e72fc95d6c97cc402ecd77efe5a55ada11b4efe1113771ccb7eed1",
+    "phase2-lowering-fixtures.json": "716c20415572325f06c83f2036c72533fbadcccd819f84850a29b79923fd50c0",
+    "phase2-portable-differential.json": "92a8b2ebafad89dbe76b3d3decfb01f3c9930b8f2a11a5645fc5470c12601e66",
+    "phase2-progress.json": "b6c6b2949416ed642126a6982dd2e2040a3f286f855ae43b0eedb8a217a70c8f",
+    "phase2-runtime-fixtures.json": "8a085d73562465d827d668d29cc2484a869a87e96b15dc4205bc279cef4e7954",
+    "phase2-sdl-verification.json": "b9893f047cbf49f4a803b1f89d7abb5be87d57cec95231032916693fc52ec38f",
+    "phase2-services-tests.json": "fee242d20dd972bfe83359688d1bf1871cb7ac9ab0e1be03626b9e7705bf46bb",
+    "phase2-streams-fixtures.json": "af1b9e8b4f0b4a8b7fbce5e23ccb3429122a7a5d1bde57d1a650487fea4de3be",
+    "phase2-translation.json": "9b6a0750bbb75a6dbc2b5398ff32ee24cbf520e71be6aca23703a04c9d954f2d"
+  }
+}

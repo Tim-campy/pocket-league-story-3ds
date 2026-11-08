@@ -1,0 +1,384 @@
+{
+  "schema_version": 1,
+  "operation": "explicit-user-platform-policies",
+  "integration_status": "PENDING_GENERATED_GAME_BINDING",
+  "host_bootstrap": [
+    "Construct OfflineServices with host preference directory",
+    "install(&services)",
+    "Call device_id() before constructing generated Main; do not wait for registration counter"
+  ],
+  "overrides": [
+    {
+      "symbol": "M:main.AppData.CgiRegist(System.String,System.String)",
+      "action": "native",
+      "result_contract": "System.Byte[]",
+      "native_hook": "pls::services::register_local_wire",
+      "wire_contract": "Exact original local fallback: ASCII 1 newline 202",
+      "preserve_source_effects": [
+        "BootForm.Run keeps its counter reset to30 and SaveSystem calls",
+        "BootForm.Update/Run parse response line1 asversion202"
+      ]
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.UpdateBillingItems(System.Boolean)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": "pls::services::refresh_billing_inventory",
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.LaunchPurchaseFlow(system.billing.ui.BillingItem)",
+      "action": "disabled-before-original-body",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.Purchase(system.billing.ui.BillingItem)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": "pls::services::refresh_billing_inventory",
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.RegistApplyTask(System.Boolean)",
+      "action": "disabled-before-original-body",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.UpdateApplyTask(System.Boolean)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": "pls::services::refresh_billing_inventory",
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.ExecuteApplyTask(system.billing.ui.ApplyTask)",
+      "action": "disabled-before-original-body",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.Provisioning(system.billing.ui.ApplyTask)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": "pls::services::refresh_billing_inventory",
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.Cancel(system.billing.ui.ApplyTask)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": "pls::services::refresh_billing_inventory",
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+    },
+    {
+      "symbol": "M:system.billing.MyBilling.ExecuteApplyTask(system.billing.ui.ApplyTask)",
+      "action": "disabled-before-original-body",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Derived override must not bypass unavailable billing policy"
+    },
+    {
+      "symbol": "M:system.billing.MyBilling.Provisioning(system.billing.ui.ApplyTask)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Derived override must not bypass unavailable billing policy"
+    },
+    {
+      "symbol": "M:system.billing.MyBilling.Cancel(system.billing.ui.ApplyTask)",
+      "action": "disabled-before-original-body",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Derived override must not bypass unavailable billing policy"
+    },
+    {
+      "symbol": "M:system.billing.ui.StoreBase.LaunchPurchaseFlow(System.String)",
+      "action": "constant",
+      "result_contract": "null Purchase",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.billing.ui.StoreBase.Restore",
+      "action": "constant",
+      "result_contract": "RestoreResult.Faild = 1",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.billing.ui.StoreBase.WaitForInitialized",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.billing.ui.StoreBase.IsInitialized",
+      "action": "constant",
+      "result_contract": "true (disabled local backend is ready; not shop availability)",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.billing.ui.StoreBase.ConsumeItem(system.billing.util.Purchase)",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.ConnectRegistMarketPurchase",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.billing.ui.BillingManager.ConnectGetMarketPurchase",
+      "action": "constant",
+      "result_contract": "null string[][]",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:surface.SurfaceManager.UpdateAdMobView",
+      "action": "native-field-aware",
+      "result_contract": "void",
+      "native_hook": "pls::services::advertisements_enabled",
+      "required_assignments": [
+        "Config.ADMOB_ENABLE=false",
+        "Canvas ads state absent",
+        "GamePad.SIZE_PLAIN=65"
+      ],
+      "reason": "Preserve the non-ad GamePad assignment from the original method"
+    },
+    {
+      "symbol": "M:kairo.unity.ui.Canvas.UpdateAdMobView",
+      "action": "native-field-aware",
+      "result_contract": "false after state cleared",
+      "native_hook": "pls::services::advertisements_enabled",
+      "required_assignments": [
+        "Config.ADMOB_ENABLE=false",
+        "admobView_=null",
+        "updateAdMobViewRun_=false"
+      ]
+    },
+    {
+      "symbol": "M:kairo.unity.ad.AdMobView.GetAdHeight",
+      "action": "native",
+      "result_contract": "System.Int32",
+      "native_hook": "pls::services::ad_height"
+    },
+    {
+      "symbol": "M:kairo.unity.ad.AdMobView.IsLoad",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.ad.AdMobView.IsStart",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.ad.InterstitialAd.Load",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.ad.InterstitialAd.Show",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.ad.InterstitialAd.GetState",
+      "action": "constant",
+      "result_contract": "State.None = -1",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.ad.InterstitialAd.IsLoaded",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.tapjoy.ui.Tapjoy.ShowOffers",
+      "action": "native-field-aware",
+      "result_contract": "false",
+      "native_hook": null,
+      "required_assignments": [
+        "offerState_=OfferState.Failed"
+      ],
+      "reason": "No reward; existing balance getters/save remain original"
+    },
+    {
+      "symbol": "M:system.surface.GameBanner.Draw(kairo.unity.ui.Graphics)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.surface.GameBanner.Load",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.UpdateValues",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:system.notification.MyNotify.OnReceiveValue",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendString(System.Int64,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendString(System.Int32,System.Int64,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendText(System.Int64,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendText(System.Int32,System.Int64,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushString(System.String,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushString(System.Int32,System.String,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushText(System.String,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushText(System.Int32,System.String,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SetPushEnable(System.Boolean)",
+      "action": "constant",
+      "result_contract": "void; never enable transport",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.IsPushEnable",
+      "action": "native",
+      "result_contract": "false",
+      "native_hook": "pls::services::notifications_enabled"
+    },
+    {
+      "symbol": "M:kairo.unity.system.KairoBase.ConnectNotificationSend(System.String,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.system.KairoBase.ConnectNotificationRegist(System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.SendNotification(System.Int64,System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.CancelNotifications(System.Boolean,System.Boolean)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.SetNotificationFilter(System.Int32)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.SetNotificationBackground(System.Boolean)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.RemoveNotificationData",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.GetNotificationData",
+      "action": "constant",
+      "result_contract": "empty string[]",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.GetNotificationFilter",
+      "action": "constant",
+      "result_contract": "FilterLevel.None = 0",
+      "native_hook": null
+    },
+    {
+      "symbol": "M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null
+    }
+  ],
+  "preserved_original_account_symbols": [
+    "M:kairo.unity.system.KairoBase.GetUserId",
+    "M:kairo.unity.system.KairoBase.GetUserIdInt",
+    "M:kairo.unity.system.KairoBase.CheckUserId"
+  ],
+  "device_identity_scope": "Persistent local device installation ID only; never an account ID or friend registration",
+  "removed_licensing_routes": [
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.LicenseCheck",
+      "callers": [
+        "kairo.unity.io.HttpObject._connect registration branch"
+      ],
+      "handling": "Local AppData.CgiRegist bypasses this branch; no JNI implementation or fabricated licensing result"
+    },
+    {
+      "symbol": "M:kairo.unity.licensing.LicenseChecker.DoCheck",
+      "callers": [],
+      "handling": "No caller found in recovered source; remove facade from runtime dependency set; unexpected call is a diagnostic"
+    }
+  ],
+  "save_policy": "No service function accepts a mutable game save; preserve serialized billing and unknown fields",
+  "states_modified": false,
+  "reference_modified": false
+}

@@ -27,8 +27,8 @@ O inventário principal mede 1.337 membros: 718 PNG e os tipos abaixo. Os bytes 
 | TXT | 52 | 254660 | Todos UTF-8 válido; 2.584 linhas físicas somadas. Tabelas, rótulos, mensagens e scripts de evento carregados por `BootForm.Load`, `reference/src/Assembly-CSharp/form/BootForm.cs:526–773`, e `Main.OnCreate():47–67` |
 | INF | 24 | 24576 | Listas UTF-8 de recursos/opções; 1.350 linhas físicas somadas. `ResourceManager.LoadReady():284–312` e `LoadStart():332–618`, `reference/src/KairoLibrary/kairo/unity/ui/ResourceManager.cs` |
 | GMAP | 4 | 10372 | Quatro mapas binários interpretados até o fim exato: três pelo layout `game.Map.LoadMap`, um pelo layout `game.MapMain.LoadMap` |
-| MAP | 4 | 119652 | Binários não UTF-8; sem correspondência comprovada com os dois layouts GMAP. Sem consumidor explícito da extensão identificado: **UNKNOWN** |
-| CSV | 3 | 316974 | Todos UTF-8 válido, 7.542 linhas físicas somadas. Consumidor específico de cada arquivo não comprovado; não presumir que a extensão sozinha estabelece o schema ou a necessidade em runtime |
+| MAP | 4 | 119652 | Versão 102 little-endian; 4/4 projeções coincidem com GMAP. [Esquema e prova da Fase 2](phase2-legacy-assets.md); ferramenta autoral **UNKNOWN** |
+| CSV | 3 | 316974 | Pacotes de idioma UTF-8 com BOM, 7.542 linhas físicas somadas. Consumidos por `Language.Init/SetLanguagePack/LoadLanguagePack`, conforme [prova da Fase 2](phase2-legacy-assets.md) |
 
 TXT e INF não são código para o tradutor. `StringUtil.LoadStringArray`, `reference/src/KairoLibrary/kairo/unity/util/StringUtil.cs:220–252`, lê uma entrada do pacote e separa linhas; `java.lang.JString.New(byte[])`, `reference/src/KairoLibrary/java/lang/JString.cs:1170–1177`, usa UTF-8. A interpretação das colunas é feita pelo consumidor: por exemplo `PlayerData.Load():493–518` mistura nomes e campos numéricos, e `EventData.Load/ReadScript/LoadStringTable():141–199` associa textos e sequências numéricas de eventos. Esses valores continuam assets locais.
 
@@ -46,7 +46,7 @@ O modelo confirmado possui índices de textura, retângulos, deslocamentos, reve
 
 `game.MapMain.CreateMap`, `reference/src/Assembly-CSharp/game/MapMain.cs:210–222`, também solicita GMAP. `LoadMap():243–353` acrescenta pontos base e uma tabela intermediária de posicionamento antes dos objetos. Um GMAP coincide integralmente com esse segundo molde. Os extents foram calculados sem publicar dimensões de mapa, tiles ou coordenadas do jogo.
 
-Os quatro MAP possuem 119.652 bytes somados e não coincidem com nenhum desses moldes. A possibilidade de serem fontes intermediários/editoriais é apenas uma hipótese; não foi adotada como fato. Eles não foram convertidos, descartados ou tratados como imagens. Sua semântica permanece UNKNOWN e não bloqueia a identificação dos quatro arquivos GMAP que o código solicita explicitamente.
+Na Fase 2 os quatro MAP foram interpretados até o fim exato como versão 102 little-endian, e suas quatro projeções de runtime coincidem integralmente com os GMAP: tiles, pontos, tabelas e objetos. A [nota e o recibo da Fase 2](phase2-legacy-assets.md) detalham o esquema sem publicar conteúdo. O consumidor runtime comprovado continua sendo o dos GMAP; a ferramenta autoral que consome ou produz MAP permanece UNKNOWN. Nenhum arquivo foi convertido, descartado ou tratado como imagem.
 
 ## As duas Font têm fontes TrueType embutidas
 

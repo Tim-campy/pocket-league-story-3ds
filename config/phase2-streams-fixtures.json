@@ -1,0 +1,1188 @@
+{
+  "operation": "own-source-SystemIO-Stream-MemoryStream-differential",
+  "status": "PASS",
+  "fixture_cases": 174,
+  "passed": 174,
+  "default_profile": "UnityMono265",
+  "profiles": {
+    "dotnet": [
+      {
+        "case": "empty",
+        "expected": "empty=0:0:0:",
+        "actual": "empty=0:0:0:",
+        "passed": true
+      },
+      {
+        "case": "empty-eof",
+        "expected": "empty-eof=-1",
+        "actual": "empty-eof=-1",
+        "passed": true
+      },
+      {
+        "case": "first-write",
+        "expected": "first-write=1:1:256:7,",
+        "actual": "first-write=1:1:256:7,",
+        "passed": true
+      },
+      {
+        "case": "seek-gap",
+        "expected": "seek-gap=6:6:256:7,0,0,0,0,9,",
+        "actual": "seek-gap=6:6:256:7,0,0,0,0,9,",
+        "passed": true
+      },
+      {
+        "case": "shrink",
+        "expected": "shrink=2:2:256:7,0,",
+        "actual": "shrink=2:2:256:7,0,",
+        "passed": true
+      },
+      {
+        "case": "expand-zero",
+        "expected": "expand-zero=6:2:256:7,0,0,0,0,0,",
+        "actual": "expand-zero=6:2:256:7,0,0,0,0,0,",
+        "passed": true
+      },
+      {
+        "case": "capacity-shrink",
+        "expected": "capacity-shrink=6:2:6:7,0,0,0,0,0,",
+        "actual": "capacity-shrink=6:2:6:7,0,0,0,0,0,",
+        "passed": true
+      },
+      {
+        "case": "capacity-below-length",
+        "expected": "capacity-below-length=!System.ArgumentOutOfRangeException",
+        "actual": "capacity-below-length=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-expand",
+        "expected": "write-expand=9:9:256:7,0,0,0,0,0,3,4,5,",
+        "actual": "write-expand=9:9:256:7,0,0,0,0,0,3,4,5,",
+        "passed": true
+      },
+      {
+        "case": "seek-begin",
+        "expected": "seek-begin=1:1",
+        "actual": "seek-begin=1:1",
+        "passed": true
+      },
+      {
+        "case": "seek-current",
+        "expected": "seek-current=3:3",
+        "actual": "seek-current=3:3",
+        "passed": true
+      },
+      {
+        "case": "seek-end",
+        "expected": "seek-end=8:8",
+        "actual": "seek-end=8:8",
+        "passed": true
+      },
+      {
+        "case": "seek-negative",
+        "expected": "seek-negative=!System.IO.IOException",
+        "actual": "seek-negative=!System.IO.IOException",
+        "passed": true
+      },
+      {
+        "case": "seek-invalid-origin",
+        "expected": "seek-invalid-origin=!System.ArgumentException",
+        "actual": "seek-invalid-origin=!System.ArgumentException",
+        "passed": true
+      },
+      {
+        "case": "position-negative",
+        "expected": "position-negative=!System.ArgumentOutOfRangeException",
+        "actual": "position-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "position-too-large",
+        "expected": "position-too-large=!System.ArgumentOutOfRangeException",
+        "actual": "position-too-large=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "length-negative",
+        "expected": "length-negative=!System.ArgumentOutOfRangeException",
+        "actual": "length-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "length-too-large",
+        "expected": "length-too-large=!System.ArgumentOutOfRangeException",
+        "actual": "length-too-large=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "read-offset",
+        "expected": "read-offset=2:90,4,5,93,94,:9",
+        "actual": "read-offset=2:90,4,5,93,94,:9",
+        "passed": true
+      },
+      {
+        "case": "read-eof",
+        "expected": "read-eof=0:9",
+        "actual": "read-eof=0:9",
+        "passed": true
+      },
+      {
+        "case": "read-null",
+        "expected": "read-null=!System.ArgumentNullException",
+        "actual": "read-null=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "read-offset-negative",
+        "expected": "read-offset-negative=!System.ArgumentOutOfRangeException",
+        "actual": "read-offset-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "read-count-negative",
+        "expected": "read-count-negative=!System.ArgumentOutOfRangeException",
+        "actual": "read-count-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "read-bounds",
+        "expected": "read-bounds=!System.ArgumentOutOfRangeException",
+        "actual": "read-bounds=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-null",
+        "expected": "write-null=!System.ArgumentNullException",
+        "actual": "write-null=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "write-offset-negative",
+        "expected": "write-offset-negative=!System.ArgumentOutOfRangeException",
+        "actual": "write-offset-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-count-negative",
+        "expected": "write-count-negative=!System.ArgumentOutOfRangeException",
+        "actual": "write-count-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-bounds",
+        "expected": "write-bounds=!System.ArgumentOutOfRangeException",
+        "actual": "write-bounds=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-initial",
+        "expected": "slice-initial=3:0:3:12,13,14,",
+        "actual": "slice-initial=3:0:3:12,13,14,",
+        "passed": true
+      },
+      {
+        "case": "slice-seek-begin",
+        "expected": "slice-seek-begin=0:0",
+        "actual": "slice-seek-begin=0:0",
+        "passed": true
+      },
+      {
+        "case": "slice-seek-current",
+        "expected": "slice-seek-current=1:1",
+        "actual": "slice-seek-current=1:1",
+        "passed": true
+      },
+      {
+        "case": "slice-seek-end",
+        "expected": "slice-seek-end=2:2",
+        "actual": "slice-seek-end=2:2",
+        "passed": true
+      },
+      {
+        "case": "slice-read-alias",
+        "expected": "slice-read-alias=88:3:3:3:12,13,88,",
+        "actual": "slice-read-alias=88:3:3:3:12,13,88,",
+        "passed": true
+      },
+      {
+        "case": "slice-write-alias",
+        "expected": "slice-write-alias=10,11,77,13,88,15,",
+        "actual": "slice-write-alias=10,11,77,13,88,15,",
+        "passed": true
+      },
+      {
+        "case": "slice-buffer-alias",
+        "expected": "slice-buffer-alias=True",
+        "actual": "slice-buffer-alias=True",
+        "passed": true
+      },
+      {
+        "case": "slice-copy-not-alias",
+        "expected": "slice-copy-not-alias=77,13,88,",
+        "actual": "slice-copy-not-alias=77,13,88,",
+        "passed": true
+      },
+      {
+        "case": "slice-expand",
+        "expected": "slice-expand=!System.NotSupportedException",
+        "actual": "slice-expand=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "slice-capacity-same",
+        "expected": "slice-capacity-same=ok",
+        "actual": "slice-capacity-same=ok",
+        "passed": true
+      },
+      {
+        "case": "slice-capacity-change",
+        "expected": "slice-capacity-change=!System.NotSupportedException",
+        "actual": "slice-capacity-change=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "slice-overlap",
+        "expected": "slice-overlap=10,11,11,77,13,15,",
+        "actual": "slice-overlap=10,11,11,77,13,15,",
+        "passed": true
+      },
+      {
+        "case": "readonly-flags",
+        "expected": "readonly-flags=True:True:False",
+        "actual": "readonly-flags=True:True:False",
+        "passed": true
+      },
+      {
+        "case": "readonly-write",
+        "expected": "readonly-write=!System.NotSupportedException",
+        "actual": "readonly-write=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-zero-write",
+        "expected": "readonly-zero-write=!System.NotSupportedException",
+        "actual": "readonly-zero-write=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-setlength",
+        "expected": "readonly-setlength=!System.NotSupportedException",
+        "actual": "readonly-setlength=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "private-buffer",
+        "expected": "private-buffer=!System.UnauthorizedAccessException",
+        "actual": "private-buffer=!System.UnauthorizedAccessException",
+        "passed": true
+      },
+      {
+        "case": "null-buffer-constructor",
+        "expected": "null-buffer-constructor=!System.ArgumentNullException",
+        "actual": "null-buffer-constructor=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "negative-capacity-constructor",
+        "expected": "negative-capacity-constructor=!System.ArgumentOutOfRangeException",
+        "actual": "negative-capacity-constructor=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-negative-offset",
+        "expected": "slice-negative-offset=!System.ArgumentOutOfRangeException",
+        "actual": "slice-negative-offset=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-negative-count",
+        "expected": "slice-negative-count=!System.ArgumentOutOfRangeException",
+        "actual": "slice-negative-count=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-invalid-range",
+        "expected": "slice-invalid-range=!System.ArgumentException",
+        "actual": "slice-invalid-range=!System.ArgumentException",
+        "passed": true
+      },
+      {
+        "case": "far-eof-read",
+        "expected": "far-eof-read=0:20",
+        "actual": "far-eof-read=0:20",
+        "passed": true
+      },
+      {
+        "case": "far-eof-byte",
+        "expected": "far-eof-byte=-1:20",
+        "actual": "far-eof-byte=-1:20",
+        "passed": true
+      },
+      {
+        "case": "zero-write-extends",
+        "expected": "zero-write-extends=20:20:256:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,",
+        "actual": "zero-write-extends=20:20:256:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,",
+        "passed": true
+      },
+      {
+        "case": "retained-buffer",
+        "expected": "retained-buffer=False:1,2,:1,2,3,",
+        "actual": "retained-buffer=False:1,2,:1,2,3,",
+        "passed": true
+      },
+      {
+        "case": "overlap-read",
+        "expected": "overlap-read=4:1,2,1,2,3,4,",
+        "actual": "overlap-read=4:1,2,1,2,3,4,",
+        "passed": true
+      },
+      {
+        "case": "slice-shrink-expand",
+        "expected": "slice-shrink-expand=3:0:4:2,0,0,:1,2,0,0,5,6,",
+        "actual": "slice-shrink-expand=3:0:4:2,0,0,:1,2,0,0,5,6,",
+        "passed": true
+      },
+      {
+        "case": "slice-position-max",
+        "expected": "slice-position-max=!System.ArgumentOutOfRangeException",
+        "actual": "slice-position-max=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "seek-too-large",
+        "expected": "seek-too-large=!System.ArgumentOutOfRangeException",
+        "actual": "seek-too-large=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "seek-minimum",
+        "expected": "seek-minimum=!System.IO.IOException",
+        "actual": "seek-minimum=!System.IO.IOException",
+        "passed": true
+      },
+      {
+        "case": "position-max-write",
+        "expected": "position-max-write=!System.IndexOutOfRangeException",
+        "actual": "position-max-write=!System.IndexOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "position-max-write-state",
+        "expected": "position-max-write-state=2147483647",
+        "actual": "position-max-write-state=2147483647",
+        "passed": true
+      },
+      {
+        "case": "fixed-zero-write-gap",
+        "expected": "fixed-zero-write-gap=!System.NotSupportedException",
+        "actual": "fixed-zero-write-gap=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-null-write",
+        "expected": "readonly-null-write=!System.ArgumentNullException",
+        "actual": "readonly-null-write=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "readonly-negative-length",
+        "expected": "readonly-negative-length=!System.ArgumentOutOfRangeException",
+        "actual": "readonly-negative-length=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "dispose-idempotent",
+        "expected": "dispose-idempotent=False",
+        "actual": "dispose-idempotent=False",
+        "passed": true
+      },
+      {
+        "case": "base-write-byte",
+        "expected": "base-write-byte=1:1",
+        "actual": "base-write-byte=1:1",
+        "passed": true
+      },
+      {
+        "case": "base-read-byte",
+        "expected": "base-read-byte=255",
+        "actual": "base-read-byte=255",
+        "passed": true
+      },
+      {
+        "case": "base-eof-byte",
+        "expected": "base-eof-byte=-1",
+        "actual": "base-eof-byte=-1",
+        "passed": true
+      },
+      {
+        "case": "base-dispose",
+        "expected": "base-dispose=False",
+        "actual": "base-dispose=False",
+        "passed": true
+      },
+      {
+        "case": "closed-flags",
+        "expected": "closed-flags=False:False:False",
+        "actual": "closed-flags=False:False:False",
+        "passed": true
+      },
+      {
+        "case": "closed-array",
+        "expected": "closed-array=7,0,0,0,0,0,3,4,5,",
+        "actual": "closed-array=7,0,0,0,0,0,3,4,5,",
+        "passed": true
+      },
+      {
+        "case": "closed-buffer",
+        "expected": "closed-buffer=256",
+        "actual": "closed-buffer=256",
+        "passed": true
+      },
+      {
+        "case": "closed-flush",
+        "expected": "closed-flush=ok",
+        "actual": "closed-flush=ok",
+        "passed": true
+      },
+      {
+        "case": "closed-read",
+        "expected": "closed-read=!System.ObjectDisposedException",
+        "actual": "closed-read=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-read-null",
+        "expected": "closed-read-null=!System.ArgumentNullException",
+        "actual": "closed-read-null=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "closed-read-negative-offset",
+        "expected": "closed-read-negative-offset=!System.ArgumentOutOfRangeException",
+        "actual": "closed-read-negative-offset=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "closed-write-null",
+        "expected": "closed-write-null=!System.ArgumentNullException",
+        "actual": "closed-write-null=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "closed-write-byte",
+        "expected": "closed-write-byte=!System.ObjectDisposedException",
+        "actual": "closed-write-byte=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-length",
+        "expected": "closed-length=!System.ObjectDisposedException",
+        "actual": "closed-length=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-capacity",
+        "expected": "closed-capacity=!System.ObjectDisposedException",
+        "actual": "closed-capacity=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-set-capacity-negative",
+        "expected": "closed-set-capacity-negative=!System.ObjectDisposedException",
+        "actual": "closed-set-capacity-negative=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-position",
+        "expected": "closed-position=!System.ObjectDisposedException",
+        "actual": "closed-position=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-negative-position",
+        "expected": "closed-negative-position=!System.ArgumentOutOfRangeException",
+        "actual": "closed-negative-position=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "closed-negative-length",
+        "expected": "closed-negative-length=!System.ArgumentOutOfRangeException",
+        "actual": "closed-negative-length=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "closed-setlength",
+        "expected": "closed-setlength=!System.NotSupportedException",
+        "actual": "closed-setlength=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "closed-seek",
+        "expected": "closed-seek=!System.ObjectDisposedException",
+        "actual": "closed-seek=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-private-buffer",
+        "expected": "closed-private-buffer=!System.UnauthorizedAccessException",
+        "actual": "closed-private-buffer=!System.UnauthorizedAccessException",
+        "passed": true
+      }
+    ],
+    "mono": [
+      {
+        "case": "empty",
+        "expected": "empty=0:0:0:",
+        "actual": "empty=0:0:0:",
+        "passed": true
+      },
+      {
+        "case": "empty-eof",
+        "expected": "empty-eof=-1",
+        "actual": "empty-eof=-1",
+        "passed": true
+      },
+      {
+        "case": "first-write",
+        "expected": "first-write=1:1:256:7,",
+        "actual": "first-write=1:1:256:7,",
+        "passed": true
+      },
+      {
+        "case": "seek-gap",
+        "expected": "seek-gap=6:6:256:7,0,0,0,0,9,",
+        "actual": "seek-gap=6:6:256:7,0,0,0,0,9,",
+        "passed": true
+      },
+      {
+        "case": "shrink",
+        "expected": "shrink=2:2:256:7,0,",
+        "actual": "shrink=2:2:256:7,0,",
+        "passed": true
+      },
+      {
+        "case": "expand-zero",
+        "expected": "expand-zero=6:2:256:7,0,0,0,0,0,",
+        "actual": "expand-zero=6:2:256:7,0,0,0,0,0,",
+        "passed": true
+      },
+      {
+        "case": "capacity-shrink",
+        "expected": "capacity-shrink=6:2:6:7,0,0,0,0,0,",
+        "actual": "capacity-shrink=6:2:6:7,0,0,0,0,0,",
+        "passed": true
+      },
+      {
+        "case": "capacity-below-length",
+        "expected": "capacity-below-length=!System.ArgumentOutOfRangeException",
+        "actual": "capacity-below-length=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-expand",
+        "expected": "write-expand=9:9:256:7,0,0,0,0,0,3,4,5,",
+        "actual": "write-expand=9:9:256:7,0,0,0,0,0,3,4,5,",
+        "passed": true
+      },
+      {
+        "case": "seek-begin",
+        "expected": "seek-begin=1:1",
+        "actual": "seek-begin=1:1",
+        "passed": true
+      },
+      {
+        "case": "seek-current",
+        "expected": "seek-current=3:3",
+        "actual": "seek-current=3:3",
+        "passed": true
+      },
+      {
+        "case": "seek-end",
+        "expected": "seek-end=8:8",
+        "actual": "seek-end=8:8",
+        "passed": true
+      },
+      {
+        "case": "seek-negative",
+        "expected": "seek-negative=!System.IO.IOException",
+        "actual": "seek-negative=!System.IO.IOException",
+        "passed": true
+      },
+      {
+        "case": "seek-invalid-origin",
+        "expected": "seek-invalid-origin=!System.ArgumentException",
+        "actual": "seek-invalid-origin=!System.ArgumentException",
+        "passed": true
+      },
+      {
+        "case": "position-negative",
+        "expected": "position-negative=!System.ArgumentOutOfRangeException",
+        "actual": "position-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "position-too-large",
+        "expected": "position-too-large=!System.ArgumentOutOfRangeException",
+        "actual": "position-too-large=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "length-negative",
+        "expected": "length-negative=!System.ArgumentOutOfRangeException",
+        "actual": "length-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "length-too-large",
+        "expected": "length-too-large=!System.ArgumentOutOfRangeException",
+        "actual": "length-too-large=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "read-offset",
+        "expected": "read-offset=2:90,4,5,93,94,:9",
+        "actual": "read-offset=2:90,4,5,93,94,:9",
+        "passed": true
+      },
+      {
+        "case": "read-eof",
+        "expected": "read-eof=0:9",
+        "actual": "read-eof=0:9",
+        "passed": true
+      },
+      {
+        "case": "read-null",
+        "expected": "read-null=!System.ArgumentNullException",
+        "actual": "read-null=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "read-offset-negative",
+        "expected": "read-offset-negative=!System.ArgumentOutOfRangeException",
+        "actual": "read-offset-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "read-count-negative",
+        "expected": "read-count-negative=!System.ArgumentOutOfRangeException",
+        "actual": "read-count-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "read-bounds",
+        "expected": "read-bounds=!System.ArgumentException",
+        "actual": "read-bounds=!System.ArgumentException",
+        "passed": true
+      },
+      {
+        "case": "write-null",
+        "expected": "write-null=!System.ArgumentNullException",
+        "actual": "write-null=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "write-offset-negative",
+        "expected": "write-offset-negative=!System.ArgumentOutOfRangeException",
+        "actual": "write-offset-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-count-negative",
+        "expected": "write-count-negative=!System.ArgumentOutOfRangeException",
+        "actual": "write-count-negative=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "write-bounds",
+        "expected": "write-bounds=!System.ArgumentException",
+        "actual": "write-bounds=!System.ArgumentException",
+        "passed": true
+      },
+      {
+        "case": "slice-initial",
+        "expected": "slice-initial=3:0:3:12,13,14,",
+        "actual": "slice-initial=3:0:3:12,13,14,",
+        "passed": true
+      },
+      {
+        "case": "slice-seek-begin",
+        "expected": "slice-seek-begin=2:0",
+        "actual": "slice-seek-begin=2:0",
+        "passed": true
+      },
+      {
+        "case": "slice-seek-current",
+        "expected": "slice-seek-current=3:1",
+        "actual": "slice-seek-current=3:1",
+        "passed": true
+      },
+      {
+        "case": "slice-seek-end",
+        "expected": "slice-seek-end=4:2",
+        "actual": "slice-seek-end=4:2",
+        "passed": true
+      },
+      {
+        "case": "slice-read-alias",
+        "expected": "slice-read-alias=88:3:3:3:12,13,88,",
+        "actual": "slice-read-alias=88:3:3:3:12,13,88,",
+        "passed": true
+      },
+      {
+        "case": "slice-write-alias",
+        "expected": "slice-write-alias=10,11,77,13,88,15,",
+        "actual": "slice-write-alias=10,11,77,13,88,15,",
+        "passed": true
+      },
+      {
+        "case": "slice-buffer-alias",
+        "expected": "slice-buffer-alias=True",
+        "actual": "slice-buffer-alias=True",
+        "passed": true
+      },
+      {
+        "case": "slice-copy-not-alias",
+        "expected": "slice-copy-not-alias=77,13,88,",
+        "actual": "slice-copy-not-alias=77,13,88,",
+        "passed": true
+      },
+      {
+        "case": "slice-expand",
+        "expected": "slice-expand=!System.NotSupportedException",
+        "actual": "slice-expand=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "slice-capacity-same",
+        "expected": "slice-capacity-same=!System.NotSupportedException",
+        "actual": "slice-capacity-same=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "slice-capacity-change",
+        "expected": "slice-capacity-change=!System.NotSupportedException",
+        "actual": "slice-capacity-change=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "slice-overlap",
+        "expected": "slice-overlap=10,11,11,77,13,15,",
+        "actual": "slice-overlap=10,11,11,77,13,15,",
+        "passed": true
+      },
+      {
+        "case": "readonly-flags",
+        "expected": "readonly-flags=True:True:False",
+        "actual": "readonly-flags=True:True:False",
+        "passed": true
+      },
+      {
+        "case": "readonly-write",
+        "expected": "readonly-write=!System.NotSupportedException",
+        "actual": "readonly-write=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-zero-write",
+        "expected": "readonly-zero-write=!System.NotSupportedException",
+        "actual": "readonly-zero-write=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-setlength",
+        "expected": "readonly-setlength=!System.NotSupportedException",
+        "actual": "readonly-setlength=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "private-buffer",
+        "expected": "private-buffer=!System.UnauthorizedAccessException",
+        "actual": "private-buffer=!System.UnauthorizedAccessException",
+        "passed": true
+      },
+      {
+        "case": "null-buffer-constructor",
+        "expected": "null-buffer-constructor=!System.ArgumentNullException",
+        "actual": "null-buffer-constructor=!System.ArgumentNullException",
+        "passed": true
+      },
+      {
+        "case": "negative-capacity-constructor",
+        "expected": "negative-capacity-constructor=!System.ArgumentOutOfRangeException",
+        "actual": "negative-capacity-constructor=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-negative-offset",
+        "expected": "slice-negative-offset=!System.ArgumentOutOfRangeException",
+        "actual": "slice-negative-offset=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-negative-count",
+        "expected": "slice-negative-count=!System.ArgumentOutOfRangeException",
+        "actual": "slice-negative-count=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "slice-invalid-range",
+        "expected": "slice-invalid-range=!System.ArgumentException",
+        "actual": "slice-invalid-range=!System.ArgumentException",
+        "passed": true
+      },
+      {
+        "case": "far-eof-read",
+        "expected": "far-eof-read=0:20",
+        "actual": "far-eof-read=0:20",
+        "passed": true
+      },
+      {
+        "case": "far-eof-byte",
+        "expected": "far-eof-byte=-1:20",
+        "actual": "far-eof-byte=-1:20",
+        "passed": true
+      },
+      {
+        "case": "zero-write-extends",
+        "expected": "zero-write-extends=20:20:256:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,",
+        "actual": "zero-write-extends=20:20:256:0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,",
+        "passed": true
+      },
+      {
+        "case": "retained-buffer",
+        "expected": "retained-buffer=False:1,2,:1,2,3,",
+        "actual": "retained-buffer=False:1,2,:1,2,3,",
+        "passed": true
+      },
+      {
+        "case": "overlap-read",
+        "expected": "overlap-read=4:1,2,1,2,3,4,",
+        "actual": "overlap-read=4:1,2,1,2,3,4,",
+        "passed": true
+      },
+      {
+        "case": "slice-shrink-expand",
+        "expected": "slice-shrink-expand=3:0:4:2,0,0,:1,2,0,0,0,6,",
+        "actual": "slice-shrink-expand=3:0:4:2,0,0,:1,2,0,0,0,6,",
+        "passed": true
+      },
+      {
+        "case": "slice-position-max",
+        "expected": "slice-position-max=2147483647",
+        "actual": "slice-position-max=2147483647",
+        "passed": true
+      },
+      {
+        "case": "seek-too-large",
+        "expected": "seek-too-large=!System.ArgumentOutOfRangeException",
+        "actual": "seek-too-large=!System.ArgumentOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "seek-minimum",
+        "expected": "seek-minimum=20",
+        "actual": "seek-minimum=20",
+        "passed": true
+      },
+      {
+        "case": "position-max-write",
+        "expected": "position-max-write=!System.IndexOutOfRangeException",
+        "actual": "position-max-write=!System.IndexOutOfRangeException",
+        "passed": true
+      },
+      {
+        "case": "position-max-write-state",
+        "expected": "position-max-write-state=-2147483648",
+        "actual": "position-max-write-state=-2147483648",
+        "passed": true
+      },
+      {
+        "case": "fixed-zero-write-gap",
+        "expected": "fixed-zero-write-gap=!System.NotSupportedException",
+        "actual": "fixed-zero-write-gap=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-null-write",
+        "expected": "readonly-null-write=!System.NotSupportedException",
+        "actual": "readonly-null-write=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "readonly-negative-length",
+        "expected": "readonly-negative-length=!System.NotSupportedException",
+        "actual": "readonly-negative-length=!System.NotSupportedException",
+        "passed": true
+      },
+      {
+        "case": "dispose-idempotent",
+        "expected": "dispose-idempotent=False",
+        "actual": "dispose-idempotent=False",
+        "passed": true
+      },
+      {
+        "case": "base-write-byte",
+        "expected": "base-write-byte=1:1",
+        "actual": "base-write-byte=1:1",
+        "passed": true
+      },
+      {
+        "case": "base-read-byte",
+        "expected": "base-read-byte=255",
+        "actual": "base-read-byte=255",
+        "passed": true
+      },
+      {
+        "case": "base-eof-byte",
+        "expected": "base-eof-byte=-1",
+        "actual": "base-eof-byte=-1",
+        "passed": true
+      },
+      {
+        "case": "base-dispose",
+        "expected": "base-dispose=False",
+        "actual": "base-dispose=False",
+        "passed": true
+      },
+      {
+        "case": "closed-flags",
+        "expected": "closed-flags=False:False:False",
+        "actual": "closed-flags=False:False:False",
+        "passed": true
+      },
+      {
+        "case": "closed-array",
+        "expected": "closed-array=7,0,0,0,0,0,3,4,5,",
+        "actual": "closed-array=7,0,0,0,0,0,3,4,5,",
+        "passed": true
+      },
+      {
+        "case": "closed-buffer",
+        "expected": "closed-buffer=256",
+        "actual": "closed-buffer=256",
+        "passed": true
+      },
+      {
+        "case": "closed-flush",
+        "expected": "closed-flush=ok",
+        "actual": "closed-flush=ok",
+        "passed": true
+      },
+      {
+        "case": "closed-read",
+        "expected": "closed-read=!System.ObjectDisposedException",
+        "actual": "closed-read=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-read-null",
+        "expected": "closed-read-null=!System.ObjectDisposedException",
+        "actual": "closed-read-null=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-read-negative-offset",
+        "expected": "closed-read-negative-offset=!System.ObjectDisposedException",
+        "actual": "closed-read-negative-offset=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-write-null",
+        "expected": "closed-write-null=!System.ObjectDisposedException",
+        "actual": "closed-write-null=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-write-byte",
+        "expected": "closed-write-byte=!System.ObjectDisposedException",
+        "actual": "closed-write-byte=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-length",
+        "expected": "closed-length=!System.ObjectDisposedException",
+        "actual": "closed-length=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-capacity",
+        "expected": "closed-capacity=!System.ObjectDisposedException",
+        "actual": "closed-capacity=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-set-capacity-negative",
+        "expected": "closed-set-capacity-negative=!System.ObjectDisposedException",
+        "actual": "closed-set-capacity-negative=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-position",
+        "expected": "closed-position=!System.ObjectDisposedException",
+        "actual": "closed-position=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-negative-position",
+        "expected": "closed-negative-position=!System.ObjectDisposedException",
+        "actual": "closed-negative-position=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-negative-length",
+        "expected": "closed-negative-length=!System.ObjectDisposedException",
+        "actual": "closed-negative-length=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-setlength",
+        "expected": "closed-setlength=!System.ObjectDisposedException",
+        "actual": "closed-setlength=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-seek",
+        "expected": "closed-seek=!System.ObjectDisposedException",
+        "actual": "closed-seek=!System.ObjectDisposedException",
+        "passed": true
+      },
+      {
+        "case": "closed-private-buffer",
+        "expected": "closed-private-buffer=!System.UnauthorizedAccessException",
+        "actual": "closed-private-buffer=!System.UnauthorizedAccessException",
+        "passed": true
+      }
+    ]
+  },
+  "measured_runtime_differences": [
+    {
+      "case": "read-bounds",
+      "dotnet": "read-bounds=!System.ArgumentOutOfRangeException",
+      "mono": "read-bounds=!System.ArgumentException"
+    },
+    {
+      "case": "write-bounds",
+      "dotnet": "write-bounds=!System.ArgumentOutOfRangeException",
+      "mono": "write-bounds=!System.ArgumentException"
+    },
+    {
+      "case": "slice-seek-begin",
+      "dotnet": "slice-seek-begin=0:0",
+      "mono": "slice-seek-begin=2:0"
+    },
+    {
+      "case": "slice-seek-current",
+      "dotnet": "slice-seek-current=1:1",
+      "mono": "slice-seek-current=3:1"
+    },
+    {
+      "case": "slice-seek-end",
+      "dotnet": "slice-seek-end=2:2",
+      "mono": "slice-seek-end=4:2"
+    },
+    {
+      "case": "slice-capacity-same",
+      "dotnet": "slice-capacity-same=ok",
+      "mono": "slice-capacity-same=!System.NotSupportedException"
+    },
+    {
+      "case": "slice-shrink-expand",
+      "dotnet": "slice-shrink-expand=3:0:4:2,0,0,:1,2,0,0,5,6,",
+      "mono": "slice-shrink-expand=3:0:4:2,0,0,:1,2,0,0,0,6,"
+    },
+    {
+      "case": "slice-position-max",
+      "dotnet": "slice-position-max=!System.ArgumentOutOfRangeException",
+      "mono": "slice-position-max=2147483647"
+    },
+    {
+      "case": "seek-minimum",
+      "dotnet": "seek-minimum=!System.IO.IOException",
+      "mono": "seek-minimum=20"
+    },
+    {
+      "case": "position-max-write-state",
+      "dotnet": "position-max-write-state=2147483647",
+      "mono": "position-max-write-state=-2147483648"
+    },
+    {
+      "case": "readonly-null-write",
+      "dotnet": "readonly-null-write=!System.ArgumentNullException",
+      "mono": "readonly-null-write=!System.NotSupportedException"
+    },
+    {
+      "case": "readonly-negative-length",
+      "dotnet": "readonly-negative-length=!System.ArgumentOutOfRangeException",
+      "mono": "readonly-negative-length=!System.NotSupportedException"
+    },
+    {
+      "case": "closed-read-null",
+      "dotnet": "closed-read-null=!System.ArgumentNullException",
+      "mono": "closed-read-null=!System.ObjectDisposedException"
+    },
+    {
+      "case": "closed-read-negative-offset",
+      "dotnet": "closed-read-negative-offset=!System.ArgumentOutOfRangeException",
+      "mono": "closed-read-negative-offset=!System.ObjectDisposedException"
+    },
+    {
+      "case": "closed-write-null",
+      "dotnet": "closed-write-null=!System.ArgumentNullException",
+      "mono": "closed-write-null=!System.ObjectDisposedException"
+    },
+    {
+      "case": "closed-negative-position",
+      "dotnet": "closed-negative-position=!System.ArgumentOutOfRangeException",
+      "mono": "closed-negative-position=!System.ObjectDisposedException"
+    },
+    {
+      "case": "closed-negative-length",
+      "dotnet": "closed-negative-length=!System.ArgumentOutOfRangeException",
+      "mono": "closed-negative-length=!System.ObjectDisposedException"
+    },
+    {
+      "case": "closed-setlength",
+      "dotnet": "closed-setlength=!System.NotSupportedException",
+      "mono": "closed-setlength=!System.ObjectDisposedException"
+    }
+  ],
+  "inputs": {
+    "tests/kairo/ManagedStreams.cs": "2514cedaf8d881298ca965ea2d7d1e6a8fe2474e051dcf1c14fdd522d8334cab",
+    "tests/kairo/managed_streams_fixtures.cpp": "a642d38aec680ce3200ae8bb3746fec94a2357ffaf2a11e3725632f596ea1d9f",
+    "src/kairo/common/managed_streams.cpp": "c22a3800528ed00564c938506f618260b0e2aae0a2be5674fedf7eb2e54352bb",
+    "src/kairo/common/managed_streams.hpp": "144f9f9c017d137670cf3e41fe7b4323f3983c20a31a5d0b8d323861d7526d76",
+    "src/kairo/common/semantic_runtime.cpp": "a2011098f88c105822bcc9d2c9aa71ff37b0d3910699d96b5665c2c7b3f210d2",
+    "src/kairo/common/semantic_runtime.hpp": "b848211ad72e517caf152a27615dd668f17cd04c05f75c6445d9a1651139201d",
+    "tests/kairo/run_streams.py": "adfce2ae27e6b9f1003df5cd577bb75fd71e2b2d1bead1ab8de937097f909f16"
+  },
+  "compiler": {
+    "csharp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\MSBuild\\Current\\Bin\\Roslyn\\csc.exe",
+    "csharp_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "cpp": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
+    "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
+  },
+  "oracles": {
+    "dotnet": {
+      "runtime": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\dotnet\\net10.0\\runtime\\dotnet.exe",
+      "sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+      "version": "10.0.10"
+    },
+    "mono": {
+      "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
+      "sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",
+      "compiler": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\lib\\mono\\unity\\smcs.exe",
+      "compiler_sha256": "26b4f7cde44cb44fe79c4981f17235de6c477df20c8daef4509903b69cc56fc0",
+      "version": "Unity5.3.4f1 Mono2.6.5"
+    }
+  },
+  "filesystem_streams_implemented": false,
+  "game_assets_used": false,
+  "original_binaries_copied": false,
+  "game_executed": false,
+  "production_emitter_exercised": false,
+  "android_behavior": "UNKNOWN",
+  "limitations": [
+    "Own source oracle/native foundation only; emitted java.io and game call sites require separate tests.",
+    "Capacity allocations near Int32 limits are not exercised; platform out-of-memory behavior is not measured."
+  ]
+}

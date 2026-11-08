@@ -1,0 +1,10 @@
+{
+  "native_fixtures": "PASS",
+  "game_boot": false,
+  "title": false,
+  "menu": false,
+  "match": false,
+  "compiler": "existing MSVC",
+  "sdl2": "2.32.10",
+  "game_assets_used": false
+}

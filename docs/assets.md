@@ -6,7 +6,7 @@
 
 Foram classificados **1189 arquivos de dados sob assets/**: 1160 serializados Unity, 27 sidecars de áudio, 1 PNG avulso e 1 XML. Total: **117861037 bytes descomprimidos**, 8083154 bytes de payload ZIP. DLLs, símbolos e executáveis não são assets desta contagem e não foram copiados para o port.
 
-Os serializados contêm **1489 objetos originais**. O leitor independente consumiu integralmente as tabelas de metadados. AssetRipper 2.0.0 reconciliou todos os objetos, com **0 ausentes**, **99/99 texturas** e **27/27 áudios** iguais em seus campos medidos. Seus 1551 objetos incluem 62 auxiliares gerados pela ferramenta, excluídos do inventário original. Não houve exportação de projeto, assemblies ou mídia pelo AssetRipper. [Auditoria](notes/assetripper-inventory.md).
+Os serializados contêm **1489 objetos originais**. O leitor independente consumiu integralmente as tabelas de metadados. AssetRipper 2.0.0 reconciliou todos os objetos, com **0 ausentes**, **99/99 texturas** e **27/27 áudios** iguais em seus campos medidos. Seus 1551 objetos incluem 62 auxiliares gerados pela ferramenta, excluídos do inventário original. No inventário da Fase 1 não houve exportação de projeto, assemblies ou mídia pelo AssetRipper. A conversão local de áudio da Fase 2 é relatada adiante. [Auditoria](notes/assetripper-inventory.md).
 
 Há 1.159 serializados com versão 5.3.4f1 e um com 5.3.2p3; isso não altera a versão Unity identificada do jogo. [Auditoria independente de formato](notes/unity-metadata-audit.md). Os níveis ZIP, objeto Unity e membro de container se sobrepõem: **não somar suas contagens ou bytes**.
 
@@ -40,14 +40,14 @@ A lista integral de tipos/IDs está em [config/assets.csv](../config/assets.csv)
 | .txt | 52 | 254660 | UTF-8; tabelas, mensagens e scripts |
 | .inf | 24 | 24576 | UTF-8; listas/opções ResourceManager |
 | .gmap | 4 | 10372 | Binário Map/MapMain, big-endian |
-| .map | 4 | 119652 | Binário; formato/consumidor UNKNOWN |
-| .csv | 3 | 316974 | UTF-8; consumidor específico UNKNOWN |
+| .map | 4 | 119652 | LE versão 102; projeção GMAP comprovada; ferramenta autoral UNKNOWN |
+| .csv | 3 | 316974 | UTF-8 BOM; pacotes Language.LoadLanguagePack |
 
-Os 718 PNGs têm **654 hashes distintos**, **631 ocorrências com alpha**, largura entre 1 e 768 e altura entre 1 e 480. Esses máximos são por eixo, não uma afirmação de que um único arquivo tem ambos. Nenhum PNG interno excede 1024 em qualquer eixo. [Distribuição exata por dimensão/alpha](../config/texture-dimensions.csv). Hash distinto não equivale a imagem distinta por pixels; não houve decodificação de pixels.
+Os 718 PNGs têm **654 hashes distintos**, **631 ocorrências com alpha**, largura entre 1 e 768 e altura entre 1 e 480. Esses máximos são por eixo, não uma afirmação de que um único arquivo tem ambos. Nenhum PNG interno excede 1024 em qualquer eixo. [Distribuição exata por dimensão/alpha](../config/texture-dimensions.csv). Hash distinto não equivale a imagem distinta por pixels. Na Fase 2 houve conversão sem perda para RGBA8 e readback nativo de todos os hashes distintos, medidos abaixo.
 
 Os cinco auxiliares são: lista de 27 áudios (548 bytes), índice de 48 recursos (1.050 bytes), tabela de formato de idioma de 25 linhas (395 bytes), e dois manifestos de posições/textos com 2.507 linhas cada (113.754 e 148.028 bytes). Total **263.775 bytes / 5.114 linhas físicas**. Não são cinco listas equivalentes.
 
-Todos os 532 SEB foram consumidos até o fim: 532 layers, 1.559 frames e 1.575 registros; referenciam Image[] e não contêm PNG embutido. Três GMAP seguem Map.LoadMap e um segue MapMain.LoadMap. Quatro MAP e o consumidor específico de três CSV continuam UNKNOWN. [Formatos, fontes e limitações](notes/custom-asset-formats.md).
+Todos os 532 SEB foram consumidos até o fim: 532 layers, 1.559 frames e 1.575 registros; referenciam Image[] e não contêm PNG embutido. Três GMAP seguem Map.LoadMap e um segue MapMain.LoadMap. Os quatro MAP versão 102 foram interpretados até o fim e suas projeções coincidem integralmente com os quatro GMAP; o consumidor autoral permanece UNKNOWN. Os três CSV são pacotes de idioma de Language.Init/SetLanguagePack/LoadLanguagePack. [Formatos e limitações](notes/custom-asset-formats.md), [prova MAP/CSV](notes/phase2-legacy-assets.md).
 
 ## Como o jogo carrega
 
@@ -60,19 +60,20 @@ Todos os 532 SEB foram consumidos até o fim: 532 layers, 1.559 frames e 1.575 r
 | Áudio | SoundOGG.Load(string) → Resources.Load<AudioClip>, pelo identificador sem extensão |
 | Fontes | Font._getDefaultGUIFont seleciona recursos por idioma; duas fontes TrueType embutidas |
 | Prefab/render target | Offscreen carrega prefab pelo Resources; o comportamento exigirá backend próprio, não o arquivo Unity como motor |
-| MAP/CSV sem vínculo | Preservados no inventário; consumidor ainda UNKNOWN |
+| MAP | Projeção runtime igual à dos GMAP; ferramenta autoral que lê/escreve MAP permanece UNKNOWN |
+| CSV | Language.Init/SetLanguagePack/LoadLanguagePack; ConvertLanguagePack aplica registros às entradas TXT |
 
 Métodos, caminhos e linhas de cada caminho: [carregadores](notes/asset-loading.md) e [formatos próprios](notes/custom-asset-formats.md). Não foi encontrada a rota de sprites baseada em Resources.Load<Texture2D>; inventariar só Texture2D omitiria as imagens internas. StreamingAssets/AssetBundle/SceneManager não apareceram no corpus examinado.
 
 ## Áudio e fontes
 
-**27 AudioClip Vorbis**, todos estéreo: 25 a 44.100 Hz, um a 24.000 Hz e um a 32.000 Hz. Soma das durações declaradas nos campos float: **206.17563989758492 s**. Estimativa PCM16: **36175860 bytes** = 34.499989 MiB, calculada por ceil(duração × frequência) × canais × 2; isso não é uma medição do número de samples efetivamente decodificados. Os 27 extents de sidecar foram verificados dentro do ZIP; nenhum áudio foi decodificado/conversão realizada.
+**27 AudioClip Vorbis**, todos estéreo: 25 a 44.100 Hz, um a 24.000 Hz e um a 32.000 Hz. Soma das durações declaradas nos campos float: **206.17563989758492 s**. Estimativa PCM16: **36175860 bytes** = 34.499989 MiB, calculada por ceil(duração × frequência) × canais × 2; isso não é uma medição do número de samples efetivamente decodificados. Os 27 extents de sidecar foram verificados dentro do ZIP. Na Fase 2 foram remontados como 27 arquivos Ogg Vorbis comprimidos; nenhuma música foi inteiramente decodificada para PCM em memória. O backend de streaming continua pendente.
 
-**Duas fontes TrueType**: 1.920.344 e 50.788 bytes, total **1.971.132 bytes**, com 15.563 e 346 glifos, respectivamente. Seus PPtr apontam exatamente às duas Texture2D 0×0: são placeholders de atlas de fonte, não custo de texto nulo. O atlas residente e o custo por tamanho de glifo ainda são UNKNOWN; nenhuma decisão de fonte/design foi tomada.
+**Duas fontes TrueType**: 1.920.344 e 50.788 bytes, total **1.971.132 bytes**, com 15.563 e 346 glifos, respectivamente. Seus PPtr apontam exatamente às duas Texture2D 0×0: são placeholders de atlas de fonte, não custo de texto nulo. Na Fase 2 os dois TTF foram extraídos localmente. A decisão do usuário é rasterizar a partir do TTF do APK, no pipeline ou runtime; a rasterização, o atlas residente e o custo por glifo continuam pendentes/UNKNOWN. Nenhuma fonte é distribuída.
 
 ## Estimativa de memória nos alvos
 
-Cálculo novo, sem converter imagens: para cada textura, padding para potência de dois com mínimo 8; dimensões acima de 1024 são particionadas antes do padding. Cenários sem mipmaps; overhead de allocator, staging, buffers, render targets, código, dados/saves e atlas de texto não está incluído. Fórmulas conferidas no [código primário citro3d](https://github.com/devkitPro/citro3d/blob/master/source/texture.c). PICA200 é a GPU: áudio é estimado separadamente para DSP/ndsp.
+Estimativa da Fase 1 para PICA200, preservada: para cada textura, padding para potência de dois com mínimo 8; dimensões acima de 1024 são particionadas antes do padding. Cenários sem mipmaps; overhead de allocator, staging, buffers, render targets, código, dados/saves e atlas de texto não está incluído. Fórmulas conferidas no [código primário citro3d](https://github.com/devkitPro/citro3d/blob/master/source/texture.c). PICA200 é a GPU: áudio é estimado separadamente para DSP/ndsp.
 
 | Corpus e formato hipotético | Bytes | MiB |
 |---|---:|---:|
@@ -91,7 +92,7 @@ Cálculo novo, sem converter imagens: para cada textura, padding para potência 
 
 O PNG avulso do APK é 1024×2048 RGB e tem 34.074 bytes de arquivo; em RGBA8 dividido em duas texturas 1024×1024 exigiria mais 8.388.608 bytes. Seu uso pelo port não foi provado. Não somar indiscriminadamente todas as texturas Unity ou tratar o corpus inteiro como simultaneamente residente. O código do jogo usa a rota PNG própria.
 
-**RGBA4 e ETC1/A4 são apenas cenários de tamanho**, não opções de fidelidade aprovadas. ETC1 não preserva alpha, e 631 PNGs têm alpha; ETC1A4/RGBA4 também não equivalem automaticamente aos pixels originais. Nenhum formato foi escolhido ou convertido.
+**RGBA4 e ETC1/A4 são apenas cenários de tamanho**, não opções de fidelidade aprovadas. ETC1 não preserva alpha, e 631 PNGs têm alpha; ETC1A4/RGBA4 também não equivalem automaticamente aos pixels originais. O usuário escolheu RGBA8 sem perda até medição exigir outra opção, e áudio obrigatoriamente em streaming. A conversão RGBA8 para SDL já foi medida; a conversão PICA200 permanece pendente.
 
 | Cenário de planejamento | Bytes antes dos demais custos | MiB |
 |---|---:|---:|
@@ -112,14 +113,26 @@ Textos existem nas tabelas/arquivos dos contêineres, manifestos de idioma e tam
 | Assembly-CSharp | 2231 | 443 | 18 | 1770 |
 | KairoLibrary | 3008 | 14 | 151 | 2837 |
 
-São ocorrências, não frases distintas nem prova de exibição em aparelho. A análise estática de UI inclui debug e é limite inferior: arrays/campos mutáveis, retornos indiretos e fluxo arbitrário continuam UNKNOWN. **A lista completa por classe, sem reproduzir os valores, está em [config/visible-text-counts.csv](../config/visible-text-counts.csv)**. [Metodologia e fixtures](csharp-subset.md). Todos os dados/frases-base precisam continuar no pipeline do usuário; resultados transitórios de formatação não são assets a distribuir. Nenhum externalizador ou tradutor foi escrito.
+São ocorrências, não frases distintas nem prova de exibição em aparelho. A análise estática de UI inclui debug e é limite inferior: arrays/campos mutáveis, retornos indiretos e fluxo arbitrário continuam UNKNOWN. **A lista completa por classe, sem reproduzir os valores, está em [config/visible-text-counts.csv](../config/visible-text-counts.csv)**. [Metodologia e fixtures](csharp-subset.md). A decisão posterior do usuário permite os literais já presentes no C# reconstruído no C++ gerado. Textos, tabelas e fontes provenientes dos assets continuam exclusivamente no pipeline do APK próprio. Language._translateText conserva sua lógica e recebe a tabela dos assets. O tradutor existe e sua cobertura comprovada é relatada em PROGRESS.md; tradução completa e boot ainda não foram alcançados.
 
 ## Reprodução e provas
 
 ```powershell
 python tools/extract-assets --apk 'CAMINHO_DO_SEU_APK' --extract
 python tools/inventory_custom_formats.py --apk 'CAMINHO_DO_SEU_APK'
+python tools/inventory_legacy_assets.py --apk 'CAMINHO_DO_SEU_APK'
+python tools/convert-assets --apk 'CAMINHO_DO_SEU_APK'
+python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK'
 python tools/progress
 ```
 
 Dados públicos: config/assets.csv, asset-summary.json, texture-dimensions.csv, custom-asset-formats.json, assetripper-summary.json e unity-metadata-audit.json. Arquivos/identificadores/payloads e chave não são publicados. Cada leitura é conferida contra o APK do usuário; o pipeline não procura nem baixa o jogo.
+
+## Estado medido da Fase 2
+
+Os 654 arquivos RGBA8 únicos ocupam **16933248 bytes** sem padding de textura. Todos foram carregados no backend SDL e cada canal/pixel foi comparado ao payload convertido: **654/654 passam**. Isso corresponde às 718 ocorrências PNG dos containers, sem duplicar hashes.
+O teste sequencial teve pico de payload de textura de **1179648 bytes**, com uma textura por vez. Não é memória residente do jogo nem orçamento do 3DS.
+
+Assets atuais por estado: **{'converts': 1, 'inventoried': 35, 'extracts': 7, 'loads': 1}**. Fontes: 2 TTF extraídos, rasterização pendente. Áudio: 27 Ogg convertidos, streaming de runtime pendente. Demais dados de containers foram extraídos com SHA-256 conferido e aguardam seus consumidores traduzidos.
+
+A geração dos estados exige hashes atuais dos fontes/produtores/gerados/recibos, manifest local, outputs e readback. Nenhum método do jogo foi executado por essa comparação de imagens. APK e conteúdos permanecem exclusivamente locais.

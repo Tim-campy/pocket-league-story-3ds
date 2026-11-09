@@ -32,9 +32,13 @@ template<class T>bool cs_is(const pls::cs::Ref<pls::cs::Object>&value){if(!value
 template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(value);if(!object)throw pls::cs::NullReferenceException();return object->GetHashCode();}
 [[maybe_unused]] static pls::cs::String cs_string_identity(const pls::cs::String&value){value.length();return value;}
 [[maybe_unused]] static pls::cs::String cs_object_string(const pls::cs::Ref<pls::cs::Object>&value){return value?value->ToString():pls::cs::String(u"");}
+[[maybe_unused]] static pls::cs::String cs_concat_objects3(const pls::cs::Ref<pls::cs::Object>&first,const pls::cs::Ref<pls::cs::Object>&second,const pls::cs::Ref<pls::cs::Object>&third){
+ auto a=cs_object_string(first);auto b=cs_object_string(second);auto c=cs_object_string(third);return pls::cs::String::concat(pls::cs::String::concat(a,b),c);
+}
 [[maybe_unused]] static bool cs_contains_string(const pls::cs::String&source,const pls::cs::String&value){return pls::cs::culture_index_of(source,value)>=0;}
 [[maybe_unused]] static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)throw pls::cs::NullReferenceException();return value;}
+template<class T> T* cs_require(T* value){if(!value)throw pls::cs::NullReferenceException();return value;}
 [[maybe_unused]] static pls::cs::String cs_string_from_chars(pls::cs::Array<char16_t> chars){if(chars.is_null())throw pls::cs::ArgumentNullException();std::u16string out;for(std::int32_t i=0;i<chars.length();++i)out.push_back(chars.at(i));return pls::cs::String(std::move(out));}
 [[maybe_unused]] static bool cs_is_little_endian(){const std::uint16_t value=1;std::uint8_t first;std::memcpy(&first,&value,1);return first==1;}
 template<class T> static T cs_network_to_host(T value){
@@ -102,7 +106,6 @@ struct cs_98f0a1bec2084c3c;
 struct cs_9487cb83e3a46e0a;
 struct cs_ab1b1085a7ab32b9;
 struct cs_acb158b492b43017;
-struct cs_3da6da0799f0bdf8;
 struct cs_8c57b816bbc8fd6e;
 struct cs_7fd3b635ed6929d0;
 struct cs_924db3d974bae2af;
@@ -115,9 +118,6 @@ virtual pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_virtual_60122bb6c899278e
 struct cs_c4521f4960c4f908 {virtual ~cs_c4521f4960c4f908()=default;
 virtual void cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream)=0;
 virtual void cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream)=0;
-};
-struct cs_3da6da0799f0bdf8 {virtual ~cs_3da6da0799f0bdf8()=default;
-virtual void cs_virtual_c0c7948ad6c9b04a(pls::cs::String v_log)=0;
 };
 struct cs_64732f8c8acf2fd3 : pls::cs::ExceptionObject {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
@@ -539,10 +539,8 @@ std::int32_t& cs_fe98f159e1f0c2a7();
 pls::cs::String& cs_1ce7e3797101a750();
 std::int32_t& cs_1a0c417252a50258();
 pls::cs::String& cs_c707455b0857f14c();
-std::int32_t& cs_56b87a4889a075c1();
 pls::cs::Array<bool>& cs_2c1d5d154b0f74ed();
 bool& cs_7d035d79ab9d9082();
-std::int32_t& cs_ae88aadf0313d525();
 bool& cs_b0827224162a4f93();
 bool& cs_01d5980f91155b3c();
 bool& cs_3de093fc674f80ed();
@@ -551,11 +549,6 @@ bool& cs_3853de49e17e07cd();
 bool& cs_e5cfdc00c9449422();
 bool& cs_a0d04541596b7678();
 bool& cs_d058affcdd0b23a7();
-std::int32_t& cs_f970055179afa1e0();
-std::int32_t& cs_64c23caca1e41663();
-std::int32_t& cs_220e04776206e9cc();
-std::int32_t& cs_3b6b8ce3637f0d5a();
-std::int32_t& cs_5c6d8357da0c0aaf();
 bool& cs_bdeecc395da0c8ba();
 bool& cs_534ddf5c958564fa();
 bool& cs_c85047b12129912e();
@@ -569,7 +562,6 @@ bool& cs_6a817fe7e36e1f1d();
 pls::cs::String& cs_f43ec1743d6637fa();
 std::int32_t& cs_efcdf5d0d7b2cdc2();
 pls::cs::String& cs_c64c5925b5d6071d();
-pls::cs::String& cs_8c4c7e2e9fdb33f7();
 bool& cs_a242c60cc463f683();
 bool& cs_4cc76a7a43706693();
 bool& cs_137686a1e7856340();
@@ -597,7 +589,6 @@ bool& cs_d267cfa02a71f045();
 bool& cs_37261ec9732c529e();
 bool& cs_e8e122e44197f378();
 pls::cs::String& cs_6ce655df5c01ad40();
-pls::cs::Array<std::int64_t>& cs_6e88f492355c58fb();
 std::int32_t& cs_0be6a67a68fc8c7b();
 pls::cs::Array<pls::cs::String>& cs_33074213f1660560();
 bool& cs_8491f3974fd931ce();
@@ -622,22 +613,15 @@ pls::cs::Array<pls::cs::String>& cs_068e31826b0fd723();
 std::int32_t& cs_593dc05baccea7cd();
 pls::cs::String& cs_01c4bf6216ab6adc();
 pls::cs::String& cs_3fb70c2eded7c9ff();
-pls::cs::String& cs_885e46a8a2b95893();
-pls::cs::String& cs_9d62cf693893d256();
-pls::cs::String& cs_8da583a8425c5117();
 pls::cs::Array<pls::cs::String>& cs_74c39fff0f46ab52();
 pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_98f0a1bec2084c3c>>& cs_2c85f04bd0d708d9();
 pls::cs::Dictionary<pls::cs::String,pls::cs::Array<pls::cs::List<cs_acb158b492b43017>>>& cs_d82354f7d4cc6e5c();
 pls::cs::Array<pls::cs::Ref<cs_9487cb83e3a46e0a>>& cs_fe1686f2bdf4b397();
-std::int32_t& cs_237ab1e79f07965b();
-pls::cs::String& cs_2fd3deed1e409352();
 std::int32_t& cs_33fd9fa03c065bd8();
 std::int32_t& cs_a73b188b45467dba();
 pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_6393581f8e4c2247();
-pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_aefbaa4ea6f5261a();
 pls::cs::Array<pls::cs::Array<pls::cs::Array<pls::cs::String>>>& cs_560940226681a6a6();
 pls::cs::String& cs_5dc81e2eacc2181a();
-pls::cs::Ref<cs_3da6da0799f0bdf8>& cs_8a995ef2c270d901();
 std::int64_t& cs_a55a986dcce0645f();
 pls::cs::Ref<cs_a0cf9aef6a251bfd>& cs_1e58df81cbed8f35();
 pls::cs::Ref<cs_3b41638e424b9ee0> cs_c3a84083a67ee263(pls::cs::Array<std::uint8_t> v_data);

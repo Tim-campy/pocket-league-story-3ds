@@ -1,11 +1,19 @@
 #pragma once
 #include "semantic_runtime.hpp"
+#include "managed_shared_field.hpp"
 #include "platform.hpp"
 #include <array>
 #include <functional>
 #include <set>
 
 namespace pls::kairo {
+namespace detail {
+// Canvas.CheckKeyPulse takes one snapshot, then writes the masked snapshot.
+// Keeping separate storage operations preserves the original lost-update case.
+template<class Field>bool consume_key_pulse(Field& field,std::int32_t key){
+    const auto cached=field.load();field.store(cached&~key);return (cached&key)!=0;
+}
+}
 class MotionEvent : public cs::Object {
     std::int32_t action_;
     cs::Array<std::int32_t> ids_;
@@ -40,7 +48,8 @@ public:
 };
 class CanvasKeyState {
     cs::Array<std::int32_t> history_=cs::Array<std::int32_t>::make(60);
-    std::int32_t work_{},event_{},state_{},pulse_{},invalid_pulse_{},index_{},disabled_{};
+    std::int32_t work_{},event_{},state_{},invalid_pulse_{},index_{},disabled_{};
+    cs::SharedField<std::int32_t> pulse_;
     std::int32_t repeat_{10},double_{4};
     bool invalid_touch_{};
     std::int32_t history(std::int32_t offset);
@@ -70,6 +79,8 @@ class PcInputAdapter {
     std::set<std::int32_t> held_;
     std::array<bool,23> groups_{};
     bool mouse_down_{},previous_mouse_down_{},right_down_{},previous_right_down_{};
+    bool initial_debug_{},config_initialized_{},polled_{};
+    std::function<bool()> current_debug_=[] {return false;};
     int x_{},y_{},previous_x_{},previous_y_{};
 public:
     std::function<void(cs::Ref<MotionEvent>)> on_touch;
@@ -77,6 +88,10 @@ public:
     // state mutation. Without a handler the adapter updates state directly.
     std::function<void(std::int32_t,cs::Ref<KeyEvent>)> on_key_down,on_key_up;
     explicit PcInputAdapter(CanvasKeyState& state):state_(state){}
+    // Capture VALID_KEYS once at source Canvas.Init; the live reader is used
+    // only for the desktop DEBUG+Shift mouse guard, after keyboard callbacks.
+    // Setup captures must be native/staticmethods, never hidden managed edges.
+    void initialize_config(bool initial_debug,std::function<bool()> current_debug);
     void feed(const platform::Input&);
     void decide_frame();
 };

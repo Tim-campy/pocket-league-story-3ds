@@ -1,0 +1,264 @@
+{
+  "operation": "original-Canvas-Surface-source-adapter-identity-routing",
+  "status": "PASS",
+  "fixture_cases": 24,
+  "passed": 24,
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "source-identity",
+      "expected": "source-identity=True:True",
+      "actual": "source-identity=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "empty-at-install",
+      "expected": "empty-at-install=",
+      "actual": "empty-at-install=",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "touch-late-list",
+      "expected": "touch-late-list=T3:True;T2:True;T1:True;",
+      "actual": "touch-late-list=T3:True;T2:True;T1:True;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "clear-all-reverse",
+      "expected": "clear-all-reverse=C3;C2;C1;",
+      "actual": "clear-all-reverse=C3;C2;C1;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "clear-games-forward-filter",
+      "expected": "clear-games-forward-filter=G1;C1;G2;G3;C3;",
+      "actual": "clear-games-forward-filter=G1;C1;G2;G3;C3;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "raw-key-after-mutation",
+      "expected": "raw-key-after-mutation=R3:27:True;R1:27:True;",
+      "actual": "raw-key-after-mutation=R3:27:True;R1:27:True;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "logical-keys",
+      "expected": "logical-keys=D3:17;D1:17;U3:17;U1:17;",
+      "actual": "logical-keys=D3:17;D1:17;U3:17;U1:17;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "source-virtual-and-graphics",
+      "expected": "source-virtual-and-graphics=V7;L7;B3:True;B1:True;W7:True;E3:True;E1:True;P7:True;",
+      "actual": "source-virtual-and-graphics=V7;L7;B3:True;B1:True;W7:True;E3:True;E1:True;P7:True;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "replace-list",
+      "expected": "replace-list=T4:True;",
+      "actual": "replace-list=T4:True;",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "replace-identity",
+      "expected": "replace-identity=True:True",
+      "actual": "replace-identity=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "clear-source",
+      "expected": "clear-source=True",
+      "actual": "clear-source=True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "clear-no-touch",
+      "expected": "clear-no-touch=",
+      "actual": "clear-no-touch=",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "source-identity",
+      "expected": "source-identity=True:True",
+      "actual": "source-identity=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "empty-at-install",
+      "expected": "empty-at-install=",
+      "actual": "empty-at-install=",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "touch-late-list",
+      "expected": "touch-late-list=T3:True;T2:True;T1:True;",
+      "actual": "touch-late-list=T3:True;T2:True;T1:True;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "clear-all-reverse",
+      "expected": "clear-all-reverse=C3;C2;C1;",
+      "actual": "clear-all-reverse=C3;C2;C1;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "clear-games-forward-filter",
+      "expected": "clear-games-forward-filter=G1;C1;G2;G3;C3;",
+      "actual": "clear-games-forward-filter=G1;C1;G2;G3;C3;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "raw-key-after-mutation",
+      "expected": "raw-key-after-mutation=R3:27:True;R1:27:True;",
+      "actual": "raw-key-after-mutation=R3:27:True;R1:27:True;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "logical-keys",
+      "expected": "logical-keys=D3:17;D1:17;U3:17;U1:17;",
+      "actual": "logical-keys=D3:17;D1:17;U3:17;U1:17;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "source-virtual-and-graphics",
+      "expected": "source-virtual-and-graphics=V7;L7;B3:True;B1:True;W7:True;E3:True;E1:True;P7:True;",
+      "actual": "source-virtual-and-graphics=V7;L7;B3:True;B1:True;W7:True;E3:True;E1:True;P7:True;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "replace-list",
+      "expected": "replace-list=T4:True;",
+      "actual": "replace-list=T4:True;",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "replace-identity",
+      "expected": "replace-identity=True:True",
+      "actual": "replace-identity=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "clear-source",
+      "expected": "clear-source=True",
+      "actual": "clear-source=True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "clear-no-touch",
+      "expected": "clear-no-touch=",
+      "actual": "clear-no-touch=",
+      "passed": true
+    }
+  ],
+  "native_gc_identity_policy": {
+    "assertions": 12,
+    "source_and_adapter_identity_separate": true,
+    "retained_snapshot_survives_clear": true,
+    "unrooted_cycle_collected": true,
+    "game_boot": false
+  },
+  "inputs": {
+    "tests/kairo/surface_bridge_fixtures.cpp": "93885eae1d897e3153e054617be38eeb3599781f5f6590c4b40d3132398db90e",
+    "src/kairo/common/canvas.cpp": "61f3ab3d2ce08706d94f0bcd55dad2c8f07d902b0d0a43cda9427354b2bf5818",
+    "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
+    "src/kairo/common/graphics.cpp": "026f54aa1ceb88fe1b54c1e3e120548ff41c7c231da72a7b7459c57268048fec",
+    "src/kairo/common/image_lifetime.cpp": "46eb7b0f818d28f48cedf6cef4542ea0026178d8e0b9ff300f5391b349abba86",
+    "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
+    "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
+    "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/SurfaceBridgeOracle.cs": "647d04d52e86789e2c5807f42317a0dec2fd011d109613781e8d02a756b95ccc",
+    "tools/test_surface_bridge.py": "67085eb36b61dbfad3f093fd906461fcb506455987f269545fcf21ac618441c1",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
+    "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
+    "src/kairo/api/forms_execution.hpp": "438873bd6f8525f0b821f9b277da122e09c8fb936b1cdb5d015abe575ddbb028",
+    "src/kairo/api/forms.hpp": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a",
+    "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
+    "src/kairo/api/canvas.hpp": "257deae29a6870f98c6c3b3ff544a8e18eaa485d3743f0fb87049bb9a37af258",
+    "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
+    "src/kairo/api/graphics.hpp": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f",
+    "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
+    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
+    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
+    "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
+    "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Canvas.cs",
+      "sha256": "c658562b9e0335d3206529286c330dfc797ec72c3fb14b5aa819e21472cbe0b9"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/SurfaceManagerBase.cs",
+      "sha256": "eef5edc4f3f3a337d26c74d9ecd3487745a610006f01181244b75355a4371825"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/form/FormManagerBase.cs",
+      "sha256": "3b230f8a79aafeddd3820f9f3a5cda16ba0477bdb5f58e6c571be0856911c34a"
+    }
+  ],
+  "original_methods": {
+    "Canvas": [
+      "public void SetSurfaceManager(SurfaceManagerBase surfaceManager)",
+      "public SurfaceManagerBase GetSurfaceManager()",
+      "public bool OnTouchEvent(MotionEvent evt)"
+    ],
+    "SurfaceManagerBase": [
+      "public Vector<SurfaceBase> GetSurfaceList()",
+      "public void ClearTouchComponent()",
+      "public void OnKeyDown(int key)",
+      "public void OnKeyUp(int key)",
+      "public void OnKeyDown(int keyCode, KeyEvent evt)",
+      "public void BeginTouchRegist(kairo.unity.ui.Graphics g)",
+      "public void EndTouchRegist(kairo.unity.ui.Graphics g)"
+    ],
+    "FormManagerBase": [
+      "private void ExecuteInitAndFinish(): exact entire Finish-path surface-clear if block"
+    ]
+  },
+  "native_executable": {
+    "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
+    "sha256": "8009349531ac455d4cc681b9d50ef63b7ea68549b0474908386bfa60584ec66f"
+  },
+  "verified_boundary_ids": [],
+  "ordering": {
+    "touch": "reverse",
+    "clear_all": "reverse",
+    "raw_and_logical_key": "reverse",
+    "clear_game_only": "forward, IsGameSurface predicate retained"
+  },
+  "limits": [
+    "Own source surface subclasses prove source identity, late list mutation, callback dispatch and Graphics/event identity, not generated game integration.",
+    "DoEvents/Draw/DrawComponents/layout are synthetic virtual targets; their original game bodies are not replaced or claimed tested.",
+    "BeginTouchRegist uses an empty synthetic TouchOption buffer; buffer unlocking semantics are outside this test.",
+    "The game-surface clear helper retains the original Finish-path if block; other ExecuteInitAndFinish statements are tested separately."
+  ],
+  "game_assets_used": false,
+  "game_boot": false,
+  "original_binaries_executed": false
+}

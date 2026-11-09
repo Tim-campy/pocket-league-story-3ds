@@ -24,7 +24,7 @@
     "tests/kairo/AnalyticsOfflineOracle.cs": "01f7dfec46848405ee5bb877880c1f8a570ec6ac1b5f44136ee4aceee6cf2ce7",
     "tests/kairo/OfflineHttpOracle.cs": "6f4e04c001cbe05a6bdd1d8246b428c2a1c5585774140b226686c0ed206ed43d",
     "tools/test_analytics_offline.py": "0ae4237206a78b6fe5c9d84ab940507504b83aa549760ae5bd35a05999cc8706",
-    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602"
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a"
   },
   "source_manifest": [
     {

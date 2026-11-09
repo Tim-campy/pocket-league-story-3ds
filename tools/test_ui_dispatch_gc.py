@@ -19,7 +19,7 @@ def main():
     native=json.loads(result.stdout)
     report=dict(operation='native-UI-dispatch-collector-cooperation',status='PASS',assertions=native['assertions'],passed=native['assertions'],ui_gc_collections=native['ui_gc_collections'],
         game_boot=False,original_binaries_used=False,verified_boundary_ids=[],native_executable=dict(path=target.relative_to(ROOT).as_posix(),sha256=sha(target)),
-        inputs={p.relative_to(ROOT).as_posix():sha(p)for p in [Path(__file__),source,runtime,runtime.with_suffix('.hpp'),ROOT/'src/kairo/api/application.hpp']},
+        inputs={p.relative_to(ROOT).as_posix():sha(p)for p in [Path(__file__),source,runtime,runtime.with_suffix('.hpp'),ROOT/'src/kairo/api/application.hpp',ROOT/'src/kairo/common/managed_shared_field.hpp']},
         limitations=['Own native scheduling invariants; not a source-oracle or game boot.', 'Does not fix unsynchronized fields in generated Game classes.'])
     (ROOT/'config/phase2-ui-dispatch-gc-tests.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps(native))
 if __name__=='__main__':main()

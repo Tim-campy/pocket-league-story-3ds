@@ -29,5 +29,25 @@ int main(){
         worker([&]{try{app->RunOnUiThread(cs::Delegate<void()>::from_static("own-ui-error",[]{throw cs::IOException("own-ui-error");}),true);}catch(const cs::IOException&e){caught=std::string(e.what())=="own-ui-error";}reentered=bool(cs::make_ref<Value>(1));});
         check(caught&&reentered);
     }
-    app->host_stop();std::cout<<"{\"assertions\":"<<assertions<<",\"ui_gc_collections\":16,\"game_boot\":false}\n";
+    check(kairo::IApplication::GetCurrentApp()==app);
+    std::atomic<bool> reading{false},finish_reading{false},bad_identity{false};
+    std::atomic<std::size_t> reads{0};
+    std::thread reader([&]{cs::GcMutatorScope active;
+        while(!finish_reading.load()){
+            auto loaded=kairo::IApplication::GetCurrentApp();
+            if(loaded&&loaded!=app)bad_identity=true;
+            ++reads;reading=true;cs::gc_safepoint();
+        }
+    });
+    while(!reading.load()){cs::gc_safepoint();std::this_thread::yield();}
+    for(int i=0;i<10000;++i){app->source_Init(nullptr);app->source_Init(app);}
+    finish_reading=true;reader.join();check(reads.load()!=0&&!bad_identity.load());
+    bool held_identity=false,observed_clear=false;
+    worker([&]{auto held=kairo::IApplication::GetCurrentApp();
+        app->RunOnUiThread(cs::Delegate<void()>::from_static("own-ui-stop",[&]{app->host_stop();cs::gc_collect();}),true);
+        held_identity=held==app&&held->GetWidth()==240;
+        observed_clear=!kairo::IApplication::GetCurrentApp();
+    });
+    check(held_identity);check(observed_clear);check(!kairo::IApplication::GetCurrentApp());
+    std::cout<<"{\"assertions\":"<<assertions<<",\"ui_gc_collections\":17,\"game_boot\":false}\n";
 }

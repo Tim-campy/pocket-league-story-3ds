@@ -1,0 +1,20 @@
+{
+  "operation": "own-PC-metrics-aggregation",
+  "status": "PASS",
+  "native_assertions": 29,
+  "json_assertions": 6,
+  "producer_sha256": "9bf7243bf3736e87e3b09902724f8fb30f996db411c076da06d1a61876cd973f",
+  "inputs_sha256": {
+    "tests/kairo/pc_metrics_fixtures.cpp": "9d7f752bb8938c64cb8edd3cffdf34ac8dc0b075e91ad25f05e0e6d10b3ab238",
+    "src/main/pc_metrics.cpp": "17a5493902edcea9a6b11670e4e666756feb3a03f4620b345f6340d673ec0e46",
+    "src/main/pc_memory.cpp": "5510247cb0372b1b626a3e188bc779e2b91e29ea247a426b15f031d4e1a127ab",
+    "src/main/pc_metrics.hpp": "94c323619ab1a0972cb503f0d54abdb6e74098f3f2a4cd246c8b57a0f2571061",
+    "src/main/pc_memory.hpp": "81f0048a3c8360c273c2b486aa12a5e2f2cc143b4f751ed87bcb82acd6ccc692"
+  },
+  "native_executable": {
+    "path": "build/pc-metrics-fixtures/pc-metrics-fixtures.exe",
+    "sha256": "73dda4432532f15db9b7b6eefb006fc9afce660ee3f51ec909ad03f998ae106c"
+  },
+  "game_executed": false,
+  "production_methods_promoted": 0
+}

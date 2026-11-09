@@ -38,6 +38,13 @@ Os inventários AST/semânticos usam o csc moderno já instalado no Visual Studi
 
 ## Ausências e limites
 
+Na consolidação de 2026-11-09, REA 6.5.0 respondeu ao doctor, mas a auditoria
+ampla registrou skill/registrations desatualizados e provedores opcionais
+ausentes. Não houve instalação ou alteração de configurações dos clientes.
+Esses provedores não são dependência das provas de fonte/build desta etapa.
+A verificação do port passou em 84 checks; detalhes em
+[checkpoint-1220](notes/checkpoint-1220.md).
+
 As SDL2.dll antigas de outros aplicativos não são usadas pelo backend. A Fase 2 usa o SDK 2.32.10 identificado abaixo. devkitARM/libctru/citro2d/citro3d e tex3ds são necessários na etapa 3DS, adiada pelo usuário à Fase 4. makerom/bannertool somente seriam necessários para a rota CIA. Azahar e hardware ainda não foram usados pelo port.
 
 AssetRipper portátil 2.0.0 foi obtido da distribuição oficial após autorização explícita do usuário, somente sob build/tools/assetripper/. SHA-256 do ZIP: `9a7ef0e7c5c3ea5b90b4e6d855e2d98d5f7ec8c3f9e26fccbc194c6a7b01baf7`, igual ao digest publicado no release oficial. Nenhum SDK 3DS ou emulador foi instalado. O leitor próprio tools/unity15_metadata.py mede tabelas e metadata do Unity5.3; os blobs próprios são analisados pelas ferramentas separadas, sempre localmente. O relatório de assets explicita a cobertura.
@@ -297,5 +304,11 @@ As implementacoes C++17 e os comandos de reproducao, incluindo limites e
 diferencas Mono/CLR, estao em [phase2-managed-foundation.md](notes/phase2-managed-foundation.md).
 Usam os compiladores ja registrados acima; nao introduzem dependencias.
 O subconjunto Regex utiliza apenas a biblioteca padrao C++17.
+O alvo CMake `pc_game` usa `/bigobj` no MSVC: a tentativa 8, com 1.120
+corpos Game, excedeu o limite de seções COFF padrão em Debug (`C1128`).
+Essa opção amplia o formato do objeto; mantém C++17, `/fp:strict` e as
+opções semânticas. O host instrumentado compilou nessa tentativa, mas o
+processo do jogo não chegou a ser iniciado. A opção não é uma dependência
+nova nem uma alteração posterior do binário.
 Census cultural reproduzivel: [culture-usage.md](culture-usage.md), com 104
 chamadas em 61 metodos e 24 overloads historicos ordinais separados.

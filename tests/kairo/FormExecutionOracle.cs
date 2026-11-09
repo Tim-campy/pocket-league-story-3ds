@@ -38,10 +38,10 @@ public class ExecManager:FormManagerBase {
  protected override void PreUpdate(){Hooks.Log("pre");base.PreUpdate();}protected override void Updated(){Hooks.Log("updated");base.Updated();}protected override void PreDraw(){Hooks.Log("preDraw");base.PreDraw();}protected override void Drawn(){Hooks.Log("drawn");base.Drawn();}
 }
 public class ExecForm:FormBase {
- public bool throwInit,throwUpdate,throwDraw;public bool initOk=true,finishOk=true,resumeOk=true;public int pending=0,updates=0;public ExecForm(int n):base(n){}
+ public bool throwInit,throwUpdate,throwDraw;public bool initOk=true,finishOk=true,resumeOk=true;public int pending=0,updates=0,updateMode=-1;public ExecForm(int n):base(n){}
  public override bool Init(){Hooks.Log("init"+GetId());if(throwInit)throw new Exception();return initOk;}
  public override bool Finish(){Hooks.Log("finish"+GetId());return finishOk;}
- public override bool Update(){Hooks.Log("update"+GetId());if(throwUpdate)throw new Exception();return updates++>=pending;}
+ public override bool Update(){Hooks.Log("update"+GetId());if(throwUpdate)throw new Exception();if(updateMode>=0)SetProcessMode(updateMode);return updates++>=pending;}
  public override bool Resume(){Hooks.Log("resume"+GetId());return resumeOk;}
  public override void Draw(Graphics g){Hooks.Log("draw"+GetId());if(throwDraw)throw new Exception();}
  public override bool ProcessEvent(AppEvent e){Hooks.Log("event"+(int)e.Type+":"+GetId());return false;}
@@ -55,6 +55,7 @@ class FormExecutionOracle {
  public static int Main(){
  Run("execute-complete",delegate(ExecManager m,ExecForm f){m.Execute();});
  Run("execute-pending-twice",delegate(ExecManager m,ExecForm f){f.pending=2;m.Execute();});
+ Run("update-mode-reread",delegate(ExecManager m,ExecForm f){f.updateMode=4;m.Execute();});
  Run("hidden",delegate(ExecManager m,ExecForm f){IApplication.GetCurrentApp().visible=false;m.Execute();});
  Run("terminated",delegate(ExecManager m,ExecForm f){IApplication.GetCurrentApp().terminated=true;m.Execute();});
  Run("paused",delegate(ExecManager m,ExecForm f){m.SetPause(true);m.Execute();});

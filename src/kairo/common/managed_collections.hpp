@@ -183,4 +183,41 @@ public:
     friend bool operator==(const List&a,const List&b)noexcept{return a.data_==b.data_;}
     friend bool operator!=(const List&a,const List&b)noexcept{return !(a==b);}
 };
+
+// Corpus-proved Stack<T> subset. Other CLR Stack members deliberately have no
+// mapping until they are required and independently verified.
+template<class T>class Stack {
+    struct Storage:Object {
+        Array<T>items;
+        std::int32_t size{};
+        Storage(){if(runtime_profile==RuntimeProfile::DotNet)items=Array<T>::make(0);}
+        std::string managed_type_name()const override{return "System.Collections.Generic.Stack`1["+managed_type_name_traits<T>::name()+"]";}
+        void trace_edges(const EdgeVisitor&visitor)const override{trace_value(items,visitor);}
+        void release_edges()override{release_value(items);}
+    };
+    Ref<Storage>data_;
+    Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
+public:
+    Stack()=default; // Null managed reference, consistent with List/Array wrappers.
+    static Stack make(){Stack result;result.data_=make_ref<Storage>();return result;}
+    bool is_null()const noexcept{return !data_;}
+    Ref<Object>as_object()const{return data_;}
+    static Stack from_object(const Ref<Object>&value){Stack result;if(value){result.data_=std::dynamic_pointer_cast<Storage>(value);if(!result.data_)throw InvalidCastException();}return result;}
+    std::int32_t count()const{return require().size;}
+    std::int32_t get_Count()const{return count();}
+    void Push(T value){
+        auto&data=require();if(data.size==std::numeric_limits<std::int32_t>::max())throw OutOfMemoryException();
+        const auto capacity=data.items.is_null()?0:data.items.length();
+        if(data.size==capacity){
+            std::int64_t next=capacity?static_cast<std::int64_t>(capacity)*2:(runtime_profile==RuntimeProfile::UnityMono265?16:4);
+            next=std::min(next,static_cast<std::int64_t>(std::numeric_limits<std::int32_t>::max()));
+            auto items=Array<T>::make(static_cast<std::int32_t>(next));if(data.size)Array<T>::copy(data.items,0,items,0,data.size);data.items=std::move(items);
+        }
+        data.items.at(data.size)=std::move(value);++data.size;
+    }
+    T Peek()const{auto&data=require();if(data.size==0)throw InvalidOperationException();return data.items.at(data.size-1);}
+    T Pop(){auto&data=require();if(data.size==0)throw InvalidOperationException();T result=std::move(data.items.at(data.size-1));data.items.at(--data.size)=T{};return result;}
+    friend bool operator==(const Stack&a,const Stack&b)noexcept{return a.data_==b.data_;}
+    friend bool operator!=(const Stack&a,const Stack&b)noexcept{return !(a==b);}
+};
 } // namespace pls::cs

@@ -73,10 +73,10 @@
     "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
     "tests/kairo/DisplayMetricsOracle.cs": "c9bec8a1773c09a235f7cda9bbe13f307545c2f4b4683383ffaaf525d8a4c02b",
     "tools/test_asset_reader.py": "0d86bffef1e295d14ca6b46726b91042f7cb38f1dff446fa0517c6ddd4e44266",
-    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
     "src/kairo/api/display_metrics.hpp": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70",
-    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
     "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -90,7 +90,7 @@
   ],
   "native_executable": {
     "path": "build/asset-reader-tests/asset-reader-fixtures.exe",
-    "sha256": "e446e6ee1f3077b205420548bceb9a40ab4df21e3aa1349cce47b8290d1ae7ab"
+    "sha256": "426ff926c42f654a1b4fe97f6844ecd512cc831145ca386fae5200dcb8221ca0"
   },
   "game_assets_used": true,
   "original_binaries_executed": false,

@@ -1,4 +1,5 @@
 #include "backend.hpp"
+#include "debug_input.hpp"
 #include <stdexcept>
 #include <limits>
 
@@ -25,8 +26,10 @@ Backend::Backend(int width,int height,bool headless):width_(width),height_(heigh
         SDL_Quit();throw std::runtime_error(error);
     }
     check(SDL_SetRenderDrawBlendMode(renderer_,SDL_BLENDMODE_NONE));
+    debug_input_initialize(height_);
 }
 Backend::~Backend() {
+    debug_input_shutdown();
     for(auto& item:textures_) SDL_DestroyTexture(item.first);
     SDL_DestroyRenderer(renderer_);
     if(surface_) SDL_FreeSurface(surface_);
@@ -53,13 +56,16 @@ void Backend::draw(SDL_Texture* texture,platform::Rect source,platform::Rect des
 }
 std::vector<platform::Input> Backend::events() {
     std::vector<platform::Input> result;SDL_Event event{};
+    debug_input_begin_frame(height_);
     while(SDL_PollEvent(&event)) {
+        debug_input_event(event);
         using Kind=platform::Input::Kind;
         if(event.type==SDL_QUIT) result.push_back({Kind::quit});
         else if(event.type==SDL_MOUSEMOTION) result.push_back({Kind::pointer_move,event.motion.x,event.motion.y});
         else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP) result.push_back({event.type==SDL_MOUSEBUTTONDOWN?Kind::pointer_down:Kind::pointer_up,event.button.x,event.button.y,event.button.button});
         else if(event.type==SDL_KEYDOWN||event.type==SDL_KEYUP) result.push_back({event.type==SDL_KEYDOWN?Kind::key_down:Kind::key_up,0,0,event.key.keysym.sym});
     }
+    debug_input_publish_frame();
     return result;
 }
 std::vector<std::uint8_t> Backend::read_pixels() { std::vector<std::uint8_t> result(std::size_t(width_)*height_*4);check(SDL_RenderReadPixels(renderer_,nullptr,SDL_PIXELFORMAT_RGBA32,result.data(),width_*4));return result; }

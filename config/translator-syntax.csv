@@ -81,7 +81,7 @@ MultiplyExpression,1525,True,observed-in-emitted-body
 NameEquals,1,False,NOT_YET_VALIDATED
 NamespaceDeclaration,95,False,NOT_YET_VALIDATED
 NotEqualsExpression,794,True,observed-in-emitted-body
-NullLiteralExpression,1298,True,observed-in-emitted-body
+NullLiteralExpression,1298,False,NOT_YET_VALIDATED
 NumericLiteralExpression,44948,True,observed-in-emitted-body
 ObjectCreationExpression,861,True,observed-in-emitted-body
 OmittedArraySizeExpression,2196,False,NOT_YET_VALIDATED

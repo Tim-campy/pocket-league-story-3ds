@@ -486,10 +486,10 @@
     "src/kairo/platform/sdl/audio.cpp": "8f2837c8409e84500d95e46175f89467cd7776beb1c70756041ccadd766bb42a",
     "tests/kairo/SoundOracle.cs": "5d757a87cf431f11467c414a1ba4932d83d41eb6e5adcc70044b63863a46f7b6",
     "tools/test_sound.py": "5ec3ec1bce505e889b110a884a7ee699a53d89d142a36d1933375a744352894c",
-    "tools/test_input.py": "b6525d84f6026fc19b1ee10c3848232c0e15147a98e79ac0fa2f76bf3a072602",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
-    "src/kairo/api/application.hpp": "0331cc25b3ec294981a790248c7b2774e6426a420428c15f4cfe38c242ed57b7",
+    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
     "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -511,16 +511,16 @@
   ],
   "native_executable": {
     "path": "build/sound-tests/sound-fixtures.exe",
-    "sha256": "c7a5731452a763c5b528402301832416d37889b6669a4396b929ae46010f584a"
+    "sha256": "1664a3d3f0f8bd99c39b535fbc3459ebf3a000cecf3b5bef83076eabe10e99fe"
   },
   "oracle_binaries": [
     {
       "path": "build/sound-tests/SoundOracle.dll",
-      "sha256": "5d2f8d6e17d53f23a4840bcd5ef7c33c4ffaa471fd09688a6fe528b20b9fc4fb"
+      "sha256": "df356d2f92ff3a31fbb2ebb8cf3d1d6ccf2d45d1ddc6556f1b49e8a0c1977c5b"
     },
     {
       "path": "build/sound-tests/SoundOracle-mono.exe",
-      "sha256": "57906f666af31473e534b3f6208961a08a0bddc71222b04c20e413c336374cc4"
+      "sha256": "907a8dc10984cfaa17b4dff595b21bd77568046f565844aaad5257b330b882e2"
     }
   ],
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",

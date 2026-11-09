@@ -72,7 +72,7 @@ def main():
  passed=all(c['passed'] for c in cases)
  inputs=native_sources+[source,ROOT/'tools/test_forms_execution.py',ROOT/'tools/test_input.py',ROOT/'tools/test_forms.py',ROOT/'tools/native_api_proof.py']
  inputs += [ROOT/'src/kairo/api'/p for p in ['forms_execution.hpp','forms_callbacks.hpp','forms.hpp','touch_value_accessor.hpp','canvas.hpp','application.hpp','graphics.hpp','font.hpp','sound.hpp','input.hpp']]
- inputs += [ROOT/'src/kairo/common'/p for p in ['semantic_runtime.hpp','asset_catalog.hpp','sha256.hpp']]+[ROOT/'src/kairo/platform/sdl'/p for p in ['font.hpp','audio.hpp']]
+ inputs += [ROOT/'src/kairo/common'/p for p in ['semantic_runtime.hpp','managed_shared_field.hpp','asset_catalog.hpp','sha256.hpp']]+[ROOT/'src/kairo/platform/sdl'/p for p in ['font.hpp','audio.hpp']]
  ids=boundary_ids(exact=['M:kairo.unity.form.FormManagerBase.'+s for s in ['Execute','OnDraw','Resume','SetPause(System.Boolean)','IsPause','Drawn','PreDraw','PreUpdate','Updated']])
  report=dict(operation='original-source-form-execute-render-order-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,
   verified_boundary_ids=ids,native_callback_policy=policy,inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},

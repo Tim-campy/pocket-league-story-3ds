@@ -18,12 +18,14 @@ def main():
     run([runtime,tool,req,report_file],folder/'lowering-translator.log')
     report=json.loads(report_file.read_text(encoding='utf-8-sig'))
     rejected=report['rejected_methods']
-    expected_rejected={'M:LoweringFixtures.UnsupportedClosureGoto(System.Int32)','M:Synthetic.IRun.Run'}
+    expected_rejected={'M:LoweringFixtures.UnsupportedClosureGoto(System.Int32)','M:Synthetic.IRun.Run','M:Synthetic.ImplicitScope.NeverCalled(System.Int32)','M:Synthetic.AbstractBase.Read'}
     if set(rejected)!=expected_rejected:raise ValueError('Unexpected supported/unsupported fixture set: '+str(rejected))
+    emitted={m['id']for m in report['emitted_methods']}
+    if not {'M:LoweringFixtures.ImplicitConstructorScope','M:Synthetic.ImplicitScope.#ctor'}<=emitted:raise ValueError('Implicit constructor inherited an unreachable method scope')
     subprocess.run([sys.executable,ROOT/'translator/test_portable.py','--report',report_file,'--generated',output,'--oracle',output/'source_oracle.cs','--folder',folder/'lowering-differential','--result',ROOT/'config/phase2-lowering-fixtures.json'],check=True,cwd=ROOT)
     result_file=ROOT/'config/phase2-lowering-fixtures.json';result=json.loads(result_file.read_text())
     negative='M:LoweringFixtures.UnsupportedClosureGoto(System.Int32)'
-    result.update(producer=producer,negative_control=dict(id=negative,reason=rejected[negative]['reason']),abstract_declarations_without_body=['M:Synthetic.IRun.Run'],fixture_source_sha256=__import__('hashlib').sha256(source.read_bytes()).hexdigest())
+    result.update(producer=producer,negative_control=dict(id=negative,reason=rejected[negative]['reason']),abstract_declarations_without_body=['M:Synthetic.IRun.Run','M:Synthetic.AbstractBase.Read'],abstract_initializer_exercised_through=dict(initializer='M:Synthetic.AbstractBase.#ctor',scenario='M:LoweringFixtures.AbstractCtorDispatch',expected_seen=9,factory_defined=False),fixture_source_sha256=__import__('hashlib').sha256(source.read_bytes()).hexdigest())
     result_file.write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
 
 

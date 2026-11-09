@@ -342,7 +342,7 @@ def baked_evidence():
 
 def additional_platform_evidence(boundary_ids):
     ids=set();reports={}
-    for area in ['storage','input','forms','forms-execution','sound']:
+    for area in ['storage','input','forms','forms-execution','sound','application-properties','application-orientation']:
         name='phase2-'+area+'-tests.json'
         if not (ROOT/'config'/name).exists():continue
         proof=load('config/'+name);validate_inputs(proof)
@@ -364,6 +364,7 @@ FOUNDATION_RECEIPTS={
     'stream-reader-tests':'cases','mono-collation-tests':'cases','thread-tests':'cases',
     'globalization-tests':'cases','bootstrap-tests':'fixture_cases','asset-reader-tests':'fixture_cases',
     'string-ops-tests':'cases','image-lifetime-tests':'fixture_cases','ui-dispatch-gc-tests':'assertions',
+    'stack-fixtures':'fixture_cases',
 }
 
 def foundation_evidence():
@@ -374,7 +375,7 @@ def foundation_evidence():
         proof=load(path.relative_to(ROOT));validate_inputs(proof)
         count=proof[count_field]
         if proof['status']!='PASS' or count!=proof['passed'] or count<=0:raise ValueError('Foundation proof incomplete: '+name)
-        for key in ['native_executable','edge_native_executable','bmp_native_executable']:
+        for key in ['native_executable','edge_native_executable','bmp_native_executable','gc_executable']:
             if proof.get(key):expect_hash(ROOT/proof[key]['path'],proof[key]['sha256'])
         reports[name]=dict(cases=count,passed=proof['passed'])
         if name=='mono-collation-tests':
@@ -427,7 +428,7 @@ def refresh():
     if not (ROOT/'config/phase2-translation.json').is_file():
         return None
     receipt_names=['phase2-translation.json','phase2-portable-differential.json','phase2-assets.json','phase2-image-tests.json','phase2-services-tests.json','phase2-legacy-assets.json','phase2-game-translation.json','phase2-graphics-tests.json','phase2-media-tests.json','baked-array-index.json','phase2-storage-tests.json','phase2-input-tests.json','phase2-forms-tests.json','phase2-sound-tests.json']
-    receipt_names+=['phase2-'+name+'.json' for name in FOUNDATION_RECEIPTS]+['culture-usage.json','phase2-forms-execution-tests.json']
+    receipt_names+=['phase2-'+name+'.json' for name in FOUNDATION_RECEIPTS]+['culture-usage.json','phase2-forms-execution-tests.json','phase2-application-properties-tests.json','phase2-application-orientation-tests.json','phase2-pc-metrics-tests.json','phase2-surface-bridge-tests.json']
     receipt_snapshot={name:sha(ROOT/'config'/name) for name in receipt_names if (ROOT/'config'/name).exists()}
     emitted,differential,methods,roots,compiled,executed,verified = translator_evidence()
     foundation=foundation_evidence();culture=culture_evidence()

@@ -52,10 +52,39 @@ public static class LoweringFixtures {
     public static string SplitTrim(string value) { if(value==null)return null;var parts=value.Split('a','b');return parts[0].Trim(' ','-')+parts.Length; }
     public static int HexParse(string value) { return int.Parse(value,System.Globalization.NumberStyles.HexNumber); }
     public static string Replacement(string value) { return value.Replace("ab","Z").Replace('a','c'); }
+    public static int ImplicitConstructorScope() { return new Synthetic.ImplicitScope().value; }
+    public static int UnusedStaticLayout(){return Synthetic.UnusedStatic.value;}
+    public static int ChainedDefaultStatic(){return Synthetic.StaticWriteA.value+Synthetic.StaticWriteB.noInitializer;}
+    public static bool StructQuery(int value){var data=new Synthetic.QueryValue(value);return data.Positive();}
+    public static bool StructQueryCopy(int value){var data=new Synthetic.QueryValue(value);var copy=data;return copy.Positive()==data.Positive();}
+    public static bool StructQueryAlias(int value){var data=new Synthetic.QueryValue(value);return data.Alias();}
+    public static int StackLifo(int value){var stack=new System.Collections.Generic.Stack<int>();stack.Push(value);stack.Push(37);int top=stack.Peek();return unchecked(stack.Pop()+stack.Pop()+stack.Count+top);}
+    public static bool StackIdentity(){var stack=new System.Collections.Generic.Stack<object>();var alias=stack;object value=new Synthetic.ConcatValue(4);stack.Push(value);return (object)alias==(object)stack&&alias.Pop()==value;}
+    public static int StackEmpty(){var stack=new System.Collections.Generic.Stack<int>();try{return stack.Pop();}catch(InvalidOperationException){return 37;}}
+    public static int AbstractCtorDispatch(){return new Synthetic.AbstractDerived().seen;}
+    public static object ConcatArgument(int step,object value) {Stamp(step);return value;}
+    public static string ObjectConcatOrder(int seed) {trace_=seed;return string.Concat(ConcatArgument(1,new Synthetic.ConcatValue(4)),ConcatArgument(2,new Synthetic.ConcatValue(5)),ConcatArgument(3,new Synthetic.ConcatValue(6)));}
+    public static string ObjectConcatNull(int seed) {trace_=seed;return string.Concat(ConcatArgument(1,null),ConcatArgument(2,new Synthetic.ConcatValue(5,false,true)),ConcatArgument(3,"end"));}
+    public static int ObjectConcatThrow(int seed) {trace_=seed;try{string.Concat(ConcatArgument(1,new Synthetic.ConcatValue(4,true)),ConcatArgument(2,new Synthetic.ConcatValue(5)),ConcatArgument(3,new Synthetic.ConcatValue(6)));}catch(InvalidOperationException){return trace_;}return -1;}
     // Negative control: captured-variable lifetime across goto is not lowered.
     public static int UnsupportedClosureGoto(int value) { Func<int> f=()=>value;if(value<0)goto done;value++;done:return f(); }
 }
 namespace Synthetic {
+    public abstract class AbstractBase {public int seen;public AbstractBase(){seen=Read();}public abstract int Read();}
+    public class AbstractDerived:AbstractBase {public int value=9;public override int Read(){return value;}}
+    public struct QueryValue {public int value;public QueryValue(int input){value=input;}public bool Positive(){return value>0;}public bool Alias(){return Positive();}}
+    public static class UnusedStatic {private static System.WeakReference neverUsed;public static int value=37;}
+    public static class StaticWriteA {public static int value=Init();public static int Init(){StaticWriteB.noInitializer=StaticWriteB.first+1;return StaticWriteB.noInitializer;}}
+    public static class StaticWriteB {public static int noInitializer;public static int first=37;}
+    public sealed class ConcatValue {
+        public int step;public bool fail;public bool nullResult;
+        public ConcatValue(int step,bool fail=false,bool nullResult=false){this.step=step;this.fail=fail;this.nullResult=nullResult;}
+        public override string ToString(){LoweringFixtures.Stamp(step);if(fail)throw new InvalidOperationException("own fixture");return nullResult?null:step==4?"A":step==5?"B":"C";}
+    }
+    public sealed class ImplicitScope {
+        public int value=37;
+        private static void NeverCalled(int n) {System.WeakReference unreachable=null;again:if(n-->0)goto again;GC.KeepAlive(unreachable);}
+    }
     public interface IRun {void Run();}
     public class DelegateTarget:IRun {public int value;public DelegateTarget(int seed){value=seed;}public int Add(int amount){value+=amount;return value;}public void Run(){value++;}public Func<int,int> Make(){return amount=>Add(amount);}}
     public class BaseCtor { public int baseValue; public BaseCtor(int value) { baseValue = LoweringFixtures.Stamp(value); } }

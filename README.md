@@ -21,9 +21,10 @@ Corrigir o tradutor e regenerar seus arquivos; nunca editar `src/game/` ou os fo
 
 - [Fronteira](docs/boundary.md): 775 símbolos KairoLibrary — 254 portáveis, 452 a reimplementar, 69 a remover — e 18 símbolos UnityEngine diretos. Os 254 símbolos portáveis incluem tipos/campos/propriedades: não são 254 métodos.
 - [Contrato do tradutor](docs/translator.md): UTF-16, overflow definido, avaliação ordenada, exceções, classes, capturas e limites atuais. Os 123 SyntaxKinds medidos não estão todos implementados.
-- [Serviços offline](docs/design/services.md): registro local com identificador de aparelho persistente; cobrança indisponível preservando saves, sem concessões; anúncios, licenciamento e notificações removidos. Contratos testados ainda aguardam integração ao jogo traduzido.
+- [Serviços offline](docs/design/services.md): registro local com identificador de aparelho persistente; cobrança indisponível preservando saves, sem concessões; anúncios, licenciamento e notificações removidos. Dezoito das 53 políticas foram alcançadas na emissão; sua execução no jogo ainda aguarda o boot.
 - [Assets](docs/assets.md): inventário, formatos e estimativas; [MAP/CSV](docs/notes/phase2-legacy-assets.md) identificados sem publicar conteúdo.
 - [Toolchain e reprodução](docs/toolchain.md). Não há backend 3DS nem decisão sobre telas/controles nesta fase.
+- [Consolidação de 1.220 corpos](docs/notes/checkpoint-1220.md): 84 checks aprovados; 110 corpos adicionais e zero perdas frente a cde8988. Compilação e fixtures não equivalem a título/menu executados.
 
 ## Pipeline local e testes
 

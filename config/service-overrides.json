@@ -1,5 +1,6 @@
 {
   "schema_version": 1,
+  "lowering_schema_version": 1,
   "operation": "explicit-user-platform-policies",
   "integration_status": "PENDING_GENERATED_GAME_BINDING",
   "host_bootstrap": [
@@ -17,126 +18,205 @@
       "preserve_source_effects": [
         "BootForm.Run keeps its counter reset to30 and SaveSystem calls",
         "BootForm.Update/Run parse response line1 asversion202"
-      ]
+      ],
+      "lowering": {
+        "kind": "register_local",
+        "native_hook": "pls::services::managed::register_local",
+        "native_include": "services_managed.hpp",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.UpdateBillingItems(System.Boolean)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": "pls::services::refresh_billing_inventory",
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.LaunchPurchaseFlow(system.billing.ui.BillingItem)",
       "action": "disabled-before-original-body",
       "result_contract": "false",
       "native_hook": null,
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.Purchase(system.billing.ui.BillingItem)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": "pls::services::refresh_billing_inventory",
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.RegistApplyTask(System.Boolean)",
       "action": "disabled-before-original-body",
       "result_contract": "false",
       "native_hook": null,
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.UpdateApplyTask(System.Boolean)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": "pls::services::refresh_billing_inventory",
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.ExecuteApplyTask(system.billing.ui.ApplyTask)",
       "action": "disabled-before-original-body",
       "result_contract": "false",
       "native_hook": null,
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.Provisioning(system.billing.ui.ApplyTask)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": "pls::services::refresh_billing_inventory",
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.Cancel(system.billing.ui.ApplyTask)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": "pls::services::refresh_billing_inventory",
-      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant"
+      "reason": "Preserve billing save, pending tasks and provisions; no removal or grant",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.MyBilling.ExecuteApplyTask(system.billing.ui.ApplyTask)",
       "action": "disabled-before-original-body",
       "result_contract": "false",
       "native_hook": null,
-      "reason": "Derived override must not bypass unavailable billing policy"
+      "reason": "Derived override must not bypass unavailable billing policy",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.MyBilling.Provisioning(system.billing.ui.ApplyTask)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": null,
-      "reason": "Derived override must not bypass unavailable billing policy"
+      "reason": "Derived override must not bypass unavailable billing policy",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.MyBilling.Cancel(system.billing.ui.ApplyTask)",
       "action": "disabled-before-original-body",
       "result_contract": "void",
       "native_hook": null,
-      "reason": "Derived override must not bypass unavailable billing policy"
+      "reason": "Derived override must not bypass unavailable billing policy",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.StoreBase.LaunchPurchaseFlow(System.String)",
       "action": "constant",
       "result_contract": "null Purchase",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "null",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.StoreBase.Restore",
       "action": "constant",
       "result_contract": "RestoreResult.Faild = 1",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "int_exact",
+        "value": 1,
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.StoreBase.WaitForInitialized",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.StoreBase.IsInitialized",
       "action": "constant",
       "result_contract": "true (disabled local backend is ready; not shop availability)",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_true",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.StoreBase.ConsumeItem(system.billing.util.Purchase)",
       "action": "constant",
       "result_contract": "false",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.ConnectRegistMarketPurchase",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.billing.ui.BillingManager.ConnectGetMarketPurchase",
       "action": "constant",
       "result_contract": "null string[][]",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "null",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:surface.SurfaceManager.UpdateAdMobView",
@@ -148,7 +228,23 @@
         "Canvas ads state absent",
         "GamePad.SIZE_PLAIN=65"
       ],
-      "reason": "Preserve the non-ad GamePad assignment from the original method"
+      "reason": "Preserve the non-ad GamePad assignment from the original method",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": [
+          {
+            "field": "F:kairo.common.cfg.Config.ADMOB_ENABLE",
+            "kind": "bool",
+            "value": false
+          },
+          {
+            "field": "F:surface.GamePad.SIZE_PLAIN",
+            "kind": "int",
+            "value": 65
+          }
+        ],
+        "native_representation": "canvas_ads_absent"
+      }
     },
     {
       "symbol": "M:kairo.unity.ui.Canvas.UpdateAdMobView",
@@ -159,49 +255,91 @@
         "Config.ADMOB_ENABLE=false",
         "admobView_=null",
         "updateAdMobViewRun_=false"
-      ]
+      ],
+      "lowering": {
+        "kind": "canvas_ads_absent",
+        "field_assignments": [
+          {
+            "field": "F:kairo.common.cfg.Config.ADMOB_ENABLE",
+            "kind": "bool",
+            "value": false
+          }
+        ],
+        "return_kind": "bool_false",
+        "native_representation": "Canvas has no ad object, pending flag, JNI creation/destruction callbacks or transport; absence is structural"
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.AdMobView.GetAdHeight",
       "action": "native",
       "result_contract": "System.Int32",
-      "native_hook": "pls::services::ad_height"
+      "native_hook": "pls::services::ad_height",
+      "lowering": {
+        "kind": "int_exact",
+        "value": 0,
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.AdMobView.IsLoad",
       "action": "constant",
       "result_contract": "false",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.AdMobView.IsStart",
       "action": "constant",
       "result_contract": "false",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.InterstitialAd.Load",
       "action": "constant",
       "result_contract": "false",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.InterstitialAd.Show",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.InterstitialAd.GetState",
       "action": "constant",
       "result_contract": "State.None = -1",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "int_exact",
+        "value": -1,
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.ad.InterstitialAd.IsLoaded",
       "action": "constant",
       "result_contract": "false",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.tapjoy.ui.Tapjoy.ShowOffers",
@@ -211,151 +349,259 @@
       "required_assignments": [
         "offerState_=OfferState.Failed"
       ],
-      "reason": "No reward; existing balance getters/save remain original"
+      "reason": "No reward; existing balance getters/save remain original",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": [
+          {
+            "field": "F:system.tapjoy.ui.Tapjoy.offerState_",
+            "kind": "enum",
+            "value": 2,
+            "enum_member": "F:system.tapjoy.ui.Tapjoy.OfferState.Failed"
+          }
+        ]
+      }
     },
     {
       "symbol": "M:system.surface.GameBanner.Draw(kairo.unity.ui.Graphics)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.surface.GameBanner.Load",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.UpdateValues",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:system.notification.MyNotify.OnReceiveValue",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendString(System.Int64,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendString(System.Int32,System.Int64,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendText(System.Int64,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendText(System.Int32,System.Int64,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushString(System.String,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushString(System.Int32,System.String,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushText(System.String,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SendPushText(System.Int32,System.String,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.SetPushEnable(System.Boolean)",
       "action": "constant",
       "result_contract": "void; never enable transport",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.notification.ui.NotifyManager.IsPushEnable",
       "action": "native",
       "result_contract": "false",
-      "native_hook": "pls::services::notifications_enabled"
+      "native_hook": "pls::services::notifications_enabled",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.KairoBase.ConnectNotificationSend(System.String,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.system.KairoBase.ConnectNotificationRegist(System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.SendNotification(System.Int64,System.String,System.String)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.CancelNotifications(System.Boolean,System.Boolean)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.SetNotificationFilter(System.Int32)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.SetNotificationBackground(System.Boolean)",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.RemoveNotificationData",
       "action": "constant",
       "result_contract": "void",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.GetNotificationData",
       "action": "constant",
       "result_contract": "empty string[]",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "empty_string_array",
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.native.KairoPlugin.GetNotificationFilter",
       "action": "constant",
       "result_contract": "FilterLevel.None = 0",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "int_exact",
+        "value": 0,
+        "field_assignments": []
+      }
     },
     {
       "symbol": "M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification",
       "action": "constant",
       "result_contract": "false",
-      "native_hook": null
+      "native_hook": null,
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
     }
   ],
   "preserved_original_account_symbols": [

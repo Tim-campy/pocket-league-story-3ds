@@ -51,7 +51,7 @@ bool SourceFormExecution::ExecuteStep(cs::Ref<FormManagerBase> manager){
         manager->source_ExecuteInitAndFinish();if(manager->loading_)manager->SetLoadingForm({});
         if(app->IsTermination()){manager->stack_.clear();return true;}
         if(manager->show_termination_){manager->show_termination_=false;if(runtime_->TerminationDialog()){FormManagerBase::ProcessEvent(AppEventType::Exit);manager->termination_=true;manager->RemoveAllForms();return true;}}
-        if(view&&(manager->stack_.empty()||manager->GetTopForm()->mode_==1))view->DoEvents();
+        if(view&&(manager->stack_.empty()||manager->GetTopForm()->mode_.load()==1))view->DoEvents();
         manager->source_ExecuteInitAndFinish();
         if(manager->pause_)manager->PreUpdate();
         else {
@@ -59,8 +59,8 @@ bool SourceFormExecution::ExecuteStep(cs::Ref<FormManagerBase> manager){
             for(std::size_t i=0;i+1<manager->stack_.size();++i)manager->stack_[i]->continuous_=0;
             const auto fep=runtime_->Fep();if(fep&&fep->Update())manager->source_ExecuteInitAndFinish();
             if(!manager->stack_.empty()){
-                auto form=manager->GetTopForm();if(form->mode_==1){manager->PreUpdate();form->mode_=2;}
-                if(form->mode_==2){cs::run_finally([&]{manager->current_=form;if((runtime_->Fep()!=nullptr||form->Update())&&form->mode_==2)form->mode_=3;},[&]{manager->current_.reset();});form->continuous_=cs::add_i32(form->continuous_,1);return false;}
+                auto form=manager->GetTopForm();if(form->mode_.load()==1){manager->PreUpdate();form->mode_.store(2);}
+                if(form->mode_.load()==2){cs::run_finally([&]{manager->current_=form;if((runtime_->Fep()!=nullptr||form->Update())&&form->mode_.load()==2)form->mode_.store(3);},[&]{manager->current_.reset();});form->continuous_=cs::add_i32(form->continuous_,1);return false;}
             }
         }
         if(recorder)recorder->Unlock(true);manager->wait_late_update_=false;manager->Updated();manager->service_update_=false;
@@ -79,7 +79,7 @@ void SourceFormExecution::OnDraw(cs::Ref<FormManagerBase> manager){
         // InterstitialAd.DrawLoading is removed by the advertisement policy.
         canvas->EndPaint();runtime_->ReleaseExpiredImages();
     }}
-    if(!manager->stack_.empty()){auto form=manager->GetTopForm();if(form->mode_!=0&&form->mode_!=4)form->mode_=1;}
+    if(!manager->stack_.empty()){auto form=manager->GetTopForm();if(form->mode_.load()!=0&&form->mode_.load()!=4)form->mode_.store(1);}
     manager->draw_skip_=false;manager->Drawn();runtime_->CloseJarCache();auto app=IApplication::GetCurrentApp();if(!app)throw cs::NullReferenceException();if(app->IsTermination())manager->stack_.clear();
 }
 }

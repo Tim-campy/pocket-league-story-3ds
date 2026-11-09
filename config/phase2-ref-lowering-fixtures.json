@@ -1,0 +1,451 @@
+{
+  "operation": "generated-source-ref-out-fixtures",
+  "cases": 140,
+  "passed": 133,
+  "methods": 20,
+  "verified_method_ids": [
+    "M:SyntheticRefs.Holder.#ctor",
+    "M:SyntheticRefs.Holder.Instance(System.Int32@,System.Int32)",
+    "M:SyntheticRefs.Source.Alias(System.Int32@,System.Int32@)",
+    "M:SyntheticRefs.Source.AliasLocal",
+    "M:SyntheticRefs.Source.ArrayElement(System.Int32)",
+    "M:SyntheticRefs.Source.ArrayIndex",
+    "M:SyntheticRefs.Source.Bump(System.Int32@)",
+    "M:SyntheticRefs.Source.ExceptionalWrite",
+    "M:SyntheticRefs.Source.Field(System.Int32)",
+    "M:SyntheticRefs.Source.NullArrayOrder",
+    "M:SyntheticRefs.Source.NullReceiverAfterArguments",
+    "M:SyntheticRefs.Source.NullReceiverOrder",
+    "M:SyntheticRefs.Source.OutLocal(System.Int32)",
+    "M:SyntheticRefs.Source.ReplaceArray",
+    "M:SyntheticRefs.Source.Rhs",
+    "M:SyntheticRefs.Source.Set(System.Int32@,System.Int32)",
+    "M:SyntheticRefs.Source.SetWithArgument(System.Int32@,System.Int32)",
+    "M:SyntheticRefs.Source.StableArrayAddress",
+    "M:SyntheticRefs.Source.ThrowAfterWrite(System.Int32@)"
+  ],
+  "known_platform_differences": [
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:0",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:1",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:2",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:3",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:4",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:5",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:6",
+      "note": "Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified."
+    }
+  ],
+  "unexpected_failures": [],
+  "executed_method_ids": [
+    "M:SyntheticRefs.Holder.#ctor",
+    "M:SyntheticRefs.Holder.Instance(System.Int32@,System.Int32)",
+    "M:SyntheticRefs.Source.Alias(System.Int32@,System.Int32@)",
+    "M:SyntheticRefs.Source.AliasLocal",
+    "M:SyntheticRefs.Source.ArrayElement(System.Int32)",
+    "M:SyntheticRefs.Source.ArrayIndex",
+    "M:SyntheticRefs.Source.Bump(System.Int32@)",
+    "M:SyntheticRefs.Source.ExceptionalWrite",
+    "M:SyntheticRefs.Source.Field(System.Int32)",
+    "M:SyntheticRefs.Source.NullArrayOrder",
+    "M:SyntheticRefs.Source.NullFieldOrder",
+    "M:SyntheticRefs.Source.NullReceiverAfterArguments",
+    "M:SyntheticRefs.Source.NullReceiverOrder",
+    "M:SyntheticRefs.Source.OutLocal(System.Int32)",
+    "M:SyntheticRefs.Source.ReplaceArray",
+    "M:SyntheticRefs.Source.Rhs",
+    "M:SyntheticRefs.Source.Set(System.Int32@,System.Int32)",
+    "M:SyntheticRefs.Source.SetWithArgument(System.Int32@,System.Int32)",
+    "M:SyntheticRefs.Source.StableArrayAddress",
+    "M:SyntheticRefs.Source.ThrowAfterWrite(System.Int32@)"
+  ],
+  "unexercised_abstract_owner_methods": [],
+  "failures": [
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:0"
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:1"
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:2"
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:3"
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:4"
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:5"
+    },
+    {
+      "method": "M:SyntheticRefs.Source.NullFieldOrder",
+      "case": "10:6"
+    }
+  ],
+  "scalar_float_comparison": "exact IEEE bits",
+  "identity_hash_comparison": "For exact return base.GetHashCode bodies only: repeated calls must be stable; allocation-dependent raw values are recorded privately and are not compared across runtimes.",
+  "identity_hash_method_ids": [],
+  "post_state_compared": true,
+  "original_binaries_used": false,
+  "execution_seconds": {
+    "csharp-compile": 0.2579444998409599,
+    "native-compile": 17.166987400036305,
+    "managed-output": 0.8942507999017835,
+    "native-output": 0.6549750999547541
+  },
+  "game_executed": false,
+  "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
+  "source_oracle_sha256": "18ffc06291189662a93352a5ae9239fbc9e21f84c66c6e025c1536d0b4ea79a1",
+  "cpp_generated_sha256": "a5f279e74b7c4ee33d6da32baec429abb6610cc5c643d7d67036514c55ea82b3",
+  "hpp_generated_sha256": "0201a1f68b1bb3d9f6f6bae806e6835369db72727f924104772181b517376a6b",
+  "generated_files": [
+    {
+      "path": "build/translator/ref-generated/portable_generated.cpp",
+      "sha256": "a5f279e74b7c4ee33d6da32baec429abb6610cc5c643d7d67036514c55ea82b3"
+    },
+    {
+      "path": "build/translator/ref-generated/portable_generated.hpp",
+      "sha256": "0201a1f68b1bb3d9f6f6bae806e6835369db72727f924104772181b517376a6b"
+    }
+  ],
+  "native_compiler_options": [
+    "/std:c++17",
+    "/EHsc",
+    "/Od",
+    "/fp:strict",
+    "/utf-8",
+    "/W4"
+  ],
+  "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "native_executable": {
+    "path": "build/translator/ref-differential/Harness.exe",
+    "sha256": "e0cf072d06373828edf244521fa89c3ab6cc02a62accd6741c3aac066726c4f5"
+  },
+  "source_oracle_executable": {
+    "path": "build/translator/ref-differential/Harness-managed.exe",
+    "sha256": "d76ad99a0e9c17febae1c2280c53eb6af2c924b00b1e1870ce3019b1f8e417a4"
+  },
+  "differential_runner_sha256": "6b1bdd306127e284c056f865c74cde326bf3f4df405cc822955de6911746661a",
+  "runtime_sources": [
+    {
+      "path": "build/generated/mono-collation/mono_character_tables.inc",
+      "sha256": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a"
+    },
+    {
+      "path": "build/generated/mono-collation/mono_collation_tables.inc",
+      "sha256": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8"
+    },
+    {
+      "path": "build/generated/mono-collation/mono_decimal_digit_ranges.inc",
+      "sha256": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e"
+    },
+    {
+      "path": "build/translator/ref-differential/Harness.cpp",
+      "sha256": "74726a3d010691e9a0e8ba68f799fa1e3e7094843c164f32b0faee19195a1343"
+    },
+    {
+      "path": "build/translator/ref-generated/portable_generated.cpp",
+      "sha256": "a5f279e74b7c4ee33d6da32baec429abb6610cc5c643d7d67036514c55ea82b3"
+    },
+    {
+      "path": "build/translator/ref-generated/portable_generated.hpp",
+      "sha256": "0201a1f68b1bb3d9f6f6bae806e6835369db72727f924104772181b517376a6b"
+    },
+    {
+      "path": "src/kairo/api/application.hpp",
+      "sha256": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4"
+    },
+    {
+      "path": "src/kairo/api/asset_reader.hpp",
+      "sha256": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3"
+    },
+    {
+      "path": "src/kairo/api/bootstrap.hpp",
+      "sha256": "30d97bada49ba6093e9c01329ddfb8de79a9440afe20b93b8bf388130fad4b83"
+    },
+    {
+      "path": "src/kairo/api/canvas.hpp",
+      "sha256": "257deae29a6870f98c6c3b3ff544a8e18eaa485d3743f0fb87049bb9a37af258"
+    },
+    {
+      "path": "src/kairo/api/debug_input.hpp",
+      "sha256": "98b997edacbcd78acfe15263ea5e9ff9d648f81b71d831d04168ed05ffd73c27"
+    },
+    {
+      "path": "src/kairo/api/dialog_service.hpp",
+      "sha256": "76af044e7b00e41cbef4f5c7e407fca5d111fcc57c9acda01315af15b9e9947e"
+    },
+    {
+      "path": "src/kairo/api/display_metrics.hpp",
+      "sha256": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70"
+    },
+    {
+      "path": "src/kairo/api/font.hpp",
+      "sha256": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee"
+    },
+    {
+      "path": "src/kairo/api/forms.hpp",
+      "sha256": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a"
+    },
+    {
+      "path": "src/kairo/api/forms_callbacks.hpp",
+      "sha256": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd"
+    },
+    {
+      "path": "src/kairo/api/forms_execution.hpp",
+      "sha256": "438873bd6f8525f0b821f9b277da122e09c8fb936b1cdb5d015abe575ddbb028"
+    },
+    {
+      "path": "src/kairo/api/game_entry.hpp",
+      "sha256": "c8b19367908562580b78eef682b103ed2646480c33d56e6a15aab784517d4f53"
+    },
+    {
+      "path": "src/kairo/api/globalization.hpp",
+      "sha256": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65"
+    },
+    {
+      "path": "src/kairo/api/graphics.hpp",
+      "sha256": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f"
+    },
+    {
+      "path": "src/kairo/api/input.hpp",
+      "sha256": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d"
+    },
+    {
+      "path": "src/kairo/api/offline_http.hpp",
+      "sha256": "a18f5ef72d163e33687c4ab80c0592edf8a1093f709f6c684e56eb24b3aa7850"
+    },
+    {
+      "path": "src/kairo/api/platform.hpp",
+      "sha256": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1"
+    },
+    {
+      "path": "src/kairo/api/services_managed.hpp",
+      "sha256": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5"
+    },
+    {
+      "path": "src/kairo/api/sound.hpp",
+      "sha256": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0"
+    },
+    {
+      "path": "src/kairo/api/storage.hpp",
+      "sha256": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2"
+    },
+    {
+      "path": "src/kairo/api/system.hpp",
+      "sha256": "f2d26bb21b6ff604ea00841cea34d4893333d827b45ed9876440e60265117fa2"
+    },
+    {
+      "path": "src/kairo/api/touch_value_accessor.hpp",
+      "sha256": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a"
+    },
+    {
+      "path": "src/kairo/api/vector2.hpp",
+      "sha256": "09ab95478fdd27af71e0a03d0de8e3084c6388b7842d86ea6915ef68204315e9"
+    },
+    {
+      "path": "src/kairo/api/vector3.hpp",
+      "sha256": "f95494b057b1f7a43f8e53efc9942641c592d32030f7f35c592fcce8407e4707"
+    },
+    {
+      "path": "src/kairo/common/asset_catalog.hpp",
+      "sha256": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60"
+    },
+    {
+      "path": "src/kairo/common/baked_arrays.hpp",
+      "sha256": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf"
+    },
+    {
+      "path": "src/kairo/common/generated/portable_generated.hpp",
+      "sha256": "455027ae1fa14284a5858fb26f5a83b63cf95d6372abebf4df6cbf29d32e14c2"
+    },
+    {
+      "path": "src/kairo/common/managed_collation.cpp",
+      "sha256": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778"
+    },
+    {
+      "path": "src/kairo/common/managed_collation.hpp",
+      "sha256": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d"
+    },
+    {
+      "path": "src/kairo/common/managed_collections.hpp",
+      "sha256": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b"
+    },
+    {
+      "path": "src/kairo/common/managed_dictionary.hpp",
+      "sha256": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0"
+    },
+    {
+      "path": "src/kairo/common/managed_encoding.cpp",
+      "sha256": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20"
+    },
+    {
+      "path": "src/kairo/common/managed_encoding.hpp",
+      "sha256": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66"
+    },
+    {
+      "path": "src/kairo/common/managed_exceptions.cpp",
+      "sha256": "745e2888f7df6121829b5b3aadf96cafef3700d910e930b12eae4361b1d8856a"
+    },
+    {
+      "path": "src/kairo/common/managed_exceptions.hpp",
+      "sha256": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b"
+    },
+    {
+      "path": "src/kairo/common/managed_mono_character_data.cpp",
+      "sha256": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df"
+    },
+    {
+      "path": "src/kairo/common/managed_path.hpp",
+      "sha256": "545683f23b690b066bb420199b282ecf04ecff1a49207111febd8e86fbd9498c"
+    },
+    {
+      "path": "src/kairo/common/managed_random.hpp",
+      "sha256": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf"
+    },
+    {
+      "path": "src/kairo/common/managed_reflection.hpp",
+      "sha256": "3b6fbecdf446ed74c45521e004b88724a22989df12d335469c943d4b50e756ad"
+    },
+    {
+      "path": "src/kairo/common/managed_regex.cpp",
+      "sha256": "fd2abe8620339c867db57620862c8ea2a82a2f721ee54a9ae31a1dcad87f00ac"
+    },
+    {
+      "path": "src/kairo/common/managed_regex.hpp",
+      "sha256": "a320c06a2c7183b976f8dcfafdd6ecc6a1e64ea94a178f06aa1eb2cd53eab7e0"
+    },
+    {
+      "path": "src/kairo/common/managed_shared_field.hpp",
+      "sha256": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
+    },
+    {
+      "path": "src/kairo/common/managed_stream_reader.cpp",
+      "sha256": "ae83f5638ede4fbbb157181d0ae305771d5194747f7e948cc35d77a9b694c721"
+    },
+    {
+      "path": "src/kairo/common/managed_stream_reader.hpp",
+      "sha256": "96e53adda06be397ec8372a91ab7045358e88866ea5a017acb4eaf215c8ae538"
+    },
+    {
+      "path": "src/kairo/common/managed_streams.cpp",
+      "sha256": "6940e37d7782ffbaea0f975fd231195e0ed6171201c823dea42c20cfe27d5278"
+    },
+    {
+      "path": "src/kairo/common/managed_streams.hpp",
+      "sha256": "ef93cc1d080d67a78c4718efd2ea260e31ecf4bdf41b4db1191cd398077d6c7d"
+    },
+    {
+      "path": "src/kairo/common/managed_string_ops.cpp",
+      "sha256": "053d988815f4dbeaec8ac547ba9f148dd0a3d2f66110d7a96f9961048b04d20b"
+    },
+    {
+      "path": "src/kairo/common/managed_string_ops.hpp",
+      "sha256": "7ec154c1fce37083e5ef297052a9a0e58175064264c7859db1c6045ebe366c7d"
+    },
+    {
+      "path": "src/kairo/common/managed_text.hpp",
+      "sha256": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b"
+    },
+    {
+      "path": "src/kairo/common/managed_thread.cpp",
+      "sha256": "76ddd5568410670d790f953dc3111976ff48144364ad088724eebf3e61feadaf"
+    },
+    {
+      "path": "src/kairo/common/managed_thread.hpp",
+      "sha256": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b"
+    },
+    {
+      "path": "src/kairo/common/managed_time.hpp",
+      "sha256": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1"
+    },
+    {
+      "path": "src/kairo/common/managed_type_init.hpp",
+      "sha256": "2d54016e820fe8e9356a24b28ef72e8d30ce266850c11daccd14fb008ab406d2"
+    },
+    {
+      "path": "src/kairo/common/semantic_runtime.cpp",
+      "sha256": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a"
+    },
+    {
+      "path": "src/kairo/common/semantic_runtime.hpp",
+      "sha256": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
+    },
+    {
+      "path": "src/kairo/common/services.hpp",
+      "sha256": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0"
+    },
+    {
+      "path": "src/kairo/common/sha256.hpp",
+      "sha256": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c"
+    },
+    {
+      "path": "src/kairo/platform/sdl/globalization.cpp",
+      "sha256": "7072332bae2f9696c2fc6113311574bcae887e8edb0443bff35f07c07cc9d4c3"
+    }
+  ],
+  "snapshot_comparison": "SHA256 of every UTF-16LE byte of the complete deterministic post-state serialization; no field, value or surrogate normalization",
+  "oracle_framework": [
+    {
+      "filename": "mscorlib.dll",
+      "sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1"
+    },
+    {
+      "filename": "System.dll",
+      "sha256": "7e72b92ddcd6b7b791ab24dd5756544f2da81f65e7ba7d1ebe8223123720d0ac"
+    },
+    {
+      "filename": "System.Core.dll",
+      "sha256": "104278a0bf67b4de8fd1e910e3292a3ef51808ebee7a5f2a229125f18463c98c"
+    }
+  ],
+  "comparison_profile": "Standalone readonly-source oracle compiled with current Roslyn against Unity SDK mscorlib/System/System.Core; executes on Unity Mono 2.6.5. Native target UnityMono265, invariant fixture culture.",
+  "producer": {
+    "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+    "translator_source_sha256": "7db0f65379657174ddd4586a4bcdaaab11d0bc359d868fe7348fe40b59e87d36",
+    "driver_sha256": "987e7899591d367f9cf396d63daf3ddde2f7b56d8211d40b005b78b53eb83236"
+  },
+  "runner_sha256": "55903f5a6026bd89f839be36483b1c8e0a5a189f24bb7ebd66e1f0efdaf0025c",
+  "fixture_sha256": "0de0596b864d143ddd3c65791574ff434eeb4cd90e21a70f99dabbf5e8982116",
+  "negative_control": {
+    "id": "M:SyntheticRefs.Source.SharedAddressForbidden",
+    "reason": "shared fields cannot expose an unsynchronized managed address"
+  },
+  "limitations": [
+    "Ref/out lowerings apply to source method signatures and addressable local, mutable field and array element storage. Shared fields, readonly address escape, external APIs and ref/out delegates remain unsupported."
+  ]
+}

@@ -212,6 +212,137 @@
         "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual bool __cdecl pls::game::cs_3ee77977aa791047::Update(void)\" (?Update@cs_3ee77977aa791047@game@pls@@UEAA_NXZ)"
       ],
       "log_sha256": "4c57e1e088bddc7405ac6117cfffbb3aba9e930d90fa5b70df45d93ff04a59db"
+    },
+    {
+      "number": 8,
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "0c40206d92c6249d28dbe1063349bdc6c9e7912c060e92f12592e77444decc33"
+        },
+        {
+          "path": "src/game/game_generated.hpp",
+          "sha256": "2be4e0bd52a8c31d48ad6c18aaf56321de90b7796e103bfd033e34b57ac262b3"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0000.inc",
+          "sha256": "5a9b20e5cefb6cebee416eae85539f558cc02b114af45cadf8a52f5273b30be0"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0001.inc",
+          "sha256": "ec98d5b6f29634139f09a44fedd586f0a57b076a53cb787f1e219345e6324065"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0002.inc",
+          "sha256": "a029ffd3449dbac067eeb8b48a77aff5a8e2f9fd0e6552721db4cb41af335bac"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0003.inc",
+          "sha256": "ab8c9115ca6c28dd7458fc2ce0c519008ab2763c5fededa21f6223e3be69d4cc"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0004.inc",
+          "sha256": "4de968675a427b0bf39ab8f272d905357c490506aa834c02419ce8dd16b080b6"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "metrics_requested": true,
+      "metrics_recorded": false,
+      "logs": [
+        {
+          "path": "build/pc/attempts/8/step-0.log",
+          "sha256": "a267d4e7e000f7fb77aef1d2b0027701eb9627278db985e3fbdafdf2910f9648"
+        },
+        {
+          "path": "build/pc/attempts/8/step-1.log",
+          "sha256": "687031103dd525497c819ff674c8a7bc16a23295d92f673781045c1f78773629"
+        }
+      ],
+      "source_inputs": {
+        "path": "build/pc/attempts/8/source-inputs.before.json",
+        "sha256": "c6d24dd7de4280f7f029993e65c23ff6861271fca401ea80e2e91fc39437c807",
+        "files": 105
+      },
+      "stage": "compile-or-link-failed",
+      "exit_code": 1,
+      "diagnostics": [
+        "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\game\\game_generated.cpp : fatal error C1128: o n\u00famero de se\u00e7\u00f5es excedeu o limite de formato de arquivo do objeto: compile com /bigobj"
+      ],
+      "log_sha256": "687031103dd525497c819ff674c8a7bc16a23295d92f673781045c1f78773629"
+    },
+    {
+      "number": 9,
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "6bba27a02828d6a0c0c3f6a68bcd9be837263faa43d05924300ac26add190cfb"
+        },
+        {
+          "path": "src/game/game_generated.hpp",
+          "sha256": "7a62458d069fbe19b51e1cab176dcd2581d91882262796964c4c98032f30b236"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0000.inc",
+          "sha256": "4b00674147f9d9eae9aaba4d6931fea4bbefbb3076a1004598a4559555c573a4"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0001.inc",
+          "sha256": "4368c4a391ebdbe0cddaf77eac7fe644ed31b204d50af1ad4b4d41b151106a56"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0002.inc",
+          "sha256": "ad837ccd2cb7ff6e53c174258dec79c2dc35d8dd2654e94ce630d35d17273ce7"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0003.inc",
+          "sha256": "c60fb86b109ff0a5b97f110326b5e57a5a9ee46b5a649eb5d68601dcab83aba5"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0004.inc",
+          "sha256": "92a8afb5acfe254b9f5184c81211a1423743670b52153cab881bdd2f49bab1d2"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0005.inc",
+          "sha256": "984d57d9e0e4dcfc1b4e6d5bb4ad9370abb9312901823fd311fc1d9c7a99b4aa"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "metrics_requested": true,
+      "metrics_recorded": false,
+      "logs": [
+        {
+          "path": "build/pc/attempts/9/step-0.log",
+          "sha256": "a267d4e7e000f7fb77aef1d2b0027701eb9627278db985e3fbdafdf2910f9648"
+        },
+        {
+          "path": "build/pc/attempts/9/step-1.log",
+          "sha256": "b2c7bd831676fc66afaf8ea43b44587ae38813a626558a9d6aba97928b2a86a2"
+        }
+      ],
+      "source_inputs": {
+        "path": "build/pc/attempts/9/source-inputs.before.json",
+        "sha256": "fbd6d1bdca5766f653fbc6d64acabbc2b620d7ec17b6e83473e91e5503692ed8",
+        "files": 110
+      },
+      "stage": "compile-or-link-failed",
+      "exit_code": 4294967295,
+      "diagnostics": [
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual int __cdecl pls::game::cs_89c0d586cfe20341::GetHashCode(void)\" (?GetHashCode@cs_89c0d586cfe20341@game@pls@@UEAAHXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual bool __cdecl pls::game::cs_f1dd8f2aa583774c::Equals(class std::shared_ptr<struct pls::cs::Object> const &)\" (?Equals@cs_f1dd8f2aa583774c@game@pls@@UEAA_NAEBV?$shared_ptr@UObject@cs@pls@@@std@@@Z)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual int __cdecl pls::game::cs_f1dd8f2aa583774c::GetHashCode(void)\" (?GetHashCode@cs_f1dd8f2aa583774c@game@pls@@UEAAHXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_d37bccc1c3814fc6::cs_virtual_24e6f1c38df06a63(class std::shared_ptr<struct pls::game::cs_5ad2213598dfcd5d>,int,int)\" (?cs_virtual_24e6f1c38df06a63@cs_d37bccc1c3814fc6@game@pls@@UEAAXV?$shared_ptr@Ucs_5ad2213598dfcd5d@game@pls@@@std@@HH@Z)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_4a8bef2ab48b32d7::cs_virtual_d58c9861d84c3c7d(void)\" (?cs_virtual_d58c9861d84c3c7d@cs_4a8bef2ab48b32d7@game@pls@@UEAAXXZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual void __cdecl pls::game::cs_4a8bef2ab48b32d7::cs_virtual_a4fa9c8087597dcf(class std::shared_ptr<class pls::kairo::Graphics>)\" (?cs_virtual_a4fa9c8087597dcf@cs_4a8bef2ab48b32d7@game@pls@@UEAAXV?$shared_ptr@VGraphics@kairo@pls@@@std@@@Z)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual class pls::cs::String __cdecl pls::game::cs_757516ce190cf813::ToString(void)\" (?ToString@cs_757516ce190cf813@game@pls@@UEAA?AVString@cs@3@XZ)",
+        "game_generated.cpp.obj : error LNK2001: s\u00edmbolo externo n\u00e3o resolvido \"public: virtual int __cdecl pls::game::cs_757516ce190cf813::GetHashCode(void)\" (?GetHashCode@cs_757516ce190cf813@game@pls@@UEAAHXZ)"
+      ],
+      "log_sha256": "b2c7bd831676fc66afaf8ea43b44587ae38813a626558a9d6aba97928b2a86a2"
     }
   ]
 }

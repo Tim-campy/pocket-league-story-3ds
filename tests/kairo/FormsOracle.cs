@@ -21,6 +21,9 @@ class TouchProbe:FormBase {
  public override void SetTouchValue(int type,int value){receivedType=type;receivedValue=value;}
  public int BaseValue(){return base.GetTouchValue(3,4);}public void BaseSet(){base.SetTouchValue(5,6);}
 }
+class ModeProbe:FormBase {
+ public ModeProbe():base(71){}public override bool Init(){SetProcessMode(4);return true;}public override bool Finish(){SetProcessMode(1);return true;}
+}
 class FormsOracle {
  static FormManagerBase m=new FormManagerBase();
  static string S(){string s="";for(int i=0;i<m.GetFormsNum();i++){var f=m.GetForm(i);s+=f.GetId()+":"+f.GetProcessMode()+",";}return s;}
@@ -60,6 +63,8 @@ class FormsOracle {
  P("touch-base-default",delegate{kairo.unity.surface.TouchValueAccessor touch=new FormBase(9);touch.SetTouchValue(1,2);return touch.GetTouchValue(3,4)+":"+T(touch is FormBase);});
  P("touch-derived-dispatch",delegate{var p=new TouchProbe();kairo.unity.surface.TouchValueAccessor touch=p;touch.SetTouchValue(5,7);p.BaseSet();return touch.GetTouchValue(3,4)+":"+p.BaseValue()+":"+p.receivedType+":"+p.receivedValue;});
  P("touch-object-identity",delegate{var p=new TouchProbe();kairo.unity.surface.TouchValueAccessor touch=p;object boxed=touch;return T(Object.ReferenceEquals(boxed,p))+":"+T(Object.ReferenceEquals((TouchProbe)boxed,touch));});
+ P("init-mode-reread",delegate{var manager=new FormManagerBase();var form=new ModeProbe();manager.Push(form);manager.ExecuteInitAndFinish();return manager.GetFormsNum()+":"+form.GetProcessMode();});
+ P("finish-mode-reread",delegate{var manager=new FormManagerBase();var form=new ModeProbe();manager.Push(form);manager.ExecuteInitAndFinish();manager.ExecuteInitAndFinish();return manager.GetFormsNum()+":"+form.GetProcessMode();});
  return 0;
  }
 }

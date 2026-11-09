@@ -1,5 +1,7 @@
 #include "forms.hpp"
 #include <iostream>
+#include <atomic>
+#include <thread>
 using namespace pls::kairo;using Str=pls::cs::String;
 struct ProbeForm:FormBase {
  inline static std::string trace;
@@ -20,6 +22,32 @@ struct TouchProbe:FormBase {
  std::int32_t GetTouchValue(std::int32_t type,std::int32_t index)override{return pls::cs::add_i32(pls::cs::add_i32(pls::cs::add_i32(pls::cs::mul_i32(type,31),index),received_type),received_value);}
  void SetTouchValue(std::int32_t type,std::int32_t value)override{received_type=type;received_value=value;}
 };
+struct ModeProbe:FormBase {ModeProbe():FormBase(71){}bool Init()override{SetProcessMode(4);return true;}bool Finish()override{SetProcessMode(1);return true;}};
+int concurrent_policy(){
+ pls::cs::GcMutatorScope mutator;unsigned int checks=0;auto require=[&](bool v){if(!v)throw std::runtime_error("Native UI shared field policy failed");++checks;};
+ auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<FormBase>(13);manager->Push(form);form->SetProcessMode(1);auto canvas=Canvas::GetInstance();
+ std::atomic<bool> ready{false},warm{false},resume{false},done{false};std::exception_ptr error;
+ std::thread writer([&]{try{pls::cs::GcMutatorScope worker;ready=true;for(int i=0;i<2000;++i){
+  auto value=Str(std::u16string{u'L',char16_t(0xd800),u'\0',static_cast<char16_t>(i&255)});form->SetSoftLabel(value,value,value,value);pls::cs::gc_safepoint();
+  if(i==99){warm=true;while(!resume.load()){pls::cs::gc_safepoint();std::this_thread::yield();}}
+ }done=true;}catch(...){error=std::current_exception();ready=true;warm=true;done=true;}});
+ while(!ready.load()){pls::cs::gc_safepoint();std::this_thread::yield();}
+ auto valid=[&](Str value){return value.is_null()||value==Str(u"")||(value.length()==4&&value.code_units()[0]==u'L'&&value.code_units()[1]==char16_t(0xd800)&&value.code_units()[2]==0);};
+ unsigned int collections=0;
+ while(!warm.load()){pls::cs::gc_safepoint();std::this_thread::yield();}
+ require(form->GetLeftSoftLabel().length()==4);canvas->UpdateSoftLabel();require(canvas->GetSoftLabelL().length()==4);
+ pls::cs::gc_collect();++collections;resume=true;
+ while(!done.load()){
+  require(valid(form->GetLeftSoftLabel()));require(valid(form->GetRightSoftLabel()));require(valid(form->GetSoftLabel3()));require(valid(form->GetSoftLabel4()));
+  form->SetProcessMode(4);require(!form->CheckUsable());form->SetProcessMode(1);canvas->UpdateSoftLabel();require(valid(canvas->GetSoftLabelL()));require(valid(canvas->GetSoftLabelR()));
+  pls::cs::gc_collect();++collections;
+ }
+ {pls::cs::GcNativeBlockingScope blocked;writer.join();}if(error)std::rethrow_exception(error);
+ require(collections>0);auto snapshot=form->GetLeftSoftLabel();form->SetSoftLabel(Str(u"replacement"),{}, {}, {});require(valid(snapshot));
+ std::weak_ptr<pls::cs::Object> weak=snapshot.as_object();pls::cs::gc_collect();require(!weak.expired());snapshot={};pls::cs::gc_collect();
+ bool bounds=false;try{canvas->SetSoftLabel(-1,{});}catch(const pls::cs::IndexOutOfRangeException&){bounds=true;}require(bounds);
+ std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<checks<<",\"writer_iterations\":2000,\"collections_while_writer_registered\":"<<collections<<",\"whole_method_lock\":false,\"game_boot\":false}\n";return 0;
+}
 template<class F>void P(const char* name,F&& f){std::cout<<name<<'=';try{std::cout<<f();}catch(const pls::cs::Exception& e){std::cout<<'!'<<e.type_name();}std::cout<<'\n';}
 const char* T(bool v){return v?"True":"False";}
 int policy(){
@@ -51,7 +79,8 @@ int policy(){
  canvas->SetSurfaceManager({});require(!canvas->GetSourceSurfaceManager()&&!canvas->GetSurfaceManager());
  std::cout<<"{\"policy_assertions\":"<<checks<<",\"unbound_effects_rejected\":true,\"native_form_cycle_collected\":true,\"game_boot\":false}\n";return 0;
 }
-int main(int argc,char**){
+int main(int argc,char**argv){
+ if(argc==2&&std::string(argv[1])=="concurrent")return concurrent_policy();
  if(argc==2)return policy();
  auto m=pls::cs::make_ref<FormManagerBase>();m->source_construct();m->host_game_state(nullptr);
  auto S=[&]{std::string s;for(int i=0;i<m->GetFormsNum();++i){auto f=m->GetForm(i);s+=std::to_string(f->GetId())+":"+std::to_string(f->GetProcessMode())+",";}return s;};
@@ -88,4 +117,6 @@ int main(int argc,char**){
  P("touch-base-default",[]{pls::cs::Ref<TouchValueAccessor> touch=pls::cs::make_ref<FormBase>(9);touch->SetTouchValue(1,2);return std::to_string(touch->GetTouchValue(3,4))+":"+T(bool(std::dynamic_pointer_cast<FormBase>(touch)));});
  P("touch-derived-dispatch",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;touch->SetTouchValue(5,7);p->source_SetTouchValue(5,6);return std::to_string(touch->GetTouchValue(3,4))+":"+std::to_string(p->source_GetTouchValue(3,4))+":"+std::to_string(p->received_type)+":"+std::to_string(p->received_value);});
  P("touch-object-identity",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;auto boxed=std::dynamic_pointer_cast<pls::cs::Object>(touch);return std::string(T(boxed==std::static_pointer_cast<pls::cs::Object>(p)))+":"+T(std::dynamic_pointer_cast<TouchValueAccessor>(std::dynamic_pointer_cast<TouchProbe>(boxed))==touch);});
+ P("init-mode-reread",[]{auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<ModeProbe>();manager->Push(form);manager->source_ExecuteInitAndFinish();return std::to_string(manager->GetFormsNum())+":"+std::to_string(form->GetProcessMode());});
+ P("finish-mode-reread",[]{auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<ModeProbe>();manager->Push(form);manager->source_ExecuteInitAndFinish();manager->source_ExecuteInitAndFinish();return std::to_string(manager->GetFormsNum())+":"+std::to_string(form->GetProcessMode());});
 }

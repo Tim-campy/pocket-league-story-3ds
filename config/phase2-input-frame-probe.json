@@ -1,0 +1,555 @@
+{
+  "operation": "original-full-Canvas-DecideKeyState-aggregated-frame-differential",
+  "status": "PASS",
+  "cases": [
+    {
+      "profile": "dotnet",
+      "case": "quick-left-released",
+      "original": "quick-left-released=/0",
+      "native": "quick-left-released=/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "hold-left",
+      "original": "hold-left=T0:10:20;/0",
+      "native": "hold-left=T0:10:20;/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-repress-left",
+      "original": "release-repress-left=T2:12:22;/0",
+      "native": "release-repress-left=T2:12:22;/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "quick-click-while-held",
+      "original": "quick-click-while-held=T1:13:23;/0",
+      "native": "quick-click-while-held=T1:13:23;/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "idle",
+      "original": "idle=/0",
+      "native": "idle=/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "quick-right-released",
+      "original": "quick-right-released=/0",
+      "native": "quick-right-released=/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "hold-right",
+      "original": "hold-right=D260:0;/16",
+      "native": "hold-right=D260:0;/16",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-repress-right",
+      "original": "release-repress-right=/16",
+      "native": "release-repress-right=/16",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-right",
+      "original": "release-right=U260:0;/0",
+      "native": "release-right=U260:0;/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "quick-arrow-released",
+      "original": "quick-arrow-released=/0",
+      "native": "quick-arrow-released=/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "hold-arrow",
+      "original": "hold-arrow=D273:0;/131072",
+      "native": "hold-arrow=D273:0;/131072",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-repress-arrow",
+      "original": "release-repress-arrow=/131072",
+      "native": "release-repress-arrow=/131072",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-arrow",
+      "original": "release-arrow=U273:1;/0",
+      "native": "release-arrow=U273:1;/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "debug-shift-suppresses-mouse",
+      "original": "debug-shift-suppresses-mouse=D97:0;/2097152",
+      "native": "debug-shift-suppresses-mouse=D97:0;/2097152",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-shift-starts-touch",
+      "original": "release-shift-starts-touch=U97:1;T0:30:40;/0",
+      "native": "release-shift-starts-touch=U97:1;T0:30:40;/0",
+      "matched": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "release-after-shift",
+      "original": "release-after-shift=T1:30:40;/0",
+      "native": "release-after-shift=T1:30:40;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "quick-left-released",
+      "original": "quick-left-released=/0",
+      "native": "quick-left-released=/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "hold-left",
+      "original": "hold-left=T0:10:20;/0",
+      "native": "hold-left=T0:10:20;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-repress-left",
+      "original": "release-repress-left=T2:12:22;/0",
+      "native": "release-repress-left=T2:12:22;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "quick-click-while-held",
+      "original": "quick-click-while-held=T1:13:23;/0",
+      "native": "quick-click-while-held=T1:13:23;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "idle",
+      "original": "idle=/0",
+      "native": "idle=/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "quick-right-released",
+      "original": "quick-right-released=/0",
+      "native": "quick-right-released=/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "hold-right",
+      "original": "hold-right=D260:0;/16",
+      "native": "hold-right=D260:0;/16",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-repress-right",
+      "original": "release-repress-right=/16",
+      "native": "release-repress-right=/16",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-right",
+      "original": "release-right=U260:0;/0",
+      "native": "release-right=U260:0;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "quick-arrow-released",
+      "original": "quick-arrow-released=/0",
+      "native": "quick-arrow-released=/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "hold-arrow",
+      "original": "hold-arrow=D273:0;/131072",
+      "native": "hold-arrow=D273:0;/131072",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-repress-arrow",
+      "original": "release-repress-arrow=/131072",
+      "native": "release-repress-arrow=/131072",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-arrow",
+      "original": "release-arrow=U273:1;/0",
+      "native": "release-arrow=U273:1;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "debug-shift-suppresses-mouse",
+      "original": "debug-shift-suppresses-mouse=D97:0;/2097152",
+      "native": "debug-shift-suppresses-mouse=D97:0;/2097152",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-shift-starts-touch",
+      "original": "release-shift-starts-touch=U97:1;T0:30:40;/0",
+      "native": "release-shift-starts-touch=U97:1;T0:30:40;/0",
+      "matched": true
+    },
+    {
+      "profile": "mono",
+      "case": "release-after-shift",
+      "original": "release-after-shift=T1:30:40;/0",
+      "native": "release-after-shift=T1:30:40;/0",
+      "matched": true
+    }
+  ],
+  "observations": 32,
+  "matched": 32,
+  "differences": 0,
+  "source_frame_metadata": [
+    {
+      "profile": "dotnet",
+      "edge_queries": 0,
+      "frames_with_both_mouse_edges": 5
+    },
+    {
+      "profile": "mono",
+      "edge_queries": 0,
+      "frames_with_both_mouse_edges": 5
+    }
+  ],
+  "initial_debug_matrix": {
+    "cases": [
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-left-control-down",
+        "original": "initial-debug-left-control-down=D260:0;/16",
+        "native": "initial-debug-left-control-down=D260:0;/16",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-control-alias-held",
+        "original": "initial-debug-control-alias-held=/16",
+        "native": "initial-debug-control-alias-held=/16",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-one-control-released",
+        "original": "initial-debug-one-control-released=/16",
+        "native": "initial-debug-one-control-released=/16",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-all-control-released",
+        "original": "initial-debug-all-control-released=U260:1;/0",
+        "native": "initial-debug-all-control-released=U260:1;/0",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-shift-suppresses-touch",
+        "original": "initial-debug-shift-suppresses-touch=D262:0;/64",
+        "native": "initial-debug-shift-suppresses-touch=D262:0;/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-shift-alias-held",
+        "original": "initial-debug-shift-alias-held=/64",
+        "native": "initial-debug-shift-alias-held=/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-one-shift-released",
+        "original": "initial-debug-one-shift-released=/64",
+        "native": "initial-debug-one-shift-released=/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-matrix-retained-live-debug-false",
+        "original": "initial-debug-matrix-retained-live-debug-false=T0:40:50;/64",
+        "native": "initial-debug-matrix-retained-live-debug-false=T0:40:50;/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-restored-suppression",
+        "original": "initial-debug-restored-suppression=/64",
+        "native": "initial-debug-restored-suppression=/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-release-mouse-suppressed",
+        "original": "initial-debug-release-mouse-suppressed=/64",
+        "native": "initial-debug-release-mouse-suppressed=/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-release-shift-delivers-up",
+        "original": "initial-debug-release-shift-delivers-up=U262:1;T1:40:50;/0",
+        "native": "initial-debug-release-shift-delivers-up=U262:1;T1:40:50;/0",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-control-still-in-matrix",
+        "original": "initial-debug-control-still-in-matrix=D260:0;/16",
+        "native": "initial-debug-control-still-in-matrix=D260:0;/16",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-control-final-release",
+        "original": "initial-debug-control-final-release=U260:1;/0",
+        "native": "initial-debug-control-final-release=U260:1;/0",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-right-mouse-down-suppressed",
+        "original": "initial-debug-right-mouse-down-suppressed=D262:0;/64",
+        "native": "initial-debug-right-mouse-down-suppressed=D262:0;/64",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-right-mouse-down-delayed",
+        "original": "initial-debug-right-mouse-down-delayed=U262:1;D260:0;/16",
+        "native": "initial-debug-right-mouse-down-delayed=U262:1;D260:0;/16",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-right-mouse-up-suppressed",
+        "original": "initial-debug-right-mouse-up-suppressed=D262:0;/80",
+        "native": "initial-debug-right-mouse-up-suppressed=D262:0;/80",
+        "matched": true
+      },
+      {
+        "profile": "dotnet",
+        "case": "initial-debug-right-mouse-up-delayed",
+        "original": "initial-debug-right-mouse-up-delayed=U262:1;U260:0;/0",
+        "native": "initial-debug-right-mouse-up-delayed=U262:1;U260:0;/0",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-left-control-down",
+        "original": "initial-debug-left-control-down=D260:0;/16",
+        "native": "initial-debug-left-control-down=D260:0;/16",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-control-alias-held",
+        "original": "initial-debug-control-alias-held=/16",
+        "native": "initial-debug-control-alias-held=/16",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-one-control-released",
+        "original": "initial-debug-one-control-released=/16",
+        "native": "initial-debug-one-control-released=/16",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-all-control-released",
+        "original": "initial-debug-all-control-released=U260:1;/0",
+        "native": "initial-debug-all-control-released=U260:1;/0",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-shift-suppresses-touch",
+        "original": "initial-debug-shift-suppresses-touch=D262:0;/64",
+        "native": "initial-debug-shift-suppresses-touch=D262:0;/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-shift-alias-held",
+        "original": "initial-debug-shift-alias-held=/64",
+        "native": "initial-debug-shift-alias-held=/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-one-shift-released",
+        "original": "initial-debug-one-shift-released=/64",
+        "native": "initial-debug-one-shift-released=/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-matrix-retained-live-debug-false",
+        "original": "initial-debug-matrix-retained-live-debug-false=T0:40:50;/64",
+        "native": "initial-debug-matrix-retained-live-debug-false=T0:40:50;/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-restored-suppression",
+        "original": "initial-debug-restored-suppression=/64",
+        "native": "initial-debug-restored-suppression=/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-release-mouse-suppressed",
+        "original": "initial-debug-release-mouse-suppressed=/64",
+        "native": "initial-debug-release-mouse-suppressed=/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-release-shift-delivers-up",
+        "original": "initial-debug-release-shift-delivers-up=U262:1;T1:40:50;/0",
+        "native": "initial-debug-release-shift-delivers-up=U262:1;T1:40:50;/0",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-control-still-in-matrix",
+        "original": "initial-debug-control-still-in-matrix=D260:0;/16",
+        "native": "initial-debug-control-still-in-matrix=D260:0;/16",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-control-final-release",
+        "original": "initial-debug-control-final-release=U260:1;/0",
+        "native": "initial-debug-control-final-release=U260:1;/0",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-right-mouse-down-suppressed",
+        "original": "initial-debug-right-mouse-down-suppressed=D262:0;/64",
+        "native": "initial-debug-right-mouse-down-suppressed=D262:0;/64",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-right-mouse-down-delayed",
+        "original": "initial-debug-right-mouse-down-delayed=U262:1;D260:0;/16",
+        "native": "initial-debug-right-mouse-down-delayed=U262:1;D260:0;/16",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-right-mouse-up-suppressed",
+        "original": "initial-debug-right-mouse-up-suppressed=D262:0;/80",
+        "native": "initial-debug-right-mouse-up-suppressed=D262:0;/80",
+        "matched": true
+      },
+      {
+        "profile": "mono",
+        "case": "initial-debug-right-mouse-up-delayed",
+        "original": "initial-debug-right-mouse-up-delayed=U262:1;U260:0;/0",
+        "native": "initial-debug-right-mouse-up-delayed=U262:1;U260:0;/0",
+        "matched": true
+      }
+    ],
+    "observations": 34,
+    "matched": 34,
+    "differences": 0
+  },
+  "native_config_policy": {
+    "status": "PASS",
+    "assertions": 8,
+    "source_config_global_modified": false
+  },
+  "normal_key_regression": {
+    "receipt": "config/phase2-input-tests.json",
+    "sha256": "e64c1a50d64a8240247c13b77bf91c64cb1b1c9fa57db6e99067ef833eb778c2",
+    "fixture_cases": 56,
+    "passed": 56,
+    "native_adapter_assertions": 19,
+    "pulse_cases": 4,
+    "pulse_passed": 4
+  },
+  "previous_diagnostic": {
+    "observations": 32,
+    "matched": 28,
+    "differences": 4,
+    "cases": [
+      "debug-shift-suppresses-mouse",
+      "release-shift-starts-touch"
+    ],
+    "history": "Measured before Config.DEBUG reader and initial VALID_KEYS matrix integration; retained in repository history and docs/notes/phase2-input-frames.md"
+  },
+  "hypothesis_mouse_edge_loss": "REFUTED: original Canvas consumes held state, not GetMouseButtonDown/Up; complete clicks between polls are ignored there too",
+  "resolved_gap": "Initial VALID_KEYS captures DEBUG once; live DEBUG plus held Shift suppresses mouse polling and preserves previous pointer history",
+  "inputs": {
+    "tests/kairo/input_frame_fixtures.cpp": "f0244f5435efec550174ea6201a6da2a7c697ba8c6992e6d2210a17a944a655c",
+    "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/InputFrameOracle.cs": "01025deb364316050adb293b0fba364340e0808fb0d1e42ca62477a6c79ef27b",
+    "tools/probe_input_frames.py": "f45bb14a35b9c4ca1e07d04cb2fcd780f4fa71679e057855d6faa1ffd05c1d2d",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
+    "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
+    "config/phase2-input-tests.json": "e64c1a50d64a8240247c13b77bf91c64cb1b1c9fa57db6e99067ef833eb778c2"
+  },
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Canvas.cs",
+      "sha256": "c658562b9e0335d3206529286c330dfc797ec72c3fb14b5aa819e21472cbe0b9"
+    }
+  ],
+  "keycode_metadata_sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
+  "native_executable": {
+    "path": "build/input-frame-probe/input-frame-fixtures.exe",
+    "sha256": "b13089f219ef511d74f16d6a166f9971e4ec6dff06182e2e78eb9778c2e8cbb8"
+  },
+  "original_methods": [
+    "public void DecideKeyState(): complete body",
+    "protected int GetKeyID(KeyCode keyCode): complete body",
+    "private void Init(): complete DEBUG if/else selecting VALID_KEYS"
+  ],
+  "limits": [
+    "Own frame facade supplies held/edge state; not a Unity event-pump observation on Android.",
+    "Own OnKeyDown/Up leaves instrument calls and physical bit mutation, without Escape/dialog/surface handling.",
+    "GetAxis=0 and touchCount=0: pinch/wheel/mobile paths are read but not runtime-tested.",
+    "No boundary or Game method is automatically promoted by this polling proof."
+  ],
+  "verified_boundary_ids": [],
+  "production_modified": true,
+  "game_boot": false,
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

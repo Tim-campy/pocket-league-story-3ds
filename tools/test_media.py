@@ -45,7 +45,7 @@ def main():
     native=folder/'media-fixtures.exe'
     compiler=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
     prefix=ROOT/sdk['prefix']
-    sources=[ROOT/name for name in ['tests/kairo/media_fixtures.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/platform/sdl/audio.cpp','src/kairo/platform/sdl/backend.cpp']]
+    sources=[ROOT/name for name in ['tests/kairo/media_fixtures.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/platform/sdl/audio.cpp','src/kairo/platform/sdl/backend.cpp','src/kairo/platform/sdl/debug_input.cpp','src/kairo/common/semantic_runtime.cpp']]
     sdl=ROOT/'build/deps/SDL2-2.32.10'
     command=[compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/O2','/MD','/utf-8','/DSDL_MAIN_HANDLED',
              '/I'+str(ROOT/'src/kairo/platform/sdl'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(sdl/'include'),
@@ -77,7 +77,7 @@ def main():
                                 max_absolute_float_error=error,passed=error<=0.00002))
     if not all(c['passed'] for c in comparisons):raise ValueError('Vorbis versus FFmpeg prefix exceeds measured tolerance')
     if sha(args.apk)!=EXPECTED:raise ValueError('APK changed during test')
-    inputs=sources+[ROOT/'src/kairo/platform/sdl/font.hpp',ROOT/'src/kairo/platform/sdl/audio.hpp',ROOT/'tools/test_media.py']
+    inputs=sources+[ROOT/p for p in ['src/kairo/platform/sdl/font.hpp','src/kairo/platform/sdl/audio.hpp','src/kairo/platform/sdl/backend.hpp','src/kairo/platform/sdl/debug_input.hpp','src/kairo/api/platform.hpp','src/kairo/api/debug_input.hpp','src/kairo/api/vector3.hpp','src/kairo/common/semantic_runtime.hpp','tools/test_media.py']]
     report=dict(operation='local-TTF-SDL-and-bounded-Vorbis-mixer-fixtures',status='PASS',**result,
                 inputs={i.relative_to(ROOT).as_posix():sha(i) for i in inputs},sdk_receipt_sha256=sha(ROOT/'config/media-sdk.json'),
                 manifest_sha256=sha(manifest_path),apk_sha256=EXPECTED,native_executable_sha256=sha(native),

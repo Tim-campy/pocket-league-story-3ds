@@ -26,6 +26,37 @@ cs::String java_legacy_language(const cs::String& language){
 } // namespace pls::kairo
 
 namespace pls::sdl {
+cs::String detail::device_model_from_registry(const DeviceModelRegistryReader&read){
+    constexpr std::uint32_t maximum_bytes=65536,more_data=234;
+    const auto fallback=[](){return cs::String(u"Windows");};
+    auto valid_size=[maximum_bytes](std::uint32_t bytes){return bytes>=2&&bytes<=maximum_bytes&&bytes%2==0;};
+    if(!read)return fallback();
+    std::uint32_t bytes=0;auto status=read(nullptr,bytes);
+    if((status!=0&&status!=more_data)||!valid_size(bytes))return fallback();
+    for(unsigned attempt=0;attempt<4;++attempt){
+        const auto units=std::min<std::uint32_t>(bytes/2+1,maximum_bytes/2);
+        std::vector<char16_t>buffer(units,u'\0');bytes=units*2;
+        status=read(buffer.data(),bytes);
+        if(status==more_data){if(!valid_size(bytes))return fallback();continue;}
+        if(status!=0||!valid_size(bytes)||bytes>units*2)return fallback();
+        const auto end=std::find(buffer.begin(),buffer.begin()+bytes/2,u'\0');
+        if(end==buffer.begin()||end==buffer.begin()+bytes/2)return fallback();
+        return cs::String(std::u16string(buffer.begin(),end));
+    }
+    return fallback();
+}
+cs::String device_model(){
+#if defined(_WIN32)
+    static_assert(sizeof(wchar_t)==sizeof(char16_t));
+    return detail::device_model_from_registry([](void*data,std::uint32_t&size){
+        DWORD bytes=size;
+        const auto result=RegGetValueW(HKEY_LOCAL_MACHINE,L"HARDWARE\\DESCRIPTION\\System\\BIOS",L"SystemProductName",RRF_RT_REG_SZ,nullptr,data,&bytes);
+        size=bytes;return static_cast<std::uint32_t>(result);
+    });
+#else
+    throw cs::NotSupportedException("Native device model provider has not been implemented on this host");
+#endif
+}
 #if defined(_WIN32)
 namespace {
 cs::String utf16(const wchar_t* text){std::u16string value;for(;*text;++text)value.push_back(static_cast<char16_t>(*text));return cs::String(std::move(value));}

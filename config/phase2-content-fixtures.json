@@ -9,8 +9,8 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "0c96df2831ed2decda20021cfa5b9f8695328f6781cb56f0c86c8a003760f06b",
-    "driver_sha256": "39e42eec8028f316a252b96000388c6fb38789ead4c1a0549eb446f78110835f"
+    "translator_source_sha256": "7db0f65379657174ddd4586a4bcdaaab11d0bc359d868fe7348fe40b59e87d36",
+    "driver_sha256": "987e7899591d367f9cf396d63daf3ddde2f7b56d8211d40b005b78b53eb83236"
   },
   "inputs": [
     {
@@ -19,7 +19,7 @@
     },
     {
       "path": "translator/test_content_lowering.py",
-      "sha256": "90e467fdbb0a55af6c7687d9263d5606ca08b71bce3a1dd58a51b82ed36b2e32"
+      "sha256": "e6e56587656450c6f28c0cdd2ffc56804b1153d20f9042c7227281be6c3adcad"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -71,7 +71,7 @@
     },
     {
       "path": "src/kairo/common/managed_collections.hpp",
-      "sha256": "daee4c23611a2658e1de478fd4062476832588d04dd959a1f4ff932dd9894560"
+      "sha256": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b"
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
@@ -153,15 +153,15 @@
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated.hpp",
-      "sha256": "cbe205faa4c28baf460a213d39ccffbf0ac3a9b40130cf7d7821deae7bb77cf8"
+      "sha256": "57a47198c3067d827ab810d940072c5f88591743030bc6c2d381e2a676bec14d"
     }
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "933852228b6aa4a4b747265613f04ad08cba07b29188a884bfe6c017e0dc30d5"
+    "sha256": "1f650239460a35986585bbfc688785c205f7c0a12a1de1eb2c0c16e95bae4e62"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "dfaaedf743b2a3ce6e32e90c4c2fb2efa48322cf5f3e8faf28ca1d463e38d0de"
+    "sha256": "03e7a1669576a256eb6d3709240b2a07da56455cb3a998286a9283e0340b64ec"
   }
 }

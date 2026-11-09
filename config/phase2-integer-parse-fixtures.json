@@ -21,7 +21,7 @@
     "tests\\translator\\integer_parse_fixtures.cpp": "eae4e38b13ba415a76a8596575253b9d99cc0aa66669d420baf98759c112ccde",
     "src\\kairo\\common\\semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
     "src\\kairo\\common\\semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
-    "src\\kairo\\common\\managed_collections.hpp": "daee4c23611a2658e1de478fd4062476832588d04dd959a1f4ff932dd9894560",
+    "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
     "src\\kairo\\common\\managed_dictionary.hpp": "3a82c0b75878d612128f7f7d46249d2d6b5a6b289742cf0273293708a4111ed0",

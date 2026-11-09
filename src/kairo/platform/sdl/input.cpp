@@ -4,7 +4,7 @@
 
 namespace pls::kairo {
 std::int32_t CanvasKeyState::history(std::int32_t offset){return history_.at(cs::mod_i32(cs::add_i32(cs::add_i32(index_,history_.length()),offset),history_.length()));}
-bool CanvasKeyState::CheckKeyPulse(std::int32_t key){const auto value=pulse_;pulse_=value&~key;return (value&key)!=0;}
+bool CanvasKeyState::CheckKeyPulse(std::int32_t key){return detail::consume_key_pulse(pulse_,key);}
 bool CanvasKeyState::CheckKeyRepeat(std::int32_t key,std::int32_t interval) {
     if((history(-1)&key)==0)return false;if((history(-2)&key)==0)return true;
     for(std::int32_t i=1;i<interval;i=cs::add_i32(i,1)){const auto value=history(cs::sub_i32(-2,i));const auto bits=value&key;if(cs::sub_i32(value,bits)!=0||bits==0)return false;}
@@ -22,10 +22,10 @@ void CanvasKeyState::KeyUp(std::int32_t key){if(key==-1)return;work_&=~key;if(on
 void CanvasKeyState::KeyClick(std::int32_t key){if(key==-1)return;event_|=key;if(on_key_down)on_key_down(key);if(on_key_up)on_key_up(key);}
 void CanvasKeyState::DecideKeyState(std::int32_t touches) {
     if(touches==0&&invalid_touch_)invalid_touch_=false;
-    const auto next=work_|event_;event_=0;pulse_=(next^state_)&next&~invalid_pulse_;state_=next;invalid_pulse_=0;
+    const auto next=work_|event_;event_=0;pulse_.store((next^state_)&next&~invalid_pulse_);state_=next;invalid_pulse_=0;
     work_&=~KEY_SOFT1;work_&=~KEY_SOFT2;history_.at(index_)=next;index_=(index_+1)%history_.length();
 }
-void CanvasKeyState::ClearKeyBuffer(){for(std::int32_t i=0;i<history_.length();++i)history_.at(i)=0;index_=pulse_=state_=event_=work_=0;invalid_touch_=true;}
+void CanvasKeyState::ClearKeyBuffer(){for(std::int32_t i=0;i<history_.length();++i)history_.at(i)=0;index_=0;pulse_.store(0);state_=0;event_=0;work_=0;invalid_touch_=true;}
 std::int32_t CanvasKeyState::GetKeyID(std::int32_t code,bool debug) {
     if(code>=256&&code<=265)return code-256;
     switch(code){case 42:case 268:return 10;case 35:case 267:return 11;case 273:return 17;case 275:return 18;case 274:return 19;case 276:return 16;
@@ -49,15 +49,25 @@ void PcInputAdapter::feed(const platform::Input& event) {
     else if(event.kind==Kind::pointer_up){x_=event.x;y_=event.y;if(event.key==3)right_down_=false;else if(event.key==0||event.key==1)mouse_down_=false;}
     else if(event.kind==Kind::pointer_move){x_=event.x;y_=event.y;}
 }
+void PcInputAdapter::initialize_config(bool initial_debug,std::function<bool()> current_debug){
+    if(!current_debug)throw cs::ArgumentException("Current Config.DEBUG reader must be nonempty");
+    if(config_initialized_||polled_)throw cs::InvalidOperationException("PC input configuration must be initialized once before polling");
+    initial_debug_=initial_debug;current_debug_=std::move(current_debug);config_initialized_=true;
+}
 void PcInputAdapter::decide_frame() {
     // Order and duplicated key groups match Canvas.VALID_KEYS, including the
     // original release interaction between Asterisk and KeypadMultiply.
-    static const std::array<std::vector<std::int32_t>,23> groups={{{256},{257},{258},{259},{260},{261},{262},{263},{264},{265},{42},{35},{268},{267},{273},{275},{274},{276},{271,32,122,13},{97,304},{115,120,303},{27},{278}}};
+    polled_=true;
+    static const std::array<std::vector<std::int32_t>,23> normal_groups={{{256},{257},{258},{259},{260},{261},{262},{263},{264},{265},{42},{35},{268},{267},{273},{275},{274},{276},{271,32,122,13},{97,304},{115,120,303},{27},{278}}};
+    static const std::array<std::vector<std::int32_t>,23> debug_groups={{{256},{257},{258},{259},{260,306,305},{261},{262,304,303},{263},{264},{265},{42},{35},{268},{267},{273},{275},{274},{276},{271,32,122,13},{97},{115,120},{27},{278}}};
+    const auto& groups=initial_debug_?debug_groups:normal_groups;
     for(std::size_t i=0;i<groups.size();++i){bool down=false;for(auto key:groups[i])if(held_.count(key)){down=true;break;}
         if(down==groups_[i])continue;groups_[i]=down;const auto code=groups[i][0];
         if(down){if(on_key_down)on_key_down(code,cs::make_ref<KeyEvent>(0,code));else state_.PhysicalDown(code);}
         else {if(on_key_up)on_key_up(code,cs::make_ref<KeyEvent>(1,code));else state_.PhysicalUp(code);}
     }
+    const bool suppress_mouse=current_debug_()&&(held_.count(304)!=0||held_.count(303)!=0);
+    if(!suppress_mouse){
     int action=-1;
     if(mouse_down_&&!previous_mouse_down_)action=0;
     else if(mouse_down_&&(x_!=previous_x_||y_!=previous_y_))action=2;
@@ -71,6 +81,7 @@ void PcInputAdapter::decide_frame() {
         else {if(on_key_up)on_key_up(260,event);else state_.PhysicalUp(260);}
     }
     previous_right_down_=right_down_;
+    }
     state_.DecideKeyState();
 }
 }

@@ -69,10 +69,10 @@ struct Manager:FormManagerBase {
     void PreDraw()override{log("preDraw");FormManagerBase::PreDraw();}void Drawn()override{log("drawn");FormManagerBase::Drawn();}
 };
 struct Form:FormBase {
-    bool throw_init{},throw_update{},throw_draw{},init_ok{true},finish_ok{true},resume_ok{true};int pending{},updates{};explicit Form(int id):FormBase(id){}
+    bool throw_init{},throw_update{},throw_draw{},init_ok{true},finish_ok{true},resume_ok{true};int pending{},updates{},update_mode{-1};explicit Form(int id):FormBase(id){}
     bool Init()override{log("init"+std::to_string(GetId()));if(throw_init)throw pls::cs::Exception();return init_ok;}
     bool Finish()override{log("finish"+std::to_string(GetId()));return finish_ok;}
-    bool Update()override{log("update"+std::to_string(GetId()));if(throw_update)throw pls::cs::Exception();return updates++>=pending;}
+    bool Update()override{log("update"+std::to_string(GetId()));if(throw_update)throw pls::cs::Exception();if(update_mode>=0)SetProcessMode(update_mode);return updates++>=pending;}
     bool Resume()override{log("resume"+std::to_string(GetId()));return resume_ok;}void Draw(pls::cs::Ref<Graphics>)override{log("draw"+std::to_string(GetId()));if(throw_draw)throw pls::cs::Exception();}
     bool ProcessEvent(pls::cs::Ref<AppEvent> e)override{log("event"+std::to_string(static_cast<int>(e->Type))+":"+std::to_string(GetId()));return false;}
 };
@@ -131,6 +131,7 @@ int main(int argc,char**){
     if(argc==2)return policy();
     run("execute-complete",[](auto m,auto,auto,auto){m->Execute();});
     run("execute-pending-twice",[](auto m,auto f,auto,auto){f->pending=2;m->Execute();});
+    run("update-mode-reread",[](auto m,auto f,auto,auto){f->update_mode=4;m->Execute();});
     run("hidden",[](auto m,auto,auto,auto a){a->visible(false);m->Execute();});
     run("terminated",[](auto m,auto,auto,auto a){a->terminated(true);m->Execute();});
     run("paused",[](auto m,auto,auto,auto){m->SetPause(true);m->Execute();});

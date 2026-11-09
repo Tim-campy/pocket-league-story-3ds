@@ -80,17 +80,22 @@ def main():
     request['external_methods']={'M:UnityEngine.Debug.Log(System.Object)':'pls::kairo::debug_log'}
     request['native_includes']=['system.hpp']
     if args.assembly=='Assembly-CSharp':
+        request['service_overrides']={row['symbol']:row['lowering'] for row in policies['overrides']}
+        concurrency=json.loads((ROOT/'config/phase2-boot-concurrency.json').read_text(encoding='utf8'))
+        supported_classes={'progress_concurrent','multi_writer_load_then_store','payload_published_by_state_candidate','lifecycle_handoff_reinit_unknown'}
+        request['shared_fields']=[field['field']for field in concurrency['boot_field_classifications']if field['classification']in supported_classes]
         portable=json.loads((ROOT/'config/phase2-translation.json').read_text(encoding='utf-8'))
         request.update(select_all_source_methods=True,select_source_prefix="src/Assembly-CSharp/",
             external_types={c['id']:'pls::generated::'+c['cpp_name'].split('<')[0] for c in portable['generated_classes']},
             external_methods={m['id']:'pls::generated::'+m['cpp_name'] for m in portable['emitted_methods']},
             external_fields={**{f['id']:f['cpp_name'] for c in portable['generated_classes'] for f in c['fields'] if 'id' in f},**{f['id']:'pls::generated::'+f.get('cpp_accessor',f['cpp_name']) for f in portable['static_fields']}},
+            external_type_initializers={row['id']:'pls::generated::'+row['cpp_name'] for row in portable.get('type_initializers',[])},
             bootstrap_method='M:main.Main.#ctor' if args.bootstrap_main else '')
         request['external_complete_bases']=list(request['external_types'])
         request['external_types']['T:kairo.unity.ui.IApplication']='pls::kairo::IApplication'
         request['external_types']['T:kairo.unity.form.FormManagerBase']='pls::kairo::FormManagerBase'
         request['external_complete_bases'].append('T:kairo.unity.ui.IApplication')
-        request['native_includes']=['application.hpp','baked_arrays.hpp']
+        request['native_includes']=['application.hpp','baked_arrays.hpp','services_managed.hpp']
         baked=json.loads((ROOT/'config/baked-array-index.json').read_text(encoding='utf-8'))
         request['baked_arrays']={b['id']:b for b in baked['matched']}
         app='M:kairo.unity.ui.IApplication.'
@@ -156,6 +161,19 @@ def main():
                         if name not in ('Execute','OnDraw'):request['external_methods'][row['id']]='member:source_'+name
         request['external_methods']['M:kairo.unity.form.FormBase.#ctor(System.Int32)']='base:source_construct'
         request['external_methods']['M:kairo.unity.form.FormManagerBase.#ctor']='base:source_construct'
+        request['external_value_types']={'T:UnityEngine.Vector2':'pls::kairo::Vector2'}
+        request['external_fields'].update({'F:UnityEngine.Vector2.x':'x','F:UnityEngine.Vector2.y':'y'})
+        request['external_methods']['M:UnityEngine.Vector2.Set(System.Single,System.Single)']='value-member:Set'
+        request['external_methods']['M:kairo.unity.ui.Canvas.GetSurfaceManager']='canvas-source:get'
+        request['external_methods']['M:kairo.unity.ui.Canvas.SetSurfaceManager(kairo.unity.surface.SurfaceManagerBase)']='canvas-source:set'
+        request['native_includes'].append('forms_callbacks.hpp')
+        request['external_value_types']['T:UnityEngine.Vector3']='pls::kairo::Vector3'
+        request['external_fields'].update({'F:UnityEngine.Vector3.x':'x','F:UnityEngine.Vector3.y':'y','F:UnityEngine.Vector3.z':'z'})
+        request['external_methods'].update({'M:UnityEngine.Input.GetKey(UnityEngine.KeyCode)':'pls::kairo::DebugInput::GetKey','M:UnityEngine.Input.GetMouseButton(System.Int32)':'pls::kairo::DebugInput::GetMouseButton','M:UnityEngine.Input.GetMouseButtonDown(System.Int32)':'pls::kairo::DebugInput::GetMouseButtonDown','M:UnityEngine.Input.get_mousePosition':'pls::kairo::DebugInput::get_mousePosition','M:UnityEngine.Screen.get_height':'pls::kairo::DebugInput::screen_height'})
+        request['native_includes'].append('debug_input.hpp')
+        request['external_methods'].update({'M:kairo.unity.ui.Graphics.GetCurrent':'pls::kairo::Graphics::GetCurrent','M:kairo.unity.ui.Graphics.IsGUI':'member:IsGUI','M:kairo.unity.ui.Graphics.ResetRender':'member:ResetRender'})
+        request['external_fields']['F:kairo.unity.ui.Graphics.current_']='readonly:pls::kairo::Graphics::GetCurrent()'
+        request['native_includes']+=['vector2.hpp']
         request['external_types']['T:kairo.unity.surface.TouchValueAccessor']='pls::kairo::TouchValueAccessor'
         request['native_includes']+=['touch_value_accessor.hpp']
         for name in ('GetTouchValue','SetTouchValue'):
@@ -178,7 +196,8 @@ def main():
     # Shared, concrete platform leaves used by generated JarInflater/AssetReader.
     request.setdefault('external_types',{}).update({'T:kairo.unity.io.Storage':'pls::kairo::Storage','T:kairo.unity.ui.IApplication':'pls::kairo::IApplication','T:kairo.unity.util.DisplayMetrics':'pls::kairo::DisplayMetrics','T:UnityEngine.TextAsset':'pls::kairo::NativeTextAsset','T:UnityEngine.Object':'pls::cs::Object'})
     request['native_includes']+=['storage.hpp','application.hpp','asset_reader.hpp','display_metrics.hpp']
-    request['external_methods'].update({'M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)':'pls::kairo::Storage::Read','M:kairo.unity.ui.IApplication.GetCurrentApp':'pls::kairo::IApplication::GetCurrentApp','M:kairo.unity.ui.IApplication.RunOnUiThread(kairo.unity.ui.IApplication.UIMethod,System.Boolean)':'member:RunOnUiThread','M:kairo.unity.ui.IApplication.RunOnUiThread(System.Threading.ThreadStart,System.Boolean)':'member:RunOnUiThread','M:UnityEngine.TextAsset.get_bytes':'member:get_bytes','M:UnityEngine.TextAsset.get_text':'member:get_text','M:kairo.unity.util.DisplayMetrics.get_Density':'pls::kairo::DisplayMetrics::get_Density'})
+    request['external_methods'].update({'M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)':'pls::kairo::Storage::Read','M:kairo.unity.ui.IApplication.GetCurrentApp':'pls::kairo::IApplication::GetCurrentApp','M:kairo.unity.ui.IApplication.GetProperty(System.String)':'pls::kairo::IApplication::GetProperty','M:kairo.unity.ui.IApplication.RunOnUiThread(kairo.unity.ui.IApplication.UIMethod,System.Boolean)':'member:RunOnUiThread','M:kairo.unity.ui.IApplication.RunOnUiThread(System.Threading.ThreadStart,System.Boolean)':'member:RunOnUiThread','M:UnityEngine.TextAsset.get_bytes':'member:get_bytes','M:UnityEngine.TextAsset.get_text':'member:get_text','M:kairo.unity.util.DisplayMetrics.get_Density':'pls::kairo::DisplayMetrics::get_Density'})
+    request['external_methods'].update({'M:kairo.unity.ui.IApplication.IsSide':'member:IsSide','M:kairo.unity.ui.IApplication.GetOrientation':'member:GetOrientation'})
     if args.assembly=='KairoLibrary':
         request['oracle_external_methods'].update({'M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)':'SyntheticAssets.Read','M:kairo.unity.ui.IApplication.GetCurrentApp':'SyntheticAssets.Current','M:UnityEngine.Resources.Load(System.String)':'UnityEngine.Resources.Load','M:UnityEngine.Resources.UnloadAsset(UnityEngine.Object)':'UnityEngine.Resources.UnloadAsset'})
         request['oracle_support']+='''

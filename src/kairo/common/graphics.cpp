@@ -46,7 +46,16 @@ void Image::SetTransparentEnabled(bool enabled){
     }
     if(!enabled)format=Format::RGB24;else if(was_rgb)format=Format::ARGB32;
 }
-Graphics::Graphics(cs::Ref<Image> target):target_(cs::nonnull(target)),font_(cs::make_ref<Font>()){ClearRenderRect();}
+Graphics::Graphics(cs::Ref<Image> target,bool display_context):target_(cs::nonnull(target)),is_gui_(display_context),font_(cs::make_ref<Font>()){ClearRenderRect();}
+void Graphics::ResetRender(){
+    // Graphics.ResetRender: reset the states represented by the CPU backend;
+    // construction/reset never publishes Graphics.current_. Only Canvas does.
+    clips_.clear();origins_.clear();modes_.clear();fonts_.clear();
+    Font::UnlockLocalizeSetting();Font::ClearLocalizeSettings();
+    font_->SetFace(2);font_->SetSize(0);font_->SetStyle(0);
+    color_=GetColorOfRGB(0,0,0);origin_x_=origin_y_=0;scale_=100.0f;
+    world_={1,0,0,0,1,0,0,0,1};mode_={0,255,0};ClearRenderRect();
+}
 void Graphics::SetFont(cs::Ref<Font> font){font_->Copy(cs::nonnull(font));font_->AdjustFontSize(GetScale());}
 cs::Ref<Font> Graphics::GetFont(cs::Ref<Font> copy){if(!copy)return cs::make_ref<Font>(font_);copy->Copy(font_);return copy;}
 void Graphics::PushFont(cs::Ref<Font> font){fonts_.push_back(GetFont());SetFont(font);}

@@ -16,12 +16,14 @@ public:
 };
 class Canvas : public cs::Object {
     inline static cs::Ref<Canvas> instance_;
+    inline static cs::Ref<Graphics> graphics_buffer_;
     cs::Ref<Image> display_;
     cs::Ref<Graphics> graphics_;
+    bool is_alter_static_rendering_{};
     cs::Ref<Font> default_font_;
     cs::Ref<CanvasSurface> surface_;
     cs::Ref<cs::Object> source_surface_;
-    cs::Array<cs::String> labels_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
+    std::array<cs::SharedField<cs::String>,4> labels_;
     cs::Array<cs::String> shown_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
     std::int32_t background_{};
     float aspect_=std::numeric_limits<float>::quiet_NaN();
@@ -33,6 +35,7 @@ public:
     static cs::Ref<Canvas> GetInstance(bool make=true);
     // Explicit PC display dependency, not an alternative game screen design.
     void host_display(cs::Ref<Image>,cs::Ref<Font>);
+    void host_input_config(std::function<bool()> reader){if(!reader)throw cs::ArgumentException("Canvas Config.DEBUG reader must be nonempty");const bool initial=reader();input_.initialize_config(initial,std::move(reader));}
     void host_event(const platform::Input& event){input_.feed(event);}
     void SetDisplayCurrent(cs::Ref<IApplication>){} // Original body is empty.
     void SetSurfaceManager(cs::Ref<CanvasSurface> value){source_surface_=value;surface_=std::move(value);}
@@ -44,8 +47,12 @@ public:
     cs::Ref<CanvasSurface> GetSurfaceManager(){return surface_;}
     cs::Ref<Graphics> GetGraphicsInstance(){return graphics_;}
     cs::Ref<Graphics> BeginPaint();
-    cs::Ref<Graphics> BeginPaint(cs::Ref<Graphics>);
+    cs::Ref<Graphics> BeginPaint(cs::Ref<Graphics>,std::int32_t mesh_id=-1);
+    cs::Ref<Graphics> BeginAlterStaticRender(cs::Ref<Graphics>,std::int32_t mesh_id=-1);
     void EndPaint();
+    void EndPaint(cs::Ref<Graphics>,std::int32_t mesh_id=-1);
+    void EndAlterStaticRender(cs::Ref<Graphics>,std::int32_t mesh_id=-1);
+    bool source_IsAlterStaticRendering()const{return is_alter_static_rendering_;}
     void SetBackground(std::int32_t c){SetBackColor(c);}
     void SetBackColor(std::int32_t c){background_=c;}
     std::int32_t GetBackColor(){return background_;}

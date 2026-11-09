@@ -55,7 +55,7 @@ ForEachStatement,10,False,NOT_YET_VALIDATED
 ForStatement,1316,True,observed-in-emitted-body
 GenericName,157,False,NOT_YET_VALIDATED
 GetAccessorDeclaration,5,False,NOT_YET_VALIDATED
-GotoCaseStatement,1,False,NOT_YET_VALIDATED
+GotoCaseStatement,1,True,observed-in-emitted-body
 GotoStatement,8,True,observed-in-emitted-body
 GreaterThanExpression,595,True,observed-in-emitted-body
 GreaterThanOrEqualExpression,469,True,observed-in-emitted-body
@@ -81,11 +81,11 @@ MultiplyExpression,1525,True,observed-in-emitted-body
 NameEquals,1,False,NOT_YET_VALIDATED
 NamespaceDeclaration,95,False,NOT_YET_VALIDATED
 NotEqualsExpression,794,True,observed-in-emitted-body
-NullLiteralExpression,1298,True,observed-in-emitted-body
+NullLiteralExpression,1298,False,NOT_YET_VALIDATED
 NumericLiteralExpression,44948,True,observed-in-emitted-body
 ObjectCreationExpression,861,True,observed-in-emitted-body
 OmittedArraySizeExpression,2196,False,NOT_YET_VALIDATED
-OrAssignmentExpression,11,False,NOT_YET_VALIDATED
+OrAssignmentExpression,11,True,observed-in-emitted-body
 Parameter,2776,False,NOT_YET_VALIDATED
 ParameterList,1851,False,NOT_YET_VALIDATED
 ParenthesizedExpression,2703,True,observed-in-emitted-body

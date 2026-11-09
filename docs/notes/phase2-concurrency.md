@@ -38,3 +38,8 @@ O [inventário vinculado dos campos do boot](phase2-boot-fields.md) registra os
 labels, consumo de keyPulse e as condições de confinamento de ResourceManager.
 O JSON reproduzível é `config/phase2-boot-concurrency.json`; não representa uma
 correção aplicada ao emissor ou às APIs.
+
+A correção posterior dos dez slots nativos e as suas provas estão em
+[campos nativos da UI](phase2-native-ui-fields.md). A mesma nota distingue os
+campos de `IApplication` publicados antes do worker dos caminhos concorrentes
+que continuam `UNKNOWN`; não declara a aplicação inteira livre de data races.

@@ -24,6 +24,11 @@ CLASSES={}
 METHODS=[]
 BUILDING=set()
 RUN_TIMINGS={}
+ABSTRACT_FIXTURE_OWNER='kairo.unity.util.SecureNumber'
+
+
+def abstract_fixture(type):
+    return type==ABSTRACT_FIXTURE_OWNER and CLASSES.get(type,{}).get('is_abstract',False)
 
 
 def run(command,folder,name,env=None):
@@ -51,6 +56,8 @@ def run(command,folder,name,env=None):
 
 def values(type,index):
     if type=='bool':return ('bool','bool',['false','true'][index%2])
+    native_null_inputs={'kairo.unity.surface.MotionEvent':'MotionEvent','kairo.unity.ui.KeyEvent':'KeyEvent','kairo.unity.ui.Graphics':'Graphics'}
+    if type in native_null_inputs:return ('pls::cs::Ref<pls::kairo::'+native_null_inputs[type]+'>',type,('pls::cs::Ref<pls::kairo::'+native_null_inputs[type]+'>{}','null'))
     if type=='System.Exception':
         return ('pls::cs::ExceptionRef',type,('pls::cs::ExceptionRef{}','null')) if index%7==0 else ('pls::cs::ExceptionRef',type,('pls::cs::make_exception("System.ArgumentException",pls::cs::String(u"synthetic"))','new System.ArgumentException("synthetic")'))
     if type=='System.Type':return ('pls::cs::Ref<pls::cs::RuntimeType>',type,('pls::cs::runtime_type_of<pls::cs::Array<std::uint8_t>>()','typeof(byte[])'))
@@ -101,6 +108,11 @@ def values(type,index):
         if CLASSES[type].get('is_interface'):return ('pls::cs::Ref<pls::generated::'+CLASSES[type]['cpp_name']+'>',type,('pls::cs::Ref<pls::generated::'+CLASSES[type]['cpp_name']+'>{}','null'))
         cls=CLASSES[type];native='pls::generated::'+cls['cpp_name'] if cls.get('is_value_type') else 'pls::cs::Ref<pls::generated::'+cls['cpp_name']+'>'
         if (index%7==0 and not cls.get('is_value_type')) or type in BUILDING:return (native,type,(native+'{}','null'))
+        if abstract_fixture(type):
+            ctor=next(m for m in METHODS if m['is_constructor'] and m['containing_type']==type and not m['parameters'])
+            base='pls::generated::'+cls['cpp_name']
+            cpp_value='([](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=std::static_pointer_cast<'+base+'>(x);'+ctor['cpp_name']+'_init(base);return base;}())'
+            return (native,type,(cpp_value,'('+type+')new HarnessAbstractSecureNumber()'))
         BUILDING.add(type)
         ctors=[m for m in METHODS if m['is_constructor'] and m['containing_type']==type and all(p['type'] not in CLASSES for p in m['parameters'])]
         if not ctors:
@@ -237,13 +249,23 @@ def main():
     parser.add_argument('--result',type=Path,default=ROOT/'config/phase2-portable-differential.json')
     parser.add_argument('--folder',type=Path,default=ROOT/'build/translator/differential')
     options=parser.parse_args()
+    for path_option in ('report','generated','oracle','folder','result'):setattr(options,path_option,getattr(options,path_option).resolve())
     report=json.loads(options.report.read_text(encoding='utf-8-sig'))
     CLASSES={c['type']:c for c in report['generated_classes']};METHODS=report['emitted_methods']
     folder=options.folder;folder.mkdir(parents=True,exist_ok=True)
     cs=[CS_FORMAT];cpp=[CPP_FORMAT];cases=[]
+    abstract_fixture_source=None
+    if abstract_fixture(ABSTRACT_FIXTURE_OWNER):
+        abstract_fixture_source=ROOT/'tests/translator/AbstractSecureNumberHarness.cs'
+        cs[0]=cs[0].replace('public static class Harness {',abstract_fixture_source.read_text(encoding='utf8')+'\npublic static class Harness {')
+        cpp[0]+='\nstruct HarnessAbstractSecureNumber final : pls::generated::'+CLASSES[ABSTRACT_FIXTURE_OWNER]['cpp_name']+' {};\n'
     # Reference overloads are declared before recursive array/object formatting.
     # Their bodies expose only synthetic test state from generated typed objects.
     prototypes=[];definitions=[]
+    uses_vector2=any('UnityEngine.Vector2' in str(m)for m in report['emitted_methods'])or any('UnityEngine.Vector2' in str(c)for c in report['generated_classes'])
+    if uses_vector2:
+        prototypes.append('std::string F(const pls::kairo::Vector2&value);')
+        definitions.append('std::string F(const pls::kairo::Vector2&value){return "obj:UnityEngine.Vector2{UnityEngine.Vector2::x:"+F(value.x)+",UnityEngine.Vector2::y:"+F(value.y)+",}";}')
     if 'FixtureApp' in report.get('oracle_native_setup',''):
         prototypes.append('std::string F(const pls::cs::Ref<pls::kairo::NativeTextAsset>&value);')
         definitions.append('std::string F(const pls::cs::Ref<pls::kairo::NativeTextAsset>&value){return value?"textasset:"+F(value->get_bytes())+":"+F(value->get_text()):"null";}')
@@ -255,8 +277,10 @@ def main():
         if not cls.get('is_value_type'):
             object_value='std::dynamic_pointer_cast<pls::cs::Object>(value)' if cls.get('is_interface') else 'value'
             body+='if(!value)return "null";auto object='+object_value+';if(std::find(format_path.begin(),format_path.end(),object.get())!=format_path.end())return "cycle";FormatGuard guard(object.get());'
-        body+='std::string out="obj:'+cls['type']+'{";'
-        for field in sorted(cls['fields'],key=lambda f:f['declaring_type']+'::'+f['name']):body+='out+="'+field['declaring_type']+'::'+field['name']+':"+F(value'+('.' if cls.get('is_value_type') else '->')+field['cpp_name']+')+",";'
+        if abstract_fixture(cls['type']):
+            body+='std::string out=std::dynamic_pointer_cast<HarnessAbstractSecureNumber>(value)?"obj:HarnessAbstractSecureNumber{":"obj:'+cls['type']+'{";'
+        else:body+='std::string out="obj:'+cls['type']+'{";'
+        for field in sorted(cls['fields'],key=lambda f:f['declaring_type']+'::'+f['name']):body+='out+="'+field['declaring_type']+'::'+field['name']+':"+F(value'+('.' if cls.get('is_value_type') else '->')+field['cpp_name']+('.load()' if field.get('shared') else '')+')+",";'
         definitions.append(body+'return out+"}";}')
     object_dispatch=''
     for cls in sorted(CLASSES.values(),key=lambda c:len(c['fields']),reverse=True):
@@ -264,6 +288,9 @@ def main():
             object_dispatch+='if(auto typed=std::dynamic_pointer_cast<pls::generated::'+cls['cpp_name']+'>(value))return F(typed);'
     cpp[0]=cpp[0].replace('if(std::dynamic_pointer_cast<pls::cs::ArrayBase>(value))',object_dispatch+'if(std::dynamic_pointer_cast<pls::cs::ArrayBase>(value))')
     # Insert declarations before the generic array formatter for dependent lookup.
+    for native,managed in [('MotionEvent','kairo.unity.surface.MotionEvent'),('KeyEvent','kairo.unity.ui.KeyEvent'),('Graphics','kairo.unity.ui.Graphics')]:
+        if any(managed==p['type'] for method in report['emitted_methods'] for p in method['parameters']):
+            prototypes.append('std::string F(const pls::cs::Ref<pls::kairo::'+native+'> &value){if(!value)return "null";throw std::runtime_error("Only null native '+native+' differential inputs are configured");}')
     cpp[0]=cpp[0].replace('template<class T>std::string F(T value)', '\n'.join(prototypes)+'\ntemplate<class T>std::string F(T value)')
     stream_f='std::string F(const pls::cs::Ref<pls::cs::Stream>&value){if(!value)return "null";if(auto m=std::dynamic_pointer_cast<pls::cs::MemoryStream>(value))return "mem:"+std::string(m->get_CanRead()?"True":"False")+":"+(m->get_CanSeek()?"True":"False")+":"+(m->get_CanWrite()?"True":"False")+":"+F(m->ToArray())+":"+(m->get_CanSeek()?std::to_string(m->get_Position()):"closed");'
     if 'java.io.WrappedSystemStream' in CLASSES:stream_f+='if(auto typed=std::dynamic_pointer_cast<pls::generated::'+CLASSES['java.io.WrappedSystemStream']['cpp_name']+'>(value))return F(typed);'
@@ -278,7 +305,8 @@ def main():
         cpp.append('result+="|state:"+F(pls::generated::'+field.get('cpp_accessor',name)+');')
     cs.append('var result=builder.ToString();long formatted=System.Diagnostics.Stopwatch.GetTimestamp();serializationTicks+=formatted-start;var raw=new byte[result.Length*2];for(int i=0;i<result.Length;i++){raw[i*2]=(byte)result[i];raw[i*2+1]=(byte)(result[i]>>8);}using(var hash=System.Security.Cryptography.SHA256.Create()){var digest=BitConverter.ToString(hash.ComputeHash(raw)).Replace("-","").ToLowerInvariant();hashTicks+=System.Diagnostics.Stopwatch.GetTimestamp()-formatted;return "|state-sha256:"+digest;}}')
     cpp.append('auto formatted=std::chrono::steady_clock::now();serialization_time+=formatted-start;pls::assets::Sha256 hash;auto units=pls::cs::String::from_utf8(result);std::vector<std::uint8_t>raw(std::size_t(units.length())*2);for(std::int32_t i=0;i<units.length();i++){auto value=units.at(i);raw[std::size_t(i)*2]=static_cast<std::uint8_t>(value);raw[std::size_t(i)*2+1]=static_cast<std::uint8_t>(value>>8);}hash.update(raw.data(),raw.size());auto digest=hash.finish();hash_time+=std::chrono::steady_clock::now()-formatted;return "|state-sha256:"+digest;}')
-    for method_index,method in enumerate(report['emitted_methods']):
+    exercise_methods=[method for method in report['emitted_methods']if not method.get('is_abstract_type')or method['is_static']or abstract_fixture(method['containing_type'])]
+    for method_index,method in enumerate(exercise_methods):
         for case_index in range(7):
             case_id=str(method_index)+':'+str(case_index)
             args=[];cs.append('static void cs_case_'+case_id.replace(':','_')+'(){');cpp.append('void cs_case_'+case_id.replace(':','_')+'(){')
@@ -312,19 +340,24 @@ def main():
                 else:cpp_value=typ+'('+value+')';cs_value='('+managed+')('+value+')'
                 cpp.append(f'{typ} arg{pindex}={cpp_value};');cs.append(f'{managed} arg{pindex}={cs_value};');args.append('arg'+str(pindex))
             templates=method.get('concrete_cpp_type_arguments',[])
+            managed_args=[('ref ' if parameter.get('ref_kind')=='Ref' else 'out ' if parameter.get('ref_kind')=='Out' else '')+argument for parameter,argument in zip(method['parameters'],args)]
             native_callee=method['cpp_name']+('<'+','.join(templates)+'>' if templates else '')
             invocation=native_callee+'('+','.join(args)+')'
-            if method['is_constructor']:managed_invocation='new '+method['containing_type']+'('+','.join(args)+')'
+            if method['is_constructor']:managed_invocation='new '+method['containing_type']+'('+','.join(managed_args)+')'
             elif not method['is_static']:
-                invocation=native_callee+'('+','.join(['self']+args)+')'
+                invocation=native_callee+'('+','.join([('&' if CLASSES.get(method['containing_type'],{}).get('is_value_type') else '')+'self']+args)+')'
                 if method['kind']=='PropertyGet':managed_invocation='self['+','.join(args)+']' if method.get('is_indexer') else 'self.'+method['name'][4:]
                 elif method['kind']=='PropertySet':managed_invocation=('self['+','.join(args[:-1])+']' if method.get('is_indexer') else 'self.'+method['name'][4:])+'='+args[-1]
-                else:managed_invocation='self.'+method['name']+'('+','.join(args)+')'
+                else:managed_invocation='self.'+method['name']+'('+','.join(managed_args)+')'
             elif method['kind']=='Conversion':managed_invocation='('+method['return_type']+')'+args[0]
             elif method['kind']=='UserDefinedOperator':
                 token={'op_Equality':'==','op_Inequality':'!=','op_Addition':'+','op_Subtraction':'-','op_Multiply':'*','op_Division':'/'}[method['name']]
                 managed_invocation='('+args[0]+' '+token+' '+args[1]+')'
-            else:managed_invocation='SourceOracle.'+method['cpp_name']+('<'+','.join(method.get('concrete_cs_type_arguments',['int']*len(templates)))+'>' if templates else '')+'('+','.join(args)+')'
+            else:managed_invocation='SourceOracle.'+method['cpp_name']+('<'+','.join(method.get('concrete_cs_type_arguments',['int']*len(templates)))+'>' if templates else '')+'('+','.join(managed_args)+')'
+            if method['is_constructor'] and abstract_fixture(method['containing_type']):
+                base='pls::generated::'+CLASSES[method['containing_type']]['cpp_name']
+                invocation='([&](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=std::static_pointer_cast<'+base+'>(x);'+native_callee+'_init('+','.join(['base']+args)+');return base;}())'
+                managed_invocation='new HarnessAbstractSecureNumber('+','.join(managed_args)+')'
             prefix=case_id+'|'
             if method.get('identity_hash_result'):
                 cs.append('string result;try{var first='+managed_invocation+';var second='+managed_invocation+';Console.Error.WriteLine("identity-hash|'+case_id+'|"+first);result=first==second?"identity-hash:stable":"identity-hash:UNSTABLE";}catch(Exception e){result="!"+e.GetType().FullName;}')
@@ -334,7 +367,7 @@ def main():
                 cpp.append('std::string result;try{'+(invocation+';result="void";' if method['return_type']=='void' else 'result=F('+invocation+');')+'}catch(const pls::cs::Exception& e){result="!"+std::string(e.type_name());}')
             # Compare post-call input arrays and global static state, not only return values.
             for pindex,parameter in enumerate(method['parameters']):
-                if parameter['type'].endswith('[]') or parameter['type'] in CLASSES or parameter['type']=='object':
+                if parameter['type'].endswith('[]') or parameter['type'] in CLASSES or parameter['type']=='object' or parameter.get('ref_kind') in ('Ref','Out'):
                     cs.append(f'result+="|a{pindex}:"+F(arg{pindex});');cpp.append(f'result+="|a{pindex}:"+F(arg{pindex});')
             if not method['is_static'] and not method['is_constructor']:
                 cs.append('result+="|self:"+F(self);');cpp.append('result+="|self:"+F(self);')
@@ -343,7 +376,7 @@ def main():
             cs.append('}');cpp.append('}');cases.append(dict(case=case_id,method=method['id']))
     cs.append('public static void Main(){System.Threading.Thread.CurrentThread.CurrentCulture=CultureInfo.InvariantCulture;System.Threading.Thread.CurrentThread.CurrentUICulture=CultureInfo.InvariantCulture;');cs+=['cs_case_'+case['case'].replace(':','_')+'();' for case in cases];cs.append('System.Console.Error.WriteLine("harness-profile|serialization_seconds="+((double)serializationTicks/System.Diagnostics.Stopwatch.Frequency).ToString("R",CultureInfo.InvariantCulture)+"|hash_seconds="+((double)hashTicks/System.Diagnostics.Stopwatch.Frequency).ToString("R",CultureInfo.InvariantCulture));}}');cpp.append('int main(){pls::cs::runtime_profile=pls::cs::RuntimeProfile::UnityMono265;pls::cs::managed_path_platform=pls::cs::PathPlatform::Windows;pls::cs::install_mono_collation_character_data();pls::cs::set_current_collation_culture(pls::cs::CollationCulture{127,{},"",false});pls::cs::utc_clock_ticks=[](){return std::int64_t(638000000000000000ll);};')
     cpp.append(report.get('oracle_native_setup',''))
-    if 'asset_reader.hpp' in (ROOT/'src/kairo/common/generated/portable_generated.hpp').read_text(encoding='utf-8') and options.report.name not in ('lowering-report.json','content-report.json'):
+    if 'FixtureApp' in report.get('oracle_native_setup',''):
         sys.path.insert(0,str(ROOT/'tools'))
         from test_asset_reader import synthetic_catalog
         catalog_folder=folder/'synthetic-catalog';synthetic_catalog(catalog_folder)
@@ -364,17 +397,20 @@ def main():
     if report.get('oracle_native_setup') and 'FixtureApp' in report['oracle_native_setup']:
         cpp_command += [ROOT/'src/kairo/common/storage.cpp',ROOT/'src/kairo/common/asset_catalog.cpp',ROOT/'src/kairo/common/asset_reader.cpp']
     proof_inputs=set(options.generated.glob('*.?pp'))|set(options.generated.glob('*.inc'))|set((ROOT/'src/kairo/common').rglob('*.hpp'))|set((ROOT/'src/kairo/api').rglob('*.hpp'))|set((ROOT/'build/generated/mono-collation').glob('*.*'))|{Path(p) for p in cpp_command if Path(str(p)).suffix=='.cpp'}
+    if abstract_fixture_source:proof_inputs.add(abstract_fixture_source)
     proof_before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in proof_inputs}
     run(cpp_command,folder,'native-compile',env)
     expected=run([runtime,oracle],folder,'managed-output',dict(env,MONO_PATH=str(framework))).splitlines();actual=run([exe],folder,'native-output',env).splitlines()
     if len(expected)!=len(cases) or len(actual)!=len(cases):raise ValueError('Missing differential output cases')
     failures=[dict(cases[i],expected=expected[i],actual=actual[i]) for i in range(len(cases)) if expected[i]!=actual[i]]
     known_platform=[failure for failure in failures if failure['method']=='M:java.lang.JMath.Sin(System.Double)' and failure['expected'].split('|')[1]=='d:0000000000000000' and failure['actual'].split('|')[1]=='d:8000000000000000']
+    known_null_field=[failure for failure in failures if failure['method']=='M:SyntheticRefs.Source.NullFieldOrder' and failure['expected'].split('|')[1]=='2' and failure['actual'].split('|')[1]=='0']
+    known_platform+=known_null_field
     unexpected=[failure for failure in failures if failure not in known_platform]
     nonmatching_methods={failure['method'] for failure in failures}
     if any(hashlib.sha256(Path(p).read_bytes()).hexdigest()!=h for p,h in proof_before.items()):raise RuntimeError('Differential native inputs changed concurrently; rerun before publishing')
     result=dict(operation='differential-generated-portable-method-source-oracle',cases=len(cases),passed=len(cases)-len(failures),
-        methods=len(report['emitted_methods']),verified_method_ids=[m['id'] for m in report['emitted_methods'] if m['id'] not in nonmatching_methods],known_platform_differences=[dict(method=f['method'],case=f['case'],note='Windows Unity Mono Math.Sin(-0) returns +0 while std::sin returns -0; Android runtime sign UNKNOWN, original Android Mono imports sin. Production call is unchanged.') for f in known_platform],unexpected_failures=[dict(method=f['method'],case=f['case']) for f in unexpected],executed_method_ids=[m['id'] for m in report['emitted_methods']],
+        methods=len(exercise_methods),verified_method_ids=[m['id'] for m in exercise_methods if m['id'] not in nonmatching_methods],known_platform_differences=[dict(method=f['method'],case=f['case'],note=('Unity Mono Windows defers a null reference-field managed-address check until dereference; CLR .NET10 validates before later arguments. Native keeps defined eager C# checking. Android ordering UNKNOWN; this method is executed but not verified.' if f in known_null_field else 'Windows Unity Mono Math.Sin(-0) returns +0 while std::sin returns -0; Android runtime sign UNKNOWN, original Android Mono imports sin. Production call is unchanged.')) for f in known_platform],unexpected_failures=[dict(method=f['method'],case=f['case']) for f in unexpected],executed_method_ids=[m['id'] for m in exercise_methods],unexercised_abstract_owner_methods=[m['id']for m in report['emitted_methods']if m not in exercise_methods],
         failures=[dict(method=f['method'],case=f['case']) for f in failures],
         scalar_float_comparison='exact IEEE bits',identity_hash_comparison='For exact return base.GetHashCode bodies only: repeated calls must be stable; allocation-dependent raw values are recorded privately and are not compared across runtimes.',identity_hash_method_ids=[m['id'] for m in report['emitted_methods'] if m.get('identity_hash_result')],post_state_compared=True,original_binaries_used=False,execution_seconds=RUN_TIMINGS,
         game_executed=False,runtime_profile='UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization',

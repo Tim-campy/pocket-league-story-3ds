@@ -4,13 +4,15 @@ O pedido da Fase 2 exige memória residente por categoria (texturas, áudio,
 código e heap) e frame time no primeiro boot. **Ainda não há medição de boot
 neste documento.** As leituras abaixo são infraestrutura e um teste sintético.
 Não promovem métodos do jogo a runs/verified e não demonstram título, menu ou
-partida. A integração no host espera o Main gerado compilar e ligar.
+partida. A execução integrada espera o Main gerado compilar e ligar.
 
 `src/main/pc_memory.hpp/.cpp` fornece `pls::pc::sample_process_memory()`.
 Usa somente o Windows SDK já instalado, sem nova dependência. O link precisa
 de `Psapi.lib`. Em outra plataforma os campos são ausentes, com diagnóstico
-explícito, em vez de apresentar zero como uma medição válida. O host ainda
-não foi alterado para consumir esse sampler.
+explícito, em vez de apresentar zero como uma medição válida. O host integra
+o sampler em modo opt-in `PLS_PC_METRICS=1`; o driver oferece `--run --metrics`.
+Os registros JSONL usam o prefixo `PLS_PC_METRICS=` em stderr, retido pelo driver
+sob `build/pc/attempts/`. Nenhum payload de asset é escrito nesses registros.
 
 | Leitura | Significado e limite |
 |---|---|
@@ -66,3 +68,45 @@ preservar separadamente os frames iniciais. Present pode bloquear por VSync e
 não deve ser interpretado automaticamente como custo de desenho da CPU. Medição
 residente por categoria exata e o frame time do jogo seguem UNKNOWN até a
 execução real; esse sampler não representa o primeiro boot.
+
+## Integração e prova do agregador
+
+`pc_metrics.hpp/.cpp` separa o relógio de frames do agregador determinístico.
+`tools/test_pc_metrics.py` passou **29 invariantes nativos e seis verificações
+JSON**; o target CMake `pc_metrics_test` e `ctest -R pc_metrics_fixture` também
+passaram. O recibo `config/phase2-pc-metrics-tests.json` descreve somente casos
+próprios com durações injetadas. Não promove método do jogo nem prova boot.
+
+Os eventos `memory` registram `before_main`, `first_presented_frame` e
+`final_before_teardown`. O guard final existe enquanto backend, áudio e display
+ainda estão vivos e cobre retorno por quit e exceções após a preparação desses
+recursos. Falha antes desse guard usa a fase `failure_after_setup_unwind`, com
+payloads ausentes. O primeiro frame completo registra a fase depois de present,
+liberação da textura e pacing, sem chamá-la de título ou menu. `game_screen`
+permanece UNKNOWN em todos os registros. O código não consulta formulários
+nem interpreta conteúdo de pixels para classificar uma tela.
+
+Os estágios são safepoint de GC, entrada, update, pump de áudio, desenho do
+jogo, upload, render do host, present, liberação da textura e pacing. O timestamp
+usado por `UnityApplication::pace(frame_start)` conserva sua posição e valor;
+as etapas são amostradas com steady_clock somente com instrumentação habilitada.
+São retidos os **primeiros 600 frames completos**, com contagem dos demais,
+e séries distintas para os primeiros 60 e os frames retidos após os primeiros
+60. Não se presume que 60 frames aqueçam o jogo ou correspondam a uma tela.
+A mediana par usa a média dos dois valores centrais; p95 usa nearest rank.
+Uma série vazia publica estatísticas null, enquanto duração medida zero é zero.
+Em uma saída que não completa frame algum, nenhum evento de primeiro frame
+é inventado. `frame_summary` contém outcome, contagens, janela e estatísticas.
+
+O display expõe tamanho e capacidade de seu RGBA. Backend.memory mede payload
+SDL corrente; o máximo observado após upload conserva a textura temporária
+mesmo que ela já tenha sido liberada no snapshot. Os valores de áudio são lidos
+pelo accessor com lock. A soma dos picos de resampler de cada voice é informada
+em payload_peaks e **não** prova um pico simultâneo do conjunto. Não se consulta
+o cache global de imagens nem o mapa privado de fontes enquanto seus acessos
+concorrentes não tiverem observação segura. Fontes, todas as imagens e bytes do
+heap permanecem UNKNOWN. Contagens do último GC são lidas com o lock existente.
+Snapshots fazem varredura de páginas em pontos limitados, fora da duração do
+frame já registrado; seu custo próprio é publicado em sampler_nanoseconds.
+Mesmo fora dessa duração, a instrumentação pode interferir no tempo de parede
+observado pelo jogo. Os números sempre pertencem ao modo instrumentado.

@@ -21,7 +21,7 @@ def main():
     source.parent.mkdir(parents=True,exist_ok=True);source.write_bytes(original.read_bytes())
     output=work/'generated';output.mkdir(exist_ok=True)
     csc,_,_=compiler_paths();unity=Path('C:/Users/l_abn/AppData/Local/Programs/Unity/5.3.4f1/Editor/Data/Mono')
-    framework=unity/'lib/mono/2.0'
+    framework=unity/'lib/mono/unity'
     request=dict(assembly='Assembly-CSharp',sources=[str(source)],references=[str(framework/'mscorlib.dll')],source_root=str(fixture_root),output=str(output),selected=['M:BakedArrayFixtures.Dynamic(System.Int32)','M:BakedArrayFixtures.ConstantControl'])
     input_file=work/'request.json';raw=work/'report.json'
     input_file.write_text(json.dumps(request)+'\n',encoding='utf8',newline='\n')

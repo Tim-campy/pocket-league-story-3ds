@@ -1,6 +1,7 @@
 #pragma once
 #include "canvas.hpp"
 #include "touch_value_accessor.hpp"
+#include "managed_shared_field.hpp"
 #include <optional>
 #include <thread>
 #include <atomic>
@@ -19,15 +20,16 @@ inline std::function<void(FormManagerBase&)> form_construction_hook;
 class FormBase : public cs::Object, public TouchValueAccessor {
     friend class FormManagerBase;
     friend class SourceFormExecution;
-    std::int32_t id_{},mode_{},continuous_{};
-    cs::String left_,right_,third_,fourth_;
+    std::int32_t id_{},continuous_{};
+    cs::SharedField<std::int32_t> mode_;
+    cs::SharedField<cs::String> left_,right_,third_,fourth_;
     cs::Ref<FormManagerBase> manager_;
 public:
     FormBase()=default;
     // Emitted allocation is separate from the C# base-constructor invocation.
     // Until this bridge runs, managed fields retain CLR-zero/default values.
     explicit FormBase(std::int32_t id){source_construct(id);}
-    void source_construct(std::int32_t id){left_=cs::String(u"");right_=cs::String(u"");id_=id;}
+    void source_construct(std::int32_t id){left_.store(cs::String(u""));right_.store(cs::String(u""));id_=id;}
     virtual bool Init(){return true;}virtual void Draw(cs::Ref<Graphics>){}virtual bool Update(){return true;}
     virtual bool Resume(){return true;}virtual void Suspend(){}virtual bool Finish(){return true;}
     std::int32_t GetTouchValue(std::int32_t,std::int32_t)override{return 0;}void SetTouchValue(std::int32_t,std::int32_t)override{}
@@ -45,11 +47,11 @@ public:
     bool source_ProcessEvent(cs::Ref<AppEvent> e){return FormBase::ProcessEvent(std::move(e));}
     bool source_ProcessBackKey(){return FormBase::ProcessBackKey();}
     void SetSoftLabel(cs::String,cs::String,cs::String={},cs::String={});
-    cs::String GetLeftSoftLabel(){return left_;}cs::String GetRightSoftLabel(){return right_;}
-    cs::String GetSoftLabel3(){return third_;}cs::String GetSoftLabel4(){return fourth_;}
+    cs::String GetLeftSoftLabel(){return left_.load();}cs::String GetRightSoftLabel(){return right_.load();}
+    cs::String GetSoftLabel3(){return third_.load();}cs::String GetSoftLabel4(){return fourth_.load();}
     bool Push(cs::Ref<FormBase>);bool Pop();bool CheckUsable();
-    std::int32_t GetId(){return id_;}std::int32_t GetProcessMode(){return mode_;}void SetProcessMode(std::int32_t value){mode_=value;}
-    bool IsAlive(){return mode_==3||mode_==1||mode_==2;}
+    std::int32_t GetId(){return id_;}std::int32_t GetProcessMode(){return mode_.load();}void SetProcessMode(std::int32_t value){mode_.store(value);}
+    bool IsAlive(){return mode_.load()==3||mode_.load()==1||mode_.load()==2;}
     void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
 };
 // Platform bridges resolve real source collaborators. A null game-state bridge
@@ -97,7 +99,7 @@ public:
     cs::Ref<FormBase> GetDownForm(){return stack_.empty()?nullptr:stack_.front();}
     cs::Ref<FormBase> GetCurrentForm(){return current_?current_:GetTopForm();}
     bool RemoveAllForms();void MoveToTop(cs::Ref<FormBase>);void MoveToDown(cs::Ref<FormBase>);
-    bool CheckUsable(cs::Ref<FormBase> form){if(!form)throw cs::NullReferenceException();return form->mode_!=4;}
+    bool CheckUsable(cs::Ref<FormBase> form){if(!form)throw cs::NullReferenceException();return form->mode_.load()!=4;}
     void DrawAllForms(bool=false){draw_all_=true;}void DrawSkip(){draw_skip_=true;}bool IsDrawSkip(){return draw_skip_;}
     void SetLoadingForm(cs::Ref<FormBase>);void SetPrintForm(cs::Ref<FormBase>);
     void Draw(cs::Ref<Graphics>);

@@ -96,6 +96,10 @@ public class CanvasKeyOracle {
     mono=oldroot/'Editor/Data/Mono/bin/mono.exe';smcs=oldroot/'Editor/Data/Mono/lib/mono/unity/smcs.exe'
     env=dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(oldroot/'Editor/Data/Mono/etc'))
     old=folder/'InputOracle-mono.exe';run([mono,smcs,'-nologo','-noconfig','-optimize+','-out:'+str(old),*sources],folder,'mono-compile',env)
+    pulse_source=folder/'InputPulseOracle.cs'
+    pulse_source.write_text((ROOT/'tests/kairo/InputPulseOracle.cs').read_text(encoding='utf-8').replace('/* ORIGINAL_CHECK_KEY_PULSE */',span(canvas,'public bool CheckKeyPulse(int key)')),encoding='utf-8',newline='\n')
+    pulse_modern=folder/'InputPulseOracle.dll';compile_modern([pulse_source],pulse_modern,folder,'pulse-dotnet',csc,framework)
+    pulse_old=folder/'InputPulseOracle-mono.exe';run([mono,smcs,'-nologo','-noconfig','-optimize+','-out:'+str(pulse_old),pulse_source],folder,'pulse-mono-compile',env)
     native_sources=[ROOT/p for p in ['tests/kairo/input_fixtures.cpp','src/kairo/platform/sdl/input.cpp','src/kairo/common/semantic_runtime.cpp']]
     native=folder/'input-fixtures.exe';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
     run([cl,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/O2','/utf-8','/DSDL_MAIN_HANDLED',
@@ -106,10 +110,17 @@ public class CanvasKeyOracle {
         if len(a)!=len(b):raise ValueError('Input trace length differs')
         cases += [dict(profile=profile,case=x.split('=',1)[0],expected=x,actual=y,passed=x==y) for x,y in zip(a,b)]
     adapter=json.loads(run([native,'adapter'],folder,'adapter-run',environment()))
+    pulse_actual=run([native,'pulse'],folder,'pulse-native-run',environment());pulse_cases=[]
+    for profile,command,environment_ in [('dotnet',[dotnet,pulse_modern],None),('mono',[mono,pulse_old],env)]:
+        expected=run(command,folder,'pulse-'+profile+'-run',environment_)
+        a,b=expected.splitlines(),pulse_actual.splitlines()
+        if len(a)!=len(b):raise ValueError('Pulse storage trace length differs')
+        pulse_cases += [dict(profile=profile,case=x.split('=',1)[0],expected=x,actual=y,passed=x==y) for x,y in zip(a,b)]
+    if not all(c['passed'] for c in pulse_cases):raise ValueError('Cached pulse/lost-update contract differs')
     passed=all(c['passed'] for c in cases)
-    inputs=native_sources+[ROOT/'src/kairo/api/input.hpp',ROOT/'tests/kairo/InputOracle.cs',ROOT/'tools/test_input.py',ROOT/'tools/native_api_proof.py',ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/platform/sdl/backend.hpp']
+    inputs=native_sources+[ROOT/'src/kairo/api/input.hpp',ROOT/'tests/kairo/InputOracle.cs',ROOT/'tests/kairo/InputPulseOracle.cs',ROOT/'tools/test_input.py',ROOT/'tools/native_api_proof.py',ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/managed_shared_field.hpp',ROOT/'src/kairo/platform/sdl/backend.hpp']
     report=dict(verified_boundary_ids=input_ids(),operation='original-source-event-Canvas-key-state-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,
-        native_adapter_policy=adapter,native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},
+        native_adapter_policy=adapter,pulse_storage_instrumentation=dict(cases=pulse_cases,fixture_cases=len(pulse_cases),passed=sum(c['passed'] for c in pulse_cases),source_body_unchanged=True,source_field_instrumented_as_property=True,production_uses_separate_load_store=True),native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},
         source_manifest=[dict(path=p.relative_to(ROOT/'reference').as_posix(),sha256=sha(p)) for p in [original_canvas,*original_events]],
         keycode_metadata_sha256=sha(unity),checked_Unity_KeyCode_constants=checked,
         source_path_limits=['Canvas key-state bodies only; physical polling and full touch routing are not differential-tested.',

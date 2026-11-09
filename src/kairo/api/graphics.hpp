@@ -1,6 +1,7 @@
 #pragma once
 #include "semantic_runtime.hpp"
 #include "asset_catalog.hpp"
+#include "managed_shared_field.hpp"
 #include <array>
 namespace pls::kairo {
 class Graphics;
@@ -56,7 +57,10 @@ public:
     const std::vector<std::uint8_t>& pixels()const;
 };
 class Graphics : public cs::Object {
+    friend class Canvas;
+    inline static cs::SharedField<cs::Ref<Graphics>> current_;
     cs::Ref<Image> target_;
+    bool is_gui_{};
     std::int32_t color_{cs::bit_copy<std::int32_t>(std::uint32_t(0xff000000))},origin_x_{},origin_y_{};
     float scale_{100.0f};
     std::array<float,9> world_{1,0,0,0,1,0,0,0,1};
@@ -75,7 +79,11 @@ class Graphics : public cs::Object {
     std::array<float,2> point(float,float)const;
     void update_world();
 public:
-    explicit Graphics(cs::Ref<Image>);
+    explicit Graphics(cs::Ref<Image>,bool display_context=false);
+    static cs::Ref<Graphics> GetCurrent(){return current_.load();}
+    bool IsGUI()const{return is_gui_;}
+    bool IsRenderGUIMode()const{return is_gui_;} // CPU backend has no active GL batch.
+    void ResetRender();
     static std::int32_t GetColorOfRGB(std::int32_t,std::int32_t,std::int32_t);
     static std::int32_t GetColorOfRGB(std::int32_t,std::int32_t,std::int32_t,std::int32_t);
     static cs::Array<std::int32_t> GetAnchorPosition(std::int32_t,std::int32_t,std::int32_t,std::int32_t,std::int32_t);

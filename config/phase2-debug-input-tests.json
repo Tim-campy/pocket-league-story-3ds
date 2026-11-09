@@ -1,0 +1,240 @@
+{
+  "operation": "SDL-debug-input-snapshot-original-coordinate-expressions",
+  "status": "PASS",
+  "fixture_cases": 24,
+  "passed": 24,
+  "cases": [
+    {
+      "profile": "UnityMono265",
+      "case": "frame-0",
+      "expected": "00;00;00;00;00000000,438c0000,00000000;280;c0a98953,c0fe4dfd",
+      "actual": "00;00;00;00;00000000,438c0000,00000000;280;c0a98953,c0fe4dfd",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-1",
+      "expected": "10;10;10;10;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "actual": "10;10;10;10;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-2",
+      "expected": "10;10;00;00;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "actual": "10;10;00;00;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-3",
+      "expected": "10;10;00;00;c0a00000,c1a00000,00000000;280;c13eba7d,43c2b3b5",
+      "actual": "10;10;00;00;c0a00000,c1a00000,00000000;280;c13eba7d,43c2b3b5",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-4",
+      "expected": "01;11;01;01;41f00000,43700000,00000000;280;4209bf93,423421e8",
+      "actual": "01;11;01;01;41f00000,43700000,00000000;280;4209bf93,423421e8",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-5",
+      "expected": "00;00;00;00;42000000,436e0000,00000000;280;42145829,423eba7d",
+      "actual": "00;00;00;00;42000000,436e0000,00000000;280;42145829,423eba7d",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-6",
+      "expected": "00;00;10;10;40000000,438a8000,00000000;280;c0298953,c07e4dfd",
+      "actual": "00;00;10;10;40000000,438a8000,00000000;280;c0298953,c07e4dfd",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-7",
+      "expected": "00;00;00;00;cf000000,cefffffe,00000000;280;cf298953,4f298953",
+      "actual": "00;00;00;00;cf000000,cefffffe,00000000;280;cf298953,4f298953",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-8",
+      "expected": "00;00;11;11;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "actual": "00;00;11;11;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-9",
+      "expected": "00;00;00;00;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "actual": "00;00;00;00;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-10",
+      "expected": "01;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "actual": "01;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "frame-11",
+      "expected": "00;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "actual": "00;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-0",
+      "expected": "00;00;00;00;00000000,438c0000,00000000;280;c0a98953,c0fe4dfd",
+      "actual": "00;00;00;00;00000000,438c0000,00000000;280;c0a98953,c0fe4dfd",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-1",
+      "expected": "10;10;10;10;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "actual": "10;10;10;10;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-2",
+      "expected": "10;10;00;00;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "actual": "10;10;00;00;41200000,43820000,00000000;280;40fe4dfd,41945829",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-3",
+      "expected": "10;10;00;00;c0a00000,c1a00000,00000000;280;c13eba7d,43c2b3b5",
+      "actual": "10;10;00;00;c0a00000,c1a00000,00000000;280;c13eba7d,43c2b3b5",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-4",
+      "expected": "01;11;01;01;41f00000,43700000,00000000;280;4209bf93,423421e8",
+      "actual": "01;11;01;01;41f00000,43700000,00000000;280;4209bf93,423421e8",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-5",
+      "expected": "00;00;00;00;42000000,436e0000,00000000;280;42145829,423eba7d",
+      "actual": "00;00;00;00;42000000,436e0000,00000000;280;42145829,423eba7d",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-6",
+      "expected": "00;00;10;10;40000000,438a8000,00000000;280;c0298953,c07e4dfd",
+      "actual": "00;00;10;10;40000000,438a8000,00000000;280;c0298953,c07e4dfd",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-7",
+      "expected": "00;00;00;00;cf000000,cefffffe,00000000;280;cf298953,4f298953",
+      "actual": "00;00;00;00;cf000000,cefffffe,00000000;280;cf298953,4f298953",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-8",
+      "expected": "00;00;11;11;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "actual": "00;00;11;11;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-9",
+      "expected": "00;00;00;00;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "actual": "00;00;00;00;40c00000,43888000,00000000;280;40298953,3fa98953",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-10",
+      "expected": "01;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "actual": "01;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "frame-11",
+      "expected": "00;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "actual": "00;00;00;00;41100000,43878000,00000000;280;40d3eba8,407e4dfd",
+      "passed": true
+    }
+  ],
+  "native_policy": {
+    "status": "PASS",
+    "assertions": 24,
+    "sdk_synthetic_frames": 12,
+    "game_boot": false,
+    "physical_user_input_used": false
+  },
+  "verified_boundary_ids": [],
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/surface/SurfaceManagerBase.cs",
+      "sha256": "eef5edc4f3f3a337d26c74d9ecd3487745a610006f01181244b75355a4371825"
+    }
+  ],
+  "original_expression_sha256": [
+    "6d0930dc490e45e3e8e71467d6fd4a5086d45948023d35e5b92c215497e1b6b4",
+    "37d9de7fffb8d098a7386cb9e0ad9667f29bfe65cda87185d72828276abd303f"
+  ],
+  "inputs_sha256": {
+    "tests/kairo/debug_input_fixtures.cpp": "1b0cf2d77bebdfad9ce49930fdaa33cdb1dddf0a87b354b767855911dcb5c090",
+    "src/kairo/platform/sdl/backend.cpp": "8b76e8469af5d63a1cf3e847205c1cf2fcb3ac18e55ce463157d2b8c593f2bea",
+    "src/kairo/platform/sdl/debug_input.cpp": "6c5c62c4c7fe687d4d6f22bbe6bd0f609edb31e063c50338252919097bd9f713",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/DebugInputOracle.cs": "c658fcf09d326ebf7cb7d6da63343082bafa65b5e03914574500f1fa6d432bfd",
+    "tests/kairo/UnityDebugInputMetadata.cs": "6ce29f5c1302cd39fcf52d2a893cc91d2287a023912e21df3c89d65dd9136c54",
+    "tools/test_debug_input.py": "1e9f1a8c856f95c3917c8ad1452bd4e4c138a15573364a25d33c58323741f9b8",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
+    "src/kairo/api/debug_input.hpp": "98b997edacbcd78acfe15263ea5e9ff9d648f81b71d831d04168ed05ffd73c27",
+    "src/kairo/api/vector3.hpp": "f95494b057b1f7a43f8e53efc9942641c592d32030f7f35c592fcce8407e4707",
+    "src/kairo/platform/sdl/debug_input.hpp": "cd94188a03c614fa6fce4072d76c2057a9cadad7473d500817f8a2acfa9c5cd1",
+    "src/kairo/platform/sdl/backend.hpp": "81cf34cc2fc084428aef4eb4ea6f080bbe98047e429de15b9f35955105281d1e",
+    "src/kairo/api/platform.hpp": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
+  },
+  "native_executable": {
+    "path": "build/debug-input-tests/debug-input-fixtures.exe",
+    "sha256": "e236b78ba7e495baa5672140b554447bf18c4668d4d42c2c14ae9dc45b26bdab"
+  },
+  "external_api_metadata": {
+    "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
+    "observations": [
+      "method:Screen.get_height=InternalCall;rva=0",
+      "field:Vector3.x=060c",
+      "field:Vector3.y=060c",
+      "field:Vector3.z=060c",
+      "method:Input.GetKey=IL;rva=62548",
+      "method:Input.GetKey=IL;rva=62556",
+      "method:Input.GetMouseButton=InternalCall;rva=0",
+      "method:Input.GetMouseButtonDown=InternalCall;rva=0",
+      "method:Input.get_mousePosition=IL;rva=62596",
+      "key:RightShift=303",
+      "key:LeftShift=304"
+    ]
+  },
+  "limitations": [
+    "Exact original coordinate expressions plus own Input collaborator; not full SurfaceManagerBase.DoEvents/Draw proof.",
+    "SDL synthetic headless events prove native snapshot policy; no original Unity native Input, Android or physical user input exercised.",
+    "Only Shift GetKey, mouse buttons0/1 held/down, mousePosition fields and render height are admitted; other APIs/keys/buttons remain refused.",
+    "The existing Canvas pulse and mouse aggregation consumer is separate and unchanged."
+  ],
+  "game_boot": false,
+  "game_assets_used": false,
+  "physical_user_input_used": false,
+  "original_binaries_executed": false
+}

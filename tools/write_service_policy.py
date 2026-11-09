@@ -5,6 +5,45 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 
+def typed_lowering(policy):
+    """A finite lowering contract; the emitter never parses prose results."""
+    identifier=policy['symbol']
+    result=policy['result_contract']
+    constants={
+        'void':dict(kind='void'),
+        'false':dict(kind='bool_false'),
+        'false after state cleared':dict(kind='bool_false'),
+        'true (disabled local backend is ready; not shop availability)':dict(kind='bool_true'),
+        'null Purchase':dict(kind='null'),
+        'null string[][]':dict(kind='null'),
+        'empty string[]':dict(kind='empty_string_array'),
+        'RestoreResult.Faild = 1':dict(kind='int_exact',value=1),
+        'State.None = -1':dict(kind='int_exact',value=-1),
+        'FilterLevel.None = 0':dict(kind='int_exact',value=0),
+        'void; never enable transport':dict(kind='void'),
+    }
+    if identifier=='M:main.AppData.CgiRegist(System.String,System.String)':
+        return dict(kind='register_local',native_hook='pls::services::managed::register_local',native_include='services_managed.hpp',field_assignments=[])
+    if identifier=='M:kairo.unity.ad.AdMobView.GetAdHeight':
+        return dict(kind='int_exact',value=0,field_assignments=[])
+    if result not in constants:raise ValueError('No typed lowering for '+identifier)
+    lowering=dict(constants[result],field_assignments=[])
+    if identifier=='M:surface.SurfaceManager.UpdateAdMobView':
+        lowering['field_assignments']=[
+            dict(field='F:kairo.common.cfg.Config.ADMOB_ENABLE',kind='bool',value=False),
+            dict(field='F:surface.GamePad.SIZE_PLAIN',kind='int',value=65)]
+        lowering['native_representation']='canvas_ads_absent'
+    elif identifier=='M:kairo.unity.ui.Canvas.UpdateAdMobView':
+        lowering['kind']='canvas_ads_absent'
+        lowering['return_kind']='bool_false'
+        lowering['field_assignments']=[dict(field='F:kairo.common.cfg.Config.ADMOB_ENABLE',kind='bool',value=False)]
+        lowering['native_representation']='Canvas has no ad object, pending flag, JNI creation/destruction callbacks or transport; absence is structural'
+    elif identifier=='M:system.tapjoy.ui.Tapjoy.ShowOffers':
+        lowering['field_assignments']=[dict(field='F:system.tapjoy.ui.Tapjoy.offerState_',kind='enum',value=2,
+            enum_member='F:system.tapjoy.ui.Tapjoy.OfferState.Failed')]
+    return lowering
+
+
 def main():
     policies=[]
     def add(symbol,action,result,hook=None,**extra):
@@ -65,9 +104,10 @@ def main():
         ('GetNotificationData','','empty string[]'),('GetNotificationFilter','','FilterLevel.None = 0')]:
         add('M:kairo.unity.native.KairoPlugin.'+name+('('+args+')' if args else ''),'constant',result)
     add('M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification','constant','false')
+    for policy in policies:policy['lowering']=typed_lowering(policy)
     # No fabricated license result: these two internals are cut by local register
     # substitution and by not generating the removed licensing API at all.
-    report=dict(schema_version=1,operation='explicit-user-platform-policies',
+    report=dict(schema_version=1,lowering_schema_version=1,operation='explicit-user-platform-policies',
         integration_status='PENDING_GENERATED_GAME_BINDING',
         host_bootstrap=['Construct OfflineServices with host preference directory','install(&services)',
                         'Call device_id() before constructing generated Main; do not wait for registration counter'],
@@ -84,7 +124,7 @@ def main():
         save_policy='No service function accepts a mutable game save; preserve serialized billing and unknown fields',
         states_modified=False,reference_modified=False)
     (ROOT/'config/service-overrides.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
-    print(json.dumps(dict(platform_overrides=len(policies),integration_status=report['integration_status'])))
+    print(json.dumps(dict(platform_overrides=len(policies),typed_overrides=sum('lowering' in p for p in policies),integration_status=report['integration_status'])))
 
 
 if __name__=='__main__':main()

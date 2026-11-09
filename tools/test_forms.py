@@ -94,9 +94,10 @@ namespace kairo.unity.form {
   if len(a)!=len(b):raise ValueError('Form trace lengths differ')
   cases += [dict(profile=profile,case=x.split('=',1)[0],expected=x,actual=y,passed=x==y) for x,y in zip(a,b)]
  policy=json.loads(run([native,'policy'],folder,'native-policy',environment()))
+ concurrency=json.loads(run([native,'concurrent'],folder,'native-concurrent',environment()))
  passed=all(x['passed'] for x in cases)
- inputs=native_sources+[source,ROOT/'tools/test_forms.py',ROOT/'tools/native_api_proof.py',ROOT/'tools/test_input.py']+[ROOT/'src/kairo/api'/p for p in ['canvas.hpp','forms.hpp','touch_value_accessor.hpp','input.hpp','graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/asset_catalog.hpp',ROOT/'src/kairo/platform/sdl/font.hpp']
- report=dict(verified_boundary_ids=forms_ids(),operation='original-source-FormBase-stack-Canvas-label-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(x['passed'] for x in cases),cases=cases,native_platform_policy=policy,
+ inputs=native_sources+[source,ROOT/'tools/test_forms.py',ROOT/'tools/native_api_proof.py',ROOT/'tools/test_input.py']+[ROOT/'src/kairo/api'/p for p in ['canvas.hpp','forms.hpp','touch_value_accessor.hpp','input.hpp','graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/managed_shared_field.hpp',ROOT/'src/kairo/common/asset_catalog.hpp',ROOT/'src/kairo/platform/sdl/font.hpp']
+ report=dict(verified_boundary_ids=forms_ids(),operation='original-source-FormBase-stack-Canvas-label-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(x['passed'] for x in cases),cases=cases,native_platform_policy=policy,native_concurrent_fields=concurrency,
   inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},source_manifest=[dict(path=p.relative_to(ROOT/'reference').as_posix(),sha256=sha(p)) for p in [manager,canvas,*originals]],
   original_methods={'FormManagerBase':MANAGER,'Canvas':CANVAS,'FormBase':'entire original class'},
   native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),

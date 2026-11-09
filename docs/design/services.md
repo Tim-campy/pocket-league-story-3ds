@@ -4,6 +4,19 @@ Estas políticas aplicam as decisões explícitas do usuário após o inventári
 
 Implementação nativa: `src/kairo/common/services.hpp/.cpp`, namespace `pls::services`. Política por símbolo: `config/service-overrides.json`, gerada por `python tools/write_service_policy.py`. **O teste da política nativa não prova que os overrides já foram ligados ao jogo traduzido nem que o boot funciona.** O recibo mantém integração `PENDING` até o emissor gerar, compilar e exercitar esses chamadores.
 
+O produtor também emite `lowering_schema_version=1` e um contrato técnico
+`lowering` por símbolo. O emissor não precisa interpretar o texto de
+`result_contract`: `kind` distingue void, booleanos, null, array vazio,
+inteiro exato, registro local e ausência estrutural de ads. `field_assignments`
+fornece DocIDs e valores tipados; preserva `GamePad.SIZE_PLAIN=65` e
+`Tapjoy.offerState_=OfferState.Failed` (valor 2), além de desativar ADMOB_ENABLE.
+No Canvas nativo não existem objeto de anúncio, flag pendente ou callbacks
+JNI de criação/destruição: sua ausência é estrutural. Isso dispensa criar um
+backend fictício que apenas retorne sucesso. O hook tipado de registro é
+`pls::services::managed::register_local`, que devolve `Array<byte>` e traduz
+falhas de persistência em IOException; o hook de bytes nativos permanece como
+contrato interno do serviço.
+
 ## Registro: resposta e identidade são contratos diferentes
 
 `main.AppData.CgiRegist(string,string)`, `reference/src/Assembly-CSharp/main/AppData.cs:1945–1953`, tem um ramo local explícito. Sua resposta é exatamente os cinco bytes ASCII/UTF-8 **`1\n202`**. A implementação `OfflineServices::register_local_wire()` reproduz essa resposta sem transporte, criando antes a identidade persistente local. Falha de armazenamento lança `PersistenceError`: não se informa sucesso se o identificador não pôde ser persistido. O bridge para o runtime deve converter esse erro na exceção de IO correspondente.

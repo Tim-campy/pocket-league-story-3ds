@@ -1,0 +1,465 @@
+{
+  "operation": "original-source-IApplication-orientation-getters-differential",
+  "status": "PASS",
+  "fixture_cases": 40,
+  "passed": 40,
+  "cases": [
+    {
+      "profile": "UnityMono265",
+      "case": "side-0",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=0",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=0",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-1",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-2",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=2",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=2",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-3",
+      "expected": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-4",
+      "expected": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "actual": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-5",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=5",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=5",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-99",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=99",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=99",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-0",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=0",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=0",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-1",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=1",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-2",
+      "expected": "2;gets=1;auto_gets=0;sets=0;stored=2",
+      "actual": "2;gets=1;auto_gets=0;sets=0;stored=2",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-3",
+      "expected": "3;gets=1;auto_gets=0;sets=0;stored=3",
+      "actual": "3;gets=1;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-4",
+      "expected": "1;gets=1;auto_gets=0;sets=0;stored=4",
+      "actual": "1;gets=1;auto_gets=0;sets=0;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-5",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=5",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=5",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "get-99",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=99",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=99",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-reread-0",
+      "expected": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-reread-1",
+      "expected": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "actual": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-reread-2",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-reread-3",
+      "expected": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-reread-4",
+      "expected": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "side-reread-5",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=3",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-0",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=0",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=0",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-1",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-2",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=2",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=2",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-3",
+      "expected": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-4",
+      "expected": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "actual": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-5",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=5",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=5",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-99",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=99",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=99",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-0",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=0",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=0",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-1",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=1",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-2",
+      "expected": "2;gets=1;auto_gets=0;sets=0;stored=2",
+      "actual": "2;gets=1;auto_gets=0;sets=0;stored=2",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-3",
+      "expected": "3;gets=1;auto_gets=0;sets=0;stored=3",
+      "actual": "3;gets=1;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-4",
+      "expected": "1;gets=1;auto_gets=0;sets=0;stored=4",
+      "actual": "1;gets=1;auto_gets=0;sets=0;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-5",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=5",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=5",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "get-99",
+      "expected": "0;gets=1;auto_gets=0;sets=0;stored=99",
+      "actual": "0;gets=1;auto_gets=0;sets=0;stored=99",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-reread-0",
+      "expected": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-reread-1",
+      "expected": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "actual": "True;gets=3;auto_gets=0;sets=0;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-reread-2",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-reread-3",
+      "expected": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=2;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-reread-4",
+      "expected": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "actual": "True;gets=1;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "side-reread-5",
+      "expected": "False;gets=3;auto_gets=0;sets=0;stored=3",
+      "actual": "False;gets=3;auto_gets=0;sets=0;stored=3",
+      "passed": true
+    }
+  ],
+  "native_policy": {
+    "status": "PASS",
+    "assertions": 8,
+    "monitor_sensor_used": false,
+    "setter_autorotate_implemented": false
+  },
+  "verified_boundary_ids": [
+    "M:kairo.unity.ui.IApplication.GetOrientation",
+    "M:kairo.unity.ui.IApplication.IsSide"
+  ],
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/IApplication.cs",
+      "sha256": "3e9fd412628d295c4132ae08fa09c8bcfa19c923e08e0deb904073e857b8d2c0"
+    }
+  ],
+  "original_method_spans": [
+    {
+      "signature": "public bool IsSide()",
+      "sha256": "ca1061de9fd9b0e8db767a62febc7afbc86622507c9e40a6e16fc37ef4576777"
+    },
+    {
+      "signature": "public int GetOrientation()",
+      "sha256": "fbdfdee567d16076d8f13ba7d171af073230e8069581805e8f6992077a1c5984"
+    },
+    {
+      "signature": "public void SetOrientation(int orientation)",
+      "sha256": "309b9608106e2db1308d6629f18f1a490528a6527b43f6758545435b89e00603"
+    },
+    {
+      "signature": "public bool IsAutoOrientation()",
+      "sha256": "b446763fa4456e90e4e7f44371916601cfe8ff1b5c4c37bb912886eddb514295"
+    },
+    {
+      "signature": "public void ResetOrientation()",
+      "sha256": "f3aff9e6873b330b4940a7ed9a0ac8542e017fbf6cf7e89862e839a73f488ddd"
+    }
+  ],
+  "inputs_sha256": {
+    "tests/kairo/application_orientation_fixtures.cpp": "7218c3ff1db3b072010354f9f01de243a66752f8c56b62847bcdd020f66d3472",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/ApplicationOrientationOracle.cs": "85a9c1016610bbe4c389bba607ee2e147c05a7e7501067187baae3282f1b264e",
+    "tests/kairo/UnityScreenMetadata.cs": "a662fea60d991e954ef51bd91947a669585d771df4ae68fab479efeb6fc56297",
+    "tools/test_application_orientation.py": "12cf3b6c998d3f0586789dc71a1a23ca1f2d10b6451ed0b44a94e441e5e4d31f",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
+    "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
+    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
+  },
+  "native_executable": {
+    "path": "build/application-orientation-tests/application-orientation-fixtures.exe",
+    "sha256": "38f124c87a1ac83cdc75a71e3de6f61f0a18618ef06a07edaad7a4341481f5fd"
+  },
+  "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+  "external_unity_api_metadata": {
+    "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
+    "observations": [
+      "property:get_autorotateToPortrait=InternalCall;rva=0",
+      "property:set_autorotateToPortrait=InternalCall;rva=0",
+      "property:get_orientation=InternalCall;rva=0",
+      "property:set_orientation=InternalCall;rva=0",
+      "enum:Unknown=0",
+      "enum:Portrait=1",
+      "enum:PortraitUpsideDown=2",
+      "enum:LandscapeLeft=3",
+      "enum:LandscapeRight=4",
+      "enum:AutoRotation=5",
+      "enum:Landscape=3"
+    ]
+  },
+  "source_only_context": [
+    {
+      "profile": "UnityMono265",
+      "native_verified": false,
+      "observations": {
+        "auto-0-False": "False;gets=0;auto_gets=1;sets=0;stored=0",
+        "auto-0-True": "True;gets=0;auto_gets=1;sets=0;stored=0",
+        "auto-1-False": "False;gets=0;auto_gets=1;sets=0;stored=1",
+        "auto-1-True": "True;gets=0;auto_gets=1;sets=0;stored=1",
+        "auto-2-False": "False;gets=0;auto_gets=1;sets=0;stored=2",
+        "auto-2-True": "True;gets=0;auto_gets=1;sets=0;stored=2",
+        "auto-3-False": "False;gets=0;auto_gets=1;sets=0;stored=3",
+        "auto-3-True": "True;gets=0;auto_gets=1;sets=0;stored=3",
+        "auto-4-False": "False;gets=0;auto_gets=1;sets=0;stored=4",
+        "auto-4-True": "True;gets=0;auto_gets=1;sets=0;stored=4",
+        "auto-5-False": "False;gets=0;auto_gets=1;sets=0;stored=5",
+        "auto-5-True": "True;gets=0;auto_gets=1;sets=0;stored=5",
+        "auto-99-False": "False;gets=0;auto_gets=1;sets=0;stored=99",
+        "auto-99-True": "True;gets=0;auto_gets=1;sets=0;stored=99",
+        "set--2147483648": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set--2": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set--1": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set-0": "0/False/False;gets=4;auto_gets=1;sets=1;stored=1",
+        "set-1": "1/True/False;gets=4;auto_gets=1;sets=1;stored=4",
+        "set-2": "2/False/False;gets=4;auto_gets=1;sets=1;stored=2",
+        "set-3": "3/True/False;gets=2;auto_gets=1;sets=1;stored=3",
+        "set-4": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set-90": "1/True/False;gets=4;auto_gets=1;sets=1;stored=4",
+        "set-180": "2/False/False;gets=4;auto_gets=1;sets=1;stored=2",
+        "set-270": "3/True/False;gets=2;auto_gets=1;sets=1;stored=3",
+        "set-360": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set-2147483647": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "reset-0": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
+        "reset-1": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
+        "reset-2": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
+        "reset-3": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
+        "reset-4": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
+        "reset-5": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
+        "reset-99": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
+        "reset-before-awake": "0;gets=1;auto_gets=0;sets=1;stored=0",
+        "set-does-not-change-autorotate-False-0": "False;gets=0;auto_gets=1;sets=1;stored=1",
+        "set-does-not-change-autorotate-False-4": "False;gets=0;auto_gets=1;sets=1;stored=5",
+        "set-does-not-change-autorotate-False-90": "False;gets=0;auto_gets=1;sets=1;stored=4",
+        "set-does-not-change-autorotate-True-0": "True;gets=0;auto_gets=1;sets=1;stored=1",
+        "set-does-not-change-autorotate-True-4": "True;gets=0;auto_gets=1;sets=1;stored=5",
+        "set-does-not-change-autorotate-True-90": "True;gets=0;auto_gets=1;sets=1;stored=4"
+      }
+    },
+    {
+      "profile": "DotNet",
+      "native_verified": false,
+      "observations": {
+        "auto-0-False": "False;gets=0;auto_gets=1;sets=0;stored=0",
+        "auto-0-True": "True;gets=0;auto_gets=1;sets=0;stored=0",
+        "auto-1-False": "False;gets=0;auto_gets=1;sets=0;stored=1",
+        "auto-1-True": "True;gets=0;auto_gets=1;sets=0;stored=1",
+        "auto-2-False": "False;gets=0;auto_gets=1;sets=0;stored=2",
+        "auto-2-True": "True;gets=0;auto_gets=1;sets=0;stored=2",
+        "auto-3-False": "False;gets=0;auto_gets=1;sets=0;stored=3",
+        "auto-3-True": "True;gets=0;auto_gets=1;sets=0;stored=3",
+        "auto-4-False": "False;gets=0;auto_gets=1;sets=0;stored=4",
+        "auto-4-True": "True;gets=0;auto_gets=1;sets=0;stored=4",
+        "auto-5-False": "False;gets=0;auto_gets=1;sets=0;stored=5",
+        "auto-5-True": "True;gets=0;auto_gets=1;sets=0;stored=5",
+        "auto-99-False": "False;gets=0;auto_gets=1;sets=0;stored=99",
+        "auto-99-True": "True;gets=0;auto_gets=1;sets=0;stored=99",
+        "set--2147483648": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set--2": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set--1": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set-0": "0/False/False;gets=4;auto_gets=1;sets=1;stored=1",
+        "set-1": "1/True/False;gets=4;auto_gets=1;sets=1;stored=4",
+        "set-2": "2/False/False;gets=4;auto_gets=1;sets=1;stored=2",
+        "set-3": "3/True/False;gets=2;auto_gets=1;sets=1;stored=3",
+        "set-4": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set-90": "1/True/False;gets=4;auto_gets=1;sets=1;stored=4",
+        "set-180": "2/False/False;gets=4;auto_gets=1;sets=1;stored=2",
+        "set-270": "3/True/False;gets=2;auto_gets=1;sets=1;stored=3",
+        "set-360": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "set-2147483647": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
+        "reset-0": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
+        "reset-1": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
+        "reset-2": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
+        "reset-3": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
+        "reset-4": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
+        "reset-5": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
+        "reset-99": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
+        "reset-before-awake": "0;gets=1;auto_gets=0;sets=1;stored=0",
+        "set-does-not-change-autorotate-False-0": "False;gets=0;auto_gets=1;sets=1;stored=1",
+        "set-does-not-change-autorotate-False-4": "False;gets=0;auto_gets=1;sets=1;stored=5",
+        "set-does-not-change-autorotate-False-90": "False;gets=0;auto_gets=1;sets=1;stored=4",
+        "set-does-not-change-autorotate-True-0": "True;gets=0;auto_gets=1;sets=1;stored=1",
+        "set-does-not-change-autorotate-True-4": "True;gets=0;auto_gets=1;sets=1;stored=5",
+        "set-does-not-change-autorotate-True-90": "True;gets=0;auto_gets=1;sets=1;stored=4"
+      }
+    }
+  ],
+  "limits": [
+    "Only IsSide/GetOrientation are native source-differential proofs; setter/reset/autorotate remain source-only context and are not implemented.",
+    "Window aspect policy is explicit PC behavior, not evidence of original Unity desktop or Android sensor behavior.",
+    "The provider is installed before managed workers; captures must be native only and synchronization of mutable provider state is the host obligation.",
+    "No SDL monitor orientation, Android global configuration flag or Nintendo 3DS layout is selected."
+  ],
+  "game_boot": false,
+  "game_assets_used": false,
+  "original_binaries_executed": false,
+  "original_unity_binary_copied": false
+}

@@ -2,11 +2,28 @@
 #include <SDL.h>
 #include <iostream>
 #include <sstream>
+#include <atomic>
+#include <thread>
 using namespace pls::kairo;
 template<class F>void P(const char* name,F&& f){std::cout<<name<<'=';try{std::cout<<f();}catch(const pls::cs::Exception& e){std::cout<<'!'<<e.type_name();}std::cout<<'\n';}
 const char* T(bool x){return x?"True":"False";}
 std::string State(CanvasKeyState& k){return std::to_string(k.GetKeyState())+":"+std::to_string(k.GetKeypadState());}
-int main(int argc,char**){
+int pulse_policy(){
+ struct Field {
+  pls::cs::SharedField<std::int32_t> storage{3};std::atomic<int> loads{0},stores{0},ready{0};std::atomic<bool> release{false};bool gated{};
+  std::int32_t load(){const auto v=storage.load();++loads;if(gated){++ready;while(!release.load())std::this_thread::yield();}else storage.store(8);return v;}
+  void store(std::int32_t v){++stores;storage.store(v);}
+ } snapshot;
+ const auto single=detail::consume_key_pulse(snapshot,1);
+ std::cout<<"cached-read="<<T(single)<<":"<<snapshot.storage.load()<<":"<<snapshot.loads.load()<<":"<<snapshot.stores.load()<<'\n';
+ Field concurrent;concurrent.gated=true;bool a=false,b=false;
+ std::thread first([&]{a=detail::consume_key_pulse(concurrent,1);}),second([&]{b=detail::consume_key_pulse(concurrent,2);});
+ while(concurrent.ready.load()!=2)std::this_thread::yield();concurrent.release=true;first.join();second.join();
+ const auto final=concurrent.storage.load();
+ std::cout<<"lost-update="<<T(a)<<":"<<T(b)<<":"<<T(final==1||final==2)<<":"<<concurrent.loads.load()<<":"<<concurrent.stores.load()<<'\n';return 0;
+}
+int main(int argc,char**argv){
+ if(argc==2&&std::string(argv[1])=="pulse")return pulse_policy();
  CanvasKeyState keys;
  if(argc==2){
   unsigned int count=0;auto require=[&](bool value){if(!value)throw std::runtime_error("PC input adapter assertion failed");++count;};

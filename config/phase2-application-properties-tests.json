@@ -1,0 +1,1050 @@
+{
+  "operation": "original-source-IApplication-GetProperty-cache-differential",
+  "status": "PASS",
+  "fixture_cases": 132,
+  "passed": 132,
+  "cases": [
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-1",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-2",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "before-awake-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-1",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-2",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-A-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-1",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-2",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "live-changed-cache-unchanged-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-1",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-2",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "host-refresh-B-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-1",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-2",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cache-null-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-1",
+      "expected": "03b10000d800;cached_ref=True",
+      "actual": "03b10000d800;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-2",
+      "expected": "03b10000d800;cached_ref=True",
+      "actual": "03b10000d800;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "cached-code-units-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-1",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-2",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "before-awake-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-1",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-2",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-A-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-1",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-2",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0041;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "live-changed-cache-unchanged-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-1",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-2",
+      "expected": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "actual": "006300610063006800650064002d006d006f00640065006c002d0042;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "host-refresh-B-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-1",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-2",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cache-null-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-0",
+      "expected": "E:System.NullReferenceException",
+      "actual": "E:System.NullReferenceException",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-1",
+      "expected": "03b10000d800;cached_ref=True",
+      "actual": "03b10000d800;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-2",
+      "expected": "03b10000d800;cached_ref=True",
+      "actual": "03b10000d800;cached_ref=True",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-3",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-4",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-5",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-6",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-7",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-8",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-9",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "cached-code-units-10",
+      "expected": "NULL;cached_ref=False",
+      "actual": "NULL;cached_ref=False",
+      "passed": true
+    }
+  ],
+  "native_backend": {
+    "status": "PASS",
+    "assertions": 21,
+    "native_model_nonempty": true,
+    "hardware_value_logged": false
+  },
+  "verified_boundary_ids": [
+    "M:kairo.unity.ui.IApplication.GetProperty(System.String)"
+  ],
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/IApplication.cs",
+      "sha256": "3e9fd412628d295c4132ae08fa09c8bcfa19c923e08e0deb904073e857b8d2c0"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JSystem.cs",
+      "sha256": "7877b2705bb5e4089b5c1dba9f90e5c2df95057fe964266a11871d5e8d40b602"
+    }
+  ],
+  "original_method_spans": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/IApplication.cs",
+      "signature": "public static string GetProperty(string key)",
+      "sha256": "cb723369a2001b42bed4321264f74c4414ff1cff0f1bbacccd0eb25d17ad1774"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JSystem.cs",
+      "signature": "public static string GetProperty(string key)",
+      "sha256": "7c69300a967aec517cce7c8ca36c9572069bb74f70f7acdf98010ea192eaa4b0"
+    }
+  ],
+  "inputs_sha256": {
+    "tests/kairo/application_properties_fixtures.cpp": "969b1787bcb979866daf4dfd95626d7162934d45ff1d2da0b88cb51b7ee0d8f7",
+    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/platform/sdl/globalization.cpp": "7072332bae2f9696c2fc6113311574bcae887e8edb0443bff35f07c07cc9d4c3",
+    "tests/kairo/ApplicationPropertiesOracle.cs": "5f9535874848aefc73363d118b67adaa0adfff63bc8754846620478faa22b8b0",
+    "tools/test_application_properties.py": "4bd26a88ef8d3c9fdf0d1499bc016d01ded0a9c99726dd811a4bc62774bfd3ee",
+    "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
+    "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
+    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
+    "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
+    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
+    "src/kairo/common/managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
+    "src/kairo/platform/sdl/globalization.hpp": "9a5f11c69a8a41c03cc026741da7d4d6c7ef5d95afe94d228f2630871669c2d7"
+  },
+  "native_executable": {
+    "path": "build/application-properties-tests/application-properties-fixtures.exe",
+    "sha256": "485d8dc8a6daa9125778e4845ccf05c297f2c761c3dbcfb69e272726157dea0e"
+  },
+  "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+  "source_only_jsystem": [
+    {
+      "profile": "UnityMono265",
+      "observations": {
+        "Android-0": "NULL",
+        "Android-1": "006c006900760065002d006d006f00640065006c002d0041",
+        "Android-2": "006c006900760065002d006d006f00640065006c002d0041",
+        "Android-3": "NULL",
+        "Android-4": "NULL",
+        "Android-5": "NULL",
+        "Android-6": "NULL",
+        "Android-7": "NULL",
+        "Android-8": "NULL",
+        "Android-9": "NULL",
+        "Android-10": "NULL",
+        "IPhonePlayer-0": "NULL",
+        "IPhonePlayer-1": "006c006900760065002d006e0061006d0065002d0041",
+        "IPhonePlayer-2": "006c006900760065002d006e0061006d0065002d0041",
+        "IPhonePlayer-3": "NULL",
+        "IPhonePlayer-4": "NULL",
+        "IPhonePlayer-5": "NULL",
+        "IPhonePlayer-6": "NULL",
+        "IPhonePlayer-7": "NULL",
+        "IPhonePlayer-8": "NULL",
+        "IPhonePlayer-9": "NULL",
+        "IPhonePlayer-10": "NULL"
+      },
+      "native_verified": false
+    },
+    {
+      "profile": "DotNet",
+      "observations": {
+        "Android-0": "NULL",
+        "Android-1": "006c006900760065002d006d006f00640065006c002d0041",
+        "Android-2": "006c006900760065002d006d006f00640065006c002d0041",
+        "Android-3": "NULL",
+        "Android-4": "NULL",
+        "Android-5": "NULL",
+        "Android-6": "NULL",
+        "Android-7": "NULL",
+        "Android-8": "NULL",
+        "Android-9": "NULL",
+        "Android-10": "NULL",
+        "IPhonePlayer-0": "NULL",
+        "IPhonePlayer-1": "006c006900760065002d006e0061006d0065002d0041",
+        "IPhonePlayer-2": "006c006900760065002d006e0061006d0065002d0041",
+        "IPhonePlayer-3": "NULL",
+        "IPhonePlayer-4": "NULL",
+        "IPhonePlayer-5": "NULL",
+        "IPhonePlayer-6": "NULL",
+        "IPhonePlayer-7": "NULL",
+        "IPhonePlayer-8": "NULL",
+        "IPhonePlayer-9": "NULL",
+        "IPhonePlayer-10": "NULL"
+      },
+      "native_verified": false
+    }
+  ],
+  "limitations": [
+    "Only IApplication.GetProperty is a verified boundary identity; JSystem direct source observations are context, not native JSystem proof.",
+    "Cached model changes only through host_platform; real generated Awake ordering and platform initialization are separate integration obligations.",
+    "Windows SystemProductName is a native PC model, not an Android or Unity model; failed/empty/malformed/oversized reads use Windows.",
+    "The live hardware model value is not emitted or hashed in the fixture logs or public receipt."
+  ],
+  "game_boot": false,
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

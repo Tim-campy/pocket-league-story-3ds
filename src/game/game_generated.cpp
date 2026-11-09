@@ -4,3 +4,4 @@
 #include "game_generated_cpp_part_0002.inc"
 #include "game_generated_cpp_part_0003.inc"
 #include "game_generated_cpp_part_0004.inc"
+#include "game_generated_cpp_part_0005.inc"

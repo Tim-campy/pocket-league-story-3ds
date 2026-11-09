@@ -70,14 +70,14 @@
     "src/kairo/common/asset_reader.cpp": "bf8d107a15993bea7a77c980f8eaf2d47a5bfe9fc24b329103a5d54d03c35669",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/common/managed_encoding.cpp": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20",
-    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "tests/kairo/DisplayMetricsOracle.cs": "c9bec8a1773c09a235f7cda9bbe13f307545c2f4b4683383ffaaf525d8a4c02b",
     "tools/test_asset_reader.py": "0d86bffef1e295d14ca6b46726b91042f7cb38f1dff446fa0517c6ddd4e44266",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
     "src/kairo/api/display_metrics.hpp": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70",
-    "src/kairo/api/application.hpp": "280d2510630a9eccb8d887cccc44249141ee5ca65a8a1d6775706c8ac703bd4d",
-    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+    "src/kairo/api/application.hpp": "254281540812339895b95ca4c6c47a886efa5b24005f8501483e87e77c5fc965",
+    "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66"
@@ -90,7 +90,7 @@
   ],
   "native_executable": {
     "path": "build/asset-reader-tests/asset-reader-fixtures.exe",
-    "sha256": "d4803ea24bfe8a93da8d87a5824df1ac28f98477c9577352af951c71816a536f"
+    "sha256": "1618112cf217b35f29a9b078d3e09330da347fc3ecb6a54bb2d80dbc00f16de1"
   },
   "game_assets_used": true,
   "original_binaries_executed": false,

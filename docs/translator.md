@@ -166,7 +166,7 @@ python tests/translator/run_semantic_fixtures.py --fixture GcFixtures
 
 O script usa Roslyn/.NET10 e smcs/Mono Unity já existentes para compilar somente o C# sintético selecionado de `tests/translator/`. Usa MSVC C++17 existente com `/EHsc /fp:strict /permissive- /W4 /WX /utf-8`. Nenhuma DLL/player do jogo/Unity é copiada para build; os executáveis de compilador/runtime existentes são apenas ferramentas externas. Cada fixture tem sua saída em um subdiretório de `build/`, ignorado.
 
-Foram obtidos **1.164/1.164 casos diferenciais**, divididos igualmente entre os dois oráculos/perfis. Os primeiros 60 cobrem overflow/wrap, divisão/resto de negativos/bordas, casts integrais, shifts, avaliação de argumentos/array stores, UTF-16/null/ordinal, arrays/alias/bounds, hierarquia/rethrow/finally, capturas, evento, propriedades, switch, goto e bits/larguras float/double. Streams têm seu contrato e recibo separados em `docs/notes/managed-streams.md`.
+Foram obtidos **1.200/1.200 casos diferenciais**, divididos igualmente entre os dois oráculos/perfis. Os primeiros 60 cobrem overflow/wrap, divisão/resto de negativos/bordas, casts integrais, shifts, avaliação de argumentos/array stores, UTF-16/null/ordinal, arrays/alias/bounds, hierarquia/rethrow/finally, capturas, evento, propriedades, switch, goto e bits/larguras float/double. Streams têm seu contrato e recibo separados em `docs/notes/managed-streams.md`.
 
 | Recibo sintético | .NET10 | Mono Unity | Casos com resultado diferente entre oráculos |
 |---|---:|---:|---:|
@@ -177,15 +177,70 @@ Foram obtidos **1.164/1.164 casos diferenciais**, divididos igualmente entre os 
 | integer-parse | 157/157 | 157/157 | 41 |
 | array-bridge | 21/21 | 21/21 | 1 |
 | random | 34/34 | 34/34 | 31 |
-| string-builder | 24/24 | 24/24 | 8 |
+| string-builder | 42/42 | 42/42 | 20 |
 | dictionary | 27/27 | 27/27 | 6 |
 | floating-cast | 80/80 | 80/80 | 21 |
 | time | 53/53 | 53/53 | 7 |
 | object-dispatch | 20/20 | 20/20 | 0 |
 | timezone | 16/16 | 16/16 | 3 |
 | gc | 13/13 | 13/13 | 3 |
-| Total | 582/582 | 582/582 | 142 |
+| Total | 600/600 | 600/600 | 154 |
 
-Os 142 são observações de fixtures, não 142 famílias de bugs nem diferenças provadas no jogo Android. Cada recibo contém `historical_profile_differences` com os resultados dos dois oráculos. Os perfis nativos correspondentes passaram todos os casos. Os 21 invariantes nativos de GC são contados separadamente dos diferenciais.
+Os 154 são observações de fixtures, não 154 famílias de bugs nem diferenças provadas no jogo Android. Cada recibo contém `historical_profile_differences` com os resultados dos dois oráculos. Os perfis nativos correspondentes passaram todos os casos. Os 26 invariantes nativos de GC, incluindo a inspeção de memória sem coleta e o endereço do corpo em herança múltipla, são contados separadamente dos diferenciais.
 
 Recibos gerados: `config/phase2-<linha da tabela>-fixtures.json`, com hashes dos fontes/helpers, runner, compiladores e traces sintéticos. O oráculo histórico referencia System.Core.dll externamente do perfil Unity para TimeZoneInfo; nenhuma DLL é copiada para o port/build do jogo. Runner/fontes/JSONs usam LF para conservar hashes em clone. A sonda `HistoricalSemanticProfile.cs` registra diferenças sem confundi-las com fixtures do jogo. **O C++ dessas fixtures é uma implementação de teste independente: esses recibos não medem cobertura do emissor de produção, métodos traduzidos do jogo ou primeiro boot.** Esses números vêm dos recibos separados do tradutor/build/execução.
+
+## Extensões testadas após 5b02ef6
+
+O emissor suporta propriedades automáticas estáticas sem inicializador em tipos
+não genéricos. O backing field conserva seu zero inicial, a guarda uma vez por
+tipo e a ordem do inicializador/cctor. O oráculo conserva auto-properties C#
+na mesma classe de estado estático e testa leitura/escrita, referência nula e
+reentrada durante inicialização. Inicializadores de auto-property e estado
+estático genérico continuam recusados. A suíte ampliada do emissor passou
+1.323/1.323 observações em 189 métodos, após acrescentar os casos abaixo.
+
+StringBuilder.Insert(int,string) conserva checagem de índice antes de null,
+identidade do builder, code units UTF-16 e capacidade/caching por perfil.
+São 84 observações no teste de runtime: 42 por perfil, com 20 diferenças entre
+Mono e .NET moderno preservadas. Outros overloads de Insert não foram admitidos
+por semelhança de nome. O emissor também testa receptor nulo após avaliação dos
+argumentos.
+
+A verificação integral expôs um redirecionamento excessivo do oráculo: uma
+auto-property estática de um método fora do corpus emitido apontava para um
+forwarder inexistente (CS0117). O rewriter agora só redireciona backing fields
+presentes no conjunto emitido; os demais membros conservam a declaração C#.
+O corpus portátil voltou a compilar e passar depois dessa correção. A falha foi
+do gerador de testes, antes da execução diferencial, não uma mudança aceita do
+resultado do jogo.
+
+O diagnóstico de execução pode usar --allow-uncompiled explicitamente: copia
+fontes gerados para build/, registra precompile_diagnostic, zero métodos
+normalmente compilados e zero promoção de cobertura. O próprio build Release
+deve compilar e ligar essa fotografia antes de executar. O inventário normal
+continua dependendo da compilação integral e da verificação final; o gerador
+de progresso recusa recibos transitórios sem essa evidência. Isso evita compilar
+a mesma fotografia em dois modos antes de localizar uma lacuna de execução.
+
+As métricas emitem checkpoints nos frames 60/120/300 sem encerrar o acumulador,
+pois um timeout ou guard fatal pode terminar o processo sem executar destrutores.
+Capturas BMP dos frames 1/60/120/300 ficam apenas na pasta privada da tentativa.
+Captura e amostragem de memória são instrumentação; seus intervalos não podem
+ser apresentados como custo puro da lógica sem explicitar essa distinção.
+
+Concat(string,string,string,string) e Concat(object[]) possuem bindings exatos
+separados. O segundo preserva a falha histórica quando ToString retorna null
+(no Mono Windows, NullReferenceException); a primeira tentativa falhou em seis
+casos e foi corrigida antes da adoção. Null no array continua ArgumentNullException.
+Math.Abs int/long recusa signedMin com OverflowException e não faz signed negation
+indefinida. Math.Log10(double) conserva resultados não finitos, sem corrigir o
+comportamento original de AppData.GetFig(0).
+
+Matrix4x4 tem apenas armazenamento scalar, zero, identity e MultiplyPoint, com
+Vector3 scalar. O teste de 21 observações compara um oráculo C# próprio cuja
+ordem de operações é conferida simbolicamente contra CIL autenticado. Nenhuma
+DLL Unity é executada ou vinculada. Arcos continuam experimentais: o núcleo
+geométrico passou 180/180 em .NET x64 e 55/180 no Mono histórico, com 360/360
+estruturas iguais. Não estão integrados à API Graphics nem qualificados como
+equivalentes ao Android; resultados e testemunhas permanecem no recibo específico.

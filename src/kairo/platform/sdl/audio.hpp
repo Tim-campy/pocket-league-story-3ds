@@ -1,4 +1,5 @@
 #pragma once
+#include "../../common/memory_ranges.hpp"
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
@@ -56,6 +57,7 @@ public:
     void pump();
     VoiceStats stats(std::size_t voice) const;
     AudioMemory memory() const;
+    void memory_ranges(const memory::RangeVisitor&)const;
     AudioOutputStats diagnostics() const;
     void reset_diagnostics();
     int output_rate() const;

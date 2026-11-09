@@ -14,7 +14,7 @@ MonitorScope::~MonitorScope(){target_->monitor.unlock();}
 namespace {
 struct CollectorState {
     std::mutex mutex;std::condition_variable condition;
-    struct Entry{std::weak_ptr<Object>object;std::int32_t generation=0;};
+    struct Entry{std::weak_ptr<Object>object;std::int32_t generation=0;std::size_t body_bytes=0;const void*body_begin=nullptr;};
     std::unordered_map<Object*,Entry>objects;
     std::unordered_map<std::thread::id,std::size_t>mutators;
     std::unordered_map<std::thread::id,std::size_t>native_blocked;
@@ -31,12 +31,28 @@ struct CollectionPause {
     ~CollectionPause(){std::lock_guard<std::mutex>lock(state.mutex);state.requested=false;state.collector={};state.condition.notify_all();}
 };
 }
-void register_managed_object(const Ref<Object>&object){
+void register_managed_object(const Ref<Object>&object,std::size_t body_bytes,const void*body_begin){
     auto&state=collector_state();std::unique_lock<std::mutex>lock(state.mutex);
     if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Managed allocation inside a native blocking scope");
     wait_for_collection(state,lock);
     auto it=state.objects.find(object.get());
-    if(it==state.objects.end()||it->second.object.expired())state.objects[object.get()]={object,0};
+    if(it==state.objects.end()||it->second.object.expired())state.objects[object.get()]={object,0,body_bytes,body_begin};
+}
+void visit_managed_memory(const memory::RangeVisitor&visitor,const std::function<void()>&finish){
+    auto&state=collector_state();
+    {std::unique_lock<std::mutex>lock(state.mutex);
+        if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Memory snapshot inside a native blocking scope");
+        if(state.requested&&state.collector==std::this_thread::get_id())throw InvalidOperationException("Recursive memory snapshot");
+        wait_for_collection(state,lock);state.requested=true;state.collector=std::this_thread::get_id();
+    }
+    CollectionPause pause{state};
+    struct SnapshotObject{Ref<Object>object;std::size_t bytes;const void*begin;};std::vector<SnapshotObject>objects;
+    {std::unique_lock<std::mutex>lock(state.mutex);
+        if(!state.condition.wait_for(lock,std::chrono::seconds(1),[&]{for(const auto&entry:state.mutators)if(entry.first!=state.collector&&!state.parked.count(entry.first)&&!state.native_blocked.count(entry.first))return false;return true;}))throw NotSupportedException("Managed worker did not reach a memory snapshot safepoint");
+        for(const auto&entry:state.objects)if(auto object=entry.second.object.lock())objects.push_back({std::move(object),entry.second.body_bytes,entry.second.body_begin});
+    }
+    for(const auto&entry:objects){visitor(entry.begin,entry.bytes,memory::Category::managed_heap);entry.object->memory_ranges(visitor);}
+    if(finish)finish();
 }
 std::int32_t gc_max_generation()noexcept{return runtime_profile==RuntimeProfile::UnityMono265?0:2;}
 std::int32_t gc_generation(const Ref<Object>&object){if(!object)throw ArgumentNullException();auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);auto it=state.objects.find(object.get());if(it==state.objects.end())throw NotSupportedException("Object was not registered with the managed collector");return it->second.generation;}

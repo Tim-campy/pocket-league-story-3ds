@@ -374,5 +374,41 @@ Versão medida: Android Debug Bridge 1.0.41, Platform-Tools
 37.0.1-15733141; SHA-256
 `b4a6b455702684652cccf7b46258b29e653538904359a58fd4931cf3ef286b3f`.
 Essa ferramenta externa não entra no build nem no repositório. A consulta
-`adb devices -l` nesta continuação retornou lista vazia. A comparação visual
-com o original permanece UNKNOWN; nenhum APK foi instalado ou substituído.
+inicial `adb devices -l` retornou lista vazia. O estado posterior, com o aparelho
+conectado e a substituição expressamente autorizada pelo usuário, está registrado
+na seção seguinte e na nota do primeiro frame; a ausência inicial é histórica.
+
+## Continuidade após 5b02ef6: Unicode, texto SDL e referência Android
+
+A rodada UCD está em [unicode-regeneration.md](notes/unicode-regeneration.md).
+Mono/Unity documenta Unicode 3.1, mas UCD 3.1.0 puro e o controle 3.0.0 falham
+em cinco das 25.704 observações. As tabelas GNU Library GPL v2 são mantidas
+separadas, sem correções extraídas delas para os candidatos. Downloads,
+revisões, hashes e licença Unicode dos experimentos constam do recibo
+config/phase2-unicode-regeneration.json. O script reproduz os candidatos
+privados; não altera o provider de produção.
+
+A decisão PC de ImeOnBlock usa SDL_TextInput, sem espera pela edição ou janela
+modal, com 32 asserções próprias em tools/test_text_input.py (20 de campo simples
+e 12 de painel assíncrono). A assinatura
+string conserva o texto inicial como retorno; o estado Blocking é false.
+O getter Canvas.IsLinearFilterEnable consulta QualitySettings.antiAliasing;
+o setter original é vazio. O backend CPU reporta zero amostras adicionais,
+sem confundir esse valor com Image.Filter. A fixture de sistema tem agora
+17 asserções. Esses contratos PC não são prova de IME ou rasterização Android.
+
+Para a comparação visual, em 9/11/2026 o S22 Ultra SM-S908E conectado recebeu,
+com autorização explícita, o APK original autenticado por SHA-256
+d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8.
+O APK anterior era a baseline de teste 8a832f276fa7b29c4e0d35121b563098543206c3119aff4a3f21325896b5f333,
+não um oracle original. As duas DLLs instaladas diferiam das originais.
+run-as negou acesso para backup dos saves privados; a desinstalação foi
+autorizada pelo usuário. Nenhuma proteção global do Android foi desligada.
+O usuário concluiu a tela de permissões no aparelho.
+
+A atividade net.kairosoft.android.soccer_en/main.Main abriu o título e, após
+uma entrada de toque de teste, a seleção de saves. Capturas 1080×2316 e seus
+recibos permanecem em build/android-original-comparison/, ignorado. São
+evidência visual, nunca fonte de assets e nunca arquivos distribuídos.
+O layout observado nesse aparelho é vertical; isso é observação do original,
+não escolha de distribuição das telas do Nintendo 3DS.

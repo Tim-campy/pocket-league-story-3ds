@@ -2,6 +2,9 @@
 #include <cstdint>
 #include <optional>
 #include <string>
+#include <array>
+#include <vector>
+#include "../kairo/common/memory_ranges.hpp"
 namespace pls::pc {
 struct ProcessMemory {
     // Working set is resident pages, including shared image pages. Private
@@ -14,4 +17,9 @@ struct ProcessMemory {
     std::string platform,diagnostic;
 };
 ProcessMemory sample_process_memory();
+struct MemoryRange {const void* data;std::size_t bytes;memory::Category category;};
+struct KnownMemory {std::array<std::optional<std::uint64_t>,4>capacity_bytes{},resident_payload_bytes{};};
+// Union of known byte intervals intersecting resident pages, excluding padding.
+// Coverage is partial; categories are not an exhaustive partition of the RSS.
+KnownMemory sample_known_memory(const std::vector<MemoryRange>&);
 }

@@ -22,6 +22,7 @@
 #include "application.hpp"
 #include "baked_arrays.hpp"
 #include "services_managed.hpp"
+#include "text_input.hpp"
 #include "dialog_service.hpp"
 #include "graphics.hpp"
 #include "font.hpp"
@@ -33,6 +34,7 @@
 #include "system.hpp"
 #include "offline_http.hpp"
 #include "forms_callbacks.hpp"
+#include "matrix4.hpp"
 #include "debug_input.hpp"
 #include "runtime_memory.hpp"
 #include "vector2.hpp"
@@ -56,6 +58,11 @@ template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(va
 [[maybe_unused]] static pls::cs::String cs_concat_objects3(const pls::cs::Ref<pls::cs::Object>&first,const pls::cs::Ref<pls::cs::Object>&second,const pls::cs::Ref<pls::cs::Object>&third){
  auto a=cs_object_string(first);auto b=cs_object_string(second);auto c=cs_object_string(third);return pls::cs::String::concat(pls::cs::String::concat(a,b),c);
 }
+[[maybe_unused]] static pls::cs::String cs_concat_strings4(const pls::cs::String&a,const pls::cs::String&b,const pls::cs::String&c,const pls::cs::String&d){return pls::cs::String::concat(pls::cs::String::concat(pls::cs::String::concat(a,b),c),d);}
+[[maybe_unused]] static pls::cs::String cs_concat_object_array(const pls::cs::Array<pls::cs::Ref<pls::cs::Object>>&values){
+ if(values.is_null())throw pls::cs::ArgumentNullException();auto result=pls::cs::String(u"");for(std::int32_t i=0;i<values.length();++i){auto part=cs_object_string(values.at(i));if(part.is_null()&&pls::cs::runtime_profile==pls::cs::RuntimeProfile::UnityMono265)throw pls::cs::NullReferenceException();result=pls::cs::String::concat(result,part);}return result;
+}
+
 [[maybe_unused]] static bool cs_contains_string(const pls::cs::String&source,const pls::cs::String&value){return pls::cs::culture_index_of(source,value)>=0;}
 [[maybe_unused]] static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)throw pls::cs::NullReferenceException();return value;}
@@ -4075,6 +4082,7 @@ bool& cs_286ddfcc2d29fb20();
 pls::cs::Ref<pls::cs::Object>& cs_8c8ed916f00e435c();
 pls::cs::Ref<cs_89c0d586cfe20341>& cs_280b0a230ee3dea4();
 pls::cs::Array<std::int64_t>& cs_6e88f492355c58fb();
+bool& cs_ba8d1e73ebddc909();
 pls::cs::Ref<cs_77de402a688eeb9d>& cs_c51cfc9dfddab106();
 pls::cs::List<pls::cs::Ref<cs_18d5b680efad7752>>& cs_f7651e4f416e5e3a();
 pls::cs::Ref<pls::cs::Object>& cs_4033fa251a2d7de3();
@@ -4556,6 +4564,7 @@ void cs_03172f7ba0b3ea2e_init(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 void cs_42bb8aebe071689d(pls::cs::Ref<cs_3ee77977aa791047> cs_this,std::int32_t v_state);
 void cs_447101f05fb5af24(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_e44afa197352af80(pls::cs::Ref<cs_3ee77977aa791047> cs_this,pls::cs::String v_url);
+void cs_c6afef41251df5e5(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 void cs_12eb36fc63ec269b(pls::cs::Ref<cs_3ee77977aa791047> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 bool cs_2f6ed49f4ea77db8(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 std::int32_t cs_c332efb9d5fe5210(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
@@ -4570,6 +4579,7 @@ void cs_de5bb8c9612fd43a(pls::cs::Ref<cs_3ee77977aa791047> cs_this,std::int32_t 
 void cs_a914afd569fe85bf(pls::cs::Ref<cs_3ee77977aa791047> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 pls::cs::String cs_ee9032c5644d1f00(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 bool cs_b95026f36cfa9750(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
+void cs_29f7569ef5082bb8(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 pls::cs::Ref<cs_66eb7014769dfe80> cs_e74ea43aa478ba48();
 void cs_e74ea43aa478ba48_init(pls::cs::Ref<cs_66eb7014769dfe80> cs_this);
 void cs_c92b7df67bd593dd(pls::cs::Ref<cs_66eb7014769dfe80> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
@@ -4636,6 +4646,7 @@ void cs_fc44a24109e43dbd(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this,pls::cs::Stri
 void cs_6330d76c8e753c94(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this,std::int32_t v_x,std::int32_t v_y);
 void cs_4b975ffec839e539(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this,std::int32_t v_x,std::int32_t v_y);
 void cs_d0410a4a62cb8de4(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this,std::int32_t v_scale);
+void cs_47fda1ccc4dc7bca(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this,std::int32_t v_type,std::int32_t v_value);
 pls::cs::String cs_a20d3d4d705fb05f(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this);
 bool cs_ba8b5ba0971d8a14(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this);
 void cs_f6da1db7a67a489d(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,bool v_all_update);
@@ -4677,6 +4688,7 @@ void cs_c91dd49daad1c45c(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_s
 pls::cs::String cs_373a9dd86e523b7e(pls::cs::Ref<cs_5451b2154f09f4c5> cs_this,pls::cs::String v_text,pls::cs::String v_oldStr,pls::cs::String v_newStr);
 pls::cs::String cs_ee9c23ebc8767b84(pls::cs::String v_text,pls::cs::String v_arg);
 bool cs_f6039316248c9637(pls::cs::Ref<cs_5451b2154f09f4c5> cs_this);
+void cs_3d1ead99a7eb01b8(pls::cs::Ref<cs_5451b2154f09f4c5> cs_this,std::int32_t v_type,std::int32_t v_value);
 std::int32_t cs_27feab6de540a5d5(pls::cs::Ref<cs_5451b2154f09f4c5> cs_this,std::int32_t v_type,std::int32_t v_value);
 pls::cs::String cs_287ba81ffa50d9d9(pls::cs::String v_text,std::int64_t v_value,bool v_comma);
 pls::cs::String cs_467f665d29a30c7d(pls::cs::String v_text,std::int64_t v_value);
@@ -4710,8 +4722,11 @@ void cs_74066a08e4cb72e1(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Arra
 void cs_ec594e06dc1a1dfb(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,std::int32_t v_wait);
 void cs_2a0d335a5db582e0(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,std::int32_t v_state);
 void cs_6460662d965aa686(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
+void cs_384684ca1ec42e54(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
+void cs_48f1b7fb6e3077c7(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_6b0bd771b95cf4e8(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_a26a547b2d54506f(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
+void cs_f2e93cf31f87308e(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_299aa49d03aaff75(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_60cc3df57cea3a9d(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_ee3b8a5ace87d903(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
@@ -4744,6 +4759,7 @@ void cs_4caa076a83c5ffa0(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
 void cs_8e18ea445796d5e6(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
 void cs_746741428a56a3ac(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,std::int32_t v_scale);
 void cs_c5480e7f4d903064(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
+void cs_2a1829c674ee63b5(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,std::int32_t v_type,std::int32_t v_value);
 pls::cs::String cs_d9fffbcf499f9061(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
 void cs_aaba363bebba8dd7(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,bool v_all_update);
 void cs_3df63b5e0818c73d(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
@@ -4761,8 +4777,11 @@ bool cs_affa57deeadcf8fe(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 void cs_008d18ec9ef5cd90(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 bool cs_305dfcfb28ab9c87(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 void cs_b858b36069a76eb9(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
+void cs_70a4bf233f4613fb(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,std::int32_t v_type,std::int32_t v_value);
 void cs_20e7594ab76bbe1b(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,pls::cs::String v_text,pls::cs::String v_buttons);
 pls::cs::String cs_7ecc9e73b43a1714(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
+bool cs_479b0fad2741c8e1(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
+void cs_234c3e5564247a35(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 pls::cs::Ref<cs_a2cea92715051fa5> cs_96f4037b01fdf783();
 void cs_96f4037b01fdf783_init(pls::cs::Ref<cs_a2cea92715051fa5> cs_this);
 pls::cs::Ref<cs_a2cea92715051fa5> cs_d272ce0b93eae59f(std::int32_t v_type,std::int32_t v_x,std::int32_t v_y);
@@ -4784,11 +4803,15 @@ void cs_29016327aad9ed18(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_c
 void cs_aa554c005c7607d0(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_8506c761b455f776(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_backId,std::int32_t v_dx,std::int32_t v_dy);
 void cs_041c40074fa1fd68(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_frame);
+void cs_2f28fcd4ba46fd8c(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_seb,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_cnt,std::int32_t v_anchor);
+void cs_832483e2b990527a(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_seb,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_cnt);
 void cs_b312fa0e717f4ddc(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_frame_);
 void cs_2c37a94a2ce3c300(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_iconId,std::int32_t v_dx,std::int32_t v_dy);
 void cs_554d39ed324ff093(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_iconId,std::int32_t v_dx,std::int32_t v_dy);
 void cs_a5718e88b4cb4745(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_87eb95e6e73430e7(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_cnt,std::int32_t v_padding);
+void cs_293873b4311c7d1c(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_seb,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_cnt,std::int32_t v_anchor);
+void cs_74a6ba1b0d94d986(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_seb,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_cnt);
 void cs_dbc96390a656f375(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::String v_str,std::int32_t v_x,std::int32_t v_y,bool v_active,bool v_cursor);
 void cs_8b8e8ecbf9d5a8ed(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::String v_str,std::int32_t v_x,std::int32_t v_y,std::int32_t v_anchor,bool v_active,bool v_cursor);
 void cs_60f4f2bf29ade497(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::String v_str,std::int32_t v_x,std::int32_t v_y,std::int32_t v_anchor,bool v_active,std::int32_t v_margin,bool v_cursor);
@@ -4841,11 +4864,14 @@ void cs_8d930429acc02783(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t 
 void cs_d7b7e594e313ea4c(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_line,std::int32_t v_faId,std::int32_t v_nowValue);
 void cs_f84412bd38722374(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_line,std::int32_t v_TIME,std::int32_t v_value,std::int32_t v_valueMax,std::int32_t v_rank,std::int32_t v_rankMax,std::int32_t v_add);
 void cs_64a9d1d2eb3aa2a7(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::String v_msg);
+void cs_73f65148e53c30c4(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_type,std::int32_t v_value);
 void cs_c07e607e2364fb02(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_time,std::int32_t v_wait,std::int32_t v_JAMP_DIS,std::int32_t v_JAMP_TIME);
 void cs_82ae2c702d7b9c9f(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_time);
 void cs_5824b6f84fb0659b(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_time,std::int32_t v_tMode);
 pls::cs::String cs_19af8a8701589f9f(pls::cs::Ref<cs_a2cea92715051fa5> cs_this);
+bool cs_dd2a086cd01e914b(pls::cs::Ref<cs_a2cea92715051fa5> cs_this);
 void cs_792cfbbfa6db1382(pls::cs::Ref<cs_a2cea92715051fa5> cs_this);
+bool cs_0e901a0d03e0c454(pls::cs::Ref<cs_a2cea92715051fa5> cs_this);
 void cs_4f961eec07d2ba19(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t v_frame,std::int32_t v_line);
 void cs_997c4d85b05dc754(pls::cs::Ref<cs_e31f80000513fe82> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 pls::cs::Ref<cs_e31f80000513fe82> cs_046213c85d73180d();
@@ -4863,8 +4889,10 @@ bool cs_a3bbb54f7183a8b3(pls::cs::Ref<cs_e31f80000513fe82> cs_this,pls::cs::Ref<
 void cs_f7b5dc5945c49025(pls::cs::Ref<cs_e31f80000513fe82> cs_this,std::int32_t v_index);
 bool cs_157441e08e263633(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_0d8688313d58fbfb(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
+void cs_baa82dca182cb994(pls::cs::Ref<cs_e31f80000513fe82> cs_this,std::int32_t v_type,std::int32_t v_value);
 void cs_d1808deb025fbd5a(pls::cs::Ref<cs_e31f80000513fe82> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 pls::cs::String cs_c27882f05e0eaec9(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
+bool cs_5326b92cc796829d(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_17b223e3f49ace02(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_3f93eb8cbc4c0c54(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_a50549fcee852844(pls::cs::Ref<cs_e31f80000513fe82> cs_this,std::int32_t v_addClickNum);
@@ -5361,12 +5389,16 @@ float cs_43d7fa04d81da9ff(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this);
 void cs_20c48a456cf53f6e(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this,float v_left,float v_top,float v_right,float v_bottom);
 float cs_bacff363ff8ad693(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this);
 void cs_815bf8a38e0fb5d2(pls::cs::Array<std::int64_t> v_crcTable,bool v_encrypt);
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_54dec6a9b058dafd(pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split);
+pls::cs::Array<std::uint8_t> cs_97ad906b29abf8fb(pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check);
+bool cs_a18d6f92033697cb();
 std::int32_t cs_3c5e64aab4be4dca();
 pls::cs::String cs_11f71ced6c57f274();
 pls::cs::String cs_9ec572c71522df31();
 pls::cs::Ref<cs_18d5b680efad7752> cs_424a1f3830f8b281();
 pls::cs::Ref<cs_18d5b680efad7752> cs_b1fabebdabf8d17c();
 void cs_b1fabebdabf8d17c_init(pls::cs::Ref<cs_18d5b680efad7752> cs_this);
+pls::cs::Ref<cs_18d5b680efad7752> cs_c97cedff510ba4db();
 pls::cs::String cs_42eaa879561f279c();
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_d2a21b4a921597a9(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split);
 pls::cs::Ref<cs_77de402a688eeb9d> cs_e751bd24448f57f3(bool v_retryEnable);
@@ -5382,6 +5414,7 @@ pls::cs::String cs_0c1c941d76211aca(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
 void cs_2756d68ee4aaa074(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,bool v_value);
 std::int32_t cs_611e38080e0184ae(std::int32_t v_spid);
 pls::cs::Array<std::uint8_t> cs_0478a420e3edd658(std::int32_t v_spid,std::int32_t v_pos,std::int32_t v_length);
+void cs_f9745ca56fe55fad(std::int32_t v_spid,std::int32_t v_pos,pls::cs::Array<std::uint8_t> v_data);
 float cs_82e90932e565633e(float v_a);
 float cs_87ef3d6d0d364edc(float v_a);
 std::int32_t cs_7681d78b1e4df50b(std::int32_t v_x,std::int32_t v_y);
@@ -5407,6 +5440,8 @@ bool cs_ce1d94fc60447e39(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,char16_t v_c)
 void cs_d97b566e589c7a21(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 void cs_c28309dd1ee0c605(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 void cs_88ddecbed02f84a4(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,std::int32_t v_key,pls::cs::String v_text);
+void cs_eb726d3fffc72be0(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this);
+bool cs_c54513f5ba5b96e8(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this);
 pls::cs::Ref<cs_4c00a0e0c6e6e2e5> cs_80617835aa0d7a16(pls::cs::String v_text);
 void cs_80617835aa0d7a16_init(pls::cs::Ref<cs_4c00a0e0c6e6e2e5> cs_this,pls::cs::String v_text);
 std::int32_t cs_19774412e61c6647(pls::cs::Ref<cs_4c00a0e0c6e6e2e5> cs_this);
@@ -5499,6 +5534,7 @@ pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_03e2f5f2e825917f();
 void cs_03e2f5f2e825917f_init(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
 void cs_919bc150e4142cc1(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_70b3e83e4dd8bf96(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
+void cs_8964fe45c954e72d(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,bool v_skip);
 void cs_1e0863d8f2b7a360(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
 void cs_c311823b6552fdf7(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
 void cs_a4fa9c8087597dcf(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
@@ -5614,8 +5650,10 @@ void cs_bc64dbfb155d02c7(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::Stri
 void cs_5c18cba22441d508(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,std::int32_t v_value);
 void cs_87abc8a059905f77(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,std::int32_t v_left,std::int32_t v_right,std::int32_t v_top,std::int32_t v_bottom,pls::cs::Delegate<void(pls::cs::Ref<pls::kairo::Graphics>,float,pls::cs::Ref<cs_f1dd8f2aa583774c>,pls::cs::Ref<cs_f1dd8f2aa583774c>)> v_render);
 void cs_00f4f3ea699b68a8(pls::cs::Ref<pls::kairo::Canvas> cs_this,bool v_enable);
+pls::cs::String cs_0c63416912f65567(pls::cs::Ref<pls::kairo::Canvas> cs_this,pls::cs::String v_text,std::int32_t v_displayMode,std::int32_t v_inputMode);
 bool cs_c8e32e6eaf380ca6(pls::cs::Ref<pls::kairo::Canvas> cs_this);
 bool cs_26fe694df0ae6d4f(pls::cs::Ref<pls::kairo::Canvas> cs_this);
+bool cs_c1254eeab17d49bd(pls::cs::Ref<pls::kairo::Canvas> cs_this);
 bool cs_25bba6e14d51039b(pls::cs::String v_url);
 void cs_bc7b8b04f006df42(pls::cs::Ref<pls::kairo::Canvas> cs_this,bool v_enable);
 void cs_ac34c1502cb07afe(pls::cs::String v_url);
@@ -5635,8 +5673,12 @@ void cs_feea20f608ec9bb6(pls::cs::Ref<pls::kairo::Graphics> cs_this,pls::cs::Str
 void cs_da83e0acd18b1deb(pls::cs::Ref<pls::kairo::Graphics> cs_this,pls::cs::Ref<cs_dc09c88a279424b5> v_lf,pls::cs::String v_str,float v_x,float v_y,std::int32_t v_color,std::int32_t v_anchor);
 void cs_bd0818c86bdc2dd2(pls::cs::Ref<pls::kairo::Graphics> cs_this,pls::cs::String v_str,float v_x,float v_y,std::int32_t v_color,std::int32_t v_anchor);
 void cs_89a5e9b21929e049(pls::cs::Ref<pls::kairo::Graphics> cs_this,pls::cs::Ref<cs_dc09c88a279424b5> v_lf,pls::cs::String v_str,float v_x,float v_y,std::int32_t v_color,std::int32_t v_anchor);
+void cs_7ae33d7210848539(pls::cs::Ref<pls::kairo::Graphics> cs_this,pls::cs::Ref<cs_dc09c88a279424b5> v_lf,pls::cs::String v_str,float v_x,float v_y,float v_width,std::int32_t v_anchor);
+void cs_3a532227458b89c6(pls::cs::Ref<pls::kairo::Graphics> cs_this,pls::cs::String v_str,float v_x,float v_y,float v_width,std::int32_t v_anchor);
 std::int32_t cs_ca48ee9e5dbe6d98(std::int32_t v_name);
 std::int32_t cs_734e0f1de4f940e6();
+std::int32_t cs_35fe07f2b79ae9d6(pls::cs::Ref<pls::kairo::IApplication> cs_this);
+bool cs_abcd346a5a41f570(pls::cs::Ref<pls::kairo::IApplication> cs_this);
 pls::cs::Array<std::int32_t> cs_4821dc8d620fb368(pls::cs::Array<std::uint8_t> v_data);
 pls::cs::String cs_cc8b6c2700fa40bd(pls::cs::Array<std::uint8_t> v_data);
 pls::cs::Array<std::int32_t> cs_63aaf001afdbc743(pls::cs::Array<std::uint8_t> v_data);
@@ -5818,9 +5860,11 @@ pls::cs::Ref<cs_8bf13b560e1e05e9> cs_3afc5298ce4a3e84();
 void cs_3afc5298ce4a3e84_init(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this);
 pls::cs::Ref<cs_8bf13b560e1e05e9> cs_6b53a5cdc402f43c(pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName);
 void cs_6b53a5cdc402f43c_init(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName);
+void cs_3e2739124195383e(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::Ref<cs_5ad2213598dfcd5d> v_c,std::int32_t v_type,std::int32_t v_param);
 std::int32_t cs_9dc7651e6c063ad0(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::String v_str);
 void cs_9ab4bec37ce639be(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName);
 void cs_b312c8d19342903d(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::String v_name);
+void cs_a3ffc1615f910b95(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod);
 pls::cs::Ref<cs_2ffa6f51468590ea> cs_2f5492a9dea0a4ac();
 void cs_2f5492a9dea0a4ac_init(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this);
 void cs_761ec71a552eb9f1(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_debug_log);
@@ -5838,9 +5882,12 @@ void cs_d130abd124b700c6(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Arra
 pls::cs::Array<pls::cs::Ref<cs_b08d770c239489bf>> cs_69245dee82c72fc3(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Array<pls::cs::Ref<cs_b08d770c239489bf>> v_list,std::int32_t v_id);
 pls::cs::Array<std::uint8_t> cs_1165aa3eb3bd00a8(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Array<bool> v_bools);
 void cs_94181b675211bd10(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Array<std::int32_t> v_list);
+pls::cs::Array<std::uint8_t> cs_1f1b43e72fa5d4d5(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_m);
 pls::cs::String cs_625a98664abbed2d(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_m);
+pls::cs::Array<std::uint8_t> cs_8df0c766a9b7b335(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_m,pls::cs::String v_r,pls::cs::String v_p);
 pls::cs::String cs_38470bdb3f8437ca(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_m,pls::cs::String v_r,pls::cs::String v_p);
 pls::cs::Array<std::uint8_t> cs_6d95fb53423037bb(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_cm,pls::cs::String v_r);
+pls::cs::Array<std::uint8_t> cs_07a34a1a7b45e837(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_m,pls::cs::String v_s,pls::cs::String v_r);
 pls::cs::String cs_2dc4274529875f85(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_m,pls::cs::String v_s,pls::cs::String v_r);
 pls::cs::String cs_956ae4af07815f66(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_cm,pls::cs::String v_r);
 void cs_a0d588186627b4ec(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_next_mapId);
@@ -5929,6 +5976,7 @@ std::int32_t cs_6efab0ea61f29346(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::
 pls::cs::Array<pls::cs::Array<std::int32_t>> cs_376abd5bcc201f39(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_delayId);
 pls::cs::Array<std::int32_t> cs_0e43d8ab78998b13(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_left,std::int32_t v_right,std::int32_t v_padding,std::int32_t v_index,std::int32_t v_max);
 std::int32_t cs_403b24da3b07fdd6(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_id);
+std::int32_t cs_f74cc0faca3e6d5a(std::int64_t v_value);
 std::int64_t cs_c13ac9fb15b1936e(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this);
 pls::cs::String cs_428607d20e3f3658(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this);
 pls::cs::Ref<cs_2ffa6f51468590ea> cs_6b283e61fdac2d16();
@@ -5972,9 +6020,11 @@ pls::cs::String cs_ecb814bcd5ee800e(pls::cs::String v_query,pls::cs::String v_pa
 std::int32_t cs_4cd2b388eb7a0694(std::int32_t v_v1,std::int32_t v_v2);
 std::int32_t cs_f18b55fda99863b9(std::int32_t v_v1,std::int32_t v_v2);
 void cs_b708460eea6c6df0(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_slot,pls::cs::String v_name);
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_4b1fa6248654b253(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_dir,pls::cs::String v_file);
 void cs_1ca8cad04edda95c(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_bgm);
 void cs_fac1396bd1214784(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_jingle);
 void cs_a3dc092674ab6de6(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_se);
+void cs_f1241afac3e9e8f5(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_url,pls::cs::String v_file,pls::cs::String v_index,pls::cs::String v_date,pls::cs::Array<std::uint8_t> v_data);
 void cs_9b142b0c3e92ca63(pls::cs::String v_str);
 bool cs_68fcb18265769d80(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Ref<pls::kairo::FormBase> v_form);
 std::int32_t cs_15f77c54ef987b54(std::int32_t v_total);
@@ -5991,6 +6041,11 @@ pls::cs::Array<bool> cs_1ac265addce78873(pls::cs::Ref<cs_2ffa6f51468590ea> cs_th
 pls::cs::Array<std::int32_t> cs_83519dceef52cfef(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Array<std::uint8_t> v_src,std::int32_t v_size);
 pls::cs::Array<std::int32_t> cs_9860ae9d692b87ac(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Array<std::uint8_t> v_src);
 std::int32_t cs_7f2d55b45a07fbae(pls::cs::Array<std::int32_t> v_array,std::int32_t v_key);
+void cs_226a08f2e67db01f(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_text,bool v_scratchpad,pls::cs::Ref<pls::cs::ExceptionObject> v_th);
+void cs_8b5f17f6255af03d(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_text,bool v_scratchpad);
+void cs_e51d08967835b92f(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_text,std::int32_t v_type,pls::cs::Ref<pls::cs::ExceptionObject> v_th);
+void cs_463a9e14579423e5(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_text,std::int32_t v_type);
+void cs_bb04d65e23009190(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_text);
 void cs_124c31e48b3fe662(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os,pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> v_scripts);
 void cs_34a842e07132dc32(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int64_t v_score);
 void cs_e1e9cde920cf8975(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int64_t v_score);
@@ -6021,6 +6076,7 @@ pls::cs::Ref<cs_20db1845606f1f3b> cs_8947b9476c4f17f7(pls::cs::String v_label,pl
 void cs_8947b9476c4f17f7_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength);
 pls::cs::Ref<cs_20db1845606f1f3b> cs_a669d4cd9c91bbb0(pls::cs::String v_label,pls::cs::String v_defaultText);
 void cs_a669d4cd9c91bbb0_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText);
+void cs_14c2613f2e6bc060(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod);
 void cs_a08cf6e8e956e572(std::int32_t v_delta);
 std::int32_t cs_268e4c8a5c5e1aa9();
 void cs_88dfc436b791ac1f();
@@ -6066,13 +6122,21 @@ void cs_4d9093772b7b2178(pls::cs::String v_text,std::int32_t v_duration);
 void cs_d77afa4a6ff2b7fb();
 std::int64_t cs_e4c8e8c5d833899f();
 pls::cs::String cs_99bb8e5b618e57bb(pls::cs::String v_value);
+bool cs_2eb79b51879e59c7();
 void cs_762af1e562b96b8a(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
 void cs_d4ade149898c4a1b();
 pls::cs::Ref<cs_792a6372766eb19f> cs_cf8ab3fc66fb56cb();
 void cs_cf8ab3fc66fb56cb_init(pls::cs::Ref<cs_792a6372766eb19f> cs_this);
+void cs_7c7da0c4369e8446(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_id,std::int32_t v_value,bool v_enable);
+void cs_f1a80f024da2b6ee(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_id,std::int32_t v_value);
+void cs_fb0cff21536b034a(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_id);
+void cs_41ddda44b52789d1(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
+void cs_dd559390e255ede0(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y);
 void cs_9bfe00949a9c4d85(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_imgId);
 void cs_b55690f7a47a296c(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,float v_w,float v_h,std::int32_t v_imgId);
+bool cs_08147b57532d085e(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_id,std::int32_t v_value,bool v_enable);
 void cs_b5ef9d13e4a21bab(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_imgId);
+void cs_81b27bd67bb6cb56(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_311049404bce850c(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y);
 pls::cs::Array<float> cs_da8b794ec31d3049(pls::cs::Ref<cs_792a6372766eb19f> cs_this,float v_left,float v_right,float v_padding,std::int32_t v_index,std::int32_t v_max);
 pls::cs::Ref<cs_792a6372766eb19f> cs_a066f615d75279e2();
@@ -6419,6 +6483,7 @@ void cs_5e76b9a5115ec3c6(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t 
 void cs_ac42dbacd2c8b2e5(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_num,std::int32_t v_showMax,std::int32_t v_value);
 void cs_875f1f851e8f75df(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_num,std::int32_t v_showMax);
 void cs_0d32f320570d6146(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
+void cs_1b77d58a6eb05a2c(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_type,std::int32_t v_value);
 void cs_b9bbd2b4e1a59f2c(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_type);
 pls::cs::String cs_d8a792a28d79d9b9(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
 void cs_16641f71ed4d7f8a(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
@@ -6470,6 +6535,7 @@ pls::cs::Ref<cs_7eeafe36a056776c> cs_6365b6907852f094(pls::cs::String v_msg,pls:
 bool cs_2e8467cceed75e07(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,pls::cs::Ref<cs_757516ce190cf813> v_e);
 bool cs_50194a8436c518b8(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);
 void cs_dcfbcce06a015340(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,std::int32_t v_left,std::int32_t v_right);
+void cs_6b3d79cf80d0d155(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,std::int32_t v_type,std::int32_t v_value);
 pls::cs::String cs_7b5204c0798583ad(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);
 pls::cs::Ref<cs_5dc998c2cffb18c8> cs_148ae4520ebf5819(pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_connectMethod,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_resultMethod);
 void cs_148ae4520ebf5819_init(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_connectMethod,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_resultMethod);
@@ -6520,6 +6586,7 @@ std::int32_t cs_f2e4ff8d5073c2eb(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this,std::
 bool cs_fd09666c1ad0b529(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 bool cs_2a2e46575659084c(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 void cs_a6e481b168e6fc62(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
+void cs_784b75a2e8fe91ae(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this,std::int32_t v_type,std::int32_t v_value);
 pls::cs::String cs_83e48a5feada74ed(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 bool cs_6ee8d12c93887b93(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 void cs_e3c23e4f2567a056(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
@@ -6536,6 +6603,7 @@ std::int32_t cs_67dd227a98626429(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this,std::
 bool cs_57c70e6e7991c22c(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this);
 bool cs_8ef5f4c367db33f4(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this);
 void cs_e882a89810a20b62(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this);
+void cs_138177c5ca8d7e75(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this,std::int32_t v_type,std::int32_t v_value);
 void cs_fe024bdc277f72eb(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this,std::int32_t v_type);
 pls::cs::String cs_90a97af61ea9a1ba(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this);
 pls::cs::Ref<cs_7a8a85ab4c0396df> cs_972efb29b2f26070(pls::cs::Ref<pls::kairo::FormBase> v_next);
@@ -6610,6 +6678,7 @@ pls::cs::Ref<cs_90cdc908fbacdc4d> cs_8a97d90a17275f58();
 void cs_8a97d90a17275f58_init(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this);
 pls::cs::Ref<cs_90cdc908fbacdc4d> cs_7236fab2e58bd0b3(pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName);
 void cs_7236fab2e58bd0b3_init(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName);
+void cs_8bc9aa25aebc3796(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod);
 pls::cs::Ref<cs_af32d28251411c95> cs_11534d928e8399e4();
 void cs_11534d928e8399e4_init(pls::cs::Ref<cs_af32d28251411c95> cs_this);
 void cs_9d38c5ec25140485(pls::cs::Ref<cs_af32d28251411c95> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
@@ -6929,6 +6998,8 @@ inline std::int32_t cs_5451b2154f09f4c5::GetTouchValue(std::int32_t v_type,std::
 inline std::int32_t cs_d0b7ac4933bed3ac::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_31d00564715a79b8(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()),v_type,v_index);}
 inline bool cs_d0b7ac4933bed3ac::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_3abdf9a4844132f6(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()),v_e);}
 inline bool cs_d0b7ac4933bed3ac::Resume() {return cs_48b0c339ae28a97d(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()));}
+inline void cs_5451b2154f09f4c5::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_3d1ead99a7eb01b8(std::static_pointer_cast<cs_5451b2154f09f4c5>(shared_from_this()),v_type,v_value);}
+inline void cs_d0b7ac4933bed3ac::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_47fda1ccc4dc7bca(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_d0b7ac4933bed3ac::ToString() {return cs_a20d3d4d705fb05f(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()));}
 inline bool cs_d0b7ac4933bed3ac::Update() {return cs_ba8b5ba0971d8a14(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()));}
 inline bool cs_5451b2154f09f4c5::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_7a6109cc91f876a5(std::static_pointer_cast<cs_5451b2154f09f4c5>(shared_from_this()),v_e);}
@@ -6947,6 +7018,7 @@ inline std::int32_t cs_65bcdaa7ea8c7d7a::GetHashCode() {return cs_f0ad67243e55b6
 inline std::int32_t cs_65bcdaa7ea8c7d7a::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_5d22c5ebff313c6c(std::static_pointer_cast<cs_65bcdaa7ea8c7d7a>(shared_from_this()),v_type,v_index);}
 inline bool cs_65bcdaa7ea8c7d7a::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_6ba0d1267167231a(std::static_pointer_cast<cs_65bcdaa7ea8c7d7a>(shared_from_this()),v_e);}
 inline bool cs_65bcdaa7ea8c7d7a::Resume() {return cs_79a92769557395bc(std::static_pointer_cast<cs_65bcdaa7ea8c7d7a>(shared_from_this()));}
+inline void cs_65bcdaa7ea8c7d7a::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_2a1829c674ee63b5(std::static_pointer_cast<cs_65bcdaa7ea8c7d7a>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_65bcdaa7ea8c7d7a::ToString() {return cs_d9fffbcf499f9061(std::static_pointer_cast<cs_65bcdaa7ea8c7d7a>(shared_from_this()));}
 inline void cs_7eb0a1119bc141dc::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_c70c9dc115a7d15d(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()),v_g);}
 inline bool cs_7eb0a1119bc141dc::Finish() {return cs_087864ad04891f7d(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()));}
@@ -6954,7 +7026,9 @@ inline std::int32_t cs_7eb0a1119bc141dc::GetHashCode() {return cs_7890b8933e5494
 inline std::int32_t cs_7eb0a1119bc141dc::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_4f7f903e64b08713(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()),v_type,v_index);}
 inline bool cs_7eb0a1119bc141dc::Init() {return cs_affa57deeadcf8fe(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()));}
 inline bool cs_7eb0a1119bc141dc::Resume() {return cs_305dfcfb28ab9c87(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()));}
+inline void cs_7eb0a1119bc141dc::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_70a4bf233f4613fb(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_7eb0a1119bc141dc::ToString() {return cs_7ecc9e73b43a1714(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()));}
+inline bool cs_7eb0a1119bc141dc::Update() {return cs_479b0fad2741c8e1(std::static_pointer_cast<cs_7eb0a1119bc141dc>(shared_from_this()));}
 inline std::int32_t cs_a2cea92715051fa5::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_45eb085094ccbf19(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()),v_type,v_index);}
 inline bool cs_a2cea92715051fa5::CheckMainWindow() {return cs_e3bab3146e4e3d19(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
 inline bool cs_a2cea92715051fa5::Finish() {return cs_4d4a99d5706a74a6(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
@@ -6962,14 +7036,20 @@ inline std::int32_t cs_a2cea92715051fa5::GetHashCode() {return cs_fbbfd4efc888ec
 inline bool cs_a2cea92715051fa5::Init() {return cs_bddd362da1b29cd5(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
 inline bool cs_a2cea92715051fa5::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_23e2161b160086ab(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()),v_e);}
 inline bool cs_a2cea92715051fa5::Resume() {return cs_ebac7785f8a5a1f3(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
+inline void cs_a2cea92715051fa5::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_73f65148e53c30c4(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_a2cea92715051fa5::ToString() {return cs_19af8a8701589f9f(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
+inline void cs_8bf13b560e1e05e9::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_a3ffc1615f910b95(std::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_canvas,v_onFinishMethod);}
+inline void cs_20db1845606f1f3b::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_14c2613f2e6bc060(std::static_pointer_cast<cs_20db1845606f1f3b>(shared_from_this()),v_canvas,v_onFinishMethod);}
+inline bool cs_a2cea92715051fa5::Update() {return cs_dd2a086cd01e914b(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
 inline void cs_e31f80000513fe82::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_5d2fbec875d6b0cf(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()),v_g);}
 inline bool cs_e31f80000513fe82::Finish() {return cs_98e3505e1c38b93d(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline std::int32_t cs_e31f80000513fe82::GetHashCode() {return cs_a369b9c98e9b81ec(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline bool cs_e31f80000513fe82::Init() {return cs_ab52e5cd05fa2edb(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline bool cs_e31f80000513fe82::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_a3bbb54f7183a8b3(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()),v_e);}
 inline bool cs_e31f80000513fe82::Resume() {return cs_157441e08e263633(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
+inline void cs_e31f80000513fe82::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_baa82dca182cb994(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_e31f80000513fe82::ToString() {return cs_c27882f05e0eaec9(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
+inline bool cs_e31f80000513fe82::Update() {return cs_5326b92cc796829d(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline pls::cs::Ref<pls::kairo::FormManagerBase> cs_bad15ea7469ee2b9::GetFormManager() {return cs_a8d7ff329d533cce(std::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
 inline void cs_bad15ea7469ee2b9::OnCreate() {cs_fe479bb5365005e6(std::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
 inline void cs_bad15ea7469ee2b9::OnDestroy() {cs_436207ec3f57c2d7(std::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
@@ -6980,6 +7060,7 @@ inline void cs_bad15ea7469ee2b9::OnUpdate() {cs_0b355334e1fce7ed(std::static_poi
 inline void cs_4368d694d01424b0::cs_virtual_9ed05c6b3a5346ec() {cs_9ed05c6b3a5346ec(std::static_pointer_cast<cs_4368d694d01424b0>(shared_from_this()));}
 inline void cs_b489b0d33bb37bb8::cs_virtual_706bcbd9776cf6ef() {cs_706bcbd9776cf6ef(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 inline void cs_b489b0d33bb37bb8::cs_virtual_9ca5e184bd541bee() {cs_9ca5e184bd541bee(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+inline void cs_792a6372766eb19f::cs_virtual_07a0bb2e4afc307c(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_41ddda44b52789d1(std::static_pointer_cast<cs_792a6372766eb19f>(shared_from_this()),v_g);}
 inline bool cs_792a6372766eb19f::cs_virtual_9b7c686ee42b269b() {return cs_d237d8c9ca71f7cc(std::static_pointer_cast<cs_792a6372766eb19f>(shared_from_this()));}
 inline void cs_792a6372766eb19f::cs_virtual_acea3de130dbb7cd() {cs_df21b41e03f2f36f(std::static_pointer_cast<cs_792a6372766eb19f>(shared_from_this()));}
 inline void cs_e315dac1df3b175d::cs_virtual_14c25464911dc345(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_344a1e1fb645eab7(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
@@ -7032,17 +7113,20 @@ inline void cs_925b3cf054e42b78::cs_virtual_3481915358ac0fff() {cs_9006c280cca35
 inline bool cs_5df8265429cd2423::Init() {return cs_e4c18b596618208a(std::static_pointer_cast<cs_5df8265429cd2423>(shared_from_this()));}
 inline bool cs_5df8265429cd2423::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_ead3618c8cf94cf7(std::static_pointer_cast<cs_5df8265429cd2423>(shared_from_this()),v_e);}
 inline bool cs_5df8265429cd2423::Resume() {return cs_62252863f9b5a066(std::static_pointer_cast<cs_5df8265429cd2423>(shared_from_this()));}
+inline void cs_5df8265429cd2423::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_1b77d58a6eb05a2c(std::static_pointer_cast<cs_5df8265429cd2423>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_5df8265429cd2423::ToString() {return cs_d8a792a28d79d9b9(std::static_pointer_cast<cs_5df8265429cd2423>(shared_from_this()));}
 inline bool cs_f52c904bea265acc::Finish() {return cs_63e8f3ae67da7af4(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
 inline std::int32_t cs_f52c904bea265acc::GetHashCode() {return cs_69ffb55861de2893(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
 inline bool cs_f52c904bea265acc::Resume() {return cs_affd13cffeea0427(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
 inline pls::cs::String cs_f52c904bea265acc::ToString() {return cs_7ed9b921ca878f0d(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
+inline void cs_90cdc908fbacdc4d::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_8bc9aa25aebc3796(std::static_pointer_cast<cs_90cdc908fbacdc4d>(shared_from_this()),v_canvas,v_onFinishMethod);}
 inline void cs_7eeafe36a056776c::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_60833b1af0d05697(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()),v_g);}
 inline bool cs_7eeafe36a056776c::Finish() {return cs_700199628a5d3944(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
 inline std::int32_t cs_7eeafe36a056776c::GetHashCode() {return cs_bbd44ad53610e27c(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
 inline std::int32_t cs_7eeafe36a056776c::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_cfa914e2f676e2a8(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()),v_type,v_index);}
 inline bool cs_7eeafe36a056776c::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_2e8467cceed75e07(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()),v_e);}
 inline bool cs_7eeafe36a056776c::Resume() {return cs_50194a8436c518b8(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
+inline void cs_7eeafe36a056776c::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_6b3d79cf80d0d155(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_7eeafe36a056776c::ToString() {return cs_7b5204c0798583ad(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
 inline bool cs_5dc998c2cffb18c8::CheckMainWindow() {return cs_caae27da0b1b6167(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 inline void cs_5dc998c2cffb18c8::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_cf0a08b4237473bc(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()),v_g);}
@@ -7062,6 +7146,7 @@ inline std::int32_t cs_d01bf6d528df5d3e::GetHashCode() {return cs_424cc8dfa482f7
 inline std::int32_t cs_d01bf6d528df5d3e::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_f2e4ff8d5073c2eb(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()),v_type,v_index);}
 inline bool cs_d01bf6d528df5d3e::Init() {return cs_fd09666c1ad0b529(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline bool cs_d01bf6d528df5d3e::Resume() {return cs_2a2e46575659084c(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
+inline void cs_d01bf6d528df5d3e::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_784b75a2e8fe91ae(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_d01bf6d528df5d3e::ToString() {return cs_83e48a5feada74ed(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline bool cs_d01bf6d528df5d3e::Update() {return cs_6ee8d12c93887b93(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline bool cs_c63e265fb6ff73e9::CheckMainWindow() {return cs_b3bffc2410b4d94b(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
@@ -7071,6 +7156,7 @@ inline std::int32_t cs_c63e265fb6ff73e9::GetHashCode() {return cs_d2c3db6c33dce4
 inline std::int32_t cs_c63e265fb6ff73e9::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_67dd227a98626429(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()),v_type,v_index);}
 inline bool cs_c63e265fb6ff73e9::Init() {return cs_57c70e6e7991c22c(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
 inline bool cs_c63e265fb6ff73e9::Resume() {return cs_8ef5f4c367db33f4(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
+inline void cs_c63e265fb6ff73e9::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_138177c5ca8d7e75(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()),v_type,v_value);}
 inline pls::cs::String cs_c63e265fb6ff73e9::ToString() {return cs_90a97af61ea9a1ba(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
 inline bool cs_7a8a85ab4c0396df::CheckMainWindow() {return cs_62510745d5314f43(std::static_pointer_cast<cs_7a8a85ab4c0396df>(shared_from_this()));}
 inline void cs_7a8a85ab4c0396df::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_92c8ac080808b50a(std::static_pointer_cast<cs_7a8a85ab4c0396df>(shared_from_this()),v_g);}
@@ -7123,6 +7209,7 @@ inline bool cs_f1dd8f2aa583774c::Equals(pls::cs::Ref<pls::cs::Object> const& v_o
 inline std::int32_t cs_f1dd8f2aa583774c::GetHashCode() {return cs_140e188d0a82c8b7(std::static_pointer_cast<cs_f1dd8f2aa583774c>(shared_from_this()));}
 inline bool cs_9f5a071d05c1d020::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_a3399ea8077672e2(std::static_pointer_cast<cs_9f5a071d05c1d020>(shared_from_this()),v_obj);}
 inline std::int32_t cs_9f5a071d05c1d020::GetHashCode() {return cs_cdd09ba02ba5e5aa(std::static_pointer_cast<cs_9f5a071d05c1d020>(shared_from_this()));}
+inline void cs_8bf13b560e1e05e9::cs_virtual_24e6f1c38df06a63(pls::cs::Ref<cs_5ad2213598dfcd5d> v_c,std::int32_t v_type,std::int32_t v_param) {cs_3e2739124195383e(std::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_c,v_type,v_param);}
 inline pls::cs::String cs_23a020152d468724::ToString() {return cs_959efe4557f9babf(std::static_pointer_cast<cs_23a020152d468724>(shared_from_this()));}
 inline void cs_4368d694d01424b0::cs_virtual_2186b93ea03d07c2() {cs_2186b93ea03d07c2(std::static_pointer_cast<cs_4368d694d01424b0>(shared_from_this()));}
 inline pls::cs::String cs_7f70540c4f85d74f::ToString() {return cs_9eab9ded735366ec(std::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}

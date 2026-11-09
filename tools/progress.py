@@ -4,6 +4,7 @@ import csv
 import json
 from pathlib import Path
 from update_phase2_progress import refresh,EvidencePending
+from diagnostic_evidence import frame_evidence
 
 ROOT=Path(__file__).resolve().parents[1]
 csv.field_size_limit(2_000_000)
@@ -168,6 +169,7 @@ def main():
         print(json.dumps(dict(status='PENDING',reason=str(error),ledgers_and_documents_published=False)))
         return
     boundary=rows('config/boundary.csv');translation=rows('config/translation.csv');assets=rows('config/assets.csv')
+    diagnostic=frame_evidence(ROOT)
     b=load('config/boundary-summary.json');a=load('config/asset-summary.json')
     if len(boundary)!=b['kairo']['unique_symbols']:raise ValueError('Boundary summary differs from ledger')
     if len(translation)!=1958 or len({r['id'] for r in translation})!=1958:raise ValueError('Translation identities differ')
@@ -222,7 +224,7 @@ def main():
             f"- Sintaxe: {phase2['syntax_kinds_observed_in_emitted_bodies']}/{phase2['measured_syntax_kinds']} SyntaxKinds na união dos corpos emitidos ({phase2['portable_syntax_kinds_observed']} Kairo, {phase2['game_syntax_kinds_observed']} Game); observação não comprova cobertura semântica integral de cada construção.",
             f"- Serviços: {phase2['service_contracts']} contratos explícitos e {phase2['service_native_assertions']} assertions nativas; hooks não integrados, nenhum símbolo da fronteira promovido por essas fixtures.",
             f"- Assets: {phase2['rgba8_files']} RGBA8 únicos ({phase2['rgba8_bytes']} bytes) com readback integral; {phase2['ttf_files']} TTF e {phase2['ogg_files']} Ogg "+('exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.' if phase2['media_runtime_verified'] else 'ainda sem prova atual de rasterização/streaming.'),
-            '- Backend SDL e fixtures C++/C# foram executados. Título, menu, partida, frame time e memória residente por categoria do jogo permanecem UNKNOWN; não houve primeiro boot do jogo.',
+            (f"- Diagnósticos privados Release: até {diagnostic['max_reported_presented_frames']} frames apresentados com logs locais autenticados. Isso não promove métodos a runs/verified nem comprova a tela por inferência. Inspeção do título/menu, comparação Android e medições com cobertura parcial: [primeiro frame](docs/notes/phase2-first-frame.md). Partida completa ainda UNKNOWN." if diagnostic['available'] else '- Backend SDL e fixtures C++/C# foram executados. Sem logs privados de frames disponíveis nesta máquina; contagens de método não comprovam título/menu. Evidência histórica e limites: [primeiro frame](docs/notes/phase2-first-frame.md). Partida completa ainda UNKNOWN.'),
             '- Próxima integração: ampliar tradução e bindings de plataforma até o título/menu e a partida completa. Nenhuma decisão de telas 3DS foi tomada.',
             '', '## Limites das contagens e dos bindings','',
             'translated significa apenas que o corpo C++ gerado compilou em objeto, com produtor, fontes, headers, compilador e objeto ancorados por hash. Não comprova link completo, bootstrap executado, chamada de todas as APIs ou comportamento em aparelho. runs/verified do jogo permanecem zero até prova de execução apropriada.',

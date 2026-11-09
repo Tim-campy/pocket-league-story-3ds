@@ -12,6 +12,11 @@ template<class F>std::string error(F work){try{work();return "none";}catch(const
 static const char*tf(bool value){return value?"True":"False";}
 static int own_native_tests(){
     std::size_t passed=0;auto check=[&](bool value){if(!value)throw std::runtime_error("Own native GC invariant failed");++passed;};
+    {struct Left{virtual ~Left()=default;std::uint64_t padding=7;};struct Offset:Left,Object{};auto value=make_ref<Offset>();bool found=false;visit_managed_memory([&](const void*data,std::size_t bytes,pls::memory::Category){if(data==value.get()&&bytes==sizeof(Offset))found=true;});check(found);}
+    {auto node=make_ref<Node>();node->next=node;const auto generation=gc_generation(node);auto array=Array<int>::make(23);String text(u"own snapshot fixture string");std::size_t bytes=0;bool finished=false;
+        visit_managed_memory([&](const void*,std::size_t n,pls::memory::Category){bytes+=n;},[&]{finished=true;});
+        check(bytes>=sizeof(Node)+23*sizeof(int));check(finished&&gc_generation(node)==generation&&node->next==node);
+        check(error([]{visit_managed_memory([](const void*,std::size_t,pls::memory::Category){throw ArgumentException();});})=="System.ArgumentException");check(error([]{gc_collect();})=="none");node->next.reset();}
     std::weak_ptr<Node>a,b;
     {auto node=make_ref<Node>();node->next=node;a=node;}gc_collect();check(a.expired());
     {auto one=make_ref<Node>(),two=make_ref<Node>();one->next=two;two->next=one;a=one;b=two;}gc_collect();check(a.expired()&&b.expired());

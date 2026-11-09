@@ -1,4 +1,5 @@
 #include "pc_metrics.hpp"
+#include "../kairo/api/diagnostic_output.hpp"
 #include <algorithm>
 #include <cstdlib>
 #include <iomanip>
@@ -48,13 +49,16 @@ void RunMetrics::emit_memory(const std::string&phase,const ProcessMemory&m,const
     if(!enabled_)return;try{std::ostringstream out;out<<"PLS_PC_METRICS={\"event\":\"memory\",\"phase\":"<<quote(phase)<<",\"completed_presented_frames\":"<<frames_.seen()<<",\"sampler_nanoseconds\":"<<sampler_ns<<",\"process\":{";
         field(out,"resident_bytes",m.resident_bytes);field(out,"peak_resident_bytes",m.peak_resident_bytes);field(out,"private_commit_bytes",m.private_commit_bytes);field(out,"executable_image_committed_bytes",m.executable_image_committed_bytes);field(out,"executable_image_resident_bytes",m.executable_image_resident_bytes);out<<"\"page_bytes\":"<<m.page_bytes<<",\"platform\":"<<quote(m.platform)<<",\"diagnostic\":"<<quote(m.diagnostic)<<"},\"resident_by_category\":{\"textures\":null,\"audio\":null,\"fonts\":null,\"managed_heap\":null},\"payload_bytes\":{";
         field(out,"display_rgba",p.display_rgba_bytes);field(out,"display_rgba_capacity",p.display_rgba_capacity_bytes);field(out,"backend_texture",p.backend_texture_payload_bytes);field(out,"audio_ring",p.audio_ring_bytes);field(out,"audio_scratch",p.audio_scratch_bytes);field(out,"audio_resampler_available",p.audio_resampler_available_bytes);field(out,"audio_device_callback",p.audio_device_callback_bytes);out<<"\"all_images\":null,\"font_source\":null,\"font_cache_rgba\":null,\"managed_heap\":null},\"payload_peaks_bytes\":{\"backend_texture\":"<<peak_backend_texture_payload_bytes_<<',';field(out,"audio_resampler_available",p.audio_peak_resampler_available_bytes,false);
-        out<<"},\"gc_last_collection\":{";field(out,"tracked",p.gc_tracked);field(out,"roots",p.gc_roots);field(out,"unreachable",p.gc_unreachable);field(out,"collected",p.gc_collected,false);out<<"},\"memory_categories_are_not_additive\":true,\"game_screen\":\"UNKNOWN\"}\n";output_<<out.str();output_.flush();
+        out<<"},\"known_allocations\":{\"coverage\":\"partial\",\"overhead_and_opaque_library_allocations\":\"UNKNOWN\",\"sampling_is_atomic\":false,\"categories\":{";
+        const char*categories[]={"textures","audio","fonts","managed_heap"};for(std::size_t i=0;i<4;++i){if(i)out<<',';out<<quote(categories[i])<<":{";field(out,"capacity_bytes",p.known.capacity_bytes[i]);field(out,"resident_payload_bytes",p.known.resident_payload_bytes[i],false);out<<'}';}out<<"}},\"gc_last_collection\":{";field(out,"tracked",p.gc_tracked);field(out,"roots",p.gc_roots);field(out,"unreachable",p.gc_unreachable);field(out,"collected",p.gc_collected,false);out<<"},\"memory_categories_are_not_additive\":true,\"game_screen\":\"UNKNOWN\"}\n";{std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);output_<<out.str();output_.flush();}
     }catch(...){}}
-void RunMetrics::finish(const std::string&outcome)noexcept{if(!enabled_||finished_)return;finished_=true;try{
+void RunMetrics::finish(const std::string&outcome)noexcept{if(!enabled_||finished_)return;finished_=true;emit_summary(outcome);}
+void RunMetrics::checkpoint(const std::string&outcome)noexcept{if(enabled_&&!finished_)emit_summary(outcome);}
+void RunMetrics::emit_summary(const std::string&outcome)noexcept{try{
     std::ostringstream out;out<<"PLS_PC_METRICS={\"event\":\"frame_summary\",\"outcome\":"<<quote(outcome)<<",\"completed_presented_frames\":"<<frames_.seen()<<",\"retained_frames\":"<<frames_.retained()<<",\"frames_not_retained\":"<<(frames_.seen()-frames_.retained())<<",\"window\":\"first_600_completed_frames\",\"p95_rule\":\"nearest_rank\",\"game_screen\":\"UNKNOWN\",\"slices\":{";
     bool first_slice=true;for(auto slice:{FrameSlice::retained,FrameSlice::startup_first_60,FrameSlice::after_first_60}){
         if(!first_slice)out<<',';first_slice=false;out<<quote(slice==FrameSlice::retained?"retained":slice==FrameSlice::startup_first_60?"first_60":"after_first_60")<<":{";
         for(std::size_t i=0;i<frame_stage_count;++i){if(i)out<<',';out<<quote(names[i])<<':';distribution(out,frames_.summarize(static_cast<FrameStage>(i),slice));}out<<'}';
-    }out<<"}}\n";output_<<out.str();output_.flush();
+    }out<<"}}\n";{std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);output_<<out.str();output_.flush();}
 }catch(...){}}
 }

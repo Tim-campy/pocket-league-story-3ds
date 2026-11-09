@@ -108,3 +108,16 @@ records a private behavioral ablation: removing the unassigned bitmap changes
 the case-table lookups changes eight uppercase conversions. Production data
 was retained under the existing authorization. This is not a license choice
 for the rest of the port.
+
+## Tentativa UCD posterior a 5b02ef6, não adotada em produção
+
+As tabelas de caixa/categoria foram regeradas independentemente com UnicodeData
+3.1.0 (versão declarada nas fontes Mono/Unity) e 3.0.0 como controle. As duas
+variantes falharam em cinco das 25.704 observações históricas. Nenhum dado foi
+retocado a partir do provider LGPL para forçar igualdade. Produção conserva
+46.832 + 80 bytes GNU Library GPL v2 separados dos 337.358 bytes MIT/X11.
+
+Os downloads oficiais da experiência são cobertos pela Unicode License V3,
+fixada por hash no script e recibo; não integram o executável de produção.
+Proveniência, hashes, resultados e religação pelo fonte completo publicado:
+[unicode-regeneration.md](docs/notes/unicode-regeneration.md).

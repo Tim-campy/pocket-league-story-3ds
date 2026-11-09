@@ -20,4 +20,6 @@ int main(int argc,char**argv){if(argc>1&&std::string(argv[1])=="dotnet")runtime_
     std::cout<<"null-negative="<<run([]{return make_ref<StringBuilder>()->Append(String(),-1,0)->ToString().utf8();})<<'\n';
     std::cout<<"outside-get="<<run([]{return String(std::u16string{make_ref<StringBuilder>()->get_Chars(0)}).utf8();})<<'\n';std::cout<<"outside-set="<<run([]{make_ref<StringBuilder>()->set_Chars(0,u'a');return std::string("none");})<<'\n';
     std::cout<<"negative-length="<<run([&]{a->set_Length(-1);return std::string("none");})<<'\n';std::cout<<"small-capacity="<<run([&]{a->set_Capacity(1);return std::string("none");})<<'\n';
+    const std::int32_t indexes[]={-1,0,1,2,3,4};const String values[]={String{},String(u""),String(u"x\0\xd800",3)};
+    for(std::size_t i=0;i<6;++i)for(std::size_t j=0;j<3;++j)std::cout<<"insert-"<<i<<'-'<<j<<'='<<run([&]{auto b=make_ref<StringBuilder>(String(u"202"));const bool same=b==b->Insert(indexes[i],values[j]);const auto cap=b->get_Capacity();const auto text=units(b->ToString());return std::string(same?"True":"False")+","+std::to_string(cap)+","+std::to_string(b->get_Capacity())+","+text;})<<'\n';
 }

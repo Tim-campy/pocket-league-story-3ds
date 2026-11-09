@@ -14,3 +14,4 @@
 #include "game_generated_cpp_part_0012.inc"
 #include "game_generated_cpp_part_0013.inc"
 #include "game_generated_cpp_part_0014.inc"
+#include "game_generated_cpp_part_0015.inc"

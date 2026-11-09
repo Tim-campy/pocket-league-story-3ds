@@ -1,6 +1,7 @@
 #include "backend.hpp"
 #include "debug_input.hpp"
 #include "system.hpp"
+#include "application.hpp"
 #include <stdexcept>
 #include <limits>
 
@@ -51,6 +52,15 @@ void Backend::reset_default_orientation(){
     // The PC host has a fixed logical framebuffer, no orientation sensor.
     // Restore its actual initial window shape, not a fabricated Android value.
     if(window_)SDL_SetWindowSize(window_,width_,height_);
+    orientation_mode_.store(0);
+}
+kairo::WindowOrientation Backend::orientation()const{const auto stored=orientation_mode_.load();return stored?static_cast<kairo::WindowOrientation>(stored):width_>height_?kairo::WindowOrientation::landscape_left:kairo::WindowOrientation::portrait;}
+void Backend::set_orientation(kairo::WindowOrientation value){
+    // This fixed-framebuffer desktop host has no rotation sensor. Support the
+    // existing orientation and automatic mode; do not fake rotated rendering.
+    const auto physical=width_>height_?kairo::WindowOrientation::landscape_left:kairo::WindowOrientation::portrait;
+    if(value!=kairo::WindowOrientation::auto_rotation&&value!=physical)throw cs::NotSupportedException("Rotating the fixed PC framebuffer to another orientation is not implemented");
+    orientation_mode_.store(static_cast<std::int32_t>(value));
 }
 void Backend::set_fullscreen(bool enabled){
     if(!window_)throw cs::InvalidOperationException("Fullscreen needs an SDL window");
@@ -83,6 +93,7 @@ std::vector<platform::Input> Backend::events() {
         debug_input_event(event);
         using Kind=platform::Input::Kind;
         if(event.type==SDL_QUIT) result.push_back({Kind::quit});
+        else if(event.type==SDL_TEXTINPUT) result.push_back({Kind::text_input,0,0,0,event.text.text});
         else if(event.type==SDL_MOUSEMOTION) result.push_back({Kind::pointer_move,event.motion.x,event.motion.y});
         else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP) result.push_back({event.type==SDL_MOUSEBUTTONDOWN?Kind::pointer_down:Kind::pointer_up,event.button.x,event.button.y,event.button.button});
         else if(event.type==SDL_KEYDOWN||event.type==SDL_KEYUP) result.push_back({event.type==SDL_KEYDOWN?Kind::key_down:Kind::key_up,0,0,event.key.keysym.sym});

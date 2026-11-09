@@ -93,6 +93,7 @@ public:
     // Setup captures must be native/staticmethods, never hidden managed edges.
     void initialize_config(bool initial_debug,std::function<bool()> current_debug);
     void feed(const platform::Input&);
+    void cancel_focus(){held_.clear();groups_.fill(false);mouse_down_=previous_mouse_down_=right_down_=previous_right_down_=false;state_.ClearKeyBuffer();}
     void decide_frame();
 };
 }

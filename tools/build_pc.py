@@ -30,7 +30,7 @@ def metric_log_summary(stderr):
     result=dict(protocol='PLS_PC_METRICS=JSONL',records=0,invalid_records=0,
         memory_phases=[],frame_summary_records=0,max_completed_presented_frames=0,
         game_screen='UNKNOWN')
-    phases={'before_main','first_presented_frame','final_before_teardown','failure_after_setup_unwind'}
+    phases={'before_main','first_presented_frame','after_60_presented_frames','final_before_teardown','failure_after_setup_unwind'}
     for line in stderr.splitlines():
         if not line.startswith(b'PLS_PC_METRICS='):continue
         try:
@@ -60,7 +60,10 @@ def validate_diagnostic_manifest(folder,root=ROOT):
     if manifest.get('diagnostic_only')is not True:raise ValueError('Diagnostic-only manifest required')
     if manifest.get('canonical_report_sha256')!=digest(root/'config/phase2-game-translation.json'):raise ValueError('Diagnostic canonical report is stale')
     canonical=unpack_source_paths(json.loads((root/'config/phase2-game-translation.json').read_text(encoding='utf8')))
-    if canonical.get('assembly')!='Assembly-CSharp'or canonical.get('compiled')is not True:raise ValueError('Compiled canonical Game report required')
+    if canonical.get('assembly')!='Assembly-CSharp':raise ValueError('Canonical Game report required')
+    if canonical.get('compiled')is not True:
+        if manifest.get('precompile_diagnostic')is not True or manifest.get('canonical_compiled')is not False or manifest.get('normal_compiled_methods')!=0 or manifest.get('diagnostic_game_execution_promotes_zero_methods')is not True:
+            raise ValueError('Uncompiled Game requires an explicit private precompile diagnostic with zero normal coverage')
     producer=canonical.get('producer')
     if not isinstance(producer,dict)or manifest.get('producer')!=producer:raise ValueError('Diagnostic producer differs from canonical generation')
     for key,name in [('translator_source_sha256','translator/Translator.cs'),('driver_sha256','translator/translate.py')]:
@@ -149,9 +152,11 @@ def main():
     parser.add_argument('--metrics',action='store_true',help='Record opt-in native memory/frame measurements in the private run log; requires --run')
     parser.add_argument('--diagnostic-generated',type=Path,help='Private manifest-verified sources with fatal gap traps; separate build and isolated preferences')
     parser.add_argument('--configuration',choices=['Debug','Release'],default='Debug')
+    parser.add_argument('--diagnostic-select-frame',type=int,action='append',help='Private deterministic Canvas KEY_SELECT after this completed frame (1..600); repeat for a sequence')
     args=parser.parse_args()
     if args.diagnostic_generated and args.fixtures_only:parser.error('Diagnostic sources require a game build')
     if args.metrics and (not args.run or args.fixtures_only):parser.error('--metrics requires a game --run attempt')
+    if args.diagnostic_select_frame is not None and(not args.diagnostic_generated or not args.run or any(not 1<=n<=600 for n in args.diagnostic_select_frame)or args.diagnostic_select_frame!=sorted(set(args.diagnostic_select_frame))):parser.error('Scripted input requires a private diagnostic run and strictly increasing frames1..600')
     if not args.fixtures_only:
         if not args.apk or not args.apk.is_file():parser.error('Forneça seu próprio APK local com --apk. Nenhum jogo é baixado.')
         if hashlib.sha256(args.apk.read_bytes()).hexdigest()!=APK_SHA:parser.error('APK diferente; confirme a versão no pipeline antes de compilar.')
@@ -159,6 +164,7 @@ def main():
     if not sdk.is_dir():parser.error('SDL2 development SDK missing; no dependency is installed automatically.')
     env=environment()
     if args.metrics:env['PLS_PC_METRICS']='1'
+    if args.diagnostic_select_frame is not None:env['PLS_PC_SELECT_FRAME']=','.join(str(n)for n in args.diagnostic_select_frame)
     diagnostic_folder=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
     diagnostic_manifest=validate_diagnostic_manifest(diagnostic_folder)if diagnostic_folder else None
     build_name='pc-diagnostic'if diagnostic_folder else 'pc'
@@ -177,9 +183,12 @@ def main():
         attempt=dict(number=next_attempt_number(history,folder),configuration=args.configuration,apk_sha256=APK_SHA,generated_game_sources=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))],game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
         attempt_folder=folder/'attempts'/str(attempt['number'])
         attempt_folder.mkdir(parents=True,exist_ok=False)
+        attempt['scripted_select_frame']=args.diagnostic_select_frame
+        if args.metrics:env['PLS_PC_CAPTURE_DIR']=str((attempt_folder/'frames').resolve())
         if diagnostic_folder:
             attempt.update(diagnostic_only=True,diagnostic_manifest_sha256=digest(diagnostic_folder/'manifest.json'),trap_count=len(diagnostic_manifest['traps']),
                 canonical_report_sha256=diagnostic_manifest['canonical_report_sha256'],game_coverage_promoted=False)
+            attempt['precompile_diagnostic']=diagnostic_manifest.get('precompile_diagnostic',False)
             env['PLS_DIAGNOSTIC_SAVE_ROOT']=str((attempt_folder/'preferences').resolve())
         attempt['logs']=[]
         inputs_before=source_snapshot(diagnostic_folder=diagnostic_folder)
@@ -238,6 +247,7 @@ def main():
             if args.metrics:
                 attempt['metrics_log_summary']=metric_log_summary((attempt_folder/'game-run.stderr').read_bytes())
                 attempt['metrics_recorded']=attempt['metrics_log_summary']['records']>0
+                attempt['frame_captures']=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p),bytes=p.stat().st_size)for p in sorted((attempt_folder/'frames').glob('frame-*.bmp'))]
         history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
         print(json.dumps(attempt));return
     result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,dependency_audit=dependency_audit,

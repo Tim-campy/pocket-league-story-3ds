@@ -1,0 +1,420 @@
+{
+  "operation": "bounded-official-UCD-regeneration-audit",
+  "status": "PASS",
+  "audit_completed": true,
+  "adoption": "RETAIN_SEPARATE_LGPL_COMPONENT",
+  "documented_unicode_version": "3.1",
+  "documented_version_source": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Documentation/en/System.Globalization/UnicodeCategory.xml",
+  "documented_version_lines": [
+    19,
+    26
+  ],
+  "mono_revision": "f08f8a27bfe3aafda4e430ee2365dec73c1070d7",
+  "unity_revision": "b6587926c0f146c8b12985744f33a13b39a22d57",
+  "version_caveat": "Mono/Unity documentation says3.1; historical invariant CLR tables are not identical to raw UCD3.1. UCD3.0 is a bounded historical control, not a second replacement policy.",
+  "upstream_generation_evidence": {
+    "path": "mono/metadata/ChangeLog",
+    "lines": [
+      21010,
+      21020
+    ],
+    "date": "2005-04-06",
+    "text_summary": "Table regeneration corrected to invariant culture; historical CharCategoryTest records generation under MS.NET."
+  },
+  "ucd_license": "Unicode License V3",
+  "files": [
+    {
+      "path": "build/deps/unicode-legacy/UnicodeData-3.1.0.txt",
+      "url": "https://www.unicode.org/Public/3.1-Update/UnicodeData-3.1.0.txt",
+      "sha256": "8e57884da0da3a66782b8a6332a601fccbcae9ed0060e12501aca02fa56ffecd",
+      "bytes": 780369
+    },
+    {
+      "path": "build/deps/unicode-legacy/UnicodeData-3.0.0.txt",
+      "url": "https://www.unicode.org/Public/3.0-Update/UnicodeData-3.0.0.txt",
+      "sha256": "f41d967bc458ee106f0c3948bfad71cd0860d96c49304e3fd02eaf2bbae4b6d9",
+      "bytes": 636043
+    },
+    {
+      "path": "build/deps/unicode-legacy/Unicode-LICENSE.txt",
+      "url": "https://www.unicode.org/license.txt",
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "bytes": 1995
+    },
+    {
+      "path": "build/deps/unicode-legacy/ReadMe-3.1.0.txt",
+      "url": "https://www.unicode.org/Public/3.1-Update/ReadMe-3.1.0.txt",
+      "sha256": "a20b55ea29adf4cd28633a2e74e1e3d3e348108031c79d7d7ea90549341dba0a",
+      "bytes": 1449
+    },
+    {
+      "path": "build/deps/unicode-legacy/mcs/class/corlib/Documentation/en/System.Globalization/UnicodeCategory.xml",
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Documentation/en/System.Globalization/UnicodeCategory.xml",
+      "sha256": "7f162c16a1fc82fee3cfdd75f7dc4036d8a9b0823ca6d2dc8fa36093cc49192c",
+      "bytes": 27113
+    },
+    {
+      "path": "build/deps/unicode-legacy/mcs/class/corlib/Test/System/CharCategoryTest.cs",
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mcs/class/corlib/Test/System/CharCategoryTest.cs",
+      "sha256": "a544d67eb76ec1df4681daa9bc160cb5700dae51b59c3bce9d4dc3a7c2f7e0e9",
+      "bytes": 37575
+    },
+    {
+      "path": "build/deps/unicode-legacy/mono/metadata/ChangeLog",
+      "url": "https://raw.githubusercontent.com/mono/mono/f08f8a27bfe3aafda4e430ee2365dec73c1070d7/mono/metadata/ChangeLog",
+      "sha256": "265bfb71d33d9dc5adb70a7e47d6080f226d51879e79348afbdaa70d94dc44f3",
+      "bytes": 1215423
+    },
+    {
+      "path": "build/deps/unicode-legacy/unity-UnicodeCategory.xml",
+      "url": "https://raw.githubusercontent.com/Unity-Technologies/mono/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/Documentation/en/System.Globalization/UnicodeCategory.xml",
+      "sha256": "7f162c16a1fc82fee3cfdd75f7dc4036d8a9b0823ca6d2dc8fa36093cc49192c",
+      "bytes": 27113
+    }
+  ],
+  "candidates": [
+    {
+      "version": "3.1.0",
+      "construction": "UnicodeData fields12/13 simple case mappings; Cn/Nd categories; no baseline patches",
+      "tables": {
+        "ToLowerDataLow": {
+          "entries": 9424,
+          "different_entries": 100,
+          "witnesses": [
+            {
+              "codepoint": "U+0130",
+              "baseline": 304,
+              "ucd": 105
+            },
+            {
+              "codepoint": "U+01A6",
+              "baseline": 422,
+              "ucd": 640
+            },
+            {
+              "codepoint": "U+01C5",
+              "baseline": 453,
+              "ucd": 454
+            },
+            {
+              "codepoint": "U+01C8",
+              "baseline": 456,
+              "ucd": 457
+            },
+            {
+              "codepoint": "U+01CB",
+              "baseline": 459,
+              "ucd": 460
+            },
+            {
+              "codepoint": "U+01F2",
+              "baseline": 498,
+              "ucd": 499
+            },
+            {
+              "codepoint": "U+01F6",
+              "baseline": 502,
+              "ucd": 405
+            },
+            {
+              "codepoint": "U+01F7",
+              "baseline": 503,
+              "ucd": 447
+            }
+          ]
+        },
+        "ToLowerDataHigh": {
+          "entries": 223,
+          "different_entries": 0,
+          "witnesses": []
+        },
+        "ToUpperDataLow": {
+          "entries": 9450,
+          "different_entries": 71,
+          "witnesses": [
+            {
+              "codepoint": "U+00B5",
+              "baseline": 181,
+              "ucd": 924
+            },
+            {
+              "codepoint": "U+0131",
+              "baseline": 305,
+              "ucd": 73
+            },
+            {
+              "codepoint": "U+017F",
+              "baseline": 383,
+              "ucd": 83
+            },
+            {
+              "codepoint": "U+0195",
+              "baseline": 405,
+              "ucd": 502
+            },
+            {
+              "codepoint": "U+01BF",
+              "baseline": 447,
+              "ucd": 503
+            },
+            {
+              "codepoint": "U+01C5",
+              "baseline": 453,
+              "ucd": 452
+            },
+            {
+              "codepoint": "U+01C8",
+              "baseline": 456,
+              "ucd": 455
+            },
+            {
+              "codepoint": "U+01CB",
+              "baseline": 459,
+              "ucd": 458
+            }
+          ]
+        },
+        "ToUpperDataHigh": {
+          "entries": 223,
+          "different_entries": 0,
+          "witnesses": []
+        }
+      },
+      "unassigned_bitmap_different_codepoints": 2,
+      "unassigned_bitmap_witnesses": [
+        "U+03F4",
+        "U+03F5"
+      ],
+      "decimal_digit_different_codepoints": 0,
+      "decimal_digit_ranges": 20,
+      "case_and_bitmap_bytes": 46832,
+      "decimal_digit_range_bytes": 80,
+      "generated_payload_sha256": "c52cb5886a9b2e0381f648c012f79d2b48f8fd35a94e0664b3e5e54bce04aa43",
+      "cases": 25704,
+      "passed": 25699,
+      "mismatches": 5,
+      "mismatches_by_culture": {
+        "0": 5
+      },
+      "witnesses": [
+        {
+          "case": "c0a7b8equalsCI",
+          "expected": "False",
+          "actual": "True"
+        },
+        {
+          "case": "c0a8lower",
+          "expected": "str:0130",
+          "actual": "str:0069"
+        },
+        {
+          "case": "c0a8b7equalsCI",
+          "expected": "False",
+          "actual": "True"
+        },
+        {
+          "case": "c0a8b9equalsCI",
+          "expected": "False",
+          "actual": "True"
+        },
+        {
+          "case": "c0a9b8equalsCI",
+          "expected": "False",
+          "actual": "True"
+        }
+      ],
+      "provider_sha256": "f336638da02f7a1e04caaf9a5f59389c850688f8535fbef9a42c4253832c09c0",
+      "table_include_sha256": "7957786a7e9f0939657a4977526f2a5af497a03cdaa52ff12c0b6f9d4875d9d9",
+      "executable_sha256": "4068f69dc83e0eb7fb825dfc2754efce9a7a6c2d752c46282b4405ee71ac8d72",
+      "stdout_sha256": "2a7b5ed1c4ffa7151769d7dd37a769cbd8d9b26f3ef90119d4e2c2557acd7200",
+      "inputs_sha256": {
+        "tools/probe_unicode_regeneration.py": "9337fd00fe4026059c89c0bdbb568c39fe54ad0c49f813b9457cca0c1117c499",
+        "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+        "tests/translator/mono_collation_edge_fixtures.cpp": "116cc94ef9de17f26cb0380c4067c702b759905d4a723ea0e078ef340b51bbe6",
+        "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
+        "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+        "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
+        "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
+        "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
+        "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
+        "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8"
+      },
+      "production_changed": false
+    },
+    {
+      "version": "3.0.0",
+      "construction": "UnicodeData fields12/13 simple case mappings; Cn/Nd categories; no baseline patches",
+      "tables": {
+        "ToLowerDataLow": {
+          "entries": 9424,
+          "different_entries": 99,
+          "witnesses": [
+            {
+              "codepoint": "U+0130",
+              "baseline": 304,
+              "ucd": 105
+            },
+            {
+              "codepoint": "U+01A6",
+              "baseline": 422,
+              "ucd": 640
+            },
+            {
+              "codepoint": "U+01C5",
+              "baseline": 453,
+              "ucd": 454
+            },
+            {
+              "codepoint": "U+01C8",
+              "baseline": 456,
+              "ucd": 457
+            },
+            {
+              "codepoint": "U+01CB",
+              "baseline": 459,
+              "ucd": 460
+            },
+            {
+              "codepoint": "U+01F2",
+              "baseline": 498,
+              "ucd": 499
+            },
+            {
+              "codepoint": "U+01F6",
+              "baseline": 502,
+              "ucd": 405
+            },
+            {
+              "codepoint": "U+01F7",
+              "baseline": 503,
+              "ucd": 447
+            }
+          ]
+        },
+        "ToLowerDataHigh": {
+          "entries": 223,
+          "different_entries": 0,
+          "witnesses": []
+        },
+        "ToUpperDataLow": {
+          "entries": 9450,
+          "different_entries": 70,
+          "witnesses": [
+            {
+              "codepoint": "U+00B5",
+              "baseline": 181,
+              "ucd": 924
+            },
+            {
+              "codepoint": "U+0131",
+              "baseline": 305,
+              "ucd": 73
+            },
+            {
+              "codepoint": "U+017F",
+              "baseline": 383,
+              "ucd": 83
+            },
+            {
+              "codepoint": "U+0195",
+              "baseline": 405,
+              "ucd": 502
+            },
+            {
+              "codepoint": "U+01BF",
+              "baseline": 447,
+              "ucd": 503
+            },
+            {
+              "codepoint": "U+01C5",
+              "baseline": 453,
+              "ucd": 452
+            },
+            {
+              "codepoint": "U+01C8",
+              "baseline": 456,
+              "ucd": 455
+            },
+            {
+              "codepoint": "U+01CB",
+              "baseline": 459,
+              "ucd": 458
+            }
+          ]
+        },
+        "ToUpperDataHigh": {
+          "entries": 223,
+          "different_entries": 0,
+          "witnesses": []
+        }
+      },
+      "unassigned_bitmap_different_codepoints": 0,
+      "unassigned_bitmap_witnesses": [],
+      "decimal_digit_different_codepoints": 0,
+      "decimal_digit_ranges": 20,
+      "case_and_bitmap_bytes": 46832,
+      "decimal_digit_range_bytes": 80,
+      "generated_payload_sha256": "dd8ddbfb069088a3b77145630e504094247f4fc4cf4d5f799b0745f999c17cd8",
+      "cases": 25704,
+      "passed": 25699,
+      "mismatches": 5,
+      "mismatches_by_culture": {
+        "0": 5
+      },
+      "witnesses": [
+        {
+          "case": "c0a7b8equalsCI",
+          "expected": "False",
+          "actual": "True"
+        },
+        {
+          "case": "c0a8lower",
+          "expected": "str:0130",
+          "actual": "str:0069"
+        },
+        {
+          "case": "c0a8b7equalsCI",
+          "expected": "False",
+          "actual": "True"
+        },
+        {
+          "case": "c0a8b9equalsCI",
+          "expected": "False",
+          "actual": "True"
+        },
+        {
+          "case": "c0a9b8equalsCI",
+          "expected": "False",
+          "actual": "True"
+        }
+      ],
+      "provider_sha256": "f336638da02f7a1e04caaf9a5f59389c850688f8535fbef9a42c4253832c09c0",
+      "table_include_sha256": "dc1c995e6fdd377537aa497ff805b3a4ba28976ef0096bef540f738d4d0fd6ef",
+      "executable_sha256": "0d039e7dab229bf27e9d95b2eff198dd0b24345c51a6153ad4544eae8ffd38d0",
+      "stdout_sha256": "2a7b5ed1c4ffa7151769d7dd37a769cbd8d9b26f3ef90119d4e2c2557acd7200",
+      "inputs_sha256": {
+        "tools/probe_unicode_regeneration.py": "9337fd00fe4026059c89c0bdbb568c39fe54ad0c49f813b9457cca0c1117c499",
+        "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+        "tests/translator/mono_collation_edge_fixtures.cpp": "116cc94ef9de17f26cb0380c4067c702b759905d4a723ea0e078ef340b51bbe6",
+        "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
+        "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+        "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
+        "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
+        "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
+        "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
+        "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8"
+      },
+      "production_changed": false
+    }
+  ],
+  "oracle_stdout_sha256": "299e5c22d454d7b4346b717fb6428288bd41739ca59f415dc7e12edd3c81257b",
+  "baseline_header_sha256": "b73fbd2efc19dc6e6104448383e3859595264f210e5e0dbdd19e691712477d83",
+  "producer_sha256": "9337fd00fe4026059c89c0bdbb568c39fe54ad0c49f813b9457cca0c1117c499",
+  "production_changed": false,
+  "limitations": [
+    "This audit does not choose a project-wide license or establish Android runtime equality.",
+    "No mapping values or corrective patches are copied from the LGPL baseline into the UCD candidate.",
+    "The 25704 observations are synthetic; full array differences are reported to expose gaps outside that sample.",
+    "Production stays on the separately attributed LGPL provider unless an independent equivalent is established."
+  ]
+}

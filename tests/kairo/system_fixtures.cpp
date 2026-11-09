@@ -11,6 +11,9 @@ int main(){
         check(UnityApplication::get_targetFrameRate()==rate);
     }
     QualitySettings::set_vSyncCount(0);check(QualitySettings::get_vSyncCount()==0);
+    check(QualitySettings::get_antiAliasing()==0);
+    auto battery=native_battery_info();check(battery.length()==2&&battery.at(0)==0&&battery.at(1)==0);
+    battery.at(0)=2;check(native_battery_info().at(0)==0);
     bool rejected=false;try{QualitySettings::set_vSyncCount(1);}catch(const pls::cs::NotSupportedException&){rejected=true;}
     check(rejected);
     check(!native_package_name().is_null()&&native_package_name().length()==0);

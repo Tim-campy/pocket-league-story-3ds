@@ -110,5 +110,9 @@ FontMetrics RasterFont::metrics() const {
     return {impl_->pixel_height,static_cast<float>(m.ascender)/64.0f,static_cast<float>(m.descender)/64.0f,static_cast<float>(m.height)/64.0f};
 }
 FontMemory RasterFont::memory() const {return {impl_->source.size(),impl_->bytes,impl_->cache.size(),impl_->limit};}
+void RasterFont::memory_ranges(const memory::RangeVisitor&visit)const{
+    visit(impl_->source.data(),impl_->source.capacity(),memory::Category::fonts);
+    for(const auto&entry:impl_->cache){const auto&pixels=entry.second.glyph.rgba8;visit(pixels.data(),pixels.capacity(),memory::Category::fonts);}
+}
 void RasterFont::clear_cache(){impl_->cache.clear();impl_->lru.clear();impl_->bytes=0;}
 }

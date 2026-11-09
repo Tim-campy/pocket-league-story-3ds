@@ -178,6 +178,23 @@ Só depois do New 3DS funcionar. Meça onde o tempo vai (perfil), otimize o que 
 
 ## 9. Regras de trabalho
 
+**Decisão posterior ao primeiro título/menu PC:** prosseguir com a API mantendo
+as diferenças numéricas de arcos/trigonometria como UNKNOWN no Android e adiar
+a validação nesse aparelho. Conservar os resultados negativos Mono Windows e
+o contrato float32/double64; não relaxar o comparador nem conceder equivalência
+Android por inferência. Essa decisão não autoriza instalar Frida/server,
+alterar o APK original ou preparar o toolchain 3DS.
+
+**Decisões posteriores ao checkpoint 5b02ef6:** no alvo PC de desenvolvimento,
+ImeOnBlock não espera a edição e o backend informa não bloqueado; entrada por
+SDL_TextInput em campo simples, sem janela de IME. A assinatura original retorna
+string: o texto inicial é devolvido após o despacho de UI e os dois consumidores
+existentes descartam o retorno. O comportamento 3DS/swkbd fica para a Fase 3.
+Tentar uma rodada de regeneração das quatro tabelas de caixa e bitmap Mono a
+partir do UCD da versão histórica; se não preservar as 25.704 observações, manter
+o componente LGPL separado, com avisos, proveniência e procedimento público de
+religação pelo fonte completo. Não mudar a semântica para fazer o UCD passar.
+
 **Autorização posterior após 0b9d3e7:** componente de colação do Mono (`SimpleCollator` e tabelas) autorizado a partir do repositório oficial, na revisão mais próxima do Mono do Unity 5.3.4f1. Confirmar licença e registrar arquivo, revisão e hashes em `docs/toolchain.md` e `THIRD_PARTY.md`. Antes de portar, medir usos culturais, culturas e dados no jogo/KairoLibrary; reduzir ao subconjunto comprovadamente necessário e relatar bytes das tabelas. Conservar os 120 casos diferenciais como regressão. Essa dependência integra a lista pré-autorizada; não consultar novamente para prepará-la nessas condições. Continuar até fechar as 32 raízes e integrar callbacks/serviços, tentando o boot cedo; demais condições de parada mantidas.
 
 **Autorização adicional de licença:** o usuário autorizou explicitamente as tabelas históricas auxiliares de `mono/metadata/char-conversions.h` sob GNU Library General Public License versão 2 (junho de 1991), com licença e proveniência separadas. Não rotular essas tabelas como MIT/X11 nem incorporar outras partes da VM. Núcleo/tabelas de colação MIT e dados auxiliares LGPL devem permanecer distinguidos em `THIRD_PARTY.md` e na toolchain.

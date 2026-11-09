@@ -69,6 +69,7 @@ public:
     void Use();void Unuse();
     bool get_IsDisposed()const{return disposed_;}
     bool native_resident()const{return alive_;}
+    void memory_ranges(const memory::RangeVisitor&visit)const override{visit(rgba_.data(),rgba_.capacity(),memory::Category::textures);}
     void SetExpiration(bool yes,std::int32_t frames=-1){lock_expiration_=!yes;validate_frames_=frames;}
     bool IsExpiration()const{return !lock_expiration_;}
     static void SetSourceImageMaxCount(std::int32_t);

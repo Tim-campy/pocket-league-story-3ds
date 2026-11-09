@@ -9,10 +9,10 @@ Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f591
 | Inventário | Total | Estado medido |
 |---|---:|---|
 | Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 522, 'verified': 252, 'implemented': 1} |
-| Métodos a traduzir | 1958 | {'todo': 282, 'translated': 1676} |
+| Métodos a traduzir | 1958 | {'todo': 238, 'translated': 1720} |
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1676/1958 identidades originais com C++ compilado; 0 executadas/verificadas em jogo.**
+**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1720/1958 identidades originais com C++ compilado; 0 executadas/verificadas em jogo.**
 
 ## Preparação e medições da Fase 1 preservadas
 
@@ -37,11 +37,11 @@ Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets]
 
 - Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 172 raízes + 202 dependências emitidas/compiladas; 374 métodos exercitados e 373 verificados. 2617/2618 observações diferenciais aprovadas; 1 diferenças de plataforma explicitamente retidas, sem promoção a verified.
 - Fronteira: 252/775 símbolos verificados: 171 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.
-- Assembly-CSharp: 1676 corpos emitidos, 1676 compilados em objeto C++; 1676/1958 (85.60%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4832 identidades declaradas; o pedido atual inclui 1893 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
+- Assembly-CSharp: 1720 corpos emitidos, 1720 compilados em objeto C++; 1720/1958 (87.84%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4832 identidades declaradas; o pedido atual inclui 1893 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
 - Sintaxe: 69/123 SyntaxKinds na união dos corpos emitidos (63 Kairo, 69 Game); observação não comprova cobertura semântica integral de cada construção.
 - Serviços: 53 contratos explícitos e 49 assertions nativas; hooks não integrados, nenhum símbolo da fronteira promovido por essas fixtures.
 - Assets: 654 RGBA8 únicos (16933248 bytes) com readback integral; 2 TTF e 27 Ogg exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.
-- Backend SDL e fixtures C++/C# foram executados. Título, menu, partida, frame time e memória residente por categoria do jogo permanecem UNKNOWN; não houve primeiro boot do jogo.
+- Diagnósticos privados Release: até 303 frames apresentados com logs locais autenticados. Isso não promove métodos a runs/verified nem comprova a tela por inferência. Inspeção do título/menu, comparação Android e medições com cobertura parcial: [primeiro frame](docs/notes/phase2-first-frame.md). Partida completa ainda UNKNOWN.
 - Próxima integração: ampliar tradução e bindings de plataforma até o título/menu e a partida completa. Nenhuma decisão de telas 3DS foi tomada.
 
 ## Limites das contagens e dos bindings

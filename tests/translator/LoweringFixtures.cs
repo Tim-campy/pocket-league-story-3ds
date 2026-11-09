@@ -1,6 +1,7 @@
 // Synthetic translator inputs. These methods contain no game data.
 using System;
 using System.Linq;
+using System.Text;
 public static class LoweringFixtures {
     private static int trace_;
     public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
@@ -205,8 +206,17 @@ public static class LoweringFixtures {
     public static int ObjectConcatThrow(int seed) {trace_=seed;try{string.Concat(ConcatArgument(1,new Synthetic.ConcatValue(4,true)),ConcatArgument(2,new Synthetic.ConcatValue(5)),ConcatArgument(3,new Synthetic.ConcatValue(6)));}catch(InvalidOperationException){return trace_;}return -1;}
     // Negative control: captured-variable lifetime across goto is not lowered.
     public static int UnsupportedClosureGoto(int value) { Func<int> f=()=>value;if(value<0)goto done;value++;done:return f(); }
+    public static int StaticAutoProperty(int value){Synthetic.StaticAuto.Value=value;Synthetic.StaticAuto.Enabled=value<0;Synthetic.StaticAuto.Text=value==0?null:"x";return Synthetic.StaticAuto.Value+(Synthetic.StaticAuto.Enabled?3:0)+(Synthetic.StaticAuto.Text==null?7:11);}
+    public static int StaticAutoInitialization(){return Synthetic.StaticAutoOrder.Value+(Synthetic.StaticAutoOrder.Enabled?100:0);}
+    public static string BuilderInsert(int value){StringBuilder b=value==0?null:new StringBuilder("202");return b.Insert(Stamp(1),".").ToString();}
+    public static string StringConcatFour(int value){return string.Concat(value==0?null:"a","",value<0?"b":null,"c");}
+    public static string ObjectArrayConcat(int value){trace_=value;object[] a=value==0?null:new object[]{new Synthetic.ConcatValue(4),null,new Synthetic.ConcatValue(5,false,true),"z"};return string.Concat(a);}
+    public static int ObjectArrayConcatThrow(int value){trace_=value;try{string.Concat(new object[]{new Synthetic.ConcatValue(4,true),new Synthetic.ConcatValue(5)});}catch(InvalidOperationException){return trace_;}return -1;}
+    public static int MathDigits(int value){long v=value==0?long.MinValue:value==1?long.MaxValue:value==2?0:value<0?-10:999;try{return unchecked((int)Math.Log10(Math.Abs(v))+1);}catch(OverflowException){return -7;}}
 }
 namespace Synthetic {
+    public class StaticAuto {public static int Value{get;set;}public static bool Enabled{get;set;}public static string Text{get;set;}}
+    public class StaticAutoOrder {public static int Value{get;set;}public static bool Enabled{get;set;}public static int first=Capture();private static int Capture(){int prior=Value;Value=3;return prior+7;}static StaticAutoOrder(){Value=Value+first;Enabled=true;}}
     public class OptionalCtor {public int value;public OptionalCtor():this(4){}public OptionalCtor(int value,int scale=3){this.value=value*scale;}}
     public class OptionalDerived:OptionalCtor {public OptionalDerived():base(5){}}
     public class SourceAdapterTarget {public int value;public int Read(int delta=2){return value+delta;}public int Next(ref int delta){int prior=delta;delta=value;return prior;}}
@@ -227,8 +237,8 @@ namespace Synthetic {
         public override string ToString(){LoweringFixtures.Stamp(step);if(fail)throw new InvalidOperationException("own fixture");return nullResult?null:step==4?"A":step==5?"B":"C";}
     }
     public sealed class ImplicitScope {
-        public int value=37;
-        private static void NeverCalled(int n) {System.WeakReference unreachable=null;again:if(n-->0)goto again;GC.KeepAlive(unreachable);}
+        public int value=37;public static bool UnusedAutoFlag{get;set;}
+        private static void NeverCalled(int n) {System.WeakReference unreachable=null;again:if(n-->0)goto again;GC.KeepAlive(UnusedAutoFlag?unreachable:null);}
     }
     public interface IRun {void Run();}
     public class DelegateTarget:IRun {public int value;public DelegateTarget(int seed){value=seed;}public int Add(int amount){value+=amount;return value;}public void Run(){value++;}public Func<int,int> Make(){return amount=>Add(amount);}}

@@ -13,12 +13,30 @@
 #include "managed_thread.hpp"
 #include "managed_exceptions.hpp"
 #include "pc_metrics.hpp"
+#include "../kairo/platform/sdl/text_input.hpp"
 #include "../kairo/platform/sdl/globalization.hpp"
 #include <exception>
 #include <cstdlib>
 #include <functional>
+#include <filesystem>
 #include <iostream>
+#include <sstream>
 namespace {
+void capture_frame(const pls::cs::Ref<pls::kairo::Image>& display,std::uint64_t frame){
+    const auto* folder=std::getenv("PLS_PC_CAPTURE_DIR");if(!folder||!*folder)return;
+    const auto root=std::filesystem::u8path(folder);std::filesystem::create_directories(root);
+    const auto path=root/("frame-"+std::to_string(frame)+".bmp");
+    const auto& pixels=display->pixels();const auto w=display->GetWidth(),h=display->GetHeight();
+    auto* surface=SDL_CreateRGBSurfaceWithFormatFrom(const_cast<std::uint8_t*>(pixels.data()),w,h,32,w*4,SDL_PIXELFORMAT_RGBA32);
+    if(!surface)throw pls::cs::IOException(SDL_GetError());
+    const auto status=SDL_SaveBMP(surface,path.u8string().c_str());SDL_FreeSurface(surface);
+    if(status!=0)throw pls::cs::IOException(SDL_GetError());
+    std::cerr<<"PLS_PC_CAPTURE_FRAME="<<frame<<'\n';
+}
+struct TextInputCleanup {
+    pls::cs::Ref<pls::sdl::SimpleTextInput> field;
+    ~TextInputCleanup()noexcept{try{field->Close();pls::kairo::install_text_input({});}catch(...) {}}
+};
 struct FinalMetrics {
     pls::pc::RunMetrics& metrics;
     std::function<pls::pc::PayloadSnapshot()> payload;
@@ -42,6 +60,9 @@ int main(int argc,char** argv){
         pls::sdl::install_globalization_backend();
         pls::assets::Catalog assets(std::filesystem::u8path(argv[1]));pls::kairo::install_asset_catalog(&assets);
         pls::sdl::Backend backend(240,280,false);
+        auto text_input=pls::cs::make_ref<pls::sdl::SimpleTextInput>();
+        pls::kairo::install_text_input(text_input);
+        TextInputCleanup text_input_cleanup{text_input};
         pls::sdl::AudioMixer audio;
         pls::kairo::configure_sound(&assets,&audio);
         std::string preferences;
@@ -66,6 +87,9 @@ int main(int argc,char** argv){
             try{value.backend_texture_payload_bytes=backend.memory().texture_payload_bytes;}catch(...){}
             try{const auto m=audio.memory();value.audio_ring_bytes=m.ring_bytes;value.audio_scratch_bytes=m.scratch_bytes;value.audio_resampler_available_bytes=m.sdl_resampler_available_bytes;value.audio_device_callback_bytes=m.device_callback_bytes;value.audio_peak_resampler_available_bytes=m.peak_resampler_available_bytes;}catch(...){}
             try{const auto gc=pls::cs::gc_last_collection();value.gc_tracked=gc.tracked;value.gc_roots=gc.roots;value.gc_unreachable=gc.unreachable;value.gc_collected=gc.collected;}catch(...){}
+            try{std::vector<pls::pc::MemoryRange>ranges;const auto visit=[&](const void*data,std::size_t bytes,pls::memory::Category category){ranges.push_back({data,bytes,category});};
+                pls::cs::visit_managed_memory(visit,[&]{pls::kairo::visit_font_memory(visit);audio.memory_ranges(visit);value.known=pls::pc::sample_known_memory(ranges);});
+            }catch(...){}
             return value;
         };
         const char* exit_reason="termination_requested";
@@ -78,16 +102,29 @@ int main(int argc,char** argv){
         // Termination must be connected to the translated event/finish handlers.
         app->host_configure(240,280,pls::cs::String::from_utf8(preferences),{});
         app->host_orientation_reset([&backend]{backend.reset_default_orientation();});
+        app->host_orientation_reader([&backend]{return backend.orientation();});
+        app->host_orientation_writer([&backend](auto value){backend.set_orientation(value);});
         app->host_fullscreen_writer([&backend](bool enabled){backend.set_fullscreen(enabled);});
         pls::game::configure_application(app);
         app->host_start();
+        std::uint64_t presented_frames=0;
+#if defined(PLS_DIAGNOSTIC_BUILD)
+        std::vector<std::uint64_t>select_frames;
+        if(const auto* value=std::getenv("PLS_PC_SELECT_FRAME")){std::istringstream input(value);std::string token;
+            while(std::getline(input,token,',')){std::size_t used=0;const auto frame=std::stoull(token,&used);if(used!=token.size()||frame==0||frame>600||(!select_frames.empty()&&frame<=select_frames.back()))throw pls::cs::ArgumentOutOfRangeException();select_frames.push_back(frame);}
+        }
+#endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
             pls::pc::FrameClock timing(metrics.enabled());
             pls::cs::gc_safepoint();
             const auto frame_start=std::chrono::steady_clock::now();
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            if(std::find(select_frames.begin(),select_frames.end(),presented_frames)!=select_frames.end()){canvas->KeyClick(pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_SELECT_FRAME="<<presented_frames<<'\n';}
+#endif
             timing.mark(pls::pc::FrameStage::gc);
             for(const auto& event:backend.events()){
                 if(event.kind==pls::platform::Input::Kind::quit){exit_reason="window_quit";app->host_stop();return 0;}
+                if(text_input->Handle(event))continue;
                 canvas->host_event(event);
             }
             timing.mark(pls::pc::FrameStage::input);
@@ -96,6 +133,7 @@ int main(int argc,char** argv){
             audio.pump();
             timing.mark(pls::pc::FrameStage::audio);
             app->host_draw();
+            text_input->Draw(display);
             timing.mark(pls::pc::FrameStage::game_draw);
             auto* texture=backend.upload_rgba8(240,280,display->pixels());
             if(metrics.enabled())metrics.observe_texture_payload(backend.memory().texture_payload_bytes);
@@ -103,6 +141,10 @@ int main(int argc,char** argv){
             pls::cs::run_finally([&]{backend.draw(texture,{0,0,240,280},{0,0,240,280},false);timing.mark(pls::pc::FrameStage::render);backend.present();timing.mark(pls::pc::FrameStage::present);},[&]{backend.release(texture);timing.mark(pls::pc::FrameStage::release);});
             pls::kairo::UnityApplication::pace(frame_start);
             if(metrics.frame(timing.finish()))metrics.memory("first_presented_frame",payload());
+            ++presented_frames;
+            if(presented_frames==1||presented_frames==60||presented_frames==120||presented_frames==300)capture_frame(display,presented_frames);
+            if(metrics.enabled()&&presented_frames==60)metrics.memory("after_60_presented_frames",payload());
+            if(metrics.enabled()&&(presented_frames==60||presented_frames==120||presented_frames==300))metrics.checkpoint("running_checkpoint");
         }
         app->host_stop();return 0;
     }catch(const pls::cs::Exception& error){if(!metrics.finished()){metrics.memory("failure_after_setup_unwind",{});metrics.finish("exception_before_metrics_guard");}std::cerr<<pls::cs::capture_exception(error)->ToString().utf8()<<"\n";return 1;}

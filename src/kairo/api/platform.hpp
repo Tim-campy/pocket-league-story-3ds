@@ -6,7 +6,7 @@
 namespace pls::platform {
 struct Color { std::uint8_t r,g,b,a; };
 struct Rect { int x,y,w,h; };
-struct Input { enum class Kind { quit,pointer_down,pointer_up,pointer_move,key_down,key_up }; Kind kind; int x{},y{},key{}; };
+struct Input { enum class Kind { quit,pointer_down,pointer_up,pointer_move,key_down,key_up,text_input }; Kind kind; int x{},y{},key{}; std::string text{}; };
 struct Memory { std::uint64_t texture_payload_bytes{},audio_ring_bytes{}; };
 class Drawing {
 public:

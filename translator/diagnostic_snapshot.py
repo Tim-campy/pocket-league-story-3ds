@@ -17,11 +17,13 @@ def cpp_string(value):return '"'+value.replace('\\','\\\\').replace('"','\\"').r
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--allow-uncompiled',action='store_true',help='Private Release-first experiment only; zero normal compiled-method claims')
     options=parser.parse_args();output=options.output.resolve()
     if not output.is_relative_to((ROOT/'build').resolve()):raise ValueError('Diagnostic output must stay below the ignored build directory')
     if output.exists()and any(output.iterdir()):raise ValueError('Use a new empty directory for each diagnostic snapshot')
     report_file=ROOT/'config/phase2-game-translation.json';report=unpack_source_paths(json.loads(report_file.read_text(encoding='utf8')));producer=report['producer']
-    if not report.get('compiled'):raise ValueError('A compiled canonical snapshot is required')
+    canonical_compiled=report.get('compiled')is True
+    if not canonical_compiled and not options.allow_uncompiled:raise ValueError('A compiled canonical snapshot is required, or explicit --allow-uncompiled for a private Release-first experiment')
     for key,path in [('translator_source_sha256',ROOT/'translator/Translator.cs'),('driver_sha256',ROOT/'translator/translate.py')]:
         if producer.get(key)!=sha(path):raise ValueError('Canonical producer is stale; regenerate normal Game first')
     if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=sha(ROOT/'translator/report_paths.py'):raise ValueError('Canonical path producer is stale')
@@ -45,6 +47,7 @@ def main():
 #include <cstdio>
 #include <exception>
 #include <string>
+#include "diagnostic_output.hpp"
 namespace pls::game {
 class TranslationGap final:public std::exception {
     std::string id_;
@@ -54,7 +57,7 @@ public:
 };
 [[noreturn]] inline void diagnostic_translation_gap(const char* id){
     const auto marker=std::string("PLS_TRANSLATION_GAP=")+id+"\\n";
-    std::fwrite(marker.data(),1,marker.size(),stderr);std::fflush(stderr);
+    {std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::fwrite(marker.data(),1,marker.size(),stderr);std::fflush(stderr);}
     throw TranslationGap(id);
 }
 }
@@ -79,7 +82,9 @@ public:
     manifest=dict(diagnostic_only=True,diagnostic_stage='missing_virtual_slots_and_bootstrap_guards',canonical_report_sha256=sha(report_file),canonical_files=canonical,
         generated_files=[dict(path=path.relative_to(output).as_posix(),sha256=sha(path))for path in generated],traps=manifest_traps,producer=producer,
         diagnostic_generator=dict(path=Path(__file__).relative_to(ROOT).as_posix(),sha256=sha(Path(__file__))),candidate_bodies=[],
-        normal_compiled_methods=report['compiled_method_count'],diagnostic_game_execution_promotes_zero_methods=True,
+        canonical_compiled=canonical_compiled,precompile_diagnostic=not canonical_compiled,
+        normal_compiled_methods=report.get('compiled_method_count',0)if canonical_compiled else 0,
+        emitted_candidate_method_count=report['emitted_method_count'],diagnostic_game_execution_promotes_zero_methods=True,
         execution_requirement='Root supervisor must terminate on PLS_TRANSLATION_GAP= even if game/framework catches an exception wrapper; isolated preferences and separate diagnostic CMake build are mandatory.',
         marker='PLS_TRANSLATION_GAP=',notes=['Canonical sources/reports are never edited. Each named trap throws a native exception outside cs::Exception after a flushed stderr marker.','This first diagnostic stage may stop at a missing Main callback; no alternative Main or silent body is supplied.'])
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf8',newline='\n')

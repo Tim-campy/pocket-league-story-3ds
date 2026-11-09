@@ -451,20 +451,20 @@
   },
   "native_executable": {
     "path": "build/input-tests/input-fixtures.exe",
-    "sha256": "46796afb5f3bff5bf5ab85555579e4ba386dc7bb98109d70a86b3dcd528b89c6"
+    "sha256": "ac4afaccb3d442699b269c8f7d5b0f216ecef1b799ba33247621816933d95e0b"
   },
   "inputs": {
     "tests/kairo/input_fixtures.cpp": "82b775ad2e65c4bb37253f5bf75337d1ec53e622fba2db61e04a6ea0b68b4728",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
-    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
-    "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
+    "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
+    "src/kairo/api/input.hpp": "021a99799933471069df42f904fbc58d0c9a5cb5ef519f138c461396af839f71",
     "tests/kairo/InputOracle.cs": "5edd0d0ada599a6b7f8190bd26bce61d81aa9a837925ef0f3c44dd1458b5b991",
     "tests/kairo/InputPulseOracle.cs": "c6f9bdef1729c693084f537540839fb37c604f0fdcb8d0958a63a6791faf49a9",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+    "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "src/kairo/platform/sdl/backend.hpp": "ab187a6cd19a2a75e7e50b8a326e6ecd6df1d77d5da3bbfc4f0006b79395a5be"
+    "src/kairo/platform/sdl/backend.hpp": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df"
   },
   "source_manifest": [
     {

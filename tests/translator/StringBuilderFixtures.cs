@@ -19,5 +19,7 @@ public static class StringBuilderFixtures {
         Console.WriteLine("null-negative="+Run(delegate{return new StringBuilder().Append((string)null,-1,0).ToString();}));
         Console.WriteLine("outside-get="+Run(delegate{return new StringBuilder()[0].ToString();}));Console.WriteLine("outside-set="+Run(delegate{StringBuilder b=new StringBuilder();b[0]='a';return "none";}));
         Console.WriteLine("negative-length="+Run(delegate{a.Length=-1;return "none";}));Console.WriteLine("small-capacity="+Run(delegate{a.Capacity=1;return "none";}));
+        int[] indexes={-1,0,1,2,3,4};string[] values={null,"","x\0\uD800"};
+        for(int i=0;i<indexes.Length;i++)for(int j=0;j<values.Length;j++){int index=indexes[i];string value=values[j];Console.WriteLine("insert-"+i+"-"+j+"="+Run(delegate{StringBuilder b=new StringBuilder("202");bool same=Object.ReferenceEquals(b,b.Insert(index,value));int cap=b.Capacity;string result=Units(b.ToString());return same+","+cap+","+b.Capacity+","+result;}));}
     }
 }

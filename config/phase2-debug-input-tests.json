@@ -193,24 +193,24 @@
   ],
   "inputs_sha256": {
     "tests/kairo/debug_input_fixtures.cpp": "7ed9448c4d28a15b8bd67d2ba62bdc266c98f83217883db0e3f4efa02b1ecec1",
-    "src/kairo/platform/sdl/backend.cpp": "83b60d6036414d8b838c521c32624baf995786f49826df9aa27cc758689e64f9",
-    "src/kairo/platform/sdl/debug_input.cpp": "86501ba92f2fbb7a02525a811ea4078ce941564bac47bd3fc5de408de150c84c",
-    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "src/kairo/platform/sdl/backend.cpp": "432bc993e2a184f19b0a5ac5b37021c8c240c74cbb87437b634b6dbb05bc2b12",
+    "src/kairo/platform/sdl/debug_input.cpp": "2f8b1f59a88d07ddfc4730e785d7188bac7af5ff19799cd385e5e61b4313e577",
+    "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "tests/kairo/DebugInputOracle.cs": "c658fcf09d326ebf7cb7d6da63343082bafa65b5e03914574500f1fa6d432bfd",
     "tests/kairo/UnityDebugInputMetadata.cs": "6ce29f5c1302cd39fcf52d2a893cc91d2287a023912e21df3c89d65dd9136c54",
     "tools/test_debug_input.py": "4f3c8903e07bd3d6c5396f20da4a280a6ba100f921d262939b092ebb957bc69a",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/debug_input.hpp": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918",
-    "src/kairo/api/vector3.hpp": "f95494b057b1f7a43f8e53efc9942641c592d32030f7f35c592fcce8407e4707",
-    "src/kairo/platform/sdl/debug_input.hpp": "16f336aef15e5c9cff125f1c59a89f4b4dd1ce3e219f1e2a4fa8e83173e9a218",
-    "src/kairo/platform/sdl/backend.hpp": "ab187a6cd19a2a75e7e50b8a326e6ecd6df1d77d5da3bbfc4f0006b79395a5be",
-    "src/kairo/api/platform.hpp": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1",
-    "src/kairo/api/system.hpp": "e1635a68b0bea9a832fbde829ed10d34814c6158195c24b86facea667c837f05",
-    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070"
+    "src/kairo/api/vector3.hpp": "4830f223a65124ea07c7e49f119e14a581d8ef2eee901c1a37c9c863f6bfac81",
+    "src/kairo/platform/sdl/debug_input.hpp": "2fb4d8352d8b783efbc41bf81bc4b9eae974bdd560266307b6d53bdc216cbefb",
+    "src/kairo/platform/sdl/backend.hpp": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df",
+    "src/kairo/api/platform.hpp": "a8aa73dcc40333a6a528be69fd1374cae4d841aeb364cb6e6605dfdb06140add",
+    "src/kairo/api/system.hpp": "35ef88ea81d5683d5264f95ff987fdcc9029b75ae343b4b0743a9e031e05eb6e",
+    "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49"
   },
   "native_executable": {
     "path": "build/debug-input-tests/debug-input-fixtures.exe",
-    "sha256": "17e291ace1cdc8f80b76dfbd44c54588792347b7d9f18f902b9635626fe729b4"
+    "sha256": "75315744048c54ebf0c77fd99efe7c3645179c400feda5e25db8faecab6c2bad"
   },
   "external_api_metadata": {
     "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",

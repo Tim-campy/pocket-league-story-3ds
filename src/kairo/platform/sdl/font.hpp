@@ -1,4 +1,5 @@
 #pragma once
+#include "../../common/memory_ranges.hpp"
 #include <cstddef>
 #include <cstdint>
 #include <filesystem>
@@ -30,6 +31,7 @@ public:
     float measure_utf16(std::u16string_view text,FontStyle style=FontStyle::plain,bool use_kerning=true);
     FontMetrics metrics() const;
     FontMemory memory() const;
+    void memory_ranges(const memory::RangeVisitor&)const;
     void clear_cache();
 };
 }

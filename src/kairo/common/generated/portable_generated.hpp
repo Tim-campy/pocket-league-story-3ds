@@ -36,6 +36,11 @@ template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(va
 [[maybe_unused]] static pls::cs::String cs_concat_objects3(const pls::cs::Ref<pls::cs::Object>&first,const pls::cs::Ref<pls::cs::Object>&second,const pls::cs::Ref<pls::cs::Object>&third){
  auto a=cs_object_string(first);auto b=cs_object_string(second);auto c=cs_object_string(third);return pls::cs::String::concat(pls::cs::String::concat(a,b),c);
 }
+[[maybe_unused]] static pls::cs::String cs_concat_strings4(const pls::cs::String&a,const pls::cs::String&b,const pls::cs::String&c,const pls::cs::String&d){return pls::cs::String::concat(pls::cs::String::concat(pls::cs::String::concat(a,b),c),d);}
+[[maybe_unused]] static pls::cs::String cs_concat_object_array(const pls::cs::Array<pls::cs::Ref<pls::cs::Object>>&values){
+ if(values.is_null())throw pls::cs::ArgumentNullException();auto result=pls::cs::String(u"");for(std::int32_t i=0;i<values.length();++i){auto part=cs_object_string(values.at(i));if(part.is_null()&&pls::cs::runtime_profile==pls::cs::RuntimeProfile::UnityMono265)throw pls::cs::NullReferenceException();result=pls::cs::String::concat(result,part);}return result;
+}
+
 [[maybe_unused]] static bool cs_contains_string(const pls::cs::String&source,const pls::cs::String&value){return pls::cs::culture_index_of(source,value)>=0;}
 [[maybe_unused]] static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)throw pls::cs::NullReferenceException();return value;}

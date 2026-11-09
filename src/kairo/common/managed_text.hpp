@@ -41,6 +41,11 @@ public:
         else{grow(static_cast<std::int64_t>(get_Length())+value.length());allocate([&]{text_+=value.code_units();});}
     }return std::static_pointer_cast<StringBuilder>(shared_from_this());}
     Ref<StringBuilder> Append(char16_t value){grow(static_cast<std::int64_t>(get_Length())+1);allocate([&]{text_.push_back(value);});return std::static_pointer_cast<StringBuilder>(shared_from_this());}
+    Ref<StringBuilder> Insert(std::int32_t index,const String&value){
+        if(index<0||index>get_Length())throw ArgumentOutOfRangeException();
+        if(!value.is_null()&&value.length()!=0){grow(static_cast<std::int64_t>(get_Length())+value.length());allocate([&]{text_.insert(static_cast<std::size_t>(index),value.code_units());});}
+        return std::static_pointer_cast<StringBuilder>(shared_from_this());
+    }
     Ref<StringBuilder> Append(char16_t value,std::int32_t repeat){if(repeat<0)throw ArgumentOutOfRangeException();grow(static_cast<std::int64_t>(get_Length())+repeat);allocate([&]{text_.append(static_cast<std::size_t>(repeat),value);});return std::static_pointer_cast<StringBuilder>(shared_from_this());}
     Ref<StringBuilder> Append(const String&value,std::int32_t start,std::int32_t count){
         if(historical_&&value.is_null()){if(start&&count)throw ArgumentNullException();return std::static_pointer_cast<StringBuilder>(shared_from_this());}

@@ -3,6 +3,8 @@
 #include <SDL.h>
 #include <unordered_map>
 #include <memory>
+#include <atomic>
+namespace pls::kairo {enum class WindowOrientation:std::int32_t;}
 
 namespace pls::sdl {
 class Backend final : public platform::Drawing {
@@ -11,6 +13,7 @@ class Backend final : public platform::Drawing {
     SDL_Renderer* renderer_{};
     std::unordered_map<SDL_Texture*,std::uint64_t> textures_;
     int width_,height_;
+    std::atomic<std::int32_t> orientation_mode_{};
 public:
     Backend(int width,int height,bool headless);
     ~Backend() override;
@@ -30,6 +33,8 @@ public:
     std::string preference_path() const;
     void reset_default_orientation();
     void set_fullscreen(bool);
+    void set_orientation(kairo::WindowOrientation);
+    kairo::WindowOrientation orientation()const;
     std::uint32_t native_window_id()const{return window_?SDL_GetWindowID(window_):0;}
 };
 }

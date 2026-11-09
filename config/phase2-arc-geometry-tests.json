@@ -1,0 +1,5840 @@
+{
+  "operation": "original-complete-arc-methods-geometry-only",
+  "status": "FAIL",
+  "fixture_cases": 360,
+  "passed": 235,
+  "own_parameter_cases": 180,
+  "cases": [
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b0-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:41cd71f7,41a87f2d",
+        "map:41cd71f7,41a87f2d"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:41cd71f7,41a87f2c",
+        "map:41cd71f7,41a87f2c"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b0-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41f00000,41d00000,00000000",
+        "map:41e34b6f,41bb8d5c",
+        "map:41e6d624,41b9b17b"
+      ],
+      "actual_context": [
+        "v:41f00000,41d00000,00000000",
+        "map:41e34b6e,41bb8d5c",
+        "map:41e6d624,41b9b17b"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b0-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 16,
+      "expected_context": [
+        "map:41c8e692,41af14a5",
+        "map:41cd71f7,41a87f2d",
+        "v:41c8e692,41af14a5,00000000"
+      ],
+      "actual_context": [
+        "map:41c8e692,41af14a5",
+        "map:41cd71f7,41a87f2c",
+        "v:41c8e692,41af14a5,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b0-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41f00000,41d00000,00000000",
+        "map:413253b9,42020645",
+        "map:41e6d624,41b9b17b"
+      ],
+      "actual_context": [
+        "v:41f00000,41d00000,00000000",
+        "map:413253b9,42020646",
+        "map:41e6d624,41b9b17b"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": 17,
+      "expected_context": [
+        "i:0,4,5",
+        "map:41d587cc,41ac543d",
+        "v:41d587cc,41ac543d,00000000"
+      ],
+      "actual_context": [
+        "i:0,4,5",
+        "map:41d587cc,41ac543c",
+        "v:41d587cc,41ac543c,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b1-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": 20,
+      "expected_context": [
+        "i:4,5,7,4,7,6",
+        "map:41fd8c9a,40fd4d11",
+        "map:41fd8c9a,40fd4d11"
+      ],
+      "actual_context": [
+        "i:4,5,7,4,7,6",
+        "map:41fd8c9a,40fd4d10",
+        "map:41fd8c9a,40fd4d10"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b1-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": 21,
+      "expected_context": [
+        "map:41fa97dc,41040a43",
+        "map:41fd8c9a,40fd4d11",
+        "v:41fa97dc,41040a43,00000000"
+      ],
+      "actual_context": [
+        "map:41fa97dc,41040a43",
+        "map:41fd8c9a,40fd4d10",
+        "v:41fa97dc,41040a43,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b1-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": 10,
+      "expected_context": [
+        "i:0,1,3,0,3,2",
+        "map:4207d033,41406be9",
+        "map:420b8b0e,413aa444"
+      ],
+      "actual_context": [
+        "i:0,1,3,0,3,2",
+        "map:4207d034,41406be9",
+        "map:420b8b0e,413aa444"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b1-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": 21,
+      "expected_context": [
+        "map:41874ec8,41ab1dd2",
+        "map:41fd8c9a,40fd4d11",
+        "v:41874ec8,41ab1dd2,00000000"
+      ],
+      "actual_context": [
+        "map:41874ec8,41ab1dd2",
+        "map:41fd8c9a,40fd4d10",
+        "v:41874ec8,41ab1dd2,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": 11,
+      "expected_context": [
+        "i:0,2,3",
+        "map:420d717a,414b13df",
+        "v:420d717a,414b13df,00000000"
+      ],
+      "actual_context": [
+        "i:0,2,3",
+        "map:420d717a,414b13e0",
+        "v:420d717a,414b13e0,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b2-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:41b1da5b,40eaa5a0",
+        "map:41b1da5b,40eaa5a0"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:41b1da5a,40eaa5a0",
+        "map:41b1da5a,40eaa5a0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b2-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": 16,
+      "expected_context": [
+        "map:41af7142,40f76a4e",
+        "map:41b1da5b,40eaa5a0",
+        "v:41af7142,40f76a4e,00000000"
+      ],
+      "actual_context": [
+        "map:41af7142,40f76a4e",
+        "map:41b1da5a,40eaa5a0",
+        "v:41af7142,40f76a4e,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b2-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": 16,
+      "expected_context": [
+        "map:41ad0828,4102177e",
+        "map:41b1da5b,40eaa5a0",
+        "v:41ad0828,4102177e,00000000"
+      ],
+      "actual_context": [
+        "map:41ad0828,4102177e",
+        "map:41b1da5a,40eaa5a0",
+        "v:41ad0828,4102177e,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b2-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": 16,
+      "expected_context": [
+        "map:4122dcdc,41ba5830",
+        "map:41b1da5b,40eaa5a0",
+        "v:4122dcdc,41ba5830,00000000"
+      ],
+      "actual_context": [
+        "map:4122dcdc,41ba5830",
+        "map:41b1da5a,40eaa5a0",
+        "v:4122dcdc,41ba5830,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b2",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": 14,
+      "expected_context": [
+        "i:0,3,4",
+        "map:41adaeba,40da44a7",
+        "v:41adaeba,40da44a7,00000000"
+      ],
+      "actual_context": [
+        "i:0,3,4",
+        "map:41adaeba,40da44a8",
+        "v:41adaeba,40da44a8,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b3-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:41017877,419e87b9",
+        "map:41017877,419e87b9"
+      ],
+      "actual_context": [
+        "ready",
+        "map:41017877,419e87ba",
+        "map:41017877,419e87ba"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b3-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": 2,
+      "expected_context": [
+        "map:4102ff3e,419a9a8a",
+        "map:41017877,419e87b9",
+        "v:4102ff3e,419a9a8a,00000000"
+      ],
+      "actual_context": [
+        "map:4102ff3e,419a9a8a",
+        "map:41017877,419e87ba",
+        "v:4102ff3e,419a9a8a,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b3-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": 2,
+      "expected_context": [
+        "map:41048604,4196ad5a",
+        "map:41017877,419e87b9",
+        "v:41048604,4196ad5a,00000000"
+      ],
+      "actual_context": [
+        "map:41048604,4196ad5a",
+        "map:41017877,419e87ba",
+        "v:41048604,4196ad5a,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b3-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:413e8789,3e3c2348",
+        "map:41017877,419e87b9"
+      ],
+      "actual_context": [
+        "ready",
+        "map:413e8789,3e3c2340",
+        "map:41017877,419e87ba"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b3",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": 1,
+      "expected_context": [
+        "map:41200000,41200000",
+        "map:41017877,419e87b9",
+        "ready"
+      ],
+      "actual_context": [
+        "map:41200000,41200000",
+        "map:41017877,419e87ba",
+        "ready"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b4-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b4-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:419bfd09,4122a71c",
+        "map:419ffce2,4122cada"
+      ],
+      "actual_context": [
+        "ready",
+        "map:419bfd0a,4122a71c",
+        "map:419ffce2,4122cada"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b4-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:4197fd31,4122835e",
+        "map:419ffce2,4122cada"
+      ],
+      "actual_context": [
+        "ready",
+        "map:4197fd32,4122835e",
+        "map:419ffce2,4122cada"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b4-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:3ac79c00,411d3526",
+        "map:419ffce2,4122cada"
+      ],
+      "actual_context": [
+        "ready",
+        "map:3ac7a000,411d3526",
+        "map:419ffce2,4122cada"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b4",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b5-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b5-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:419bfd09,40bcedaa",
+        "map:419ffce2,40bca62e"
+      ],
+      "actual_context": [
+        "ready",
+        "map:419bfd0a,40bcedaa",
+        "map:419ffce2,40bca62e"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b5-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:4197fd31,40bd3526",
+        "map:419ffce2,40bca62e"
+      ],
+      "actual_context": [
+        "ready",
+        "map:4197fd32,40bd3526",
+        "map:419ffce2,40bca62e"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b5-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:3ac79c00,40c7d195",
+        "map:419ffce2,40bca62e"
+      ],
+      "actual_context": [
+        "ready",
+        "map:3ac7a000,40c7d195",
+        "map:419ffce2,40bca62e"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b6-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b6-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b6-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b6-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:411f769c,40be7369,00000000",
+        "map:c1178cb3,41282fe7",
+        "map:411d8bf2,40aabae5"
+      ],
+      "actual_context": [
+        "v:411f769c,40be7369,00000000",
+        "map:c1178cb3,41282fe8",
+        "map:411d8bf2,40aabae5"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b6",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b7-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:41a738b1,4129bb78",
+        "map:41a738b1,4129bb78"
+      ],
+      "actual_context": [
+        "ready",
+        "map:41a738b0,4129bb78",
+        "map:41a738b0,4129bb78"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b7-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 2,
+      "expected_context": [
+        "map:41a342a8,412ad87f",
+        "map:41a738b1,4129bb78",
+        "v:41a342a8,412ad87f,00000000"
+      ],
+      "actual_context": [
+        "map:41a342a8,412ad87f",
+        "map:41a738b0,4129bb78",
+        "v:41a342a8,412ad87f,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b7-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 2,
+      "expected_context": [
+        "map:419f4c9f,412bf586",
+        "map:41a738b1,4129bb78",
+        "v:419f4c9f,412bf586,00000000"
+      ],
+      "actual_context": [
+        "map:419f4c9f,412bf586",
+        "map:41a738b0,4129bb78",
+        "v:419f4c9f,412bf586,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b7-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:3f8c74f7,41564488",
+        "map:41a738b1,4129bb78"
+      ],
+      "actual_context": [
+        "ready",
+        "map:3f8c74f8,41564488",
+        "map:41a738b0,4129bb78"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b7",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": 1,
+      "expected_context": [
+        "map:41300000,41400000",
+        "map:41a738b1,4129bb78",
+        "ready"
+      ],
+      "actual_context": [
+        "map:41300000,41400000",
+        "map:41a738b0,4129bb78",
+        "ready"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b8-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 10,
+      "expected_context": [
+        "i:0,1,3,0,3,2",
+        "map:00000000,3f7a1cbe",
+        "map:00000000,3f7a1cbe"
+      ],
+      "actual_context": [
+        "i:0,1,3,0,3,2",
+        "map:00000000,3f7a1cc0",
+        "map:00000000,3f7a1cc0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b8-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 10,
+      "expected_context": [
+        "i:0,1,3,0,3,2",
+        "map:be8c04cb,3fb2a282",
+        "map:00000000,3f7a1cbe"
+      ],
+      "actual_context": [
+        "i:0,1,3,0,3,2",
+        "map:be8c04cb,3fb2a280",
+        "map:00000000,3f7a1cc0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b8-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 11,
+      "expected_context": [
+        "map:bf0c04cb,3fe836a4",
+        "map:00000000,3f7a1cbe",
+        "v:bf0c04cb,3fe836a4,00000000"
+      ],
+      "actual_context": [
+        "map:bf0c04cb,3fe836a4",
+        "map:00000000,3f7a1cc0",
+        "v:bf0c04cb,3fe836a4,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b8-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 11,
+      "expected_context": [
+        "map:c12f05fe,418dc33d",
+        "map:00000000,3f7a1cbe",
+        "v:c12f05fe,418dc33d,00000000"
+      ],
+      "actual_context": [
+        "map:c12f05fe,418dc33d",
+        "map:00000000,3f7a1cc0",
+        "v:c12f05fe,418dc33d,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b8",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": 14,
+      "expected_context": [
+        "i:0,3,4",
+        "map:00000000,3fc543c9",
+        "v:00000000,3fc543c9,00000000"
+      ],
+      "actual_context": [
+        "i:0,3,4",
+        "map:00000000,3fc543c8",
+        "v:00000000,3fc543c8,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b9-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b9-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b9-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b9-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:40c00000,00000000,00000000",
+        "map:c0a188f3,c1448c4e",
+        "map:412bc1eb,00000000"
+      ],
+      "actual_context": [
+        "v:40c00000,00000000,00000000",
+        "map:c0a188f2,c1448c4e",
+        "map:412bc1eb,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b9",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b10-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b10-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:a40d3000,3f000000",
+        "map:00000000,00000000"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:a40d3132,3f000000",
+        "map:00000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b10-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:a48d3000,3f800000",
+        "map:00000000,00000000"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:a48d3132,3f800000",
+        "map:00000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b10-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:a6b07c00,41a00000",
+        "map:00000000,00000000"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:a6b07d7e,41a00000",
+        "map:00000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b10",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b11-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b11-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b11-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b11-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b11",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b12-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41b00000,41500000,00000000",
+        "map:41a813d8,410a941f",
+        "map:41a813d8,410a941f"
+      ],
+      "actual_context": [
+        "v:41b00000,41500000,00000000",
+        "map:41a813d8,410a9420",
+        "map:41a813d8,410a9420"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b12-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41b00000,41500000,00000000",
+        "map:41a47940,410e0cb7",
+        "map:41a813d8,410a941f"
+      ],
+      "actual_context": [
+        "v:41b00000,41500000,00000000",
+        "map:41a47940,410e0cb8",
+        "map:41a813d8,410a9420"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b12-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41b00000,41500000,00000000",
+        "map:41a0dea8,4111854f",
+        "map:41a813d8,410a941f"
+      ],
+      "actual_context": [
+        "v:41b00000,41500000,00000000",
+        "map:41a0dea8,41118550",
+        "map:41a813d8,410a9420"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b12-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": 6,
+      "expected_context": [
+        "map:403f6144,418ab5f0",
+        "map:41a813d8,410a941f",
+        "v:403f6144,418ab5f0,00000000"
+      ],
+      "actual_context": [
+        "map:403f6144,418ab5f0",
+        "map:41a813d8,410a9420",
+        "v:403f6144,418ab5f0,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b12",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": 26,
+      "expected_context": [
+        "i:0,7,8",
+        "map:41717156,405f52e6",
+        "v:41717156,405f52e6,00000000"
+      ],
+      "actual_context": [
+        "i:0,7,8",
+        "map:41717156,405f52e4",
+        "v:41717156,405f52e4,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b13-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:41024df6,4053e889",
+        "map:41024df6,4053e889"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:41024df6,4053e88a",
+        "map:41024df6,4053e88a"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b13-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": 16,
+      "expected_context": [
+        "map:40fec37d,4071b241",
+        "map:41024df6,4053e889",
+        "v:40fec37d,4071b241,00000000"
+      ],
+      "actual_context": [
+        "map:40fec37d,4071b241",
+        "map:41024df6,4053e88a",
+        "v:40fec37d,4071b241,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b13-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": 16,
+      "expected_context": [
+        "map:40f8eb0d,4087bdfc",
+        "map:41024df6,4053e889",
+        "v:40f8eb0d,4087bdfc,00000000"
+      ],
+      "actual_context": [
+        "map:40f8eb0d,4087bdfc",
+        "map:41024df6,4053e88a",
+        "v:40f8eb0d,4087bdfc,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b13-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": 15,
+      "expected_context": [
+        "i:2,3,5,2,5,4",
+        "map:3f5653e5,41af6da9",
+        "map:41024df6,4053e889"
+      ],
+      "actual_context": [
+        "i:2,3,5,2,5,4",
+        "map:3f5653e8,41af6da8",
+        "map:41024df6,4053e88a"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b13",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": 8,
+      "expected_context": [
+        "i:0,1,2",
+        "map:4129c678,40b56e0f",
+        "v:4129c678,40b56e0f,00000000"
+      ],
+      "actual_context": [
+        "i:0,1,2",
+        "map:4129c678,40b56e10",
+        "v:4129c678,40b56e10,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b14-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b14-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b14-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41ee5ff7,4141f6ef,00000000",
+        "map:41e61dbd,4141701c",
+        "map:41edfe9f,413ea8d8"
+      ],
+      "actual_context": [
+        "v:41ee5ff7,4141f6ef,00000000",
+        "map:41e61dbc,4141701c",
+        "map:41edfe9f,413ea8d8"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b14-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b14",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b15-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41bffc42,40d3a14e,00000000",
+        "map:41bf795f,40ba4211",
+        "map:41bf795f,40ba4211"
+      ],
+      "actual_context": [
+        "v:41bffc42,40d3a14e,00000000",
+        "map:41bf795f,40ba4212",
+        "map:41bf795f,40ba4212"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b15-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 6,
+      "expected_context": [
+        "map:41bb7efb,40bbee38",
+        "map:41bf795f,40ba4211",
+        "v:41bb7efb,40bbee38,00000000"
+      ],
+      "actual_context": [
+        "map:41bb7efb,40bbee38",
+        "map:41bf795f,40ba4212",
+        "v:41bb7efb,40bbee38,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b15-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 6,
+      "expected_context": [
+        "map:41b78497,40bd9a5e",
+        "map:41bf795f,40ba4211",
+        "v:41b78497,40bd9a5e,00000000"
+      ],
+      "actual_context": [
+        "map:41b78497,40bd9a5e",
+        "map:41bf795f,40ba4212",
+        "v:41b78497,40bd9a5e,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b15-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": 6,
+      "expected_context": [
+        "map:40816703,40fd2803",
+        "map:41bf795f,40ba4211",
+        "v:40816703,40fd2803,00000000"
+      ],
+      "actual_context": [
+        "map:40816703,40fd2803",
+        "map:41bf795f,40ba4212",
+        "v:40816703,40fd2803,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b15",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:41bffc42,40d3a14e,00000000",
+        "map:41bf795f,40ba4211",
+        "v:41bf795f,40ba4211,00000000"
+      ],
+      "actual_context": [
+        "v:41bffc42,40d3a14e,00000000",
+        "map:41bf795f,40ba4212",
+        "v:41bf795f,40ba4212,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b16-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:bf722112,40c1a85b",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:bf722115,40c1a862",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b16-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:bfb598ce,40c6da54",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:bfb598d0,40c6da5a",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b16-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:bff22112,40cc0c4c",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:bff22115,40cc0c51",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b16-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:c19ee5b4,4148bb96",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "v:bf7ff605,4101ace9,00000000",
+        "map:c19ee5b6,4148bb8e",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b16",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": 8,
+      "expected_context": [
+        "i:0,1,2",
+        "map:bf76153f,40cb13df",
+        "v:bf76153f,40cb13df,00000000"
+      ],
+      "actual_context": [
+        "i:0,1,2",
+        "map:bf76153f,40cb13e0",
+        "v:bf76153f,40cb13e0,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b17-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b17-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": 1,
+      "expected_context": [
+        "ready",
+        "map:40e31256,beffe20f",
+        "map:40e359d2,391fb000"
+      ],
+      "actual_context": [
+        "ready",
+        "map:40e31256,beffe210",
+        "map:40e359d2,391fb000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b17-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g0-b17-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": 5,
+      "expected_context": [
+        "v:40e359d2,391fb000,00000000",
+        "map:c08188f3,c13e601e",
+        "map:413bc1eb,3ec585ea"
+      ],
+      "actual_context": [
+        "v:40e359d2,391fb000,00000000",
+        "map:c08188f2,c13e601e",
+        "map:413bc1eb,3ec585ea"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g0-b17",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b0-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:41e6d624,41b9b17b,00000000",
+        "map:41cd71f7,41a87f2d",
+        "map:41cd71f7,41a87f2d"
+      ],
+      "actual_context": [
+        "v:41e6d624,41b9b17b,00000000",
+        "map:41cd71f7,41a87f2c",
+        "map:41cd71f7,41a87f2c"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b0-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41f00000,41d00000",
+        "map:41e34b6f,41bb8d5c",
+        "map:41e6d624,41b9b17b"
+      ],
+      "actual_context": [
+        "map:41f00000,41d00000",
+        "map:41e34b6e,41bb8d5c",
+        "map:41e6d624,41b9b17b"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b0-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": 17,
+      "expected_context": [
+        "map:41c8e692,41af14a5",
+        "map:41cd71f7,41a87f2d",
+        "v:41d5e48d,41b579a0,00000000"
+      ],
+      "actual_context": [
+        "map:41c8e692,41af14a5",
+        "map:41cd71f7,41a87f2c",
+        "v:41d5e48d,41b579a0,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b0-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41f00000,41d00000",
+        "map:413253b9,42020645",
+        "map:41e6d624,41b9b17b"
+      ],
+      "actual_context": [
+        "map:41f00000,41d00000",
+        "map:413253b9,42020646",
+        "map:41e6d624,41b9b17b"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": 20,
+      "expected_context": [
+        "v:41dd4897,41b1256d,00000000",
+        "map:41d587cc,41ac543d",
+        "v:41a00000,41d00000,00000000"
+      ],
+      "actual_context": [
+        "v:41dd4897,41b1256d,00000000",
+        "map:41d587cc,41ac543c",
+        "v:41a00000,41d00000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b1-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": 22,
+      "expected_context": [
+        "v:420b8b0e,413aa444,00000000",
+        "map:41fd8c9a,40fd4d11",
+        "map:41fd8c9a,40fd4d11"
+      ],
+      "actual_context": [
+        "v:420b8b0e,413aa444,00000000",
+        "map:41fd8c9a,40fd4d10",
+        "map:41fd8c9a,40fd4d10"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b1-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": 23,
+      "expected_context": [
+        "map:41fa97dc,41040a43",
+        "map:41fd8c9a,40fd4d11",
+        "v:420469f6,411f22f6,00000000"
+      ],
+      "actual_context": [
+        "map:41fa97dc,41040a43",
+        "map:41fd8c9a,40fd4d10",
+        "v:420469f6,411f22f6,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b1-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": 10,
+      "expected_context": [
+        "v:420eff50,4190ab94,00000000",
+        "map:4207d033,41406be9",
+        "map:420b8b0e,413aa444"
+      ],
+      "actual_context": [
+        "v:420eff50,4190ab94,00000000",
+        "map:4207d034,41406be9",
+        "map:420b8b0e,413aa444"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b1-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": 23,
+      "expected_context": [
+        "map:41874ec8,41ab1dd2",
+        "map:41fd8c9a,40fd4d11",
+        "v:418431a4,41a1b10f,00000000"
+      ],
+      "actual_context": [
+        "map:41874ec8,41ab1dd2",
+        "map:41fd8c9a,40fd4d10",
+        "v:418431a4,41a1b10f,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 185,
+      "actual_commands": 185,
+      "first_mismatch": 12,
+      "expected_context": [
+        "v:420f5b92,4165475d,00000000",
+        "map:420d717a,414b13df",
+        "v:419c0000,41800000,00000000"
+      ],
+      "actual_context": [
+        "v:420f5b92,4165475d,00000000",
+        "map:420d717a,414b13e0",
+        "v:419c0000,41800000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b2-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:41c99ef0,413d059b,00000000",
+        "map:41b1da5b,40eaa5a0",
+        "map:41b1da5b,40eaa5a0"
+      ],
+      "actual_context": [
+        "v:41c99ef0,413d059b,00000000",
+        "map:41b1da5a,40eaa5a0",
+        "map:41b1da5a,40eaa5a0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b2-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": 17,
+      "expected_context": [
+        "map:41af7142,40f76a4e",
+        "map:41b1da5b,40eaa5a0",
+        "v:41bbfd24,411b88b0,00000000"
+      ],
+      "actual_context": [
+        "map:41af7142,40f76a4e",
+        "map:41b1da5a,40eaa5a0",
+        "v:41bbfd24,411b88b0,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b2-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": 17,
+      "expected_context": [
+        "map:41ad0828,4102177e",
+        "map:41b1da5b,40eaa5a0",
+        "v:41b90865,4120ec6a,00000000"
+      ],
+      "actual_context": [
+        "map:41ad0828,4102177e",
+        "map:41b1da5a,40eaa5a0",
+        "v:41b90865,4120ec6a,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b2-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": 17,
+      "expected_context": [
+        "map:4122dcdc,41ba5830",
+        "map:41b1da5b,40eaa5a0",
+        "v:41116828,41b6dd0d,00000000"
+      ],
+      "actual_context": [
+        "map:4122dcdc,41ba5830",
+        "map:41b1da5a,40eaa5a0",
+        "v:41116828,41b6dd0d,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b2",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:41b83c8e,4103cf4d,00000000",
+        "map:41adaeba,40da44a7",
+        "v:41700000,41a40000,00000000"
+      ],
+      "actual_context": [
+        "v:41b83c8e,4103cf4d,00000000",
+        "map:41adaeba,40da44a8",
+        "v:41700000,41a40000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b3-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:1",
+        "map:41017877,419e87b9",
+        "map:41017877,419e87b9"
+      ],
+      "actual_context": [
+        "begin:1",
+        "map:41017877,419e87ba",
+        "map:41017877,419e87ba"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b3-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": 3,
+      "expected_context": [
+        "map:4102ff3e,419a9a8a",
+        "map:41017877,419e87b9",
+        "map:4141d2bd,419a1832"
+      ],
+      "actual_context": [
+        "map:4102ff3e,419a9a8a",
+        "map:41017877,419e87ba",
+        "map:4141d2bd,419a1832"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b3-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": 3,
+      "expected_context": [
+        "map:41048604,4196ad5a",
+        "map:41017877,419e87b9",
+        "map:41400b04,419631df"
+      ],
+      "actual_context": [
+        "map:41048604,4196ad5a",
+        "map:41017877,419e87ba",
+        "map:41400b04,419631df"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b3-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:7",
+        "map:413e8789,3e3c2348",
+        "map:41017877,419e87b9"
+      ],
+      "actual_context": [
+        "begin:7",
+        "map:413e8789,3e3c2340",
+        "map:41017877,419e87ba"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b3",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": 1,
+      "expected_context": [
+        "map:41200000,41200000",
+        "map:41017877,419e87b9",
+        "pass:0"
+      ],
+      "actual_context": [
+        "map:41200000,41200000",
+        "map:41017877,419e87ba",
+        "pass:0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b4-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b4-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b4-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b4-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b4",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b5-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b5-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:7",
+        "map:419bfd09,40bcedaa",
+        "map:419ffce2,40bca62e"
+      ],
+      "actual_context": [
+        "begin:7",
+        "map:419bfd0a,40bcedaa",
+        "map:419ffce2,40bca62e"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b5-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:7",
+        "map:4197fd31,40bd3526",
+        "map:419ffce2,40bca62e"
+      ],
+      "actual_context": [
+        "begin:7",
+        "map:4197fd32,40bd3526",
+        "map:419ffce2,40bca62e"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b5-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:7",
+        "map:3ac79c00,40c7d195",
+        "map:419ffce2,40bca62e"
+      ],
+      "actual_context": [
+        "begin:7",
+        "map:3ac7a000,40c7d195",
+        "map:419ffce2,40bca62e"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b6-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b6-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b6-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b6-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:411f769c,40be7369",
+        "map:c1178cb3,41282fe7",
+        "map:411d8bf2,40aabae5"
+      ],
+      "actual_context": [
+        "map:411f769c,40be7369",
+        "map:c1178cb3,41282fe8",
+        "map:411d8bf2,40aabae5"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b6",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b7-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:1",
+        "map:41a738b1,4129bb78",
+        "map:41a738b1,4129bb78"
+      ],
+      "actual_context": [
+        "begin:1",
+        "map:41a738b0,4129bb78",
+        "map:41a738b0,4129bb78"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b7-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 3,
+      "expected_context": [
+        "map:41a342a8,412ad87f",
+        "map:41a738b1,4129bb78",
+        "map:41a0addd,41138f3c"
+      ],
+      "actual_context": [
+        "map:41a342a8,412ad87f",
+        "map:41a738b0,4129bb78",
+        "map:41a0adde,41138f3c"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b7-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 3,
+      "expected_context": [
+        "map:419f4c9f,412bf586",
+        "map:41a738b1,4129bb78",
+        "map:419cda9c,4115e603"
+      ],
+      "actual_context": [
+        "map:419f4c9f,412bf586",
+        "map:41a738b0,4129bb78",
+        "map:419cda9c,4115e602"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b7-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:7",
+        "map:3f8c74f7,41564488",
+        "map:41a738b1,4129bb78"
+      ],
+      "actual_context": [
+        "begin:7",
+        "map:3f8c74f8,41564488",
+        "map:41a738b0,4129bb78"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b7",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": 1,
+      "expected_context": [
+        "map:41300000,41400000",
+        "map:41a738b1,4129bb78",
+        "pass:0"
+      ],
+      "actual_context": [
+        "map:41300000,41400000",
+        "map:41a738b0,4129bb78",
+        "pass:0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b8-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 10,
+      "expected_context": [
+        "v:00000000,40a1f6ef,00000000",
+        "map:00000000,3f7a1cbe",
+        "map:00000000,3f7a1cbe"
+      ],
+      "actual_context": [
+        "v:00000000,40a1f6ef,00000000",
+        "map:00000000,3f7a1cc0",
+        "map:00000000,3f7a1cc0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b8-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 10,
+      "expected_context": [
+        "v:00000000,40a1f6ef,00000000",
+        "map:be8c04cb,3fb2a282",
+        "map:00000000,3f7a1cbe"
+      ],
+      "actual_context": [
+        "v:00000000,40a1f6ef,00000000",
+        "map:be8c04cb,3fb2a280",
+        "map:00000000,3f7a1cc0"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b8-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 11,
+      "expected_context": [
+        "map:bf0c04cb,3fe836a4",
+        "map:00000000,3f7a1cbe",
+        "v:bf4a051d,403b73b2,00000000"
+      ],
+      "actual_context": [
+        "map:bf0c04cb,3fe836a4",
+        "map:00000000,3f7a1cc0",
+        "v:bf4a051d,403b73b2,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b8-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 11,
+      "expected_context": [
+        "map:c12f05fe,418dc33d",
+        "map:00000000,3f7a1cbe",
+        "v:c17c8664,4169956a,00000000"
+      ],
+      "actual_context": [
+        "map:c12f05fe,418dc33d",
+        "map:00000000,3f7a1cc0",
+        "v:c17c8664,4169956a,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b8",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:00000000,40092b68,00000000",
+        "map:00000000,3fc543c9",
+        "v:00000000,40c00000,00000000"
+      ],
+      "actual_context": [
+        "v:00000000,40092b68,00000000",
+        "map:00000000,3fc543c8",
+        "v:00000000,40c00000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b9-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b9-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b9-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b9-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:40c00000,00000000",
+        "map:c0a188f3,c1448c4e",
+        "map:412bc1eb,00000000"
+      ],
+      "actual_context": [
+        "map:40c00000,00000000",
+        "map:c0a188f2,c1448c4e",
+        "map:412bc1eb,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b9",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 45,
+      "actual_commands": 45,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b10-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b10-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:00000000,00000000,00000000",
+        "map:a40d3000,3f000000",
+        "map:00000000,00000000"
+      ],
+      "actual_context": [
+        "v:00000000,00000000,00000000",
+        "map:a40d3132,3f000000",
+        "map:00000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b10-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:00000000,00000000,00000000",
+        "map:a48d3000,3f800000",
+        "map:00000000,00000000"
+      ],
+      "actual_context": [
+        "v:00000000,00000000,00000000",
+        "map:a48d3132,3f800000",
+        "map:00000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b10-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:00000000,00000000,00000000",
+        "map:a6b07c00,41a00000",
+        "map:00000000,00000000"
+      ],
+      "actual_context": [
+        "v:00000000,00000000,00000000",
+        "map:a6b07d7e,41a00000",
+        "map:00000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b10",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b11-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b11-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b11-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b11-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b11",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b12-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41b00000,41500000",
+        "map:41a813d8,410a941f",
+        "map:41a813d8,410a941f"
+      ],
+      "actual_context": [
+        "map:41b00000,41500000",
+        "map:41a813d8,410a9420",
+        "map:41a813d8,410a9420"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b12-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41b00000,41500000",
+        "map:41a47940,410e0cb7",
+        "map:41a813d8,410a941f"
+      ],
+      "actual_context": [
+        "map:41b00000,41500000",
+        "map:41a47940,410e0cb8",
+        "map:41a813d8,410a9420"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b12-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41b00000,41500000",
+        "map:41a0dea8,4111854f",
+        "map:41a813d8,410a941f"
+      ],
+      "actual_context": [
+        "map:41b00000,41500000",
+        "map:41a0dea8,41118550",
+        "map:41a813d8,410a9420"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b12-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": 5,
+      "expected_context": [
+        "map:403f6144,418ab5f0",
+        "map:41a813d8,410a941f",
+        "v:40000000,41500000,00000000"
+      ],
+      "actual_context": [
+        "map:403f6144,418ab5f0",
+        "map:41a813d8,410a9420",
+        "v:40000000,41500000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b12",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": 32,
+      "expected_context": [
+        "v:418311d7,408062ca,00000000",
+        "map:41717156,405f52e6",
+        "v:41400000,41500000,00000000"
+      ],
+      "actual_context": [
+        "v:418311d7,408062ca,00000000",
+        "map:41717156,405f52e4",
+        "v:41400000,41500000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b13-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:41237d3b,409ee1c2,00000000",
+        "map:41024df6,4053e889",
+        "map:41024df6,4053e889"
+      ],
+      "actual_context": [
+        "v:41237d3b,409ee1c2,00000000",
+        "map:41024df6,4053e88a",
+        "map:41024df6,4053e88a"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b13-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": 17,
+      "expected_context": [
+        "map:40fec37d,4071b241",
+        "map:41024df6,4053e889",
+        "v:410fe741,408becf0,00000000"
+      ],
+      "actual_context": [
+        "map:40fec37d,4071b241",
+        "map:41024df6,4053e88a",
+        "v:410fe741,408becf0,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b13-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": 17,
+      "expected_context": [
+        "map:40f8eb0d,4087bdfc",
+        "map:41024df6,4053e889",
+        "v:410aea59,40986f52,00000000"
+      ],
+      "actual_context": [
+        "map:40f8eb0d,4087bdfc",
+        "map:41024df6,4053e88a",
+        "v:410aea59,40986f52,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b13-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": 16,
+      "expected_context": [
+        "v:41237d3b,409ee1c2,00000000",
+        "map:3f5653e5,41af6da9",
+        "map:41024df6,4053e889"
+      ],
+      "actual_context": [
+        "v:41237d3b,409ee1c2,00000000",
+        "map:3f5653e8,41af6da8",
+        "map:41024df6,4053e88a"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b13",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": 8,
+      "expected_context": [
+        "v:412d35fa,40c84ee8,00000000",
+        "map:4129c678,40b56e0f",
+        "v:40d00000,40f00000,00000000"
+      ],
+      "actual_context": [
+        "v:412d35fa,40c84ee8,00000000",
+        "map:4129c678,40b56e10",
+        "v:40d00000,40f00000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b14-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b14-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b14-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41ee5ff7,4141f6ef",
+        "map:41e61dbd,4141701c",
+        "map:41edfe9f,413ea8d8"
+      ],
+      "actual_context": [
+        "map:41ee5ff7,4141f6ef",
+        "map:41e61dbc,4141701c",
+        "map:41edfe9f,413ea8d8"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b14-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b14",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b15-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:41bffc42,40d3a14e",
+        "map:41bf795f,40ba4211",
+        "map:41bf795f,40ba4211"
+      ],
+      "actual_context": [
+        "map:41bffc42,40d3a14e",
+        "map:41bf795f,40ba4212",
+        "map:41bf795f,40ba4212"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b15-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 5,
+      "expected_context": [
+        "map:41bb7efb,40bbee38",
+        "map:41bf795f,40ba4211",
+        "v:41bbfc6a,40d359d2,00000000"
+      ],
+      "actual_context": [
+        "map:41bb7efb,40bbee38",
+        "map:41bf795f,40ba4212",
+        "v:41bbfc6a,40d359d2,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b15-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 5,
+      "expected_context": [
+        "map:41b78497,40bd9a5e",
+        "map:41bf795f,40ba4211",
+        "v:41b7fc92,40d31256,00000000"
+      ],
+      "actual_context": [
+        "map:41b78497,40bd9a5e",
+        "map:41bf795f,40ba4212",
+        "v:41b7fc92,40d31256,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b15-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": 5,
+      "expected_context": [
+        "map:40816703,40fd2803",
+        "map:41bf795f,40ba4211",
+        "v:408009fb,40c875e7,00000000"
+      ],
+      "actual_context": [
+        "map:40816703,40fd2803",
+        "map:41bf795f,40ba4212",
+        "v:408009fb,40c875e7,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b15",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": 4,
+      "expected_context": [
+        "begin:4",
+        "map:41bf795f,40ba4211",
+        "v:41400000,40d00000,00000000"
+      ],
+      "actual_context": [
+        "begin:4",
+        "map:41bf795f,40ba4212",
+        "v:41400000,40d00000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b16-w0",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:bf7ff605,4101ace9",
+        "map:bf722112,40c1a85b",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "map:bf7ff605,4101ace9",
+        "map:bf722115,40c1a862",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b16-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:bf7ff605,4101ace9",
+        "map:bfb598ce,40c6da54",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "map:bf7ff605,4101ace9",
+        "map:bfb598d0,40c6da5a",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b16-w1",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:bf7ff605,4101ace9",
+        "map:bff22112,40cc0c4c",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "map:bf7ff605,4101ace9",
+        "map:bff22115,40cc0c51",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b16-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:bf7ff605,4101ace9",
+        "map:c19ee5b4,4148bb96",
+        "map:bf722112,40c1a85b"
+      ],
+      "actual_context": [
+        "map:bf7ff605,4101ace9",
+        "map:c19ee5b6,4148bb8e",
+        "map:bf722115,40c1a862"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b16",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 53,
+      "actual_commands": 53,
+      "first_mismatch": 8,
+      "expected_context": [
+        "v:bf7d8235,40e5475d,00000000",
+        "map:bf76153f,40cb13df",
+        "v:00000000,41000000,00000000"
+      ],
+      "actual_context": [
+        "v:bf7d8235,40e5475d,00000000",
+        "map:bf76153f,40cb13e0",
+        "v:00000000,41000000,00000000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b17-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b17-w0.5",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": 2,
+      "expected_context": [
+        "begin:7",
+        "map:40e31256,beffe20f",
+        "map:40e359d2,391fb000"
+      ],
+      "actual_context": [
+        "begin:7",
+        "map:40e31256,beffe210",
+        "map:40e359d2,391fb000"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b17-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "draw-g1-b17-w20",
+      "passed": false,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": 4,
+      "expected_context": [
+        "map:40e359d2,391fb000",
+        "map:c08188f3,c13e601e",
+        "map:413bc1eb,3ec585ea"
+      ],
+      "actual_context": [
+        "map:40e359d2,391fb000",
+        "map:c08188f2,c13e601e",
+        "map:413bc1eb,3ec585ea"
+      ]
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "fill-g1-b17",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b0-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b0-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b0-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b0-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b1-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b1-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b1-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b1-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 175,
+      "actual_commands": 175,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b2-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b2-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b2-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b2-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 170,
+      "actual_commands": 170,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b2",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b3-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b3-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b3-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b3-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 40,
+      "actual_commands": 40,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b3",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b4-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b4-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b4-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b4-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b4",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b5-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b5-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b5-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b5-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b6-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b6-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b6-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b6-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b6",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b7-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b7-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b7-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b7-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b7",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b8-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b8-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b8-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b8-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b8",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b9-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b9-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b9-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b9-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 20,
+      "actual_commands": 20,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b9",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b10-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b10-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b10-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b10-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b10",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b11-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b11-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b11-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b11-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 80,
+      "actual_commands": 80,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b11",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b12-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b12-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b12-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b12-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 140,
+      "actual_commands": 140,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b12",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b13-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b13-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b13-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b13-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 110,
+      "actual_commands": 110,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b13",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 137,
+      "actual_commands": 137,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b14-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b14-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b14-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b14-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b14",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b15-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b15-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b15-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b15-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 10,
+      "actual_commands": 10,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b15",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 8,
+      "actual_commands": 8,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b16-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b16-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b16-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b16-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 30,
+      "actual_commands": 30,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b16",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b17-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b17-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b17-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g0-b17-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 25,
+      "actual_commands": 25,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g0-b17",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 38,
+      "actual_commands": 38,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b0-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b0-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b0-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b0-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 41,
+      "actual_commands": 41,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b1-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b1-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b1-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b1-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 209,
+      "actual_commands": 209,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 185,
+      "actual_commands": 185,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b2-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b2-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b2-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b2-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 203,
+      "actual_commands": 203,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b2",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b3-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b3-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b3-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b3-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 47,
+      "actual_commands": 47,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b3",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b4-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b4-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b4-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b4-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 3,
+      "actual_commands": 3,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b4",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 5,
+      "actual_commands": 5,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b5-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b5-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b5-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b5-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b6-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b6-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b6-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b6-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b6",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b7-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b7-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b7-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b7-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b7",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b8-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b8-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b8-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b8-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b8",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b9-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b9-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b9-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b9-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 23,
+      "actual_commands": 23,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b9",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 45,
+      "actual_commands": 45,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b10-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b10-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b10-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b10-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b10",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b11-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b11-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b11-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b11-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 95,
+      "actual_commands": 95,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b11",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b12-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b12-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b12-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b12-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 167,
+      "actual_commands": 167,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b12",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b13-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b13-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b13-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b13-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 131,
+      "actual_commands": 131,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b13",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 181,
+      "actual_commands": 181,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b14-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b14-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b14-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b14-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b14",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b15-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b15-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b15-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b15-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 11,
+      "actual_commands": 11,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b15",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 9,
+      "actual_commands": 9,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b16-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b16-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b16-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b16-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 35,
+      "actual_commands": 35,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b16",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 53,
+      "actual_commands": 53,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b17-w0",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b17-w0.5",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b17-w1",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "draw-g1-b17-w20",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 29,
+      "actual_commands": 29,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    },
+    {
+      "profile": "DotNet",
+      "case": "fill-g1-b17",
+      "passed": true,
+      "structural_passed": true,
+      "expected_commands": 49,
+      "actual_commands": 49,
+      "first_mismatch": null,
+      "expected_context": [],
+      "actual_context": []
+    }
+  ],
+  "structural_passed": 360,
+  "profile_results": {
+    "UnityMono265": {
+      "cases": 180,
+      "passed": 55,
+      "structural_passed": 180
+    },
+    "DotNet": {
+      "cases": 180,
+      "passed": 180,
+      "structural_passed": 180
+    }
+  },
+  "precision_probe": {
+    "native": {
+      "platform-pointer-bytes": "8",
+      "p0-cos": "3f62ad3f",
+      "p0-sin": "3eedf032",
+      "p0-radians": "3fdeeebf3a621f11",
+      "p0-expr": "41c60000",
+      "p0-single-product": "41c60000",
+      "p0-diagnostic-wide": "41c60000",
+      "p1-cos": "3f3f9e67",
+      "p1-sin": "3f29c268",
+      "p1-radians": "3fe7330f50faad5a",
+      "p1-expr": "41eb0001",
+      "p1-single-product": "41eb0001",
+      "p1-diagnostic-wide": "41eb0001",
+      "p2-cos": "3f116cb2",
+      "p2-sin": "3f52af12",
+      "p2-radians": "3feeeebf16a391cb",
+      "p2-expr": "c10c0006",
+      "p2-single-product": "c10c0006",
+      "p2-diagnostic-wide": "c10c0006",
+      "p3-cos": "248d3132",
+      "p3-sin": "3f800000",
+      "p3-radians": "3ff921fb54442d18",
+      "p3-expr": "c03ffee0",
+      "p3-single-product": "c03ffee0",
+      "p3-diagnostic-wide": "c03ffee0",
+      "p4-cos": "bf800000",
+      "p4-sin": "250d3132",
+      "p4-radians": "400921fb54442d18",
+      "p4-expr": "41d90004",
+      "p4-single-product": "41d90004",
+      "p4-diagnostic-wide": "41d90004",
+      "p5-cos": "3f7ff605",
+      "p5-sin": "bc8ef859",
+      "p5-radians": "4019101c0da1da7a",
+      "p5-expr": "41f70003",
+      "p5-single-product": "41f70003",
+      "p5-diagnostic-wide": "41f70003",
+      "p6-cos": "3f800000",
+      "p6-sin": "00000000",
+      "p6-radians": "0000000000000000",
+      "p6-expr": "c1440011",
+      "p6-single-product": "c1440011",
+      "p6-diagnostic-wide": "c1440011",
+      "p7-cos": "3f800000",
+      "p7-sin": "80000000",
+      "p7-radians": "8000000000000000",
+      "p7-expr": "c03ffe77",
+      "p7-single-product": "c03ffe77",
+      "p7-diagnostic-wide": "c03ffe77",
+      "p8-cos": "3f62ad3f",
+      "p8-sin": "3eedf032",
+      "p8-radians": "3fdeeebf3a621f11",
+      "p8-expr": "41ec000f",
+      "p8-single-product": "41ec000f",
+      "p8-diagnostic-wide": "41ec000f",
+      "p9-cos": "3f3f9e67",
+      "p9-sin": "3f29c268",
+      "p9-radians": "3fe7330f50faad5a",
+      "p9-expr": "42030005",
+      "p9-single-product": "42030005",
+      "p9-diagnostic-wide": "42030005",
+      "p10-cos": "3f116cb2",
+      "p10-sin": "3f52af12",
+      "p10-radians": "3feeeebf16a391cb",
+      "p10-expr": "c18c001b",
+      "p10-single-product": "c18c001b",
+      "p10-diagnostic-wide": "c18c001b",
+      "p11-cos": "248d3132",
+      "p11-sin": "3f800000",
+      "p11-radians": "3ff921fb54442d18",
+      "p11-expr": "c03ffdbf",
+      "p11-single-product": "c03ffdbf",
+      "p11-diagnostic-wide": "c03ffdbf",
+      "p12-cos": "bf800000",
+      "p12-sin": "250d3132",
+      "p12-radians": "400921fb54442d18",
+      "p12-expr": "4209000b",
+      "p12-single-product": "4209000b",
+      "p12-diagnostic-wide": "4209000b",
+      "p13-cos": "3f7ff605",
+      "p13-sin": "bc8ef859",
+      "p13-radians": "4019101c0da1da7a",
+      "p13-expr": "420f0008",
+      "p13-single-product": "420f0008",
+      "p13-diagnostic-wide": "420f0008",
+      "p14-cos": "3f800000",
+      "p14-sin": "00000000",
+      "p14-radians": "0000000000000000",
+      "p14-expr": "c1c40026",
+      "p14-single-product": "c1c40026",
+      "p14-diagnostic-wide": "c1c40026",
+      "p15-cos": "3f800000",
+      "p15-sin": "80000000",
+      "p15-radians": "8000000000000000",
+      "p15-expr": "c03ffcee",
+      "p15-single-product": "c03ffcee",
+      "p15-diagnostic-wide": "c03ffcee",
+      "p16-cos": "3f62ad3f",
+      "p16-sin": "3eedf032",
+      "p16-radians": "3fdeeebf3a621f11",
+      "p16-expr": "421c001d",
+      "p16-single-product": "421c001d",
+      "p16-diagnostic-wide": "421c001d",
+      "p17-cos": "3f3f9e67",
+      "p17-sin": "3f29c268",
+      "p17-radians": "3fe7330f50faad5a",
+      "p17-expr": "421e0014",
+      "p17-single-product": "421e0014",
+      "p17-diagnostic-wide": "421e0014",
+      "p18-cos": "3f116cb2",
+      "p18-sin": "3f52af12",
+      "p18-radians": "3feeeebf16a391cb",
+      "p18-expr": "c20c0030",
+      "p18-single-product": "c20c0030",
+      "p18-diagnostic-wide": "c20c0030",
+      "p19-cos": "248d3132",
+      "p19-sin": "3f800000",
+      "p19-radians": "3ff921fb54442d18",
+      "p19-expr": "c03ffb7f",
+      "p19-single-product": "c03ffb7f",
+      "p19-diagnostic-wide": "c03ffb7f",
+      "p20-cos": "bf800000",
+      "p20-sin": "250d3132",
+      "p20-radians": "400921fb54442d18",
+      "p20-expr": "42420024",
+      "p20-single-product": "42420024",
+      "p20-diagnostic-wide": "42420024",
+      "p21-cos": "3f7ff605",
+      "p21-sin": "bc8ef859",
+      "p21-radians": "4019101c0da1da7a",
+      "p21-expr": "42360018",
+      "p21-single-product": "42360018",
+      "p21-diagnostic-wide": "42360018",
+      "p22-cos": "3f800000",
+      "p22-sin": "00000000",
+      "p22-radians": "0000000000000000",
+      "p22-expr": "c244003b",
+      "p22-single-product": "c244003b",
+      "p22-diagnostic-wide": "c244003b",
+      "p23-cos": "3f800000",
+      "p23-sin": "80000000",
+      "p23-radians": "8000000000000000",
+      "p23-expr": "c03ff9db",
+      "p23-single-product": "c03ff9db",
+      "p23-diagnostic-wide": "c03ff9db",
+      "p24-cos": "3f62ad3f",
+      "p24-sin": "3eedf032",
+      "p24-radians": "3fdeeebf3a621f11",
+      "p24-expr": "42680057",
+      "p24-single-product": "42680057",
+      "p24-diagnostic-wide": "42680057",
+      "p25-cos": "3f3f9e67",
+      "p25-sin": "3f29c268",
+      "p25-radians": "3fe7330f50faad5a",
+      "p25-expr": "42540039",
+      "p25-single-product": "42540039",
+      "p25-diagnostic-wide": "42540039",
+      "p26-cos": "3f116cb2",
+      "p26-sin": "3f52af12",
+      "p26-radians": "3feeeebf16a391cb",
+      "p26-expr": "c28c0045",
+      "p26-single-product": "c28c0045",
+      "p26-diagnostic-wide": "c28c0045",
+      "p27-cos": "248d3132",
+      "p27-sin": "3f800000",
+      "p27-radians": "3ff921fb54442d18",
+      "p27-expr": "c03ff6fd",
+      "p27-single-product": "c03ff6fd",
+      "p27-diagnostic-wide": "c03ff6fd",
+      "p28-cos": "bf800000",
+      "p28-sin": "250d3132",
+      "p28-radians": "400921fb54442d18",
+      "p28-expr": "429a0032",
+      "p28-single-product": "429a0032",
+      "p28-diagnostic-wide": "429a0032",
+      "p29-cos": "3f7ff605",
+      "p29-sin": "bc8ef859",
+      "p29-radians": "4019101c0da1da7a",
+      "p29-expr": "42820021",
+      "p29-single-product": "42820021",
+      "p29-diagnostic-wide": "42820021",
+      "p30-cos": "3f800000",
+      "p30-sin": "00000000",
+      "p30-radians": "0000000000000000",
+      "p30-expr": "c2c40050",
+      "p30-single-product": "c2c40050",
+      "p30-diagnostic-wide": "c2c40050",
+      "p31-cos": "3f800000",
+      "p31-sin": "80000000",
+      "p31-radians": "8000000000000000",
+      "p31-expr": "c03ff3b6",
+      "p31-single-product": "c03ff3b6",
+      "p31-diagnostic-wide": "c03ff3b6",
+      "step-1-plain": "41dd89d9",
+      "step-1-single": "41dd89d9",
+      "step-2-plain": "42262763",
+      "step-2-single": "42262763",
+      "step-3-plain": "425d89d9",
+      "step-3-single": "425d89d9",
+      "step-4-plain": "428a7628",
+      "step-4-single": "428a7628",
+      "step-5-plain": "42a62763",
+      "step-5-single": "42a62763",
+      "step-6-plain": "42c1d89e",
+      "step-6-single": "42c1d89e",
+      "step-7-plain": "42dd89d9",
+      "step-7-single": "42dd89d9",
+      "step-8-plain": "42f93b14",
+      "step-8-single": "42f93b14"
+    },
+    "UnityMono265": {
+      "values": {
+        "platform-pointer-bytes": "4",
+        "p0-cos": "3f62ad3f",
+        "p0-sin": "3eedf032",
+        "p0-radians": "3fdeeebf3a621f11",
+        "p0-expr": "41c60000",
+        "p0-single-product": "41c60000",
+        "p0-diagnostic-wide": "41c60000",
+        "p1-cos": "3f3f9e67",
+        "p1-sin": "3f29c268",
+        "p1-radians": "3fe7330f50faad5a",
+        "p1-expr": "41eb0001",
+        "p1-single-product": "41eb0001",
+        "p1-diagnostic-wide": "41eb0001",
+        "p2-cos": "3f116cb2",
+        "p2-sin": "3f52af12",
+        "p2-radians": "3feeeebf16a391cb",
+        "p2-expr": "c10c0006",
+        "p2-single-product": "c10c0006",
+        "p2-diagnostic-wide": "c10c0006",
+        "p3-cos": "248d3000",
+        "p3-sin": "3f800000",
+        "p3-radians": "3ff921fb54442d18",
+        "p3-expr": "c03ffee0",
+        "p3-single-product": "c03ffee0",
+        "p3-diagnostic-wide": "c03ffee0",
+        "p4-cos": "bf800000",
+        "p4-sin": "250d3000",
+        "p4-radians": "400921fb54442d18",
+        "p4-expr": "41d90004",
+        "p4-single-product": "41d90004",
+        "p4-diagnostic-wide": "41d90004",
+        "p5-cos": "3f7ff605",
+        "p5-sin": "bc8ef859",
+        "p5-radians": "4019101c0da1da7a",
+        "p5-expr": "41f70003",
+        "p5-single-product": "41f70003",
+        "p5-diagnostic-wide": "41f70003",
+        "p6-cos": "3f800000",
+        "p6-sin": "00000000",
+        "p6-radians": "0000000000000000",
+        "p6-expr": "c1440011",
+        "p6-single-product": "c1440011",
+        "p6-diagnostic-wide": "c1440011",
+        "p7-cos": "3f800000",
+        "p7-sin": "00000000",
+        "p7-radians": "8000000000000000",
+        "p7-expr": "c03ffe77",
+        "p7-single-product": "c03ffe77",
+        "p7-diagnostic-wide": "c03ffe77",
+        "p8-cos": "3f62ad3f",
+        "p8-sin": "3eedf032",
+        "p8-radians": "3fdeeebf3a621f11",
+        "p8-expr": "41ec000f",
+        "p8-single-product": "41ec000f",
+        "p8-diagnostic-wide": "41ec000f",
+        "p9-cos": "3f3f9e67",
+        "p9-sin": "3f29c268",
+        "p9-radians": "3fe7330f50faad5a",
+        "p9-expr": "42030005",
+        "p9-single-product": "42030005",
+        "p9-diagnostic-wide": "42030005",
+        "p10-cos": "3f116cb2",
+        "p10-sin": "3f52af12",
+        "p10-radians": "3feeeebf16a391cb",
+        "p10-expr": "c18c001b",
+        "p10-single-product": "c18c001b",
+        "p10-diagnostic-wide": "c18c001b",
+        "p11-cos": "248d3000",
+        "p11-sin": "3f800000",
+        "p11-radians": "3ff921fb54442d18",
+        "p11-expr": "c03ffdbf",
+        "p11-single-product": "c03ffdbf",
+        "p11-diagnostic-wide": "c03ffdbf",
+        "p12-cos": "bf800000",
+        "p12-sin": "250d3000",
+        "p12-radians": "400921fb54442d18",
+        "p12-expr": "4209000b",
+        "p12-single-product": "4209000b",
+        "p12-diagnostic-wide": "4209000b",
+        "p13-cos": "3f7ff605",
+        "p13-sin": "bc8ef859",
+        "p13-radians": "4019101c0da1da7a",
+        "p13-expr": "420f0008",
+        "p13-single-product": "420f0008",
+        "p13-diagnostic-wide": "420f0008",
+        "p14-cos": "3f800000",
+        "p14-sin": "00000000",
+        "p14-radians": "0000000000000000",
+        "p14-expr": "c1c40026",
+        "p14-single-product": "c1c40026",
+        "p14-diagnostic-wide": "c1c40026",
+        "p15-cos": "3f800000",
+        "p15-sin": "00000000",
+        "p15-radians": "8000000000000000",
+        "p15-expr": "c03ffcee",
+        "p15-single-product": "c03ffcee",
+        "p15-diagnostic-wide": "c03ffcee",
+        "p16-cos": "3f62ad3f",
+        "p16-sin": "3eedf032",
+        "p16-radians": "3fdeeebf3a621f11",
+        "p16-expr": "421c001d",
+        "p16-single-product": "421c001d",
+        "p16-diagnostic-wide": "421c001d",
+        "p17-cos": "3f3f9e67",
+        "p17-sin": "3f29c268",
+        "p17-radians": "3fe7330f50faad5a",
+        "p17-expr": "421e0014",
+        "p17-single-product": "421e0014",
+        "p17-diagnostic-wide": "421e0014",
+        "p18-cos": "3f116cb2",
+        "p18-sin": "3f52af12",
+        "p18-radians": "3feeeebf16a391cb",
+        "p18-expr": "c20c0030",
+        "p18-single-product": "c20c0030",
+        "p18-diagnostic-wide": "c20c0030",
+        "p19-cos": "248d3000",
+        "p19-sin": "3f800000",
+        "p19-radians": "3ff921fb54442d18",
+        "p19-expr": "c03ffb7f",
+        "p19-single-product": "c03ffb7f",
+        "p19-diagnostic-wide": "c03ffb7f",
+        "p20-cos": "bf800000",
+        "p20-sin": "250d3000",
+        "p20-radians": "400921fb54442d18",
+        "p20-expr": "42420024",
+        "p20-single-product": "42420024",
+        "p20-diagnostic-wide": "42420024",
+        "p21-cos": "3f7ff605",
+        "p21-sin": "bc8ef859",
+        "p21-radians": "4019101c0da1da7a",
+        "p21-expr": "42360018",
+        "p21-single-product": "42360018",
+        "p21-diagnostic-wide": "42360018",
+        "p22-cos": "3f800000",
+        "p22-sin": "00000000",
+        "p22-radians": "0000000000000000",
+        "p22-expr": "c244003b",
+        "p22-single-product": "c244003b",
+        "p22-diagnostic-wide": "c244003b",
+        "p23-cos": "3f800000",
+        "p23-sin": "00000000",
+        "p23-radians": "8000000000000000",
+        "p23-expr": "c03ff9db",
+        "p23-single-product": "c03ff9db",
+        "p23-diagnostic-wide": "c03ff9db",
+        "p24-cos": "3f62ad3f",
+        "p24-sin": "3eedf032",
+        "p24-radians": "3fdeeebf3a621f11",
+        "p24-expr": "42680057",
+        "p24-single-product": "42680057",
+        "p24-diagnostic-wide": "42680057",
+        "p25-cos": "3f3f9e67",
+        "p25-sin": "3f29c268",
+        "p25-radians": "3fe7330f50faad5a",
+        "p25-expr": "42540039",
+        "p25-single-product": "42540039",
+        "p25-diagnostic-wide": "42540039",
+        "p26-cos": "3f116cb2",
+        "p26-sin": "3f52af12",
+        "p26-radians": "3feeeebf16a391cb",
+        "p26-expr": "c28c0045",
+        "p26-single-product": "c28c0045",
+        "p26-diagnostic-wide": "c28c0045",
+        "p27-cos": "248d3000",
+        "p27-sin": "3f800000",
+        "p27-radians": "3ff921fb54442d18",
+        "p27-expr": "c03ff6fd",
+        "p27-single-product": "c03ff6fd",
+        "p27-diagnostic-wide": "c03ff6fd",
+        "p28-cos": "bf800000",
+        "p28-sin": "250d3000",
+        "p28-radians": "400921fb54442d18",
+        "p28-expr": "429a0032",
+        "p28-single-product": "429a0032",
+        "p28-diagnostic-wide": "429a0032",
+        "p29-cos": "3f7ff605",
+        "p29-sin": "bc8ef859",
+        "p29-radians": "4019101c0da1da7a",
+        "p29-expr": "42820021",
+        "p29-single-product": "42820021",
+        "p29-diagnostic-wide": "42820021",
+        "p30-cos": "3f800000",
+        "p30-sin": "00000000",
+        "p30-radians": "0000000000000000",
+        "p30-expr": "c2c40050",
+        "p30-single-product": "c2c40050",
+        "p30-diagnostic-wide": "c2c40050",
+        "p31-cos": "3f800000",
+        "p31-sin": "00000000",
+        "p31-radians": "8000000000000000",
+        "p31-expr": "c03ff3b6",
+        "p31-single-product": "c03ff3b6",
+        "p31-diagnostic-wide": "c03ff3b6",
+        "step-1-plain": "41dd89d9",
+        "step-1-single": "41dd89d9",
+        "step-2-plain": "42262763",
+        "step-2-single": "42262763",
+        "step-3-plain": "425d89d9",
+        "step-3-single": "425d89d9",
+        "step-4-plain": "428a7628",
+        "step-4-single": "428a7628",
+        "step-5-plain": "42a62763",
+        "step-5-single": "42a62763",
+        "step-6-plain": "42c1d89e",
+        "step-6-single": "42c1d89e",
+        "step-7-plain": "42dd89d9",
+        "step-7-single": "42dd89d9",
+        "step-8-plain": "42f93b14",
+        "step-8-single": "42f93b14"
+      },
+      "comparison_to_native": {
+        "-cos": {
+          "cases": 32,
+          "passed": 28,
+          "mismatches": 4,
+          "witnesses": [
+            {
+              "case": "p3-cos",
+              "oracle": "248d3000",
+              "native": "248d3132"
+            },
+            {
+              "case": "p11-cos",
+              "oracle": "248d3000",
+              "native": "248d3132"
+            },
+            {
+              "case": "p19-cos",
+              "oracle": "248d3000",
+              "native": "248d3132"
+            },
+            {
+              "case": "p27-cos",
+              "oracle": "248d3000",
+              "native": "248d3132"
+            }
+          ]
+        },
+        "-sin": {
+          "cases": 32,
+          "passed": 24,
+          "mismatches": 8,
+          "witnesses": [
+            {
+              "case": "p4-sin",
+              "oracle": "250d3000",
+              "native": "250d3132"
+            },
+            {
+              "case": "p7-sin",
+              "oracle": "00000000",
+              "native": "80000000"
+            },
+            {
+              "case": "p12-sin",
+              "oracle": "250d3000",
+              "native": "250d3132"
+            },
+            {
+              "case": "p15-sin",
+              "oracle": "00000000",
+              "native": "80000000"
+            },
+            {
+              "case": "p20-sin",
+              "oracle": "250d3000",
+              "native": "250d3132"
+            }
+          ]
+        },
+        "-radians": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-expr": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-single-product": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-diagnostic-wide": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-plain": {
+          "cases": 8,
+          "passed": 8,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-single": {
+          "cases": 8,
+          "passed": 8,
+          "mismatches": 0,
+          "witnesses": []
+        }
+      },
+      "stdout_sha256": "b3e900252cbe14a566deca9ebb8bcd0af2647da50e7cf92e836884c671fb4e04"
+    },
+    "DotNet": {
+      "values": {
+        "platform-pointer-bytes": "8",
+        "p0-cos": "3f62ad3f",
+        "p0-sin": "3eedf032",
+        "p0-radians": "3fdeeebf3a621f11",
+        "p0-expr": "41c60000",
+        "p0-single-product": "41c60000",
+        "p0-diagnostic-wide": "41c60000",
+        "p1-cos": "3f3f9e67",
+        "p1-sin": "3f29c268",
+        "p1-radians": "3fe7330f50faad5a",
+        "p1-expr": "41eb0001",
+        "p1-single-product": "41eb0001",
+        "p1-diagnostic-wide": "41eb0001",
+        "p2-cos": "3f116cb2",
+        "p2-sin": "3f52af12",
+        "p2-radians": "3feeeebf16a391cb",
+        "p2-expr": "c10c0006",
+        "p2-single-product": "c10c0006",
+        "p2-diagnostic-wide": "c10c0006",
+        "p3-cos": "248d3132",
+        "p3-sin": "3f800000",
+        "p3-radians": "3ff921fb54442d18",
+        "p3-expr": "c03ffee0",
+        "p3-single-product": "c03ffee0",
+        "p3-diagnostic-wide": "c03ffee0",
+        "p4-cos": "bf800000",
+        "p4-sin": "250d3132",
+        "p4-radians": "400921fb54442d18",
+        "p4-expr": "41d90004",
+        "p4-single-product": "41d90004",
+        "p4-diagnostic-wide": "41d90004",
+        "p5-cos": "3f7ff605",
+        "p5-sin": "bc8ef859",
+        "p5-radians": "4019101c0da1da7a",
+        "p5-expr": "41f70003",
+        "p5-single-product": "41f70003",
+        "p5-diagnostic-wide": "41f70003",
+        "p6-cos": "3f800000",
+        "p6-sin": "00000000",
+        "p6-radians": "0000000000000000",
+        "p6-expr": "c1440011",
+        "p6-single-product": "c1440011",
+        "p6-diagnostic-wide": "c1440011",
+        "p7-cos": "3f800000",
+        "p7-sin": "80000000",
+        "p7-radians": "8000000000000000",
+        "p7-expr": "c03ffe77",
+        "p7-single-product": "c03ffe77",
+        "p7-diagnostic-wide": "c03ffe77",
+        "p8-cos": "3f62ad3f",
+        "p8-sin": "3eedf032",
+        "p8-radians": "3fdeeebf3a621f11",
+        "p8-expr": "41ec000f",
+        "p8-single-product": "41ec000f",
+        "p8-diagnostic-wide": "41ec000f",
+        "p9-cos": "3f3f9e67",
+        "p9-sin": "3f29c268",
+        "p9-radians": "3fe7330f50faad5a",
+        "p9-expr": "42030005",
+        "p9-single-product": "42030005",
+        "p9-diagnostic-wide": "42030005",
+        "p10-cos": "3f116cb2",
+        "p10-sin": "3f52af12",
+        "p10-radians": "3feeeebf16a391cb",
+        "p10-expr": "c18c001b",
+        "p10-single-product": "c18c001b",
+        "p10-diagnostic-wide": "c18c001b",
+        "p11-cos": "248d3132",
+        "p11-sin": "3f800000",
+        "p11-radians": "3ff921fb54442d18",
+        "p11-expr": "c03ffdbf",
+        "p11-single-product": "c03ffdbf",
+        "p11-diagnostic-wide": "c03ffdbf",
+        "p12-cos": "bf800000",
+        "p12-sin": "250d3132",
+        "p12-radians": "400921fb54442d18",
+        "p12-expr": "4209000b",
+        "p12-single-product": "4209000b",
+        "p12-diagnostic-wide": "4209000b",
+        "p13-cos": "3f7ff605",
+        "p13-sin": "bc8ef859",
+        "p13-radians": "4019101c0da1da7a",
+        "p13-expr": "420f0008",
+        "p13-single-product": "420f0008",
+        "p13-diagnostic-wide": "420f0008",
+        "p14-cos": "3f800000",
+        "p14-sin": "00000000",
+        "p14-radians": "0000000000000000",
+        "p14-expr": "c1c40026",
+        "p14-single-product": "c1c40026",
+        "p14-diagnostic-wide": "c1c40026",
+        "p15-cos": "3f800000",
+        "p15-sin": "80000000",
+        "p15-radians": "8000000000000000",
+        "p15-expr": "c03ffcee",
+        "p15-single-product": "c03ffcee",
+        "p15-diagnostic-wide": "c03ffcee",
+        "p16-cos": "3f62ad3f",
+        "p16-sin": "3eedf032",
+        "p16-radians": "3fdeeebf3a621f11",
+        "p16-expr": "421c001d",
+        "p16-single-product": "421c001d",
+        "p16-diagnostic-wide": "421c001d",
+        "p17-cos": "3f3f9e67",
+        "p17-sin": "3f29c268",
+        "p17-radians": "3fe7330f50faad5a",
+        "p17-expr": "421e0014",
+        "p17-single-product": "421e0014",
+        "p17-diagnostic-wide": "421e0014",
+        "p18-cos": "3f116cb2",
+        "p18-sin": "3f52af12",
+        "p18-radians": "3feeeebf16a391cb",
+        "p18-expr": "c20c0030",
+        "p18-single-product": "c20c0030",
+        "p18-diagnostic-wide": "c20c0030",
+        "p19-cos": "248d3132",
+        "p19-sin": "3f800000",
+        "p19-radians": "3ff921fb54442d18",
+        "p19-expr": "c03ffb7f",
+        "p19-single-product": "c03ffb7f",
+        "p19-diagnostic-wide": "c03ffb7f",
+        "p20-cos": "bf800000",
+        "p20-sin": "250d3132",
+        "p20-radians": "400921fb54442d18",
+        "p20-expr": "42420024",
+        "p20-single-product": "42420024",
+        "p20-diagnostic-wide": "42420024",
+        "p21-cos": "3f7ff605",
+        "p21-sin": "bc8ef859",
+        "p21-radians": "4019101c0da1da7a",
+        "p21-expr": "42360018",
+        "p21-single-product": "42360018",
+        "p21-diagnostic-wide": "42360018",
+        "p22-cos": "3f800000",
+        "p22-sin": "00000000",
+        "p22-radians": "0000000000000000",
+        "p22-expr": "c244003b",
+        "p22-single-product": "c244003b",
+        "p22-diagnostic-wide": "c244003b",
+        "p23-cos": "3f800000",
+        "p23-sin": "80000000",
+        "p23-radians": "8000000000000000",
+        "p23-expr": "c03ff9db",
+        "p23-single-product": "c03ff9db",
+        "p23-diagnostic-wide": "c03ff9db",
+        "p24-cos": "3f62ad3f",
+        "p24-sin": "3eedf032",
+        "p24-radians": "3fdeeebf3a621f11",
+        "p24-expr": "42680057",
+        "p24-single-product": "42680057",
+        "p24-diagnostic-wide": "42680057",
+        "p25-cos": "3f3f9e67",
+        "p25-sin": "3f29c268",
+        "p25-radians": "3fe7330f50faad5a",
+        "p25-expr": "42540039",
+        "p25-single-product": "42540039",
+        "p25-diagnostic-wide": "42540039",
+        "p26-cos": "3f116cb2",
+        "p26-sin": "3f52af12",
+        "p26-radians": "3feeeebf16a391cb",
+        "p26-expr": "c28c0045",
+        "p26-single-product": "c28c0045",
+        "p26-diagnostic-wide": "c28c0045",
+        "p27-cos": "248d3132",
+        "p27-sin": "3f800000",
+        "p27-radians": "3ff921fb54442d18",
+        "p27-expr": "c03ff6fd",
+        "p27-single-product": "c03ff6fd",
+        "p27-diagnostic-wide": "c03ff6fd",
+        "p28-cos": "bf800000",
+        "p28-sin": "250d3132",
+        "p28-radians": "400921fb54442d18",
+        "p28-expr": "429a0032",
+        "p28-single-product": "429a0032",
+        "p28-diagnostic-wide": "429a0032",
+        "p29-cos": "3f7ff605",
+        "p29-sin": "bc8ef859",
+        "p29-radians": "4019101c0da1da7a",
+        "p29-expr": "42820021",
+        "p29-single-product": "42820021",
+        "p29-diagnostic-wide": "42820021",
+        "p30-cos": "3f800000",
+        "p30-sin": "00000000",
+        "p30-radians": "0000000000000000",
+        "p30-expr": "c2c40050",
+        "p30-single-product": "c2c40050",
+        "p30-diagnostic-wide": "c2c40050",
+        "p31-cos": "3f800000",
+        "p31-sin": "80000000",
+        "p31-radians": "8000000000000000",
+        "p31-expr": "c03ff3b6",
+        "p31-single-product": "c03ff3b6",
+        "p31-diagnostic-wide": "c03ff3b6",
+        "step-1-plain": "41dd89d9",
+        "step-1-single": "41dd89d9",
+        "step-2-plain": "42262763",
+        "step-2-single": "42262763",
+        "step-3-plain": "425d89d9",
+        "step-3-single": "425d89d9",
+        "step-4-plain": "428a7628",
+        "step-4-single": "428a7628",
+        "step-5-plain": "42a62763",
+        "step-5-single": "42a62763",
+        "step-6-plain": "42c1d89e",
+        "step-6-single": "42c1d89e",
+        "step-7-plain": "42dd89d9",
+        "step-7-single": "42dd89d9",
+        "step-8-plain": "42f93b14",
+        "step-8-single": "42f93b14"
+      },
+      "comparison_to_native": {
+        "-cos": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-sin": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-radians": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-expr": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-single-product": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-diagnostic-wide": {
+          "cases": 32,
+          "passed": 32,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-plain": {
+          "cases": 8,
+          "passed": 8,
+          "mismatches": 0,
+          "witnesses": []
+        },
+        "-single": {
+          "cases": 8,
+          "passed": 8,
+          "mismatches": 0,
+          "witnesses": []
+        }
+      },
+      "stdout_sha256": "c627f669fd337681efc69593c24ae4b6bec574362f9f9a5fbe309958e34cd71f"
+    }
+  },
+  "precision_manifest_sha256": "f67770219a1bf1f2a74c7438f963ee022ce40f9b8db1dd380992b745b8ef326e",
+  "original_method_signatures": [
+    "public void DrawArc(float x, float y, float width, float height, float startAngle, float arcAngle, float lineWidth = 1f)",
+    "public void FillArc(float x, float y, float width, float height, float startAngle, float arcAngle)"
+  ],
+  "original_fragments_sha256": [
+    "1c2208da7d267881da2336491cc9ce676d4a98afb00954758f32aaf1cae9cd99",
+    "765a6b977f4a4ff790670a0a32c1b756adfefc49fd2c5d0fe7e1ed210a3e18db"
+  ],
+  "source_manifest": [
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/Graphics.cs",
+      "sha256": "c1dd3a966f1a9d39db525daa2953cc54728fce3624c74b9e15101a08ba12b6a6"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/m3d4/util3d/FastMath.cs",
+      "sha256": "adf8218dbc37b19d2305c52f448f867ee4e8d4a126524d8b6ee387980d4325c1"
+    },
+    {
+      "path": "src/KairoLibrary/java/lang/JMath.cs",
+      "sha256": "d3011ec07bac0cffdb3450aa05dc155cbfe6ff60614744c671094f946202c9d1"
+    }
+  ],
+  "inputs": {
+    "tools/test_arc_geometry.py": "d2aa530ba183771cc221e2e7e59fbd13b78922aec26439370b13c50544a47288",
+    "src/kairo/common/arc_geometry.hpp": "c7a85271de77a6b1e024c327bdd0dffc9e867f0dfac75dfd1dc6b24b216689e2",
+    "tests/kairo/arc_geometry_fixtures.cpp": "91c034961aff6398d283f81d133daf9aae5d0ab98bd0a3e7e437699df215783c"
+  },
+  "case_manifest_sha256": "1ea244d88d751bc83f50df53259a5deac092290c5c4a8a17331460be9abc9b5b",
+  "generated_oracle_sha256": "36e93be9eef9161ecd1245f20240a5ef314ae475793415d2e3df6ad1c15631d7",
+  "oracle_stdout_sha256": {
+    "UnityMono265": "8678a8a6a9cb04378caf107bc5b640189480360de99d97f2ee0ce07790db115d",
+    "DotNet": "138f013e4d03d8ee64991fa704f6489c8faa96ca1dad4faa640502328c2a3f5d"
+  },
+  "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "native_options": [
+    "/nologo",
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/O2",
+    "/Fe:C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\arc-geometry-tests\\arc-geometry-fixtures.exe",
+    "/Fo:C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\arc-geometry-tests/",
+    "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\tests\\kairo\\arc_geometry_fixtures.cpp"
+  ],
+  "native_executable": {
+    "path": "build/arc-geometry-tests/arc-geometry-fixtures.exe",
+    "sha256": "02066d459e963f777c8125d22f4076a38652a6187c23db9cfdf117facd6005c9"
+  },
+  "native_stdout_sha256": "138f013e4d03d8ee64991fa704f6489c8faa96ca1dad4faa640502328c2a3f5d",
+  "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
+  "historical_oracle_executable_sha256": "309e9b38dbb05d2dcc837286e1c6ebc5e295d6db0b0d3d498c9d149b0f45c623",
+  "modern_oracle_executable_sha256": "b989d54aaad6c487b1aa640c1cf623eed5490a73d387d6aa8ff6ef1b82305c6b",
+  "verified_boundary_ids": [],
+  "game_boot": false,
+  "game_assets_used": false,
+  "original_binaries_executed": false,
+  "limitations": [
+    "Geometry and ordering only; identity GetTransPointGL collaborator deliberately excludes transforms, GL Y conversion and clip rasterization.",
+    "One synthetic shape render pass/color; material shaders, alpha/blend pixels and Config counters are not qualified.",
+    "Full original DrawArc/FillArc and FastMath.Sin/Cos/JMath.ToRadians bodies are compiled; no original Unity/game assembly executes.",
+    "GUI/offscreen, zero and oversized stroke, negative and normalized angles, zero dimensions and first-step alignment are covered.",
+    "Non-progressing or million-plus segment domains are explicitly refused by the independent kernel and are outside this source-equivalence corpus.",
+    "Precision probes are diagnostics only: the wider expression is never substituted into the binary32 production-contract geometry.",
+    "No raster or Android equivalence claim; no translation or boundary state is promoted."
+  ]
+}

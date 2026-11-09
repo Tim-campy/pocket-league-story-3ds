@@ -34,6 +34,7 @@ public:
     Distribution summarize(FrameStage,FrameSlice=FrameSlice::retained)const;
 };
 struct PayloadSnapshot {
+    KnownMemory known;
     std::optional<std::uint64_t>display_rgba_bytes,display_rgba_capacity_bytes,backend_texture_payload_bytes;
     std::optional<std::uint64_t>audio_ring_bytes,audio_scratch_bytes,audio_resampler_available_bytes,audio_device_callback_bytes,audio_peak_resampler_available_bytes;
     std::optional<std::uint64_t>gc_tracked,gc_roots,gc_unreachable,gc_collected;
@@ -46,6 +47,7 @@ class RunMetrics {
     std::ostream&output_;
     FrameAccumulator frames_;
     std::uint64_t peak_backend_texture_payload_bytes_{};
+    void emit_summary(const std::string&)noexcept;
 public:
     RunMetrics(bool,std::ostream&);
     bool enabled()const noexcept{return enabled_;}
@@ -55,5 +57,6 @@ public:
     void memory(const std::string&phase,const PayloadSnapshot&)noexcept;
     void emit_memory(const std::string&phase,const ProcessMemory&,const PayloadSnapshot&,std::uint64_t sampler_ns=0)noexcept;
     void finish(const std::string&outcome)noexcept;
+    void checkpoint(const std::string&outcome)noexcept;
 };
 }

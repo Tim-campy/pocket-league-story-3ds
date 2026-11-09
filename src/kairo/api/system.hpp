@@ -1,5 +1,6 @@
 #pragma once
 #include "semantic_runtime.hpp"
+#include "diagnostic_output.hpp"
 #include <atomic>
 #include <chrono>
 #include <mutex>
@@ -7,7 +8,6 @@
 #include <iostream>
 
 namespace pls::kairo {
-inline std::mutex debug_log_mutex;
 inline void debug_log(const cs::String& text){
     // Platform diagnostic leaf only; Config.PRINT/listener/deduplication remain
     // in the generated source Log implementation.
@@ -34,6 +34,9 @@ public:
 };
 class QualitySettings {
 public:
+    // The PC CPU rasterizer uses one coverage sample. This reports the actual
+    // backend capability; it is unrelated to Image.Filter/Bilinear.
+    static std::int32_t get_antiAliasing(){return 0;}
     static void set_vSyncCount(std::int32_t value){
         // Main sets zero: SDL presentation is software-driven and the explicit
         // target rate above controls this PC development backend.
@@ -51,6 +54,9 @@ inline cs::String native_release(){return cs::String(u"5.0");}
 // KairoPlugin._getStatusBarHeight/_getStatusBarPosition non-Android branches.
 inline std::int32_t native_status_bar_height(){return 0;}
 inline std::int32_t native_status_bar_position(){return 0;}
+// Exact non-Android _getBatteryInfo branch: a fresh zero-initialized int[2].
+// Actual Nintendo 3DS battery integration belongs to the later CTR backend.
+inline cs::Array<std::int32_t> native_battery_info(){return cs::Array<std::int32_t>::make(2);}
 inline std::mutex native_plugin_mutex;
 inline NativePluginContext native_plugin_context;
 inline void native_plugin_init(std::int32_t language,bool logging,const cs::String& license_key){

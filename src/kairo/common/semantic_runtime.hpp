@@ -1,4 +1,5 @@
 #pragma once
+#include "memory_ranges.hpp"
 // New implementation of the measured C# language contract; no original assets.
 #include <algorithm>
 #include <cmath>
@@ -169,6 +170,10 @@ inline std::int32_t conv_i32(float value)noexcept{return conv_signed<std::int32_
 inline std::int32_t conv_i32(double value)noexcept{return conv_signed<std::int32_t>(value);}
 inline std::int64_t conv_i64(float value)noexcept{return conv_signed<std::int64_t>(value);}
 inline std::int64_t conv_i64(double value)noexcept{return conv_signed<std::int64_t>(value);}
+template<class T>T math_abs(T value){
+    if constexpr(std::is_integral_v<T>){static_assert(std::is_signed_v<T>);if(value==std::numeric_limits<T>::min())throw OverflowException();return value<0?neg_integer(value):value;}
+    else return std::fabs(value);
+}
 
 class String;
 struct Object;
@@ -197,8 +202,12 @@ struct Object : std::enable_shared_from_this<Object> {
     virtual String ToString();
     virtual void trace_edges(const EdgeVisitor&)const{}
     virtual void release_edges(){}
+    virtual void memory_ranges(const memory::RangeVisitor&)const{}
 };
-void register_managed_object(const Ref<Object>&object);
+void register_managed_object(const Ref<Object>&object,std::size_t body_bytes=0,const void*body_begin=nullptr);
+// Cooperative read-only snapshot: never collects, advances generations or
+// changes game references. Callback must not allocate managed objects.
+void visit_managed_memory(const memory::RangeVisitor&,const std::function<void()>&finish={});
 void gc_safepoint();
 void gc_collect(std::int32_t generation=2);
 std::int32_t gc_max_generation()noexcept;
@@ -233,13 +242,14 @@ public:
     MonitorScope&operator=(const MonitorScope&)=delete;
 };
 template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
-    try{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result);return result;}
+    try{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,sizeof(T),result.get());return result;}
     catch(const std::bad_alloc&){throw OutOfMemoryException();}
 }
 
 class String {
     struct Storage : Object {
         const std::u16string value;
+        void memory_ranges(const memory::RangeVisitor&visit)const override{visit(value.data(),(value.capacity()+1)*sizeof(char16_t),memory::Category::managed_heap);}
         explicit Storage(std::u16string v):value(std::move(v)){}
         String ToString()override;
         std::string managed_type_name()const override{return "System.String";}
@@ -355,6 +365,7 @@ template<class T> class Array {
     struct Storage : ArrayBase {
         std::int32_t size;
         std::unique_ptr<T[]> values;
+        void memory_ranges(const memory::RangeVisitor&visit)const override{visit(values.get(),static_cast<std::size_t>(size)*sizeof(T),memory::Category::managed_heap);}
         explicit Storage(std::int32_t n):size(n),values(n?std::make_unique<T[]>(static_cast<std::size_t>(n)):nullptr){}
         std::int32_t get_Length()const override{return size;}
         std::string managed_type_name()const override{return managed_type_name_traits<T>::name()+"[]";}

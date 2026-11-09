@@ -14,13 +14,13 @@ struct Frame {
     std::int32_t touch_count{};
     float dpi{};bool fullscreen{};
 };
-std::mutex published_mutex;Frame published;bool available{};
+std::mutex published_mutex;Frame published;bool available{},captured{};
 struct Pump {
     std::set<std::pair<SDL_TouchID,SDL_FingerID>> fingers;
     Frame frame;int x{},y{};bool active{},open{};std::thread::id owner;
     void require()const{if(!active||owner!=std::this_thread::get_id())throw pls::cs::InvalidOperationException("SDL debug input pump requires its backend owner thread");}
 }pump;
-Frame snapshot(){std::lock_guard<std::mutex>lock(published_mutex);if(!available)throw pls::cs::InvalidOperationException("SDL debug input backend is not installed");return published;}
+Frame snapshot(){std::lock_guard<std::mutex>lock(published_mutex);if(!available)throw pls::cs::InvalidOperationException("SDL debug input backend is not installed");auto value=published;if(captured){value.left_shift=value.right_shift=false;value.held={false,false};value.down={false,false};value.touch_count=0;}return value;}
 std::size_t button_index(std::int32_t index){if(index!=0&&index!=1)throw pls::cs::NotSupportedException("Debug mouse input admits only left and right buttons");return static_cast<std::size_t>(index);}
 void publish(){if(pump.fingers.size()>static_cast<std::size_t>(INT32_MAX))throw pls::cs::OverflowException();pump.frame.touch_count=static_cast<std::int32_t>(pump.fingers.size());pump.frame.mouse={static_cast<float>(pump.x),static_cast<float>(pump.frame.height)-static_cast<float>(pump.y),0.0f};std::lock_guard<std::mutex>lock(published_mutex);published=pump.frame;available=true;}
 }
@@ -58,5 +58,6 @@ void debug_input_event(const SDL_Event&event){
 }
 void debug_input_publish_frame(){pump.require();if(!pump.open)throw cs::InvalidOperationException("SDL debug input publish outside backend pump");publish();pump.open=false;}
 void debug_input_fullscreen(bool fullscreen){pump.require();pump.frame.fullscreen=fullscreen;publish();}
-void debug_input_shutdown(){pump.require();{std::lock_guard<std::mutex>lock(published_mutex);available=false;published={};}pump={};}
+void debug_input_capture(bool focus){pump.require();{std::lock_guard<std::mutex>lock(published_mutex);captured=focus;}pump.frame.left_shift=pump.frame.right_shift=false;pump.frame.held={false,false};pump.frame.down={false,false};pump.fingers.clear();publish();}
+void debug_input_shutdown(){pump.require();{std::lock_guard<std::mutex>lock(published_mutex);available=false;captured=false;published={};}pump={};}
 }

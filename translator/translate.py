@@ -113,6 +113,19 @@ def main():
         request['source_native_helpers']+=['M:kairo.unity.ui.Canvas.VersionUp(System.String)','M:kairo.unity.ui.Canvas.IsGetStatusBarHeight',
             'M:kairo.unity.ui.Canvas.IsGetStatusBarPosition','M:kairo.unity.ui.Canvas.SetLinearFilterEnable(System.Boolean)',
             'M:kairo.unity.ui.Canvas.Fullscreen(System.Boolean)']
+        request['source_native_helpers'].append('M:kairo.unity.ui.Canvas.IsLinearFilterEnable')
+        request['external_methods']['M:UnityEngine.QualitySettings.get_antiAliasing']='pls::kairo::QualitySettings::get_antiAliasing'
+        request['source_native_helpers']+=['M:kairo.unity.ui.IApplication.GetBattery','M:kairo.unity.ui.IApplication.IsBatteryCharging']
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.GetBatteryInfo']='pls::kairo::native_battery_info'
+        request['source_native_helpers'].append('M:kairo.unity.ui.Canvas.ImeOnBlock(System.String,System.Int32,System.Int32)')
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.ImeOnBlock(System.String,System.Int32,System.Int32)']='pls::kairo::request_text_input'
+        request['native_includes'].append('text_input.hpp')
+        request['external_methods'].update({
+            'M:kairo.unity.native.KairoPlugin.StartFepPanel(System.String,System.String,System.Int32,System.String,System.String,System.Int32)':'pls::kairo::start_text_panel',
+            'M:kairo.unity.native.KairoPlugin.IsFepPanelFinish':'pls::kairo::text_panel_finished',
+            'M:kairo.unity.native.KairoPlugin.GetFepPanelResult':'pls::kairo::text_panel_result'})
+        request['source_native_helpers']+=['M:kairo.unity.ui.Graphics.DrawText(System.String,System.Single,System.Single,System.Single,System.Int32)',
+            'M:kairo.unity.ui.Graphics.DrawText(kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Single,System.Int32)']
         request['external_fields']['F:kairo.unity.ui.Canvas.statusBarPosition_']='source_status_bar_position'
         request['external_fields'].update({'F:kairo.unity.ui.Graphics.color_':'source_color()',
             'F:kairo.unity.ui.Graphics.font_':'source_font()',
@@ -250,6 +263,12 @@ def main():
         request['external_methods']['M:kairo.unity.ui.Canvas.SetSurfaceManager(kairo.unity.surface.SurfaceManagerBase)']='canvas-source:set'
         request['native_includes'].append('forms_callbacks.hpp')
         request['external_value_types']['T:UnityEngine.Vector3']='pls::kairo::Vector3'
+        request['external_value_types']['T:UnityEngine.Matrix4x4']='pls::kairo::Matrix4x4'
+        request['native_includes'].append('matrix4.hpp')
+        request['external_methods']['M:UnityEngine.Matrix4x4.get_identity']='pls::kairo::Matrix4x4::identity'
+        request['external_methods']['M:UnityEngine.Matrix4x4.MultiplyPoint(UnityEngine.Vector3)']='value-member:MultiplyPoint'
+        for column in range(4):
+            for row in range(4):request['external_fields']['F:UnityEngine.Matrix4x4.m'+str(row)+str(column)]='m'+str(row)+str(column)
         request['external_fields'].update({'F:UnityEngine.Vector3.x':'x','F:UnityEngine.Vector3.y':'y','F:UnityEngine.Vector3.z':'z'})
         request['external_methods'].update({'M:UnityEngine.Input.GetKey(UnityEngine.KeyCode)':'pls::kairo::DebugInput::GetKey','M:UnityEngine.Input.GetMouseButton(System.Int32)':'pls::kairo::DebugInput::GetMouseButton','M:UnityEngine.Input.GetMouseButtonDown(System.Int32)':'pls::kairo::DebugInput::GetMouseButtonDown','M:UnityEngine.Input.get_mousePosition':'pls::kairo::DebugInput::get_mousePosition','M:UnityEngine.Screen.get_height':'pls::kairo::DebugInput::screen_height'})
         request['native_includes'].append('debug_input.hpp')
@@ -260,6 +279,7 @@ def main():
         request['external_methods']['M:kairo.unity.native.KairoPlugin.GetRelease']='pls::kairo::native_release'
         request['external_methods']['M:kairo.unity.ui.IApplication.Terminate']='member:Terminate'
         request['external_methods']['M:kairo.unity.ui.IApplication.ResetOrientation']='member:ResetOrientation'
+        request['external_methods']['M:kairo.unity.ui.IApplication.SetOrientation(System.Int32)']='member:SetOrientation'
         request['external_methods']['M:kairo.unity.ui.IApplication.GetResource']='source-adapter:M:PlsPortGeneratedBootstrap.Source.GetApplicationResource(kairo.unity.ui.IApplication)'
         request['native_includes'].append('runtime_memory.hpp')
         for name in ('Free','Total'):

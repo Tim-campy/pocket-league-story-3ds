@@ -465,7 +465,7 @@
   "producer_sha256": "792c416120885f29f7f8bfd1caf1f26ee215f5d152cdd20c876bc497f4d72d1f",
   "inputs_sha256": {
     "tests/translator/thread_fixtures.cpp": "e017e3787e9f5d7d8937ff43a41ac0ed01675573454e9947b324f72f4eb10105",
-    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "src/kairo/common/managed_thread.cpp": "76ddd5568410670d790f953dc3111976ff48144364ad088724eebf3e61feadaf",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "tests/translator/ThreadProbe.cs": "85be9a67d96e7cbd4dbc44e8e5d64251d7f013654cf72054f6a065367cac695f",
@@ -475,7 +475,7 @@
     "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "src/kairo/common/managed_thread.hpp": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b",
-    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+    "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
@@ -487,7 +487,7 @@
   },
   "native_executable": {
     "path": "build/thread-fixtures/thread-fixtures.exe",
-    "sha256": "0d5cbad93b471ce33b75b54e2b9a66b3e353ff35faf13145bcea60bebedceff9"
+    "sha256": "31aaa66e2cf6d27ca57f0042d852fbc4d437d162a60bb4431e3ee9e91c457ac9"
   },
   "production_methods_promoted": 0,
   "game_binary_loaded": false,

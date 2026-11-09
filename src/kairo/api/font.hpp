@@ -13,6 +13,7 @@ struct TextServices {
     std::function<void(cs::Ref<Graphics>,cs::String,float,float,std::int32_t)> markup_draw;
 };
 void install_text_services(TextServices);
+void visit_font_memory(const memory::RangeVisitor&);
 cs::String translate_text(cs::String);
 bool japanese_text();
 void draw_markup(cs::Ref<Graphics>,cs::String,float,float,std::int32_t);

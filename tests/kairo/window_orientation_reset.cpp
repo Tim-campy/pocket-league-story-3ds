@@ -1,5 +1,6 @@
 #include "backend.hpp"
 #include "../../src/kairo/api/debug_input.hpp"
+#include "application.hpp"
 #include <stdexcept>
 #include <iostream>
 int main(){
@@ -17,5 +18,11 @@ int main(){
     if(!(SDL_GetWindowFlags(window)&SDL_WINDOW_FULLSCREEN)||!pls::kairo::DebugInput::get_fullScreen())throw std::runtime_error("Fullscreen flag did not reach SDL and its reader");
     backend.set_fullscreen(false);
     if((SDL_GetWindowFlags(window)&SDL_WINDOW_FULLSCREEN)||pls::kairo::DebugInput::get_fullScreen())throw std::runtime_error("Fullscreen flag did not clear");
-    std::cout<<"{\"assertions\":6,\"SDL_window_reset\":true,\"fullscreen_toggle\":true,\"physical_display_used\":false}\n";
+    backend.set_orientation(pls::kairo::WindowOrientation::auto_rotation);
+    if(backend.orientation()!=pls::kairo::WindowOrientation::auto_rotation)throw std::runtime_error("Automatic mode was not retained");
+    backend.set_orientation(pls::kairo::WindowOrientation::portrait);
+    if(backend.orientation()!=pls::kairo::WindowOrientation::portrait)throw std::runtime_error("Current portrait mode was not retained");
+    bool refused=false;try{backend.set_orientation(pls::kairo::WindowOrientation::landscape_right);}catch(const pls::cs::NotSupportedException&){refused=true;}
+    if(!refused)throw std::runtime_error("Unimplemented physical rotation was not refused");
+    std::cout<<"{\"assertions\":9,\"SDL_window_reset\":true,\"fullscreen_toggle\":true,\"physical_display_used\":false}\n";
 }

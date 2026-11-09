@@ -26,6 +26,10 @@ int main(){
     ProcessMemory memory;memory.resident_bytes=100;memory.private_commit_bytes=300;memory.executable_image_resident_bytes=25;memory.platform="own fixture";PayloadSnapshot payload;payload.display_rgba_bytes=10;payload.backend_texture_payload_bytes=9;payload.audio_ring_bytes=6;
     run.emit_memory("first\n\"present",memory,payload,8);run.finish("own fixture");const auto text=output.str();run.finish("duplicate");check(output.str()==text,"Finish is idempotent");
     check(text.find("PLS_PC_METRICS=")!=std::string::npos,"Stable prefix");check(text.find("first\\n\\\"present")!=std::string::npos,"JSON escapes phase strings");check(text.find("\"managed_heap\":null")!=std::string::npos,"Unknown heap bytes are not invented");check(text.find("\"font_source\":null")!=std::string::npos,"Font payload remains UNKNOWN without passive getter");check(text.find("\"backend_texture\":17")!=std::string::npos,"Transient backend peak is retained");check(text.find("\"memory_categories_are_not_additive\":true")!=std::string::npos,"Payload not summed into resident bytes");check(text.find("\"game_screen\":\"UNKNOWN\"")!=std::string::npos,"A completed frame does not prove game screen");
+    std::ostringstream live_output;RunMetrics live(true,live_output);live.frame(sample(10));live.checkpoint("running");
+    check(!live.finished(),"Periodic summary does not finish a running measurement");
+    live.frame(sample(20));live.checkpoint("running");check(live_output.str().find("\"completed_presented_frames\":2")!=std::string::npos,"Periodic summaries preserve accumulated frames");
+    live.finish("complete");check(live.finished(),"Normal finish remains available after checkpoints");
     std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<checks<<",\"game_executed\":false}\n";
     std::cout<<text;
 }

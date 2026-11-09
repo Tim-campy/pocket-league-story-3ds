@@ -47,22 +47,27 @@ public class OriginalOrientation {ScreenOrientation defaultOrientation_;public v
     native_sources=[ROOT/'tests/kairo/application_orientation_fixtures.cpp',ROOT/'src/kairo/common/semantic_runtime.cpp'];native=folder/'application-orientation-fixtures.exe';compiler=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
     run([compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/utf-8','/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src/kairo/common'),'/Fe:'+str(native),'/Fo:'+str(folder)+'/',*native_sources],folder,'native-compile',environment())
     actual=dict(line.split('\t',1) for line in run([native],folder,'native-cases',environment()).splitlines())
-    if len(actual)!=27:raise ValueError('Incomplete native getter/reset corpus')
+    if len(actual)!=40:raise ValueError('Incomplete native getter/setter/reset corpus')
     cases=[];context=[]
     for profile,command,childenv in [('UnityMono265',[mono,old],env),('DotNet',[dotnet,modern],None)]:
         observed=dict(line.split('\t',1) for line in run(command,folder,profile+'-source-oracle',childenv).splitlines())
         if len(observed)!=61 or not actual.keys()<=observed.keys():raise ValueError('Incomplete original source orientation corpus')
-        cases.extend(dict(profile=profile,case=k,expected=observed[k],actual=v,passed=observed[k]==v) for k,v in actual.items())
+        def projected(key,value):
+            if not key.startswith('set-'):return value
+            head,*fields=value.split(';')
+            return '/'.join(head.split('/')[:2])+';'+ ';'.join(f for f in fields if not f.startswith('auto_gets='))
+        cases.extend(dict(profile=profile,case=k,expected=projected(k,observed[k]),actual=projected(k,v),passed=projected(k,observed[k])==projected(k,v)) for k,v in actual.items())
         context.append(dict(profile=profile,native_verified=False,observations={k:v for k,v in observed.items() if k not in actual}))
     policy=json.loads(run([native,'policy'],folder,'native-policy',environment()))
-    if policy.get('status')!='PASS' or policy.get('assertions')!=10 or policy.get('setter_autorotate_implemented') is not False or policy.get('default_reset_callback_implemented')is not True:raise ValueError('Incomplete own host orientation policy fixture')
+    if policy.get('status')!='PASS' or policy.get('assertions')!=12 or policy.get('setter_autorotate_implemented') is not False or policy.get('default_reset_callback_implemented')is not True:raise ValueError('Incomplete own host orientation policy fixture')
     passed=all(row['passed'] for row in cases)
     inputs=[*native_sources,source,metadata_source,ROOT/'tools/test_application_orientation.py',ROOT/'tools/test_input.py',ROOT/'tools/native_api_proof.py',ROOT/'src/kairo/api/application.hpp',ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/managed_shared_field.hpp']
     receipt=dict(operation='original-source-IApplication-orientation-getters-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,native_policy=policy,
         verified_boundary_ids=boundary_ids(exact=['M:kairo.unity.ui.IApplication.IsSide','M:kairo.unity.ui.IApplication.GetOrientation']) if passed else [],
         source_manifest=[dict(path=original.relative_to(ROOT/'reference').as_posix(),sha256=sha(original))],original_method_spans=[dict(signature=s,sha256=hashlib.sha256(b.encode('utf-8')).hexdigest()) for s,b in zip(signatures,bodies)],
         inputs_sha256={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),historical_core_sha256=sha(core),external_unity_api_metadata=dict(sha256=sha(external),observations=metadata),source_only_context=context,
-        limits=['IsSide/GetOrientation and default reset are source-differential observations. General setter/autorotate remain source-only context and are not implemented.',
+        limits=['IsSide/GetOrientation, setter enum mapping and default reset are source-differential observations. Setter cases project out the unimplemented IsAutoOrientation getter/result/read count, retaining all orientation reads/writes.',
+                'SDL fixed-framebuffer backend supports current physical orientation and AutoRotation mode; rotation to a different physical orientation is explicitly refused. No 3DS sensor/layout policy is chosen.',
                 'Window aspect policy is explicit PC behavior, not evidence of original Unity desktop or Android sensor behavior.',
                 'The provider is installed before managed workers; captures must be native only and synchronization of mutable provider state is the host obligation.',
                 'No SDL monitor orientation, Android global configuration flag or Nintendo 3DS layout is selected.'],game_boot=False,game_assets_used=False,original_binaries_executed=False,original_unity_binary_copied=False)

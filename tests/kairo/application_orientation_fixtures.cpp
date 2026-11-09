@@ -16,6 +16,8 @@ int policy(){
     failed=false;try{missing.host_orientation_reader({});}catch(const pls::cs::ArgumentException&){failed=true;}check(failed,"Null reader rejected");
     failed=false;try{missing.ResetOrientation();}catch(const pls::cs::InvalidOperationException&){failed=true;}check(failed,"Missing reset callback is explicit");
     failed=false;try{missing.host_orientation_reset({});}catch(const pls::cs::ArgumentException&){failed=true;}check(failed,"Null reset callback rejected");
+    failed=false;try{missing.SetOrientation(0);}catch(const pls::cs::InvalidOperationException&){failed=true;}check(failed,"Missing orientation writer is explicit");
+    failed=false;try{missing.host_orientation_writer({});}catch(const pls::cs::ArgumentException&){failed=true;}check(failed,"Null orientation writer rejected");
     App portrait;portrait.host_configure(240,280,{},{});check(portrait.GetOrientation()==0&&!portrait.IsSide(),"Known PC portrait window");
     App landscape;landscape.host_configure(280,240,{},{});check(landscape.GetOrientation()==3&&landscape.IsSide(),"Explicit PC landscape-left aspect policy");
     App square;square.host_configure(240,240,{},{});check(square.GetOrientation()==0&&!square.IsSide(),"Square aspect policy uses portrait");
@@ -27,6 +29,7 @@ int policy(){
 int main(int argc,char**){pls::cs::GcMutatorScope mutator;if(argc>1)return policy();
     for(auto state:{0,1,2,3,4,5,99}){Observation o{static_cast<WindowOrientation>(state),{}};App app;app.host_orientation_reader([&]{return o.read();});print("side-"+std::to_string(state),boolean(app.IsSide()),o);}
     for(auto state:{0,1,2,3,4,5,99}){Observation o{static_cast<WindowOrientation>(state),{}};App app;app.host_orientation_reader([&]{return o.read();});const auto orientation=app.GetOrientation();print("get-"+std::to_string(state),std::to_string(orientation),o);}
+    for(auto requested:{INT32_MIN,-2,-1,0,1,2,3,4,90,180,270,360,INT32_MAX}){Observation o{WindowOrientation::portrait,{}};App app;app.host_orientation_reader([&]{return o.read();});app.host_orientation_writer([&](auto value){o.current=value;++o.writes;});app.SetOrientation(requested);const auto orientation=app.GetOrientation();const auto side=app.IsSide();print("set-"+std::to_string(requested),std::to_string(orientation)+"/"+boolean(side),o);}
     for(auto state:{0,1,2,3,4,5,99}){Observation o{static_cast<WindowOrientation>(state),{}};App app;app.host_orientation_reader([&]{return o.read();});const auto saved=o.read();o.current=WindowOrientation::landscape_right;++o.writes;app.host_orientation_reset([&]{o.current=saved;++o.writes;});app.ResetOrientation();const auto orientation=app.GetOrientation();const auto side=app.IsSide();print("reset-"+std::to_string(state),std::to_string(orientation)+"/"+boolean(side),o);}
     std::vector<std::vector<int>>sequences={{1,3},{1,1,4},{4,1,1},{0,3},{3},{1,1,3}};
     for(std::size_t i=0;i<sequences.size();++i){Observation o{WindowOrientation::unknown,{}};for(auto v:sequences[i])o.sequence.push_back(static_cast<WindowOrientation>(v));App app;app.host_orientation_reader([&]{return o.read();});print("side-reread-"+std::to_string(i),boolean(app.IsSide()),o);}

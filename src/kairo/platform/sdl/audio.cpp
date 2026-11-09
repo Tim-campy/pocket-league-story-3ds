@@ -275,6 +275,10 @@ AudioMemory AudioMixer::memory()const {
     return result;
 }
 int AudioMixer::output_rate()const{return impl_->format.freq;}
+void AudioMixer::memory_ranges(const memory::RangeVisitor&visit)const{
+    DeviceLock lock(impl_->device);
+    for(const auto&voice:impl_->voices)if(voice)for(const auto*buffer:{&voice->ring,&voice->input,&voice->scratch})visit(buffer->data(),buffer->capacity()*sizeof(float),memory::Category::audio);
+}
 AudioOutputStats AudioMixer::diagnostics()const {DeviceLock lock(impl_->device);return impl_->output;}
 void AudioMixer::reset_diagnostics(){DeviceLock lock(impl_->device);impl_->output={};}
 }

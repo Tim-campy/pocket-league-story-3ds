@@ -6,6 +6,7 @@
 namespace pls::kairo {
 namespace {TextServices services;std::map<std::pair<std::string,int>,std::unique_ptr<sdl::RasterFont>> rasters;}
 void install_text_services(TextServices value){services=std::move(value);rasters.clear();}
+void visit_font_memory(const memory::RangeVisitor&visit){for(const auto&entry:rasters)entry.second->memory_ranges(visit);}
 cs::String translate_text(cs::String text){if(!services.translate)throw cs::InvalidOperationException("Generated Language.TranslateText bridge is not installed");return services.translate(text);}
 bool japanese_text(){if(!services.japanese)throw cs::InvalidOperationException("Generated Language.Japanese bridge is not installed");return services.japanese();}
 void draw_markup(cs::Ref<Graphics> g,cs::String value,float x,float y,std::int32_t anchor){if(!services.markup_draw)throw cs::NotSupportedException("Translated TextLayout draw bridge is not installed");services.markup_draw(std::move(g),std::move(value),x,y,anchor);}

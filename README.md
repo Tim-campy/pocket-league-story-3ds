@@ -2,7 +2,7 @@
 
 **Port não oficial, não afiliado à Kairosoft. Requer que o usuário possua o jogo e forneça o próprio APK. Não distribui assets nem binários originais do jogo ou do Unity.**
 
-Alvo principal: **New Nintendo 3DS XL**. O 3DS original é uma meta secundária, sujeita a medições. A Fase 2 começou com o tradutor Roslyn, runtime C++17, contratos offline, conversão local de assets e primitivas SDL2. **O port ainda não é jogável: título, menu e partida não foram executados.** Os números atuais e suas provas estão em [PROGRESS.md](PROGRESS.md); testes de infraestrutura não contam como boot.
+Alvo principal: **New Nintendo 3DS XL**. O 3DS original é uma meta secundária, sujeita a medições. A Fase 2 implementa o tradutor Roslyn, runtime C++17, contratos offline, conversão local de assets e backend SDL2. **O título e a seleção de saves já foram observados em diagnóstico Release no PC; o port ainda não está jogável e a partida completa permanece pendente.** O [checkpoint do primeiro frame](docs/notes/checkpoint-first-frame.md) e a [evidência da execução](docs/notes/phase2-first-frame.md) separam a observação das contagens compiladas em [PROGRESS.md](PROGRESS.md). Testes de infraestrutura não contam como boot.
 
 ## Referência imutável
 
@@ -48,7 +48,7 @@ python tools/build-pc --fixtures-only
 python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK'
 ```
 
-Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e tenta compilar e ligar o jogo gerado; slots virtuais ainda sem corpo impedem o link. Os quatro callbacks de Main já são traduzidos. As execuções diagnósticas usam cópias privadas com armadilhas fatais identificadas, sem criar stubs de menu ou promover métodos a runs. FreeType e o mixer Vorbis já rasterizam as fontes e reproduzem áudio em streaming nos testes nativos; o boot continua pendente. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
+Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e tenta compilar e ligar o jogo gerado; slots virtuais ainda sem corpo impedem o link. Os quatro callbacks de Main já são traduzidos. As execuções diagnósticas usam cópias privadas com armadilhas fatais identificadas, sem criar stubs de menu ou promover métodos a runs. FreeType e o mixer Vorbis rasterizam as fontes e reproduzem áudio em streaming; o diagnóstico já exibiu o título, com lacunas posteriores ainda explícitas. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
 
 FreeType, libogg e libvorbis foram autorizados e preparados localmente, sem instalação global. O [catálogo privado](docs/notes/phase2-private-catalog.md) associa recursos a identificadores e mantém os inicializadores numéricos classificados fora do C++ público. Armazenamento, entrada, formulários e som têm [provas separadas](docs/notes/phase2-storage-input-ui.md); isso não comprova sua execução dentro do jogo.
 

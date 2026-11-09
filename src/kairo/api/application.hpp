@@ -37,6 +37,7 @@ class IApplication : public cs::Object {
     // state, never hidden managed references; each call is a separate read.
     std::function<WindowOrientation()> orientation_reader_;
     std::function<void()> orientation_reset_;
+    std::function<void(WindowOrientation)> orientation_writer_;
     std::function<void(bool)> fullscreen_writer_;
     ApplicationInitializationBridge initialization_;
     cs::Ref<cs::Object> initialization_owner_;
@@ -83,6 +84,12 @@ public:
     void host_orientation_reader(std::function<WindowOrientation()> reader){if(!reader)throw cs::ArgumentException("Host window orientation reader must be nonempty");if(created_)throw cs::InvalidOperationException("Window orientation reader is host-setup-only");orientation_reader_=std::move(reader);}
     void host_orientation_reset(std::function<void()> reset){if(!reset)throw cs::ArgumentException();if(created_)throw cs::InvalidOperationException("Window orientation reset is host-setup-only");orientation_reset_=std::move(reset);}
     void ResetOrientation(){if(!orientation_reset_)throw cs::InvalidOperationException("Host default window orientation reset is not installed");orientation_reset_();}
+    void host_orientation_writer(std::function<void(WindowOrientation)> writer){if(!writer)throw cs::ArgumentException();if(created_)throw cs::InvalidOperationException("Orientation writer is host-setup-only");orientation_writer_=std::move(writer);}
+    void SetOrientation(std::int32_t value){
+        auto next=WindowOrientation::auto_rotation;
+        switch(value){case 0:next=WindowOrientation::portrait;break;case 1:case 90:next=WindowOrientation::landscape_right;break;case 2:case 180:next=WindowOrientation::portrait_upside_down;break;case 3:case 270:next=WindowOrientation::landscape_left;break;default:break;}
+        if(!orientation_writer_)throw cs::InvalidOperationException("Host orientation writer is not installed");orientation_writer_(next);
+    }
     void host_fullscreen_writer(std::function<void(bool)> writer){if(!writer)throw cs::ArgumentException();if(created_)throw cs::InvalidOperationException("Fullscreen writer is host-setup-only");fullscreen_writer_=std::move(writer);}
     void source_set_fullscreen(bool enabled){if(!CheckUiThread())throw cs::InvalidOperationException("Fullscreen update must run on the UI thread");if(!fullscreen_writer_)throw cs::InvalidOperationException("Host fullscreen writer is not installed");fullscreen_writer_(enabled);}
     bool IsSide()const{

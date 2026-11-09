@@ -45,6 +45,7 @@ public:
     void host_display(cs::Ref<Image>,cs::Ref<Font>);
     void host_input_config(std::function<bool()> reader){if(!reader)throw cs::ArgumentException("Canvas Config.DEBUG reader must be nonempty");const bool initial=reader();input_.initialize_config(initial,std::move(reader));}
     void host_event(const platform::Input& event){input_.feed(event);}
+    void host_text_input_focus(){input_.cancel_focus();if(surface_)surface_->ClearTouch();}
     void SetDisplayCurrent(cs::Ref<IApplication>){} // Original body is empty.
     void SetSurfaceManager(cs::Ref<CanvasSurface> value){source_surface_=value;surface_=std::move(value);}
     // Generated source keeps its original SurfaceManagerBase object/Vector.

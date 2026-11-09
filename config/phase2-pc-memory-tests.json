@@ -1,26 +1,27 @@
 {
   "operation": "own-Windows-process-memory-sampler",
   "status": "PASS",
-  "assertions": 8,
+  "assertions": 10,
   "measurements": {
     "status": "PASS",
-    "assertions": 8,
-    "baseline_resident_bytes": 3518464,
+    "assertions": 10,
+    "baseline_resident_bytes": 3538944,
     "baseline_private_commit_bytes": 528384,
-    "baseline_executable_image_committed_bytes": 4014080,
-    "baseline_executable_image_resident_bytes": 2187264,
+    "baseline_executable_image_committed_bytes": 4026368,
+    "baseline_executable_image_resident_bytes": 2195456,
     "page_bytes": 4096,
     "allocation_bytes": 67108864
   },
-  "producer_sha256": "33f61c431003328610963f145d72d9a7f7bd8e88b31c10bb4ca3af2256455412",
+  "producer_sha256": "9ddfe962027a93cf45ee251d4812a3658c94cef80899761b6e59cd77159a0ef3",
   "inputs_sha256": {
-    "tests/kairo/pc_memory_fixtures.cpp": "4702c02ef48584545749b2698eb5d7970f619b1791bab62cc91985535b451daa",
-    "src/main/pc_memory.cpp": "5510247cb0372b1b626a3e188bc779e2b91e29ea247a426b15f031d4e1a127ab",
-    "src/main/pc_memory.hpp": "81f0048a3c8360c273c2b486aa12a5e2f2cc143b4f751ed87bcb82acd6ccc692"
+    "tests/kairo/pc_memory_fixtures.cpp": "f7d89c7e4f7fb1ccae633f8a89bae2b82e11a6e04f89d303584ee2f528328361",
+    "src/main/pc_memory.cpp": "e3486237ff7ad51a96d87e9bef126425dc5bb615d3c284a9e3f94495b93effcd",
+    "src/main/pc_memory.hpp": "212de100c29067a1063662f779f9ebf2d3696b7a49d173e6ad151385cb3ac28e",
+    "src/kairo/common/memory_ranges.hpp": "237593f45c5bc1b201793228f4615d4fa493bdedded05eae30bc6e107ff2305e"
   },
   "native_executable": {
     "path": "build/pc-memory-fixtures/pc-memory-fixtures.exe",
-    "sha256": "e1e26baaa9414be6806c659cd1ac417ceb8426f6d2a635b33e39c558041aa089"
+    "sha256": "3fae43c8c523f0cbadb40c9b81c1e525c783556aa7727138f2afaeeb56fe3eba"
   },
   "production_methods_promoted": 0,
   "game_executed": false,
@@ -28,6 +29,6 @@
     "Measurements describe only the synthetic fixture process, not game boot.",
     "Working set and executable page samples are sequential, not atomic.",
     "Executable MEM_IMAGE page counts include EXE/DLL padding and shared pages; not exact compiled machine-code lengths.",
-    "No per-category resident or managed heap byte attribution is inferred."
+    "Known byte ranges are unioned within categories; allocator overhead and opaque allocations remain UNKNOWN."
   ]
 }

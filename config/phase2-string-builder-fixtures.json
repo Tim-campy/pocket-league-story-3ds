@@ -1,10 +1,10 @@
 {
   "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
   "status": "PASS",
-  "fixture_cases": 48,
-  "passed": 48,
-  "expected_lines": 24,
-  "actual_lines": 24,
+  "fixture_cases": 84,
+  "passed": 84,
+  "expected_lines": 42,
+  "actual_lines": 42,
   "native_collector_tests": null,
   "production_methods_translated": 0,
   "production_translator_exercised": false,
@@ -17,13 +17,13 @@
     "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
   },
   "inputs": {
-    "tests\\translator\\StringBuilderFixtures.cs": "2965a2be95f23080594677333a110ba37ee8099615e188044aa7fbc92a224c43",
-    "tests\\translator\\string_builder_fixtures.cpp": "36a9926314cbfb03b0044ceb5d3458f29328a4ce74174b648371a46eaa44fdd2",
-    "src\\kairo\\common\\semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
-    "src\\kairo\\common\\semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+    "tests\\translator\\StringBuilderFixtures.cs": "3cb1ec74969a3ab3fd7f37b78d234bddaead5a06edb3b0d69a4d097f6693262e",
+    "tests\\translator\\string_builder_fixtures.cpp": "6c8ba96fadeb4642afa7ebe5349f0b90ec94e09fb1ec7ac9529c545539cc1f4d",
+    "src\\kairo\\common\\semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
+    "src\\kairo\\common\\semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
     "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
-    "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
+    "src\\kairo\\common\\managed_text.hpp": "5b8f6473cf2693e88357e3567980934c883662ebbf49898bd4bf53993751fc81",
     "src\\kairo\\common\\managed_dictionary.hpp": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab",
     "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
     "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97"
@@ -192,6 +192,114 @@
       "expected": "small-capacity=System.ArgumentOutOfRangeException",
       "actual": "small-capacity=System.ArgumentOutOfRangeException",
       "passed": true
+    },
+    {
+      "case": "insert-0-0",
+      "expected": "insert-0-0=System.ArgumentOutOfRangeException",
+      "actual": "insert-0-0=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-0-1",
+      "expected": "insert-0-1=System.ArgumentOutOfRangeException",
+      "actual": "insert-0-1=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-0-2",
+      "expected": "insert-0-2=System.ArgumentOutOfRangeException",
+      "actual": "insert-0-2=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-1-0",
+      "expected": "insert-1-0=True,16,16,0032,0030,0032",
+      "actual": "insert-1-0=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-1-1",
+      "expected": "insert-1-1=True,16,16,0032,0030,0032",
+      "actual": "insert-1-1=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-1-2",
+      "expected": "insert-1-2=True,16,16,0078,0000,D800,0032,0030,0032",
+      "actual": "insert-1-2=True,16,16,0078,0000,D800,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-2-0",
+      "expected": "insert-2-0=True,16,16,0032,0030,0032",
+      "actual": "insert-2-0=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-2-1",
+      "expected": "insert-2-1=True,16,16,0032,0030,0032",
+      "actual": "insert-2-1=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-2-2",
+      "expected": "insert-2-2=True,16,16,0032,0078,0000,D800,0030,0032",
+      "actual": "insert-2-2=True,16,16,0032,0078,0000,D800,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-3-0",
+      "expected": "insert-3-0=True,16,16,0032,0030,0032",
+      "actual": "insert-3-0=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-3-1",
+      "expected": "insert-3-1=True,16,16,0032,0030,0032",
+      "actual": "insert-3-1=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-3-2",
+      "expected": "insert-3-2=True,16,16,0032,0030,0078,0000,D800,0032",
+      "actual": "insert-3-2=True,16,16,0032,0030,0078,0000,D800,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-4-0",
+      "expected": "insert-4-0=True,16,16,0032,0030,0032",
+      "actual": "insert-4-0=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-4-1",
+      "expected": "insert-4-1=True,16,16,0032,0030,0032",
+      "actual": "insert-4-1=True,16,16,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-4-2",
+      "expected": "insert-4-2=True,16,16,0032,0030,0032,0078,0000,D800",
+      "actual": "insert-4-2=True,16,16,0032,0030,0032,0078,0000,D800",
+      "passed": true
+    },
+    {
+      "case": "insert-5-0",
+      "expected": "insert-5-0=System.ArgumentOutOfRangeException",
+      "actual": "insert-5-0=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-5-1",
+      "expected": "insert-5-1=System.ArgumentOutOfRangeException",
+      "actual": "insert-5-1=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-5-2",
+      "expected": "insert-5-2=System.ArgumentOutOfRangeException",
+      "actual": "insert-5-2=System.ArgumentOutOfRangeException",
+      "passed": true
     }
   ],
   "historical_cases": [
@@ -338,6 +446,114 @@
       "expected": "small-capacity=System.ArgumentException",
       "actual": "small-capacity=System.ArgumentException",
       "passed": true
+    },
+    {
+      "case": "insert-0-0",
+      "expected": "insert-0-0=System.ArgumentOutOfRangeException",
+      "actual": "insert-0-0=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-0-1",
+      "expected": "insert-0-1=System.ArgumentOutOfRangeException",
+      "actual": "insert-0-1=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-0-2",
+      "expected": "insert-0-2=System.ArgumentOutOfRangeException",
+      "actual": "insert-0-2=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-1-0",
+      "expected": "insert-1-0=True,3,3,0032,0030,0032",
+      "actual": "insert-1-0=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-1-1",
+      "expected": "insert-1-1=True,3,3,0032,0030,0032",
+      "actual": "insert-1-1=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-1-2",
+      "expected": "insert-1-2=True,32,32,0078,0000,D800,0032,0030,0032",
+      "actual": "insert-1-2=True,32,32,0078,0000,D800,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-2-0",
+      "expected": "insert-2-0=True,3,3,0032,0030,0032",
+      "actual": "insert-2-0=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-2-1",
+      "expected": "insert-2-1=True,3,3,0032,0030,0032",
+      "actual": "insert-2-1=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-2-2",
+      "expected": "insert-2-2=True,32,32,0032,0078,0000,D800,0030,0032",
+      "actual": "insert-2-2=True,32,32,0032,0078,0000,D800,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-3-0",
+      "expected": "insert-3-0=True,3,3,0032,0030,0032",
+      "actual": "insert-3-0=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-3-1",
+      "expected": "insert-3-1=True,3,3,0032,0030,0032",
+      "actual": "insert-3-1=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-3-2",
+      "expected": "insert-3-2=True,32,32,0032,0030,0078,0000,D800,0032",
+      "actual": "insert-3-2=True,32,32,0032,0030,0078,0000,D800,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-4-0",
+      "expected": "insert-4-0=True,3,3,0032,0030,0032",
+      "actual": "insert-4-0=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-4-1",
+      "expected": "insert-4-1=True,3,3,0032,0030,0032",
+      "actual": "insert-4-1=True,3,3,0032,0030,0032",
+      "passed": true
+    },
+    {
+      "case": "insert-4-2",
+      "expected": "insert-4-2=True,32,32,0032,0030,0032,0078,0000,D800",
+      "actual": "insert-4-2=True,32,32,0032,0030,0032,0078,0000,D800",
+      "passed": true
+    },
+    {
+      "case": "insert-5-0",
+      "expected": "insert-5-0=System.ArgumentOutOfRangeException",
+      "actual": "insert-5-0=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-5-1",
+      "expected": "insert-5-1=System.ArgumentOutOfRangeException",
+      "actual": "insert-5-1=System.ArgumentOutOfRangeException",
+      "passed": true
+    },
+    {
+      "case": "insert-5-2",
+      "expected": "insert-5-2=System.ArgumentOutOfRangeException",
+      "actual": "insert-5-2=System.ArgumentOutOfRangeException",
+      "passed": true
     }
   ],
   "historical_profile_differences": [
@@ -380,6 +596,66 @@
       "case": "small-capacity",
       "dotnet": "small-capacity=System.ArgumentOutOfRangeException",
       "unity_mono": "small-capacity=System.ArgumentException"
+    },
+    {
+      "case": "insert-1-0",
+      "dotnet": "insert-1-0=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-1-0=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-1-1",
+      "dotnet": "insert-1-1=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-1-1=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-1-2",
+      "dotnet": "insert-1-2=True,16,16,0078,0000,D800,0032,0030,0032",
+      "unity_mono": "insert-1-2=True,32,32,0078,0000,D800,0032,0030,0032"
+    },
+    {
+      "case": "insert-2-0",
+      "dotnet": "insert-2-0=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-2-0=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-2-1",
+      "dotnet": "insert-2-1=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-2-1=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-2-2",
+      "dotnet": "insert-2-2=True,16,16,0032,0078,0000,D800,0030,0032",
+      "unity_mono": "insert-2-2=True,32,32,0032,0078,0000,D800,0030,0032"
+    },
+    {
+      "case": "insert-3-0",
+      "dotnet": "insert-3-0=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-3-0=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-3-1",
+      "dotnet": "insert-3-1=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-3-1=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-3-2",
+      "dotnet": "insert-3-2=True,16,16,0032,0030,0078,0000,D800,0032",
+      "unity_mono": "insert-3-2=True,32,32,0032,0030,0078,0000,D800,0032"
+    },
+    {
+      "case": "insert-4-0",
+      "dotnet": "insert-4-0=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-4-0=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-4-1",
+      "dotnet": "insert-4-1=True,16,16,0032,0030,0032",
+      "unity_mono": "insert-4-1=True,3,3,0032,0030,0032"
+    },
+    {
+      "case": "insert-4-2",
+      "dotnet": "insert-4-2=True,16,16,0032,0030,0032,0078,0000,D800",
+      "unity_mono": "insert-4-2=True,32,32,0032,0030,0032,0078,0000,D800"
     }
   ],
   "limitations": [

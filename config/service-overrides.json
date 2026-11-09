@@ -616,7 +616,7 @@
       "callers": [
         "kairo.unity.io.HttpObject._connect registration branch"
       ],
-      "handling": "Local AppData.CgiRegist bypasses this branch; no JNI implementation or fabricated licensing result"
+      "handling": "Local AppData.CgiRegist bypasses this branch; removed_license_check throws NotSupportedException on an unexpected call; no JNI or fabricated licensing result"
     },
     {
       "symbol": "M:kairo.unity.licensing.LicenseChecker.DoCheck",

@@ -312,3 +312,26 @@ processo do jogo não chegou a ser iniciado. A opção não é uma dependência
 nova nem uma alteração posterior do binário.
 Census cultural reproduzivel: [culture-usage.md](culture-usage.md), com 104
 chamadas em 61 metodos e 24 overloads historicos ordinais separados.
+
+## Continuidade posterior a af66d13
+
+O driver de compilação isolada do tradutor também usa `/bigobj`: a ampliação
+para 1.282 corpos ultrapassou o formato COFF padrão (C1128), mesmo antes do link.
+`/we4715` recusa funções C++ com caminho sem retorno; o emissor preserva retornos
+de regiões finally/using com tokens próprios e uma guarda de queda impossível.
+Isso não muda o compilador nem introduz uma dependência. CMake e o harness
+diferencial aplicam as mesmas duas verificações de objeto/retorno.
+
+`tools/build-pc --configuration Release` usa build/pc-release; com
+`--diagnostic-generated <pasta privada>` usa build/pc-diagnostic-release.
+Debug continua disponível explicitamente. A tentativa 4 Release alcançou a fase
+de recursos depois de completar a configuração/plataforma, mas apresentou zero
+frames. Reprodução e limites: [ponte do bootstrap](notes/phase2-bootstrap-bridge.md).
+Nenhum build Debug é usado para alegar medições de um primeiro frame estável.
+
+A divisão de licenças e o teste de retirada dos dados auxiliares estão em
+[collation-license-review.md](notes/collation-license-review.md), com arquivos,
+bytes e alternativas. `python tools/audit_collation_license.py` recompila quatro
+providers privados e compara 25.704 observações sintéticas por variante; não
+altera a produção. A retirada do bitmap muda 124 observações en-US. Os dados
+continuam sob a autorização anterior; a licença do port não foi escolhida.

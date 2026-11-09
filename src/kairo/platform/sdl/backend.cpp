@@ -1,11 +1,22 @@
 #include "backend.hpp"
 #include "debug_input.hpp"
+#include "system.hpp"
 #include <stdexcept>
 #include <limits>
+
+namespace pls::kairo {
+void UnityApplication::OpenURL(const cs::String& value){
+    if(value.is_null())throw cs::ArgumentNullException();const auto url=value.utf8();int status;std::string error;
+    {cs::GcNativeBlockingScope parked;status=SDL_OpenURL(url.c_str());if(status<0)error=SDL_GetError();}
+    if(status<0)throw cs::IOException(error);
+}
+}
 
 namespace pls::sdl {
 static void check(int result) { if(result<0) throw std::runtime_error(SDL_GetError()); }
 static SDL_Rect rect(platform::Rect r) { return {r.x,r.y,r.w,r.h}; }
+static float screen_dpi(SDL_Window* window){float dpi=0;const auto display=window?SDL_GetWindowDisplayIndex(window):-1;if(display<0||SDL_GetDisplayDPI(display,&dpi,nullptr,nullptr)!=0||!std::isfinite(dpi)||dpi<=0)return 0;return dpi;}
+static bool fullscreen(SDL_Window* window){return window&&(SDL_GetWindowFlags(window)&SDL_WINDOW_FULLSCREEN)!=0;}
 Backend::Backend(int width,int height,bool headless):width_(width),height_(height) {
     if(width<=0||height<=0) throw std::invalid_argument("invalid surface dimensions");
     SDL_SetMainReady();
@@ -26,7 +37,7 @@ Backend::Backend(int width,int height,bool headless):width_(width),height_(heigh
         SDL_Quit();throw std::runtime_error(error);
     }
     check(SDL_SetRenderDrawBlendMode(renderer_,SDL_BLENDMODE_NONE));
-    debug_input_initialize(height_);
+    debug_input_initialize(height_,screen_dpi(window_),fullscreen(window_));
 }
 Backend::~Backend() {
     debug_input_shutdown();
@@ -57,6 +68,7 @@ void Backend::draw(SDL_Texture* texture,platform::Rect source,platform::Rect des
 std::vector<platform::Input> Backend::events() {
     std::vector<platform::Input> result;SDL_Event event{};
     debug_input_begin_frame(height_);
+    debug_input_screen(screen_dpi(window_),fullscreen(window_));
     while(SDL_PollEvent(&event)) {
         debug_input_event(event);
         using Kind=platform::Input::Kind;

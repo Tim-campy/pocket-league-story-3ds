@@ -1,3 +1,26 @@
+ auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_23af4da78e1ad81f; }()); auto cs_index = v_i_2061; return cs_array.at(cs_index); }()); auto cs_value = (cs_old ^ cs_rhs); pls::generated::cs_require(cs_target)->cs_fe44ec569b4e9ab5 = cs_value; return cs_value; }());
+}
+return cs_this;
+}
+}
+}
+// M:kairo.unity.util.SecureString.StartsWith(System.String)
+bool cs_eaf1659172f4a34c(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_prefix) { cs_init_bb652fbb61000386();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{
+return ([&]() -> bool { auto cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_bb652fbb61000386>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6dd0b8d6220bd2b3(cs_receiver); }()); auto cs_arg1 = v_prefix; return pls::cs::culture_starts_with(cs_arg0,cs_arg1); }());
+}
+}
+}
+// M:kairo.unity.util.SecureString.ToString
+pls::cs::String cs_f93784de5b5888a8(pls::cs::Ref<cs_bb652fbb61000386> cs_this) { cs_init_bb652fbb61000386();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{
+return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_bb652fbb61000386>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6dd0b8d6220bd2b3(cs_receiver); }());
+}
+}
+}
+// M:kairo.unity.util.SecureString.ToString(kairo.unity.util.SecureString)
 pls::cs::String cs_1192c1f2378de3bb(pls::cs::Ref<cs_bb652fbb61000386> v_str) { cs_init_bb652fbb61000386();
 {
 return ([&]() -> pls::cs::String { auto cs_conditional = v_str; if(!cs_conditional)return pls::cs::String{}; return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_bb652fbb61000386>>(cs_conditional); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->ToString(); }()); }());
@@ -452,19 +475,19 @@ return ([&]() -> pls::cs::Array<pls::cs::String> { auto cs_arg0 = ([&]() -> pls:
 }
 // M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String,System.Boolean)
 pls::cs::Array<pls::cs::String> cs_93446701c72d7a20(pls::cs::Ref<cs_52158c8b20364c2b> v_jar,pls::cs::String v_fileName,bool v_zeroSkip) { cs_init_1ff3292665c8e0c4();
-{
+{try{
 pls::cs::Ref<cs_e7a5499b363ef51b> v_inputStream_4791 = pls::cs::Ref<cs_e7a5499b363ef51b>{};
-return pls::cs::run_finally([&]() -> pls::cs::Array<pls::cs::String> { {
+pls::cs::run_finally([&]() {{
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_e7a5499b363ef51b> { auto cs_receiver = static_cast<pls::cs::Ref<cs_52158c8b20364c2b>>(v_jar); auto cs_arg0 = v_fileName; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f410f19385e7fe89(cs_receiver,cs_arg0); }()); v_inputStream_4791 = cs_value; return cs_value; }());
 if (([&]() { auto cs_left = pls::cs::box(v_inputStream_4791); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-return pls::cs::Array<pls::cs::String>{};
+throw pls::cs::ReturnFlow<pls::cs::Array<pls::cs::String>>{pls::cs::Array<pls::cs::String>{}};
 }
-return ([&]() -> pls::cs::Array<pls::cs::String> { auto cs_arg0 = v_inputStream_4791; auto cs_arg1 = v_zeroSkip; return cs_38c511d0555671a7(cs_arg0,cs_arg1); }());
-} }, [&]() {
+throw pls::cs::ReturnFlow<pls::cs::Array<pls::cs::String>>{([&]() -> pls::cs::Array<pls::cs::String> { auto cs_arg0 = v_inputStream_4791; auto cs_arg1 = v_zeroSkip; return cs_38c511d0555671a7(cs_arg0,cs_arg1); }())};
+}}, [&]() {
 ([&]() -> void { auto cs_conditional = v_inputStream_4791; if(!cs_conditional)return; ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_e7a5499b363ef51b>>(cs_conditional); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_4546aef6e4846446(); }()); }());
 ([&]() { auto cs_value = pls::cs::Ref<cs_e7a5499b363ef51b>{}; v_inputStream_4791 = cs_value; return cs_value; }());
 });
-}
+}catch(const pls::cs::ReturnFlow<pls::cs::Array<pls::cs::String>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<pls::cs::String>>();}
 }
 // M:kairo.unity.util.StringUtil.LoadStringArray(kairo.unity.util.JarInflater,System.String)
 pls::cs::Array<pls::cs::String> cs_aa767d3dce39dc9d(pls::cs::Ref<cs_52158c8b20364c2b> v_jar,pls::cs::String v_fileName) { cs_init_1ff3292665c8e0c4();

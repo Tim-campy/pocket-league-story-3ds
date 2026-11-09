@@ -3,7 +3,7 @@ AccessorList,5,False,NOT_YET_VALIDATED
 AddAssignmentExpression,454,True,observed-in-emitted-body
 AddExpression,6301,True,observed-in-emitted-body
 AliasQualifiedName,30,False,NOT_YET_VALIDATED
-AnonymousMethodExpression,31,False,NOT_YET_VALIDATED
+AnonymousMethodExpression,31,True,observed-in-emitted-body
 Argument,45265,False,NOT_YET_VALIDATED
 ArgumentList,17768,False,NOT_YET_VALIDATED
 ArrayCreationExpression,2022,True,observed-in-emitted-body
@@ -51,7 +51,7 @@ ExpressionStatement,17044,True,observed-in-emitted-body
 FalseLiteralExpression,727,True,observed-in-emitted-body
 FieldDeclaration,4574,False,NOT_YET_VALIDATED
 FinallyClause,88,False,NOT_YET_VALIDATED
-ForEachStatement,10,False,NOT_YET_VALIDATED
+ForEachStatement,10,True,observed-in-emitted-body
 ForStatement,1316,True,observed-in-emitted-body
 GenericName,157,False,NOT_YET_VALIDATED
 GetAccessorDeclaration,5,False,NOT_YET_VALIDATED
@@ -69,7 +69,7 @@ LeftShiftExpression,27,True,observed-in-emitted-body
 LessThanExpression,1886,True,observed-in-emitted-body
 LessThanOrEqualExpression,226,True,observed-in-emitted-body
 LocalDeclarationStatement,4949,True,observed-in-emitted-body
-LockStatement,2,False,NOT_YET_VALIDATED
+LockStatement,2,True,observed-in-emitted-body
 LogicalAndExpression,904,True,observed-in-emitted-body
 LogicalNotExpression,402,True,observed-in-emitted-body
 LogicalOrExpression,598,True,observed-in-emitted-body
@@ -89,7 +89,7 @@ OrAssignmentExpression,11,True,observed-in-emitted-body
 Parameter,2776,False,NOT_YET_VALIDATED
 ParameterList,1851,False,NOT_YET_VALIDATED
 ParenthesizedExpression,2703,True,observed-in-emitted-body
-ParenthesizedLambdaExpression,3,False,NOT_YET_VALIDATED
+ParenthesizedLambdaExpression,3,True,observed-in-emitted-body
 PostDecrementExpression,131,True,observed-in-emitted-body
 PostIncrementExpression,1618,True,observed-in-emitted-body
 PredefinedType,16523,False,NOT_YET_VALIDATED
@@ -109,7 +109,7 @@ SwitchSection,239,False,NOT_YET_VALIDATED
 SwitchStatement,48,True,observed-in-emitted-body
 ThisConstructorInitializer,5,False,NOT_YET_VALIDATED
 ThisExpression,131,True,observed-in-emitted-body
-ThrowStatement,25,False,NOT_YET_VALIDATED
+ThrowStatement,25,True,observed-in-emitted-body
 TrueLiteralExpression,1147,True,observed-in-emitted-body
 TryStatement,203,True,observed-in-emitted-body
 TypeArgumentList,157,False,NOT_YET_VALIDATED

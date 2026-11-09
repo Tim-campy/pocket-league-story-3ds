@@ -58,6 +58,7 @@ String default_message(const std::string& name){
     auto found=messages.find(name);return found==messages.end()?String():String(found->second);
 }
 std::string parent(const std::string& name){
+    if(name=="System.UriFormatException")return "System.FormatException";
     if(name=="System.Exception")return {};
     if(name=="System.SystemException"||name=="System.TimeZoneNotFoundException"||name=="System.InvalidTimeZoneException")return "System.Exception";
     if(name=="System.ArgumentNullException"||name=="System.ArgumentOutOfRangeException")return "System.ArgumentException";
@@ -122,7 +123,7 @@ bool exception_is(const ExceptionRef& object,const std::string& target){
     PLS_UNWIND_TYPE(IndexOutOfRangeException,"System.IndexOutOfRangeException");PLS_UNWIND_TYPE(InvalidCastException,"System.InvalidCastException");
     PLS_UNWIND_TYPE(ArrayTypeMismatchException,"System.ArrayTypeMismatchException");PLS_UNWIND_TYPE(InvalidOperationException,"System.InvalidOperationException");
     PLS_UNWIND_TYPE(ObjectDisposedException,"System.ObjectDisposedException");PLS_UNWIND_TYPE(NotSupportedException,"System.NotSupportedException");
-    PLS_UNWIND_TYPE(NotImplementedException,"System.NotImplementedException");PLS_UNWIND_TYPE(FormatException,"System.FormatException");
+    PLS_UNWIND_TYPE(NotImplementedException,"System.NotImplementedException");PLS_UNWIND_TYPE(FormatException,"System.FormatException");PLS_UNWIND_TYPE(UriFormatException,"System.UriFormatException");
     PLS_UNWIND_TYPE(OutOfMemoryException,"System.OutOfMemoryException");PLS_UNWIND_TYPE(UnauthorizedAccessException,"System.UnauthorizedAccessException");
     PLS_UNWIND_TYPE(ArgumentException,"System.ArgumentException");PLS_UNWIND_TYPE(ArgumentNullException,"System.ArgumentNullException");
     PLS_UNWIND_TYPE(ArgumentOutOfRangeException,"System.ArgumentOutOfRangeException");PLS_UNWIND_TYPE(IOException,"System.IO.IOException");

@@ -15,6 +15,7 @@ void push(SDL_Event e){if(SDL_PushEvent(&e)!=1)throw std::runtime_error("Synthet
 SDL_Event key(Uint32 type,SDL_Scancode code,bool repeat=false){SDL_Event e{};e.type=type;e.key.keysym.scancode=code;e.key.keysym.sym=SDL_GetKeyFromScancode(code);e.key.repeat=repeat?1:0;return e;}
 SDL_Event mouse(Uint32 type,Uint8 button,int x,int y){SDL_Event e{};e.type=type;e.button.button=button;e.button.x=x;e.button.y=y;return e;}
 SDL_Event motion(int x,int y){SDL_Event e{};e.type=SDL_MOUSEMOTION;e.motion.x=x;e.motion.y=y;return e;}
+SDL_Event finger(Uint32 type,SDL_TouchID device,SDL_FingerID id){SDL_Event e{};e.type=type;e.tfinger.touchId=device;e.tfinger.fingerId=id;return e;}
 std::string bits(float value){std::ostringstream out;out<<std::hex<<std::setfill('0')<<std::setw(8)<<pls::cs::bit_copy<std::uint32_t>(value);return out.str();}
 std::string trace(){
     auto p=DebugInput::get_mousePosition();
@@ -49,6 +50,16 @@ int main(int argc,char**){const bool policy=argc>1;
         failed=false;try{DebugInput::GetMouseButtonDown(-1);}catch(const pls::cs::NotSupportedException&){failed=true;}check(failed,"Unproved down index refused");
         const auto previous=DebugInput::get_mousePosition();pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_event(motion(99,100));check(DebugInput::get_mousePosition().x==previous.x,"Unpublished half-frame invisible");pls::sdl::debug_input_publish_frame();check(DebugInput::get_mousePosition().x==99&&DebugInput::get_mousePosition().y==180,"Whole snapshot published");
         failed=false;try{pls::sdl::debug_input_publish_frame();}catch(const pls::cs::InvalidOperationException&){failed=true;}check(failed,"Double publication refused");
+        check(DebugInput::get_touchCount()==0,"Mouse input is not a touch finger");
+        check(DebugInput::get_dpi()==0&&!DebugInput::get_fullScreen(),"Headless has unknown DPI and no fullscreen window");
+        pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_screen(160.0f,true);check(DebugInput::get_dpi()==0&&!DebugInput::get_fullScreen(),"Unpublished display metadata invisible");pls::sdl::debug_input_publish_frame();check(DebugInput::get_dpi()==160.0f&&DebugInput::get_fullScreen(),"Whole display metadata published");
+        const auto touch_frame=[&](SDL_Event event){pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_event(event);pls::sdl::debug_input_publish_frame();};
+        pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_event(finger(SDL_FINGERDOWN,11,22));check(DebugInput::get_touchCount()==0,"Unpublished touch state invisible");pls::sdl::debug_input_publish_frame();check(DebugInput::get_touchCount()==1,"First finger published");
+        touch_frame(finger(SDL_FINGERDOWN,11,22));touch_frame(finger(SDL_FINGERDOWN,12,22));check(DebugInput::get_touchCount()==2,"Finger identity includes device; duplicate down is idempotent");
+        touch_frame(finger(SDL_FINGERUP,99,22));check(DebugInput::get_touchCount()==2,"Unknown finger up does not change active count");
+        touch_frame(finger(SDL_FINGERUP,11,22));check(DebugInput::get_touchCount()==1,"Only matching finger removed");
+        touch_frame(finger(SDL_FINGERMOTION,12,22));check(DebugInput::get_touchCount()==1,"Finger motion preserves count");
+        SDL_Event lost{};lost.type=SDL_WINDOWEVENT;lost.window.event=SDL_WINDOWEVENT_FOCUS_LOST;touch_frame(lost);check(DebugInput::get_touchCount()==0,"Focus loss cancels held fingers");
         if(policy){push(motion(0,0));backend.events();std::atomic<bool>running{true},valid{true};std::atomic<int>observed{-1},reads{0};
             std::thread reader([&]{while(running){const auto p=DebugInput::get_mousePosition();if(p.x+p.y!=280.0f||p.z!=0)valid=false;observed=static_cast<int>(p.x);++reads;}});
             const auto deadline=std::chrono::steady_clock::now()+std::chrono::seconds(5);

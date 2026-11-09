@@ -60,6 +60,7 @@ def main():
         ('runtime-regex',['tools/test_regex.py']),
         ('runtime-path',['tools/test_path.py']),
         ('mono-collation-differential',['tests/translator/run_mono_collation.py']),
+        ('collation-license-audit',['tools/audit_collation_license.py']),
         ('managed-threads',['tests/translator/run_thread_fixtures.py']),
         ('managed-shared-fields',['tools/test_shared_fields.py']),
         ('native-globalization',['tools/test_globalization.py']),
@@ -96,7 +97,7 @@ def main():
         ('android-Unicode-static',['tools/inspect_android_unicode.py','--apk',str(args.apk.resolve())]),
         ('android-math-static',['tools/inspect_android_math.py','--apk',str(args.apk.resolve())]),
         ('culture-characterization',['tools/probe_string_culture.py']),
-        ('checkpoint-comparison',['translator/compare_checkpoint.py','--commit','cde8988']),
+        ('checkpoint-comparison',['translator/compare_checkpoint.py','--commit','af66d13']),
         ('progress',['tools/progress']),
     ]
     folder=ROOT/'build/phase2-verification';folder.mkdir(parents=True,exist_ok=True)
@@ -124,7 +125,7 @@ def main():
     if sha(args.apk)!=EXPECTED:raise ValueError('Original APK changed during verification')
     report=dict(operation='phase2-checkpoint-full-verification',status='PASS',complete=True,checks=checks,
         producer_sha256=sha(Path(__file__)),apk_sha256=EXPECTED,game_boot=False,
-        receipts={path.name:sha(path) for path in sorted((ROOT/'config').glob('phase2-*.json'))
+        receipts={path.name:sha(path) for path in sorted(set((ROOT/'config').glob('phase2-*.json'))|{ROOT/'config/collation-license-audit.json'})
                   if path.name!='phase2-verification.json'})
     (ROOT/'config/phase2-verification.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
 

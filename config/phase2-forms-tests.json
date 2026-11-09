@@ -516,9 +516,9 @@
   },
   "native_concurrent_fields": {
     "status": "PASS",
-    "assertions": 9295,
+    "assertions": 8546,
     "writer_iterations": 2000,
-    "collections_while_writer_registered": 1328,
+    "collections_while_writer_registered": 1221,
     "whole_method_lock": false,
     "game_boot": false
   },
@@ -532,19 +532,19 @@
     "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
     "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
-    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
     "tests/kairo/FormsOracle.cs": "704d67129441ac52cd0a29ba5e14159a201835e06b7e78dbffa9e4543c3139b3",
     "tools/test_forms.py": "e69ea5875f556a587f7e8d91e6a532fe10237eb4b9126c23e2205858243d525a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/canvas.hpp": "257deae29a6870f98c6c3b3ff544a8e18eaa485d3743f0fb87049bb9a37af258",
+    "src/kairo/api/canvas.hpp": "302f78420eab27c2246980748700967f13a69f07e70c5eed89949d49ce8f44df",
     "src/kairo/api/forms.hpp": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
     "src/kairo/api/graphics.hpp": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f",
     "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
-    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
-    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd"
@@ -615,7 +615,7 @@
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "fc60c4df57b5a39fb313264927c6dccd4eae9d9740c79ba1f6de06d572f25957"
+    "sha256": "4ae4be1ae64cdf6e206b064c118ef938381cfbb32e67b261994f30c4d26f679d"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

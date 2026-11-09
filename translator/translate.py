@@ -79,6 +79,8 @@ def main():
     request['source_root']=str(reference)
     request['external_methods']={'M:UnityEngine.Debug.Log(System.Object)':'pls::kairo::debug_log'}
     request['native_includes']=['system.hpp']
+    bootstrap_adapter=None
+    adapter_sources=[]
     if args.assembly=='Assembly-CSharp':
         request['service_overrides']={row['symbol']:row['lowering'] for row in policies['overrides']}
         concurrency=json.loads((ROOT/'config/phase2-boot-concurrency.json').read_text(encoding='utf8'))
@@ -100,6 +102,17 @@ def main():
         request['baked_arrays']={b['id']:b for b in baked['matched']}
         app='M:kairo.unity.ui.IApplication.'
         request['external_methods'].update({app+'Init(kairo.unity.ui.IApplication)':'member:source_Init',app+'GetCurrentApp':'pls::kairo::IApplication::GetCurrentApp',app+'SetViewport(System.Int32,System.Int32)':'member:SetViewport'})
+        request['external_methods'].update({app+'GetPackageName':'member:GetPackageName','M:kairo.unity.native.KairoPlugin.GetPackageName':'pls::kairo::native_package_name'})
+        request['external_methods'][app+'GetTotalFrames']='member:GetTotalFrames'
+        request['source_native_helpers']=['M:kairo.unity.ui.Graphics.GetColorOfName(System.Int32)','M:kairo.unity.ui.Canvas.OpenBrowser(System.String)']
+        request['external_fields']['F:kairo.unity.ui.Canvas.lastOpenBrowserFrame_']='pls::kairo::Canvas::source_last_browser_frame()'
+        request['external_methods']['M:UnityEngine.Application.OpenURL(System.String)']='pls::kairo::UnityApplication::OpenURL'
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.ShowDialog(System.Int32,System.String,System.String,System.String)']='pls::kairo::show_dialog'
+        request['external_methods']['M:kairo.unity.form.FormManagerBase.ProcessEvent(kairo.unity.ui.AppEventType,System.Object[])']='pls::kairo::FormManagerBase::ProcessEvent'
+        request['native_includes'].append('dialog_service.hpp')
+        # The SDL host follows KairoPlugin._getClockTime's non-Android branch.
+        # Keep the already translated JSystem epoch/rounding implementation.
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.GetClockTime']=request['external_methods']['M:java.lang.JSystem.CurrentTimeMillis']
         slots=['OnCreate','OnStart','OnRestart','OnStop','OnResume','OnSuspend','OnUpdate','OnDraw','OnRender','OnDestroy','GetFormManager']
         request['external_slots']={app+n:n for n in slots}
         request['external_methods'].update({app+n:'member:source_'+n for n in ['OnCreate','OnResume','OnSuspend','OnDestroy']})
@@ -150,6 +163,26 @@ def main():
             'M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)':'pls::kairo::native_plugin_init',
             'M:UnityEngine.Application.set_targetFrameRate(System.Int32)':'pls::kairo::UnityApplication::set_targetFrameRate',
             'M:UnityEngine.QualitySettings.set_vSyncCount(System.Int32)':'pls::kairo::QualitySettings::set_vSyncCount'})
+        request['external_types']['T:UnityEngine.WWW']='pls::kairo::OfflineWebRequest'
+        request['native_includes'].append('offline_http.hpp')
+        request['external_methods'].update({
+            'M:UnityEngine.WWW.#ctor(System.String)':'pls::cs::make_ref<pls::kairo::OfflineWebRequest>',
+            'M:UnityEngine.WWW.#ctor(System.String,System.Byte[])':'pls::cs::make_ref<pls::kairo::OfflineWebRequest>',
+            'M:UnityEngine.WWW.get_isDone':'member:get_isDone','M:UnityEngine.WWW.get_error':'member:get_error',
+            'M:UnityEngine.WWW.get_bytes':'member:get_bytes','M:UnityEngine.WWW.Dispose':'member:Dispose',
+            'M:UnityEngine.PlayerPrefs.HasKey(System.String)':'pls::kairo::PlayerPrefs::HasKey',
+            'M:kairo.unity.ui.SoundBase.Dispose':'member:Dispose',
+            'M:kairo.unity.native.KairoPlugin.LicenseCheck':'pls::kairo::removed_license_check',
+            'M:kairo.unity.native.KairoPlugin.GetInstallReferrer(System.String)':'pls::kairo::native_install_referrer'})
+        for member,signatures in {
+            'GetString':['(System.String)','(System.String,System.String)'],
+            'GetInt':['(System.String)','(System.String,System.Int32)'],
+            'GetFloat':['(System.String)','(System.String,System.Single)'],
+            'SetString':['(System.String,System.String)'],'SetInt':['(System.String,System.Int32)'],
+            'SetFloat':['(System.String,System.Single)'],'DeleteKey':['(System.String)'],
+            'DeleteAll':[''],'Save':[''],
+        }.items():
+            for signature in signatures:request['external_methods']['M:UnityEngine.PlayerPrefs.'+member+signature]='pls::kairo::PlayerPrefs::'+member
         for base,slots in {'FormBase':['Init','Draw','Update','Resume','Suspend','Finish','GetTouchValue','SetTouchValue','CheckMainWindow','ProcessEvent','ProcessBackKey'],'FormManagerBase':['PreUpdate','Updated','PreDraw','Drawn','Execute','OnDraw','Resume']}.items():
             for name in slots:
                 # Full signatures are supplied by Roslyn in the lowerer. Slot
@@ -171,6 +204,12 @@ def main():
         request['external_fields'].update({'F:UnityEngine.Vector3.x':'x','F:UnityEngine.Vector3.y':'y','F:UnityEngine.Vector3.z':'z'})
         request['external_methods'].update({'M:UnityEngine.Input.GetKey(UnityEngine.KeyCode)':'pls::kairo::DebugInput::GetKey','M:UnityEngine.Input.GetMouseButton(System.Int32)':'pls::kairo::DebugInput::GetMouseButton','M:UnityEngine.Input.GetMouseButtonDown(System.Int32)':'pls::kairo::DebugInput::GetMouseButtonDown','M:UnityEngine.Input.get_mousePosition':'pls::kairo::DebugInput::get_mousePosition','M:UnityEngine.Screen.get_height':'pls::kairo::DebugInput::screen_height'})
         request['native_includes'].append('debug_input.hpp')
+        request['external_methods']['M:UnityEngine.Input.get_touchCount']='pls::kairo::DebugInput::get_touchCount'
+        request['external_methods'].update({'M:UnityEngine.Screen.get_dpi':'pls::kairo::DebugInput::get_dpi','M:UnityEngine.Screen.get_fullScreen':'pls::kairo::DebugInput::get_fullScreen',
+            'M:kairo.unity.native.KairoPlugin.IsFullscreen':'pls::kairo::DebugInput::get_fullScreen',
+            'M:kairo.unity.native.KairoPlugin.GetStatusBarHeight':'pls::kairo::native_status_bar_height','M:kairo.unity.native.KairoPlugin.GetStatusBarPosition':'pls::kairo::native_status_bar_position',
+            'M:kairo.unity.ui.Canvas.IsFullscreen':'member:IsFullscreen','M:kairo.unity.ui.Canvas.GetStatusBarHeight':'member:GetStatusBarHeight','M:kairo.unity.ui.Canvas.GetStatusBarPosition':'member:GetStatusBarPosition',
+            'M:kairo.unity.ui.IApplication.GetResolutionScaleRatio':'member:GetResolutionScaleRatio'})
         request['external_methods'].update({'M:kairo.unity.ui.Graphics.GetCurrent':'pls::kairo::Graphics::GetCurrent','M:kairo.unity.ui.Graphics.IsGUI':'member:IsGUI','M:kairo.unity.ui.Graphics.ResetRender':'member:ResetRender'})
         request['external_fields']['F:kairo.unity.ui.Graphics.current_']='readonly:pls::kairo::Graphics::GetCurrent()'
         request['native_includes']+=['vector2.hpp']
@@ -207,19 +246,50 @@ namespace kairo.unity.util {public static class DisplayMetrics {public static fl
 namespace UnityEngine { public class Object {} public class TextAsset:Object{public byte[] bytes;public string text;}public static class Resources {public static Object Load(string name){return null;}public static void UnloadAsset(Object value){}}}
 '''
         request['oracle_native_setup']+='struct FixtureApp:pls::kairo::IApplication{void OnUpdate()override{}void OnDraw()override{}pls::cs::Ref<pls::kairo::FormManagerBase> GetFormManager()override{return {};}};auto fixtureApp=pls::cs::make_ref<FixtureApp>();fixtureApp->source_Init(fixtureApp);fixtureApp->host_configure(240,280,{},[](){});'
+    if args.assembly=='Assembly-CSharp' and args.bootstrap_main:
+        import bootstrap_source as bootstrap_adapter
+        extra_source=bootstrap_adapter.write(folder)
+        adapter_sources=[dict(path=extra_source.relative_to(ROOT).as_posix(),sha256=digest(extra_source)),
+                         dict(path='translator/bootstrap_source.py',sha256=digest(ROOT/'translator/bootstrap_source.py')),
+                         dict(path='config/phase2-bootstrap-plan.json',sha256=digest(ROOT/'config/phase2-bootstrap-plan.json'))]
+        request['sources'].append(str(extra_source))
+        request['selected']+=bootstrap_adapter.selected()
+        request['native_includes'].append('bootstrap_bindings.hpp')
+        request['external_methods'].update({
+            'M:PlsPortGeneratedBootstrap.Host.InstallNativeBindings':'pls::game::native_install_bootstrap_bindings',
+            'M:kairo.unity.native.KairoPlugin.Init(System.Int32,System.Boolean,System.String)':'pls::kairo::native_plugin_init',
+            'M:kairo.unity.util.DisplayMetrics.#ctor':'pls::cs::make_ref<pls::kairo::DisplayMetrics>',
+            'M:kairo.unity.ui.Image.SetExpiration(System.Boolean,System.Int32)':'member:SetExpiration'})
+        producer['bootstrap_generator_sha256']=digest(ROOT/'translator/bootstrap_source.py')
+        if not args.diagnostics_only:
+            output.mkdir(parents=True,exist_ok=True)
+            bootstrap_adapter.header(output)
     input_path=folder/(args.assembly+'-input.json');raw_path=folder/(args.assembly+'-translation.json')
     input_path.write_text(json.dumps(request,indent=2)+'\n',encoding='utf-8',newline='\n')
     run([runtime,target,input_path,raw_path],folder/(args.assembly+'-translator.log'))
     report=json.loads(raw_path.read_text(encoding='utf-8-sig'))
     # Snippets may contain source numeric payloads. Keep those diagnostics only
     # in ignored build/raw reports; public receipts contain locations, not data.
-    for diagnostic in report.get('rejected_methods',{}).values():
-        site=diagnostic.pop('site',None)
-        if site:
-            location=re.match(r'^(.*?\\.cs):(\\d+):',site)
-            if location:diagnostic.update(node_source=location.group(1),node_line=int(location.group(2)))
+    def redact_sites(value):
+        if isinstance(value,dict):
+            site=value.pop('site',None)
+            if isinstance(site,str):
+                location=re.match(r'^(.*?\.cs):(\d+):',site)
+                if location:value.update(node_source=location.group(1),node_line=int(location.group(2)))
+            # Preserve every locator without repeating the absolute checkout
+            # prefix thousands of times in public receipts. Raw diagnostics
+            # remain private; these paths resolve against the repository root.
+            if args.assembly=='Assembly-CSharp':
+                for key in ('source','node_source'):
+                    path=Path(value[key]) if isinstance(value.get(key),str) else None
+                    if path is not None and path.is_absolute() and path.is_relative_to(ROOT):value[key]=path.relative_to(ROOT).as_posix()
+            for child in value.values():redact_sites(child)
+        elif isinstance(value,list):
+            for child in value:redact_sites(child)
+    redact_sites(report)
+    if args.assembly=='Assembly-CSharp':report['source_path_base']='repository_root'
     if args.diagnostics_only:
-        report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs])
+        report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],platform_adapter_sources=adapter_sources,reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs])
         target_report=ROOT/'config'/('phase2-game-diagnostics.json' if args.assembly=='Assembly-CSharp' else 'phase2-portable-diagnostics.json')
         target_report.write_text(json.dumps(report,indent=None if args.assembly=='Assembly-CSharp' else 2,ensure_ascii=True,separators=(',',':') if args.assembly=='Assembly-CSharp' else None)+'\n',encoding='utf-8',newline='\n')
         print(json.dumps({k:report[k] for k in ['source_method_declarations','binding_errors','source_bodies_lowered_in_memory','generated_cpp_methods','compiled_methods','executed_methods']}))
@@ -232,12 +302,14 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         oracle.unlink(missing_ok=True)
         (folder/'Assembly-CSharp-source-oracle.cs').unlink(missing_ok=True)
     elif oracle.exists():shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
+    if bootstrap_adapter:report['bootstrap_bindings']=bootstrap_adapter.emit(output,report,portable)
     compiled=False;compile_evidence=None
     if args.compile and report['emitted_method_count']:
         env=environment();native=folder/'native';native.mkdir(exist_ok=True)
-        command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/fp:strict','/utf-8','/W4','/c',
+        command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/fp:strict','/utf-8','/W4','/we4715','/bigobj','/c',
             '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/Fo'+str(native/(args.assembly+'.obj')),str(output/('game_generated.cpp' if args.assembly=='Assembly-CSharp' else 'portable_generated.cpp'))]
         inputs=sorted(set((ROOT/'src/kairo/common').rglob('*.hpp'))|set((ROOT/'src/kairo/common').rglob('*.inc'))|set((ROOT/'src/kairo/api').rglob('*.hpp'))|set(output.glob('*.?pp'))|set(output.glob('*.inc')))
+        inputs+=list((ROOT/'src/kairo/platform/sdl').glob('*.hpp'))
         before={p.relative_to(ROOT).as_posix():digest(p) for p in inputs}
         run(command,folder/('native-'+args.assembly+'-compile.log'),env)
         after={p.relative_to(ROOT).as_posix():digest(p) for p in inputs}
@@ -245,7 +317,7 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         compiled=True
         object_file=native/(args.assembly+'.obj')
         compile_evidence=dict(compiler=dict(path=str(command[0]),sha256=digest(command[0])),object=dict(path=object_file.relative_to(ROOT).as_posix(),sha256=digest(object_file)),command=[str(c) for c in command],inputs=after)
-    report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],
+    report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],platform_adapter_sources=adapter_sources,
         reference_commit='c7d097a847ca1f1a8e5fb7141ff11d338f5915c4',
         reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs],compiled=compiled,compile_evidence=compile_evidence,
         compiled_method_count=report['emitted_method_count'] if compiled else 0,

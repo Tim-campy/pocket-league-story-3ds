@@ -23,6 +23,8 @@ def main():
     if not report.get('compiled'):raise ValueError('A compiled canonical snapshot is required')
     for key,path in [('translator_source_sha256',ROOT/'translator/Translator.cs'),('driver_sha256',ROOT/'translator/translate.py')]:
         if producer.get(key)!=sha(path):raise ValueError('Canonical producer is stale; regenerate normal Game first')
+    for entry in report.get('platform_adapter_sources',[]):
+        if sha(ROOT/entry['path'])!=entry['sha256']:raise ValueError('Bootstrap producer/source is stale')
     canonical=report['generated_files'];names=set()
     for entry in canonical:
         source=(ROOT/entry['path']).resolve()
@@ -51,6 +53,7 @@ public:
     throw TranslationGap(id);
 }
 }
+#define PLS_BOOTSTRAP_GAP(id) ::pls::game::diagnostic_translation_gap(id)
 '''
     cpp=['// GENERATED private diagnostic traps; no original/translated method claim.\n#include "game_generated.hpp"\nnamespace pls::game {\n']
     generic=['\nnamespace pls::game {\n']
@@ -66,14 +69,16 @@ public:
     header=output/'game_generated.hpp'
     header.write_bytes(header.read_bytes()+b'\n#include "diagnostic_virtual_traps.hpp"\n')
     generated=sorted(path for path in output.iterdir()if path.suffix in ('.cpp','.hpp','.inc'))
-    manifest=dict(diagnostic_only=True,diagnostic_stage='missing_virtual_slots_only',canonical_report_sha256=sha(report_file),canonical_files=canonical,
+    for identifier in report.get('bootstrap_bindings',{}).get('missing_bindings',[]):
+        manifest_traps.append(dict(id=identifier,cpp_class='platform-bootstrap',slot='guard',reason='Missing generated bootstrap collaborator',cpp_signature='explicit bootstrap guard'))
+    manifest=dict(diagnostic_only=True,diagnostic_stage='missing_virtual_slots_and_bootstrap_guards',canonical_report_sha256=sha(report_file),canonical_files=canonical,
         generated_files=[dict(path=path.relative_to(output).as_posix(),sha256=sha(path))for path in generated],traps=manifest_traps,producer=producer,
         diagnostic_generator=dict(path=Path(__file__).relative_to(ROOT).as_posix(),sha256=sha(Path(__file__))),candidate_bodies=[],
         normal_compiled_methods=report['compiled_method_count'],diagnostic_game_execution_promotes_zero_methods=True,
         execution_requirement='Root supervisor must terminate on PLS_TRANSLATION_GAP= even if game/framework catches an exception wrapper; isolated preferences and separate diagnostic CMake build are mandatory.',
         marker='PLS_TRANSLATION_GAP=',notes=['Canonical sources/reports are never edited. Each named trap throws a native exception outside cs::Exception after a flushed stderr marker.','This first diagnostic stage may stop at a missing Main callback; no alternative Main or silent body is supplied.'])
     (output/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf8',newline='\n')
-    print(json.dumps(dict(output=str(output),diagnostic_only=True,traps=len(traps),generated_files=len(generated),executed=False)))
+    print(json.dumps(dict(output=str(output),diagnostic_only=True,traps=len(manifest_traps),generated_files=len(generated),executed=False)))
 
 
 if __name__=='__main__':main()

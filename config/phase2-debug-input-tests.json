@@ -175,7 +175,7 @@
   ],
   "native_policy": {
     "status": "PASS",
-    "assertions": 24,
+    "assertions": 35,
     "sdk_synthetic_frames": 12,
     "game_boot": false,
     "physical_user_input_used": false
@@ -192,24 +192,25 @@
     "37d9de7fffb8d098a7386cb9e0ad9667f29bfe65cda87185d72828276abd303f"
   ],
   "inputs_sha256": {
-    "tests/kairo/debug_input_fixtures.cpp": "1b0cf2d77bebdfad9ce49930fdaa33cdb1dddf0a87b354b767855911dcb5c090",
-    "src/kairo/platform/sdl/backend.cpp": "8b76e8469af5d63a1cf3e847205c1cf2fcb3ac18e55ce463157d2b8c593f2bea",
-    "src/kairo/platform/sdl/debug_input.cpp": "6c5c62c4c7fe687d4d6f22bbe6bd0f609edb31e063c50338252919097bd9f713",
-    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "tests/kairo/debug_input_fixtures.cpp": "8fa3e42cb9f683617ecbbe5e501246f7e52cf4c624ab5d47495d50ea8274bba1",
+    "src/kairo/platform/sdl/backend.cpp": "4223ed6aceaef9538f6205914f9b65689b3533357edc5217f49141c3ec23e1b8",
+    "src/kairo/platform/sdl/debug_input.cpp": "1d57dc2c03766a09a2493cc03574c0f193348a1fdbd541d472c8d001bc6cb4c3",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
     "tests/kairo/DebugInputOracle.cs": "c658fcf09d326ebf7cb7d6da63343082bafa65b5e03914574500f1fa6d432bfd",
     "tests/kairo/UnityDebugInputMetadata.cs": "6ce29f5c1302cd39fcf52d2a893cc91d2287a023912e21df3c89d65dd9136c54",
-    "tools/test_debug_input.py": "1e9f1a8c856f95c3917c8ad1452bd4e4c138a15573364a25d33c58323741f9b8",
+    "tools/test_debug_input.py": "87b5749ae47f31277732d3327057255f8314ec637f83904db1a334e41ace3ec5",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/debug_input.hpp": "98b997edacbcd78acfe15263ea5e9ff9d648f81b71d831d04168ed05ffd73c27",
+    "src/kairo/api/debug_input.hpp": "a5a942c732f63d6bd9f757c1e4702cca9d001ee5b07e8ae23a5bf2d8d4d1eb31",
     "src/kairo/api/vector3.hpp": "f95494b057b1f7a43f8e53efc9942641c592d32030f7f35c592fcce8407e4707",
-    "src/kairo/platform/sdl/debug_input.hpp": "cd94188a03c614fa6fce4072d76c2057a9cadad7473d500817f8a2acfa9c5cd1",
+    "src/kairo/platform/sdl/debug_input.hpp": "858d11a2fcbd123f72f37726010d22241b49195fc7309ae798adc72a36fc7bd9",
     "src/kairo/platform/sdl/backend.hpp": "81cf34cc2fc084428aef4eb4ea6f080bbe98047e429de15b9f35955105281d1e",
     "src/kairo/api/platform.hpp": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1",
-    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a"
+    "src/kairo/api/system.hpp": "aa18b85e1ca16a943f4818a206d69f53b9a5bd3c52026505fa34144be95a23e3",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d"
   },
   "native_executable": {
     "path": "build/debug-input-tests/debug-input-fixtures.exe",
-    "sha256": "e236b78ba7e495baa5672140b554447bf18c4668d4d42c2c14ae9dc45b26bdab"
+    "sha256": "5b00004745ea0482078d52dec9578aeafd0b7f581577c78189559868d20dc018"
   },
   "external_api_metadata": {
     "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
@@ -230,7 +231,7 @@
   "limitations": [
     "Exact original coordinate expressions plus own Input collaborator; not full SurfaceManagerBase.DoEvents/Draw proof.",
     "SDL synthetic headless events prove native snapshot policy; no original Unity native Input, Android or physical user input exercised.",
-    "Only Shift GetKey, mouse buttons0/1 held/down, mousePosition fields and render height are admitted; other APIs/keys/buttons remain refused.",
+    "Shift GetKey, mouse buttons0/1 held/down, mousePosition fields, render height, active SDL finger count and display DPI/fullscreen snapshots are admitted; other APIs/keys/buttons remain refused.",
     "The existing Canvas pulse and mouse aggregation consumer is separate and unchanged."
   ],
   "game_boot": false,

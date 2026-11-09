@@ -392,7 +392,7 @@ def main():
     command+=['/r:'+str(framework/(name+'.dll')) for name in ['mscorlib','System','System.Core']]+[options.oracle,cs_file]
     run(command,folder,'csharp-compile')
     env=environment();exe=folder/'Harness.exe'
-    cpp_command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/Od','/fp:strict','/utf-8','/W4',
+    cpp_command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/Od','/fp:strict','/utf-8','/W4','/we4715','/bigobj',
         '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/I'+str(options.generated),'/I'+str(ROOT/'build/generated/mono-collation'),'/Fe:'+str(exe),'/Fo'+str(folder)+'/',cpp_file,ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_streams.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp',ROOT/'src/kairo/common/managed_thread.cpp',ROOT/'src/kairo/common/managed_encoding.cpp',ROOT/'src/kairo/common/managed_regex.cpp',ROOT/'src/kairo/common/managed_stream_reader.cpp',ROOT/'src/kairo/common/managed_string_ops.cpp',ROOT/'src/kairo/common/managed_collation.cpp',ROOT/'src/kairo/common/managed_mono_character_data.cpp',ROOT/'src/kairo/platform/sdl/globalization.cpp','Advapi32.lib']
     if report.get('oracle_native_setup') and 'FixtureApp' in report['oracle_native_setup']:
         cpp_command += [ROOT/'src/kairo/common/storage.cpp',ROOT/'src/kairo/common/asset_catalog.cpp',ROOT/'src/kairo/common/asset_reader.cpp']
@@ -418,7 +418,7 @@ def main():
         cpp_generated_sha256=hashlib.sha256((options.generated/'portable_generated.cpp').read_bytes()).hexdigest(),
         hpp_generated_sha256=hashlib.sha256((options.generated/'portable_generated.hpp').read_bytes()).hexdigest(),
         generated_files=[dict(path=p.relative_to(ROOT).as_posix(),sha256=hashlib.sha256(p.read_bytes()).hexdigest()) for p in sorted(set(options.generated.glob('*.?pp'))|set(options.generated.glob('*.inc')))],
-        native_compiler_options=['/std:c++17','/EHsc','/Od','/fp:strict','/utf-8','/W4'],native_compiler_sha256=hashlib.sha256(Path(cpp_command[0]).read_bytes()).hexdigest(),
+        native_compiler_options=['/std:c++17','/EHsc','/Od','/fp:strict','/utf-8','/W4','/we4715','/bigobj'],native_compiler_sha256=hashlib.sha256(Path(cpp_command[0]).read_bytes()).hexdigest(),
         native_executable=dict(path=exe.relative_to(ROOT).as_posix(),sha256=hashlib.sha256(exe.read_bytes()).hexdigest()),
         source_oracle_executable=dict(path=oracle.relative_to(ROOT).as_posix(),sha256=hashlib.sha256(oracle.read_bytes()).hexdigest()),
         differential_runner_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

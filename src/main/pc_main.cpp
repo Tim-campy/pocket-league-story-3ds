@@ -76,6 +76,7 @@ int main(int argc,char** argv){
         if(!app)throw pls::cs::InvalidOperationException("Generated Main factory returned null");
         // Termination must be connected to the translated event/finish handlers.
         app->host_configure(240,280,pls::cs::String::from_utf8(preferences),{});
+        pls::game::configure_application(app);
         app->host_start();
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
             pls::pc::FrameClock timing(metrics.enabled());

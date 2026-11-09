@@ -13,6 +13,7 @@ int main(){
     QualitySettings::set_vSyncCount(0);check(QualitySettings::get_vSyncCount()==0);
     bool rejected=false;try{QualitySettings::set_vSyncCount(1);}catch(const pls::cs::NotSupportedException&){rejected=true;}
     check(rejected);
+    check(!native_package_name().is_null()&&native_package_name().length()==0);
     native_plugin_init(3,true,pls::cs::String(u"synthetic-unused-key"));
     auto state=native_plugin_state();check(state.initialized&&state.language==3&&state.logging);
     native_plugin_init(-7,false,{});state=native_plugin_state();check(state.language==-7&&!state.logging);

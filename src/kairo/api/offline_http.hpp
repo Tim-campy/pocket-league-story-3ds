@@ -17,4 +17,7 @@ public:
 };
 // KairoPlugin.GetInstallReferrer's non-Android branch leaves text == null.
 inline cs::String native_install_referrer(const cs::String& key={}){(void)key;return {};}
+// Registration is intercepted by CgiRegist's authorized local policy. Keep an
+// explicit failure on the removed transitive API, never a fake license status.
+[[noreturn]] inline std::int32_t removed_license_check(){throw cs::NotSupportedException("Licensing integration has been removed; use the local registration route");}
 }

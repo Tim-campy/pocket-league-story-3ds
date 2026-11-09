@@ -165,6 +165,209 @@
         "max_completed_presented_frames": 0,
         "game_screen": "UNKNOWN"
       }
+    },
+    {
+      "number": 3,
+      "configuration": "Release",
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/bootstrap_bindings.hpp",
+          "sha256": "3dd5771acfc6523fd27ac6a977c538c95c8d9d82cb719f9db31f82e2f0d45474"
+        },
+        {
+          "path": "src/game/bootstrap_generated.cpp",
+          "sha256": "b920d5c8ba38e45f70f5e2fef932a58e4aa31629b0360fda65ab4ccb5244eaf1"
+        },
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "6bba27a02828d6a0c0c3f6a68bcd9be837263faa43d05924300ac26add190cfb"
+        },
+        {
+          "path": "src/game/game_generated.hpp",
+          "sha256": "0033b1fb0f9845dce9aa1312d87658c7f0157ecb1cd397abe8b23dc9f11678e3"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0000.inc",
+          "sha256": "2cc54a7625fa5e3fc723008154dfcee298d66735f6a65b6ec8a6070b8688a25b"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0001.inc",
+          "sha256": "462dc20a71be573d9ec3a861c0d650f818683d0b4fb187dbdfbd1c3e1976740c"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0002.inc",
+          "sha256": "dfb5913bb79ae1e63da46ff4bdd0500e2b2d93281687c02cb28f3e7bdc17b0bf"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0003.inc",
+          "sha256": "934d972ff6e2cdae057d518a96c0a63f6579a661cd5d37239a1225eac09b8ef7"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0004.inc",
+          "sha256": "c13aa144660501bd31465d16241e625eb3cfe90d98ec646a2683fec5597ff970"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0005.inc",
+          "sha256": "dd50a06936023f2ad769ab1859ce8b56eb49eef6df2c7a24fb4b90adedc512c1"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "metrics_requested": true,
+      "metrics_recorded": true,
+      "diagnostic_only": true,
+      "diagnostic_manifest_sha256": "157fc06f442dbac6bfec690d3af2c68b50acb3c9699b61c42050f5bfb79ebb16",
+      "trap_count": 121,
+      "canonical_report_sha256": "ad0dd3e2f0f11f5d7adbecbd5b9b0a9210ed1c94822933d033aa9389aa837f1a",
+      "game_coverage_promoted": false,
+      "logs": [
+        {
+          "path": "build/pc-diagnostic-release/attempts/3/step-0.log",
+          "sha256": "0685ab13533bc16d192774418fb4fb85d688e9f4139b374f333d7240bf48725b"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/3/step-1.log",
+          "sha256": "7ff05180207b4b22a6b3db5d76cf078a3d8c9ee5b26859ec1d4889b5eaafd49e"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/3/game-run.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/3/game-run.stderr",
+          "sha256": "558c655a1c2d80021d93dbb3c1df366520ca691fb861099efbaead280e35eb30"
+        }
+      ],
+      "source_inputs": {
+        "path": "build/pc-diagnostic-release/attempts/3/source-inputs.before.json",
+        "sha256": "5409e013874f580a53f6bae2775cdbf6a6ba62c31f0b1cc08ef8ad14c2dd8902",
+        "files": 127
+      },
+      "stage": "diagnostic-gap-detected",
+      "exit_code": 0,
+      "process_id": 12000,
+      "process_exit_code": 1,
+      "elapsed_seconds": 1.9690000000409782,
+      "stopped_reason": "translation-gap",
+      "translation_gap_detected": true,
+      "diagnostic": true,
+      "stopped_at_timeout": false,
+      "executable_sha256": "55b7a130338e9cb5cac6857fa12768e01c532ebc10a7bcde1887749060703412",
+      "metrics_log_summary": {
+        "protocol": "PLS_PC_METRICS=JSONL",
+        "records": 1,
+        "invalid_records": 0,
+        "memory_phases": [
+          "before_main"
+        ],
+        "frame_summary_records": 0,
+        "max_completed_presented_frames": 0,
+        "game_screen": "UNKNOWN"
+      }
+    },
+    {
+      "number": 4,
+      "configuration": "Release",
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/bootstrap_bindings.hpp",
+          "sha256": "3dd5771acfc6523fd27ac6a977c538c95c8d9d82cb719f9db31f82e2f0d45474"
+        },
+        {
+          "path": "src/game/bootstrap_generated.cpp",
+          "sha256": "48174460e340671491156e0893b3b2f7ab1de46d54d0f4c73c3ba72ed639056e"
+        },
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "6bba27a02828d6a0c0c3f6a68bcd9be837263faa43d05924300ac26add190cfb"
+        },
+        {
+          "path": "src/game/game_generated.hpp",
+          "sha256": "8f5c64cfc81d442e0891de36c7d5b5d59efdded9daffbb2fbf0f6f830c7f6404"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0000.inc",
+          "sha256": "89a82fd59cdb343374312702f43f500cfa4e9e256f5d5eca933efdf04120f427"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0001.inc",
+          "sha256": "f9472e44945ed6a3f0ab5a1a6e7b73e859a693dae0b9b55984a3f4849a55e50f"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0002.inc",
+          "sha256": "3f0123c893fb44089dd20e60a676c03774f0fe9e13250e028f90b9c96cd516e6"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0003.inc",
+          "sha256": "984f54231b6f81f6a41f9795b61be694caee790da8c24ef109832bfe9445b097"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0004.inc",
+          "sha256": "8faf01f7b54ee9fb5103456fb511aeba1cfce39ca9db4b0c52d4073801b9ca51"
+        },
+        {
+          "path": "src/game/game_generated_cpp_part_0005.inc",
+          "sha256": "207b7a93f7227b507a2705ce944bde6d05e6ef3a708d542f1cf60a8b8c2bfa5e"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "metrics_requested": true,
+      "metrics_recorded": true,
+      "diagnostic_only": true,
+      "diagnostic_manifest_sha256": "c14f921fb44cc45fc2e5b83577d16ffe8bcb0ea186a1064cd9cbaaaad93dac60",
+      "trap_count": 110,
+      "canonical_report_sha256": "db1ec83d0f3d08cff18922fea7f1c3f2c5939521402af47ab8e0bea3a2fdf5c0",
+      "game_coverage_promoted": false,
+      "logs": [
+        {
+          "path": "build/pc-diagnostic-release/attempts/4/step-0.log",
+          "sha256": "ffced80bb2f43349df89f78c13d3e6a9930069bdba7ede764320411c0ae27c6e"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/4/step-1.log",
+          "sha256": "55b4c6af614eef397de1c37df2e6cc7f0556ee69331094b114decaa4cdfc9528"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/4/game-run.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/4/game-run.stderr",
+          "sha256": "daf9d1699e8cdd2f892f4959222ad7b18e1cea446f1641d274d70acdf19aa72a"
+        }
+      ],
+      "source_inputs": {
+        "path": "build/pc-diagnostic-release/attempts/4/source-inputs.before.json",
+        "sha256": "baf60060af0ab0af25160d3652b38f56f8dc7884e7ff10a646c37aae1037b966",
+        "files": 128
+      },
+      "stage": "diagnostic-gap-detected",
+      "exit_code": 0,
+      "process_id": 31648,
+      "process_exit_code": 1,
+      "elapsed_seconds": 1.3909999998286366,
+      "stopped_reason": "translation-gap",
+      "translation_gap_detected": true,
+      "diagnostic": true,
+      "stopped_at_timeout": false,
+      "executable_sha256": "d639b59d26dfccc4c8c870082a588cd14ca26a7be440577b01fd826f4cd9d8cd",
+      "metrics_log_summary": {
+        "protocol": "PLS_PC_METRICS=JSONL",
+        "records": 3,
+        "invalid_records": 0,
+        "memory_phases": [
+          "before_main",
+          "final_before_teardown"
+        ],
+        "frame_summary_records": 1,
+        "max_completed_presented_frames": 0,
+        "game_screen": "UNKNOWN"
+      }
     }
   ]
 }

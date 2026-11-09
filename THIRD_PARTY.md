@@ -101,3 +101,10 @@ The 2016 upstream MIT runtime relicensing was not treated as retroactive permiss
 the old header had been removed in 2015 and its replacements changed data/rules.
 That investigation is why the historical data has a separate license and explicit
 authorization instead of being copied into the MIT attribution.
+
+The later [license dependency review](docs/notes/collation-license-review.md)
+records a private behavioral ablation: removing the unassigned bitmap changes
+992 of 25,704 synthetic edge observations, including 124 in en-US; disabling
+the case-table lookups changes eight uppercase conversions. Production data
+was retained under the existing authorization. This is not a license choice
+for the rest of the port.

@@ -43,6 +43,7 @@ public:
     Ref<Object>as_object()const{return data_;}
     static Dictionary from_object(const Ref<Object>&object){Dictionary result;if(object){result.data_=std::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
     std::int32_t get_Count()const{return require().count;}
+    Array<K> KeysToArray()const{auto&data=require();auto result=Array<K>::make(data.count);std::int32_t index=0;for(const auto&entry:data.entries)if(entry.item)result.at(index++)=entry.item->key;return result;}
     V get_Item(const K&key)const{require();auto hash=dictionary_hash(key);auto i=find(key,hash);if(i==require().entries.size())throw KeyNotFoundException();return require().entries[i].item->value;}
     void set_Item(K key,V value){put(std::move(key),std::move(value),true);}
     void Add(K key,V value){put(std::move(key),std::move(value),false);}

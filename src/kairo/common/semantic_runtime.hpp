@@ -12,6 +12,7 @@
 #include <mutex>
 #include <optional>
 #include <string>
+#include <stdexcept>
 #include <type_traits>
 #include <typeinfo>
 #include <utility>
@@ -55,6 +56,7 @@ PLS_CS_EXCEPTION(ObjectDisposedException,InvalidOperationException,"System.Objec
 PLS_CS_EXCEPTION(NotSupportedException,SystemException,"System.NotSupportedException")
 PLS_CS_EXCEPTION(NotImplementedException,SystemException,"System.NotImplementedException")
 PLS_CS_EXCEPTION(FormatException,SystemException,"System.FormatException")
+PLS_CS_EXCEPTION(UriFormatException,FormatException,"System.UriFormatException")
 PLS_CS_EXCEPTION(OutOfMemoryException,SystemException,"System.OutOfMemoryException")
 PLS_CS_EXCEPTION(UnauthorizedAccessException,SystemException,"System.UnauthorizedAccessException")
 PLS_CS_EXCEPTION(ArgumentException,SystemException,"System.ArgumentException")
@@ -171,6 +173,7 @@ inline std::int64_t conv_i64(double value)noexcept{return conv_signed<std::int64
 class String;
 struct Object;
 template<class T>using Ref=std::shared_ptr<T>;
+inline bool reference_equals(const Ref<Object>& left,const Ref<Object>& right){return left.get()==right.get();}
 using EdgeVisitor=std::function<void(const Ref<Object>&)>;
 template<class T>struct is_shared_ref : std::false_type {};
 template<class T>struct is_shared_ref<std::shared_ptr<T>> : std::true_type {using element_type=T;};
@@ -217,6 +220,16 @@ public:
     GcNativeBlockingScope();~GcNativeBlockingScope();
     GcNativeBlockingScope(const GcNativeBlockingScope&)=delete;
     GcNativeBlockingScope&operator=(const GcNativeBlockingScope&)=delete;
+};
+// Source lock(object): evaluate once, retain the identity, allow recursion,
+// release on every C++ scope exit. Waiting cooperates with the managed GC.
+class MonitorScope {
+    Ref<Object> target_;
+public:
+    explicit MonitorScope(Ref<Object> target);
+    ~MonitorScope();
+    MonitorScope(const MonitorScope&)=delete;
+    MonitorScope&operator=(const MonitorScope&)=delete;
 };
 template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
     try{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result);return result;}
@@ -388,6 +401,11 @@ template<class F>bool exception_filter(F&&body)noexcept{try{return body();}catch
 
 // Execute cleanup outside C++ exception unwinding: a cleanup exception replaces
 // an outstanding exception, matching C#finally. Throwing RAII destructors do not.
+// Private translator control token, deliberately outside the managed exception
+// hierarchy. C# catch handlers cannot intercept a pending return.
+template<class T>struct ReturnFlow {T value;explicit ReturnFlow(T result):value(std::move(result)){}};
+template<>struct ReturnFlow<void> {};
+template<class T>[[noreturn]] T invalid_return_flow(){throw std::logic_error("Generated protected return reached an invalid fallthrough");}
 template<class F,class G>auto run_finally(F&&body,G&&cleanup)->std::invoke_result_t<F> {
     using R=std::invoke_result_t<F>;
     std::exception_ptr pending;
@@ -453,6 +471,7 @@ struct IntegerNumberFormat {
 // Configure from the selected managed culture before workers start.
 inline IntegerNumberFormat integer_number_format;
 std::int32_t int32_parse(const String&value,bool hexadecimal=false);
+bool int32_try_parse(const String&value,std::int32_t& result);
 std::int64_t int64_parse(const String&value,bool hexadecimal=false);
 
 } // namespace pls::cs

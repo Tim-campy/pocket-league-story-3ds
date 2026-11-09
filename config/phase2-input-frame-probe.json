@@ -494,7 +494,7 @@
   },
   "normal_key_regression": {
     "receipt": "config/phase2-input-tests.json",
-    "sha256": "e64c1a50d64a8240247c13b77bf91c64cb1b1c9fa57db6e99067ef833eb778c2",
+    "sha256": "3f1bda3aa7959e6ad459156f35eda21c1363ace0957246f120b0c9e874d43012",
     "fixture_cases": 56,
     "passed": 56,
     "native_adapter_assertions": 19,
@@ -516,14 +516,14 @@
   "inputs": {
     "tests/kairo/input_frame_fixtures.cpp": "f0244f5435efec550174ea6201a6da2a7c697ba8c6992e6d2210a17a944a655c",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
-    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
     "tests/kairo/InputFrameOracle.cs": "01025deb364316050adb293b0fba364340e0808fb0d1e42ca62477a6c79ef27b",
     "tools/probe_input_frames.py": "f45bb14a35b9c4ca1e07d04cb2fcd780f4fa71679e057855d6faa1ffd05c1d2d",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
-    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "config/phase2-input-tests.json": "e64c1a50d64a8240247c13b77bf91c64cb1b1c9fa57db6e99067ef833eb778c2"
+    "config/phase2-input-tests.json": "3f1bda3aa7959e6ad459156f35eda21c1363ace0957246f120b0c9e874d43012"
   },
   "source_manifest": [
     {
@@ -534,7 +534,7 @@
   "keycode_metadata_sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
   "native_executable": {
     "path": "build/input-frame-probe/input-frame-fixtures.exe",
-    "sha256": "b13089f219ef511d74f16d6a166f9971e4ec6dff06182e2e78eb9778c2e8cbb8"
+    "sha256": "a870defe24b1cffe06222043f360db853bfba7ad942c56f693eeb42ca9682eaa"
   },
   "original_methods": [
     "public void DecideKeyState(): complete body",

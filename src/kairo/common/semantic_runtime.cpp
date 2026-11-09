@@ -6,6 +6,11 @@
 #include <chrono>
 
 namespace pls::cs {
+MonitorScope::MonitorScope(Ref<Object> target):target_(std::move(target)){
+    if(!target_)throw ArgumentNullException();
+    GcNativeBlockingScope parked;target_->monitor.lock();
+}
+MonitorScope::~MonitorScope(){target_->monitor.unlock();}
 namespace {
 struct CollectorState {
     std::mutex mutex;std::condition_variable condition;
@@ -291,5 +296,9 @@ template<class T>T parse_integer(const String&value,bool hexadecimal){
 }
 }
 std::int32_t int32_parse(const String&value,bool hexadecimal){return parse_integer<std::int32_t>(value,hexadecimal);}
+bool int32_try_parse(const String& value,std::int32_t& result){
+    result=0;if(value.is_null())return false;
+    try{result=int32_parse(value);return true;}catch(const FormatException&){return false;}catch(const OverflowException&){return false;}
+}
 std::int64_t int64_parse(const String&value,bool hexadecimal){return parse_integer<std::int64_t>(value,hexadecimal);}
 } // namespace pls::cs

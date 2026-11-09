@@ -9,14 +9,14 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "98b16714aa166d16ed6f2d242069e8294139498e77c2ad55be258ad2d3bdd84a"
+    "sha256": "f4df2564a84dc9ce53501354c14b95d5cc2e78722f59de765af6f2689262a2a3"
   },
   "inputs": {
     "tools/test_ui_dispatch_gc.py": "3306f01025f79e7c290a6ecc880468668e8216d125a0da2a12cb8fe7a924fbd0",
     "tests/kairo/ui_dispatch_gc.cpp": "9b875d0174c1eb9e39b3e3b9671bf66e21a0aa09b2ba968df2d7bc35d03f1014",
-    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
-    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
-    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
   },
   "limitations": [

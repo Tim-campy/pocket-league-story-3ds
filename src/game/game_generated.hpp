@@ -17,10 +17,12 @@
 #include "managed_stream_reader.hpp"
 #include "managed_path.hpp"
 #include "managed_string_ops.hpp"
+#include "managed_guid_uri.hpp"
 #include "generated/portable_generated.hpp"
 #include "application.hpp"
 #include "baked_arrays.hpp"
 #include "services_managed.hpp"
+#include "dialog_service.hpp"
 #include "graphics.hpp"
 #include "font.hpp"
 #include "sound.hpp"
@@ -29,6 +31,7 @@
 #include "storage.hpp"
 #include "input.hpp"
 #include "system.hpp"
+#include "offline_http.hpp"
 #include "forms_callbacks.hpp"
 #include "debug_input.hpp"
 #include "vector2.hpp"
@@ -38,6 +41,7 @@
 #include "application.hpp"
 #include "asset_reader.hpp"
 #include "display_metrics.hpp"
+#include "bootstrap_bindings.hpp"
 #include <cmath>
 #include <cstring>
 namespace pls::game {
@@ -134,8 +138,11 @@ struct cs_63cc285eb997c6a4;
 struct cs_75707aa3f1629c85;
 struct cs_4c145fe8f008af05;
 struct cs_89c0d586cfe20341;
+struct cs_70c4092da329e972;
 struct cs_9f5a071d05c1d020;
 struct cs_f1dd8f2aa583774c;
+struct cs_18d5b680efad7752;
+struct cs_77de402a688eeb9d;
 struct cs_17bc7a5b28fcdc2a;
 struct cs_5ad2213598dfcd5d;
 struct cs_d37bccc1c3814fc6;
@@ -148,11 +155,18 @@ struct cs_4a8bef2ab48b32d7;
 struct cs_3a3d09f9e75a32d2;
 struct cs_757516ce190cf813;
 struct cs_6517d63c01870958;
+struct cs_c87dc3d2d0f9440a;
+struct cs_b489b0d33bb37bb8;
+struct cs_7f70540c4f85d74f;
+struct cs_2c2ce8625d613473;
+struct cs_50c5a567a6876ee3;
 struct cs_fd683372658feff4;
 struct cs_1ab688350081022a;
 struct cs_4368d694d01424b0;
+struct cs_8e2bf0f8fe011785;
 struct cs_96c54d9323f24f8e;
 struct cs_2eedf806ae9938c7;
+struct cs_0286a0dbe9da0b33;
 struct cs_c8e1f3d3f96670c6;
 struct cs_ec6b992b38927bb3;
 struct cs_b728593e3dcffe31;
@@ -163,6 +177,8 @@ struct cs_5ac9304f9db0671e;
 struct cs_dc09c88a279424b5;
 struct cs_87fb4d668ea5580b;
 struct cs_43347b50b6a10e65;
+struct cs_27b8baf7307cff9f;
+struct cs_d86010513034d6a0;
 struct cs_8bf13b560e1e05e9;
 struct cs_2ffa6f51468590ea;
 struct cs_bad15ea7469ee2b9;
@@ -197,6 +213,7 @@ struct cs_ec8ac507fb495e84;
 struct cs_9465f7541f51c47e;
 struct cs_2d2e25a6914f7709;
 struct cs_22115ea4236d0eaa;
+struct cs_925b3cf054e42b78;
 struct cs_e00832a42e12ec3b;
 struct cs_23ed5cbd0e3922f3;
 struct cs_90cdc908fbacdc4d;
@@ -712,6 +729,15 @@ std::int32_t cs_6480f04c9d401dc1{};
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
+struct cs_70c4092da329e972 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.analytics.AnalyticsTracker+AnalyticsData";}
+pls::cs::String cs_dd489d151d299036{};
+std::int32_t cs_d06132c0c6e80bc6{};
+std::int64_t cs_aacdf84efc9d168d{};
+};
 struct cs_9f5a071d05c1d020 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
@@ -735,6 +761,29 @@ float cs_06ef4703cb291a79{};
 float cs_c8b58e9490836581{};
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
+};
+struct cs_18d5b680efad7752 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.io.Http+HttpThread";}
+pls::cs::Ref<cs_89c0d586cfe20341> cs_437ffc21e8449636{};
+pls::cs::Ref<cs_77de402a688eeb9d> cs_fda18c2ca470418e{};
+bool cs_79a73cb588797b93{};
+};
+struct cs_77de402a688eeb9d : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.io.HttpObject";}
+pls::cs::Ref<pls::kairo::OfflineWebRequest> cs_d19c98fe2d601ad1{};
+pls::cs::String cs_f78aa7a0d989fd7c{};
+std::int32_t cs_32388247d17bb567{};
+pls::cs::String cs_0810a6bbdad8f652{};
+pls::cs::String cs_37f984d70850be71{};
+pls::cs::Ref<pls::cs::ExceptionObject> cs_c3b53640b80e29dc{};
+bool cs_fa8defba521b90ce{};
+bool cs_7db6741aeec24156{};
 };
 struct cs_5ad2213598dfcd5d : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
@@ -915,6 +964,84 @@ pls::cs::Array<std::int32_t> cs_c71933e9bca11daa{};
 bool cs_a404a90eff0aeb13{};
 std::int32_t cs_4d04dab5735542a9{};
 };
+struct cs_c87dc3d2d0f9440a {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();
+std::int32_t cs_153fdaae746575f6{};
+pls::cs::String cs_3f97f246a7d4b8ee{};
+pls::cs::String cs_b455953d5d99c95c{};
+pls::cs::String cs_ad6910b7b897b250{};
+std::int32_t cs_618ea558ebfe77c3{};
+std::int32_t cs_77e1513fb44fb202{};
+pls::cs::String cs_7a8e84cb54b27614{};
+pls::cs::String cs_055616eacd82bf39{};
+std::int32_t cs_e9266e43c90692ac{};
+std::int32_t cs_38927e554bfc845e{};
+};
+struct cs_b489b0d33bb37bb8 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_7a0d5be4ca3b1254")return "M:kairo.unity.system.KairoBase.OnInit";if(slot=="cs_virtual_51f84c16de790570")return "M:kairo.unity.system.KairoBase.OnStart";if(slot=="cs_virtual_4e3c4bf49c24e27d")return "M:kairo.unity.system.KairoBase.OnLoad(java.io.InputStream)";if(slot=="cs_virtual_e634eb1896b92689")return "M:kairo.unity.system.KairoBase.OnWrite(java.io.OutputStream)";if(slot=="cs_virtual_7ebfee2a92c0d37e")return "M:kairo.unity.system.KairoBase.OnNewGame(System.Boolean)";if(slot=="cs_virtual_10a01b9d900fa6c0")return "M:kairo.unity.system.KairoBase.OnLoadGame(java.io.InputStream)";if(slot=="cs_virtual_9a7c0378d22d6bd5")return "M:kairo.unity.system.KairoBase.OnWriteGame(java.io.OutputStream)";if(slot=="cs_virtual_706bcbd9776cf6ef")return "M:kairo.unity.system.KairoBase.Finish";if(slot=="cs_virtual_a6a3a2dac688088b")return "M:kairo.unity.system.KairoBase.Connected(System.String,System.Byte[],System.Boolean)";if(slot=="cs_virtual_9ca5e184bd541bee")return "M:kairo.unity.system.KairoBase.Update";if(slot=="cs_virtual_3481915358ac0fff")return "M:kairo.unity.system.KairoBase.Save";if(slot=="cs_virtual_06f3c8d943914943")return "M:kairo.unity.system.KairoBase.SaveAll";if(slot=="cs_virtual_89868493b44dd8bd")return "M:kairo.unity.system.KairoBase.HandleActivityResult(System.Int32,System.Int32,System.Object)";if(slot=="cs_virtual_7226942a83482c7a")return "M:kairo.unity.system.KairoBase.OnSaveGameBegin";if(slot=="cs_virtual_486e7c39f05ac1d6")return "M:kairo.unity.system.KairoBase.OnSaveGameEnd";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.system.KairoBase";}
+std::int32_t cs_a3decda7a4670291{};
+bool cs_bb15809d7dd758fd{};
+pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_fe5c5a440152445e{};
+pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_675e01745bf2ff64{};
+std::int32_t cs_23f814b97b0cdf1c{};
+std::int32_t cs_3803cd72992c3762{};
+pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_ac9d14d8fd218a0c{};
+pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_efb4aeef5c6f7590{};
+std::int32_t cs_a051b3620098d255{};
+std::int32_t cs_b0faf2c47f9ac8ae{};
+bool cs_a1c9fd0398fc101a{};
+bool cs_ca174d10ffdcf6e9{};
+std::int32_t cs_b28b626edc40d63d{};
+pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> cs_284cc3cac7606c94{};
+bool cs_a93f8b0e2caf329a{};
+bool cs_98f6c84566bf4254{};
+pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_a491890168e60b87{};
+pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_cc1025ec243f7ac6{};
+std::int64_t cs_60f22a64c143004f{};
+std::int32_t cs_36d9dd4afd7f06af{};
+bool cs_3daead10b8062e0b{};
+bool cs_213a6e42cc559d34{};
+pls::cs::Array<pls::cs::String> cs_6fe9af9a0c00d125{};
+pls::cs::Array<std::int32_t> cs_bbeeaad9491d7958{};
+pls::cs::String cs_25a8ca82b2553566{};
+bool cs_77c315e5b65bf792{};
+pls::cs::Dictionary<pls::cs::String,std::int32_t> cs_f534ca76cfc62abb{};
+pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_d8c919de6b5bfad1{};
+pls::cs::Array<cs_c87dc3d2d0f9440a> cs_3f3b83b6a44bdc33{};
+std::int32_t cs_241b6f9cd68962e5{};
+pls::cs::String cs_4cd5b2fa578372a4{};
+pls::cs::Array<std::int32_t> cs_bc8b4cc170dd0946{};
+pls::cs::Stack<pls::cs::Ref<cs_2c2ce8625d613473>> cs_1f2ecebcf07a4a8b{};
+pls::cs::List<pls::cs::Ref<cs_8e2bf0f8fe011785>> cs_4170a278138fe06e{};
+pls::cs::List<pls::cs::String> cs_c9f1f5e90f89763b{};
+virtual void cs_virtual_7a0d5be4ca3b1254();
+virtual void cs_virtual_51f84c16de790570();
+virtual void cs_virtual_4e3c4bf49c24e27d(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+virtual void cs_virtual_e634eb1896b92689(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+virtual void cs_virtual_7ebfee2a92c0d37e(bool v_take);
+virtual void cs_virtual_10a01b9d900fa6c0(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+virtual void cs_virtual_9a7c0378d22d6bd5(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+virtual void cs_virtual_706bcbd9776cf6ef();
+virtual void cs_virtual_a6a3a2dac688088b(pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
+virtual void cs_virtual_9ca5e184bd541bee();
+virtual void cs_virtual_3481915358ac0fff()=0;
+virtual void cs_virtual_06f3c8d943914943()=0;
+virtual bool cs_virtual_89868493b44dd8bd(std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data);
+virtual void cs_virtual_7226942a83482c7a();
+virtual void cs_virtual_486e7c39f05ac1d6();
+};
+struct cs_7f70540c4f85d74f : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:kairo.unity.system.KairoBase.AccessCount.ToString";if(slot=="GetHashCode")return "M:kairo.unity.system.KairoBase.AccessCount.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.system.KairoBase+AccessCount";}
+pls::cs::String cs_59ca359e3d3d712d{};
+std::int64_t cs_0d03485f6b953700{};
+virtual pls::cs::String ToString();
+virtual std::int32_t GetHashCode();
+};
 struct cs_fd683372658feff4 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
@@ -948,6 +1075,22 @@ bool cs_c8c6e41546654cef{};
 std::int32_t cs_5d5ca7bd52c7784a{};
 virtual void cs_virtual_9ed05c6b3a5346ec();
 virtual void cs_virtual_2186b93ea03d07c2();
+};
+struct cs_8e2bf0f8fe011785 : pls::cs::Object, pls::generated::cs_c4521f4960c4f908 {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:kairo.unity.system.payment.PaymentDataRecord.ToString";if(slot=="cs_virtual_8d925e3b30750eb6")return "M:kairo.unity.system.payment.PaymentDataRecord.Serialize(java.io.OutputStream)";if(slot=="cs_virtual_f2ab7f0a88763f04")return "M:kairo.unity.system.payment.PaymentDataRecord.Deserialize(java.io.InputStream)";return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.system.payment.PaymentDataRecord";}
+pls::cs::String cs_1a5ce6d62f4773c6{};
+pls::cs::String cs_2b580027dd662ff5{};
+pls::cs::String cs_f1c6c21012307803{};
+std::int64_t cs_004158f701fd286d{};
+bool cs_3b077329e09687d5{};
+std::int32_t cs_cf10600a0f2e10ac{};
+std::int32_t cs_b85e706eedf54802{};
+virtual pls::cs::String ToString();
+virtual void cs_virtual_8d925e3b30750eb6(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_stream);
+virtual void cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
 };
 struct cs_96c54d9323f24f8e : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
@@ -990,6 +1133,19 @@ std::int32_t cs_a761c125310aa486{};
 std::int32_t cs_634b21dce02e25f1{};
 std::int64_t cs_2214583ad4513e43{};
 pls::cs::Array<std::int32_t> cs_9af277b6dbe45809{};
+};
+struct cs_0286a0dbe9da0b33 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.ui.Dialog";}
+pls::cs::Ref<pls::kairo::Font> cs_6e5c685dce0d605a{};
+pls::cs::String cs_ef63d4d4b6ab550f{};
+pls::cs::String cs_7f418c9c27e5c628{};
+pls::cs::Array<pls::cs::String> cs_7c40c7d83d91cf74{};
+std::int32_t cs_1931e59a708b44ff{};
+std::int32_t cs_71eb51b3f792969a{};
+pls::cs::String cs_49c162566c3d94ef{};
 };
 struct cs_c8e1f3d3f96670c6 : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
@@ -1138,6 +1294,24 @@ std::int32_t cs_7055da6e5ca7b4e7{};
 float cs_213a47847f8db5d2{};
 bool cs_76ef6fdfcd6628c6{};
 pls::cs::Array<pls::cs::String> cs_55c8b74f6db29a7a{};
+};
+struct cs_27b8baf7307cff9f : pls::cs::ExceptionObject {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::ExceptionObject::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.ui.UIException";}
+};
+struct cs_d86010513034d6a0 : pls::cs::Object {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.util.Language+LanguagePackInfo";}
+pls::cs::String cs_9cd046221a0a73b2{};
+pls::cs::String cs_559ce244f31c7bdd{};
+pls::cs::String cs_5a7be69e432288e7{};
+pls::cs::String cs_9bdb4dbfef785f37{};
+pls::cs::String cs_48810e5f53569359{};
+pls::cs::String cs_ab5676da2e5daeda{};
 };
 struct cs_2ffa6f51468590ea : pls::cs::Object {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
@@ -1912,6 +2086,23 @@ std::int32_t cs_4761156567811a9b{};
 std::int32_t cs_84f6d6bdc01421d0{};
 std::int32_t cs_03f115a488ad951b{};
 };
+struct cs_2c2ce8625d613473 : cs_77de402a688eeb9d {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return cs_77de402a688eeb9d::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.system.KairoBase+ConnectObject";}
+pls::cs::Ref<cs_b489b0d33bb37bb8> cs_9fbc61c5b5f6475e{};
+};
+struct cs_50c5a567a6876ee3 : cs_b489b0d33bb37bb8 {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_3481915358ac0fff")return "M:kairo.unity.system.KairoBase.KairoDummy.Save";if(slot=="cs_virtual_06f3c8d943914943")return "M:kairo.unity.system.KairoBase.KairoDummy.SaveAll";if(slot=="cs_virtual_7226942a83482c7a")return "M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameBegin";if(slot=="cs_virtual_486e7c39f05ac1d6")return "M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameEnd";return cs_b489b0d33bb37bb8::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "kairo.unity.system.KairoBase+KairoDummy";}
+virtual void cs_virtual_3481915358ac0fff();
+virtual void cs_virtual_06f3c8d943914943();
+virtual void cs_virtual_7226942a83482c7a();
+virtual void cs_virtual_486e7c39f05ac1d6();
+};
 struct cs_8bf13b560e1e05e9 : cs_d37bccc1c3814fc6 {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
@@ -2048,6 +2239,27 @@ std::string managed_delegate_method_id(const std::string&slot)const override{if(
 std::string managed_type_name()const override{return "system.friend.MyFriend";}
 virtual void cs_virtual_9401fb4f0ec784c5(std::int32_t v_value);
 virtual pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_virtual_d865bbafdeb43983();
+};
+struct cs_925b3cf054e42b78 : cs_b489b0d33bb37bb8 {
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_7a0d5be4ca3b1254")return "M:system.KairoService.OnInit";if(slot=="cs_virtual_51f84c16de790570")return "M:system.KairoService.OnStart";if(slot=="cs_virtual_a6a3a2dac688088b")return "M:system.KairoService.Connected(System.String,System.Byte[],System.Boolean)";if(slot=="cs_virtual_9ca5e184bd541bee")return "M:system.KairoService.Update";if(slot=="cs_virtual_706bcbd9776cf6ef")return "M:system.KairoService.Finish";if(slot=="cs_virtual_4e3c4bf49c24e27d")return "M:system.KairoService.OnLoad(java.io.InputStream)";if(slot=="cs_virtual_e634eb1896b92689")return "M:system.KairoService.OnWrite(java.io.OutputStream)";if(slot=="cs_virtual_7ebfee2a92c0d37e")return "M:system.KairoService.OnNewGame(System.Boolean)";if(slot=="cs_virtual_10a01b9d900fa6c0")return "M:system.KairoService.OnLoadGame(java.io.InputStream)";if(slot=="cs_virtual_9a7c0378d22d6bd5")return "M:system.KairoService.OnWriteGame(java.io.OutputStream)";if(slot=="cs_virtual_3481915358ac0fff")return "M:system.KairoService.Save";if(slot=="cs_virtual_06f3c8d943914943")return "M:system.KairoService.SaveAll";return cs_b489b0d33bb37bb8::managed_delegate_method_id(slot);}
+std::string managed_type_name()const override{return "system.KairoService";}
+pls::cs::Ref<cs_89c0d586cfe20341> cs_0f9909df8253bfe0{};
+bool cs_42ee6ef0eb7e8761{};
+std::int32_t cs_25150d256e75d102{};
+virtual void cs_virtual_7a0d5be4ca3b1254();
+virtual void cs_virtual_51f84c16de790570();
+virtual void cs_virtual_a6a3a2dac688088b(pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
+virtual void cs_virtual_9ca5e184bd541bee();
+virtual void cs_virtual_706bcbd9776cf6ef();
+virtual void cs_virtual_4e3c4bf49c24e27d(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+virtual void cs_virtual_e634eb1896b92689(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+virtual void cs_virtual_7ebfee2a92c0d37e(bool v_take);
+virtual void cs_virtual_10a01b9d900fa6c0(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+virtual void cs_virtual_9a7c0378d22d6bd5(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+virtual void cs_virtual_3481915358ac0fff();
+virtual void cs_virtual_06f3c8d943914943();
 };
 struct cs_e00832a42e12ec3b : cs_1ab688350081022a {
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
@@ -2783,10 +2995,18 @@ void cs_init_4feff672b530e53a();
 void cs_init_63cc285eb997c6a4();
 void cs_init_75707aa3f1629c85();
 void cs_init_89c0d586cfe20341();
+void cs_init_7a470603d6db57af();
+void cs_init_68277163e843ed70();
+void cs_init_70c4092da329e972();
 void cs_init_e9cc65282df10bc8();
+void cs_init_9f5a071d05c1d020();
 void cs_init_f1dd8f2aa583774c();
+void cs_init_11e0490f60fdc166();
+void cs_init_18d5b680efad7752();
+void cs_init_77de402a688eeb9d();
 void cs_init_fd48512b974504f6();
 void cs_init_bcccbac2bf72843d();
+void cs_init_381ecfc7910ffbab();
 void cs_init_d37bccc1c3814fc6();
 void cs_init_e57cdf426b59f0ee();
 void cs_init_4ccab99c775ca4c5();
@@ -2797,9 +3017,16 @@ void cs_init_4a8bef2ab48b32d7();
 void cs_init_3a3d09f9e75a32d2();
 void cs_init_757516ce190cf813();
 void cs_init_6517d63c01870958();
+void cs_init_c87dc3d2d0f9440a();
+void cs_init_b489b0d33bb37bb8();
+void cs_init_7f70540c4f85d74f();
+void cs_init_50c5a567a6876ee3();
 void cs_init_fd683372658feff4();
 void cs_init_1ab688350081022a();
+void cs_init_4368d694d01424b0();
+void cs_init_8e2bf0f8fe011785();
 void cs_init_96c54d9323f24f8e();
+void cs_init_0286a0dbe9da0b33();
 void cs_init_c8e1f3d3f96670c6();
 void cs_init_b728593e3dcffe31();
 void cs_init_9cade6927d6e0bf3();
@@ -2807,10 +3034,15 @@ void cs_init_672083a5397f2913();
 void cs_init_5ac9304f9db0671e();
 void cs_init_dc09c88a279424b5();
 void cs_init_87fb4d668ea5580b();
+void cs_init_27b8baf7307cff9f();
+void cs_init_130519c307b90f46();
+void cs_init_98f0a1bec2084c3c();
+void cs_init_d86010513034d6a0();
 void cs_init_8bf13b560e1e05e9();
 void cs_init_2ffa6f51468590ea();
 void cs_init_bad15ea7469ee2b9();
 void cs_init_20db1845606f1f3b();
+void cs_init_ed8eabc614ddcf9e();
 void cs_init_792a6372766eb19f();
 void cs_init_e315dac1df3b175d();
 void cs_init_f9cfa6da3459412e();
@@ -2823,6 +3055,7 @@ void cs_init_6ee7d14059be1acf();
 void cs_init_24ddde8b39392611();
 void cs_init_cd85e7c847ae4598();
 void cs_init_15f31d4f046b09a8();
+void cs_init_fa01867c9c048464();
 void cs_init_51fd12cb14e568f9();
 void cs_init_e6ed65290db381ba();
 void cs_init_a42daea58251b089();
@@ -2840,6 +3073,7 @@ void cs_init_ec8ac507fb495e84();
 void cs_init_9465f7541f51c47e();
 void cs_init_2d2e25a6914f7709();
 void cs_init_22115ea4236d0eaa();
+void cs_init_925b3cf054e42b78();
 void cs_init_851a96be86c28dd2();
 void cs_init_e00832a42e12ec3b();
 void cs_init_23ed5cbd0e3922f3();
@@ -3433,13 +3667,42 @@ pls::cs::Array<std::int32_t>& cs_05c0c8294738f18d();
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_90bd42172ae5eb5b();
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_a0da2f27fc9122c9();
 pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>>& cs_110a219403a49c59();
+std::int32_t& cs_56b87a4889a075c1();
+std::int32_t& cs_ae88aadf0313d525();
+std::int32_t& cs_f970055179afa1e0();
+std::int32_t& cs_64c23caca1e41663();
+std::int32_t& cs_220e04776206e9cc();
+std::int32_t& cs_3b6b8ce3637f0d5a();
+std::int32_t& cs_5c6d8357da0c0aaf();
+std::int32_t& cs_d9c18e1b80629b14();
+pls::cs::List<pls::cs::Ref<cs_70c4092da329e972>>& cs_b3c3facbebad5adb();
+pls::cs::Array<pls::cs::String>& cs_9a982ba0549bdebb();
+bool& cs_286ddfcc2d29fb20();
+pls::cs::Ref<pls::cs::Object>& cs_8c8ed916f00e435c();
+pls::cs::Ref<cs_89c0d586cfe20341>& cs_280b0a230ee3dea4();
 pls::cs::Array<std::int64_t>& cs_6e88f492355c58fb();
+pls::cs::Ref<cs_77de402a688eeb9d>& cs_c51cfc9dfddab106();
+pls::cs::List<pls::cs::Ref<cs_18d5b680efad7752>>& cs_f7651e4f416e5e3a();
+pls::cs::Ref<pls::cs::Object>& cs_4033fa251a2d7de3();
+std::int32_t& cs_ee68d7af15d52996();
+std::int32_t& cs_d55e531dc45044c8();
+std::int32_t& cs_488c822c37320213();
+std::int32_t& cs_949f450fbe8c712e();
+std::int32_t& cs_a5a25a2e3d29a692();
+std::int32_t& cs_8fd991c5a14be628();
+std::int32_t& cs_14be5baf84375bb9();
+std::int32_t& cs_92a1a5572c032916();
+pls::cs::Ref<cs_d37bccc1c3814fc6>& cs_fff40af3d4f61c60();
 pls::cs::Array<std::int32_t>& cs_e2d8ee0a92b1147c();
 pls::cs::Ref<cs_e1ac8ca60ae0d404>& cs_e22ec5a4a308544e();
 pls::cs::Array<std::int32_t>& cs_19e8a97a219b74b4();
 bool& cs_042e86d7c14d33a1();
 pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>>& cs_6cb933168d711678();
+pls::cs::Array<std::int32_t>& cs_eb4b193093fe2ed1();
+pls::cs::Ref<cs_50c5a567a6876ee3>& cs_0d794b0205468f6a();
+pls::cs::Ref<cs_b489b0d33bb37bb8>& cs_11e5ce60ddaa567b();
 pls::cs::Ref<cs_1ab688350081022a>& cs_eb626cd1b0f88bfd();
+pls::cs::Ref<cs_4368d694d01424b0>& cs_af3cecaddfff33af();
 pls::cs::Ref<cs_f1dd8f2aa583774c>& cs_846238cb57fd2bbf();
 pls::cs::Array<float>& cs_973a19e093bc0fda();
 pls::cs::Ref<cs_c8e1f3d3f96670c6>& cs_70333ca9b184d4ad();
@@ -3458,7 +3721,10 @@ pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_ec6b992b38927bb3>>& cs_43a8f
 bool& cs_fa530d5bd7357035();
 bool& cs_b9bcb985f936ef96();
 pls::cs::Array<pls::cs::String>& cs_44e247f7ea696755();
+bool& cs_0aabbac1b4cc00d9();
 pls::cs::String& cs_9d62cf693893d256();
+pls::cs::String& cs_8da583a8425c5117();
+pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_aefbaa4ea6f5261a();
 pls::cs::Array<std::int32_t>& cs_c1536eff3bf2f9e3();
 pls::cs::Array<std::int32_t>& cs_f0160227dfac6551();
 pls::cs::Ref<pls::kairo::Canvas>& cs_3e56073ce0fe6fbf();
@@ -3539,6 +3805,8 @@ pls::cs::Ref<cs_6485f92c2f04639f>& cs_853c51ab649a13bb();
 pls::cs::Ref<pls::generated::cs_bb652fbb61000386>& cs_4ba6b876c86cbecd();
 pls::cs::Ref<cs_6ee7d14059be1acf>& cs_33c160ec018e286a();
 pls::cs::Array<std::uint8_t>& cs_0ab9b09ba01c1501();
+pls::cs::Ref<cs_925b3cf054e42b78>& cs_d59ecb529d3c681c();
+pls::cs::String& cs_e9c57a349e970656();
 bool& cs_9b88f949daa3f81c();
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_7193278c42da6bcc();
 pls::cs::Array<std::int32_t>& cs_74505787d7d17de7();
@@ -3556,9 +3824,11 @@ std::int32_t& cs_9e9f3d99e4fddcd2();
 pls::cs::Array<std::int32_t>& cs_c367fac6300f8cee();
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_4f1e4b27200eabc7();
 std::int32_t& cs_6165a1c4f7bf45ea();
+std::int32_t& cs_4eda79c4b15c03ea();
 std::int32_t& cs_21099aafdcadb3e3();
 std::int32_t& cs_34052c1785c8754e();
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_4ed30b03deb528a2();
+pls::cs::Ref<cs_b728593e3dcffe31>& cs_a251c18c9d0f913d();
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_819bdeccec161577();
 pls::cs::Array<pls::cs::Array<std::uint8_t>>& cs_01b07286e746610e();
 pls::cs::Array<std::int32_t>& cs_e2d16fab426c5d2f();
@@ -3566,11 +3836,17 @@ pls::cs::Array<std::int64_t>& cs_2f2e8e46132e7fcc();
 pls::cs::Array<pls::cs::Ref<pls::generated::cs_c20c229ea63037d8>>& cs_4d39e0560b934a4f();
 pls::cs::Array<pls::cs::String>& cs_1633c4562f4c40eb();
 pls::cs::Ref<cs_2d2e25a6914f7709>& cs_52166bbebe634258();
+pls::cs::Ref<cs_2ffa6f51468590ea>& cs_79b2a93539dda8c5();
+pls::cs::Ref<cs_08829eb6a4df2a40>& cs_4fd143d9a5ab23f5();
+pls::cs::Ref<cs_ec8ac507fb495e84>& cs_1cc9a669b732975f();
+pls::cs::Ref<cs_e00832a42e12ec3b>& cs_859633da82a2fd50();
 bool& cs_66520490d812bf5b();
 pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_99f86cd66d5ccef0();
 pls::cs::Array<pls::cs::String>& cs_3f7ae294e0213a46();
 pls::cs::Ref<pls::kairo::Image>& cs_de24cebe7367b9a6();
 void cs_ff6aeae8eb9c621a();
+void cs_9fc47ec3093254f0(bool v_packageName,pls::cs::Array<pls::cs::String> v_p);
+void cs_2efe36383f878d36(bool v_packageName,pls::cs::String v_id,pls::cs::Array<pls::cs::String> v_p);
 pls::cs::Ref<cs_b08d770c239489bf> cs_0c4b303cde7d7a27();
 void cs_0c4b303cde7d7a27_init(pls::cs::Ref<cs_b08d770c239489bf> cs_this);
 bool cs_c0d738dcc0a5bec7(pls::cs::Ref<cs_b08d770c239489bf> cs_this,std::int32_t v_bit);
@@ -3751,6 +4027,7 @@ pls::cs::Ref<cs_3ee77977aa791047> cs_03172f7ba0b3ea2e();
 void cs_03172f7ba0b3ea2e_init(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 void cs_42bb8aebe071689d(pls::cs::Ref<cs_3ee77977aa791047> cs_this,std::int32_t v_state);
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_e44afa197352af80(pls::cs::Ref<cs_3ee77977aa791047> cs_this,pls::cs::String v_url);
+bool cs_2f6ed49f4ea77db8(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 std::int32_t cs_c332efb9d5fe5210(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
 std::int32_t cs_64179362a8f1bef2(pls::cs::Ref<cs_3ee77977aa791047> cs_this,std::int32_t v_type,std::int32_t v_index);
 void cs_630f6e34926b8eba(pls::cs::Ref<cs_3ee77977aa791047> cs_this);
@@ -3845,6 +4122,7 @@ pls::cs::String cs_7e11fd20a13d2014(std::int64_t v_value);
 pls::cs::Ref<cs_834c8c593e682d3f> cs_6b785705076d0599();
 void cs_6b785705076d0599_init(pls::cs::Ref<cs_834c8c593e682d3f> cs_this);
 void cs_d9266d0e56282574(pls::cs::Ref<cs_834c8c593e682d3f> cs_this,std::int32_t v_state);
+bool cs_93c486009381ff04(pls::cs::Ref<cs_834c8c593e682d3f> cs_this);
 std::int32_t cs_dfc26b43dd564060(pls::cs::Ref<cs_834c8c593e682d3f> cs_this);
 std::int32_t cs_7e79fe9d6b3a0ee0(pls::cs::Ref<cs_834c8c593e682d3f> cs_this,std::int32_t v_type,std::int32_t v_index);
 bool cs_707d993c797a341d(pls::cs::Ref<cs_834c8c593e682d3f> cs_this);
@@ -3886,6 +4164,8 @@ void cs_c5480e7f4d903064(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
 pls::cs::String cs_d9fffbcf499f9061(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
 pls::cs::Ref<cs_7eb0a1119bc141dc> cs_9b717c692f7d696e();
 void cs_9b717c692f7d696e_init(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
+pls::cs::Ref<cs_7eb0a1119bc141dc> cs_122d27bb8b75d40b(pls::cs::Ref<pls::cs::ExceptionObject> v_th);
+void cs_122d27bb8b75d40b_init(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,pls::cs::Ref<pls::cs::ExceptionObject> v_th);
 void cs_6f27d428ebac1634(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,std::int32_t v_id,pls::cs::String v_str);
 void cs_37d7a155e6cebe13(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,std::int32_t v_state);
 bool cs_087864ad04891f7d(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
@@ -3893,6 +4173,7 @@ std::int32_t cs_7890b8933e5494c6(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 void cs_008d18ec9ef5cd90(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 bool cs_305dfcfb28ab9c87(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 void cs_b858b36069a76eb9(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
+void cs_20e7594ab76bbe1b(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,pls::cs::String v_text,pls::cs::String v_buttons);
 pls::cs::String cs_7ecc9e73b43a1714(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 pls::cs::Ref<cs_a2cea92715051fa5> cs_96f4037b01fdf783();
 void cs_96f4037b01fdf783_init(pls::cs::Ref<cs_a2cea92715051fa5> cs_this);
@@ -3955,9 +4236,11 @@ void cs_4f961eec07d2ba19(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,std::int32_t 
 pls::cs::Ref<cs_e31f80000513fe82> cs_046213c85d73180d();
 void cs_046213c85d73180d_init(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_cc59c9ba70203da7(pls::cs::Ref<cs_e31f80000513fe82> cs_this,std::int32_t v_state);
+bool cs_98e3505e1c38b93d(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 std::int32_t cs_a369b9c98e9b81ec(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_af128fbb0fee219f(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_3695a5db00b0c6e7(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
+bool cs_a3bbb54f7183a8b3(pls::cs::Ref<cs_e31f80000513fe82> cs_this,pls::cs::Ref<cs_757516ce190cf813> v_e);
 void cs_f7b5dc5945c49025(pls::cs::Ref<cs_e31f80000513fe82> cs_this,std::int32_t v_index);
 bool cs_157441e08e263633(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
 void cs_0d8688313d58fbfb(pls::cs::Ref<cs_e31f80000513fe82> cs_this);
@@ -4281,6 +4564,7 @@ void cs_acdccc495e420b5d(pls::cs::Ref<cs_75707aa3f1629c85> cs_this);
 void cs_50dfaae2579fc0e5(pls::cs::Ref<cs_75707aa3f1629c85> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
 void cs_3d82855e0a53d3fd(pls::cs::Ref<cs_75707aa3f1629c85> cs_this);
 void cs_66f5b748171347a5(pls::cs::Ref<cs_75707aa3f1629c85> cs_this);
+void cs_8b626bdb278198ca(pls::cs::Ref<cs_75707aa3f1629c85> cs_this);
 void cs_3b958d08bf34853f(pls::cs::Ref<cs_75707aa3f1629c85> cs_this,std::int32_t v_seb,std::int32_t v_bodyImg,std::int32_t v_faceImg,std::int32_t v_frame,std::int32_t v_direct,std::int32_t v_role,std::int32_t v_tData_id);
 void cs_ffc650d6a0f99dae(pls::cs::Ref<cs_75707aa3f1629c85> cs_this,std::int32_t v_seb,std::int32_t v_bodyImg,std::int32_t v_faceImg,std::int32_t v_frame,std::int32_t v_direct);
 void cs_67ae46172b55fd8e(pls::cs::Ref<cs_75707aa3f1629c85> cs_this,bool v_isSoccerForm);
@@ -4294,8 +4578,13 @@ void cs_02b2fc13771849bc(pls::cs::Ref<cs_75707aa3f1629c85> cs_this);
 void cs_feecff8f6b976a04();
 void cs_4aa739c44a814699();
 void cs_2e513d3a991895b2();
+pls::cs::Ref<cs_89c0d586cfe20341> cs_f8a8e5cab3297e6d();
+void cs_f8a8e5cab3297e6d_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this);
 pls::cs::Ref<cs_89c0d586cfe20341> cs_bab91f84bee2e3d9(pls::cs::Ref<cs_4c145fe8f008af05> v_target);
 void cs_bab91f84bee2e3d9_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Ref<cs_4c145fe8f008af05> v_target);
+pls::cs::Ref<cs_89c0d586cfe20341> cs_6ac8ad3def9eea9e(pls::cs::Delegate<void()> v_start);
+void cs_6ac8ad3def9eea9e_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Delegate<void()> v_start);
+pls::cs::Ref<cs_89c0d586cfe20341> cs_c84940406f4f068f();
 bool cs_4b78e5289d2c84c2(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 std::int32_t cs_d33c547c634b2bdf(pls::cs::Ref<cs_89c0d586cfe20341> cs_this);
 bool cs_f0878a49dfa6a661(pls::cs::Ref<cs_89c0d586cfe20341> v_obj1,pls::cs::Ref<cs_89c0d586cfe20341> v_obj2);
@@ -4305,18 +4594,55 @@ void cs_b9636031b790b537(pls::cs::Ref<cs_89c0d586cfe20341> cs_this);
 void cs_012506043193cb2a();
 template<typename T_T>
 bool cs_56806ca0201c5fb9(pls::cs::Ref<pls::generated::cs_51222df74ac70bab<T_T>> cs_this,T_T v_elem);
+std::int32_t cs_8919cf419e6c7708();
+pls::cs::Ref<cs_70c4092da329e972> cs_d18c126e68c3c396();
+void cs_d18c126e68c3c396_init(pls::cs::Ref<cs_70c4092da329e972> cs_this);
+pls::cs::Ref<cs_70c4092da329e972> cs_626981c8ca17bde5(pls::cs::String v_url);
+void cs_626981c8ca17bde5_init(pls::cs::Ref<cs_70c4092da329e972> cs_this,pls::cs::String v_url);
+void cs_9d34ee3db26afc7b();
+pls::cs::String cs_ce577f730d25026e(pls::cs::String v_url);
+pls::cs::String cs_8f665f3f54f79b70();
+pls::cs::String cs_eb4256a1bc4490b2();
+void cs_6deea87a1328db75();
+void cs_0664a3e5428b09ce();
+void cs_dc20b22a3922530e();
+void cs_d56fc27939b907e9(bool v_packageName,pls::cs::String v_id,pls::cs::Array<pls::cs::String> v_p);
 std::int32_t cs_20d8b864ba249ba5(std::int32_t v_v0,std::int32_t v_v1,std::int32_t v_length,std::int32_t v_frame,std::int32_t v_edging);
+bool cs_a3399ea8077672e2(pls::cs::Ref<cs_9f5a071d05c1d020> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
+std::int32_t cs_cdd09ba02ba5e5aa(pls::cs::Ref<cs_9f5a071d05c1d020> cs_this);
 pls::cs::Ref<cs_f1dd8f2aa583774c> cs_811ec9500127b493();
 void cs_811ec9500127b493_init(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this);
 bool cs_d7701387e8f8c44a(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
 std::int32_t cs_140e188d0a82c8b7(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this);
 void cs_815bf8a38e0fb5d2(pls::cs::Array<std::int64_t> v_crcTable,bool v_encrypt);
+std::int32_t cs_3c5e64aab4be4dca();
+pls::cs::String cs_11f71ced6c57f274();
+pls::cs::String cs_9ec572c71522df31();
+pls::cs::Ref<cs_18d5b680efad7752> cs_424a1f3830f8b281();
+pls::cs::Ref<cs_18d5b680efad7752> cs_b1fabebdabf8d17c();
+void cs_b1fabebdabf8d17c_init(pls::cs::Ref<cs_18d5b680efad7752> cs_this);
+pls::cs::String cs_42eaa879561f279c();
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_d2a21b4a921597a9(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split);
+pls::cs::Ref<cs_77de402a688eeb9d> cs_e751bd24448f57f3(bool v_retryEnable);
+void cs_e751bd24448f57f3_init(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,bool v_retryEnable);
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_996b0c2cdd719ab2(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split);
+pls::cs::Array<std::uint8_t> cs_b9e6030919acf56d(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check);
+bool cs_a14193378f92facc(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+std::int32_t cs_bc4c613a89384b31(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+pls::cs::String cs_a267b8503432886a(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+pls::cs::String cs_cab4479c3676c376(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+pls::cs::String cs_c4f4767aa3a57458(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+pls::cs::String cs_0c1c941d76211aca(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+void cs_2756d68ee4aaa074(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,bool v_value);
 std::int32_t cs_611e38080e0184ae(std::int32_t v_spid);
 pls::cs::Array<std::uint8_t> cs_0478a420e3edd658(std::int32_t v_spid,std::int32_t v_pos,std::int32_t v_length);
 float cs_87ef3d6d0d364edc(float v_a);
+void cs_749d49646f9339d3(bool v_notify,bool v_ararm);
+void cs_b0502ca03ca03061(bool v_enable);
 pls::cs::Ref<cs_d37bccc1c3814fc6> cs_429433773226956d();
 void cs_429433773226956d_init(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this);
 void cs_73ded8dcd4fca440(pls::cs::Ref<cs_d37bccc1c3814fc6> v_panel);
+pls::cs::Ref<cs_d37bccc1c3814fc6> cs_17329e66670990a9();
 std::int32_t cs_73f2425dc6862ef5(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,pls::cs::String v_s);
 bool cs_ce1d94fc60447e39(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,char16_t v_c);
 void cs_88ddecbed02f84a4(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,std::int32_t v_key,pls::cs::String v_text);
@@ -4325,6 +4651,7 @@ pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_c015426253e69b27(pls::cs::Ref<cs_9326c27a92
 pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_30e0326b36c8f3ca(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id,std::int32_t v_x,std::int32_t v_y,std::int32_t v_width,std::int32_t v_height,std::int32_t v_value,pls::cs::Ref<cs_6517d63c01870958> v_option);
 void cs_14c25464911dc345(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 bool cs_6236178d574fe9e3(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
+bool cs_1941f0d8c1b7225c(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id,std::int32_t v_value);
 bool cs_d3954e1f034e3709(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id);
 bool cs_6528c0f17d8d5769(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_x,std::int32_t v_y,std::int32_t v_rcx,std::int32_t v_rcy,std::int32_t v_rcw,std::int32_t v_rch);
 bool cs_559ffe43566a7dfb(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id,std::int32_t v_value);
@@ -4334,9 +4661,11 @@ void cs_0a96693c31be1e15(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 pls::cs::Ref<cs_757516ce190cf813> cs_63e01a337b8c5816(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_type,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_component);
 pls::cs::Ref<cs_70b7974d356d68ab> cs_8636a26efe9d2eb5(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int64_t v_key,float v_x,float v_y,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_component);
 void cs_43e8c5a72fc9d69b(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
+void cs_f7a60b8dd9e85732(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 bool cs_1698aae3145703cc(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_c);
 void cs_77304e19eb4e3af6(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 bool cs_9e885a578815ee7e(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
+pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_bc6be8a193cbe380(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id,std::int32_t v_value);
 pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_ed99a71361f12b06(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_index);
 pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_19ca6d3dec6d9bd3(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id);
 std::int32_t cs_159596982eb74639(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
@@ -4346,6 +4675,7 @@ std::int32_t cs_3afc83d4646f8f54(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 float cs_e739ab87bfd72b08(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 pls::cs::Ref<cs_757516ce190cf813> cs_c01d41baf2e72b63(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_id,std::int32_t v_type);
 pls::cs::Ref<cs_757516ce190cf813> cs_6fe130a06a1a3f4e(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int64_t v_key,std::int32_t v_type);
+std::int32_t cs_aa76afa6918aaccc(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 std::int32_t cs_ef5e1e474cdfff4e(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 std::int32_t cs_099daeab6f59a950(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 std::int32_t cs_e806cfaebaa3c9d5(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
@@ -4353,11 +4683,19 @@ bool cs_1ed6a55cc3c2bbc8(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this);
 pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_ef5589b812f9d157();
 void cs_ef5589b812f9d157_init(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this);
 void cs_7c055166f9b27c04(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this);
+void cs_e879b926a94bdd5d(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this,pls::cs::Ref<cs_9326c27a92cfea3a> v_surface,pls::cs::Ref<cs_e1ac8ca60ae0d404> v_evt);
+std::int32_t cs_1fc22b186f83ddec(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this);
+std::int32_t cs_40ac27079aeadda5(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this);
+std::int32_t cs_4ccc696f76a5a02e(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this,std::int32_t v_pointerIndex);
+float cs_7be670f4053bc836(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this,std::int32_t v_index);
+float cs_f83f5dafe8eac875(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this,std::int32_t v_index);
 bool cs_75dcbdf2f80cf9d3(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this);
+bool cs_3f051d1070002654(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this);
 void cs_5bc2a6aa84d89f40(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_keyCode,pls::cs::Ref<pls::kairo::KeyEvent> v_evt);
 void cs_e94b5958615f0bf0(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_key);
 void cs_50b7ab3f6322a4ec(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_keyCode,pls::cs::Ref<pls::kairo::KeyEvent> v_evt);
 void cs_49999cff44002120(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,std::int32_t v_key);
+void cs_77131fb79b6dc21d(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,pls::cs::Ref<cs_e1ac8ca60ae0d404> v_evt);
 std::int32_t cs_f14e41b7fe4df878(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<cs_70b7974d356d68ab>>> v_list,std::int32_t v_id);
 std::int32_t cs_f1e94a75305f273b(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<cs_70b7974d356d68ab>>> v_list,std::int64_t v_key);
 void cs_6b3ccfcb08f2d196(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this,bool v_value);
@@ -4368,8 +4706,13 @@ void cs_939028c47866c657_init(pls::cs::Ref<cs_70b7974d356d68ab> cs_this);
 void cs_dbab81fd91425aae(pls::cs::Ref<cs_70b7974d356d68ab> cs_this,std::int64_t v_key,float v_x,float v_y,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_component);
 pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_03e2f5f2e825917f();
 void cs_03e2f5f2e825917f_init(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
+void cs_919bc150e4142cc1(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 void cs_1e0863d8f2b7a360(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
+void cs_c311823b6552fdf7(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this);
 void cs_fb350f55fa7620cd(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
+pls::cs::Array<pls::kairo::Vector2> cs_83e2b5e0ec4cdcad(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Array<pls::kairo::Vector2> v_points);
+pls::cs::Array<std::int32_t> cs_ac30f7dfe797187c(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Array<pls::kairo::Vector2> v_points);
+bool cs_221c91752345c75b(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,float v_x,float v_y,std::int32_t& v_rectIndex,std::int32_t& v_handleIndex);
 bool cs_ff50c908347e45e2();
 void cs_b8386c421fdf23ad(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,std::int32_t v_keyCode,pls::cs::Ref<pls::kairo::KeyEvent> v_evt);
 void cs_9082ae6a6e574dce(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,std::int32_t v_key);
@@ -4393,12 +4736,84 @@ void cs_8d483d962b875686_init(pls::cs::Ref<cs_6517d63c01870958> cs_this);
 pls::cs::Ref<cs_6517d63c01870958> cs_4b4ad350b14ef767();
 pls::cs::Ref<cs_6517d63c01870958> cs_93c9e5f80bde9aac(std::int32_t v_flag);
 pls::cs::Ref<cs_6517d63c01870958> cs_7ff4169f9e726138(pls::cs::Array<std::int32_t> v_args);
+pls::cs::Ref<cs_6517d63c01870958> cs_f8d0ca2ad798adff(pls::cs::Ref<cs_6517d63c01870958> cs_this,std::int32_t v_flag);
 void cs_aeddbf9e363c37fe(pls::cs::Ref<cs_6517d63c01870958> cs_this);
+bool cs_273c34670c40021b(cs_c87dc3d2d0f9440a* cs_this);
+bool cs_71a196f792672514(cs_c87dc3d2d0f9440a* cs_this);
+pls::cs::Ref<cs_b489b0d33bb37bb8> cs_d710b4eaf3ab212a();
+void cs_d710b4eaf3ab212a_init(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+pls::cs::Ref<cs_7f70540c4f85d74f> cs_b544d4afdbad19e4(pls::cs::String v_name,std::int64_t v_value);
+void cs_b544d4afdbad19e4_init(pls::cs::Ref<cs_7f70540c4f85d74f> cs_this,pls::cs::String v_name,std::int64_t v_value);
+std::int32_t cs_6853b87e6d3191df(pls::cs::Ref<cs_7f70540c4f85d74f> cs_this);
+pls::cs::String cs_9eab9ded735366ec(pls::cs::Ref<cs_7f70540c4f85d74f> cs_this);
+void cs_b70446c7450e6993(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_type,pls::cs::String v_name,std::int32_t v_up,bool v_save);
+bool cs_312c009a993a1e26(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+void cs_706bcbd9776cf6ef(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+pls::cs::Array<cs_c87dc3d2d0f9440a> cs_7e52a7f62521b1ee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_languageOnly,bool v_releaseOnly);
+pls::cs::String cs_047c3ab4bcca9557(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+pls::cs::Ref<cs_b489b0d33bb37bb8> cs_3eff1227bb0de063();
+std::int32_t cs_033269c53e74ac43(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+pls::cs::String cs_87f9285131d0cba9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+bool cs_89868493b44dd8bd(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data);
+bool cs_ab34005322458eed(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+pls::cs::Ref<cs_50c5a567a6876ee3> cs_145bafe9acaf77f9();
+void cs_145bafe9acaf77f9_init(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this);
+void cs_b4e47fce38dcaf3b(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this);
+void cs_dc354c17f44bb95c(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this);
+void cs_e4f93c2947373f31(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this);
+void cs_c8026282c0a24bbf(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this);
+void cs_b2a7adc10d3ecb29(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+pls::cs::Array<cs_c87dc3d2d0f9440a> cs_bf2fb5b5178771c9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Array<std::uint8_t> v_data,std::int32_t& v_date);
+void cs_7a0d5be4ca3b1254(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+void cs_4e3c4bf49c24e27d(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+void cs_10a01b9d900fa6c0(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+void cs_7ebfee2a92c0d37e(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_take);
+void cs_7226942a83482c7a(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+void cs_486e7c39f05ac1d6(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+void cs_51f84c16de790570(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+void cs_e634eb1896b92689(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+void cs_9a7c0378d22d6bd5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+void cs_e63aaf6292bf7187(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_playing);
+void cs_5d101ae71ba29127(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enable);
+void cs_9ca5e184bd541bee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 pls::cs::String cs_0ee8c20531783d1b(pls::cs::Ref<cs_fd683372658feff4> cs_this);
 pls::cs::Ref<pls::kairo::Image> cs_aeee5b62db0f8f41(pls::cs::Ref<cs_fd683372658feff4> cs_this);
+pls::cs::String cs_93bf009f197e5d4a(pls::cs::Ref<cs_fd683372658feff4> cs_this);
 pls::cs::Ref<cs_1ab688350081022a> cs_c91e4943a0e046f2();
 void cs_c91e4943a0e046f2_init(pls::cs::Ref<cs_1ab688350081022a> cs_this);
+pls::cs::Array<std::uint8_t> cs_da3162f01de6e1eb(pls::cs::String v_key);
+void cs_04c28d155861f704(pls::cs::Ref<cs_1ab688350081022a> cs_this);
+pls::cs::Array<std::uint8_t> cs_cb1becc75b26486d(pls::cs::Ref<cs_1ab688350081022a> cs_this);
+void cs_fb49ecfe97c9cd02(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
+void cs_f30d255f82bcb932(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
+pls::cs::Ref<cs_4368d694d01424b0> cs_fc7db26d427c32ff();
+bool cs_c4e7fa21030fbd91(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
+void cs_9ed05c6b3a5346ec(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
+void cs_2186b93ea03d07c2(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
+pls::cs::Ref<cs_8e2bf0f8fe011785> cs_2f2e7f50616852fe(pls::cs::String v_productId,pls::cs::String v_orderId,std::int32_t v_amount,std::int32_t v_actCode);
+void cs_2f2e7f50616852fe_init(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this,pls::cs::String v_productId,pls::cs::String v_orderId,std::int32_t v_amount,std::int32_t v_actCode);
+void cs_c147ab1af9f1939f(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+pls::cs::String cs_68d475335d41208d(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this);
+pls::cs::String cs_1b2e094e56480170(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this);
+void cs_5372ec5ae5ecedc0(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_stream);
+void cs_a9f03e15b73f7505(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this,std::int64_t v_time);
+pls::cs::String cs_1152b3bafa6371e3(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this);
+pls::cs::Ref<cs_96c54d9323f24f8e> cs_c46e5f8db55f0d51(pls::cs::String v_text,std::int32_t v_color);
+void cs_c46e5f8db55f0d51_init(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::String v_text,std::int32_t v_color);
+void cs_4254bc66f1000052(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::String v_text,std::int32_t v_color);
+void cs_3587a8418a3a177d(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,std::int32_t v_value);
+void cs_081ca02a0c18a84a(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,float v_value);
+void cs_0ab9f071b4b5eb48(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::Ref<cs_9cade6927d6e0bf3> v_value);
 void cs_bc64dbfb155d02c7(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::String v_value);
+void cs_5c18cba22441d508(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,std::int32_t v_value);
+void cs_87abc8a059905f77(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,std::int32_t v_left,std::int32_t v_right,std::int32_t v_top,std::int32_t v_bottom,pls::cs::Delegate<void(pls::cs::Ref<pls::kairo::Graphics>,float,pls::cs::Ref<cs_f1dd8f2aa583774c>,pls::cs::Ref<cs_f1dd8f2aa583774c>)> v_render);
+bool cs_25bba6e14d51039b(pls::cs::String v_url);
+pls::cs::Ref<cs_0286a0dbe9da0b33> cs_63545d46c6887c12(std::int32_t v_type,pls::cs::String v_title);
+void cs_63545d46c6887c12_init(pls::cs::Ref<cs_0286a0dbe9da0b33> cs_this,std::int32_t v_type,pls::cs::String v_title);
+void cs_f93da55cc1dd9ec3(pls::cs::Ref<cs_0286a0dbe9da0b33> cs_this,pls::cs::Array<pls::cs::String> v_buttons);
+void cs_d53653cbf2469429(pls::cs::Ref<cs_0286a0dbe9da0b33> cs_this,pls::cs::String v_msg);
+std::int32_t cs_1727d3688d4d03e6(pls::cs::Ref<cs_0286a0dbe9da0b33> cs_this);
+std::int32_t cs_ca48ee9e5dbe6d98(std::int32_t v_name);
 pls::cs::Ref<cs_c8e1f3d3f96670c6> cs_d1ef6eff6523bffb();
 void cs_d1ef6eff6523bffb_init(pls::cs::Ref<cs_c8e1f3d3f96670c6> cs_this);
 bool cs_e4546eba7825f981(pls::cs::Ref<cs_c8e1f3d3f96670c6> cs_this,pls::cs::Ref<pls::cs::Object> v_obj);
@@ -4408,8 +4823,15 @@ void cs_91c7f060c04f2ce6(pls::cs::Ref<cs_b728593e3dcffe31> cs_this);
 void cs_2ad8afd403d5dfb4(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,bool v_keepFileList);
 pls::cs::Ref<cs_b728593e3dcffe31> cs_63b2bd45669dab69(pls::cs::String v_imgList,pls::cs::String v_sebList,pls::cs::String v_sndList,pls::cs::String v_figList,pls::cs::String v_actList,pls::cs::String v_texList,pls::cs::String v_grpList);
 void cs_63b2bd45669dab69_init(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,pls::cs::String v_imgList,pls::cs::String v_sebList,pls::cs::String v_sndList,pls::cs::String v_figList,pls::cs::String v_actList,pls::cs::String v_texList,pls::cs::String v_grpList);
+bool cs_87c6cb7c61cb9fce(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,pls::cs::String v_file);
+void cs_a5f9622df7c35c0c();
+void cs_c9cd9f49f64199fc(pls::cs::Ref<cs_b728593e3dcffe31> cs_this);
+void cs_c04a7ac90db55ca6(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,bool v_keepFileList);
+pls::cs::String cs_174f6b80456cfd05(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,pls::cs::String v_file);
+void cs_7b258075c3f980c6(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> v_jar);
 pls::cs::Ref<cs_b728593e3dcffe31> cs_530b5df6d7de28c3(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,std::int32_t v_bits);
 pls::cs::Array<std::int32_t> cs_3c28d7a96403fe84(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this,std::int32_t v_index,pls::cs::Array<std::int32_t> v_sprite);
+void cs_713e673d446e8251(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this);
 void cs_6dfa20c6668983e8(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this);
 pls::cs::Array<std::int32_t> cs_a507412f284f974c(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this);
 pls::cs::Array<std::int16_t> cs_e8833b0a463d9a55(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this,std::int32_t v_frame);
@@ -4437,11 +4859,27 @@ void cs_2be5ebb4744281a0(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this,std::int32_t 
 void cs_57d9a00224068c1c(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this,std::int32_t v_color);
 void cs_6c80e48b0bf350ca(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this,std::int32_t v_lineSpace);
 void cs_33bd53255618fce1(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this,float v_w,float v_h);
+std::int32_t cs_31cf637794688433(pls::cs::Ref<cs_27b8baf7307cff9f> cs_this);
 std::int64_t cs_d08f1252d303b1f0(std::int32_t v_high,std::int32_t v_low);
 pls::cs::Array<std::int32_t> cs_b37fd969c7a5953c(std::int64_t v_value);
+std::int64_t cs_e285ad46e15aa69f();
+pls::cs::String cs_af791034e85c70f7(pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> cs_this);
+pls::cs::Array<pls::cs::String> cs_13b4a0fe102f7702(pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> cs_this);
+void cs_3d765e32623626a4();
+void cs_5185b14a34385754();
 bool cs_dea1d8116ed5aaf1();
+pls::cs::String cs_f2f2f095a1f4f83c();
 pls::cs::String cs_154f0344cd538956();
+pls::cs::String cs_9f46a4d7d50765c3();
+pls::cs::Ref<cs_d86010513034d6a0> cs_70bf143fda522859(pls::cs::Array<std::uint8_t> v_data);
+pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_2d156cd0932d3318();
+pls::cs::String cs_3b656a07e9770826(pls::cs::String v_code);
+pls::cs::Ref<pls::generated::cs_98f0a1bec2084c3c> cs_0df98a8eddce17f9(pls::cs::String v_file,char16_t v_lineCode,char16_t v_segCode);
+void cs_0df98a8eddce17f9_init(pls::cs::Ref<pls::generated::cs_98f0a1bec2084c3c> cs_this,pls::cs::String v_file,char16_t v_lineCode,char16_t v_segCode);
+pls::cs::Ref<cs_d86010513034d6a0> cs_73cc6ce27c640033();
+void cs_73cc6ce27c640033_init(pls::cs::Ref<cs_d86010513034d6a0> cs_this);
 pls::cs::String cs_334563e946ad4962(pls::cs::String v_text,pls::cs::String v_arg);
+std::int64_t cs_45b39acf7715318b();
 pls::cs::Ref<cs_8bf13b560e1e05e9> cs_3afc5298ce4a3e84();
 void cs_3afc5298ce4a3e84_init(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this);
 pls::cs::Ref<cs_2ffa6f51468590ea> cs_2f5492a9dea0a4ac();
@@ -4515,6 +4953,7 @@ pls::cs::Array<pls::cs::Array<std::int32_t>> cs_376abd5bcc201f39(pls::cs::Ref<cs
 pls::cs::Array<std::int32_t> cs_0e43d8ab78998b13(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_left,std::int32_t v_right,std::int32_t v_padding,std::int32_t v_index,std::int32_t v_max);
 std::int32_t cs_403b24da3b07fdd6(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_id);
 std::int64_t cs_c13ac9fb15b1936e(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this);
+pls::cs::String cs_428607d20e3f3658(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this);
 pls::cs::Array<pls::cs::Array<std::int32_t>> cs_1790480b70821d5d(pls::cs::String v_src);
 pls::cs::Array<std::int32_t> cs_fd5ca70325423016(pls::cs::String v_src);
 std::int32_t cs_100d897c2beb4fd1(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_xi,std::int32_t v_yi);
@@ -4547,6 +4986,7 @@ bool cs_c7994eb9bfc0f823(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t 
 bool cs_165d33155d381848(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t v_softlabel);
 bool cs_3fb5098d629f7985();
 bool cs_c080baf09a2b7f6e(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Ref<pls::kairo::FormBase> v_formBase);
+bool cs_934436cd92ceb4da(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this);
 pls::cs::String cs_ecb814bcd5ee800e(pls::cs::String v_query,pls::cs::String v_param);
 std::int32_t cs_4cd2b388eb7a0694(std::int32_t v_v1,std::int32_t v_v2);
 std::int32_t cs_f18b55fda99863b9(std::int32_t v_v1,std::int32_t v_v2);
@@ -4587,6 +5027,33 @@ void cs_fb26c3c912586adf(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this);
 void cs_48b06d9d94c6401b(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this);
 pls::cs::Ref<cs_20db1845606f1f3b> cs_edc2000ae353f18e();
 void cs_edc2000ae353f18e_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this);
+void cs_a08cf6e8e956e572(std::int32_t v_delta);
+std::int32_t cs_268e4c8a5c5e1aa9();
+void cs_88dfc436b791ac1f();
+void cs_81322bc33105f5ac();
+bool cs_9eef28fe38c56936();
+void cs_e3fca2af61411098();
+bool cs_7a0a1ee1a93eff71();
+void cs_1d5c3f31dd63adfb();
+void cs_e3da4b7ee9f51788();
+pls::cs::Ref<cs_d37bccc1c3814fc6> cs_35c6d0bf39ebc561();
+pls::cs::Ref<cs_b489b0d33bb37bb8> cs_c4936eb85a4204af();
+std::int32_t cs_24c32f1e4193a152(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
+bool cs_819b3ebc516bd932(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
+void cs_d9ce38f50244c191();
+bool cs_14404b0409612e0e(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
+bool cs_714ae7bf22940094();
+bool cs_7c911f55fe4ce22d();
+std::int64_t cs_ea83d7e6880d60d0();
+void cs_94fed40668eb39b8(std::int64_t v_value);
+void cs_ecb38147f2318edc(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
+void cs_f0ab887a70f5eb9a(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
+void cs_f9382522394ab3e5(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value,bool v_playing);
+void cs_51448637417220ba(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value,std::int32_t v_reserved);
+void cs_28b9303ca50ae96a(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value,bool v_enabled);
+pls::cs::String cs_99bb8e5b618e57bb(pls::cs::String v_value);
+void cs_762af1e562b96b8a(pls::cs::Ref<cs_b489b0d33bb37bb8> v_value);
+void cs_d4ade149898c4a1b();
 void cs_9bfe00949a9c4d85(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_imgId);
 void cs_b55690f7a47a296c(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,float v_w,float v_h,std::int32_t v_imgId);
 void cs_311049404bce850c(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y);
@@ -4600,6 +5067,7 @@ void cs_2da0940ad60eef3f(pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> v_jar
 void cs_df21b41e03f2f36f(pls::cs::Ref<cs_792a6372766eb19f> cs_this);
 void cs_7d8c3a37df2c9c0b(pls::cs::Ref<cs_792a6372766eb19f> cs_this,std::int32_t v_mode);
 void cs_f3c9caa17c71880a(pls::cs::Ref<cs_792a6372766eb19f> cs_this,std::int32_t v_page);
+void cs_0866ebf8137ed363(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::Array<std::int32_t> v_paint);
 pls::cs::Ref<cs_9b21b86f0d2914e0> cs_94ba728de1847ec7(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,std::int32_t v_id,std::int32_t v_x,std::int32_t v_y,std::int32_t v_imgId,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_c);
 pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_5c6ce742d887c401(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_id,pls::cs::Ref<pls::kairo::Image> v_img,std::int32_t v_x,std::int32_t v_y,std::int32_t v_u,std::int32_t v_v,std::int32_t v_w,std::int32_t v_h,std::int32_t v_value);
 pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_5249190fd61436f9(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_id,pls::cs::Ref<pls::kairo::Image> v_img,std::int32_t v_x,std::int32_t v_y,std::int32_t v_u,std::int32_t v_v,std::int32_t v_w,std::int32_t v_h);
@@ -4608,6 +5076,7 @@ bool cs_70aeac563b84bccd(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,std::int32_t 
 bool cs_c09effaa5a5594b5(std::int32_t v_id,std::int32_t v_value);
 bool cs_c32bdb6120b025c7(std::int64_t v_key);
 void cs_dc7bfd9cd45b88ef();
+void cs_c3eb1a825af8d5f9(pls::cs::Ref<cs_e315dac1df3b175d> cs_this);
 void cs_fbcbc38ec33df44a(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,std::int32_t v_imgId);
 void cs_08f39eff8cfbd63c(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,float v_x,float v_y,float v_w,float v_h,std::int32_t v_imgId);
 pls::cs::Array<std::int32_t> cs_031ab111eb4ca5ff(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_x,std::int32_t v_y,std::int32_t v_w,std::int32_t v_h,std::int32_t v_value,std::int32_t v_maximum,std::int32_t v_largeChange,bool v_touch,std::int32_t v_type);
@@ -4718,7 +5187,10 @@ void cs_cea422709c0e739c(pls::cs::Ref<cs_931908081ea62151> cs_this,std::int32_t 
 void cs_eae24f37838268a3(pls::cs::Ref<cs_931908081ea62151> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
 void cs_86d43294891eab63(pls::cs::Ref<cs_931908081ea62151> cs_this,bool v_provision);
 void cs_c1ebd2cf1827c239(pls::cs::Ref<cs_931908081ea62151> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
+pls::cs::Ref<cs_6ee7d14059be1acf> cs_fb6a0b22d395f57f();
+void cs_fb6a0b22d395f57f_init(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 bool cs_0fa7ac35adeb6144(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_feb7ae74aa59a27c> v_task);
+void cs_0c4347bd860d2f70(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::String v_productId,std::int32_t v_state,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
 void cs_5255d4c2789eac48(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_feb7ae74aa59a27c> v_task);
 bool cs_54b9118ddf48a0fd(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 bool cs_6e47643190d08935(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
@@ -4726,6 +5198,7 @@ bool cs_7f5d52ad795f2739(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<
 void cs_2fc4f3c7c0abe4f8(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_aa921fb14f112d41(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 void cs_ce96308860792979(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
+bool cs_7063f796d848203b(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item);
 bool cs_39912b67b6e00cf6(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_feb7ae74aa59a27c> v_task);
 void cs_fd462548e4e21992(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_606db2035b9b12ba(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,bool v_game);
@@ -4739,6 +5212,7 @@ pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_26628cac4dee43ab(pls::cs::R
 pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> cs_5ec95513c85ebc20(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 bool cs_f3ece5a1d40dcbef(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item);
 void cs_52c48544109f9d2d(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<std::uint8_t> v_data);
+void cs_83421b64347901dd(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,bool v_take);
 void cs_219ebd8a0b10d8e7(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_feb7ae74aa59a27c> v_task);
 void cs_624524290cf44192(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item);
 bool cs_4351661fbbfaa7c4(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,bool v_notice);
@@ -4748,6 +5222,7 @@ std::int32_t cs_d0a172330455208b(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::
 std::int32_t cs_2e3d6ed8fe7f9f6e(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item,std::int32_t v_type);
 void cs_1bfb44d4e16bae10(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,bool v_notice);
 void cs_4ebd3696a44e4f6b(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,bool v_detail);
+pls::cs::Array<std::uint8_t> cs_0c7e726b5f1c3198(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 pls::cs::Array<std::uint8_t> cs_9d8c67a5fdbb3c7d(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 pls::cs::Ref<cs_24ddde8b39392611> cs_67a7684996012e79(pls::cs::String v_title);
 void cs_67a7684996012e79_init(pls::cs::Ref<cs_24ddde8b39392611> cs_this,pls::cs::String v_title);
@@ -4756,6 +5231,7 @@ pls::cs::Ref<cs_cd85e7c847ae4598> cs_77c1e405abfca250();
 void cs_77c1e405abfca250_init(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this);
 pls::cs::Ref<cs_cd85e7c847ae4598> cs_f82de0fa574740fa(pls::cs::String v_productId,pls::cs::String v_orderId);
 void cs_f82de0fa574740fa_init(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this,pls::cs::String v_productId,pls::cs::String v_orderId);
+void cs_c1bab19e556927b9(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this,std::int32_t v_state,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
 void cs_9df67280b402af5e(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
 std::int32_t cs_a2ebcb9a739953bd(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this);
 pls::cs::String cs_357cc1e956f91fea(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this);
@@ -4785,12 +5261,34 @@ std::int32_t cs_b16954dcc18f83e4(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this);
 pls::cs::Ref<cs_a42daea58251b089> cs_9766d64ee1bba541(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this);
 pls::cs::String cs_76d45a6ec5e37940(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this);
 bool cs_f1c17b9cbfeb6ace(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this);
+bool cs_b38ac404eaec0f92(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this);
 pls::cs::Ref<cs_15f31d4f046b09a8> cs_fb33e792a02d6245(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
 pls::cs::Array<std::uint8_t> cs_942b8b55f6cc61e8(pls::cs::String v_src);
 pls::cs::String cs_0e8660e32789ac5b(pls::cs::String v_src);
 pls::cs::String cs_74c5b1f087d67cd2(pls::cs::Array<std::uint8_t> v_src);
 pls::cs::String cs_09009d99b892ed75(pls::cs::String v_src);
 void cs_aafe7f3e366450c4(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_stream);
+pls::cs::Ref<cs_fa01867c9c048464> cs_e3269488b9d47182();
+void cs_e3269488b9d47182_init(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
+pls::cs::Ref<cs_a42daea58251b089> cs_9e9180120f7b6e3a(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
+bool cs_0c2ef3da56499922(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
+pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>> cs_880efa9ef8cb946d(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
+std::int32_t cs_a27b4a646a4f6288(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::String v_productID);
+std::int32_t cs_4e9bffcbfff0634b();
+pls::cs::String cs_e8c6c1f01dcb9d31(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::String v_json,pls::cs::String v_orderId);
+bool cs_e407b08e50b1dd2c(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
+void cs_d5d483312d700179(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscriptions);
+bool cs_53ba148e029fe26b(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
+bool cs_4e71f3b66d66c79d(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
+pls::cs::Ref<cs_a42daea58251b089> cs_87e0519a7f6ab5fc(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::String v_productId);
+void cs_6fb7b668d4a70a0f(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+pls::cs::Ref<cs_51fd12cb14e568f9> cs_3d1833af62584b62(pls::cs::Ref<cs_fa01867c9c048464> cs_this,bool v_querySkuDetails,pls::cs::List<pls::cs::String> v_moreItemSkus,pls::cs::List<pls::cs::String> v_moreSubsSkus);
+std::int32_t cs_59826646bf6d2707(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
+void cs_3784aca2bceecd36(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_stream);
+pls::cs::Ref<cs_15f31d4f046b09a8> cs_9004764138986aa8(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::String v_json);
+void cs_bf2b5138011e18f8(std::int32_t v_request);
+pls::cs::Ref<cs_a42daea58251b089> cs_84f1e1cb3af4ded2(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_15f31d4f046b09a8> v_receipt);
+void cs_cbdd7a7dbb437bf3(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
 pls::cs::Ref<cs_51fd12cb14e568f9> cs_711d8c323ca1c807();
 void cs_711d8c323ca1c807_init(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this);
 void cs_83123998486200aa(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_p);
@@ -4906,14 +5404,28 @@ bool cs_2e8467cceed75e07(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,pls::cs::Ref<
 bool cs_50194a8436c518b8(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);
 void cs_dcfbcce06a015340(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,std::int32_t v_left,std::int32_t v_right);
 pls::cs::String cs_7b5204c0798583ad(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);
+pls::cs::Ref<cs_5dc998c2cffb18c8> cs_148ae4520ebf5819(pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_connectMethod,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_resultMethod);
+void cs_148ae4520ebf5819_init(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_connectMethod,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_resultMethod);
 bool cs_caae27da0b1b6167(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
 bool cs_03296355172125d8(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
+bool cs_c94b8415150fa1bf(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
+bool cs_f102c933220ac9aa(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
 void cs_c91786768676e5e6(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::String v_key,pls::cs::Ref<pls::cs::Object> v_data);
+pls::cs::String cs_afca4e9abd6175de(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this);
+pls::cs::Ref<pls::cs::ExceptionObject> cs_6ed697c2d33e26f6(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this);
+bool cs_07512424539c2fc2(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this);
 pls::cs::Ref<pls::cs::Object> cs_1a4dc7b41c694d0c(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::String v_key);
 bool cs_4d31a276865668d1(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::String v_key);
+void cs_491eae3eae7d9573(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::String v_value);
+void cs_8d58629cef163b32(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::Ref<pls::cs::ExceptionObject> v_value);
+void cs_961e1edcb72ada4a(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,bool v_value);
+void cs_c5e84308fbc916b7(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
+void cs_6454cbcccfc7db21(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,bool v_value);
+void cs_7f2977d6d7eff4a2(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,bool v_value);
 void cs_d35a505f9a32284f(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_method);
 void cs_eeccced648966040(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_method);
 pls::cs::String cs_9c863e1edb2b5045(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
+bool cs_f76006a37a507361(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this);
 pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_b8786f8cf097476e();
 void cs_b8786f8cf097476e_init(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this);
 bool cs_27c2d458904084a3(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this);
@@ -4926,10 +5438,12 @@ pls::cs::Ref<cs_d01bf6d528df5d3e> cs_bde331d144b7e233(std::int32_t v_type);
 void cs_bde331d144b7e233_init(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this,std::int32_t v_type);
 bool cs_3ce550173a351902(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 pls::cs::Array<std::int32_t> cs_1445009bb757ae06(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::String v_str,std::int32_t v_x,std::int32_t v_y,std::int32_t v_anchor,bool v_active,std::int32_t v_margin,bool v_cursor);
+bool cs_4cbf34065e9c29cc(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 std::int32_t cs_424cc8dfa482f7f5(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 bool cs_2a2e46575659084c(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 void cs_a6e481b168e6fc62(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 pls::cs::String cs_83e48a5feada74ed(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
+bool cs_6ee8d12c93887b93(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this);
 pls::cs::Ref<cs_c63e265fb6ff73e9> cs_2c89c48d2af86765();
 void cs_2c89c48d2af86765_init(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this);
 pls::cs::Ref<cs_c63e265fb6ff73e9> cs_ea036ba10872a3b3(std::int32_t v_type);
@@ -4964,6 +5478,7 @@ void cs_c8383603f8c4d277(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_d
 bool cs_fe0d11dfa92eb303(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 pls::cs::Ref<cs_7eeafe36a056776c> cs_3fa9688c0681c440(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 pls::cs::Ref<cs_7eeafe36a056776c> cs_aa0325ad66b87a4e(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::Ref<cs_9465f7541f51c47e> v_friend);
+pls::cs::String cs_9ab9c500b6159399(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 pls::cs::String cs_caa414870501fd01(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 pls::cs::Ref<cs_2d2e25a6914f7709> cs_7c54a1a29559a8d9();
 std::int32_t cs_57ce211197b23477(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
@@ -4986,6 +5501,14 @@ pls::cs::Ref<cs_22115ea4236d0eaa> cs_d95d2ae3639f5d06(pls::cs::String v_friendId
 void cs_d95d2ae3639f5d06_init(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this,pls::cs::String v_friendId,std::int32_t v_minute,std::int32_t v_state);
 void cs_9b78afe85b06708d(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
 void cs_2044571a728aaa71(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+void cs_15b3a4a01f584c1b(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
+void cs_6e4860eac11a2eaf(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+void cs_ee25274aa8cb5d52(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,bool v_take);
+void cs_aae6871b403a2662(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+void cs_5ebe1d2502f4ce47(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+void cs_9006c280cca35190(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
+void cs_87141379d7c66315(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
+void cs_5e6fee4146930115(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
 pls::cs::String cs_62153521fbb1f7f8(pls::cs::String v_text,std::int32_t v_arg);
 pls::cs::String cs_f026ffcc06857429(pls::cs::String v_text,pls::cs::String v_arg);
 pls::cs::String cs_f54ac89fce23e89b(pls::cs::String v_text);
@@ -5096,10 +5619,16 @@ inline void cs_75707aa3f1629c85::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_75707aa3f1629c85::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_b7a42ac708934b81);pls::cs::release_value(cs_ed90df04ab35414b);pls::cs::release_value(cs_807dc6b85c00e4f1);pls::cs::release_value(cs_58530a52dc525520);pls::cs::release_value(cs_a223c771c0fe9b43);pls::cs::release_value(cs_89d5d3fa8409af13);pls::cs::release_value(cs_31d47db7b2e7d371);pls::cs::release_value(cs_2dc5ac072cd26231);pls::cs::release_value(cs_b82f0e491e2956e9);pls::cs::release_value(cs_c82bc46de58d70bd);pls::cs::release_value(cs_671e513e4c8793e8);pls::cs::release_value(cs_a25d2bb7ea2c95a2);pls::cs::release_value(cs_ffca9d08cd4d3d67);pls::cs::release_value(cs_83c641954d4bb2ff);pls::cs::release_value(cs_21458ae50b84b853);pls::cs::release_value(cs_7b34bffcbc937138);pls::cs::release_value(cs_104ce126d7d7af35);pls::cs::release_value(cs_30474cc228341cf9);pls::cs::release_value(cs_5f273399e580008d);pls::cs::release_value(cs_75e115f65d84e5f1);pls::cs::release_value(cs_ac2c11d2c655e0b6);pls::cs::release_value(cs_7fccc65aa1d91c84);pls::cs::release_value(cs_6d14b568fca04db1);pls::cs::release_value(cs_69952927768832b3);pls::cs::release_value(cs_7512a9fff5af76be);pls::cs::release_value(cs_f3a11a1693341ae2);pls::cs::release_value(cs_adb25bcb8b2e59bb);pls::cs::release_value(cs_7819e5eb6a303fba);pls::cs::release_value(cs_80170e2f2c3d60b7);pls::cs::release_value(cs_d5c293234134db81);pls::cs::release_value(cs_6788fae9dd8b3dde);pls::cs::release_value(cs_16ca3d63988e7705);pls::cs::release_value(cs_2f122876c5c342e7);pls::cs::release_value(cs_f6cca4bd05771a01);pls::cs::release_value(cs_a691826bfb630bba);pls::cs::release_value(cs_1fdb22c8f4d8beaf);pls::cs::release_value(cs_577f36347c3c2db0);pls::cs::release_value(cs_e8206405330de5fa);pls::cs::release_value(cs_2101a349ed50a8c0);pls::cs::release_value(cs_2941ae23e8bd3551);pls::cs::release_value(cs_7f32b13509555850);pls::cs::release_value(cs_8a0ae23d62f0abf8);pls::cs::release_value(cs_2c51131d25e6fbd8);pls::cs::release_value(cs_7d522e0150c92ad8);pls::cs::release_value(cs_f1ce63d21381c2e4);pls::cs::release_value(cs_979a985325b57dab);pls::cs::release_value(cs_da5d231085fe2895);pls::cs::release_value(cs_19da1c3b06b4ba2f);pls::cs::release_value(cs_1f49fb1dda3fada1);pls::cs::release_value(cs_727ed00179060f3d);pls::cs::release_value(cs_7edd98804a00e95a);pls::cs::release_value(cs_5b869f8cafc14597);pls::cs::release_value(cs_af5a7df434c9fae6);pls::cs::release_value(cs_29e4de6f4597b737);pls::cs::release_value(cs_ea1cd0fc0df1edde);pls::cs::release_value(cs_16969b176e5aa169);pls::cs::release_value(cs_144a6a9e04253ab9);pls::cs::release_value(cs_5101b99f225cbe2b);pls::cs::release_value(cs_7a0f65f42f915709);pls::cs::release_value(cs_8e959099bc875d06);pls::cs::release_value(cs_c9043c6d9f3c56d4);pls::cs::release_value(cs_12ec80a97347c93e);pls::cs::release_value(cs_79c91dbb5a0c688a);pls::cs::release_value(cs_adc3bf0ba83d1bcc);pls::cs::release_value(cs_8ef1a7beed1fcea1);pls::cs::release_value(cs_232a1679739f6dca);pls::cs::release_value(cs_7273b1e1130a994a);pls::cs::release_value(cs_6d8936c77bbf546a);pls::cs::release_value(cs_57d96dab111833b6);pls::cs::release_value(cs_192776ffaf1b8a54);pls::cs::release_value(cs_ae0fab109d2afc57);pls::cs::release_value(cs_f800bf29e336fc55);pls::cs::release_value(cs_11ff0608e9543ce8);pls::cs::release_value(cs_76cdb4bce236231e);pls::cs::release_value(cs_1fc409e9ccbc6a72);pls::cs::release_value(cs_56a1bbb16d05e55a);pls::cs::release_value(cs_addf9a607ad71b05);pls::cs::release_value(cs_bbf5084e751254c7);pls::cs::release_value(cs_f5b5c51c297a685f);pls::cs::release_value(cs_74d323a14965ff28);pls::cs::release_value(cs_bb881a87daccf490);pls::cs::release_value(cs_ea2d8e1ab0d6deca);pls::cs::release_value(cs_10a4c42f63c8af8e);pls::cs::release_value(cs_d3f33fc75125a6e0);pls::cs::release_value(cs_e199e3d88f421f61);pls::cs::release_value(cs_05eb44f3f27969ae);pls::cs::release_value(cs_f6cfdad8eabaee52);pls::cs::release_value(cs_f15d737f3a879505);pls::cs::release_value(cs_6f4a1577ef652dd9);pls::cs::release_value(cs_8df34f03692e6d43);pls::cs::release_value(cs_762ac3c2a4dcef5c);pls::cs::release_value(cs_fc5d9f8f63ed2872);pls::cs::release_value(cs_db5942b390ba146d);pls::cs::release_value(cs_2024ce81dfc16d73);pls::cs::release_value(cs_f3098b6ab96e2aa4);pls::cs::release_value(cs_03a46546aefa392e);pls::cs::release_value(cs_8a27c15c036e96d9);pls::cs::release_value(cs_828e636c3648d1a3);pls::cs::release_value(cs_c4954d72a753878f);pls::cs::release_value(cs_00cdef5f9bcb9fff);pls::cs::release_value(cs_9b9e83561b98aff3);pls::cs::release_value(cs_0ff778361e5a4bfd);pls::cs::release_value(cs_ef16e96d1abdff31);pls::cs::release_value(cs_c6f9505e97816035);pls::cs::release_value(cs_40ba8cfa1f74cc54);pls::cs::release_value(cs_009036202361aa15);pls::cs::release_value(cs_3d15046b0a8aea3c);pls::cs::release_value(cs_6755a5336f9a28bf);}
 inline void cs_89c0d586cfe20341::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_a54a7772b0af70eb,visitor);pls::cs::trace_value(cs_6480f04c9d401dc1,visitor);}
 inline void cs_89c0d586cfe20341::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_a54a7772b0af70eb);pls::cs::release_value(cs_6480f04c9d401dc1);}
+inline void cs_70c4092da329e972::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_dd489d151d299036,visitor);pls::cs::trace_value(cs_d06132c0c6e80bc6,visitor);pls::cs::trace_value(cs_aacdf84efc9d168d,visitor);}
+inline void cs_70c4092da329e972::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_dd489d151d299036);pls::cs::release_value(cs_d06132c0c6e80bc6);pls::cs::release_value(cs_aacdf84efc9d168d);}
 inline void cs_9f5a071d05c1d020::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_0a97cf487265056a,visitor);pls::cs::trace_value(cs_4710c88d5a9d40f6,visitor);pls::cs::trace_value(cs_219b8c78c2281560,visitor);pls::cs::trace_value(cs_b03e120c72310813,visitor);}
 inline void cs_9f5a071d05c1d020::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_0a97cf487265056a);pls::cs::release_value(cs_4710c88d5a9d40f6);pls::cs::release_value(cs_219b8c78c2281560);pls::cs::release_value(cs_b03e120c72310813);}
 inline void cs_f1dd8f2aa583774c::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_8d4cf7374fb757c0,visitor);pls::cs::trace_value(cs_046578c7b896a653,visitor);pls::cs::trace_value(cs_06ef4703cb291a79,visitor);pls::cs::trace_value(cs_c8b58e9490836581,visitor);}
 inline void cs_f1dd8f2aa583774c::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_8d4cf7374fb757c0);pls::cs::release_value(cs_046578c7b896a653);pls::cs::release_value(cs_06ef4703cb291a79);pls::cs::release_value(cs_c8b58e9490836581);}
+inline void cs_18d5b680efad7752::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_437ffc21e8449636,visitor);pls::cs::trace_value(cs_fda18c2ca470418e,visitor);pls::cs::trace_value(cs_79a73cb588797b93,visitor);}
+inline void cs_18d5b680efad7752::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_437ffc21e8449636);pls::cs::release_value(cs_fda18c2ca470418e);pls::cs::release_value(cs_79a73cb588797b93);}
+inline void cs_77de402a688eeb9d::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_d19c98fe2d601ad1,visitor);pls::cs::trace_value(cs_f78aa7a0d989fd7c,visitor);pls::cs::trace_value(cs_32388247d17bb567,visitor);pls::cs::trace_value(cs_0810a6bbdad8f652,visitor);pls::cs::trace_value(cs_37f984d70850be71,visitor);pls::cs::trace_value(cs_c3b53640b80e29dc,visitor);pls::cs::trace_value(cs_fa8defba521b90ce,visitor);pls::cs::trace_value(cs_7db6741aeec24156,visitor);}
+inline void cs_77de402a688eeb9d::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_d19c98fe2d601ad1);pls::cs::release_value(cs_f78aa7a0d989fd7c);pls::cs::release_value(cs_32388247d17bb567);pls::cs::release_value(cs_0810a6bbdad8f652);pls::cs::release_value(cs_37f984d70850be71);pls::cs::release_value(cs_c3b53640b80e29dc);pls::cs::release_value(cs_fa8defba521b90ce);pls::cs::release_value(cs_7db6741aeec24156);}
 inline void cs_17bc7a5b28fcdc2a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_5ad2213598dfcd5d::trace_edges(visitor);pls::cs::trace_value(cs_ba2d5e888232cb91,visitor);}
 inline void cs_17bc7a5b28fcdc2a::release_edges(){cs_5ad2213598dfcd5d::release_edges();pls::cs::release_value(cs_ba2d5e888232cb91);}
 inline void cs_5ad2213598dfcd5d::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
@@ -5124,16 +5653,30 @@ inline void cs_757516ce190cf813::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_757516ce190cf813::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_4c4f6c2ffd41c9ca);pls::cs::release_value(cs_514f5ce520685c7d);pls::cs::release_value(cs_5d55f15261994422);pls::cs::release_value(cs_c6683c02c87c987a);pls::cs::release_value(cs_62b3f795cc04ca10);pls::cs::release_value(cs_4760729595bf56db);pls::cs::release_value(cs_34b944f664f45179);pls::cs::release_value(cs_c0fba19991e5dbf1);pls::cs::release_value(cs_8d755a9f926cf434);pls::cs::release_value(cs_1e8c6984f2271d7b);pls::cs::release_value(cs_613db60c2c58fddc);}
 inline void cs_6517d63c01870958::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_e751c7c04a2d6904,visitor);pls::cs::trace_value(cs_0ae43c28ac9b9a7a,visitor);pls::cs::trace_value(cs_9581916698464411,visitor);pls::cs::trace_value(cs_bc3ed6e7ac2c682a,visitor);pls::cs::trace_value(cs_b5f7390e18875f50,visitor);pls::cs::trace_value(cs_907bdb29f23c20f6,visitor);pls::cs::trace_value(cs_f1365c978e9c4cae,visitor);pls::cs::trace_value(cs_58d9bdebab2ca99e,visitor);pls::cs::trace_value(cs_4be9171376316f3b,visitor);pls::cs::trace_value(cs_c71933e9bca11daa,visitor);pls::cs::trace_value(cs_a404a90eff0aeb13,visitor);pls::cs::trace_value(cs_4d04dab5735542a9,visitor);}
 inline void cs_6517d63c01870958::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_e751c7c04a2d6904);pls::cs::release_value(cs_0ae43c28ac9b9a7a);pls::cs::release_value(cs_9581916698464411);pls::cs::release_value(cs_bc3ed6e7ac2c682a);pls::cs::release_value(cs_b5f7390e18875f50);pls::cs::release_value(cs_907bdb29f23c20f6);pls::cs::release_value(cs_f1365c978e9c4cae);pls::cs::release_value(cs_58d9bdebab2ca99e);pls::cs::release_value(cs_4be9171376316f3b);pls::cs::release_value(cs_c71933e9bca11daa);pls::cs::release_value(cs_a404a90eff0aeb13);pls::cs::release_value(cs_4d04dab5735542a9);}
+inline void cs_c87dc3d2d0f9440a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_153fdaae746575f6,visitor);pls::cs::trace_value(cs_3f97f246a7d4b8ee,visitor);pls::cs::trace_value(cs_b455953d5d99c95c,visitor);pls::cs::trace_value(cs_ad6910b7b897b250,visitor);pls::cs::trace_value(cs_618ea558ebfe77c3,visitor);pls::cs::trace_value(cs_77e1513fb44fb202,visitor);pls::cs::trace_value(cs_7a8e84cb54b27614,visitor);pls::cs::trace_value(cs_055616eacd82bf39,visitor);pls::cs::trace_value(cs_e9266e43c90692ac,visitor);pls::cs::trace_value(cs_38927e554bfc845e,visitor);}
+inline void cs_c87dc3d2d0f9440a::release_edges(){pls::cs::release_value(cs_153fdaae746575f6);pls::cs::release_value(cs_3f97f246a7d4b8ee);pls::cs::release_value(cs_b455953d5d99c95c);pls::cs::release_value(cs_ad6910b7b897b250);pls::cs::release_value(cs_618ea558ebfe77c3);pls::cs::release_value(cs_77e1513fb44fb202);pls::cs::release_value(cs_7a8e84cb54b27614);pls::cs::release_value(cs_055616eacd82bf39);pls::cs::release_value(cs_e9266e43c90692ac);pls::cs::release_value(cs_38927e554bfc845e);}
+inline void cs_b489b0d33bb37bb8::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_a3decda7a4670291,visitor);pls::cs::trace_value(cs_bb15809d7dd758fd,visitor);pls::cs::trace_value(cs_fe5c5a440152445e,visitor);pls::cs::trace_value(cs_675e01745bf2ff64,visitor);pls::cs::trace_value(cs_23f814b97b0cdf1c,visitor);pls::cs::trace_value(cs_3803cd72992c3762,visitor);pls::cs::trace_value(cs_ac9d14d8fd218a0c,visitor);pls::cs::trace_value(cs_efb4aeef5c6f7590,visitor);pls::cs::trace_value(cs_a051b3620098d255,visitor);pls::cs::trace_value(cs_b0faf2c47f9ac8ae,visitor);pls::cs::trace_value(cs_a1c9fd0398fc101a,visitor);pls::cs::trace_value(cs_ca174d10ffdcf6e9,visitor);pls::cs::trace_value(cs_b28b626edc40d63d,visitor);pls::cs::trace_value(cs_284cc3cac7606c94,visitor);pls::cs::trace_value(cs_a93f8b0e2caf329a,visitor);pls::cs::trace_value(cs_98f6c84566bf4254,visitor);pls::cs::trace_value(cs_a491890168e60b87,visitor);pls::cs::trace_value(cs_cc1025ec243f7ac6,visitor);pls::cs::trace_value(cs_60f22a64c143004f,visitor);pls::cs::trace_value(cs_36d9dd4afd7f06af,visitor);pls::cs::trace_value(cs_3daead10b8062e0b,visitor);pls::cs::trace_value(cs_213a6e42cc559d34,visitor);pls::cs::trace_value(cs_6fe9af9a0c00d125,visitor);pls::cs::trace_value(cs_bbeeaad9491d7958,visitor);pls::cs::trace_value(cs_25a8ca82b2553566,visitor);pls::cs::trace_value(cs_77c315e5b65bf792,visitor);pls::cs::trace_value(cs_f534ca76cfc62abb,visitor);pls::cs::trace_value(cs_d8c919de6b5bfad1,visitor);pls::cs::trace_value(cs_3f3b83b6a44bdc33,visitor);pls::cs::trace_value(cs_241b6f9cd68962e5,visitor);pls::cs::trace_value(cs_4cd5b2fa578372a4,visitor);pls::cs::trace_value(cs_bc8b4cc170dd0946,visitor);pls::cs::trace_value(cs_1f2ecebcf07a4a8b,visitor);pls::cs::trace_value(cs_4170a278138fe06e,visitor);pls::cs::trace_value(cs_c9f1f5e90f89763b,visitor);}
+inline void cs_b489b0d33bb37bb8::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_a3decda7a4670291);pls::cs::release_value(cs_bb15809d7dd758fd);pls::cs::release_value(cs_fe5c5a440152445e);pls::cs::release_value(cs_675e01745bf2ff64);pls::cs::release_value(cs_23f814b97b0cdf1c);pls::cs::release_value(cs_3803cd72992c3762);pls::cs::release_value(cs_ac9d14d8fd218a0c);pls::cs::release_value(cs_efb4aeef5c6f7590);pls::cs::release_value(cs_a051b3620098d255);pls::cs::release_value(cs_b0faf2c47f9ac8ae);pls::cs::release_value(cs_a1c9fd0398fc101a);pls::cs::release_value(cs_ca174d10ffdcf6e9);pls::cs::release_value(cs_b28b626edc40d63d);pls::cs::release_value(cs_284cc3cac7606c94);pls::cs::release_value(cs_a93f8b0e2caf329a);pls::cs::release_value(cs_98f6c84566bf4254);pls::cs::release_value(cs_a491890168e60b87);pls::cs::release_value(cs_cc1025ec243f7ac6);pls::cs::release_value(cs_60f22a64c143004f);pls::cs::release_value(cs_36d9dd4afd7f06af);pls::cs::release_value(cs_3daead10b8062e0b);pls::cs::release_value(cs_213a6e42cc559d34);pls::cs::release_value(cs_6fe9af9a0c00d125);pls::cs::release_value(cs_bbeeaad9491d7958);pls::cs::release_value(cs_25a8ca82b2553566);pls::cs::release_value(cs_77c315e5b65bf792);pls::cs::release_value(cs_f534ca76cfc62abb);pls::cs::release_value(cs_d8c919de6b5bfad1);pls::cs::release_value(cs_3f3b83b6a44bdc33);pls::cs::release_value(cs_241b6f9cd68962e5);pls::cs::release_value(cs_4cd5b2fa578372a4);pls::cs::release_value(cs_bc8b4cc170dd0946);pls::cs::release_value(cs_1f2ecebcf07a4a8b);pls::cs::release_value(cs_4170a278138fe06e);pls::cs::release_value(cs_c9f1f5e90f89763b);}
+inline void cs_7f70540c4f85d74f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_59ca359e3d3d712d,visitor);pls::cs::trace_value(cs_0d03485f6b953700,visitor);}
+inline void cs_7f70540c4f85d74f::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_59ca359e3d3d712d);pls::cs::release_value(cs_0d03485f6b953700);}
+inline void cs_2c2ce8625d613473::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_77de402a688eeb9d::trace_edges(visitor);pls::cs::trace_value(cs_9fbc61c5b5f6475e,visitor);}
+inline void cs_2c2ce8625d613473::release_edges(){cs_77de402a688eeb9d::release_edges();pls::cs::release_value(cs_9fbc61c5b5f6475e);}
+inline void cs_50c5a567a6876ee3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_b489b0d33bb37bb8::trace_edges(visitor);}
+inline void cs_50c5a567a6876ee3::release_edges(){cs_b489b0d33bb37bb8::release_edges();}
 inline void cs_fd683372658feff4::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_468796fb9827f5e6,visitor);pls::cs::trace_value(cs_7b5ebddf22953059,visitor);pls::cs::trace_value(cs_7033e8b866a8dda2,visitor);pls::cs::trace_value(cs_2f097db5779cd511,visitor);pls::cs::trace_value(cs_8f7f3ca9485bb4f8,visitor);pls::cs::trace_value(cs_de1509021f22ef65,visitor);pls::cs::trace_value(cs_de2327fcc8b4451b,visitor);}
 inline void cs_fd683372658feff4::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_468796fb9827f5e6);pls::cs::release_value(cs_7b5ebddf22953059);pls::cs::release_value(cs_7033e8b866a8dda2);pls::cs::release_value(cs_2f097db5779cd511);pls::cs::release_value(cs_8f7f3ca9485bb4f8);pls::cs::release_value(cs_de1509021f22ef65);pls::cs::release_value(cs_de2327fcc8b4451b);}
 inline void cs_1ab688350081022a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_fa8eb5510dacdd09,visitor);pls::cs::trace_value(cs_02dbac76cf838af6,visitor);pls::cs::trace_value(cs_f51be28da9a279d7,visitor);pls::cs::trace_value(cs_107cdef48659996d,visitor);}
 inline void cs_1ab688350081022a::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_fa8eb5510dacdd09);pls::cs::release_value(cs_02dbac76cf838af6);pls::cs::release_value(cs_f51be28da9a279d7);pls::cs::release_value(cs_107cdef48659996d);}
 inline void cs_4368d694d01424b0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_e57500c12d1324ce,visitor);pls::cs::trace_value(cs_c8c6e41546654cef,visitor);pls::cs::trace_value(cs_5d5ca7bd52c7784a,visitor);}
 inline void cs_4368d694d01424b0::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_e57500c12d1324ce);pls::cs::release_value(cs_c8c6e41546654cef);pls::cs::release_value(cs_5d5ca7bd52c7784a);}
+inline void cs_8e2bf0f8fe011785::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_1a5ce6d62f4773c6,visitor);pls::cs::trace_value(cs_2b580027dd662ff5,visitor);pls::cs::trace_value(cs_f1c6c21012307803,visitor);pls::cs::trace_value(cs_004158f701fd286d,visitor);pls::cs::trace_value(cs_3b077329e09687d5,visitor);pls::cs::trace_value(cs_cf10600a0f2e10ac,visitor);pls::cs::trace_value(cs_b85e706eedf54802,visitor);}
+inline void cs_8e2bf0f8fe011785::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_1a5ce6d62f4773c6);pls::cs::release_value(cs_2b580027dd662ff5);pls::cs::release_value(cs_f1c6c21012307803);pls::cs::release_value(cs_004158f701fd286d);pls::cs::release_value(cs_3b077329e09687d5);pls::cs::release_value(cs_cf10600a0f2e10ac);pls::cs::release_value(cs_b85e706eedf54802);}
 inline void cs_96c54d9323f24f8e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_46e267201e1c71a0,visitor);pls::cs::trace_value(cs_4b9a448ac07ffb59,visitor);pls::cs::trace_value(cs_2f45ae0b0f0994b7,visitor);pls::cs::trace_value(cs_62e2405d56cdd561,visitor);pls::cs::trace_value(cs_621b880d085468ff,visitor);pls::cs::trace_value(cs_1d5abc90d11ab0c5,visitor);pls::cs::trace_value(cs_ac0b0615a8627df2,visitor);pls::cs::trace_value(cs_cf6df194a94ad0ad,visitor);pls::cs::trace_value(cs_33ee1b2838e45703,visitor);pls::cs::trace_value(cs_123b4a97b07c8da1,visitor);pls::cs::trace_value(cs_a3ad63599707ed3a,visitor);pls::cs::trace_value(cs_2d58cac572c413df,visitor);pls::cs::trace_value(cs_bc45c0331c449e67,visitor);pls::cs::trace_value(cs_16eb79a87eea849e,visitor);pls::cs::trace_value(cs_d28d1f2a5203923b,visitor);pls::cs::trace_value(cs_91b205f618d8de2f,visitor);pls::cs::trace_value(cs_01a33bedccf1ec34,visitor);pls::cs::trace_value(cs_55c6179707feb486,visitor);pls::cs::trace_value(cs_c0e1478e6e65c04d,visitor);pls::cs::trace_value(cs_26d7ee92947806bd,visitor);pls::cs::trace_value(cs_34be2585a809d78b,visitor);pls::cs::trace_value(cs_4b66e3dd8daf3086,visitor);pls::cs::trace_value(cs_939495bac7ddc94f,visitor);}
 inline void cs_96c54d9323f24f8e::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_46e267201e1c71a0);pls::cs::release_value(cs_4b9a448ac07ffb59);pls::cs::release_value(cs_2f45ae0b0f0994b7);pls::cs::release_value(cs_62e2405d56cdd561);pls::cs::release_value(cs_621b880d085468ff);pls::cs::release_value(cs_1d5abc90d11ab0c5);pls::cs::release_value(cs_ac0b0615a8627df2);pls::cs::release_value(cs_cf6df194a94ad0ad);pls::cs::release_value(cs_33ee1b2838e45703);pls::cs::release_value(cs_123b4a97b07c8da1);pls::cs::release_value(cs_a3ad63599707ed3a);pls::cs::release_value(cs_2d58cac572c413df);pls::cs::release_value(cs_bc45c0331c449e67);pls::cs::release_value(cs_16eb79a87eea849e);pls::cs::release_value(cs_d28d1f2a5203923b);pls::cs::release_value(cs_91b205f618d8de2f);pls::cs::release_value(cs_01a33bedccf1ec34);pls::cs::release_value(cs_55c6179707feb486);pls::cs::release_value(cs_c0e1478e6e65c04d);pls::cs::release_value(cs_26d7ee92947806bd);pls::cs::release_value(cs_34be2585a809d78b);pls::cs::release_value(cs_4b66e3dd8daf3086);pls::cs::release_value(cs_939495bac7ddc94f);}
 inline void cs_2eedf806ae9938c7::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_5c26a6245102c9da,visitor);pls::cs::trace_value(cs_bf63c0f364fb7899,visitor);pls::cs::trace_value(cs_35b13ab65613f601,visitor);pls::cs::trace_value(cs_a761c125310aa486,visitor);pls::cs::trace_value(cs_634b21dce02e25f1,visitor);pls::cs::trace_value(cs_2214583ad4513e43,visitor);pls::cs::trace_value(cs_9af277b6dbe45809,visitor);}
 inline void cs_2eedf806ae9938c7::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_5c26a6245102c9da);pls::cs::release_value(cs_bf63c0f364fb7899);pls::cs::release_value(cs_35b13ab65613f601);pls::cs::release_value(cs_a761c125310aa486);pls::cs::release_value(cs_634b21dce02e25f1);pls::cs::release_value(cs_2214583ad4513e43);pls::cs::release_value(cs_9af277b6dbe45809);}
+inline void cs_0286a0dbe9da0b33::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6e5c685dce0d605a,visitor);pls::cs::trace_value(cs_ef63d4d4b6ab550f,visitor);pls::cs::trace_value(cs_7f418c9c27e5c628,visitor);pls::cs::trace_value(cs_7c40c7d83d91cf74,visitor);pls::cs::trace_value(cs_1931e59a708b44ff,visitor);pls::cs::trace_value(cs_71eb51b3f792969a,visitor);pls::cs::trace_value(cs_49c162566c3d94ef,visitor);}
+inline void cs_0286a0dbe9da0b33::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_6e5c685dce0d605a);pls::cs::release_value(cs_ef63d4d4b6ab550f);pls::cs::release_value(cs_7f418c9c27e5c628);pls::cs::release_value(cs_7c40c7d83d91cf74);pls::cs::release_value(cs_1931e59a708b44ff);pls::cs::release_value(cs_71eb51b3f792969a);pls::cs::release_value(cs_49c162566c3d94ef);}
 inline void cs_c8e1f3d3f96670c6::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_d48b2c060366a193,visitor);pls::cs::trace_value(cs_00f172d916ac1eda,visitor);pls::cs::trace_value(cs_5911c1aef793c754,visitor);}
 inline void cs_c8e1f3d3f96670c6::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_d48b2c060366a193);pls::cs::release_value(cs_00f172d916ac1eda);pls::cs::release_value(cs_5911c1aef793c754);}
 inline void cs_ec6b992b38927bb3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_ce73d1503e9234b0,visitor);pls::cs::trace_value(cs_619bf37d2a3827ee,visitor);pls::cs::trace_value(cs_1ba2c52a921cb7ec,visitor);pls::cs::trace_value(cs_df0d978c8b9bee8d,visitor);pls::cs::trace_value(cs_ac10bd1fd4407364,visitor);pls::cs::trace_value(cs_bbec3199a0864e22,visitor);pls::cs::trace_value(cs_89c1dc1eeea9127f,visitor);pls::cs::trace_value(cs_eabfe8b32a83efad,visitor);}
@@ -5154,6 +5697,10 @@ inline void cs_87fb4d668ea5580b::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_87fb4d668ea5580b::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_b0b620cb9221d56f);pls::cs::release_value(cs_97bc9535d0f50be9);pls::cs::release_value(cs_4332ccd66fc0b845);pls::cs::release_value(cs_ba4a660cefbde7ca);pls::cs::release_value(cs_811006785b43de41);pls::cs::release_value(cs_d01a0b822cf8b96e);pls::cs::release_value(cs_26cb7e30e3aae8e3);pls::cs::release_value(cs_6a47ac5c1690d6ca);pls::cs::release_value(cs_c758e412ac7cc76d);pls::cs::release_value(cs_4517b8f329a3a702);pls::cs::release_value(cs_4fe63b6b69f138f1);pls::cs::release_value(cs_f4a451961599aab2);pls::cs::release_value(cs_713f699cef7d60cc);pls::cs::release_value(cs_5908181b4e6e403a);pls::cs::release_value(cs_511fb284df94c7d6);pls::cs::release_value(cs_6143c284950cea97);pls::cs::release_value(cs_fb47e857b8021848);pls::cs::release_value(cs_138c255898ffd047);pls::cs::release_value(cs_780b408992a932d9);pls::cs::release_value(cs_e8df59013aef0194);pls::cs::release_value(cs_139ae560152ed14a);pls::cs::release_value(cs_8f0b2f99b656c3ee);pls::cs::release_value(cs_b4e2c591dbe50b4d);pls::cs::release_value(cs_227dfebb6c8a16fe);}
 inline void cs_43347b50b6a10e65::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_c4c04b027207a322,visitor);pls::cs::trace_value(cs_5951a1be8973598c,visitor);pls::cs::trace_value(cs_de8fb13c183fecc1,visitor);pls::cs::trace_value(cs_b17fa7396bdbcd90,visitor);pls::cs::trace_value(cs_54138a074e43426e,visitor);pls::cs::trace_value(cs_555538e920ee71b1,visitor);pls::cs::trace_value(cs_192bcc8e433dae59,visitor);pls::cs::trace_value(cs_7055da6e5ca7b4e7,visitor);pls::cs::trace_value(cs_213a47847f8db5d2,visitor);pls::cs::trace_value(cs_76ef6fdfcd6628c6,visitor);pls::cs::trace_value(cs_55c8b74f6db29a7a,visitor);}
 inline void cs_43347b50b6a10e65::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_c4c04b027207a322);pls::cs::release_value(cs_5951a1be8973598c);pls::cs::release_value(cs_de8fb13c183fecc1);pls::cs::release_value(cs_b17fa7396bdbcd90);pls::cs::release_value(cs_54138a074e43426e);pls::cs::release_value(cs_555538e920ee71b1);pls::cs::release_value(cs_192bcc8e433dae59);pls::cs::release_value(cs_7055da6e5ca7b4e7);pls::cs::release_value(cs_213a47847f8db5d2);pls::cs::release_value(cs_76ef6fdfcd6628c6);pls::cs::release_value(cs_55c8b74f6db29a7a);}
+inline void cs_27b8baf7307cff9f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
+inline void cs_27b8baf7307cff9f::release_edges(){pls::cs::ExceptionObject::release_edges();}
+inline void cs_d86010513034d6a0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_9cd046221a0a73b2,visitor);pls::cs::trace_value(cs_559ce244f31c7bdd,visitor);pls::cs::trace_value(cs_5a7be69e432288e7,visitor);pls::cs::trace_value(cs_9bdb4dbfef785f37,visitor);pls::cs::trace_value(cs_48810e5f53569359,visitor);pls::cs::trace_value(cs_ab5676da2e5daeda,visitor);}
+inline void cs_d86010513034d6a0::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_9cd046221a0a73b2);pls::cs::release_value(cs_559ce244f31c7bdd);pls::cs::release_value(cs_5a7be69e432288e7);pls::cs::release_value(cs_9bdb4dbfef785f37);pls::cs::release_value(cs_48810e5f53569359);pls::cs::release_value(cs_ab5676da2e5daeda);}
 inline void cs_8bf13b560e1e05e9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_d37bccc1c3814fc6::trace_edges(visitor);pls::cs::trace_value(cs_46fa0df374412b7f,visitor);pls::cs::trace_value(cs_09f89a2340f25102,visitor);pls::cs::trace_value(cs_39b4b25c748676d2,visitor);pls::cs::trace_value(cs_0cf6503d4b8e4210,visitor);pls::cs::trace_value(cs_5a49f60753ca2ee9,visitor);pls::cs::trace_value(cs_4be24738d1d8ef7a,visitor);pls::cs::trace_value(cs_dfad8621ad4f39fe,visitor);pls::cs::trace_value(cs_ce90b55fbd071e4f,visitor);pls::cs::trace_value(cs_cbcfd5b19b2bb127,visitor);pls::cs::trace_value(cs_210652685e2645f7,visitor);pls::cs::trace_value(cs_d89e7d5965fa0e1a,visitor);pls::cs::trace_value(cs_4c3b911964e18cd8,visitor);pls::cs::trace_value(cs_e45ed7f15498e8a3,visitor);pls::cs::trace_value(cs_d8dd36c416f7b528,visitor);pls::cs::trace_value(cs_6a51aa58c7ee0c73,visitor);pls::cs::trace_value(cs_3ec5e2b430b94a5f,visitor);pls::cs::trace_value(cs_be69170f8edbb93d,visitor);pls::cs::trace_value(cs_eeee6923a0bfab80,visitor);}
 inline void cs_8bf13b560e1e05e9::release_edges(){cs_d37bccc1c3814fc6::release_edges();pls::cs::release_value(cs_46fa0df374412b7f);pls::cs::release_value(cs_09f89a2340f25102);pls::cs::release_value(cs_39b4b25c748676d2);pls::cs::release_value(cs_0cf6503d4b8e4210);pls::cs::release_value(cs_5a49f60753ca2ee9);pls::cs::release_value(cs_4be24738d1d8ef7a);pls::cs::release_value(cs_dfad8621ad4f39fe);pls::cs::release_value(cs_ce90b55fbd071e4f);pls::cs::release_value(cs_cbcfd5b19b2bb127);pls::cs::release_value(cs_210652685e2645f7);pls::cs::release_value(cs_d89e7d5965fa0e1a);pls::cs::release_value(cs_4c3b911964e18cd8);pls::cs::release_value(cs_e45ed7f15498e8a3);pls::cs::release_value(cs_d8dd36c416f7b528);pls::cs::release_value(cs_6a51aa58c7ee0c73);pls::cs::release_value(cs_3ec5e2b430b94a5f);pls::cs::release_value(cs_be69170f8edbb93d);pls::cs::release_value(cs_eeee6923a0bfab80);}
 inline void cs_2ffa6f51468590ea::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_54080fc05a8a4a94,visitor);pls::cs::trace_value(cs_7ee89233a123e4c5,visitor);pls::cs::trace_value(cs_d7dad9c904629e24,visitor);pls::cs::trace_value(cs_ea5db026197fd848,visitor);pls::cs::trace_value(cs_0ca35823e7549127,visitor);pls::cs::trace_value(cs_46933e79ba8e3bb8,visitor);pls::cs::trace_value(cs_366cf90592403e5c,visitor);pls::cs::trace_value(cs_e036a3cb6c960ad1,visitor);pls::cs::trace_value(cs_d1cffb28bc1d14e5,visitor);pls::cs::trace_value(cs_6cf4c894d50a4468,visitor);pls::cs::trace_value(cs_ced2971dae7b95b3,visitor);pls::cs::trace_value(cs_528d7332c1044dd7,visitor);pls::cs::trace_value(cs_cf8366a706eb588f,visitor);pls::cs::trace_value(cs_9e66073c32cd8559,visitor);pls::cs::trace_value(cs_d2755abb70d3cbb1,visitor);pls::cs::trace_value(cs_6e73306221e03084,visitor);pls::cs::trace_value(cs_dcdb2fb19217cbe2,visitor);pls::cs::trace_value(cs_aea573cf5797e47f,visitor);pls::cs::trace_value(cs_6085a8404057112e,visitor);pls::cs::trace_value(cs_2e0afae818c1dc4f,visitor);pls::cs::trace_value(cs_cdfcdbd992e3cfbe,visitor);pls::cs::trace_value(cs_4f5f8bd889b02fc5,visitor);pls::cs::trace_value(cs_efab780974b7f9b9,visitor);pls::cs::trace_value(cs_92421d82e73ceb9b,visitor);pls::cs::trace_value(cs_0667af943570a6eb,visitor);pls::cs::trace_value(cs_f14e7a6200c421bf,visitor);pls::cs::trace_value(cs_52fc1b248ca1f4f2,visitor);pls::cs::trace_value(cs_2a0c420bbdb2e066,visitor);pls::cs::trace_value(cs_05f3756b1e102dcf,visitor);pls::cs::trace_value(cs_45712cf6f114ccbe,visitor);pls::cs::trace_value(cs_6e031a4c2bb5dcda,visitor);pls::cs::trace_value(cs_3f2fbfc113acbae0,visitor);pls::cs::trace_value(cs_4e54dd9708daac19,visitor);pls::cs::trace_value(cs_b98913111c35cd59,visitor);pls::cs::trace_value(cs_66167ec7b530e82b,visitor);pls::cs::trace_value(cs_785744431b3607a3,visitor);pls::cs::trace_value(cs_4e9d5679c831c705,visitor);pls::cs::trace_value(cs_5d8524a356e38017,visitor);pls::cs::trace_value(cs_d7f9e0682751f782,visitor);pls::cs::trace_value(cs_168a4d2c87612e3b,visitor);pls::cs::trace_value(cs_0326c595ecb080b3,visitor);pls::cs::trace_value(cs_f7f06d8742daeb02,visitor);pls::cs::trace_value(cs_3c515a641b6b6cb5,visitor);pls::cs::trace_value(cs_914a694717591e02,visitor);pls::cs::trace_value(cs_d242149a00592f6d,visitor);pls::cs::trace_value(cs_dcc4c8afca6eace7,visitor);pls::cs::trace_value(cs_64448a7513b68aab,visitor);pls::cs::trace_value(cs_6de10b92fdc859b0,visitor);pls::cs::trace_value(cs_3d3b5753ef643c4e,visitor);pls::cs::trace_value(cs_797d22d4c2c75df4,visitor);pls::cs::trace_value(cs_a983c6db567ab7de,visitor);pls::cs::trace_value(cs_298939cfc85b5145,visitor);pls::cs::trace_value(cs_7ca29017940553a1,visitor);pls::cs::trace_value(cs_9a33424672d806b2,visitor);pls::cs::trace_value(cs_3164deeb1fb30c7a,visitor);pls::cs::trace_value(cs_bfeb1e42ccfb2f05,visitor);pls::cs::trace_value(cs_ab1e9b1101610757,visitor);pls::cs::trace_value(cs_cdf688e3d780655b,visitor);pls::cs::trace_value(cs_c38b063657ea0f85,visitor);pls::cs::trace_value(cs_215cc6a45e18ecc6,visitor);pls::cs::trace_value(cs_d6730e3a025029e1,visitor);pls::cs::trace_value(cs_37dd86c21286891a,visitor);pls::cs::trace_value(cs_4c7e3a6362e30637,visitor);pls::cs::trace_value(cs_86eaf5d444f8e536,visitor);pls::cs::trace_value(cs_d0591574a68d1633,visitor);pls::cs::trace_value(cs_39dbfa9f37472c19,visitor);pls::cs::trace_value(cs_2ede7cf6ebbf051e,visitor);pls::cs::trace_value(cs_b71369152562ebeb,visitor);pls::cs::trace_value(cs_8f07bdb5c47c49cc,visitor);pls::cs::trace_value(cs_eca53bbf868877b6,visitor);pls::cs::trace_value(cs_f5121936b566a729,visitor);pls::cs::trace_value(cs_9d3b28b6be441835,visitor);pls::cs::trace_value(cs_0b827d5204787c3d,visitor);pls::cs::trace_value(cs_5dc879bb5d27cbe7,visitor);pls::cs::trace_value(cs_16d57d0322b8df94,visitor);pls::cs::trace_value(cs_62965223bf397d38,visitor);pls::cs::trace_value(cs_1790b037c0c6cb1a,visitor);pls::cs::trace_value(cs_fe88d9554b88dec0,visitor);pls::cs::trace_value(cs_7aabaf6601189f0f,visitor);pls::cs::trace_value(cs_b7fccfa2cdbb09c7,visitor);pls::cs::trace_value(cs_af9ed4d539d464db,visitor);pls::cs::trace_value(cs_bdfd886245214831,visitor);pls::cs::trace_value(cs_493f330cb256debe,visitor);pls::cs::trace_value(cs_cd44e68e98d12f50,visitor);pls::cs::trace_value(cs_ddbc612abf18f44b,visitor);pls::cs::trace_value(cs_2efb0e1b362e0a2d,visitor);pls::cs::trace_value(cs_2981baf401ba64bb,visitor);}
@@ -5222,6 +5769,8 @@ inline void cs_2d2e25a6914f7709::trace_edges(const pls::cs::EdgeVisitor&visitor)
 inline void cs_2d2e25a6914f7709::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_96e8baf9470c6eef);pls::cs::release_value(cs_4e08203868786b3e);pls::cs::release_value(cs_6bcda45671e82301);pls::cs::release_value(cs_cf93b6d0c87591a9);pls::cs::release_value(cs_604e4b1ef0997a4e);pls::cs::release_value(cs_dc19769b18c674e0);pls::cs::release_value(cs_52a8e080b7bfd117);pls::cs::release_value(cs_28588b55de39809d);pls::cs::release_value(cs_86537e9773f89c90);pls::cs::release_value(cs_265901ac3e38e5a5);pls::cs::release_value(cs_c8c9d3daa8567fa6);pls::cs::release_value(cs_60d30afb5a438553);pls::cs::release_value(cs_91d5244f0e476cfe);pls::cs::release_value(cs_f0ec3f768b4c70c3);pls::cs::release_value(cs_1bddb24fb5cf7315);pls::cs::release_value(cs_daf9583746fd0c6a);pls::cs::release_value(cs_be1d7f91510795ac);pls::cs::release_value(cs_c384965fc0d4bd25);pls::cs::release_value(cs_ab8cb0b69ebcac70);pls::cs::release_value(cs_cee7c1140c10ee97);}
 inline void cs_22115ea4236d0eaa::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_2940d449a6dc2c58,visitor);pls::cs::trace_value(cs_db96c721c151249c,visitor);pls::cs::trace_value(cs_0ba613afa6875a18,visitor);}
 inline void cs_22115ea4236d0eaa::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_2940d449a6dc2c58);pls::cs::release_value(cs_db96c721c151249c);pls::cs::release_value(cs_0ba613afa6875a18);}
+inline void cs_925b3cf054e42b78::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_b489b0d33bb37bb8::trace_edges(visitor);pls::cs::trace_value(cs_0f9909df8253bfe0,visitor);pls::cs::trace_value(cs_42ee6ef0eb7e8761,visitor);pls::cs::trace_value(cs_25150d256e75d102,visitor);}
+inline void cs_925b3cf054e42b78::release_edges(){cs_b489b0d33bb37bb8::release_edges();pls::cs::release_value(cs_0f9909df8253bfe0);pls::cs::release_value(cs_42ee6ef0eb7e8761);pls::cs::release_value(cs_25150d256e75d102);}
 inline void cs_e00832a42e12ec3b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_1ab688350081022a::trace_edges(visitor);}
 inline void cs_e00832a42e12ec3b::release_edges(){cs_1ab688350081022a::release_edges();}
 inline void cs_23ed5cbd0e3922f3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_4368d694d01424b0::trace_edges(visitor);}
@@ -5236,8 +5785,12 @@ inline void cs_9326c27a92cfea3a::cs_virtual_5bc2a6aa84d89f40(std::int32_t v_keyC
 inline void cs_9326c27a92cfea3a::cs_virtual_e94b5958615f0bf0(std::int32_t v_key) {cs_e94b5958615f0bf0(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()),v_key);}
 inline void cs_9326c27a92cfea3a::cs_virtual_43e8c5a72fc9d69b() {cs_43e8c5a72fc9d69b(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()));}
 inline bool cs_9326c27a92cfea3a::cs_virtual_1698aae3145703cc(pls::cs::Ref<cs_3a3d09f9e75a32d2> v_c) {return cs_1698aae3145703cc(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()),v_c);}
+inline void cs_9326c27a92cfea3a::cs_virtual_f7a60b8dd9e85732() {cs_f7a60b8dd9e85732(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()));}
+inline void cs_9326c27a92cfea3a::cs_virtual_14c25464911dc345(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_14c25464911dc345(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()),v_g);}
+inline bool cs_89c0d586cfe20341::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_4b78e5289d2c84c2(std::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()),v_obj);}
 inline void cs_5451b2154f09f4c5::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_d85e674b28736422(std::static_pointer_cast<cs_5451b2154f09f4c5>(shared_from_this()),v_g);}
 inline bool cs_5451b2154f09f4c5::Finish() {return cs_2951e25803cf3104(std::static_pointer_cast<cs_5451b2154f09f4c5>(shared_from_this()));}
+inline bool cs_3ee77977aa791047::Finish() {return cs_2f6ed49f4ea77db8(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 inline std::int32_t cs_3ee77977aa791047::GetHashCode() {return cs_c332efb9d5fe5210(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 inline std::int32_t cs_3ee77977aa791047::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_64179362a8f1bef2(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_type,v_index);}
 inline bool cs_5451b2154f09f4c5::Resume() {return cs_f6039316248c9637(std::static_pointer_cast<cs_5451b2154f09f4c5>(shared_from_this()));}
@@ -5257,6 +5810,7 @@ inline std::int32_t cs_d0b7ac4933bed3ac::GetHashCode() {return cs_9ca337bd8438da
 inline bool cs_d0b7ac4933bed3ac::Resume() {return cs_48b0c339ae28a97d(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()));}
 inline pls::cs::String cs_d0b7ac4933bed3ac::ToString() {return cs_a20d3d4d705fb05f(std::static_pointer_cast<cs_d0b7ac4933bed3ac>(shared_from_this()));}
 inline bool cs_5451b2154f09f4c5::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_7a6109cc91f876a5(std::static_pointer_cast<cs_5451b2154f09f4c5>(shared_from_this()),v_e);}
+inline bool cs_834c8c593e682d3f::Finish() {return cs_93c486009381ff04(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 inline std::int32_t cs_834c8c593e682d3f::GetHashCode() {return cs_dfc26b43dd564060(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 inline std::int32_t cs_834c8c593e682d3f::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_7e79fe9d6b3a0ee0(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_type,v_index);}
 inline bool cs_834c8c593e682d3f::Resume() {return cs_707d993c797a341d(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
@@ -5277,7 +5831,9 @@ inline std::int32_t cs_a2cea92715051fa5::GetHashCode() {return cs_fbbfd4efc888ec
 inline bool cs_a2cea92715051fa5::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_23e2161b160086ab(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()),v_e);}
 inline bool cs_a2cea92715051fa5::Resume() {return cs_ebac7785f8a5a1f3(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
 inline pls::cs::String cs_a2cea92715051fa5::ToString() {return cs_19af8a8701589f9f(std::static_pointer_cast<cs_a2cea92715051fa5>(shared_from_this()));}
+inline bool cs_e31f80000513fe82::Finish() {return cs_98e3505e1c38b93d(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline std::int32_t cs_e31f80000513fe82::GetHashCode() {return cs_a369b9c98e9b81ec(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
+inline bool cs_e31f80000513fe82::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_a3bbb54f7183a8b3(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()),v_e);}
 inline bool cs_e31f80000513fe82::Resume() {return cs_157441e08e263633(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline pls::cs::String cs_e31f80000513fe82::ToString() {return cs_c27882f05e0eaec9(std::static_pointer_cast<cs_e31f80000513fe82>(shared_from_this()));}
 inline std::int32_t cs_86b804989f2a95bb::cs_virtual_da04bc9883e88cc6(pls::cs::Ref<cs_2ef6641b828546ac> v_player) {return cs_da04bc9883e88cc6(std::static_pointer_cast<cs_86b804989f2a95bb>(shared_from_this()),v_player);}
@@ -5287,10 +5843,12 @@ inline void cs_bad15ea7469ee2b9::OnDestroy() {cs_436207ec3f57c2d7(std::static_po
 inline void cs_bad15ea7469ee2b9::OnDraw() {cs_ac69d759d513a4d5(std::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
 inline void cs_bad15ea7469ee2b9::OnResume() {cs_fb26c3c912586adf(std::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
 inline void cs_bad15ea7469ee2b9::OnSuspend() {cs_48b06d9d94c6401b(std::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
+inline void cs_4368d694d01424b0::cs_virtual_9ed05c6b3a5346ec() {cs_9ed05c6b3a5346ec(std::static_pointer_cast<cs_4368d694d01424b0>(shared_from_this()));}
+inline void cs_b489b0d33bb37bb8::cs_virtual_9ca5e184bd541bee() {cs_9ca5e184bd541bee(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 inline bool cs_792a6372766eb19f::cs_virtual_9b7c686ee42b269b() {return cs_d237d8c9ca71f7cc(std::static_pointer_cast<cs_792a6372766eb19f>(shared_from_this()));}
 inline void cs_792a6372766eb19f::cs_virtual_acea3de130dbb7cd() {cs_df21b41e03f2f36f(std::static_pointer_cast<cs_792a6372766eb19f>(shared_from_this()));}
-inline void cs_9326c27a92cfea3a::cs_virtual_14c25464911dc345(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_14c25464911dc345(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()),v_g);}
 inline void cs_e315dac1df3b175d::cs_virtual_14c25464911dc345(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_344a1e1fb645eab7(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
+inline void cs_e315dac1df3b175d::cs_virtual_f7a60b8dd9e85732() {cs_c3eb1a825af8d5f9(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
 inline bool cs_9326c27a92cfea3a::cs_virtual_6236178d574fe9e3() {return cs_6236178d574fe9e3(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()));}
 inline void cs_9326c27a92cfea3a::cs_virtual_77304e19eb4e3af6(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_77304e19eb4e3af6(std::static_pointer_cast<cs_9326c27a92cfea3a>(shared_from_this()),v_g);}
 inline void cs_e315dac1df3b175d::cs_virtual_77304e19eb4e3af6(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_c536f61eec0faa4d(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
@@ -5312,8 +5870,10 @@ inline void cs_931908081ea62151::cs_virtual_eae24f37838268a3(pls::cs::Ref<pls::g
 inline void cs_6ee7d14059be1acf::cs_virtual_5255d4c2789eac48(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_5255d4c2789eac48(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 inline bool cs_6ee7d14059be1acf::cs_virtual_39912b67b6e00cf6(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {return cs_39912b67b6e00cf6(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 inline void cs_6ee7d14059be1acf::cs_virtual_52c48544109f9d2d(pls::cs::Array<std::uint8_t> v_data) {cs_52c48544109f9d2d(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_data);}
+inline void cs_6ee7d14059be1acf::cs_virtual_83421b64347901dd(bool v_take) {cs_83421b64347901dd(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_take);}
 inline void cs_6ee7d14059be1acf::cs_virtual_219ebd8a0b10d8e7(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_219ebd8a0b10d8e7(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 inline void cs_6ee7d14059be1acf::cs_virtual_4ebd3696a44e4f6b(bool v_detail) {cs_4ebd3696a44e4f6b(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_detail);}
+inline pls::cs::Array<std::uint8_t> cs_6ee7d14059be1acf::cs_virtual_0c7e726b5f1c3198() {return cs_0c7e726b5f1c3198(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
 inline pls::cs::Array<std::uint8_t> cs_6ee7d14059be1acf::cs_virtual_9d8c67a5fdbb3c7d() {return cs_9d8c67a5fdbb3c7d(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
 inline std::int32_t cs_cd85e7c847ae4598::GetHashCode() {return cs_a2ebcb9a739953bd(std::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
 inline pls::cs::String cs_cd85e7c847ae4598::ToString() {return cs_ad7fb776daed3dde(std::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
@@ -5335,7 +5895,6 @@ inline std::int32_t cs_f52c904bea265acc::GetHashCode() {return cs_69ffb55861de28
 inline bool cs_f52c904bea265acc::Resume() {return cs_affd13cffeea0427(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
 inline pls::cs::String cs_f52c904bea265acc::ToString() {return cs_7ed9b921ca878f0d(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
 inline bool cs_f52c904bea265acc::Update() {return cs_3b9c14c758ceb110(std::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
-inline bool cs_89c0d586cfe20341::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_4b78e5289d2c84c2(std::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()),v_obj);}
 inline bool cs_7eeafe36a056776c::Finish() {return cs_700199628a5d3944(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
 inline std::int32_t cs_7eeafe36a056776c::GetHashCode() {return cs_bbd44ad53610e27c(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
 inline bool cs_7eeafe36a056776c::cs_virtual_7a6109cc91f876a5(pls::cs::Ref<cs_757516ce190cf813> v_e) {return cs_2e8467cceed75e07(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()),v_e);}
@@ -5343,14 +5902,18 @@ inline bool cs_7eeafe36a056776c::Resume() {return cs_50194a8436c518b8(std::stati
 inline pls::cs::String cs_7eeafe36a056776c::ToString() {return cs_7b5204c0798583ad(std::static_pointer_cast<cs_7eeafe36a056776c>(shared_from_this()));}
 inline bool cs_5dc998c2cffb18c8::CheckMainWindow() {return cs_caae27da0b1b6167(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 inline bool cs_5dc998c2cffb18c8::Finish() {return cs_03296355172125d8(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+inline void cs_5dc998c2cffb18c8::cs_virtual_6cb47d5f5df8e7cc() {cs_c5e84308fbc916b7(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 inline pls::cs::String cs_5dc998c2cffb18c8::ToString() {return cs_9c863e1edb2b5045(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+inline bool cs_5dc998c2cffb18c8::Update() {return cs_f76006a37a507361(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 inline bool cs_c9cd56cdd30ecf7a::CheckMainWindow() {return cs_27c2d458904084a3(std::static_pointer_cast<cs_c9cd56cdd30ecf7a>(shared_from_this()));}
 inline bool cs_c9cd56cdd30ecf7a::Finish() {return cs_b220f0282476e9dd(std::static_pointer_cast<cs_c9cd56cdd30ecf7a>(shared_from_this()));}
 inline pls::cs::String cs_c9cd56cdd30ecf7a::ToString() {return cs_e349d7428c1381fa(std::static_pointer_cast<cs_c9cd56cdd30ecf7a>(shared_from_this()));}
 inline bool cs_d01bf6d528df5d3e::CheckMainWindow() {return cs_3ce550173a351902(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
+inline bool cs_d01bf6d528df5d3e::Finish() {return cs_4cbf34065e9c29cc(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline std::int32_t cs_d01bf6d528df5d3e::GetHashCode() {return cs_424cc8dfa482f7f5(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline bool cs_d01bf6d528df5d3e::Resume() {return cs_2a2e46575659084c(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline pls::cs::String cs_d01bf6d528df5d3e::ToString() {return cs_83e48a5feada74ed(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
+inline bool cs_d01bf6d528df5d3e::Update() {return cs_6ee8d12c93887b93(std::static_pointer_cast<cs_d01bf6d528df5d3e>(shared_from_this()));}
 inline bool cs_c63e265fb6ff73e9::CheckMainWindow() {return cs_b3bffc2410b4d94b(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
 inline bool cs_c63e265fb6ff73e9::Finish() {return cs_28f69dfcc12f8ce5(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
 inline std::int32_t cs_c63e265fb6ff73e9::GetHashCode() {return cs_d2c3db6c33dce4e4(std::static_pointer_cast<cs_c63e265fb6ff73e9>(shared_from_this()));}
@@ -5360,6 +5923,15 @@ inline bool cs_7a8a85ab4c0396df::CheckMainWindow() {return cs_62510745d5314f43(s
 inline pls::cs::String cs_7a8a85ab4c0396df::ToString() {return cs_6d5017124c1ae7a5(std::static_pointer_cast<cs_7a8a85ab4c0396df>(shared_from_this()));}
 inline bool cs_7a8a85ab4c0396df::Update() {return cs_a5d5caa24a2ba6d6(std::static_pointer_cast<cs_7a8a85ab4c0396df>(shared_from_this()));}
 inline void cs_ec8ac507fb495e84::cs_virtual_9401fb4f0ec784c5(std::int32_t v_value) {cs_c9feed9f197e9812(std::static_pointer_cast<cs_ec8ac507fb495e84>(shared_from_this()),v_value);}
+inline void cs_b489b0d33bb37bb8::cs_virtual_706bcbd9776cf6ef() {cs_706bcbd9776cf6ef(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+inline void cs_925b3cf054e42b78::cs_virtual_706bcbd9776cf6ef() {cs_15b3a4a01f584c1b(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()));}
+inline void cs_925b3cf054e42b78::cs_virtual_10a01b9d900fa6c0(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_6e4860eac11a2eaf(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()),v_stream);}
+inline void cs_925b3cf054e42b78::cs_virtual_7ebfee2a92c0d37e(bool v_take) {cs_ee25274aa8cb5d52(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()),v_take);}
+inline void cs_925b3cf054e42b78::cs_virtual_e634eb1896b92689(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_aae6871b403a2662(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()),v_os);}
+inline void cs_925b3cf054e42b78::cs_virtual_9a7c0378d22d6bd5(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_5ebe1d2502f4ce47(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()),v_os);}
+inline void cs_925b3cf054e42b78::cs_virtual_3481915358ac0fff() {cs_9006c280cca35190(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()));}
+inline void cs_925b3cf054e42b78::cs_virtual_06f3c8d943914943() {cs_87141379d7c66315(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()));}
+inline void cs_925b3cf054e42b78::cs_virtual_9ca5e184bd541bee() {cs_5e6fee4146930115(std::static_pointer_cast<cs_925b3cf054e42b78>(shared_from_this()));}
 inline void cs_23ed5cbd0e3922f3::cs_virtual_9ed05c6b3a5346ec() {cs_a56b328f925cc5e4(std::static_pointer_cast<cs_23ed5cbd0e3922f3>(shared_from_this()));}
 inline void cs_23ed5cbd0e3922f3::cs_virtual_2186b93ea03d07c2() {cs_e17b9d62b02e038f(std::static_pointer_cast<cs_23ed5cbd0e3922f3>(shared_from_this()));}
 inline void cs_af32d28251411c95::cs_virtual_07a0bb2e4afc307c(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_9d38c5ec25140485(std::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()),v_g);}
@@ -5372,7 +5944,29 @@ inline pls::cs::String cs_9cade6927d6e0bf3::ToString() {return cs_db050df5f01701
 inline std::int32_t cs_9cade6927d6e0bf3::GetHashCode() {return cs_184041a08c276493(std::static_pointer_cast<cs_9cade6927d6e0bf3>(shared_from_this()));}
 inline bool cs_c8e1f3d3f96670c6::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_e4546eba7825f981(std::static_pointer_cast<cs_c8e1f3d3f96670c6>(shared_from_this()),v_obj);}
 inline std::int32_t cs_c8e1f3d3f96670c6::GetHashCode() {return cs_f80b20705650c56f(std::static_pointer_cast<cs_c8e1f3d3f96670c6>(shared_from_this()));}
+inline void cs_b489b0d33bb37bb8::cs_virtual_7a0d5be4ca3b1254() {cs_7a0d5be4ca3b1254(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+inline void cs_b489b0d33bb37bb8::cs_virtual_51f84c16de790570() {cs_51f84c16de790570(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+inline void cs_b489b0d33bb37bb8::cs_virtual_4e3c4bf49c24e27d(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_4e3c4bf49c24e27d(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_stream);}
+inline void cs_b489b0d33bb37bb8::cs_virtual_e634eb1896b92689(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_e634eb1896b92689(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_os);}
+inline void cs_b489b0d33bb37bb8::cs_virtual_7ebfee2a92c0d37e(bool v_take) {cs_7ebfee2a92c0d37e(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_take);}
+inline void cs_b489b0d33bb37bb8::cs_virtual_10a01b9d900fa6c0(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_10a01b9d900fa6c0(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_stream);}
+inline void cs_b489b0d33bb37bb8::cs_virtual_9a7c0378d22d6bd5(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_9a7c0378d22d6bd5(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_os);}
+inline bool cs_b489b0d33bb37bb8::cs_virtual_89868493b44dd8bd(std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data) {return cs_89868493b44dd8bd(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_requestCode,v_resultCode,v_data);}
+inline void cs_b489b0d33bb37bb8::cs_virtual_7226942a83482c7a() {cs_7226942a83482c7a(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+inline void cs_b489b0d33bb37bb8::cs_virtual_486e7c39f05ac1d6() {cs_486e7c39f05ac1d6(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+inline pls::cs::String cs_8e2bf0f8fe011785::ToString() {return cs_1152b3bafa6371e3(std::static_pointer_cast<cs_8e2bf0f8fe011785>(shared_from_this()));}
+inline void cs_8e2bf0f8fe011785::cs_virtual_8d925e3b30750eb6(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_stream) {cs_5372ec5ae5ecedc0(std::static_pointer_cast<cs_8e2bf0f8fe011785>(shared_from_this()),v_stream);}
+inline void cs_8e2bf0f8fe011785::cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_c147ab1af9f1939f(std::static_pointer_cast<cs_8e2bf0f8fe011785>(shared_from_this()),v_stream);}
+inline void cs_50c5a567a6876ee3::cs_virtual_3481915358ac0fff() {cs_e4f93c2947373f31(std::static_pointer_cast<cs_50c5a567a6876ee3>(shared_from_this()));}
+inline void cs_50c5a567a6876ee3::cs_virtual_06f3c8d943914943() {cs_c8026282c0a24bbf(std::static_pointer_cast<cs_50c5a567a6876ee3>(shared_from_this()));}
+inline void cs_50c5a567a6876ee3::cs_virtual_7226942a83482c7a() {cs_b4e47fce38dcaf3b(std::static_pointer_cast<cs_50c5a567a6876ee3>(shared_from_this()));}
+inline void cs_50c5a567a6876ee3::cs_virtual_486e7c39f05ac1d6() {cs_dc354c17f44bb95c(std::static_pointer_cast<cs_50c5a567a6876ee3>(shared_from_this()));}
+inline std::int32_t cs_89c0d586cfe20341::GetHashCode() {return cs_d33c547c634b2bdf(std::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()));}
 inline bool cs_f1dd8f2aa583774c::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_d7701387e8f8c44a(std::static_pointer_cast<cs_f1dd8f2aa583774c>(shared_from_this()),v_obj);}
 inline std::int32_t cs_f1dd8f2aa583774c::GetHashCode() {return cs_140e188d0a82c8b7(std::static_pointer_cast<cs_f1dd8f2aa583774c>(shared_from_this()));}
-inline std::int32_t cs_89c0d586cfe20341::GetHashCode() {return cs_d33c547c634b2bdf(std::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()));}
+inline bool cs_9f5a071d05c1d020::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_a3399ea8077672e2(std::static_pointer_cast<cs_9f5a071d05c1d020>(shared_from_this()),v_obj);}
+inline std::int32_t cs_9f5a071d05c1d020::GetHashCode() {return cs_cdd09ba02ba5e5aa(std::static_pointer_cast<cs_9f5a071d05c1d020>(shared_from_this()));}
+inline void cs_4368d694d01424b0::cs_virtual_2186b93ea03d07c2() {cs_2186b93ea03d07c2(std::static_pointer_cast<cs_4368d694d01424b0>(shared_from_this()));}
+inline pls::cs::String cs_7f70540c4f85d74f::ToString() {return cs_9eab9ded735366ec(std::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
+inline std::int32_t cs_7f70540c4f85d74f::GetHashCode() {return cs_6853b87e6d3191df(std::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
 }

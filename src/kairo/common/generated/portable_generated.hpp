@@ -16,6 +16,7 @@
 #include "managed_stream_reader.hpp"
 #include "managed_path.hpp"
 #include "managed_string_ops.hpp"
+#include "managed_guid_uri.hpp"
 #include "system.hpp"
 #include "globalization.hpp"
 #include "storage.hpp"

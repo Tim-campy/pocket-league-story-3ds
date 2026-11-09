@@ -21,6 +21,7 @@ inline void debug_log(const cs::Ref<cs::Object>& value){debug_log(value?value->T
 class UnityApplication {
     inline static std::atomic<std::int32_t> target_{-1};
 public:
+    static void OpenURL(const cs::String&);
     static void set_targetFrameRate(std::int32_t value){target_.store(value);}
     static std::int32_t get_targetFrameRate(){return target_.load();}
     static void pace(std::chrono::steady_clock::time_point frame_start){
@@ -41,6 +42,12 @@ public:
     static std::int32_t get_vSyncCount(){return 0;}
 };
 struct NativePluginContext {std::int32_t language{};bool logging{};bool initialized{};};
+// KairoPlugin._getPackageName's non-Android/non-UnityEditor result. SDL does
+// not load UnityEditor.PlayerSettings or impersonate an Android package.
+inline cs::String native_package_name(){return cs::String(u"");}
+// KairoPlugin._getStatusBarHeight/_getStatusBarPosition non-Android branches.
+inline std::int32_t native_status_bar_height(){return 0;}
+inline std::int32_t native_status_bar_position(){return 0;}
 inline std::mutex native_plugin_mutex;
 inline NativePluginContext native_plugin_context;
 inline void native_plugin_init(std::int32_t language,bool logging,const cs::String& license_key){

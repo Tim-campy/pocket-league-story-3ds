@@ -1,0 +1,234 @@
+{
+  "operation": "historical-collation-license-dependency-ablation",
+  "status": "PASS",
+  "baseline_checkpoint": "af66d13",
+  "inputs": {
+    "tools/audit_collation_license.py": "5ba73169d1809c39681b5e4206afae5368584e7bb570462fb6a4d4899265ec48",
+    "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+    "tests/translator/mono_collation_edge_fixtures.cpp": "116cc94ef9de17f26cb0380c4067c702b759905d4a723ea0e078ef340b51bbe6",
+    "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
+    "src/kairo/common/managed_collation.hpp": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
+    "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
+    "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
+    "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8"
+  },
+  "oracle_stdout_sha256": "299e5c22d454d7b4346b717fb6428288bd41739ca59f415dc7e12edd3c81257b",
+  "results": {
+    "baseline": {
+      "cases": 25704,
+      "mismatches": 0,
+      "by_operation": {},
+      "by_culture": {},
+      "en_us_operations": {},
+      "witnesses": [],
+      "provider_sha256": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
+      "executable_sha256": "5b130098cbd7d37eb8e216a13de9e9ae935a02190a7ae1ed2f4c34570ca4423a",
+      "stdout_sha256": "299e5c22d454d7b4346b717fb6428288bd41739ca59f415dc7e12edd3c81257b"
+    },
+    "without_case_tables": {
+      "cases": 25704,
+      "mismatches": 8,
+      "by_operation": {
+        "upper": 8
+      },
+      "by_culture": {
+        "0": 1,
+        "1": 1,
+        "2": 1,
+        "3": 1,
+        "4": 1,
+        "5": 1,
+        "6": 1,
+        "7": 1
+      },
+      "en_us_operations": {
+        "upper": 1
+      },
+      "witnesses": [
+        {
+          "case": "c1a5upper",
+          "expected": "str:00c9",
+          "actual": "str:00e9"
+        }
+      ],
+      "provider_sha256": "48dbaa6555d660728af2698b1388628735187d05daaad1ce5ce5efbfe28b5bdf",
+      "executable_sha256": "1458e10ff15c194bdbcb3ce96c01aeab8bdc7d7617265787fd427bdfc856b156",
+      "stdout_sha256": "a2ceffbd008394e3f220899ec759104d12954d9f33252642d6ffadcf24694309"
+    },
+    "without_unassigned_bitmap": {
+      "cases": 25704,
+      "mismatches": 992,
+      "by_operation": {
+        "starts": 176,
+        "compare": 96,
+        "equalsCI": 80,
+        "index0": 176,
+        "last": 176,
+        "lastEnd": 176,
+        "index1": 48,
+        "ends": 64
+      },
+      "by_culture": {
+        "0": 124,
+        "1": 124,
+        "2": 124,
+        "3": 124,
+        "4": 124,
+        "5": 124,
+        "6": 124,
+        "7": 124
+      },
+      "en_us_operations": {
+        "starts": 22,
+        "compare": 12,
+        "equalsCI": 10,
+        "index0": 22,
+        "last": 22,
+        "lastEnd": 22,
+        "index1": 6,
+        "ends": 8
+      },
+      "witnesses": [
+        {
+          "case": "c1a0b10compare",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a2b11ends",
+          "expected": "True",
+          "actual": "False"
+        },
+        {
+          "case": "c1a0b10equalsCI",
+          "expected": "True",
+          "actual": "False"
+        },
+        {
+          "case": "c1a1b10index0",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a2b10index1",
+          "expected": "1",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a1b10last",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a1b10lastEnd",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a0b10starts",
+          "expected": "True",
+          "actual": "False"
+        }
+      ],
+      "provider_sha256": "88e53a6b2814e2550fc9287f9d061a013ff94f6d136f0345373ada8e10f15c9a",
+      "executable_sha256": "acbf3b881cc3fe754d18037656e16cee6ba1e71e62b3f57e94f34ab7f6774696",
+      "stdout_sha256": "f06d06d4dc179b830ad53fb31424cf22de9b85c5ab0416b11d04fb366cb4c406"
+    },
+    "without_both": {
+      "cases": 25704,
+      "mismatches": 1000,
+      "by_operation": {
+        "starts": 176,
+        "compare": 96,
+        "equalsCI": 80,
+        "index0": 176,
+        "last": 176,
+        "lastEnd": 176,
+        "index1": 48,
+        "ends": 64,
+        "upper": 8
+      },
+      "by_culture": {
+        "0": 125,
+        "1": 125,
+        "2": 125,
+        "3": 125,
+        "4": 125,
+        "5": 125,
+        "6": 125,
+        "7": 125
+      },
+      "en_us_operations": {
+        "starts": 22,
+        "compare": 12,
+        "equalsCI": 10,
+        "index0": 22,
+        "last": 22,
+        "lastEnd": 22,
+        "index1": 6,
+        "ends": 8,
+        "upper": 1
+      },
+      "witnesses": [
+        {
+          "case": "c1a0b10compare",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a2b11ends",
+          "expected": "True",
+          "actual": "False"
+        },
+        {
+          "case": "c1a0b10equalsCI",
+          "expected": "True",
+          "actual": "False"
+        },
+        {
+          "case": "c1a1b10index0",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a2b10index1",
+          "expected": "1",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a1b10last",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a1b10lastEnd",
+          "expected": "0",
+          "actual": "-1"
+        },
+        {
+          "case": "c1a0b10starts",
+          "expected": "True",
+          "actual": "False"
+        },
+        {
+          "case": "c1a5upper",
+          "expected": "str:00c9",
+          "actual": "str:00e9"
+        }
+      ],
+      "provider_sha256": "57c7b885c0bff8f3c63cec1cd357edd6d94e4fde2549a28df2896ca9526b3ed2",
+      "executable_sha256": "91df4ceaa29b34700d640ad239e6022a0113ad28d5f05424891dffca5ccca4a1",
+      "stdout_sha256": "506dcad362f23eec103e14cb9a3290d0c37fff9f93903c8ecd046327d9a6ac3a"
+    }
+  },
+  "production_changed": false,
+  "license_decision_made": false,
+  "limitations": [
+    "Ablations replace behavior in private provider copies; they are not candidate implementations or physical binary-size measurements.",
+    "All 25704 observations are synthetic; this does not demonstrate which strings will occur in a complete playthrough.",
+    "The Android effective culture remains UNKNOWN. Culture index1 is en-US; index0 is invariant."
+  ]
+}

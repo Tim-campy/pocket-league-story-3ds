@@ -39,17 +39,17 @@ def main():
         if oracle.keys()!=actual.keys():raise ValueError('Incomplete original source projection observations')
         cases.extend(dict(profile=profile,case=k,expected=v,actual=actual[k],passed=v==actual[k]) for k,v in oracle.items())
     policy=json.loads(run([native,'policy'],folder,'native-policy',environment()))
-    if policy.get('status')!='PASS' or policy.get('assertions')!=24:raise ValueError('Incomplete SDK snapshot invariant corpus')
+    if policy.get('status')!='PASS' or policy.get('assertions')!=35:raise ValueError('Incomplete SDK snapshot invariant corpus')
     passed=all(c['passed'] for c in cases)
-    inputs=[*native_sources,source,metadata_source,ROOT/'tools/test_debug_input.py',ROOT/'tools/test_input.py',ROOT/'src/kairo/api/debug_input.hpp',ROOT/'src/kairo/api/vector3.hpp',ROOT/'src/kairo/platform/sdl/debug_input.hpp',ROOT/'src/kairo/platform/sdl/backend.hpp',ROOT/'src/kairo/api/platform.hpp',ROOT/'src/kairo/common/semantic_runtime.hpp']
+    inputs=[*native_sources,source,metadata_source,ROOT/'tools/test_debug_input.py',ROOT/'tools/test_input.py',ROOT/'src/kairo/api/debug_input.hpp',ROOT/'src/kairo/api/vector3.hpp',ROOT/'src/kairo/platform/sdl/debug_input.hpp',ROOT/'src/kairo/platform/sdl/backend.hpp',ROOT/'src/kairo/api/platform.hpp',ROOT/'src/kairo/api/system.hpp',ROOT/'src/kairo/common/semantic_runtime.hpp']
     receipt=dict(operation='SDL-debug-input-snapshot-original-coordinate-expressions',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,native_policy=policy,verified_boundary_ids=[],
         source_manifest=[dict(path=original.relative_to(ROOT/'reference').as_posix(),sha256=sha(original))],original_expression_sha256=[hashlib.sha256(e.encode('utf-8')).hexdigest() for e in expressions],
         inputs_sha256={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),external_api_metadata=dict(sha256=sha(external),observations=observations),
         limitations=['Exact original coordinate expressions plus own Input collaborator; not full SurfaceManagerBase.DoEvents/Draw proof.',
                     'SDL synthetic headless events prove native snapshot policy; no original Unity native Input, Android or physical user input exercised.',
-                    'Only Shift GetKey, mouse buttons0/1 held/down, mousePosition fields and render height are admitted; other APIs/keys/buttons remain refused.',
+                    'Shift GetKey, mouse buttons0/1 held/down, mousePosition fields, render height, active SDL finger count and display DPI/fullscreen snapshots are admitted; other APIs/keys/buttons remain refused.',
                     'The existing Canvas pulse and mouse aggregation consumer is separate and unchanged.'],game_boot=False,game_assets_used=False,physical_user_input_used=False,original_binaries_executed=False)
-    (ROOT/'config/phase2-debug-input-tests.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps(dict(status=receipt['status'],fixture_cases=len(cases),passed=receipt['passed'],native_assertions=24)))
+    (ROOT/'config/phase2-debug-input-tests.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps(dict(status=receipt['status'],fixture_cases=len(cases),passed=receipt['passed'],native_assertions=35)))
     if not passed:print(json.dumps([c for c in cases if not c['passed']],indent=2));return 1
     return 0
 if __name__=='__main__':sys.exit(main())

@@ -1,5 +1,12 @@
 #include "managed_string_ops.hpp"
 namespace pls::cs {
+String string_insert(const String& source,std::int32_t index,const String& value){
+    const auto& text=source.code_units();if(value.is_null())throw ArgumentNullException();
+    if(index<0||static_cast<std::size_t>(index)>text.size())throw ArgumentOutOfRangeException();
+    if(value.length()==0)return source;if(text.empty())return value;
+    if(static_cast<std::size_t>(value.length())>static_cast<std::size_t>(INT32_MAX)-text.size())throw OutOfMemoryException();
+    auto result=text;result.insert(static_cast<std::size_t>(index),value.code_units());return String(std::move(result));
+}
 namespace {
 #include "mono_decimal_digit_ranges.inc"
 bool historical_digit(char16_t c)noexcept{for(const auto&range:DecimalDigitRanges)if(c>=range[0]&&c<=range[1])return true;return false;}

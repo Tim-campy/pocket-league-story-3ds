@@ -107,6 +107,13 @@ no player Android é UNKNOWN e dependente da plataforma; o port usa um motivo
 técnico local, não uma resposta do servidor. O override de CgiRegist intercepta
 o registro antes de qualquer caminho de licenciamento.
 
+A referência transitiva a `KairoPlugin.LicenseCheck`, dentro de
+`HttpObject._connect`, permanece ligada a uma guarda explícita de plataforma:
+`removed_license_check` lança `NotSupportedException`. Ela permite compilar
+o restante do transporte, mas nunca retorna um status de licença. O corpo JNI
+do checker não é traduzido. O registro normal continua interceptado antes
+desse ramo; uma chamada inesperada falha, sem conceder conteúdo pago.
+
 `tools/test_offline_http.py` compila HttpObject integral como fonte novo com
 uma fachada WWW própria: **24 observações** nos dois perfis, incluindo GET,
 POST com e sem marcador, retry cancelado, erro/pop/reset e descarte. A folha

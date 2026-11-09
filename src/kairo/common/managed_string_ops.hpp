@@ -1,6 +1,8 @@
 #pragma once
 #include "semantic_runtime.hpp"
 namespace pls::cs {
+inline bool string_is_null_or_empty(const String& value){return value.is_null()||value.length()==0;}
+String string_insert(const String& source,std::int32_t index,const String& value);
 String string_trim(const String& value);
 String string_trim(const String& value,const Array<char16_t>& characters);
 // Proven standard Int32 X/x formatting subset: minimum precision 0..99.

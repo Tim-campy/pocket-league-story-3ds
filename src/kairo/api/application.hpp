@@ -1,6 +1,7 @@
 #pragma once
 #include "semantic_runtime.hpp"
 #include "managed_shared_field.hpp"
+#include "system.hpp"
 #include <thread>
 #include <future>
 #include <deque>
@@ -58,6 +59,7 @@ public:
     void source_OnRender(){IApplication::OnRender();}void source_OnDestroy(){IApplication::OnDestroy();}
     virtual cs::Ref<FormManagerBase> GetFormManager()=0;
     static cs::Ref<IApplication> GetCurrentApp(){return current_.load();}
+    cs::String GetPackageName()const{return native_package_name();}
     // Original Awake stores SystemInfo.deviceModel before the library-resource
     // attempt and Main.OnCreate. The platform supplies its own device model.
     static void host_platform(cs::String model){platform_model_.store(std::move(model));}

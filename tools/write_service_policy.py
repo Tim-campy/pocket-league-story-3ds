@@ -105,8 +105,8 @@ def main():
         add('M:kairo.unity.native.KairoPlugin.'+name+('('+args+')' if args else ''),'constant',result)
     add('M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification','constant','false')
     for policy in policies:policy['lowering']=typed_lowering(policy)
-    # No fabricated license result: these two internals are cut by local register
-    # substitution and by not generating the removed licensing API at all.
+    # No fabricated license result. The transitive call site has an explicit
+    # throwing platform guard; the removed JNI/checker body is never generated.
     report=dict(schema_version=1,lowering_schema_version=1,operation='explicit-user-platform-policies',
         integration_status='PENDING_GENERATED_GAME_BINDING',
         host_bootstrap=['Construct OfflineServices with host preference directory','install(&services)',
@@ -118,7 +118,7 @@ def main():
 
         removed_licensing_routes=[dict(symbol='M:kairo.unity.native.KairoPlugin.LicenseCheck',
             callers=['kairo.unity.io.HttpObject._connect registration branch'],
-            handling='Local AppData.CgiRegist bypasses this branch; no JNI implementation or fabricated licensing result'),
+            handling='Local AppData.CgiRegist bypasses this branch; removed_license_check throws NotSupportedException on an unexpected call; no JNI or fabricated licensing result'),
             dict(symbol='M:kairo.unity.licensing.LicenseChecker.DoCheck',callers=[],
                  handling='No caller found in recovered source; remove facade from runtime dependency set; unexpected call is a diagnostic')],
         save_policy='No service function accepts a mutable game save; preserve serialized billing and unknown fields',

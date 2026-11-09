@@ -62,6 +62,9 @@ def validate_diagnostic_manifest(folder,root=ROOT):
     if not isinstance(producer,dict)or manifest.get('producer')!=producer:raise ValueError('Diagnostic producer differs from canonical generation')
     for key,name in [('translator_source_sha256','translator/Translator.cs'),('driver_sha256','translator/translate.py')]:
         if producer.get(key)!=digest(root/name):raise ValueError('Diagnostic producer source is stale')
+    for row in canonical.get('platform_adapter_sources',[]):
+        path=(root/row['path']).resolve(strict=True)
+        if not path.is_relative_to(root)or digest(path)!=row['sha256']:raise ValueError('Diagnostic bootstrap source is stale')
     generator=manifest.get('diagnostic_generator',{})
     if generator.get('path')!='translator/diagnostic_snapshot.py'or generator.get('sha256')!=digest(root/'translator/diagnostic_snapshot.py'):
         raise ValueError('Diagnostic generator source is stale')
@@ -141,6 +144,7 @@ def main():
     parser.add_argument('--run',action='store_true',help='Run only a successfully linked generated game, for up to 20 seconds')
     parser.add_argument('--metrics',action='store_true',help='Record opt-in native memory/frame measurements in the private run log; requires --run')
     parser.add_argument('--diagnostic-generated',type=Path,help='Private manifest-verified sources with fatal gap traps; separate build and isolated preferences')
+    parser.add_argument('--configuration',choices=['Debug','Release'],default='Debug')
     args=parser.parse_args()
     if args.diagnostic_generated and args.fixtures_only:parser.error('Diagnostic sources require a game build')
     if args.metrics and (not args.run or args.fixtures_only):parser.error('--metrics requires a game --run attempt')
@@ -153,14 +157,16 @@ def main():
     if args.metrics:env['PLS_PC_METRICS']='1'
     diagnostic_folder=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
     diagnostic_manifest=validate_diagnostic_manifest(diagnostic_folder)if diagnostic_folder else None
-    folder=ROOT/('build/pc-diagnostic'if diagnostic_folder else 'build/pc');folder.mkdir(parents=True,exist_ok=True)
-    commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE=Debug','-DSDL2_DIR='+str(sdk),'-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else '')],
+    build_name='pc-diagnostic'if diagnostic_folder else 'pc'
+    if args.configuration=='Release':build_name+='-release'
+    folder=ROOT/'build'/build_name;folder.mkdir(parents=True,exist_ok=True)
+    commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE='+args.configuration,'-DSDL2_DIR='+str(sdk),'-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else '')],
               [CMAKE,'--build',folder,*(['--clean-first'] if args.fixtures_only else ['--target','pc_game'])]]
     if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
     if not args.fixtures_only:
         attempts=ROOT/('config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')
         history=json.loads(attempts.read_text(encoding='utf-8')) if attempts.exists() else dict(operation='generated-game-build-and-boot-attempts',attempts=[])
-        attempt=dict(number=next_attempt_number(history,folder),apk_sha256=APK_SHA,generated_game_sources=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))],game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
+        attempt=dict(number=next_attempt_number(history,folder),configuration=args.configuration,apk_sha256=APK_SHA,generated_game_sources=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))],game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
         attempt_folder=folder/'attempts'/str(attempt['number'])
         attempt_folder.mkdir(parents=True,exist_ok=False)
         if diagnostic_folder:

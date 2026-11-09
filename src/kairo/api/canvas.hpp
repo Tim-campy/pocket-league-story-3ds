@@ -1,6 +1,8 @@
 #pragma once
 #include "graphics.hpp"
 #include "input.hpp"
+#include "debug_input.hpp"
+#include "system.hpp"
 namespace pls::kairo {
 class IApplication;
 // A native surface bridge must implement these routes; defaults deliberately
@@ -17,6 +19,7 @@ public:
 class Canvas : public cs::Object {
     inline static cs::Ref<Canvas> instance_;
     inline static cs::Ref<Graphics> graphics_buffer_;
+    inline static std::int32_t last_browser_frame_{-1}; // Canvas.lastOpenBrowserFrame_ initializer.
     cs::Ref<Image> display_;
     cs::Ref<Graphics> graphics_;
     bool is_alter_static_rendering_{};
@@ -32,6 +35,10 @@ class Canvas : public cs::Object {
 public:
     static constexpr std::int32_t KEY_LEFT=65536,KEY_RIGHT=262144,KEY_UP=131072,KEY_DOWN=524288,KEY_SELECT=1048576,KEY_SOFT1=2097152,KEY_SOFT2=4194304;
     Canvas();
+    static std::int32_t& source_last_browser_frame(){return last_browser_frame_;}
+    bool IsFullscreen()const{return DebugInput::get_fullScreen();}
+    std::int32_t GetStatusBarHeight()const{return native_status_bar_height();}
+    std::int32_t GetStatusBarPosition()const{return native_status_bar_position();}
     static cs::Ref<Canvas> GetInstance(bool make=true);
     // Explicit PC display dependency, not an alternative game screen design.
     void host_display(cs::Ref<Image>,cs::Ref<Font>);

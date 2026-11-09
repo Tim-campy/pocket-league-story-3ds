@@ -7,5 +7,6 @@ int main(){unsigned int n=0;auto check=[&](bool value){if(!value)throw std::runt
   check(value->get_isDone());check(!value->get_error().is_null()&&value->get_error().length()>0);check(value->get_bytes().length()==0);check(!value->native_disposed());value->Dispose();value->Dispose();check(value->native_disposed());
  }
  check(native_install_referrer().is_null());check(native_install_referrer(pls::cs::String(u"synthetic-key")).is_null());
+ bool removed=false;try{(void)removed_license_check();}catch(const pls::cs::NotSupportedException&){removed=true;}check(removed);
  std::cout<<"{\"assertions\":"<<n<<",\"transport_attempts\":0,\"success_response\":false,\"generated_HttpObject_executed\":false,\"game_boot\":false}\n";
 }

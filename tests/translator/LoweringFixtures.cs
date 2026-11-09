@@ -1,9 +1,99 @@
 // Synthetic translator inputs. These methods contain no game data.
 using System;
+using System.Linq;
 public static class LoweringFixtures {
     private static int trace_;
     public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
     private static int Pair(int a, int b) { return a * 100 + b; }
+    public static bool GuidShape(int seed) {string a=Guid.NewGuid().ToString(),b=Guid.NewGuid().ToString();return a.Length==36&&a[8]=='-'&&a[13]=='-'&&a[14]=='4'&&(a[19]=='8'||a[19]=='9'||a[19]=='a'||a[19]=='b')&&a[18]=='-'&&a[23]=='-'&&a!=b;}
+    public static string UriEscape(string value){return Uri.EscapeDataString(value);}
+    public static bool NullOrEmpty(string value){return string.IsNullOrEmpty(value);}
+    public static string InsertText(string source,int index,string value){return source.Insert(index,value);}
+    public static int ArrayCopyFive(int seed){var values=new int[]{seed,2,3,4};Array.Copy(values,0,values,1,3);return values[1]+values[2]+values[3];}
+    public static int ArrayBaseAlias(int seed){Array a=new int[]{seed};Array b=a;Array.Copy(a,0,b,0,1);return ((int[])b)[0];}
+    public static int TryParseText(string value){int result=37;bool success=int.TryParse(value,out result);return success?result:result-100;}
+    public static int TryParseLimit(int seed){int result=seed;bool success=int.TryParse(seed<0?"-2147483648":"2147483648",out result);return success?result:result-100;}
+    public static string ObjectConcatSingle(int seed){trace_=seed;return string.Concat(seed<0?null:new Synthetic.ConcatValue(4,false,seed==0));}
+    public static string UriEscapeMarks(){return Uri.EscapeDataString("azAZ09_~!'()*-. /?:@&=+$,%#[]\\\"\u0000\u00e9\ud800");}
+    private static int SumParams(int first, params int[] rest) { if (rest == null) return -100; for (int i=0;i<rest.Length;i++) first=first*10+rest[i]; return first; }
+    private static string StringParams(params string[] values) { return values == null ? "null-array" : values.Length == 0 ? "empty" : values[0] == null ? "null-item" : values[0]; }
+    public static int ParamsOrder(int seed) { trace_=seed; int result=SumParams(Stamp(1),Stamp(2),Stamp(3)); return result+trace_; }
+    public static int ParamsEmpty(int seed) { return SumParams(seed); }
+    public static int ParamsExplicitArray(int seed) { return SumParams(seed,new int[]{3,4}); }
+    public static string ParamsNull(int seed) { return StringParams(null); }
+    public static string ParamsNullElement(int seed) { return StringParams((string)null); }
+    public static string ParamsOne(int seed) { return StringParams("own fixture"); }
+    public static string DictionaryKeysSnapshot(int seed) {
+        var map=new System.Collections.Generic.Dictionary<string,int>();
+        map.Add("a",seed);map.Add("b",2);map.Add("c",3);map.Remove("b");map.Add("d",4);
+        string[] keys=map.Keys.ToArray();map.Clear();return keys[0]+keys[1]+keys[2]+map.Keys.ToArray().Length;
+    }
+    public static int DictionaryKeysNull(int seed) {
+        System.Collections.Generic.Dictionary<string,int> map=null;
+        try { return map.Keys.ToArray().Length; } catch(NullReferenceException) { return seed; }
+    }
+    public static int StructFieldStores(int seed) { Synthetic.QueryValue item=default(Synthetic.QueryValue);item.value=seed;var copy=item;copy.value=37;return item.value+copy.value; }
+    public static int StructArrayFieldStores(int seed) { var array=new Synthetic.QueryValue[1];array[0].value=seed;return array[0].value; }
+    public static int UsingDisposeOrder(int seed) {
+        trace_=seed;
+        using(Synthetic.OwnDisposable a=new Synthetic.OwnDisposable(1),b=new Synthetic.OwnDisposable(2)){Stamp(3);}
+        return trace_;
+    }
+    public static int UsingExceptionReplacement(int seed) {
+        trace_=seed;
+        try{using(var a=new Synthetic.OwnDisposable(1,true)){throw new ArgumentException();}}
+        catch(InvalidOperationException){return trace_;}catch(ArgumentException){return -1;}
+        return -2;
+    }
+    public static int UsingNull(int seed) { using(Synthetic.OwnDisposable a=null){seed++;}return seed; }
+    public static int UsingReturn(int seed) { trace_=0;using(var a=new Synthetic.OwnDisposable(1)){if(seed<0)return seed;Stamp(2);}return trace_; }
+    public static int FinallyMixedReturn(int seed) {trace_=0;try{if(seed<0)return seed;Stamp(2);}finally{Stamp(3);}return trace_;}
+    public static int FinallyNestedReturn(int seed) {trace_=0;try{try{if(seed<0)return seed;Stamp(1);}finally{Stamp(2);}}finally{Stamp(3);}return trace_;}
+    public static int FinallyReplaceReturn(int seed) {try{try{return seed;}finally{throw new InvalidOperationException();}}catch(InvalidOperationException){return 37;}}
+    public static int FinallyInternalBreak(int seed){trace_=seed;try{for(int i=0;i<3;i++){if(i==1)break;Stamp(1);}}finally{Stamp(2);}return trace_;}
+    public static int ExplicitDelegateConstructor(int seed){var target=new Synthetic.DelegateTarget(seed);Action first=new Action(target.Run);first();return target.value;}
+    public static int AutoProperty(int seed){var target=new Synthetic.AutoProperties();int previous=target.Value;target.Value=seed;return previous+target.Value;}
+    public static string AutoPropertyReference(int seed){var target=new Synthetic.AutoProperties();string previous=target.Text;target.Text="own fixture";return previous==null?target.Text:"unexpected";}
+    public static int StringSwitch(int seed) { string value=seed<0?null:seed==0?"a":seed==1?"b":"other";int result=0;switch(value){case null:result=1;break;case "a":case "b":result=2;break;default:result=3;break;}return result; }
+    public static bool ObjectLockIdentity(int seed) {
+        trace_ = seed;
+        object gate = new object();
+        object alias = gate;
+        bool result;
+        lock (alias) {
+            lock (gate) { trace_++; }
+            result = object.ReferenceEquals(gate, alias) && !object.ReferenceEquals(gate, new object());
+        }
+        return result;
+    }
+    public static bool NullMonitor(int seed) {
+        object gate = null;
+        try { lock (gate) { trace_ = seed; } }
+        catch (ArgumentNullException) { return true; }
+        return false;
+    }
+    public static int ThreadedMonitor(int seed) {
+        object gate = new object();
+        ReturnUnderMonitor(gate);
+        try { lock (gate) { throw new ArgumentException(); } }
+        catch (ArgumentException) { }
+        int value = 0;
+        System.Threading.ThreadStart work = delegate {
+            for (int i = 0; i < 100; i++) {
+                lock (gate) {
+                    value++;
+                    if (i == 50) GC.Collect(0);
+                }
+            }
+        };
+        var first = new System.Threading.Thread(work);
+        var second = new System.Threading.Thread(work);
+        first.Start(); second.Start(); first.Join(); second.Join();
+        return value + seed;
+    }
+    private static bool ReturnUnderMonitor(object gate) {
+        lock (gate) { return true; }
+    }
     public static int Overflow(int a, int b) { return a + b; }
     public static int Divide(int a, int b) { return a / b; }
     public static int Modulo(int a, int b) { return a % b; }
@@ -70,6 +160,8 @@ public static class LoweringFixtures {
     public static int UnsupportedClosureGoto(int value) { Func<int> f=()=>value;if(value<0)goto done;value++;done:return f(); }
 }
 namespace Synthetic {
+    public class AutoProperties {public int Value{get;set;}public string Text{get;set;}}
+    public class OwnDisposable:IDisposable {public int value;public bool fail;public OwnDisposable(int value,bool fail=false){this.value=value;this.fail=fail;}public void Dispose(){LoweringFixtures.Stamp(value);if(fail)throw new InvalidOperationException();}}
     public abstract class AbstractBase {public int seen;public AbstractBase(){seen=Read();}public abstract int Read();}
     public class AbstractDerived:AbstractBase {public int value=9;public override int Read(){return value;}}
     public struct QueryValue {public int value;public QueryValue(int input){value=input;}public bool Positive(){return value>0;}public bool Alias(){return Positive();}}

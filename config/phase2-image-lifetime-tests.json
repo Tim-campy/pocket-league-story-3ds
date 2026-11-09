@@ -411,15 +411,15 @@
     "src/kairo/common/graphics.cpp": "026f54aa1ceb88fe1b54c1e3e120548ff41c7c231da72a7b7459c57268048fec",
     "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
-    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
     "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
     "tests/kairo/ImageLifetimeOracle.cs": "9eada50ef9d686e508f9c5a03f6e4100e6705e2a9c0566624964afdadd7b6cbb",
     "tools/test_image_lifetime.py": "7eef93d61e94288e6f0a54b062e8383df73e742dca71a97136ca1622aa861c45",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/graphics.hpp": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f",
     "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
-    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
-    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd"
@@ -450,7 +450,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "65a83121d42106f98c61b7f29de45078afb837936bfac221f50414f827a8ba76"
+    "sha256": "a2733a035939fdb60d5ab0a23ad3e191b5a41039cc891899012c409d4aa7f7cb"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

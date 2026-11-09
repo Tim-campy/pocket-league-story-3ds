@@ -133,10 +133,12 @@ def map_game_identities(emitted,ledger):
 def validate_emission(emitted,assembly):
     if emitted['assembly']!=assembly or emitted['reference_commit']!=REFERENCE:raise ValueError('Assembly/reference identity differs')
     for row in emitted['source_manifest']:expect_hash(ROOT/'reference'/row['path'],row['sha256'])
+    for row in emitted.get('platform_adapter_sources',[]):expect_hash(ROOT/row['path'],row['sha256'])
     for row in emitted['generated_files']:expect_hash(ROOT/row['path'],row['sha256'])
     producer=emitted['producer']
     expect_hash(ROOT/'translator/Translator.cs',producer['translator_source_sha256'])
     expect_hash(ROOT/'translator/translate.py',producer['driver_sha256'])
+    if 'bootstrap_generator_sha256'in producer:expect_hash(ROOT/'translator/bootstrap_source.py',producer['bootstrap_generator_sha256'])
     sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
     from inventory import compiler_paths
     csc,dotnet,_=compiler_paths();expect_hash(csc,producer['compiler_sha256']);expect_hash(dotnet,producer['runtime_sha256'])

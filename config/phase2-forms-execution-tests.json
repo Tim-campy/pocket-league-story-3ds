@@ -381,7 +381,7 @@
     "src/kairo/common/image_lifetime.cpp": "46eb7b0f818d28f48cedf6cef4542ea0026178d8e0b9ff300f5391b349abba86",
     "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
     "src/kairo/common/sound.cpp": "0fdac91ca3ca0497f390b0e83d793e91c75fbcb4b75b2036706b12477957f183",
-    "src/kairo/common/semantic_runtime.cpp": "1e3fc6a76fc5ed778da99847490dd8af46c50f5dbcbb52ab5667573e3aeffd8a",
+    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
     "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
@@ -395,13 +395,13 @@
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
     "src/kairo/api/forms.hpp": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
-    "src/kairo/api/canvas.hpp": "257deae29a6870f98c6c3b3ff544a8e18eaa485d3743f0fb87049bb9a37af258",
-    "src/kairo/api/application.hpp": "3b68574d6b2363570819a977e02e9a93eff313d6ee3a81d8b7a5ca7740e90ed4",
+    "src/kairo/api/canvas.hpp": "302f78420eab27c2246980748700967f13a69f07e70c5eed89949d49ce8f44df",
+    "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
     "src/kairo/api/graphics.hpp": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f",
     "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
     "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
     "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
-    "src/kairo/common/semantic_runtime.hpp": "fc7c1c4ed2f709177fd442d8a8550b8ebdb17e04133e355c6b6b36d0e149039a",
+    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -479,7 +479,7 @@
   ],
   "native_executable": {
     "path": "build/forms-execution-tests/forms-execution-fixtures.exe",
-    "sha256": "2ca0bdc424d579dc548570af29b824506f18f6871f9ae2ea143c36fbdb798a0f"
+    "sha256": "f3bdc4d95538b5f9de07198ca33e9768aa25a9a2f6f3b7d36ba90da843eef242"
   },
   "limits": [
     "Synthetic services prove call order, states, forced save unlock, retries/finally and rendering through SurfaceManager; not a game boot.",

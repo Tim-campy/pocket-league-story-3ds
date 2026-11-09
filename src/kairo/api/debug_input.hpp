@@ -11,5 +11,8 @@ public:
     static bool GetMouseButtonDown(std::int32_t button);
     static Vector3 get_mousePosition();
     static std::int32_t screen_height();
+    static std::int32_t get_touchCount();
+    static float get_dpi();
+    static bool get_fullScreen();
 };
 }

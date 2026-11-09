@@ -36,6 +36,8 @@ using kairo.unity.form;
 namespace PlsPortGeneratedBootstrap {
  public static class Host {
   [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern void QueueCapture(FormManagerBase manager,int x,int y,int w,int h,string[] tables,FormManagerBase.OnCaptureCompleted completed,bool temporary);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
   public static extern void InstallNativeBindings();
   [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
   public static extern void PushGraphicsMatrix(Graphics g,float[] values);
@@ -59,6 +61,11 @@ namespace PlsPortGeneratedBootstrap {
   public static extern long TotalHeapMemory();
  }
  public static class Source {
+  public static void Capture(FormManagerBase manager,kairo.unity.surface.SurfaceBase view,string[] tables,FormManagerBase.OnCaptureCompleted completed,bool temporary){
+   if(view==null)throw new NullReferenceException();
+   if(tables==null)tables=new string[]{"768:1024,_768_1024_ipad","640:960,_640_960_35inch","640:1136,_640_1136_40inch","750:1334,_750_1334_47inch","1242:2208,_1242_2208_55inch","2048:2732,_2048_2732_129inch"};
+   Host.QueueCapture(manager,view.GetX(),view.GetY(),view.GetWidth(),view.GetHeight(),tables,completed,temporary);
+  }
   public static void CreateConfig(){/*FIELD_COPIES*/}
   public static void InitializePlatform(){
    KairoPlugin.Init(Language.Get(),Config.PRINT,Config.BASE64_PUBLIC_KEY);
@@ -231,6 +238,7 @@ def selected():
     result=[]
     aliases={'KairoBase':'kairo.unity.system.KairoBase','FepPanel':'kairo.unity.panel.FepPanel','IApplication':'kairo.unity.ui.IApplication','Graphics':'kairo.unity.ui.Graphics','Font':'kairo.unity.ui.Font','TextFormat':'kairo.unity.ui.TextFormat','Matrix':'kairo.unity.ui.Matrix','bool':'System.Boolean','int':'System.Int32','long':'System.Int64','float':'System.Single','kairo.unity.graphics.RectangleF':'kairo.unity.graphics.RectangleF','string':'System.String','byte[]':'System.Byte[]'}
     aliases['Image']='kairo.unity.ui.Image'
+    aliases.update({'FormManagerBase':'kairo.unity.form.FormManagerBase','kairo.unity.surface.SurfaceBase':'kairo.unity.surface.SurfaceBase','string[]':'System.String[]','FormManagerBase.OnCaptureCompleted':'kairo.unity.form.FormManagerBase.OnCaptureCompleted'})
     aliases['object']='System.Object'
     aliases['kairo.unity.graphics.Offscreen']='kairo.unity.graphics.Offscreen'
     for name,parameters in re.findall(r'public static [\w.<>\[\]]+ (\w+)\(([^)]*)\)',SOURCE):

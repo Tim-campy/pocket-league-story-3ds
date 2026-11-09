@@ -16,6 +16,8 @@ pls::cs::Ref<cs_bfe2a01361163e7a> cs_b704c7698ceaf8f6() { cs_init_bfe2a01361163e
 }
 
 void cs_b704c7698ceaf8f6_init(pls::cs::Ref<cs_bfe2a01361163e7a> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.JarInflater.FileInfo.#ctor",kairo);
 {}
+}
 }
 }

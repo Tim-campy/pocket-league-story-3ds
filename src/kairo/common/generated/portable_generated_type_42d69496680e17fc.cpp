@@ -19,25 +19,31 @@ pls::cs::Ref<cs_42d69496680e17fc> cs_8fb57d859eee275a() { cs_init_42d69496680e17
 }
 
 void cs_8fb57d859eee275a_init(pls::cs::Ref<cs_42d69496680e17fc> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.#ctor",kairo);
 {}
+}
 }
 
 // M:java.lang.JRuntime.Gc
 void cs_b8f5dfbc2bf26f5f(pls::cs::Ref<cs_42d69496680e17fc> cs_this) { cs_init_42d69496680e17fc();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.Gc",kairo);
 {
-([&]() -> void { auto cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::gc_collect(cs_arg0); }());
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::gc_collect(cs_arg0); }());});
+}
 }
 }
 }
 
 // M:java.lang.JRuntime.GetRuntime
 pls::cs::Ref<cs_42d69496680e17fc> cs_232fa563e68dcabb() { cs_init_42d69496680e17fc();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.GetRuntime",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_c1bf1420af51dac4()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_42d69496680e17fc> { return cs_8fb57d859eee275a(); }()); cs_c1bf1420af51dac4() = cs_value; return cs_value; }());
 }
 return cs_c1bf1420af51dac4();
+}
 }
 }
 }

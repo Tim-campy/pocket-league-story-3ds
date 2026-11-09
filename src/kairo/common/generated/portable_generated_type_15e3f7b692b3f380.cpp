@@ -19,6 +19,8 @@ pls::cs::Ref<cs_15e3f7b692b3f380> cs_617649d3cca73756() { cs_init_15e3f7b692b3f3
 
 void cs_617649d3cca73756_init(pls::cs::Ref<cs_15e3f7b692b3f380> cs_this) {
 ([&]() { cs_f349692afe9e225e_init(std::static_pointer_cast<cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>>(cs_this)); }());
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.FastVector.#ctor",kairo);
 {}
+}
 }
 }

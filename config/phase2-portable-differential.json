@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.5435987999662757,
-    "native-compile": 79.94630259997211,
-    "managed-output": 15.931386100128293,
-    "native-output": 25.71037460002117
+    "csharp-compile": 1.3782839998602867,
+    "native-compile": 74.16736699989997,
+    "managed-output": 15.187097599962726,
+    "native-output": 25.087067800108343
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -806,11 +806,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_runtime.hpp",
-      "sha256": "a31cbdc30263ab2718428a7b8d411d8aa43e38b757193155e0dc9d3f5423d52b"
+      "sha256": "41e0a062e444d0ab353f6cd2031a6c3f8ff7020abce689a18ec99ec4c2b9f9ea"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.cpp",
-      "sha256": "d97eb3aff7b8a9ea3e0a35cde7c18bb3dfd67067a3ff1d40ec578cc721089f5f"
+      "sha256": "01f36b769ef02dc068c9f96197bc57c19b36bb9f41001d18cb1e1d71ad10671f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp",
@@ -818,7 +818,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.cpp",
-      "sha256": "dd0209a24ec5fbc3f7b08432b8f027e9c7741e006e4ac605038fe4659e4bb7a6"
+      "sha256": "c26f5a70abc35b53e3ef6bc10bf2be69077caec0425ef1a4a4a0090f13146589"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.hpp",
@@ -826,7 +826,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1feb9ce0db5130ce.cpp",
-      "sha256": "5084343f615f0a6c6219c92d28ccc370bbc9145f24c73a4f06657de5f221ba8c"
+      "sha256": "689b359d1bcc457187c6044f103c4e540d18701c4423f468975477a82b2e9a37"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1feb9ce0db5130ce.hpp",
@@ -834,7 +834,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.cpp",
-      "sha256": "9acc23404c51153903731ff5ed49623952f1b66e3cae47b1bfe3e637e9c74e83"
+      "sha256": "e9199dafb51190e841b8c3aadc64fc3eb92cf9ef84742795de61778a5013f787"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.hpp",
@@ -842,7 +842,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.cpp",
-      "sha256": "408a3c81877905e1d89cc094ef4204959d92469588d00d1819a74a3e34a18f2f"
+      "sha256": "aa70c6fc68a33bf600b218af99dde4c2549f01ca8da36483050f92526e274301"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.hpp",
@@ -850,7 +850,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3b41638e424b9ee0.cpp",
-      "sha256": "cce204c9265dd4d70c7303477be9c9ad03b948538c42e341ffbac0f956aae971"
+      "sha256": "04856eef86b5257238651a1c4f447d4913f7514cfa9ba909fbb1b87b7e682feb"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3b41638e424b9ee0.hpp",
@@ -858,7 +858,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3c64e1d398f2e00f.cpp",
-      "sha256": "44c3e33bededf5d2105ce25626ee8faaa24e524a00a4465f7ed0750a47caf056"
+      "sha256": "7afb68fa543ee62973a748a31975d9b7d44985da207cb2a0dcbc42d58b93b772"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3c64e1d398f2e00f.hpp",
@@ -866,7 +866,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_42d69496680e17fc.cpp",
-      "sha256": "4a49d31ac46baf4c29875b5b8c54c6811639eb065f4f2b3a45d553a24d52a794"
+      "sha256": "078c171fee8541d975e4b45e372e54e0a97ec160ea4dbc3bdcf466f6b0e56228"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_42d69496680e17fc.hpp",
@@ -874,7 +874,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_4978cb69e37b8564.cpp",
-      "sha256": "b924825f1b08b15c66e2054f17cc698b98c9e3b0f0fbc5f9086a19fed1098355"
+      "sha256": "0840248d4cfff167df773a3569e64f7c338504985b788f865741db54a313357e"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_4978cb69e37b8564.hpp",
@@ -882,7 +882,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_5098bfda9cf65745.cpp",
-      "sha256": "08a31a123a279d6c38917cc5d2328b3bd34b338af980717502fd195fc0fbb80c"
+      "sha256": "9eea76de707c06f3faac63fa84e4c7ffcccbbc6b411fabe7b06e635a14c5b94f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_5098bfda9cf65745.hpp",
@@ -898,11 +898,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_51222df74ac70bab_templates.hpp",
-      "sha256": "72dbe57cdafd707c7968a9e3dcafe111bf81c33a83b3ac56933460901a490704"
+      "sha256": "dff2765047661b4859373530d5b46d7ce05129c290dcf882ed533f66b95356b6"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.cpp",
-      "sha256": "2202b6ac7891a0b92a96981f1c1c3215165bb4752ee3ace0bb48eb4f823b617f"
+      "sha256": "ae760d780d3f68deec0c2781f342e87d68cd23ec55585d363cdea140e58888de"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.hpp",
@@ -910,7 +910,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_582a926e9c7748a6.cpp",
-      "sha256": "996f23a37a11bbfc2fecc6dd94f194abaf2278b7c8a410bddc5759f7eb03ff23"
+      "sha256": "dc62a2994382f7191c57600e31fba50480f01ea5044b7aefa79044b2ec3f4877"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_582a926e9c7748a6.hpp",
@@ -918,7 +918,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_64732f8c8acf2fd3.cpp",
-      "sha256": "700a91d55d3943b6d4fa15c595f6c6fe367a3cf6e458415f3932c15f853e319f"
+      "sha256": "949e7c255c9447f24a7a64584bd818ff6fa4e88d43ace5157c3926d8d8e2637c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_64732f8c8acf2fd3.hpp",
@@ -926,7 +926,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_66dbad5679f8ab87.cpp",
-      "sha256": "6599b7b928a023b21356a972fde635214dd2fc7300781156a44d66ec8dea1846"
+      "sha256": "1061f5e856d96cf5ca00b4aa4f0d99d947d4227fe2cfc10e78eb149c26c133a5"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_66dbad5679f8ab87.hpp",
@@ -942,11 +942,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_67cd241ab51652f1_templates.hpp",
-      "sha256": "10713e672b4a5b8a001405cf0b6b6f2933a794dc578d06707ca2c4016ec7575b"
+      "sha256": "4c5570b0a7316a8ac30303961c7eeef9b4dcd55311db717ef981c297863db9cb"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7254e4706a01e4e7.cpp",
-      "sha256": "8fe1bc9c11cad0b598f513395976e3cec557de61575f740081f64b28ac18e4df"
+      "sha256": "84ec9b697387cdacdb2d4b145cef7057346a81b5d2b157287a03e1896bb2da5f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7254e4706a01e4e7.hpp",
@@ -954,7 +954,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.cpp",
-      "sha256": "b435e75545f6c9b6d433e3829abd9742e23eb2f54a2a96d57cabb1aae0d48ef1"
+      "sha256": "226ae8691e05d0ea0581b21a55625f405565ede7eec03d18ac904bb31033643a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.hpp",
@@ -962,7 +962,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7de6788b61a5af56.cpp",
-      "sha256": "6b15ddb6b33846afe4fe6608d0f32bd5b5d658d45da02ebe32e7492ece228ddf"
+      "sha256": "e415e0351215a82e16c69d18e9f1ba648ad866adc78533eb9d6bf6c61ffba650"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7de6788b61a5af56.hpp",
@@ -970,7 +970,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7fd3b635ed6929d0.cpp",
-      "sha256": "334689b0f39a42e03f29676ba90f2526ef072364fbd5ec841c70d027cbae4c7e"
+      "sha256": "b4772e5b62b4eb94027aae886a808ba88e254d3e7a3dc81ca1d8db6c7159b22c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7fd3b635ed6929d0.hpp",
@@ -978,7 +978,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_832d81e198eeeec2.cpp",
-      "sha256": "7c71bfd10b53fe06c31167544589f87501f53c488e476f0bcd7d2667913a8213"
+      "sha256": "61116da65d3322840f1b5393d64d69bf5f181377042a7099b1dae2b0ce966cc2"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_832d81e198eeeec2.hpp",
@@ -986,7 +986,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.cpp",
-      "sha256": "37b0903ae3039df5fa300c374a14e2d3be437cd6c60dca67214cf81859d464b0"
+      "sha256": "c2641d34daa638bc771406ea2db3d9fea95bf4398ee379c5c2d566cb355256b3"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -1002,15 +1002,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_86e62a3c0e632a0f_cpp_part_0000.inc",
-      "sha256": "ecf5482076da28d5b5c87b775e7257758ac97723898a84e3f7a7cf46d6b4a95d"
+      "sha256": "5743f3723532a6bd89b91f7b98b44418eb594ca10f785e1d39d554af529cfa64"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_86e62a3c0e632a0f_cpp_part_0001.inc",
-      "sha256": "36e12c550d0472b41b727fce4ee0442cb702578ae069b8124cf48d746f74c728"
+      "sha256": "38aabf507974d7884305f5cd0fd6aab9ae1a79d9ffe2c0bd1254bc1cd70b4dd8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8b851671e0d8b17f.cpp",
-      "sha256": "5f58cfc265ce0685d43ed15375cb6d5ad9b32e4f2a0178db25acb31b55eb43d1"
+      "sha256": "d52d62d40b4d0619acb55ad94150211f560fe3d4942273a6033b1f2bf92472a7"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8b851671e0d8b17f.hpp",
@@ -1018,7 +1018,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8c57b816bbc8fd6e.cpp",
-      "sha256": "e3859f5d66d9630137c314ac6a8e49e2218e6f3e16700eed875efc902751891c"
+      "sha256": "3703959960c5f57ebfa58f8de57685ffe86aaa2db7711ac8c0bd245ef21b9ed1"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8c57b816bbc8fd6e.hpp",
@@ -1026,7 +1026,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8d93189702e4084b.cpp",
-      "sha256": "0278bc38684c02632462fd3e95723a5d7e7b3d8112a7d083e21c049363f30ff0"
+      "sha256": "1bacfb7d710ffbca7b3d78e2c6337cc13791e30e852fd641d1508186e0f83bec"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8d93189702e4084b.hpp",
@@ -1034,7 +1034,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_922b87749168eb15.cpp",
-      "sha256": "6d34f10873be93524ba66baa990f92fd37c8632df6b7facf7fa3db9f9bcf8eee"
+      "sha256": "921764c1853ee43f26b6e53293a8514584facefe1dd171a1f032d8f9340469a6"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_922b87749168eb15.hpp",
@@ -1042,7 +1042,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_924db3d974bae2af.cpp",
-      "sha256": "082c4a3a91b44a83259aa136b4b2dae786ff57588a0ba595f9481796e018f9a5"
+      "sha256": "ec3262ba4b72685e3180da090f5482b2e9e40d3c4e21982da5f119328e0854f0"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_924db3d974bae2af.hpp",
@@ -1066,7 +1066,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a09270023ec48eca.cpp",
-      "sha256": "44ee9b84e61300cbd312a0fbdbeb460864ec0ea05bc79995bc6d6aa10da545f1"
+      "sha256": "04f0c7c2e15ed4b57a16a2836395056dff2dd368e3e7c79a7c652a8c2f386e31"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a09270023ec48eca.hpp",
@@ -1074,7 +1074,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a0cf9aef6a251bfd.cpp",
-      "sha256": "8c543410be0366e6c37d0a2be590580e42bdac58c05df44c728c557b34e7dd89"
+      "sha256": "ec1cca74de9931fd90a2de852999aa443d14d27d686dde6de3c9f83795d28a84"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a0cf9aef6a251bfd.hpp",
@@ -1090,7 +1090,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a465028bea3432a3.cpp",
-      "sha256": "e773bf204c4f74ed2e3a2ffb4e3ce3878eb45cf922f30835fd9fed6376da8e95"
+      "sha256": "fbe77c9033bae4fb0a60ef8d5d3ab7f6c892f2482362160b8ae66d9d2c57d867"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a465028bea3432a3.hpp",
@@ -1114,7 +1114,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.cpp",
-      "sha256": "1e4afdf8974a5bac191c7d6fa065af0cc58adedcd9fa3d269baeb4e22ef2ad37"
+      "sha256": "ae16780633f5d3f929749d1f8626d3b6fd2f87b2b263424077a23a9ce997463f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.hpp",
@@ -1122,7 +1122,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bd164c3c94a49e2a.cpp",
-      "sha256": "26155c02e51929520df7a4abdeb39219b13f536626e0c1998b957dd59f58649c"
+      "sha256": "778d20220d3d3b4c77a5483957e4e438e6b2cac5baaf2fc9a60ade795ad13bdc"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bd164c3c94a49e2a.hpp",
@@ -1130,7 +1130,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bfe2a01361163e7a.cpp",
-      "sha256": "5b2a681aefb7c47ffaf2fcb8ba3a2eefe13c42c86184e1b43a61cdee948b38c3"
+      "sha256": "a624d3064dee598519dcf9ea1c60eb5491180d5cd23e3aee6585cdac9ebd6dbf"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bfe2a01361163e7a.hpp",
@@ -1138,7 +1138,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c0fae45144034cf9.cpp",
-      "sha256": "db0503e748f38a59d9c995ed22b5ac849d891e33f5eb523c9d0008828b8b188f"
+      "sha256": "c3eeaef2d6c1d6a667f0543c2e1498f83a18c8271c2cf795c1ad22e759c66402"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c0fae45144034cf9.hpp",
@@ -1146,7 +1146,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c20c229ea63037d8.cpp",
-      "sha256": "3f01059be43b69f7656b38309f1c99ec14f7f5eae7ceed990b0e57fa730e1299"
+      "sha256": "9d2adbe4def1cc44135ab9de89c1974143cf65c5fa64129c9ea1457909b2cb33"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c20c229ea63037d8.hpp",
@@ -1162,7 +1162,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c783ca99640a5ce3.cpp",
-      "sha256": "bb22b88d708258141d4f23deaad2a596ef3747519e77b540904ce983e07e5f7d"
+      "sha256": "385a12eeef52e28a82927b7a1523ad206a89de2f4f2e3b7528db7774643a5eaa"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c783ca99640a5ce3.hpp",
@@ -1170,7 +1170,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp",
-      "sha256": "2bdb867bf6142c1053253c9c16502d96ffd6382c4ad8e5ed14aec8dd298e642d"
+      "sha256": "5c52989724dfd004cf880d00267c10254d6040635117d8c13269984bb015c878"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.hpp",
@@ -1178,11 +1178,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1_templates.hpp",
-      "sha256": "8422a427bad6ba56aee568f3cd10373755d015da2c0b98e3af1796ba7d386ed2"
+      "sha256": "a00e735ce49404139e2e183097163d5e3c8f8276e4448d71f37c0948a35b6b1b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_d4a32b46456ca92c.cpp",
-      "sha256": "1f90546d95c4adc1c488d8e64ec428c7d02317f694f103fde5461e2c3128150c"
+      "sha256": "93cbaff76bc381f3e285e6c75ba577d9815276ae511edc337f292bead7751e78"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_d4a32b46456ca92c.hpp",
@@ -1190,7 +1190,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7a5499b363ef51b.cpp",
-      "sha256": "7e42af1de760cf4c8743559c759c9c6392507517708697b8fddd6c92390501cd"
+      "sha256": "0671286427950cfc14a3aa9e59a5c8024973dd07e4f70a682af58d849d13a74f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7a5499b363ef51b.hpp",
@@ -1198,7 +1198,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7d772862db62924.cpp",
-      "sha256": "4fbf2645bd45412868660b28325bd8a43089ed5c1ca36a6cd9c615689b75badf"
+      "sha256": "6a6c40eb30c3c45801175414504d2dfdba34cf633e99f14b98e67ff00145c8ed"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7d772862db62924.hpp",
@@ -1206,7 +1206,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ea324a0bbfe717fe.cpp",
-      "sha256": "48392c6fb11adb8486ae1453ef83c119342c1583e9d35df0736d1f66400c88f6"
+      "sha256": "a9ad080eef0f6bd3dc7c2cf5858f486a8a9a532eaac8f42f6b7e8ef411535613"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ea324a0bbfe717fe.hpp",
@@ -1214,7 +1214,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ead0ac0906403160.cpp",
-      "sha256": "3ff611b21471e54b020e796dbf9bdb56a3dbb106361fe4a414506c90d9a62d95"
+      "sha256": "879abc8b97426d35dc53bd77188ed2300c3d2fac95377419f07b62fa053cce9a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ead0ac0906403160.hpp",
@@ -1222,7 +1222,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.cpp",
-      "sha256": "ef03e52842daf6cae7c9e8fe69ca2cda71e8eefe40cbc4e271441edb74ea2a57"
+      "sha256": "f2157c20a8df9f2aa2149d79a8caf805571d8e55e216d625ccdc5968e409246b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.hpp",
@@ -1230,7 +1230,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f3ea616d36334b95.cpp",
-      "sha256": "9d718cc43789d21a3ecb4a47e2b9277dcb131c78d80ff31eac8b0b9b1b34c5c3"
+      "sha256": "3687b4157b620ee281d42b8f287d1dfc3758099608e11b1790d39b3d521c8a5a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f3ea616d36334b95.hpp",
@@ -1238,7 +1238,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f59223d2c773f078.cpp",
-      "sha256": "c08efde9ee7f5ff6faf38dd71cc2b79fa1174f3e421dd1913aa7a255cb0143e1"
+      "sha256": "b639e55a42c9d82d6d215a567823ffa90b87c280c0156f20558d8e789238d64b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f59223d2c773f078.hpp",
@@ -1246,7 +1246,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f8b20a4d1d9d695f.cpp",
-      "sha256": "27e5ad8d16b6bce426bab0488ca3ab0923fb6c775a0315c4b78c3204fec4f7c8"
+      "sha256": "2f2daec0836a3899490640ff448e4cd5fbd882add057c0090cdfa240ad6907c8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f8b20a4d1d9d695f.hpp",
@@ -1254,7 +1254,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_fb60578b3098a284.cpp",
-      "sha256": "6b6ee5e8c818a77e2445e6dde6daa2e2b4b82881a63ace96e7ce5d0c089f5f5c"
+      "sha256": "cda02211517524354397e53e7d48560b39fb8f92efb018d73668d8679c452b5b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_fb60578b3098a284.hpp",
@@ -1274,13 +1274,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "a6a9b088989ea861644b780fd18e4fb0a75bea42044996da13cc7c17af278917"
+    "sha256": "3afd306f899100069657829f20fb3e7337bdaa6cec3fdb91f3f7cd76f76c2e61"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "275b6368aa9a17c8a7f2168bb94356f2aefc2d4ce5ac698199b6fe24baa8a550"
+    "sha256": "7b72459c48fb2edbd3dc81e96d55ba837c7c3723df5a1c3db08581b277ba8810"
   },
-  "differential_runner_sha256": "87c1980c8a981f0d53888a8535176f9ccb2ca5fa4acf1409877af58fc3fec2be",
+  "differential_runner_sha256": "fd025cc467909a8266130b9bf90a197ea4760ea3d20188a9710c5362e2ec44b0",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -1315,6 +1315,10 @@
       "sha256": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc"
     },
     {
+      "path": "src/kairo/api/capture.hpp",
+      "sha256": "3d70a93c0508187609c4e7afed548f1856fe4c40021d7c078bb3f2f934e5396d"
+    },
+    {
       "path": "src/kairo/api/debug_input.hpp",
       "sha256": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918"
     },
@@ -1336,7 +1340,7 @@
     },
     {
       "path": "src/kairo/api/forms.hpp",
-      "sha256": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a"
+      "sha256": "a6acf91d89e5a9502b11d66246f66082ef760b3828a2fa3fe6ae8cdce1f05bbb"
     },
     {
       "path": "src/kairo/api/forms_callbacks.hpp",
@@ -1439,6 +1443,10 @@
       "sha256": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf"
     },
     {
+      "path": "src/kairo/common/diagnostic_profile.hpp",
+      "sha256": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca"
+    },
+    {
       "path": "src/kairo/common/generated/portable_generated.cpp",
       "sha256": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a"
     },
@@ -1452,11 +1460,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_runtime.hpp",
-      "sha256": "a31cbdc30263ab2718428a7b8d411d8aa43e38b757193155e0dc9d3f5423d52b"
+      "sha256": "41e0a062e444d0ab353f6cd2031a6c3f8ff7020abce689a18ec99ec4c2b9f9ea"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.cpp",
-      "sha256": "d97eb3aff7b8a9ea3e0a35cde7c18bb3dfd67067a3ff1d40ec578cc721089f5f"
+      "sha256": "01f36b769ef02dc068c9f96197bc57c19b36bb9f41001d18cb1e1d71ad10671f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp",
@@ -1464,7 +1472,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.cpp",
-      "sha256": "dd0209a24ec5fbc3f7b08432b8f027e9c7741e006e4ac605038fe4659e4bb7a6"
+      "sha256": "c26f5a70abc35b53e3ef6bc10bf2be69077caec0425ef1a4a4a0090f13146589"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.hpp",
@@ -1472,7 +1480,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1feb9ce0db5130ce.cpp",
-      "sha256": "5084343f615f0a6c6219c92d28ccc370bbc9145f24c73a4f06657de5f221ba8c"
+      "sha256": "689b359d1bcc457187c6044f103c4e540d18701c4423f468975477a82b2e9a37"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1feb9ce0db5130ce.hpp",
@@ -1480,7 +1488,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.cpp",
-      "sha256": "9acc23404c51153903731ff5ed49623952f1b66e3cae47b1bfe3e637e9c74e83"
+      "sha256": "e9199dafb51190e841b8c3aadc64fc3eb92cf9ef84742795de61778a5013f787"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.hpp",
@@ -1488,7 +1496,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.cpp",
-      "sha256": "408a3c81877905e1d89cc094ef4204959d92469588d00d1819a74a3e34a18f2f"
+      "sha256": "aa70c6fc68a33bf600b218af99dde4c2549f01ca8da36483050f92526e274301"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.hpp",
@@ -1496,7 +1504,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3b41638e424b9ee0.cpp",
-      "sha256": "cce204c9265dd4d70c7303477be9c9ad03b948538c42e341ffbac0f956aae971"
+      "sha256": "04856eef86b5257238651a1c4f447d4913f7514cfa9ba909fbb1b87b7e682feb"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3b41638e424b9ee0.hpp",
@@ -1504,7 +1512,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3c64e1d398f2e00f.cpp",
-      "sha256": "44c3e33bededf5d2105ce25626ee8faaa24e524a00a4465f7ed0750a47caf056"
+      "sha256": "7afb68fa543ee62973a748a31975d9b7d44985da207cb2a0dcbc42d58b93b772"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3c64e1d398f2e00f.hpp",
@@ -1512,7 +1520,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_42d69496680e17fc.cpp",
-      "sha256": "4a49d31ac46baf4c29875b5b8c54c6811639eb065f4f2b3a45d553a24d52a794"
+      "sha256": "078c171fee8541d975e4b45e372e54e0a97ec160ea4dbc3bdcf466f6b0e56228"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_42d69496680e17fc.hpp",
@@ -1520,7 +1528,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_4978cb69e37b8564.cpp",
-      "sha256": "b924825f1b08b15c66e2054f17cc698b98c9e3b0f0fbc5f9086a19fed1098355"
+      "sha256": "0840248d4cfff167df773a3569e64f7c338504985b788f865741db54a313357e"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_4978cb69e37b8564.hpp",
@@ -1528,7 +1536,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_5098bfda9cf65745.cpp",
-      "sha256": "08a31a123a279d6c38917cc5d2328b3bd34b338af980717502fd195fc0fbb80c"
+      "sha256": "9eea76de707c06f3faac63fa84e4c7ffcccbbc6b411fabe7b06e635a14c5b94f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_5098bfda9cf65745.hpp",
@@ -1544,11 +1552,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_51222df74ac70bab_templates.hpp",
-      "sha256": "72dbe57cdafd707c7968a9e3dcafe111bf81c33a83b3ac56933460901a490704"
+      "sha256": "dff2765047661b4859373530d5b46d7ce05129c290dcf882ed533f66b95356b6"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.cpp",
-      "sha256": "2202b6ac7891a0b92a96981f1c1c3215165bb4752ee3ace0bb48eb4f823b617f"
+      "sha256": "ae760d780d3f68deec0c2781f342e87d68cd23ec55585d363cdea140e58888de"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.hpp",
@@ -1556,7 +1564,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_582a926e9c7748a6.cpp",
-      "sha256": "996f23a37a11bbfc2fecc6dd94f194abaf2278b7c8a410bddc5759f7eb03ff23"
+      "sha256": "dc62a2994382f7191c57600e31fba50480f01ea5044b7aefa79044b2ec3f4877"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_582a926e9c7748a6.hpp",
@@ -1564,7 +1572,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_64732f8c8acf2fd3.cpp",
-      "sha256": "700a91d55d3943b6d4fa15c595f6c6fe367a3cf6e458415f3932c15f853e319f"
+      "sha256": "949e7c255c9447f24a7a64584bd818ff6fa4e88d43ace5157c3926d8d8e2637c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_64732f8c8acf2fd3.hpp",
@@ -1572,7 +1580,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_66dbad5679f8ab87.cpp",
-      "sha256": "6599b7b928a023b21356a972fde635214dd2fc7300781156a44d66ec8dea1846"
+      "sha256": "1061f5e856d96cf5ca00b4aa4f0d99d947d4227fe2cfc10e78eb149c26c133a5"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_66dbad5679f8ab87.hpp",
@@ -1588,11 +1596,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_67cd241ab51652f1_templates.hpp",
-      "sha256": "10713e672b4a5b8a001405cf0b6b6f2933a794dc578d06707ca2c4016ec7575b"
+      "sha256": "4c5570b0a7316a8ac30303961c7eeef9b4dcd55311db717ef981c297863db9cb"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7254e4706a01e4e7.cpp",
-      "sha256": "8fe1bc9c11cad0b598f513395976e3cec557de61575f740081f64b28ac18e4df"
+      "sha256": "84ec9b697387cdacdb2d4b145cef7057346a81b5d2b157287a03e1896bb2da5f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7254e4706a01e4e7.hpp",
@@ -1600,7 +1608,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.cpp",
-      "sha256": "b435e75545f6c9b6d433e3829abd9742e23eb2f54a2a96d57cabb1aae0d48ef1"
+      "sha256": "226ae8691e05d0ea0581b21a55625f405565ede7eec03d18ac904bb31033643a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.hpp",
@@ -1608,7 +1616,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7de6788b61a5af56.cpp",
-      "sha256": "6b15ddb6b33846afe4fe6608d0f32bd5b5d658d45da02ebe32e7492ece228ddf"
+      "sha256": "e415e0351215a82e16c69d18e9f1ba648ad866adc78533eb9d6bf6c61ffba650"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7de6788b61a5af56.hpp",
@@ -1616,7 +1624,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7fd3b635ed6929d0.cpp",
-      "sha256": "334689b0f39a42e03f29676ba90f2526ef072364fbd5ec841c70d027cbae4c7e"
+      "sha256": "b4772e5b62b4eb94027aae886a808ba88e254d3e7a3dc81ca1d8db6c7159b22c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7fd3b635ed6929d0.hpp",
@@ -1624,7 +1632,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_832d81e198eeeec2.cpp",
-      "sha256": "7c71bfd10b53fe06c31167544589f87501f53c488e476f0bcd7d2667913a8213"
+      "sha256": "61116da65d3322840f1b5393d64d69bf5f181377042a7099b1dae2b0ce966cc2"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_832d81e198eeeec2.hpp",
@@ -1632,7 +1640,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.cpp",
-      "sha256": "37b0903ae3039df5fa300c374a14e2d3be437cd6c60dca67214cf81859d464b0"
+      "sha256": "c2641d34daa638bc771406ea2db3d9fea95bf4398ee379c5c2d566cb355256b3"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -1648,15 +1656,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_86e62a3c0e632a0f_cpp_part_0000.inc",
-      "sha256": "ecf5482076da28d5b5c87b775e7257758ac97723898a84e3f7a7cf46d6b4a95d"
+      "sha256": "5743f3723532a6bd89b91f7b98b44418eb594ca10f785e1d39d554af529cfa64"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_86e62a3c0e632a0f_cpp_part_0001.inc",
-      "sha256": "36e12c550d0472b41b727fce4ee0442cb702578ae069b8124cf48d746f74c728"
+      "sha256": "38aabf507974d7884305f5cd0fd6aab9ae1a79d9ffe2c0bd1254bc1cd70b4dd8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8b851671e0d8b17f.cpp",
-      "sha256": "5f58cfc265ce0685d43ed15375cb6d5ad9b32e4f2a0178db25acb31b55eb43d1"
+      "sha256": "d52d62d40b4d0619acb55ad94150211f560fe3d4942273a6033b1f2bf92472a7"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8b851671e0d8b17f.hpp",
@@ -1664,7 +1672,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8c57b816bbc8fd6e.cpp",
-      "sha256": "e3859f5d66d9630137c314ac6a8e49e2218e6f3e16700eed875efc902751891c"
+      "sha256": "3703959960c5f57ebfa58f8de57685ffe86aaa2db7711ac8c0bd245ef21b9ed1"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8c57b816bbc8fd6e.hpp",
@@ -1672,7 +1680,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8d93189702e4084b.cpp",
-      "sha256": "0278bc38684c02632462fd3e95723a5d7e7b3d8112a7d083e21c049363f30ff0"
+      "sha256": "1bacfb7d710ffbca7b3d78e2c6337cc13791e30e852fd641d1508186e0f83bec"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8d93189702e4084b.hpp",
@@ -1680,7 +1688,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_922b87749168eb15.cpp",
-      "sha256": "6d34f10873be93524ba66baa990f92fd37c8632df6b7facf7fa3db9f9bcf8eee"
+      "sha256": "921764c1853ee43f26b6e53293a8514584facefe1dd171a1f032d8f9340469a6"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_922b87749168eb15.hpp",
@@ -1688,7 +1696,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_924db3d974bae2af.cpp",
-      "sha256": "082c4a3a91b44a83259aa136b4b2dae786ff57588a0ba595f9481796e018f9a5"
+      "sha256": "ec3262ba4b72685e3180da090f5482b2e9e40d3c4e21982da5f119328e0854f0"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_924db3d974bae2af.hpp",
@@ -1712,7 +1720,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a09270023ec48eca.cpp",
-      "sha256": "44ee9b84e61300cbd312a0fbdbeb460864ec0ea05bc79995bc6d6aa10da545f1"
+      "sha256": "04f0c7c2e15ed4b57a16a2836395056dff2dd368e3e7c79a7c652a8c2f386e31"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a09270023ec48eca.hpp",
@@ -1720,7 +1728,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a0cf9aef6a251bfd.cpp",
-      "sha256": "8c543410be0366e6c37d0a2be590580e42bdac58c05df44c728c557b34e7dd89"
+      "sha256": "ec1cca74de9931fd90a2de852999aa443d14d27d686dde6de3c9f83795d28a84"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a0cf9aef6a251bfd.hpp",
@@ -1736,7 +1744,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a465028bea3432a3.cpp",
-      "sha256": "e773bf204c4f74ed2e3a2ffb4e3ce3878eb45cf922f30835fd9fed6376da8e95"
+      "sha256": "fbe77c9033bae4fb0a60ef8d5d3ab7f6c892f2482362160b8ae66d9d2c57d867"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a465028bea3432a3.hpp",
@@ -1760,7 +1768,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.cpp",
-      "sha256": "1e4afdf8974a5bac191c7d6fa065af0cc58adedcd9fa3d269baeb4e22ef2ad37"
+      "sha256": "ae16780633f5d3f929749d1f8626d3b6fd2f87b2b263424077a23a9ce997463f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.hpp",
@@ -1768,7 +1776,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bd164c3c94a49e2a.cpp",
-      "sha256": "26155c02e51929520df7a4abdeb39219b13f536626e0c1998b957dd59f58649c"
+      "sha256": "778d20220d3d3b4c77a5483957e4e438e6b2cac5baaf2fc9a60ade795ad13bdc"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bd164c3c94a49e2a.hpp",
@@ -1776,7 +1784,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bfe2a01361163e7a.cpp",
-      "sha256": "5b2a681aefb7c47ffaf2fcb8ba3a2eefe13c42c86184e1b43a61cdee948b38c3"
+      "sha256": "a624d3064dee598519dcf9ea1c60eb5491180d5cd23e3aee6585cdac9ebd6dbf"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bfe2a01361163e7a.hpp",
@@ -1784,7 +1792,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c0fae45144034cf9.cpp",
-      "sha256": "db0503e748f38a59d9c995ed22b5ac849d891e33f5eb523c9d0008828b8b188f"
+      "sha256": "c3eeaef2d6c1d6a667f0543c2e1498f83a18c8271c2cf795c1ad22e759c66402"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c0fae45144034cf9.hpp",
@@ -1792,7 +1800,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c20c229ea63037d8.cpp",
-      "sha256": "3f01059be43b69f7656b38309f1c99ec14f7f5eae7ceed990b0e57fa730e1299"
+      "sha256": "9d2adbe4def1cc44135ab9de89c1974143cf65c5fa64129c9ea1457909b2cb33"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c20c229ea63037d8.hpp",
@@ -1808,7 +1816,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c783ca99640a5ce3.cpp",
-      "sha256": "bb22b88d708258141d4f23deaad2a596ef3747519e77b540904ce983e07e5f7d"
+      "sha256": "385a12eeef52e28a82927b7a1523ad206a89de2f4f2e3b7528db7774643a5eaa"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c783ca99640a5ce3.hpp",
@@ -1816,7 +1824,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp",
-      "sha256": "2bdb867bf6142c1053253c9c16502d96ffd6382c4ad8e5ed14aec8dd298e642d"
+      "sha256": "5c52989724dfd004cf880d00267c10254d6040635117d8c13269984bb015c878"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.hpp",
@@ -1824,11 +1832,11 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1_templates.hpp",
-      "sha256": "8422a427bad6ba56aee568f3cd10373755d015da2c0b98e3af1796ba7d386ed2"
+      "sha256": "a00e735ce49404139e2e183097163d5e3c8f8276e4448d71f37c0948a35b6b1b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_d4a32b46456ca92c.cpp",
-      "sha256": "1f90546d95c4adc1c488d8e64ec428c7d02317f694f103fde5461e2c3128150c"
+      "sha256": "93cbaff76bc381f3e285e6c75ba577d9815276ae511edc337f292bead7751e78"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_d4a32b46456ca92c.hpp",
@@ -1836,7 +1844,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7a5499b363ef51b.cpp",
-      "sha256": "7e42af1de760cf4c8743559c759c9c6392507517708697b8fddd6c92390501cd"
+      "sha256": "0671286427950cfc14a3aa9e59a5c8024973dd07e4f70a682af58d849d13a74f"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7a5499b363ef51b.hpp",
@@ -1844,7 +1852,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7d772862db62924.cpp",
-      "sha256": "4fbf2645bd45412868660b28325bd8a43089ed5c1ca36a6cd9c615689b75badf"
+      "sha256": "6a6c40eb30c3c45801175414504d2dfdba34cf633e99f14b98e67ff00145c8ed"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7d772862db62924.hpp",
@@ -1852,7 +1860,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ea324a0bbfe717fe.cpp",
-      "sha256": "48392c6fb11adb8486ae1453ef83c119342c1583e9d35df0736d1f66400c88f6"
+      "sha256": "a9ad080eef0f6bd3dc7c2cf5858f486a8a9a532eaac8f42f6b7e8ef411535613"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ea324a0bbfe717fe.hpp",
@@ -1860,7 +1868,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ead0ac0906403160.cpp",
-      "sha256": "3ff611b21471e54b020e796dbf9bdb56a3dbb106361fe4a414506c90d9a62d95"
+      "sha256": "879abc8b97426d35dc53bd77188ed2300c3d2fac95377419f07b62fa053cce9a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ead0ac0906403160.hpp",
@@ -1868,7 +1876,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.cpp",
-      "sha256": "ef03e52842daf6cae7c9e8fe69ca2cda71e8eefe40cbc4e271441edb74ea2a57"
+      "sha256": "f2157c20a8df9f2aa2149d79a8caf805571d8e55e216d625ccdc5968e409246b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.hpp",
@@ -1876,7 +1884,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f3ea616d36334b95.cpp",
-      "sha256": "9d718cc43789d21a3ecb4a47e2b9277dcb131c78d80ff31eac8b0b9b1b34c5c3"
+      "sha256": "3687b4157b620ee281d42b8f287d1dfc3758099608e11b1790d39b3d521c8a5a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f3ea616d36334b95.hpp",
@@ -1884,7 +1892,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f59223d2c773f078.cpp",
-      "sha256": "c08efde9ee7f5ff6faf38dd71cc2b79fa1174f3e421dd1913aa7a255cb0143e1"
+      "sha256": "b639e55a42c9d82d6d215a567823ffa90b87c280c0156f20558d8e789238d64b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f59223d2c773f078.hpp",
@@ -1892,7 +1900,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f8b20a4d1d9d695f.cpp",
-      "sha256": "27e5ad8d16b6bce426bab0488ca3ab0923fb6c775a0315c4b78c3204fec4f7c8"
+      "sha256": "2f2daec0836a3899490640ff448e4cd5fbd882add057c0090cdfa240ad6907c8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f8b20a4d1d9d695f.hpp",
@@ -1900,7 +1908,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_fb60578b3098a284.cpp",
-      "sha256": "6b6ee5e8c818a77e2445e6dde6daa2e2b4b82881a63ace96e7ce5d0c089f5f5c"
+      "sha256": "cda02211517524354397e53e7d48560b39fb8f92efb018d73668d8679c452b5b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_fb60578b3098a284.hpp",
@@ -1937,6 +1945,14 @@
     {
       "path": "src/kairo/common/managed_exceptions.hpp",
       "sha256": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b"
+    },
+    {
+      "path": "src/kairo/common/managed_float_format.cpp",
+      "sha256": "869eb3a6eba98fbde39ebac3f997f203e76bba471ad786a83a6747c47bbdb045"
+    },
+    {
+      "path": "src/kairo/common/managed_float_format.hpp",
+      "sha256": "4caace3870a09bcadb2e79cefb19f43974ee1cce1c84753b4fa8119f25efd5b6"
     },
     {
       "path": "src/kairo/common/managed_guid_uri.hpp",

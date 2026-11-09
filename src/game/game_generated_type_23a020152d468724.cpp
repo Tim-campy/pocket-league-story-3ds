@@ -16,11 +16,13 @@ void cs_init_23a020152d468724(){static pls::cs::TypeInitState state;state.run("k
 // M:kairo.unity.util.NotPermitException.ToString
 pls::cs::String cs_959efe4557f9babf(pls::cs::Ref<cs_23a020152d468724> cs_this) { cs_init_23a020152d468724();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.NotPermitException.ToString",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(pls::game::cs_require(std::static_pointer_cast<cs_cd97eee87b3216c4>(cs_this))->get_InnerException()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
-return ([&]() -> pls::cs::String { auto cs_receiver = pls::game::cs_require(std::static_pointer_cast<cs_cd97eee87b3216c4>(cs_this))->get_InnerException(); return pls::game::cs_require(cs_receiver)->ToString(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_receiver = pls::game::cs_require(std::static_pointer_cast<cs_cd97eee87b3216c4>(cs_this))->get_InnerException(); return pls::game::cs_require(cs_receiver)->ToString(); }());});
 }
-return ([&]() -> pls::cs::String { auto cs_receiver = std::static_pointer_cast<cs_cd97eee87b3216c4>(cs_this); return pls::game::cs_require(cs_receiver)->ToString(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_receiver = std::static_pointer_cast<cs_cd97eee87b3216c4>(cs_this); return pls::game::cs_require(cs_receiver)->ToString(); }());});
+}
 }
 }
 }

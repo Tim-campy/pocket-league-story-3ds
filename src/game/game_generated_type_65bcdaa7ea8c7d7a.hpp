@@ -197,6 +197,8 @@ std::int32_t& cs_d6788c804ff5e2f3();
 
 void cs_cae077a769bcc3ab(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 
+bool cs_997beba699006b3d(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,std::int32_t v_frameCount);
+
 pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_0d4cf39d498f953d();
 
 void cs_0d4cf39d498f953d_init(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
@@ -308,6 +310,10 @@ void cs_2a1829c674ee63b5(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,std::int32_t 
 bool cs_1672514a9a06c42c(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::Ref<pls::kairo::Offscreen> v_offscreen);
 
 pls::cs::String cs_d9fffbcf499f9061(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
+
+bool cs_dc0183c6ebc256a1(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
+
+bool cs_cd4bec474ed795be(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this);
 
 void cs_fe425732748887a9(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 

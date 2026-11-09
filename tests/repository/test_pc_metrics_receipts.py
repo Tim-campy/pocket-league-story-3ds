@@ -35,4 +35,13 @@ class MetricsReceiptTests(unittest.TestCase):
         self.assertEqual(result['records'],0)
         self.assertEqual(result['frame_summary_records'],0)
 
+    def test_late_window_and_memory_are_accepted_without_screen_inference(self):
+        sample=dict(event='diagnostic_frame_sample',completed_presented_frame=661,stage_nanoseconds=[1]*12)
+        memory=dict(event='memory',phase='after_900_presented_frames',completed_presented_frames=900,game_screen='UNKNOWN',process={})
+        result=metric_log_summary(line(sample)+line(memory))
+        self.assertEqual((result['records'],result['invalid_records'],result['max_completed_presented_frames']),(2,0,900))
+        self.assertEqual(result['game_screen'],'UNKNOWN')
+        for bad in [dict(sample,stage_nanoseconds=[1]*11),dict(sample,stage_nanoseconds=[True]*12),dict(sample,completed_presented_frame=1201),dict(sample,game_screen='MENU')]:
+            self.assertEqual(metric_log_summary(line(bad))['invalid_records'],1)
+
 if __name__=='__main__':unittest.main()

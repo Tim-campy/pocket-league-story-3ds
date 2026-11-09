@@ -12,12 +12,41 @@ EXPECTED='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
+def code_snapshot():
+    paths={ROOT/'CMakeLists.txt',ROOT/'AGENTS.md',ROOT/'.gitignore'}
+    for name in ('src','translator','tools','tests','reference/src'):
+        paths|={p for p in (ROOT/name).rglob('*')if p.is_file()and p.suffix in {'.cpp','.hpp','.inc','.cs','.py','.toml'}}
+    paths|={p for p in (ROOT/'config').glob('*')if p.is_file()and((p.suffix=='.json'and not p.name.startswith('phase2-'))or(p.suffix=='.csv'and p.name!='translation.csv'))}
+    return {p.relative_to(ROOT).as_posix():sha(p)for p in sorted(paths)}
+
+def refresh_run_receipts():
+    # A new replay is evidence, not a source change. Never reuse full checks
+    # after editing any producer/test/runtime/generated body or native recipe.
+    path=ROOT/'config/phase2-verification.json';report=json.loads(path.read_text(encoding='utf8'))
+    if report.get('status')!='PASS'or report.get('complete')is not True or not report.get('checks')or any(c['exit_code']!=0 for c in report['checks']):raise ValueError('A complete passing verification is required')
+    if report.get('verification_code_inputs')!=code_snapshot():raise ValueError('Code changed after full verification; rerun all checks')
+    for check in report['checks']:
+        log=ROOT/'build/phase2-verification'/(check['name']+'.log')
+        if not log.is_file()or sha(log)!=check['log_sha256']:raise ValueError('Full check log differs: '+check['name'])
+    allowed={'phase2-diagnostic-attempts.json','phase2-progress.json','phase2-match-start.json','phase2-menu-profile.json','phase2-match-complete.json','phase2-match-profile.json'}
+    current={p.name:sha(p)for p in sorted(set((ROOT/'config').glob('phase2-*.json'))|{ROOT/'config/collation-license-audit.json'})if p.name!='phase2-verification.json'}
+    for name in set(current)|set(report['receipts']):
+        if name not in allowed and current.get(name)!=report['receipts'].get(name):raise ValueError('Non-replay proof changed: '+name)
+    from diagnostic_execution import validated_completed
+    history=json.loads((ROOT/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf8'))
+    for assembly in ('Assembly-CSharp','KairoLibrary'):validated_completed(history,assembly)
+    report['receipts']=current;report['replay_receipts_refreshed_without_source_change']=True
+    path.write_text(json.dumps(report,indent=2)+'\n',encoding='utf8',newline='\n');print(json.dumps(dict(status='PASS',full_checks_reused=len(report['checks']),source_snapshot_unchanged=True)))
+
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
-    p.add_argument('--apk',required=True,type=Path)
-    p.add_argument('--original-managed',required=True,type=Path)
+    p.add_argument('--apk',type=Path)
+    p.add_argument('--original-managed',type=Path)
+    p.add_argument('--refresh-run-receipts',action='store_true',help='After a new replay only, validate hashes and retain the same complete full-check result; refuses any code/test or other proof change')
     args=p.parse_args()
+    if args.refresh_run_receipts:refresh_run_receipts();return
+    if args.apk is None or args.original_managed is None:p.error('--apk and --original-managed required for full verification')
     if not args.apk.is_file() or sha(args.apk)!=EXPECTED:p.error('Expected authenticated local APK required')
     managed=args.original_managed.resolve(strict=True)
     if managed.is_relative_to(ROOT):p.error('Original API binaries must remain outside the port repository')
@@ -30,6 +59,7 @@ def main():
         ('boot-concurrency-inventory',['tools/inventory_boot_concurrency.py']),
         ('mono-collation-source',['tools/setup_mono_collation.py','--apk',str(args.apk.resolve())]),
         ('mono-collation-generation',['tools/generate_mono_collator.py']),
+        ('mono-number-format-source',['tools/setup_number_format.py','--apk',str(args.apk.resolve())]),
         ('effective-core-profile',['tests/translator/run_core_profile.py']),
         ('portable-compile',['tools/translate','--original-managed',str(managed),'--compile']),
         ('portable-differential',['translator/test_portable.py']),
@@ -73,6 +103,7 @@ def main():
         ('native-allocator-heap',['tools/test_runtime_memory.py']),
         ('pc-metrics-aggregation',['tools/test_pc_metrics.py']),
         ('diagnostic-key-parser',['tools/test_diagnostic_keys.py']),
+        ('diagnostic-leaf-guards',['translator/test_diagnostic_leaves.py']),
         ('ui-dispatch-GC',['tools/test_ui_dispatch_gc.py']),
         ('service-policy',['tools/write_service_policy.py']),
         ('services',['tools/test_services.py']),
@@ -86,6 +117,9 @@ def main():
         ('graphics-current',['tools/test_graphics_current.py']),
         ('arc-raster-invariants',['tools/test_arc_raster.py']),
         ('graphics-arcs',['tools/test_graphics_arcs.py']),
+        ('mono-floating-format',['tools/test_float_format.py']),
+        ('diagnostic-instrumentation',['tools/test_diagnostic_instrumentation.py']),
+        ('diagnostic-profile-overhead',['tools/test_profile_overhead.py']),
         ('offscreen-mesh',['tools/test_offscreen.py']),
         ('vector-iterator',['translator/test_vector_iterator.py']),
         ('image-lifetime',['tools/test_image_lifetime.py']),
@@ -138,6 +172,7 @@ def main():
             raise RuntimeError('Verification failed; inspect '+str(log))
     if sha(args.apk)!=EXPECTED:raise ValueError('Original APK changed during verification')
     report=dict(operation='phase2-checkpoint-full-verification',status='PASS',complete=True,checks=checks,
+        verification_code_inputs=code_snapshot(),
         producer_sha256=sha(Path(__file__)),apk_sha256=EXPECTED,game_boot=False,
         receipts={path.name:sha(path) for path in sorted(set((ROOT/'config').glob('phase2-*.json'))|{ROOT/'config/collation-license-audit.json'})
                   if path.name!='phase2-verification.json'})

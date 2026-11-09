@@ -15,10 +15,12 @@ pls::cs::Ref<pls::generated::cs_98f0a1bec2084c3c> cs_0df98a8eddce17f9(pls::cs::S
 void cs_0df98a8eddce17f9_init(pls::cs::Ref<pls::generated::cs_98f0a1bec2084c3c> cs_this,pls::cs::String v_file,char16_t v_lineCode,char16_t v_segCode) {
 cs_this->cs_96513160b9f9c6b8 = char16_t(10);
 cs_this->cs_37e0eb7044938cba = char16_t(9);
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.LangPackFormat.#ctor(System.String,System.Char,System.Char)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_file; pls::game::cs_require(cs_target)->cs_a0cee6b194388bb1 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_lineCode; pls::game::cs_require(cs_target)->cs_96513160b9f9c6b8 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_segCode; pls::game::cs_require(cs_target)->cs_37e0eb7044938cba = cs_value; return cs_value; }());
+}
 }
 }
 }

@@ -9,6 +9,7 @@ void cs_init_e9cc65282df10bc8(){static pls::cs::TypeInitState state;state.run("k
 
 // M:kairo.unity.graph.Graph.Easing(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
 std::int32_t cs_20d8b864ba249ba5(std::int32_t v_v0,std::int32_t v_v1,std::int32_t v_length,std::int32_t v_frame,std::int32_t v_edging) { cs_init_e9cc65282df10bc8();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.graph.Graph.Easing(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",kairo);
 {
 if (([&]() -> bool { auto cs_left = v_frame; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left < cs_right); }())) {
 return v_v0;
@@ -35,6 +36,7 @@ if (([&]() -> bool { auto cs_left = v_num3_1863; auto cs_right = v_v1; return (c
 }
 }
 return v_num3_1863;
+}
 }
 }
 }

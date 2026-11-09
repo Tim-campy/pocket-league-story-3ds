@@ -133,6 +133,7 @@ def map_game_identities(emitted,ledger):
 
 
 def validate_emission(emitted,assembly):
+    if emitted.get('diagnostic_only')or emitted.get('diagnostic_leaf_guards'):raise ValueError('Diagnostic candidates cannot promote normal method coverage')
     if emitted['assembly']!=assembly or emitted['reference_commit']!=REFERENCE:raise ValueError('Assembly/reference identity differs')
     for row in emitted['source_manifest']:expect_hash(ROOT/'reference'/row['path'],row['sha256'])
     for row in emitted.get('platform_adapter_sources',[]):expect_hash(ROOT/row['path'],row['sha256'])
@@ -502,12 +503,17 @@ def refresh():
             row['estado'] = 'loads' if media else 'converts'
             row['formato_alvo'] = 'Bounded streaming Vorbis on SDL; CTR pending' if media else 'Ogg Vorbis compressed; runtime streaming pending'
             row['notas'] += '; phase2: '+str(len(manifest['audio']))+' Ogg files SHA256 checked; '+('all native streams exercised; prefixes compared with FFmpeg; no whole-track PCM buffer; no game boot' if media else 'native streaming not proved')
+    from diagnostic_execution import validated_completed
+    history=load('config/phase2-diagnostic-attempts.json')
+    completed_game=validated_completed(history,'Assembly-CSharp')
+    completed_portable=validated_completed(history,'KairoLibrary')
+    game_runs={original for original,doc in game_mapped.items()if doc in completed_game}
     for row in translation:
         row['notas']=row['notas'].split('; phase2:')[0]
         row['estado']='todo'
         if row['id'] in game_mapped:
-            row['estado']='translated'
-            row['notas']+='; phase2: unique full-signature Roslyn DocID '+game_mapped[row['id']]+'; generated C++ object compiled with input/compiler hashes; not linked, run or verified in game'
+            row['estado']='runs' if row['id']in game_runs else 'translated'
+            row['notas']+='; phase2: unique full-signature Roslyn DocID '+game_mapped[row['id']]+'; generated C++ object compiled with input/compiler hashes; '+('completed in authenticated diagnostic; behavior not verified'if row['id']in game_runs else 'no completed diagnostic invocation recorded; behavior not verified')
     report = dict(operation='hash-validated-phase2-ledger-update',producer_sha256=sha(Path(__file__)),
         requested_portable_symbols=emitted['requested_symbols'],requested_root_methods=emitted['requested_methods'],
         emitted_methods=len(methods),emitted_root_methods=len(roots),emitted_dependency_methods=len(methods)-len(roots),
@@ -518,7 +524,7 @@ def refresh():
         verified_portable_boundary_ids=sorted(set(promoted)&verified),verified_platform_boundary_ids=sorted(platform_ids),
         platform_proof_ids={name:proof['verified_boundary_ids'] for name,proof in extra_proofs.items()},
         emitted_root_ids_outside_boundary=sorted(roots-boundary_ids),
-        game_translated_methods=len(game_mapped),game_compiled_methods=len(game_mapped),game_executed_methods=0,game_verified_methods=0,
+        game_translated_methods=len(game_mapped),game_compiled_methods=len(game_mapped),game_executed_methods=len(game_runs),game_verified_methods=0,game_run_ids=sorted(game_runs),portable_executed_in_game_ids=sorted(completed_portable&set(methods)),
         game_emitted_cpp_methods=game_counts['emitted'],game_compiled_cpp_methods=game_counts['compiled'],game_source_method_declarations=game_counts['source_declarations'],
         game_requested_method_identities=game_counts['requested'],
         game_identity_mapping='unique complete declaring-type/name/parameter-types/return-type; constructors return System.Void; no arity-only match',

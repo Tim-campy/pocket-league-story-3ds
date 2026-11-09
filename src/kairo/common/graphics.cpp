@@ -1,3 +1,4 @@
+#include "diagnostic_profile.hpp"
 #include "graphics.hpp"
 #include "sha256.hpp"
 #include "font.hpp"
@@ -13,7 +14,7 @@ std::int32_t coord(float v){return cs::conv_i32(v);}
 using Affine=std::array<float,9>;
 constexpr Affine identity{1,0,0,0,1,0,0,0,1};
 Affine concat(const Affine& a,const Affine& b){Affine result{};for(int j=0;j<3;++j)for(int k=0;k<3;++k)for(int l=0;l<3;++l)result[std::size_t(j*3+k)]+=a[std::size_t(j*3+l)]*b[std::size_t(l*3+k)];return result;}
-template<class F>void quad(const Affine& m,float x,float y,float w,float h,int width,int height,F&& pixel){
+template<class F>void quad(const Affine& m,float x,float y,float w,float h,int width,int height,F&& pixel){PLS_PROFILE_AREA(raster);
     const auto point=[&](float px,float py){return std::array<float,2>{m[0]*px+m[3]*py+m[6],m[1]*px+m[4]*py+m[7]};};
     const auto a=point(x,y),b=point(x+w,y),c=point(x,y+h),d=point(x+w,y+h);
     for(const auto& p:{a,b,c,d})if(!std::isfinite(p[0])||!std::isfinite(p[1]))return;
@@ -129,7 +130,9 @@ void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t a
         for(std::size_t i=0;i<content.size();++i){char32_t c=content[i];if(c>=0xd800&&c<=0xdbff&&i+1<content.size()&&content[i+1]>=0xdc00&&content[i+1]<=0xdfff)c=0x10000+((c-0xd800)<<10)+(content[++i]-0xdc00);
             if(c==u'\n'){cursor=position[0];baseline+=raster.metrics().line_height;previous_glyph=0;continue;}
             const auto& glyph=raster.glyph(c,style);cursor+=raster.kerning(previous_glyph,glyph.glyph_index);
+            {PLS_PROFILE_AREA(raster);
             for(int gy=0;gy<glyph.height;++gy)for(int gx=0;gx<glyph.width;++gx){auto value=tint;value[3]=std::uint8_t(unsigned(tint[3])*glyph.rgba8[(std::size_t(gy)*glyph.width+gx)*4+3]/255);pixel(coord(cursor+float(glyph.left+gx)),coord(baseline-float(glyph.top)+float(gy)),value);}
+            }
             cursor+=glyph.advance_x;previous_glyph=glyph.glyph_index;
         }
     },[&]{if(transformed)end_render_matrix();});
@@ -236,7 +239,7 @@ void Graphics::FillRect(float x,float y,float w,float h){
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{auto c=channels(color_);quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float,float){pixel(xx,yy,c);});},[&]{if(transformed)end_render_matrix();});
 }
 void Graphics::DrawRect(float x,float y,float w,float h){DrawLine(x,y,x+w,y);DrawLine(x+w,y,x+w,y+h);DrawLine(x+w,y+h,x,y+h);DrawLine(x,y+h,x,y);}
-void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,float stroke){
+void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,float stroke){PLS_PROFILE_AREA(raster);
     begin_primitive();
     const bool transformed=begin_render_matrix(x,y);
     cs::run_finally([&]{
@@ -248,7 +251,7 @@ void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,f
         if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
     },[&]{if(transformed)end_render_matrix();});
 }
-void Graphics::FillArc(float x,float y,float w,float h,float start,float sweep){
+void Graphics::FillArc(float x,float y,float w,float h,float start,float sweep){PLS_PROFILE_AREA(raster);
     begin_primitive();
     const bool transformed=begin_render_matrix(x,y);
     cs::run_finally([&]{
@@ -260,7 +263,7 @@ void Graphics::FillArc(float x,float y,float w,float h,float start,float sweep){
     },[&]{if(transformed)end_render_matrix();});
     if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
 }
-void Graphics::DrawLine(float x,float y,float x2,float y2,float width){
+void Graphics::DrawLine(float x,float y,float x2,float y2,float width){PLS_PROFILE_AREA(raster);
     begin_primitive();
     if(!std::isfinite(x+y+x2+y2+width)||width<=0)return;auto a=point(x,y),b=point(x2,y2);float dx=b[0]-a[0],dy=b[1]-a[1];auto length=std::max(std::fabs(dx),std::fabs(dy));
     if(length>float(std::max(target_->width_,target_->height_))*4)throw cs::NotSupportedException("Unbounded line needs geometric clipping");
@@ -274,7 +277,7 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
     if(!image||w==0||h==0||!std::isfinite(x+y+w+h))return;
     image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
-    auto source=image->pixels(); // Snapshot preserves overlap when drawing an image onto itself.
+    std::vector<std::uint8_t> source;{PLS_PROFILE_AREA(raster);source=image->pixels();} // CPU sampler snapshot preserves overlapping draws.
     begin_primitive(image);
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{
     if(is_gui_&&image->source_has_touch_tasks()){

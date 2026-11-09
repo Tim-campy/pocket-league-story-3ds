@@ -1,0 +1,30 @@
+{
+  "operation": "official-MIT-mono-number-format-tables",
+  "revision": "b6587926c0f146c8b12985744f33a13b39a22d57",
+  "sources": [
+    {
+      "path": "NumberFormatter.cs",
+      "sha256": "1af3dead8e359aed4f0b28184f22a4633fc71b1be6090bb1e7856bc3949f3f0d",
+      "url": "https://raw.githubusercontent.com/Unity-Technologies/mono/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/NumberFormatter.cs",
+      "bytes": 58039,
+      "license": "MIT/X11"
+    },
+    {
+      "path": "NumberFormatter.jvm.cs",
+      "sha256": "987ca1330b298b6a90429a0c580ff0c7d16ed45a02ed1da3a41ef6fb3ba6a1b7",
+      "url": "https://raw.githubusercontent.com/Unity-Technologies/mono/b6587926c0f146c8b12985744f33a13b39a22d57/mcs/class/corlib/System/NumberFormatter.jvm.cs",
+      "bytes": 62449,
+      "license": "MIT/X11"
+    }
+  ],
+  "license": "MIT/X11",
+  "tables_payload_bytes": 24576,
+  "generated": {
+    "path": "build/generated/mono-numberformat/mono_number_tables.inc",
+    "sha256": "fc5420a33c3fa641215829c6158e8c8b21a716490739749457c9dd7dbcb4f091",
+    "bytes": 56888
+  },
+  "producer_sha256": "00ed4c7061cf8c16c55ec6bbf95818765ec9146efea656f17fdb153da4be1b50",
+  "game_assets_used": false,
+  "new_LGPL_data": false
+}

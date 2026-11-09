@@ -18,12 +18,15 @@ pls::cs::Ref<cs_70b7974d356d68ab> cs_939028c47866c657() { cs_init_70b7974d356d68
 }
 
 void cs_939028c47866c657_init(pls::cs::Ref<cs_70b7974d356d68ab> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.TouchPoint.#ctor",kairo);
 {}
+}
 }
 
 // M:kairo.unity.surface.SurfaceBase.TouchPoint.Init(System.Int64,System.Single,System.Single,kairo.unity.surface.TouchComponent)
 void cs_dbab81fd91425aae(pls::cs::Ref<cs_70b7974d356d68ab> cs_this,std::int64_t v_key,float v_x,float v_y,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_component) { cs_init_70b7974d356d68ab();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.TouchPoint.Init(System.Int64,System.Single,System.Single,kairo.unity.surface.TouchComponent)",kairo);
 {
 pls::cs::Array<std::int32_t> v_array_601 = ([&]() -> pls::cs::Array<std::int32_t> { std::int64_t cs_arg0 = v_key; return cs_b37fd969c7a5953c(cs_arg0); }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_key; pls::game::cs_require(cs_target)->cs_69110646eac3c92f = cs_value; return cs_value; }());
@@ -34,6 +37,7 @@ pls::cs::Array<std::int32_t> v_array_601 = ([&]() -> pls::cs::Array<std::int32_t
 ([&]() { auto cs_target = cs_this; auto cs_value = v_x; pls::game::cs_require(cs_target)->cs_a14ff763839a39fc = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_y; pls::game::cs_require(cs_target)->cs_cdbd50f771e65195 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_component; pls::game::cs_require(cs_target)->cs_07a9daa229d89929 = cs_value; return cs_value; }());
+}
 }
 }
 }

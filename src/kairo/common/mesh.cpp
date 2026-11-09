@@ -1,3 +1,4 @@
+#include "diagnostic_profile.hpp"
 #include "mesh.hpp"
 #include <limits>
 namespace pls::kairo {
@@ -58,6 +59,7 @@ void MeshManager::Render(const cs::Ref<Image>&target,const Commands&dynamic,cons
     struct Item{const Batch*batch;std::size_t manager,index;};std::vector<Item> sorted;
     for(std::size_t manager=0;manager<2;++manager){const auto&commands=manager?statics:dynamic;for(std::size_t index=0;index<commands.size();++index)sorted.push_back({&commands[index],manager,index});}
     std::sort(sorted.begin(),sorted.end(),[](const Item&a,const Item&b){if(a.batch->queue!=b.batch->queue)return a.batch->queue<b.batch->queue;if(a.manager!=b.manager)return a.manager<b.manager;return a.index>b.index;});
+    PLS_PROFILE_AREA(raster);
     std::vector<float> depth(std::size_t(image->GetWidth())*std::size_t(image->GetHeight()),std::numeric_limits<float>::infinity());
     for(const auto&item:sorted){const auto&batch=*item.batch;if(batch.image){batch.image->Use();batch.image->source_drawn();}
         for(const auto&fragment:batch.fragments){

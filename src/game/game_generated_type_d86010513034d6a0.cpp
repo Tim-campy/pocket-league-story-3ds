@@ -16,6 +16,8 @@ pls::cs::Ref<cs_d86010513034d6a0> cs_73cc6ce27c640033() { cs_init_d86010513034d6
 }
 
 void cs_73cc6ce27c640033_init(pls::cs::Ref<cs_d86010513034d6a0> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.LanguagePackInfo.#ctor",kairo);
 {}
+}
 }
 }

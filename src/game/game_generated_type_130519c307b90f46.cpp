@@ -13,18 +13,22 @@ bool& cs_0aabbac1b4cc00d9(){cs_init_130519c307b90f46();return cs_0aabbac1b4cc00d
 
 // M:kairo.unity.util.ClockTime.Destroy
 void cs_252b02044b3d6557() { cs_init_130519c307b90f46();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.ClockTime.Destroy",kairo);
 {
 
+}
 }
 }
 
 // M:kairo.unity.util.ClockTime.GetTime
 std::int64_t cs_e285ad46e15aa69f() { cs_init_130519c307b90f46();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.ClockTime.GetTime",kairo);
 {
 if ((!(cs_0aabbac1b4cc00d9()))) {
-return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());});
 }
-return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());});
+}
 }
 }
 }

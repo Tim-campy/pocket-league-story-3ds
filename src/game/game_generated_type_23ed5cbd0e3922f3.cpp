@@ -18,8 +18,10 @@ void cs_init_23ed5cbd0e3922f3(){static pls::cs::TypeInitState state;state.run("s
 // M:system.notification.MyNotify.OnNotify
 void cs_a56b328f925cc5e4(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this) { cs_init_23ed5cbd0e3922f3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.notification.MyNotify.OnNotify",game);
 {
 
+}
 }
 }
 }
@@ -27,8 +29,10 @@ void cs_a56b328f925cc5e4(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this) { cs_init_23
 // M:system.notification.MyNotify.OnReceiveValue
 void cs_e17b9d62b02e038f(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this) { cs_init_23ed5cbd0e3922f3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.notification.MyNotify.OnReceiveValue",game);
 {
 return;
+}
 }
 }
 }

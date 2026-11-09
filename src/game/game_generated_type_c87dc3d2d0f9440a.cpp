@@ -13,8 +13,10 @@ void cs_init_c87dc3d2d0f9440a(){static pls::cs::TypeInitState state;state.run("k
 // M:kairo.unity.system.appli.GameAppli.IsReleaseAndroid
 bool cs_273c34670c40021b(cs_c87dc3d2d0f9440a* cs_this) { cs_init_c87dc3d2d0f9440a();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.appli.GameAppli.IsReleaseAndroid",kairo);
 {
 return ([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_77e1513fb44fb202; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left != cs_right); }());
+}
 }
 }
 }
@@ -22,8 +24,10 @@ return ([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!
 // M:kairo.unity.system.appli.GameAppli.IsReleaseIOS
 bool cs_71a196f792672514(cs_c87dc3d2d0f9440a* cs_this) { cs_init_c87dc3d2d0f9440a();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.appli.GameAppli.IsReleaseIOS",kairo);
 {
 return ([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_38927e554bfc845e; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left != cs_right); }());
+}
 }
 }
 }

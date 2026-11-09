@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 public static class LoweringFixtures {
     private static int trace_;
+    public static int FloatingConcatOrder(int seed){trace_=0;string value=""+(float)Stamp(1)+":"+(double)Stamp(2)+":"+1.5f+":"+(-2.25d);return value=="1:2:1.5:-2.25"&&trace_==12?seed+1:seed-1;}
     public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
     private static int Pair(int a, int b) { return a * 100 + b; }
     public static int SourceAdapterCall(int seed){var target=new Synthetic.SourceAdapterTarget();target.value=seed;return target.Read(7)+target.Read();}

@@ -23,38 +23,48 @@ pls::cs::Array<std::int16_t>& cs_4854f02f058c4f7b(){cs_init_f3ea616d36334b95();r
 
 // M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32)
 bool cs_0bb436a75579d50a(std::int32_t v_v,std::int32_t v_bit) { cs_init_f3ea616d36334b95();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32)",kairo);
 {
 return ([&]() -> bool { auto cs_left = (([&]() -> std::int32_t { auto cs_left = v_v; auto cs_right = v_bit; return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left != cs_right); }());
+}
 }
 }
 
 // M:kairo.unity.util.BitUtil.Join(System.Int16,System.Int16)
 std::int32_t cs_959570d45f7028be(std::int16_t v_high,std::int16_t v_low) { cs_init_f3ea616d36334b95();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.BitUtil.Join(System.Int16,System.Int16)",kairo);
 {
 return ([&]() -> std::int32_t { auto cs_left = (([&]() -> std::int32_t { auto cs_left = (([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(v_high); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffull)); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x10ull)); return pls::cs::shl_i32(cs_left,cs_right); }())); auto cs_right = (([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(v_low); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffull)); return (cs_left & cs_right); }())); return (cs_left | cs_right); }());
+}
 }
 }
 
 // M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)
 std::int32_t cs_14daf94c5cc9a117(std::int32_t v_v,std::int32_t v_bit) { cs_init_f3ea616d36334b95();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.BitUtil.Off(System.Int32,System.Int32)",kairo);
 {
 return ([&]() { auto cs_old = v_v; auto cs_rhs = pls::cs::cast_integral<std::int32_t>(~(v_bit)); auto cs_value = (cs_old & cs_rhs); v_v = cs_value; return cs_value; }());
+}
 }
 }
 
 // M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)
 std::int32_t cs_239ce9a0914fe00b(std::int32_t v_v,std::int32_t v_bit) { cs_init_f3ea616d36334b95();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.BitUtil.On(System.Int32,System.Int32)",kairo);
 {
 return ([&]() -> std::int32_t { auto cs_left = v_v; auto cs_right = v_bit; return (cs_left | cs_right); }());
+}
 }
 }
 
 // M:kairo.unity.util.BitUtil.Split(System.Int32)
 pls::cs::Array<std::int16_t> cs_ba020c0b5c680349(std::int32_t v_value) { cs_init_f3ea616d36334b95();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.BitUtil.Split(System.Int32)",kairo);
 {
 ([&]() { auto cs_target = cs_4854f02f058c4f7b(); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_value = pls::cs::cast_integral<std::int16_t>((([&]() -> std::int64_t { auto cs_left = (([&]() -> std::int64_t { auto cs_left = pls::cs::cast_integral<std::int64_t>(v_value); auto cs_right = pls::cs::cast_integral<std::int64_t>(pls::cs::cast_integral<std::uint32_t>(std::uint64_t(0xffff0000ull))); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x10ull)); return pls::cs::shr_i64(cs_left,cs_right); }())));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 ([&]() { auto cs_target = cs_4854f02f058c4f7b(); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_value = pls::cs::cast_integral<std::int16_t>((([&]() -> std::int32_t { auto cs_left = v_value; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffull)); return (cs_left & cs_right); }())));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 return cs_4854f02f058c4f7b();
+}
 }
 }
 }

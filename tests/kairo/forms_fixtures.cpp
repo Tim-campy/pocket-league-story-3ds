@@ -55,7 +55,7 @@ int policy(){
  auto rejects=[&](auto&& operation){bool failed=false;try{operation();}catch(const pls::cs::NotSupportedException&){failed=true;}require(failed);};
  auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<FormBase>(27);
  rejects([&]{manager->ChangeCurrentForm(form);});require(manager->GetFormsNum()==0);
- rejects([&]{manager->Execute();});rejects([&]{manager->OnDraw();});rejects([&]{manager->Capture();});
+ rejects([&]{manager->Execute();});rejects([&]{manager->OnDraw();});require(!manager->IsCapturing());
  auto canvas=Canvas::GetInstance();bool absent=false;try{canvas->BeginPaint();}catch(const pls::cs::InvalidOperationException&){absent=true;}require(absent);
  auto image=Image::CreateImage(4,3);canvas->host_display(image,{});require(canvas->GetWidth()==4&&canvas->GetHeight()==3);
  canvas->SetAspectRatio(4,7);require(canvas->GetHeight()==7);canvas->SetAspectRatio();require(canvas->GetHeight()==3);

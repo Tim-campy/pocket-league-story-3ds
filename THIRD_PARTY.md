@@ -121,3 +121,20 @@ Os downloads oficiais da experiência são cobertos pela Unicode License V3,
 fixada por hash no script e recibo; não integram o executável de produção.
 Proveniência, hashes, resultados e religação pelo fonte completo publicado:
 [unicode-regeneration.md](docs/notes/unicode-regeneration.md).
+
+
+## Mono default numeric formatter (MIT/X11)
+
+The default-G Single/Double subset in `src/kairo/common/managed_float_format.cpp`
+is adapted from the official Unity Mono revision
+`b6587926c0f146c8b12985744f33a13b39a22d57`,
+`mcs/class/corlib/System/NumberFormatter.cs` and `NumberFormatter.jvm.cs`.
+Copyright (C) 2004 Novell, Inc.; (C) 2008 Mainsoft Co.
+Authors: Kazuki Oikawa and Eyal Alaluf. Both source headers grant MIT/X11
+permission (the MIT permission and warranty text reproduced above applies).
+The 24,576-byte mantissa/exponent table payload is generated locally from the
+MIT managed JVM source, never from the VM's differently licensed numeric tables.
+The pinned source files and generated table stay in ignored `build/`.
+Run `tools/setup_number_format.py --apk <your-local-apk>`; the source URLs,
+SHA-256 and license-header checks are recorded in
+`config/phase2-number-format-sources.json`. No game asset is involved.

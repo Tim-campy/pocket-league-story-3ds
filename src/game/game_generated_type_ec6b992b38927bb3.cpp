@@ -15,49 +15,63 @@ void cs_init_ec6b992b38927bb3(){static pls::cs::TypeInitState state;state.run("k
 // M:kairo.unity.ui.Pictograph.get_Frame
 std::int32_t cs_421aa514c9c5d059(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_Frame",kairo);
 {return cs_this->cs_1ba2c52a921cb7ec;}
+}
 }
 }
 
 // M:kairo.unity.ui.Pictograph.get_Margin
 std::int32_t cs_f42f663f078ddc9a(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_Margin",kairo);
 {return cs_this->cs_89c1dc1eeea9127f;}
+}
 }
 }
 
 // M:kairo.unity.ui.Pictograph.get_Seb
 pls::cs::Ref<cs_9cade6927d6e0bf3> cs_a7b9da8fd8e2e224(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_Seb",kairo);
 {return cs_this->cs_619bf37d2a3827ee;}
+}
 }
 }
 
 // M:kairo.unity.ui.Pictograph.get_Transform
 pls::cs::Ref<cs_c8e1f3d3f96670c6> cs_f7a1a6d38de745a1(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_Transform",kairo);
 {return cs_this->cs_eabfe8b32a83efad;}
+}
 }
 }
 
 // M:kairo.unity.ui.Pictograph.get_Wait
 std::int32_t cs_4d3996d16d3c5e25(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_Wait",kairo);
 {return cs_this->cs_df0d978c8b9bee8d;}
+}
 }
 }
 
 // M:kairo.unity.ui.Pictograph.get_X
 std::int32_t cs_9e317dd489a1ce8e(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_X",kairo);
 {return cs_this->cs_ac10bd1fd4407364;}
+}
 }
 }
 
 // M:kairo.unity.ui.Pictograph.get_Y
 std::int32_t cs_18bd61ecb1024b36(pls::cs::Ref<cs_ec6b992b38927bb3> cs_this) { cs_init_ec6b992b38927bb3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Pictograph.get_Y",kairo);
 {return cs_this->cs_bbec3199a0864e22;}
+}
 }
 }
 }

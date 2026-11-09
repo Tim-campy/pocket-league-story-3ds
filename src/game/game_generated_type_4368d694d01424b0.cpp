@@ -23,6 +23,7 @@ pls::cs::Ref<cs_4368d694d01424b0>& cs_af3cecaddfff33af(){cs_init_4368d694d01424b
 // M:kairo.unity.system.notification.ui.NotifyManager.DoCancel
 void cs_fb49ecfe97c9cd02(pls::cs::Ref<cs_4368d694d01424b0> cs_this) { cs_init_4368d694d01424b0();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.DoCancel",kairo);
 {
 pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_3003 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
 if ((([&]() { auto cs_left = pls::cs::box(v_instance_3003); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }()) && ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_3003); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_ab34005322458eed(cs_receiver); }()))) {
@@ -33,10 +34,12 @@ if ((([&]() { auto cs_left = pls::cs::box(v_instance_3003); auto cs_right = pls:
 }
 }
 }
+}
 
 // M:kairo.unity.system.notification.ui.NotifyManager.DoNotify
 void cs_f30d255f82bcb932(pls::cs::Ref<cs_4368d694d01424b0> cs_this) { cs_init_4368d694d01424b0();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.DoNotify",kairo);
 {
 pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_2705 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
 if ((([&]() { auto cs_left = pls::cs::box(v_instance_2705); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }()) && ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_2705); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_ab34005322458eed(cs_receiver); }()))) {
@@ -46,19 +49,24 @@ if ((([&]() { auto cs_left = pls::cs::box(v_instance_2705); auto cs_right = pls:
 }
 }
 }
+}
 
 // M:kairo.unity.system.notification.ui.NotifyManager.GetInstance
 pls::cs::Ref<cs_4368d694d01424b0> cs_fc7db26d427c32ff() { cs_init_4368d694d01424b0();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.GetInstance",kairo);
 {
 return cs_af3cecaddfff33af();
+}
 }
 }
 
 // M:kairo.unity.system.notification.ui.NotifyManager.IsPushEnable
 bool cs_c4e7fa21030fbd91(pls::cs::Ref<cs_4368d694d01424b0> cs_this) { cs_init_4368d694d01424b0();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.IsPushEnable",kairo);
 {
 return false;
+}
 }
 }
 }
@@ -66,8 +74,10 @@ return false;
 // M:kairo.unity.system.notification.ui.NotifyManager.OnNotify
 void cs_9ed05c6b3a5346ec(pls::cs::Ref<cs_4368d694d01424b0> cs_this) { cs_init_4368d694d01424b0();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.OnNotify",kairo);
 {
 
+}
 }
 }
 }
@@ -75,8 +85,10 @@ void cs_9ed05c6b3a5346ec(pls::cs::Ref<cs_4368d694d01424b0> cs_this) { cs_init_43
 // M:kairo.unity.system.notification.ui.NotifyManager.OnReceiveValue
 void cs_2186b93ea03d07c2(pls::cs::Ref<cs_4368d694d01424b0> cs_this) { cs_init_4368d694d01424b0();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.OnReceiveValue",kairo);
 {
 
+}
 }
 }
 }

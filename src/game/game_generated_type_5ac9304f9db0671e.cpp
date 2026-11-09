@@ -16,6 +16,8 @@ pls::cs::Ref<cs_5ac9304f9db0671e> cs_77ef879cc829cd6c() { cs_init_5ac9304f9db067
 }
 
 void cs_77ef879cc829cd6c_init(pls::cs::Ref<cs_5ac9304f9db0671e> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Seb.WorkValue.#ctor",kairo);
 {}
+}
 }
 }

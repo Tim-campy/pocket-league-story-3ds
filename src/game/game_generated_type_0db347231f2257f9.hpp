@@ -66,17 +66,23 @@ void cs_44432181dfb363fa(pls::cs::Ref<cs_0db347231f2257f9> cs_this,std::int32_t 
 
 void cs_1f29a756029e9713(pls::cs::Ref<cs_0db347231f2257f9> cs_this,std::int32_t v_next_state);
 
+void cs_a2acb3c737b002d8(pls::cs::Ref<cs_0db347231f2257f9> cs_this);
+
 void cs_48d36895375979fd(pls::cs::Ref<cs_0db347231f2257f9> cs_this,pls::cs::Ref<cs_2ef6641b828546ac> v_p1,pls::cs::Ref<cs_2ef6641b828546ac> v_p2);
 
 void cs_aee392a1a6d1e4ee(pls::cs::Ref<cs_0db347231f2257f9> cs_this,pls::cs::Ref<cs_2ef6641b828546ac> v_player);
 
 void cs_b87c854d982c64d4(pls::cs::Ref<cs_0db347231f2257f9> cs_this,pls::cs::Ref<cs_2ef6641b828546ac> v_player);
 
+void cs_cfe3c01eb8dc9065(pls::cs::Ref<cs_0db347231f2257f9> cs_this);
+
 void cs_d7f88568664fe4ad(pls::cs::Ref<cs_0db347231f2257f9> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_oy,std::int32_t v_W,std::int32_t v_index,std::int32_t v_centerX);
 
 void cs_b99afcfcb25f3390(pls::cs::Ref<cs_0db347231f2257f9> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 
 pls::cs::Ref<cs_0db347231f2257f9> cs_518d0abdf0ba15ec();
+
+void cs_f3c4f914ac4cb39c(pls::cs::Ref<cs_0db347231f2257f9> cs_this,pls::cs::Ref<cs_86b804989f2a95bb> v_ball,pls::cs::Ref<cs_2ef6641b828546ac> v_hiter);
 
 void cs_996340e06b5074af(pls::cs::Ref<cs_0db347231f2257f9> cs_this,std::int32_t v_team_id);
 

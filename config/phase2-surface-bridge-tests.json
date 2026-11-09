@@ -184,11 +184,11 @@
     "tests/kairo/surface_bridge_fixtures.cpp": "93885eae1d897e3153e054617be38eeb3599781f5f6590c4b40d3132398db90e",
     "src/kairo/common/canvas.cpp": "0d132bf3ab87ccee85f9523e621ecd8f23ef245d98bb74f7758296826da10981",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
-    "src/kairo/common/graphics.cpp": "dd1a274aa50f43f7d78da5621f44fd6d0df1e6f91d9a913ef31b1d262e651630",
-    "src/kairo/common/mesh.cpp": "528cd60f55a4ee0642082cf1ac4ecfc1d978e34805f6d47ab39c12b1b0ea34fa",
+    "src/kairo/common/graphics.cpp": "000bc3ba778d8d45c5892726ad111e2d2485f49aadb6a7c6db09908451acb99a",
+    "src/kairo/common/mesh.cpp": "90ea4d5cac38ad0b1a0cf287ebca19584c76e2f80bd0cd611670d0a6a6c5948b",
     "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
-    "src/kairo/platform/sdl/font.cpp": "e24ec08f120d98203996ae50d14abe5f4a84f3804842af1ca4f7aad84a9e6065",
+    "src/kairo/platform/sdl/font.cpp": "d7098cce7b16a430233f21db24e6555365acb324301469d0e211b98222515e44",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "tests/kairo/SurfaceBridgeOracle.cs": "647d04d52e86789e2c5807f42317a0dec2fd011d109613781e8d02a756b95ccc",
@@ -196,7 +196,7 @@
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
     "src/kairo/api/forms_execution.hpp": "438873bd6f8525f0b821f9b277da122e09c8fb936b1cdb5d015abe575ddbb028",
-    "src/kairo/api/forms.hpp": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a",
+    "src/kairo/api/forms.hpp": "a6acf91d89e5a9502b11d66246f66082ef760b3828a2fa3fe6ae8cdce1f05bbb",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/canvas.hpp": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc",
     "src/kairo/api/input.hpp": "021a99799933471069df42f904fbc58d0c9a5cb5ef519f138c461396af839f71",
@@ -244,7 +244,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "005b9d185775d24bd2e9144f03f76c3dfa744c1a4b352ca21cb6ce4d3a6b6854"
+    "sha256": "f53a362717726214ae6f33513608db5203eaa2dbdca7063212ddf5475e4d6627"
   },
   "verified_boundary_ids": [],
   "ordering": {

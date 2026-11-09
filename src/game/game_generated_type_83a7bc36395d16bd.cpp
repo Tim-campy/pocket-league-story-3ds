@@ -11,14 +11,15 @@ pls::cs::Ref<cs_3da6da0799f0bdf8>& cs_8a995ef2c270d901(){pls::generated::cs_init
 
 // M:kairo.unity.util.Log.Error(System.String,System.Exception)
 pls::cs::String cs_68d38462ed74d43f(pls::cs::String v_text,pls::cs::Ref<pls::cs::ExceptionObject> v_t) { pls::generated::cs_init_83a7bc36395d16bd();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Log.Error(System.String,System.Exception)",kairo);
 {
-([&]() { auto cs_value = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; pls::cs::Ref<pls::cs::ExceptionObject> cs_arg1 = v_t; return pls::generated::cs_a66c820e92bb7b9a(cs_arg0,cs_arg1); }()); v_text = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; pls::cs::Ref<pls::cs::ExceptionObject> cs_arg1 = v_t; return pls::generated::cs_a66c820e92bb7b9a(cs_arg0,cs_arg1); }());}); v_text = cs_value; return cs_value; }());
 if (pls::generated::cs_4cc76a7a43706693()) {
 if (([&]() { auto cs_left = pls::cs::box(v_text); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
-([&]() -> void { pls::cs::String cs_arg0 = v_text; pls::generated::cs_4fdae576ed75d546(cs_arg0); }());
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::String cs_arg0 = v_text; pls::generated::cs_4fdae576ed75d546(cs_arg0); }());});
 }
 if (([&]() { auto cs_left = pls::cs::box(v_t); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
-([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_t); pls::kairo::debug_log(cs_arg0); }());
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_t); pls::kairo::debug_log(cs_arg0); }());});
 }
 }
 if (([&]() { auto cs_left = pls::cs::box(cs_8a995ef2c270d901()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
@@ -28,6 +29,7 @@ if (([&]() { auto cs_left = pls::cs::box(v_text); auto cs_right = pls::cs::Ref<p
 return pls::cs::String(std::u16string(u"",0));
 }
 return v_text;
+}
 }
 }
 }

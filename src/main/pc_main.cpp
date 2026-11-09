@@ -4,6 +4,7 @@
 #include "graphics.hpp"
 #include "font.hpp"
 #include "canvas.hpp"
+#include "forms.hpp"
 #include "system.hpp"
 #include "sound.hpp"
 #include "audio.hpp"
@@ -14,6 +15,8 @@
 #include "managed_exceptions.hpp"
 #include "pc_metrics.hpp"
 #include "diagnostic_keys.hpp"
+#include "diagnostic_profile.hpp"
+#include "capture.hpp"
 #include "../kairo/platform/sdl/text_input.hpp"
 #include "../kairo/platform/sdl/globalization.hpp"
 #include <exception>
@@ -48,10 +51,15 @@ struct FinalMetrics {
         metrics.finish(std::uncaught_exceptions()?"exception":reason);
     }
 };
+struct FinalProfile {~FinalProfile(){if(pls::diagnostic::enabled.load()){std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);pls::diagnostic::dump(std::cerr);}}};
 }
 int main(int argc,char** argv){
     if(argc!=2){std::cerr<<"Provide the authenticated local asset directory.\n";return 2;}
     pls::pc::RunMetrics metrics(pls::pc::metrics_enabled_from_environment(),std::cerr);
+#if defined(PLS_DIAGNOSTIC_BUILD)
+    pls::diagnostic::enabled=true;
+    FinalProfile final_profile;
+#endif
     try{
         pls::cs::GcMutatorScope host_mutator;
         pls::cs::install_mono_collation_character_data();
@@ -77,6 +85,7 @@ int main(int argc,char** argv){
 #endif
         pls::services::OfflineServices services(std::filesystem::u8path(preferences));pls::services::install(&services);services.device_id();
         pls::kairo::configure_storage(std::filesystem::u8path(preferences),&assets);
+        pls::kairo::configure_capture(std::filesystem::u8path(preferences)/"captures");
         // Host framebuffer corresponds to an already-owned display texture;
         // it must not enter the game's reloadable/generated image cache.
         auto display=pls::kairo::Image::FromRgba(240,280,std::vector<std::uint8_t>(240*280*4));
@@ -112,15 +121,27 @@ int main(int argc,char** argv){
 #if defined(PLS_DIAGNOSTIC_BUILD)
         std::vector<std::uint64_t>select_frames;
         if(const auto* value=std::getenv("PLS_PC_SELECT_FRAME")){std::istringstream input(value);std::string token;
-            while(std::getline(input,token,',')){std::size_t used=0;const auto frame=std::stoull(token,&used);if(used!=token.size()||frame==0||frame>600||(!select_frames.empty()&&frame<=select_frames.back()))throw pls::cs::ArgumentOutOfRangeException();select_frames.push_back(frame);}
+            while(std::getline(input,token,',')){std::size_t used=0;const auto frame=std::stoull(token,&used);if(used!=token.size()||frame==0||frame>pls::pc::max_scripted_key_frame||(!select_frames.empty()&&frame<=select_frames.back()))throw pls::cs::ArgumentOutOfRangeException();select_frames.push_back(frame);}
         }
         const auto scripted_keys=pls::pc::parse_scripted_keys(std::getenv("PLS_PC_KEY_FRAMES")?std::getenv("PLS_PC_KEY_FRAMES"):"");
+        std::uint64_t dismiss_until=0;
+        const bool dismiss_unlabeled_only=std::getenv("PLS_PC_DISMISS_UNLABELED_ONLY")!=nullptr;
+        if(const auto* value=std::getenv("PLS_PC_DISMISS_POPUPS_UNTIL")){std::size_t used=0;dismiss_until=std::stoull(value,&used);if(value[used]!='\0'||dismiss_until<300||dismiss_until>pls::pc::max_scripted_key_frame)throw pls::cs::ArgumentOutOfRangeException();}
 #endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
             pls::pc::FrameClock timing(metrics.enabled());
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            pls::diagnostic::begin_frame();
+#endif
             pls::cs::gc_safepoint();
             const auto frame_start=std::chrono::steady_clock::now();
 #if defined(PLS_DIAGNOSTIC_BUILD)
+            if(dismiss_until&&presented_frames>=300&&presented_frames<=dismiss_until&&presented_frames%18==0&&std::find(select_frames.begin(),select_frames.end(),presented_frames)==select_frames.end()&&std::none_of(scripted_keys.begin(),scripted_keys.end(),[&](const auto&key){return key.frame==presented_frames;})){
+                auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
+                // SubForm's original base ID is 4. No generated fields/flags
+                // are changed: these are ordinary source Canvas button clicks.
+                if(form){auto label=form->GetRightSoftLabel();auto key=pls::pc::popup_dismiss_key(form->GetId(),!label.is_null()&&label.length()!=0,dismiss_unlabeled_only);if(!key.empty()){canvas->KeyClick(key=="SOFT2"?pls::kairo::Canvas::KEY_SOFT2:pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_DISMISS_POPUP_FRAME="<<presented_frames<<':'<<key<<'\n';}}
+            }
             if(std::find(select_frames.begin(),select_frames.end(),presented_frames)!=select_frames.end()){canvas->KeyClick(pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_SELECT_FRAME="<<presented_frames<<'\n';}
             for(const auto& key:scripted_keys)if(key.frame==presented_frames){
                 const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;
@@ -145,20 +166,30 @@ int main(int argc,char** argv){
             app->host_draw();
             pls::kairo::Offscreen::EndFrame();
             text_input->Draw(display);
+            pls::kairo::finish_captures(display);
             timing.mark(pls::pc::FrameStage::game_draw);
+            {
+            PLS_PROFILE_AREA(composition);
             auto* texture=backend.upload_rgba8(240,280,display->pixels());
             if(metrics.enabled())metrics.observe_texture_payload(backend.memory().texture_payload_bytes);
             timing.mark(pls::pc::FrameStage::upload);
             pls::cs::run_finally([&]{backend.draw(texture,{0,0,240,280},{0,0,240,280},false);timing.mark(pls::pc::FrameStage::render);backend.present();timing.mark(pls::pc::FrameStage::present);},[&]{backend.release(texture);timing.mark(pls::pc::FrameStage::release);});
+            }
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            {auto profile=pls::diagnostic::end_frame();std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_FRAME_PROFILE={\"frame\":"<<(presented_frames+1)<<",\"ns\":["<<profile[0]<<','<<profile[1]<<','<<profile[2]<<','<<profile[3]<<"]}\n";}
+#endif
             pls::kairo::UnityApplication::pace(frame_start);
             const auto sample=timing.finish();
             if(metrics.frame(sample))metrics.memory("first_presented_frame",payload());
             ++presented_frames;
-            if(presented_frames==1||(presented_frames<=900&&presented_frames%60==0))capture_frame(display,presented_frames);
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            if(presented_frames%60==0){std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);pls::diagnostic::dump(std::cerr);}
+#endif
+            if(presented_frames==1||(presented_frames<=pls::pc::max_scripted_key_frame&&presented_frames%60==0))capture_frame(display,presented_frames);
 #if defined(PLS_DIAGNOSTIC_BUILD)
             // Numeric-only late window, separate from the accumulator's first
             // 600 frames. A screenshot must establish what screen it measures.
-            if(metrics.enabled()&&presented_frames>=661&&presented_frames<=900){
+            if(metrics.enabled()&&presented_frames>=661&&presented_frames<=1200){
                 std::ostringstream line;line<<"PLS_PC_METRICS={\"event\":\"diagnostic_frame_sample\",\"completed_presented_frame\":"<<presented_frames<<",\"stage_nanoseconds\":[";
                 for(std::size_t i=0;i<sample.nanoseconds.size();++i){if(i)line<<',';line<<sample.nanoseconds[i];}line<<"]}\n";
                 std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<line.str();

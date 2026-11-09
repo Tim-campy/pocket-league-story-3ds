@@ -109,7 +109,11 @@ bool cs_ef3cddc2587c6e11(pls::cs::Ref<cs_792a6372766eb19f> cs_this,std::int32_t 
 
 void cs_2da0940ad60eef3f(pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> v_jar);
 
+void cs_1eeed29a5b93c2ae(pls::cs::Ref<cs_792a6372766eb19f> cs_this,pls::cs::Ref<cs_757516ce190cf813> v_evt);
+
 void cs_df21b41e03f2f36f(pls::cs::Ref<cs_792a6372766eb19f> cs_this);
+
+void cs_fc8574cb926eda9c(pls::cs::Ref<cs_792a6372766eb19f> cs_this,std::int32_t v_mode);
 
 void cs_7d8c3a37df2c9c0b(pls::cs::Ref<cs_792a6372766eb19f> cs_this,std::int32_t v_mode);
 

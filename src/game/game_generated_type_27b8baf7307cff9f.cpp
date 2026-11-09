@@ -13,8 +13,10 @@ void cs_init_27b8baf7307cff9f(){static pls::cs::TypeInitState state;state.run("k
 // M:kairo.unity.ui.UIException.GetStatus
 std::int32_t cs_31cf637794688433(pls::cs::Ref<cs_27b8baf7307cff9f> cs_this) { cs_init_27b8baf7307cff9f();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.UIException.GetStatus",kairo);
 {
 return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
+}
 }
 }
 }

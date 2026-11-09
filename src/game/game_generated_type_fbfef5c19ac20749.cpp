@@ -16,6 +16,7 @@ cs_fbfef5c19ac20749 cs_990cc4ea487d53f7(pls::cs::String v_text,float v_x,float v
 }
 
 void cs_990cc4ea487d53f7_init(cs_fbfef5c19ac20749* cs_this,pls::cs::String v_text,float v_x,float v_y,std::int32_t v_anchor,std::int32_t v_color,pls::cs::Ref<pls::kairo::Font> v_font) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Image.TextRenderTask.#ctor(System.String,System.Single,System.Single,System.Int32,System.Int32,kairo.unity.ui.Font)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_text; pls::game::cs_require(cs_target)->cs_d610593762120cde = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_x; pls::game::cs_require(cs_target)->cs_ede9b012c16594d4 = cs_value; return cs_value; }());
@@ -23,6 +24,7 @@ void cs_990cc4ea487d53f7_init(cs_fbfef5c19ac20749* cs_this,pls::cs::String v_tex
 ([&]() { auto cs_target = cs_this; auto cs_value = v_anchor; pls::game::cs_require(cs_target)->cs_aed8d166cc394ada = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_color; pls::game::cs_require(cs_target)->cs_a44884f8becb8e1b = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_font; pls::game::cs_require(cs_target)->cs_0915461b6b8b6552 = cs_value; return cs_value; }());
+}
 }
 }
 }

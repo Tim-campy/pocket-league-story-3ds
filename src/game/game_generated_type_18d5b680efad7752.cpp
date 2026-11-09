@@ -18,6 +18,8 @@ pls::cs::Ref<cs_18d5b680efad7752> cs_b1fabebdabf8d17c() { cs_init_18d5b680efad77
 }
 
 void cs_b1fabebdabf8d17c_init(pls::cs::Ref<cs_18d5b680efad7752> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.Http.HttpThread.#ctor",kairo);
 {}
+}
 }
 }

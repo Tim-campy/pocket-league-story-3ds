@@ -11,6 +11,8 @@ void cs_a08cf6e8e956e572(std::int32_t v_delta);
 
 pls::cs::Ref<pls::cs::Object> cs_15ad2768062dc729(pls::cs::Ref<pls::kairo::Image> v_image);
 
+void cs_3d6df8b476542cae(pls::cs::Ref<pls::kairo::FormManagerBase> v_manager,pls::cs::Ref<cs_9326c27a92cfea3a> v_view,pls::cs::Array<pls::cs::String> v_tables,pls::cs::Delegate<void(pls::cs::Array<pls::cs::String>)> v_completed,bool v_temporary);
+
 std::int32_t cs_268e4c8a5c5e1aa9();
 
 void cs_88dfc436b791ac1f();

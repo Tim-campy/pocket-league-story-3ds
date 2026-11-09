@@ -55,7 +55,12 @@ def main():
     parser.add_argument('--diagnostics-only',action='store_true',help='Bind and attempt every source body, without writing C++ or promoting any status')
     parser.add_argument('--output',type=Path)
     parser.add_argument('--bootstrap-main',action='store_true',help='Declare Main factory even when its body remains unsupported, without emitting a stub')
+    parser.add_argument('--diagnostic-defer-capture',action='store_true',help='Private build-only variant: fatal guard at the missing Capture API, never normal coverage')
     args=parser.parse_args()
+    if args.diagnostic_defer_capture:
+        if args.assembly!='Assembly-CSharp'or args.compile or args.diagnostics_only or args.output is None:parser.error('Capture diagnostic requires Assembly-CSharp, an explicit private output and no compile/diagnostics-only')
+        if not args.output.resolve().is_relative_to((ROOT/'build').resolve()):parser.error('Capture diagnostic output must remain below ignored build/')
+        args.output=args.output.resolve()
     folder,runtime,target,producer=prepare()
     reference=ROOT/'reference'
     subprocess.run([sys.executable,ROOT/'tools/check_reference.py'],check=True,cwd=ROOT,capture_output=True)
@@ -107,6 +112,7 @@ def main():
         request['external_methods'].update({app+'Init(kairo.unity.ui.IApplication)':'member:source_Init',app+'GetCurrentApp':'pls::kairo::IApplication::GetCurrentApp',app+'SetViewport(System.Int32,System.Int32)':'member:SetViewport'})
         request['external_methods'].update({app+'GetPackageName':'member:GetPackageName','M:kairo.unity.native.KairoPlugin.GetPackageName':'pls::kairo::native_package_name'})
         request['external_methods'][app+'GetTotalFrames']='member:GetTotalFrames'
+        request['external_methods'][app+'SetScaleRatio(System.Single)']='member:SetScaleRatio'
         request['source_native_helpers']=['M:kairo.unity.ui.Graphics.GetColorOfName(System.Int32)','M:kairo.unity.ui.Canvas.OpenBrowser(System.String)']
         request['source_native_helpers']+=['M:kairo.unity.ui.Graphics.DrawRect2(System.Single,System.Single,System.Single,System.Single)']
         request['source_native_helpers']+=['M:kairo.unity.ui.Font.Draw(kairo.unity.ui.Graphics,System.String,System.Single,System.Single)']
@@ -280,6 +286,9 @@ def main():
                         if name not in ('Execute','OnDraw'):request['external_methods'][row['id']]='member:source_'+name
         request['external_methods']['M:kairo.unity.form.FormBase.#ctor(System.Int32)']='base:source_construct'
         request['external_methods']['M:kairo.unity.form.FormManagerBase.#ctor']='base:source_construct'
+        request['native_includes'].append('capture.hpp')
+        request['external_methods']['M:kairo.unity.form.FormManagerBase.Capture(kairo.unity.surface.SurfaceBase,System.String[],kairo.unity.form.FormManagerBase.OnCaptureCompleted,System.Boolean)']='source-adapter:M:PlsPortGeneratedBootstrap.Source.Capture(kairo.unity.form.FormManagerBase,kairo.unity.surface.SurfaceBase,System.String[],kairo.unity.form.FormManagerBase.OnCaptureCompleted,System.Boolean)'
+        request['external_methods']['M:PlsPortGeneratedBootstrap.Host.QueueCapture(kairo.unity.form.FormManagerBase,System.Int32,System.Int32,System.Int32,System.Int32,System.String[],kairo.unity.form.FormManagerBase.OnCaptureCompleted,System.Boolean)']='pls::kairo::queue_capture'
         request['external_value_types']={'T:UnityEngine.Vector2':'pls::kairo::Vector2'}
         request['external_fields'].update({'F:UnityEngine.Vector2.x':'x','F:UnityEngine.Vector2.y':'y'})
         request['external_methods']['M:UnityEngine.Vector2.Set(System.Single,System.Single)']='value-member:Set'
@@ -437,7 +446,11 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         if not args.diagnostics_only:
             output.mkdir(parents=True,exist_ok=True)
             bootstrap_adapter.header(output)
-    input_path=folder/(args.assembly+'-input.json');raw_path=folder/(args.assembly+'-translation.json')
+    if args.diagnostic_defer_capture:
+        from diagnostic_leaves import CAPTURE,CPP_NAME
+        request['external_methods'][CAPTURE]=CPP_NAME
+    input_path=output/'diagnostic-request.json'if args.diagnostic_defer_capture else folder/(args.assembly+'-input.json')
+    raw_path=output/'diagnostic-raw-report.json'if args.diagnostic_defer_capture else folder/(args.assembly+'-translation.json')
     input_path.write_text(json.dumps(request,indent=2)+'\n',encoding='utf-8',newline='\n')
     run([runtime,target,input_path,raw_path],folder/(args.assembly+'-translator.log'))
     report=json.loads(raw_path.read_text(encoding='utf-8-sig'))
@@ -482,6 +495,12 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         (folder/'Assembly-CSharp-source-oracle.cs').unlink(missing_ok=True)
     elif oracle.exists():shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
     if bootstrap_adapter:report['bootstrap_bindings']=bootstrap_adapter.emit(output,report,portable)
+    if args.diagnostic_defer_capture:
+        from diagnostic_leaves import package,CAPTURE
+        callers=package(output)
+        report['diagnostic_leaf_guards']=dict(ids=[CAPTURE],callers=callers,producer_sha256=digest(ROOT/'translator/diagnostic_leaves.py'),request_path=input_path.relative_to(ROOT).as_posix(),request_sha256=digest(input_path))
+        report['diagnostic_only']=True
+        report['normal_coverage_promoted']=0
     compiled=False;compile_evidence=None
     if args.compile and report['emitted_method_count']:
         env=environment();native=folder/'native';native.mkdir(exist_ok=True)
@@ -504,8 +523,11 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         compiled_method_count=report['emitted_method_count'] if compiled else 0,
         game_translated_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_compiled_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_executed_methods=0,
         generated_files=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted(set(output.glob('*.?pp'))|set(output.glob('*.inc')))])
-    report_target=ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
+    report_target=output/'diagnostic-report.json'if args.diagnostic_defer_capture else ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
     report_target.write_text(json.dumps(report,indent=None if args.assembly=='Assembly-CSharp' else 2,ensure_ascii=True,separators=(',',':') if args.assembly=='Assembly-CSharp' else None)+'\n',encoding='utf-8',newline='\n')
+    if args.diagnostic_defer_capture:
+        print(json.dumps(dict(diagnostic_only=True,normal_coverage_promoted=0,emitted_candidates=report['emitted_method_count'],guarded_callers=callers)))
+        return
     measured=list(csv.DictReader((ROOT/'config/csharp-syntax.csv').open(encoding='utf-8')))
     covered=set(report['emitted_kind_occurrences'])
     syntax=[dict(kind=r['kind'],measured_count=r['count'],observed_in_emitted_body=r['kind'] in covered,

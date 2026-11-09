@@ -1,3 +1,4 @@
+#include "../../common/diagnostic_profile.hpp"
 #include "font.hpp"
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -48,6 +49,7 @@ const RasterGlyph& RasterFont::glyph(char32_t codepoint,FontStyle style) {
         p.lru.splice(p.lru.begin(),p.lru,found->second.lru);
         return found->second.glyph;
     }
+    PLS_PROFILE_AREA(raster);
     ft_check(FT_Load_Char(p.face,static_cast<FT_ULong>(codepoint),FT_LOAD_DEFAULT));
     if(style==FontStyle::bold)FT_GlyphSlot_Embolden(p.face->glyph);
     else if(style==FontStyle::italic)FT_GlyphSlot_Oblique(p.face->glyph);

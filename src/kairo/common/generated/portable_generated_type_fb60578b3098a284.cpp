@@ -22,16 +22,20 @@ pls::cs::Ref<cs_fb60578b3098a284> cs_10f86e0fa81e1b57() { cs_init_fb60578b3098a2
 
 void cs_10f86e0fa81e1b57_init(pls::cs::Ref<cs_fb60578b3098a284> cs_this) {
 ([&]() { cs_60f0f6dd217b8877_init(std::static_pointer_cast<cs_ea324a0bbfe717fe>(cs_this)); }());
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayOutputStream.#ctor",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { return pls::cs::make_ref<pls::cs::MemoryStream>(); }()); pls::generated::cs_require(cs_target)->cs_f48613bc1c6327b8 = cs_value; return cs_value; }());
+}
 }
 }
 
 // M:java.io.ByteArrayOutputStream.Close
 void cs_939f1d17e9442852(pls::cs::Ref<cs_fb60578b3098a284> cs_this) { cs_init_fb60578b3098a284();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayOutputStream.Close",kairo);
 {
 
+}
 }
 }
 }
@@ -39,8 +43,10 @@ void cs_939f1d17e9442852(pls::cs::Ref<cs_fb60578b3098a284> cs_this) { cs_init_fb
 // M:java.io.ByteArrayOutputStream.ToByteArray
 pls::cs::Array<std::uint8_t> cs_c875afd29ab2966c(pls::cs::Ref<cs_fb60578b3098a284> cs_this) { cs_init_fb60578b3098a284();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayOutputStream.ToByteArray",kairo);
 {
-return ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_receiver = (pls::cs::unbox<pls::cs::Ref<pls::cs::MemoryStream>>(pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f48613bc1c6327b8; }())))); return pls::generated::cs_require(cs_receiver)->ToArray(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_receiver = (pls::cs::unbox<pls::cs::Ref<pls::cs::MemoryStream>>(pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f48613bc1c6327b8; }())))); return pls::generated::cs_require(cs_receiver)->ToArray(); }());});
+}
 }
 }
 }
@@ -48,8 +54,10 @@ return ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_receiver = (pls::cs::unb
 // M:java.io.ByteArrayOutputStream.ToString
 pls::cs::String cs_576830aae6220bdb(pls::cs::Ref<cs_fb60578b3098a284> cs_this) { cs_init_fb60578b3098a284();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayOutputStream.ToString",kairo);
 {
-return ([&]() -> pls::cs::String { auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8(); auto cs_arg0 = ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_receiver = static_cast<pls::cs::Ref<cs_fb60578b3098a284>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_c875afd29ab2966c(cs_receiver); }()); return pls::generated::cs_require(cs_receiver)->GetString(cs_arg0); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_receiver = pls::cs::RuntimeEncoding::get_UTF8(); auto cs_arg0 = ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_receiver = static_cast<pls::cs::Ref<cs_fb60578b3098a284>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_c875afd29ab2966c(cs_receiver); }()); return pls::generated::cs_require(cs_receiver)->GetString(cs_arg0); }());});
+}
 }
 }
 }

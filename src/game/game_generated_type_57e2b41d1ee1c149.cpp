@@ -19,6 +19,8 @@ pls::cs::Ref<cs_57e2b41d1ee1c149> cs_c80013d97cddb420() { cs_init_57e2b41d1ee1c1
 }
 
 void cs_c80013d97cddb420_init(pls::cs::Ref<cs_57e2b41d1ee1c149> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:PlsPortGeneratedBootstrap.Source.ImageTaskState.#ctor",kairo);
 {}
+}
 }
 }

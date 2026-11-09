@@ -26,14 +26,18 @@ pls::cs::Ref<cs_50c5a567a6876ee3> cs_145bafe9acaf77f9() { cs_init_50c5a567a6876e
 
 void cs_145bafe9acaf77f9_init(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) {
 ([&]() { cs_d710b4eaf3ab212a_init(std::static_pointer_cast<cs_b489b0d33bb37bb8>(cs_this)); }());
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.KairoDummy.#ctor",kairo);
 {}
+}
 }
 
 // M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameBegin
 void cs_b4e47fce38dcaf3b(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50c5a567a6876ee3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameBegin",kairo);
 {
 
+}
 }
 }
 }
@@ -41,8 +45,10 @@ void cs_b4e47fce38dcaf3b(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50
 // M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameEnd
 void cs_dc354c17f44bb95c(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50c5a567a6876ee3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameEnd",kairo);
 {
 
+}
 }
 }
 }
@@ -50,8 +56,10 @@ void cs_dc354c17f44bb95c(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50
 // M:kairo.unity.system.KairoBase.KairoDummy.Save
 void cs_e4f93c2947373f31(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50c5a567a6876ee3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.KairoDummy.Save",kairo);
 {
 
+}
 }
 }
 }
@@ -59,8 +67,10 @@ void cs_e4f93c2947373f31(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50
 // M:kairo.unity.system.KairoBase.KairoDummy.SaveAll
 void cs_c8026282c0a24bbf(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) { cs_init_50c5a567a6876ee3();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.KairoDummy.SaveAll",kairo);
 {
 
+}
 }
 }
 }

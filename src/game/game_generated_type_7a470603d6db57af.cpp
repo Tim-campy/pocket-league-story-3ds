@@ -14,8 +14,10 @@ std::int32_t& cs_d9c18e1b80629b14(){cs_init_7a470603d6db57af();return cs_d9c18e1
 
 // M:kairo.unity.ad.AdMobView.GetAdHeight
 std::int32_t cs_8919cf419e6c7708() { cs_init_7a470603d6db57af();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ad.AdMobView.GetAdHeight",kairo);
 {
 return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
+}
 }
 }
 }

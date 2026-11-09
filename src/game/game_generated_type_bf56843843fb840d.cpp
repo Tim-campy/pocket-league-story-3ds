@@ -17,10 +17,12 @@ cs_bf56843843fb840d cs_b9f0cc63a3a1e0ed(std::int32_t v_rsId,std::int32_t v_rcId,
 }
 
 void cs_b9f0cc63a3a1e0ed_init(cs_bf56843843fb840d* cs_this,std::int32_t v_rsId,std::int32_t v_rcId,pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> v_jar) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.ResourceManager.JarCache.#ctor(System.Int32,System.Int32,kairo.unity.util.JarInflater)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_rsId; pls::game::cs_require(cs_target)->cs_85aa6688644f1732 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_rcId; pls::game::cs_require(cs_target)->cs_0e1d8386a566c122 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_jar; pls::game::cs_require(cs_target)->cs_061de919f485a022 = cs_value; return cs_value; }());
+}
 }
 }
 }

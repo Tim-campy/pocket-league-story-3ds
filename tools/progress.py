@@ -189,7 +189,7 @@ def main():
          +str(phase2['compiled_methods'])+' métodos portáveis gerados/compilados, '+str(phase2['emitted_root_methods'])+' raízes entre '
          +str(phase2['requested_root_methods'])+' métodos requisitados e '+str(phase2['emitted_dependency_methods'])+' dependências. '
          'Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: '
-         +str(phase2['game_translated_methods'])+'/1958 identidades originais com C++ compilado; 0 executadas/verificadas em jogo.**'
+         +str(phase2['game_translated_methods'])+'/1958 identidades originais com C++ compilado; '+str(phase2.get('game_executed_methods',0))+' com retorno normal registrado em jogo; 0 verificadas.**'
          if phase2 else '**Preparação: zero membros verificados e zero métodos traduzidos.** Ainda sem recibos de implementação.'),'',
         '## Preparação e medições','',
         '- Repositório separado e submódulo fixado; política de conteúdo no CI (formatos proibidos e limite 2.000.000 bytes).',

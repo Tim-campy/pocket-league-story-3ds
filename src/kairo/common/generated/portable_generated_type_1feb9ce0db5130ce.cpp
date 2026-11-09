@@ -8,8 +8,10 @@ void cs_init_1feb9ce0db5130ce(){static pls::cs::TypeInitState state;state.run("j
 
 // M:java.lang.JLong.ParseLong(System.String)
 std::int64_t cs_fbdffc982daddb52(pls::cs::String v_s) { cs_init_1feb9ce0db5130ce();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JLong.ParseLong(System.String)",kairo);
 {
-return ([&]() -> std::int64_t { auto cs_arg0 = v_s; return pls::cs::int64_parse(cs_arg0); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { auto cs_arg0 = v_s; return pls::cs::int64_parse(cs_arg0); }());});
+}
 }
 }
 }

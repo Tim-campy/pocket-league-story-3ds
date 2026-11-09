@@ -23,10 +23,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.2197310000192374,
-    "native-compile": 7.435109399957582,
-    "managed-output": 0.3639926998876035,
-    "native-output": 0.41658379998989403
+    "csharp-compile": 0.1870027999393642,
+    "native-compile": 7.334213699912652,
+    "managed-output": 0.29327200003899634,
+    "native-output": 0.235884599853307
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -48,11 +48,11 @@
     },
     {
       "path": "build/translator/matrix-point-generated/portable_generated_runtime.hpp",
-      "sha256": "956bd6432894fafe4853d6d4fdf17688a5b7d6cfdc97fa92c85b8135631c0544"
+      "sha256": "43308eab74c9b854d14428ac99a04207f83e88c5a44e3f831651dc7e93f45ef3"
     },
     {
       "path": "build/translator/matrix-point-generated/portable_generated_type_0e187cd82b971e01.cpp",
-      "sha256": "cd5c6e97e0804e62bd4d4c5347388ebb34a52b3e1c508061ce8e4e5ced77728e"
+      "sha256": "0d1a1a2e867ccb2cb6771b07a2d253bdd5f4b55a6931163db564bd0e63b2b654"
     },
     {
       "path": "build/translator/matrix-point-generated/portable_generated_type_0e187cd82b971e01.hpp",
@@ -72,13 +72,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/matrix-point-differential/Harness.exe",
-    "sha256": "f0bdd64ad5aa035ef828b5f896c65569490a55a242bd08a29915fad1e2cfac10"
+    "sha256": "c4270fe6aad5ee71931b7fff321a663dd2840096bedf84ffea888036a044800a"
   },
   "source_oracle_executable": {
     "path": "build/translator/matrix-point-differential/Harness-managed.exe",
-    "sha256": "a8179d5787372f81209b7fe5bf5aaf36536a94e817538593f3e67b4e6d7cf038"
+    "sha256": "c0db7797e89b18860587b1291bdf10630463bc07e0da2f7d86073fa9d493797a"
   },
-  "differential_runner_sha256": "87c1980c8a981f0d53888a8535176f9ccb2ca5fa4acf1409877af58fc3fec2be",
+  "differential_runner_sha256": "fd025cc467909a8266130b9bf90a197ea4760ea3d20188a9710c5362e2ec44b0",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -110,11 +110,11 @@
     },
     {
       "path": "build/translator/matrix-point-generated/portable_generated_runtime.hpp",
-      "sha256": "956bd6432894fafe4853d6d4fdf17688a5b7d6cfdc97fa92c85b8135631c0544"
+      "sha256": "43308eab74c9b854d14428ac99a04207f83e88c5a44e3f831651dc7e93f45ef3"
     },
     {
       "path": "build/translator/matrix-point-generated/portable_generated_type_0e187cd82b971e01.cpp",
-      "sha256": "cd5c6e97e0804e62bd4d4c5347388ebb34a52b3e1c508061ce8e4e5ced77728e"
+      "sha256": "0d1a1a2e867ccb2cb6771b07a2d253bdd5f4b55a6931163db564bd0e63b2b654"
     },
     {
       "path": "build/translator/matrix-point-generated/portable_generated_type_0e187cd82b971e01.hpp",
@@ -135,6 +135,10 @@
     {
       "path": "src/kairo/api/canvas.hpp",
       "sha256": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc"
+    },
+    {
+      "path": "src/kairo/api/capture.hpp",
+      "sha256": "3d70a93c0508187609c4e7afed548f1856fe4c40021d7c078bb3f2f934e5396d"
     },
     {
       "path": "src/kairo/api/debug_input.hpp",
@@ -158,7 +162,7 @@
     },
     {
       "path": "src/kairo/api/forms.hpp",
-      "sha256": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a"
+      "sha256": "a6acf91d89e5a9502b11d66246f66082ef760b3828a2fa3fe6ae8cdce1f05bbb"
     },
     {
       "path": "src/kairo/api/forms_callbacks.hpp",
@@ -253,6 +257,10 @@
       "sha256": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf"
     },
     {
+      "path": "src/kairo/common/diagnostic_profile.hpp",
+      "sha256": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca"
+    },
+    {
       "path": "src/kairo/common/generated/portable_generated.hpp",
       "sha256": "71bdfcd5e6a6d6009836b3fa0ae5c4d1682b4b87c2b82cfe1d08ebbd5e266d5a"
     },
@@ -262,7 +270,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_runtime.hpp",
-      "sha256": "a31cbdc30263ab2718428a7b8d411d8aa43e38b757193155e0dc9d3f5423d52b"
+      "sha256": "41e0a062e444d0ab353f6cd2031a6c3f8ff7020abce689a18ec99ec4c2b9f9ea"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp",
@@ -310,7 +318,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_51222df74ac70bab_templates.hpp",
-      "sha256": "72dbe57cdafd707c7968a9e3dcafe111bf81c33a83b3ac56933460901a490704"
+      "sha256": "dff2765047661b4859373530d5b46d7ce05129c290dcf882ed533f66b95356b6"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.hpp",
@@ -334,7 +342,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_67cd241ab51652f1_templates.hpp",
-      "sha256": "10713e672b4a5b8a001405cf0b6b6f2933a794dc578d06707ca2c4016ec7575b"
+      "sha256": "4c5570b0a7316a8ac30303961c7eeef9b4dcd55311db717ef981c297863db9cb"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7254e4706a01e4e7.hpp",
@@ -450,7 +458,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1_templates.hpp",
-      "sha256": "8422a427bad6ba56aee568f3cd10373755d015da2c0b98e3af1796ba7d386ed2"
+      "sha256": "a00e735ce49404139e2e183097163d5e3c8f8276e4448d71f37c0948a35b6b1b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_d4a32b46456ca92c.hpp",
@@ -523,6 +531,14 @@
     {
       "path": "src/kairo/common/managed_exceptions.hpp",
       "sha256": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b"
+    },
+    {
+      "path": "src/kairo/common/managed_float_format.cpp",
+      "sha256": "869eb3a6eba98fbde39ebac3f997f203e76bba471ad786a83a6747c47bbdb045"
+    },
+    {
+      "path": "src/kairo/common/managed_float_format.hpp",
+      "sha256": "4caace3870a09bcadb2e79cefb19f43974ee1cce1c84753b4fa8119f25efd5b6"
     },
     {
       "path": "src/kairo/common/managed_guid_uri.hpp",
@@ -648,9 +664,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "5aaab2c0372e73375340395c9da42691ed3a2b35d3b8332946edc1c80283ad6b",
-    "emission_source_sha256": "58b658a6436a9037a276914b77a8a04cf083d3b75375c43ba65eb1ecee031997",
-    "driver_sha256": "3a95f0effaeb4a81f9f00513697c31da978d7dc6d1195c6b0cac8cf9f0da67e4"
+    "translator_source_sha256": "f82d35710269fb27f20cce82141312683582461777f9aef42e7158c0fb1c24e8",
+    "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
+    "driver_sha256": "85fa47a5c277d68f9492d132f8699c81f71a5370936b1f8475062bd408c9677b"
   },
   "runner_sha256": "ab74dadb3d6efb5a3fa4ad58924b6923fb17c7dbaa5f1f3155dd1c9ce229a706",
   "fixture_sha256": "593cdc471f00c02d8948351f80e6d918e1be7c2003a0cdf5f64e1cb46a286f97",

@@ -151,7 +151,7 @@ sealed partial class Lowerer {
         var generated=new List<string>();
         void Write(string name,string text){generated.AddRange(WriteGenerated(input.output,name,text,input.chunk_bytes));}
         string Includes(IEnumerable<string> names)=>String.Concat(names.Distinct().OrderBy(x=>x,StringComparer.Ordinal).Select(name=>"#include \""+name+"\"\n"));
-        string RuntimeIncludes(string value)=>value.Contains("pls::cs::math_min_single",StringComparison.Ordinal)?"#include \"managed_math.hpp\"\n":"";
+        string RuntimeIncludes(string value)=>(value.Contains("pls::cs::math_min_single",StringComparison.Ordinal)?"#include \"managed_math.hpp\"\n":"")+(value.Contains("pls::cs::floating_to_string",StringComparison.Ordinal)?"#include \"managed_float_format.hpp\"\n":"");
         string Wrap(string text)=>"namespace "+ns+" {\n"+text+"}\n";
         var banner="// GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.\n";
         Write(basename+"_runtime.hpp",runtimePrefix+Wrap(common.ToString()));

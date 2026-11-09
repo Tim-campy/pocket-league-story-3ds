@@ -17,6 +17,7 @@ void cs_init_9f5a071d05c1d020(){static pls::cs::TypeInitState state;state.run("k
 // M:kairo.unity.graphics.Rectangle.Equals(System.Object)
 bool cs_a3399ea8077672e2(pls::cs::Ref<cs_9f5a071d05c1d020> cs_this,pls::cs::Ref<pls::cs::Object> v_obj) { cs_init_9f5a071d05c1d020();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.graphics.Rectangle.Equals(System.Object)",kairo);
 {
 if ((([&]() { auto cs_left = pls::cs::box(v_obj); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }()) && pls::game::cs_is<pls::cs::Ref<cs_9f5a071d05c1d020>>(pls::cs::box(v_obj)))) {
 pls::cs::Ref<cs_9f5a071d05c1d020> v_rectangle_842 = pls::cs::unbox<pls::cs::Ref<cs_9f5a071d05c1d020>>(v_obj);
@@ -29,12 +30,15 @@ return ([&]() { auto cs_left = pls::cs::box(cs_this); auto cs_right = pls::cs::b
 }
 }
 }
+}
 
 // M:kairo.unity.graphics.Rectangle.GetHashCode
 std::int32_t cs_cdd09ba02ba5e5aa(pls::cs::Ref<cs_9f5a071d05c1d020> cs_this) { cs_init_9f5a071d05c1d020();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.graphics.Rectangle.GetHashCode",kairo);
 {
-return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+}
 }
 }
 }

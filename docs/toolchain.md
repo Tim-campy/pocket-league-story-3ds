@@ -432,3 +432,26 @@ O menu de gestão foi inspecionado na tentativa Release 21, sem aparelho Android
 nesta continuidade. A [nota da rodada](notes/phase2-after-a418890.md) registra o
 fluxo, medições, capturas privadas por hash e limites da cobertura de memória.
 Não foram incorporados assets, capturas ou binários originais ao repositório.
+
+
+## Mono numeric formatting, default G subset
+
+Official repository: https://github.com/Unity-Technologies/mono
+Revision: `b6587926c0f146c8b12985744f33a13b39a22d57` (same pinned Unity Mono lineage).
+MIT/X11 managed sources, not VM tables:
+
+| File under mcs/class/corlib/System | SHA-256 |
+|---|---|
+| NumberFormatter.cs | `1af3dead8e359aed4f0b28184f22a4633fc71b1be6090bb1e7856bc3949f3f0d` |
+| NumberFormatter.jvm.cs | `987ca1330b298b6a90429a0c580ff0c7d16ed45a02ed1da3a41ef6fb3ba6a1b7` |
+
+Prepare with `python tools/setup_number_format.py --apk <your-local-apk>`.
+Outputs: ignored `build/deps/mono-numberformat/` and
+`build/generated/mono-numberformat/mono_number_tables.inc` (24,576 raw table bytes).
+`python tools/test_float_format.py` checks 85,264 default-G observations against
+historical Mono, including explicit invariant/synthetic UTF-16 numeric formats.
+The modern STL control failed 8/85,264 cases; it is test-only and not admitted
+as an implementation of modern .NET formatting. Production scope is Mono265
+Single G7 / Double G15, including negative zero, NaN, infinities and exponents.
+General format strings and full CultureInfo numeric data are not implemented.
+Android numerical formatting remains UNKNOWN. License attribution: THIRD_PARTY.md.

@@ -7,8 +7,10 @@ namespace pls::game {
 // M:java.lang.JRuntime.FreeMemory
 std::int64_t cs_24d7565dcc25bb03(pls::cs::Ref<pls::generated::cs_42d69496680e17fc> cs_this) { pls::generated::cs_init_42d69496680e17fc();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.FreeMemory",kairo);
 {
-return ([&]() -> std::int64_t { return cs_8c256740f2071d41(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return cs_8c256740f2071d41(); }());});
+}
 }
 }
 }
@@ -16,8 +18,10 @@ return ([&]() -> std::int64_t { return cs_8c256740f2071d41(); }());
 // M:java.lang.JRuntime.TotalMemory
 std::int64_t cs_c3e1161bab72b7e5(pls::cs::Ref<pls::generated::cs_42d69496680e17fc> cs_this) { pls::generated::cs_init_42d69496680e17fc();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.TotalMemory",kairo);
 {
-return ([&]() -> std::int64_t { return cs_e4c8e8c5d833899f(); }());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return cs_e4c8e8c5d833899f(); }());});
+}
 }
 }
 }

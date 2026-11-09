@@ -17,8 +17,10 @@ pls::cs::Ref<cs_64732f8c8acf2fd3> cs_a8c0bbab413528f7(pls::cs::String v_s) { cs_
 
 void cs_a8c0bbab413528f7_init(pls::cs::Ref<cs_64732f8c8acf2fd3> cs_this,pls::cs::String v_s) {
 ([&](){ pls::cs::String cs_arg0 = v_s; cs_this->source_ctor("System.IO.EndOfStreamException",cs_arg0);}());
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.io.EOFException.#ctor(System.String)",kairo);
 {
 
+}
 }
 }
 }

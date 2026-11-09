@@ -125,16 +125,22 @@ sealed partial class Lowerer {
         if(budget<4096)throw new ArgumentException("Generated-file byte budget must be at least 4096");
         text=text.Replace("\r\n","\n");var bytes=Encoding.UTF8.GetBytes(text);var stem=Path.GetFileNameWithoutExtension(filename);var extension=Path.GetExtension(filename).TrimStart('.');
         if(bytes.Length<=budget){WriteStableBytes(Path.Combine(folder,filename),bytes);return new[]{filename};}
-        var files=new List<string>();int start=0,safe=0;byte quote=0;bool lineComment=false,blockComment=false,escape=false;
+        var files=new List<string>();int start=0,safe=0,parens=0,macroLevel=0;byte quote=0;bool lineComment=false,blockComment=false,escape=false;
         for(int i=0;i<bytes.Length;i++) {
             var b=bytes[i];var next=i+1<bytes.Length?bytes[i+1]:(byte)0;
-            if(lineComment){if(b==10){lineComment=false;safe=i+1;}}
+            if(!lineComment&&!blockComment&&quote==0&&macroLevel==0&&b==(byte)'P'&&i+4<bytes.Length&&bytes[i+1]=='L'&&bytes[i+2]=='S'&&bytes[i+3]=='_'){
+                int end=i+4;while(end<bytes.Length&&(Char.IsAsciiLetterOrDigit((char)bytes[end])||bytes[end]=='_'))end++;
+                if(end<bytes.Length&&bytes[end]=='(')macroLevel=parens+1;
+            }
+            if(lineComment){if(b==10){lineComment=false;if(macroLevel==0)safe=i+1;}}
             else if(blockComment){if(b==(byte)'*'&&next==(byte)'/'){blockComment=false;i++;}}
             else if(quote!=0){if(escape)escape=false;else if(b==(byte)'\\')escape=true;else if(b==quote)quote=0;}
             else if(b==(byte)'/'&&next==(byte)'/'){lineComment=true;i++;}
             else if(b==(byte)'/'&&next==(byte)'*'){blockComment=true;i++;}
             else if(b==(byte)'"'||b==(byte)'\'')quote=b;
-            else if(b==10||b==(byte)';'||b==(byte)','||b==(byte)'{'||b==(byte)'}')safe=i+1;
+            else if(b==(byte)'(')parens++;
+            else if(b==(byte)')'){parens--;if(macroLevel>0&&parens<macroLevel)macroLevel=0;if(macroLevel==0)safe=i+1;}
+            else if(macroLevel==0&&(b==10||b==(byte)';'||b==(byte)','||b==(byte)'{'||b==(byte)'}'))safe=i+1;
             if(i-start>=budget-2) {
                 if(safe<=start)throw new InvalidOperationException("A generated literal/token exceeds the per-file byte budget");
                 var name=stem+"_"+extension+"_part_"+files.Count.ToString("d4",CultureInfo.InvariantCulture)+".inc";
@@ -660,6 +666,7 @@ sealed partial class Lowerer {
         if(type?.SpecialType==SpecialType.System_String)return value;
         if(type?.SpecialType==SpecialType.System_Char)return "cs_char_string("+value+")";
         if(Integral(type)&&type?.TypeKind!=TypeKind.Enum)return "cs_integer_string("+value+")";
+        if(type?.SpecialType is SpecialType.System_Single or SpecialType.System_Double)return "pls::cs::floating_to_string("+value+")";
         if(type?.SpecialType==SpecialType.System_Boolean)return "pls::cs::String("+value+"?u\"True\":u\"False\")";
         if(type?.IsReferenceType==true||type?.SpecialType==SpecialType.System_Object)return "cs_object_string(pls::cs::box("+value+"))";
         throw new Unsupported(site,"string formatting requires exact ToString contract for this value type");
@@ -825,6 +832,12 @@ sealed partial class Lowerer {
         return "([&]() { "+prefix+value+" }())";
     }
     string Invoke(InvocationExpressionSyntax n) {
+        var target=model.GetSymbolInfo(n).Symbol as IMethodSymbol;
+        var result=InvokeCore(n);
+        if(target!=null&&(externalMethods.ContainsKey(Id(target))||target.ContainingAssembly?.Name!=compilation.AssemblyName))return "pls::diagnostic::api_call([&]() -> decltype(auto) {return "+result+";})";
+        return result;
+    }
+    string InvokeCore(InvocationExpressionSyntax n) {
         var symbol=model.GetSymbolInfo(n).Symbol as IMethodSymbol;
         if(symbol==null)throw new Unsupported(n,"invocation symbol unresolved");
         var args=n.ArgumentList.Arguments.Select(a=>a.Expression).ToList();
@@ -1366,6 +1379,8 @@ sealed partial class Lowerer {
                 body="{\n"+String.Join("\n",locals.Select(l=>Type(l.Type,declaration)+" "+Local(l)+"{};"))+"\n"+body+"\n}";
             }
             if(returnFlowMethods.Contains(id))body="{try"+body+"catch(const pls::cs::ReturnFlow<"+Type(method.ReturnType,declaration)+">& cs_return){"+(method.ReturnsVoid?"return;":"return cs_return.value;")+"}"+(method.ReturnsVoid?"":"return pls::cs::invalid_return_flow<"+Type(method.ReturnType,declaration)+">();")+"}";
+            var profileAssembly=compilation.AssemblyName=="Assembly-CSharp"&&!declaration.SyntaxTree.FilePath.Replace('\\','/').Contains("/src/Assembly-CSharp/",StringComparison.Ordinal)?"KairoLibrary":compilation.AssemblyName;
+            body="{PLS_METHOD_SCOPE("+JsonSerializer.Serialize(profileAssembly)+","+JsonSerializer.Serialize(id)+","+(profileAssembly=="Assembly-CSharp"?"game":"kairo")+");\n"+body+"\n}";
             if(constructor) {
                 var ctor=declaration as ConstructorDeclarationSyntax;var chainedThis=ctor?.Initializer?.IsKind(SyntaxKind.ThisConstructorInitializer)??false;
                 var init=new StringBuilder("{\n");
@@ -1549,6 +1564,8 @@ sealed partial class Lowerer {
         }
         if(bootstrap!=null&&emitted.ContainsKey(input.bootstrap_method))cpp.Append("pls::cs::Ref<pls::kairo::IApplication> create_application(){return "+Name(bootstrap)+"();}\n");
         cpp.Append("}\n");
+        header.Insert(0,"#include \"diagnostic_profile.hpp\"\n");
+        if(!input.split_types&&cpp.ToString().Contains("pls::cs::floating_to_string",StringComparison.Ordinal))cpp.Insert(0,"#include \"managed_float_format.hpp\"\n");
         var generatedChunks=input.split_types?WritePerTypeUnits(input,basename,ns,header.ToString(),cpp.ToString(),usedClasses,usedTypes,usedFields,bootstrap):WriteGenerated(input.output,basename+".hpp",header.ToString(),input.chunk_bytes).Concat(WriteGenerated(input.output,basename+".cpp",cpp.ToString(),input.chunk_bytes)).ToArray();
         var oracleMethods=new HashSet<string>();
         if(!game){

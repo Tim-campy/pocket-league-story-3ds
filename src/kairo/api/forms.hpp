@@ -112,8 +112,8 @@ public:
     void ProcessEvent(cs::Ref<AppEvent>);static void ProcessEvent(AppEventType,cs::Array<cs::Ref<cs::Object>> args={});
     void ProcessBackKey();void ShowTerminationDialog(){show_termination_=true;}bool CheckShowTerminationDialog(){return show_termination_;}
     void SetPause(bool value){pause_=value;}bool IsPause(){return pause_;}void SurfaceChanged(){surface_changed_=true;}
-    bool IsCapturing(){return false;} // No capture path has been implemented; Capture rejects below.
-    void Capture(){throw cs::NotSupportedException("Capture surface/encoding bridge is not implemented");}
+    bool capturing_{};
+    bool IsCapturing(){return capturing_;}
     void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
     // Source warning is observable; host must implement it before false Init /
     // Finish is accepted. The warning string remains a source-derived concern.

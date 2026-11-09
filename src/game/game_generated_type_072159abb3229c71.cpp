@@ -44,6 +44,7 @@ pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f>& cs_8c57e81f204d52a5(){cs_init
 
 // M:kairo.unity.math.KairoMath.CheckHitRect(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)
 bool cs_f686cb5113bffa4f(float v_x1,float v_y1,float v_w1,float v_h1,float v_x2,float v_y2,float v_w2,float v_h2) { cs_init_072159abb3229c71();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.math.KairoMath.CheckHitRect(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)",kairo);
 {
 if (((([&]() -> bool { auto cs_left = v_x1; auto cs_right = ([&]() -> float { auto cs_left = v_x2; auto cs_right = v_w2; return (cs_left + cs_right); }()); return (cs_left <= cs_right); }()) && ([&]() -> bool { auto cs_left = v_y1; auto cs_right = ([&]() -> float { auto cs_left = v_y2; auto cs_right = v_h2; return (cs_left + cs_right); }()); return (cs_left <= cs_right); }())) && ([&]() -> bool { auto cs_left = ([&]() -> float { auto cs_left = v_x1; auto cs_right = v_w1; return (cs_left + cs_right); }()); auto cs_right = v_x2; return (cs_left >= cs_right); }()))) {
 return ([&]() -> bool { auto cs_left = ([&]() -> float { auto cs_left = v_y1; auto cs_right = v_h1; return (cs_left + cs_right); }()); auto cs_right = v_y2; return (cs_left >= cs_right); }());
@@ -51,9 +52,11 @@ return ([&]() -> bool { auto cs_left = ([&]() -> float { auto cs_left = v_y1; au
 return false;
 }
 }
+}
 
 // M:kairo.unity.math.KairoMath.Pow(System.Int32,System.Int32)
 std::int32_t cs_7681d78b1e4df50b(std::int32_t v_x,std::int32_t v_y) { cs_init_072159abb3229c71();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.math.KairoMath.Pow(System.Int32,System.Int32)",kairo);
 {
 std::int32_t v_num_15748 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));
 if (([&]() -> bool { auto cs_left = v_y; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
@@ -63,6 +66,7 @@ for (std::int32_t v_i_15806 = pls::cs::cast_integral<std::int32_t>(std::uint64_t
 ([&]() { auto cs_old = v_num_15748; auto cs_rhs = v_x; auto cs_value = pls::cs::mul_i32(cs_old,cs_rhs); v_num_15748 = cs_value; return cs_value; }());
 }
 return v_num_15748;
+}
 }
 }
 }

@@ -9,9 +9,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "5aaab2c0372e73375340395c9da42691ed3a2b35d3b8332946edc1c80283ad6b",
-    "emission_source_sha256": "58b658a6436a9037a276914b77a8a04cf083d3b75375c43ba65eb1ecee031997",
-    "driver_sha256": "3a95f0effaeb4a81f9f00513697c31da978d7dc6d1195c6b0cac8cf9f0da67e4"
+    "translator_source_sha256": "f82d35710269fb27f20cce82141312683582461777f9aef42e7158c0fb1c24e8",
+    "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
+    "driver_sha256": "85fa47a5c277d68f9492d132f8699c81f71a5370936b1f8475062bd408c9677b"
   },
   "inputs": [
     {
@@ -28,7 +28,7 @@
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
-      "sha256": "87189b116e62c5e2c71d4572dac23d1b528884f97695e5da06b4eb4c5449d13b"
+      "sha256": "737e35fbb84d101ca79087bdb9f3529bacf51ade5a6fbf7ae4f366bbc60829e5"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -83,6 +83,10 @@
       "sha256": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf"
     },
     {
+      "path": "src/kairo/common/diagnostic_profile.hpp",
+      "sha256": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca"
+    },
+    {
       "path": "src/kairo/common/managed_collation.hpp",
       "sha256": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d"
     },
@@ -101,6 +105,10 @@
     {
       "path": "src/kairo/common/managed_exceptions.hpp",
       "sha256": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b"
+    },
+    {
+      "path": "src/kairo/common/managed_float_format.hpp",
+      "sha256": "4caace3870a09bcadb2e79cefb19f43974ee1cce1c84753b4fa8119f25efd5b6"
     },
     {
       "path": "src/kairo/common/managed_guid_uri.hpp",
@@ -190,11 +198,11 @@
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_runtime.hpp",
-      "sha256": "fa35201fae4811d62cf100cf79467783d17864b3c92039a2ec5da789b45c55ef"
+      "sha256": "3df48879474858c4df9bdfe3b52602a1bfe758bc9cefb8ccfeaabb08a1123d56"
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
-      "sha256": "87189b116e62c5e2c71d4572dac23d1b528884f97695e5da06b4eb4c5449d13b"
+      "sha256": "737e35fbb84d101ca79087bdb9f3529bacf51ade5a6fbf7ae4f366bbc60829e5"
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.hpp",
@@ -203,10 +211,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "e7ee6b6256de825766255dafae9e314df48f97166d2faa67198c8a76764649cd"
+    "sha256": "f211013e03f1a7e70dd53247b0f5fb3b5353715fca96cf4feff06da17d419482"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "16f04ffb7463e628775aedef46120988da1fde1e72bd8b62fa5190142c86616d"
+    "sha256": "26e76684ca6224c8a1850206deecbfcad044005603ce2f3a2f63848e1d847da7"
   }
 }

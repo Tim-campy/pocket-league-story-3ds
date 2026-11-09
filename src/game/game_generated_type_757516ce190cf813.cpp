@@ -19,16 +19,20 @@ pls::cs::Ref<cs_757516ce190cf813> cs_f7e61b586cae64ba() { cs_init_757516ce190cf8
 }
 
 void cs_f7e61b586cae64ba_init(pls::cs::Ref<cs_757516ce190cf813> cs_this) {
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchEvent.#ctor",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_757516ce190cf813>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_76be1a4ec43b41ef(cs_receiver); }());
+}
 }
 }
 
 // M:kairo.unity.surface.TouchEvent.GetHashCode
 std::int32_t cs_cffdde71a559d83c(pls::cs::Ref<cs_757516ce190cf813> cs_this) { cs_init_757516ce190cf813();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchEvent.GetHashCode",kairo);
 {
-return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+}
 }
 }
 }
@@ -36,6 +40,7 @@ return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Ob
 // M:kairo.unity.surface.TouchEvent.Init
 void cs_76be1a4ec43b41ef(pls::cs::Ref<cs_757516ce190cf813> cs_this) { cs_init_757516ce190cf813();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchEvent.Init",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Ref<cs_3a3d09f9e75a32d2>{}; pls::game::cs_require(cs_target)->cs_613db60c2c58fddc = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::game::cs_require(cs_target)->cs_4c4f6c2ffd41c9ca = cs_value; return cs_value; }());
@@ -63,18 +68,22 @@ for (std::int32_t v_l_1582 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(
 }
 }
 }
+}
 
 // M:kairo.unity.surface.TouchEvent.IsPositive
 bool cs_b85e74354de5635b(pls::cs::Ref<cs_757516ce190cf813> cs_this) { cs_init_757516ce190cf813();
 { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchEvent.IsPositive",kairo);
 {
 return ([&]() -> bool { std::int32_t cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4c4f6c2ffd41c9ca; }()); return cs_f8630b89ac30a6e6(cs_arg0); }());
+}
 }
 }
 }
 
 // M:kairo.unity.surface.TouchEvent.IsPositive(System.Int32)
 bool cs_f8630b89ac30a6e6(std::int32_t v_type) { cs_init_757516ce190cf813();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchEvent.IsPositive(System.Int32)",kairo);
 {
 switch (v_type) {
 case 0:
@@ -89,6 +98,7 @@ return true;
 default:
 {
 return false;
+}
 }
 }
 }

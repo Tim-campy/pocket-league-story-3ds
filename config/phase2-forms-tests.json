@@ -516,9 +516,9 @@
   },
   "native_concurrent_fields": {
     "status": "PASS",
-    "assertions": 8567,
+    "assertions": 8756,
     "writer_iterations": 2000,
-    "collections_while_writer_registered": 1224,
+    "collections_while_writer_registered": 1251,
     "whole_method_lock": false,
     "game_boot": false
   },
@@ -527,21 +527,22 @@
     "src/kairo/common/canvas.cpp": "0d132bf3ab87ccee85f9523e621ecd8f23ef245d98bb74f7758296826da10981",
     "src/kairo/common/forms.cpp": "d5b2c1bc51b314377df1ac9d6831d57c7346b799ebd818854decafcc2b97afaa",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
-    "src/kairo/common/graphics.cpp": "d256186df9e6d75c48a4399bbfd0b303511bfa2b53bfe0c1e1c5d974810d423c",
-    "src/kairo/common/image_lifetime.cpp": "de739f797238366febc0a60a796630ddc7acdd703e92defa1f82d34ce33b1a1f",
+    "src/kairo/common/graphics.cpp": "dd1a274aa50f43f7d78da5621f44fd6d0df1e6f91d9a913ef31b1d262e651630",
+    "src/kairo/common/mesh.cpp": "528cd60f55a4ee0642082cf1ac4ecfc1d978e34805f6d47ab39c12b1b0ea34fa",
+    "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/platform/sdl/font.cpp": "e24ec08f120d98203996ae50d14abe5f4a84f3804842af1ca4f7aad84a9e6065",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "tests/kairo/FormsOracle.cs": "704d67129441ac52cd0a29ba5e14159a201835e06b7e78dbffa9e4543c3139b3",
-    "tools/test_forms.py": "e69ea5875f556a587f7e8d91e6a532fe10237eb4b9126c23e2205858243d525a",
+    "tools/test_forms.py": "4d0b5e1f1964266ddcbbc537bb1513ca67e6f1666a6a10d9a9025bda8cf86b68",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/canvas.hpp": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc",
     "src/kairo/api/forms.hpp": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/input.hpp": "021a99799933471069df42f904fbc58d0c9a5cb5ef519f138c461396af839f71",
-    "src/kairo/api/graphics.hpp": "c115b915285dee5d2d2eeb2449f5573bac6b0376ec2b31bf96b994ff3517f659",
+    "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "254281540812339895b95ca4c6c47a886efa5b24005f8501483e87e77c5fc965",
     "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
@@ -615,7 +616,7 @@
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "999f0b1cce39f7136c512a78d524d7c69cbaaab83123aafdc1bbd6e9cd4d9226"
+    "sha256": "676867a3a97ae4e4b5b55e9d3af15f8854d1435276440bf18d5409befe72ee52"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

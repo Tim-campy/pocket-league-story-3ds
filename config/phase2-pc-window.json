@@ -1,0 +1,260 @@
+{
+  "operation": "numeric-PC-Release-diagnostic-window",
+  "producer_sha256": "82599145e38904c6a2d09d0de8414f883c5943252ecffc49a808e723f62aa1c0",
+  "attempt": 21,
+  "attempt_record_sha256": "e5ecaaadcd5838ef110ef72e13d28082f5b9de000b4db0ebdad00bc65c7e86b9",
+  "executable_sha256": "b9e3af3534c16463f1a5c7dd08d0156dd36b29c067a11f42e0ce569aedf378db",
+  "log": {
+    "path": "build/pc-diagnostic-release/attempts/21/game-run.stderr",
+    "sha256": "ed41b5fd4e04af59fae8a8ee5138de2f9fd7b7a8847acc198971aa065525eb90"
+  },
+  "first_completed_frame": 661,
+  "last_completed_frame": 900,
+  "sample_count": 240,
+  "stages": {
+    "gc": {
+      "samples": 240,
+      "mean_ms": 0.0024220833333333334,
+      "median_ms": 0.002,
+      "p95_ms": 0.0034,
+      "max_ms": 0.0771
+    },
+    "input": {
+      "samples": 240,
+      "mean_ms": 0.035685,
+      "median_ms": 0.023350000000000003,
+      "p95_ms": 0.0451,
+      "max_ms": 2.2895
+    },
+    "update": {
+      "samples": 240,
+      "mean_ms": 12.648705416666667,
+      "median_ms": 11.7462,
+      "p95_ms": 17.6533,
+      "max_ms": 33.9542
+    },
+    "audio": {
+      "samples": 240,
+      "mean_ms": 0.087175,
+      "median_ms": 0.07575000000000001,
+      "p95_ms": 0.1422,
+      "max_ms": 0.3225
+    },
+    "game_draw": {
+      "samples": 240,
+      "mean_ms": 10.075241666666667,
+      "median_ms": 9.66415,
+      "p95_ms": 11.6101,
+      "max_ms": 34.3763
+    },
+    "upload": {
+      "samples": 240,
+      "mean_ms": 0.5839370833333334,
+      "median_ms": 0.32835000000000003,
+      "p95_ms": 0.5275,
+      "max_ms": 24.3508
+    },
+    "render": {
+      "samples": 240,
+      "mean_ms": 0.003632083333333333,
+      "median_ms": 0.003,
+      "p95_ms": 0.0053,
+      "max_ms": 0.0173
+    },
+    "present": {
+      "samples": 240,
+      "mean_ms": 0.7694775,
+      "median_ms": 0.5947,
+      "p95_ms": 1.7195,
+      "max_ms": 1.9626
+    },
+    "release": {
+      "samples": 240,
+      "mean_ms": 0.0245475,
+      "median_ms": 0.0219,
+      "p95_ms": 0.0389,
+      "max_ms": 0.0945
+    },
+    "pacing": {
+      "samples": 240,
+      "mean_ms": 26.913149166666667,
+      "median_ms": 28.0862,
+      "p95_ms": 30.7221,
+      "max_ms": 32.0629
+    },
+    "total_before_pacing": {
+      "samples": 240,
+      "mean_ms": 24.230823333333333,
+      "median_ms": 23.121299999999998,
+      "p95_ms": 30.374,
+      "max_ms": 70.7557
+    },
+    "total_wall": {
+      "samples": 240,
+      "mean_ms": 51.1439725,
+      "median_ms": 51.08355,
+      "p95_ms": 51.8974,
+      "max_ms": 70.7571
+    }
+  },
+  "memory": {
+    "event": "memory",
+    "phase": "after_900_presented_frames",
+    "completed_presented_frames": 900,
+    "sampler_nanoseconds": 3631700,
+    "process": {
+      "resident_bytes": 165060608,
+      "peak_resident_bytes": 170864640,
+      "private_commit_bytes": 153186304,
+      "executable_image_committed_bytes": 134705152,
+      "executable_image_resident_bytes": 29872128,
+      "page_bytes": 4096,
+      "platform": "Windows SDK GetProcessMemoryInfo/VirtualQuery/QueryWorkingSetEx",
+      "diagnostic": ""
+    },
+    "resident_by_category": {
+      "textures": null,
+      "audio": null,
+      "fonts": null,
+      "managed_heap": null
+    },
+    "payload_bytes": {
+      "display_rgba": 268800,
+      "display_rgba_capacity": 268800,
+      "backend_texture": 0,
+      "audio_ring": 65536,
+      "audio_scratch": 32768,
+      "audio_resampler_available": 8192,
+      "audio_device_callback": 8192,
+      "all_images": null,
+      "font_source": null,
+      "font_cache_rgba": null,
+      "managed_heap": null
+    },
+    "payload_peaks_bytes": {
+      "backend_texture": 268800,
+      "audio_resampler_available": 16384
+    },
+    "known_allocations": {
+      "coverage": "partial",
+      "overhead_and_opaque_library_allocations": "UNKNOWN",
+      "sampling_is_atomic": false,
+      "categories": {
+        "textures": {
+          "capacity_bytes": 9144072,
+          "resident_payload_bytes": 9144072
+        },
+        "audio": {
+          "capacity_bytes": 98304,
+          "resident_payload_bytes": 98304
+        },
+        "fonts": {
+          "capacity_bytes": 268640,
+          "resident_payload_bytes": 260448
+        },
+        "managed_heap": {
+          "capacity_bytes": 9784010,
+          "resident_payload_bytes": 9464174
+        }
+      }
+    },
+    "gc_last_collection": {
+      "tracked": 23045,
+      "roots": 542,
+      "unreachable": 0,
+      "collected": 0
+    },
+    "memory_categories_are_not_additive": true,
+    "game_screen": "UNKNOWN"
+  },
+  "private_captures": [
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-1.bmp",
+      "sha256": "1c071d0de650ce3c7639a9879c2b4fa0f22d53fd74610eaf06900cf08ed8b1e5",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-120.bmp",
+      "sha256": "4b59ba7a7d43ff04b02070876e92401f7ff21f06b63793b006dcddcb8864d684",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-180.bmp",
+      "sha256": "a84c6607b9671ac4816c3b75c67fbeb21e593ce9de7d40ca4955bb65fc7ee7c6",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-240.bmp",
+      "sha256": "b0e3c7b6293b5c0d344d53f30637ffc5e5c96b1bafec26fe962ff8724e3826ac",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-300.bmp",
+      "sha256": "838d5f087cc1fdec75d5f55a94f929aead123c5db6c91267446dfd646be849b4",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-360.bmp",
+      "sha256": "bd5eb1f9028cd07302cbfe72b03425d5184ee7f382b14ba912660ccc6310aa2e",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-420.bmp",
+      "sha256": "0e31fc0c78b3b45cd7627f20f001ea9ed607207714a090fdef04474ec2bfb327",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-480.bmp",
+      "sha256": "ac64d406f3360c6d71838ddf84041bbe21dc1639f61234bb03f15026f28fb1f4",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-540.bmp",
+      "sha256": "22e634756332e7d5c6fa421ce0e55c26a13d470d2db4725634b5ff04ba51a74a",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-60.bmp",
+      "sha256": "daba0d6301483be133e11b9367cea926545abb78d2d467277964777b828a98f4",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-600.bmp",
+      "sha256": "0a0cf1f7fc9bf1ee78c3bd797f110a3c575c77e976c0dde7e299651093a6469b",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-660.bmp",
+      "sha256": "b883b9eddd92037532e71dd5f296213d2459dd1b923a73242ebdf16bd8a6d580",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-720.bmp",
+      "sha256": "b883b9eddd92037532e71dd5f296213d2459dd1b923a73242ebdf16bd8a6d580",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-780.bmp",
+      "sha256": "b883b9eddd92037532e71dd5f296213d2459dd1b923a73242ebdf16bd8a6d580",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-840.bmp",
+      "sha256": "b883b9eddd92037532e71dd5f296213d2459dd1b923a73242ebdf16bd8a6d580",
+      "bytes": 268922
+    },
+    {
+      "path": "build/pc-diagnostic-release/attempts/21/frames/frame-900.bmp",
+      "sha256": "b883b9eddd92037532e71dd5f296213d2459dd1b923a73242ebdf16bd8a6d580",
+      "bytes": 268922
+    }
+  ],
+  "game_methods_promoted": 0,
+  "screen": "UNKNOWN",
+  "limitations": [
+    "Screen identification requires separate inspection of the private captures.",
+    "Memory category coverage is partial; opaque allocations and overhead are UNKNOWN; categories are not additive.",
+    "Numeric log serialization and screenshots occur after the measured interval.",
+    "PC development backend measurements do not predict Nintendo3DS memory or CPU performance."
+  ]
+}

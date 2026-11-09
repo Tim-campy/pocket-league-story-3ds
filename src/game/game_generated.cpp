@@ -1,17 +1,2 @@
-// GENERATED include chunks preserve one translation unit and one globals/template definition.
-#include "game_generated_cpp_part_0000.inc"
-#include "game_generated_cpp_part_0001.inc"
-#include "game_generated_cpp_part_0002.inc"
-#include "game_generated_cpp_part_0003.inc"
-#include "game_generated_cpp_part_0004.inc"
-#include "game_generated_cpp_part_0005.inc"
-#include "game_generated_cpp_part_0006.inc"
-#include "game_generated_cpp_part_0007.inc"
-#include "game_generated_cpp_part_0008.inc"
-#include "game_generated_cpp_part_0009.inc"
-#include "game_generated_cpp_part_0010.inc"
-#include "game_generated_cpp_part_0011.inc"
-#include "game_generated_cpp_part_0012.inc"
-#include "game_generated_cpp_part_0013.inc"
-#include "game_generated_cpp_part_0014.inc"
-#include "game_generated_cpp_part_0015.inc"
+// GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
+// Compatibility anchor; definitions live exclusively in the per-type units.

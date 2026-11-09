@@ -53,7 +53,7 @@ def main():
  args+=['/r:'+str(refs/(p+'.dll')) for p in ['mscorlib','System','System.Core']]+[str(p) for p in sources]
  rsp=folder/'mono.rsp';rsp.write_text('\n'.join('"'+v+'"' for v in args)+'\n',encoding='utf-8',newline='\n');run([csc,'/noconfig','@'+str(rsp)],folder,'mono-compile')
  native_sources=[ROOT/p for p in ['tests/kairo/forms_execution_fixtures.cpp','src/kairo/common/forms_execution.cpp','src/kairo/common/forms.cpp','src/kairo/common/canvas.cpp',
-  'src/kairo/common/graphics.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/common/sound.cpp','src/kairo/common/semantic_runtime.cpp','src/kairo/common/asset_catalog.cpp',
+  'src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/common/sound.cpp','src/kairo/common/semantic_runtime.cpp','src/kairo/common/asset_catalog.cpp',
   'src/kairo/platform/sdl/input.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/platform/sdl/audio.cpp']]
  sdk=ROOT/'build/deps/native-media';sdl=ROOT/'build/deps/SDL2-2.32.10';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe';native=folder/'forms-execution-fixtures.exe'
  objects=[]

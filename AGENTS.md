@@ -178,6 +178,17 @@ Só depois do New 3DS funcionar. Meça onde o tempo vai (perfil), otimize o que 
 
 ## 9. Regras de trabalho
 
+**Decisão posterior ao checkpoint a418890:** priorizar o ciclo de iteração:
+emissão C++ por tipo, cabeçalhos separados e dependências mínimas; medir build
+completo e alteração de um tipo antes/depois, preservando as fixtures.
+Entre checkpoints, executar os testes do componente alterado; verificação
+completa somente antes de publicar. Publicar os marcos de menu de gestão,
+primeira partida iniciada e partida completa. Implementar somente as lacunas
+exercitadas pelo fluxo e comparar cada tela nova ao Android/captura. Bibliotecas
+de código aberto MIT, BSD, zlib, Apache 2 e Unicode estão pré-autorizadas em
+`build/deps/`, com hashes; novas dependências copyleft exigem consulta. Isso
+não antecipa o toolchain 3DS nem as decisões de design da Fase 3.
+
 **Decisão posterior ao primeiro título/menu PC:** prosseguir com a API mantendo
 as diferenças numéricas de arcos/trigonometria como UNKNOWN no Android e adiar
 a validação nesse aparelho. Conservar os resultados negativos Mono Windows e

@@ -61,6 +61,13 @@ APK; o perfil SDK `2.0` foi descartado. Nenhuma dessas DLLs integra o executáve
 
 ## Conteúdo e distribuição
 
+O diagnóstico PC alcançou também o cadastro da equipe, a abertura no campo e o
+menu de gestão. A [nota de continuidade](docs/notes/phase2-after-a418890.md)
+registra as capturas privadas por hash, memória e frame time em Release.
+A comparação dessas novas telas com Android permanece pendente por decisão
+do usuário. Partida iniciada/completa e backend 3DS ainda não foram validados.
+O [build incremental](docs/notes/incremental-build.md) permite recompilar por tipo.
+
 `assets/`, `build/`, `data/`, formatos originais/convertidos e binários são ignorados e recusados pelo CI. Arquivos acima de **2.000.000 bytes** também são recusados, inclusive se adicionados à força. O submódulo é conferido pelo commit fixado.
 
 ```powershell

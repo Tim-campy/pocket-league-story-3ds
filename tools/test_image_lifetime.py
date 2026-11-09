@@ -61,7 +61,7 @@ namespace kairo.unity.ui {public class Image {
  env=dict(os.environ,MONO_PATH=str(refs),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
  args=['/nologo','/nostdlib+','/target:exe','/optimize+','/langversion:6','/out:'+str(old)]+['/r:'+str(refs/(p+'.dll')) for p in ['mscorlib','System','System.Core']]+[str(p) for p in sources]
  rsp=folder/'mono.rsp';rsp.write_text('\n'.join('"'+v+'"' for v in args)+'\n',encoding='utf-8',newline='\n');run([csc,'/noconfig','@'+str(rsp)],folder,'mono-compile')
- units=[ROOT/p for p in ['tests/kairo/image_lifetime_fixtures.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/graphics.cpp','src/kairo/common/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp','src/kairo/platform/sdl/font.cpp']]
+ units=[ROOT/p for p in ['tests/kairo/image_lifetime_fixtures.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp','src/kairo/platform/sdl/font.cpp']]
  sdk=ROOT/'build/deps/native-media';sdl=ROOT/'build/deps/SDL2-2.32.10';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe';native=folder/'image-lifetime-fixtures.exe';objects=[]
  for i,unit in enumerate(units):
   obj=folder/(str(i)+'-'+unit.stem+'.obj');objects.append(obj)

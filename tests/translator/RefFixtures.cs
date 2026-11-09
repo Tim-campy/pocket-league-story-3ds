@@ -1,5 +1,9 @@
 using System;
 namespace SyntheticRefs {
+ public delegate int RefCall(ref int value);
+ public delegate int RefPair(ref int first,ref int second);
+ public delegate int RefWithArgument(ref int value,int other);
+ public delegate void Layout(out int width,out int height,out int format,out float scale);
  public class Holder {public int field;public int shared;public int Instance(ref int value,int other){value=unchecked(value+other);return value;}}
  public static class Source {
   public static int trace;public static int[] array;
@@ -22,5 +26,12 @@ namespace SyntheticRefs {
   public static int SetWithArgument(ref int target,int ignored){target=51;return target;}
   public static int StableArrayAddress(){array=new int[1];var original=array;SetWithArgument(ref array[0],ReplaceArray());return original[0]*100+array[0];}
   public static int SharedAddressForbidden(){var holder=new Holder();return Bump(ref holder.shared);}
+  public static int DelegateAlias(){RefPair call=Alias;int value=0;return call(ref value,ref value)*100+value;}
+  public static int DelegateInstance(int input){var holder=new Holder();RefWithArgument call=holder.Instance;int value=input;return call.Invoke(ref value,3);}
+  public static int DelegateMulticast(int input){RefCall call=Bump;RefCall second=Bump;call+=second;int value=input;int result=call(ref value);return unchecked(result*100+value);}
+  public static int DelegateExceptionalWrite(){RefCall call=ThrowAfterWrite;int value=0;try{call(ref value);}catch(ArgumentException){}return value;}
+  public static int DelegateNullAfterArguments(){trace=0;RefWithArgument call=null;int value=0;try{call(ref value,Rhs());}catch(NullReferenceException){}return trace;}
+  public static void GetLayout(out int width,out int height,out int format,out float scale){width=37;height=19;format=1;scale=0.5f;}
+  public static int DelegateLayout(){Layout call=GetLayout;int width,height,format;float scale;call(out width,out height,out format,out scale);return width*100+height*10+format+(int)(scale*100);}
  }
 }

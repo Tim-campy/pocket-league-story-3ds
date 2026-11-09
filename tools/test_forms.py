@@ -77,7 +77,7 @@ namespace kairo.unity.form {
  env=dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
  old=folder/'FormsOracle-mono.exe';run([mono,smcs,'-nologo','-noconfig','-optimize+','-r:'+str(unity/'Editor/Data/Mono/lib/mono/2.0/System.Core.dll'),'-out:'+str(old),*sources],folder,'mono-compile',env)
  native_sources=[ROOT/p for p in ['tests/kairo/forms_fixtures.cpp','src/kairo/common/canvas.cpp','src/kairo/common/forms.cpp','src/kairo/platform/sdl/input.cpp',
-   'src/kairo/common/graphics.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
+   'src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
  native=folder/'forms-fixtures.exe';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
  sdk=ROOT/'build/deps/native-media'
  objects=[]

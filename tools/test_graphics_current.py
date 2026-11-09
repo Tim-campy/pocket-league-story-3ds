@@ -25,7 +25,7 @@ def main():
  unity=Path(os.environ.get('UNITY_ROOT',str(Path.home()/'AppData/Local/Programs/Unity/5.3.4f1')));mono=unity/'Editor/Data/Mono/bin/mono.exe';smcs=unity/'Editor/Data/Mono/lib/mono/unity/smcs.exe';env=dict(os.environ,MONO_PATH=str(smcs.parent),MONO_CFG_DIR=str(unity/'Editor/Data/Mono/etc'))
  old=folder/'GraphicsCurrentOracle-mono.exe';run([mono,smcs,'-nologo','-noconfig','-optimize+','-r:'+str(unity/'Editor/Data/Mono/lib/mono/2.0/System.Core.dll'),'-out:'+str(old),*sources],folder,'mono-compile',env)
  native_sources=[ROOT/p for p in ['tests/kairo/graphics_current_fixtures.cpp','src/kairo/common/canvas.cpp','src/kairo/platform/sdl/input.cpp',
-  'src/kairo/common/graphics.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
+  'src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
  sdk=ROOT/'build/deps/native-media';sdl=ROOT/'build/deps/SDL2-2.32.10';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe';native=folder/'graphics-current-fixtures.exe';objects=[]
  inputs=native_sources+[source,ROOT/'tools/test_graphics_current.py',ROOT/'tools/test_input.py']
  inputs += [ROOT/'src/kairo/api'/p for p in ['graphics.hpp','canvas.hpp','input.hpp','font.hpp','application.hpp']]

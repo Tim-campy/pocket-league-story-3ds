@@ -13,6 +13,7 @@
 #include "managed_thread.hpp"
 #include "managed_exceptions.hpp"
 #include "pc_metrics.hpp"
+#include "diagnostic_keys.hpp"
 #include "../kairo/platform/sdl/text_input.hpp"
 #include "../kairo/platform/sdl/globalization.hpp"
 #include <exception>
@@ -113,6 +114,7 @@ int main(int argc,char** argv){
         if(const auto* value=std::getenv("PLS_PC_SELECT_FRAME")){std::istringstream input(value);std::string token;
             while(std::getline(input,token,',')){std::size_t used=0;const auto frame=std::stoull(token,&used);if(used!=token.size()||frame==0||frame>600||(!select_frames.empty()&&frame<=select_frames.back()))throw pls::cs::ArgumentOutOfRangeException();select_frames.push_back(frame);}
         }
+        const auto scripted_keys=pls::pc::parse_scripted_keys(std::getenv("PLS_PC_KEY_FRAMES")?std::getenv("PLS_PC_KEY_FRAMES"):"");
 #endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
             pls::pc::FrameClock timing(metrics.enabled());
@@ -120,6 +122,10 @@ int main(int argc,char** argv){
             const auto frame_start=std::chrono::steady_clock::now();
 #if defined(PLS_DIAGNOSTIC_BUILD)
             if(std::find(select_frames.begin(),select_frames.end(),presented_frames)!=select_frames.end()){canvas->KeyClick(pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_SELECT_FRAME="<<presented_frames<<'\n';}
+            for(const auto& key:scripted_keys)if(key.frame==presented_frames){
+                const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;
+                canvas->KeyClick(code);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_KEY_FRAME="<<key.frame<<':'<<key.name<<'\n';
+            }
 #endif
             timing.mark(pls::pc::FrameStage::gc);
             for(const auto& event:backend.events()){
@@ -129,10 +135,15 @@ int main(int argc,char** argv){
             }
             timing.mark(pls::pc::FrameStage::input);
             app->host_update();
+            pls::kairo::Offscreen::RenderAll();
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error("Offscreen render failed: "+pls::kairo::Offscreen::LastRenderError());
+#endif
             timing.mark(pls::pc::FrameStage::update);
             audio.pump();
             timing.mark(pls::pc::FrameStage::audio);
             app->host_draw();
+            pls::kairo::Offscreen::EndFrame();
             text_input->Draw(display);
             timing.mark(pls::pc::FrameStage::game_draw);
             auto* texture=backend.upload_rgba8(240,280,display->pixels());
@@ -140,9 +151,20 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::upload);
             pls::cs::run_finally([&]{backend.draw(texture,{0,0,240,280},{0,0,240,280},false);timing.mark(pls::pc::FrameStage::render);backend.present();timing.mark(pls::pc::FrameStage::present);},[&]{backend.release(texture);timing.mark(pls::pc::FrameStage::release);});
             pls::kairo::UnityApplication::pace(frame_start);
-            if(metrics.frame(timing.finish()))metrics.memory("first_presented_frame",payload());
+            const auto sample=timing.finish();
+            if(metrics.frame(sample))metrics.memory("first_presented_frame",payload());
             ++presented_frames;
-            if(presented_frames==1||presented_frames==60||presented_frames==120||presented_frames==300)capture_frame(display,presented_frames);
+            if(presented_frames==1||(presented_frames<=900&&presented_frames%60==0))capture_frame(display,presented_frames);
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            // Numeric-only late window, separate from the accumulator's first
+            // 600 frames. A screenshot must establish what screen it measures.
+            if(metrics.enabled()&&presented_frames>=661&&presented_frames<=900){
+                std::ostringstream line;line<<"PLS_PC_METRICS={\"event\":\"diagnostic_frame_sample\",\"completed_presented_frame\":"<<presented_frames<<",\"stage_nanoseconds\":[";
+                for(std::size_t i=0;i<sample.nanoseconds.size();++i){if(i)line<<',';line<<sample.nanoseconds[i];}line<<"]}\n";
+                std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<line.str();
+            }
+            if(metrics.enabled()&&presented_frames==900)metrics.memory("after_900_presented_frames",payload());
+#endif
             if(metrics.enabled()&&presented_frames==60)metrics.memory("after_60_presented_frames",payload());
             if(metrics.enabled()&&(presented_frames==60||presented_frames==120||presented_frames==300))metrics.checkpoint("running_checkpoint");
         }

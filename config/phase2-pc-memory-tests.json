@@ -5,8 +5,8 @@
   "measurements": {
     "status": "PASS",
     "assertions": 10,
-    "baseline_resident_bytes": 3538944,
-    "baseline_private_commit_bytes": 528384,
+    "baseline_resident_bytes": 3555328,
+    "baseline_private_commit_bytes": 536576,
     "baseline_executable_image_committed_bytes": 4026368,
     "baseline_executable_image_resident_bytes": 2195456,
     "page_bytes": 4096,
@@ -21,7 +21,7 @@
   },
   "native_executable": {
     "path": "build/pc-memory-fixtures/pc-memory-fixtures.exe",
-    "sha256": "3fae43c8c523f0cbadb40c9b81c1e525c783556aa7727138f2afaeeb56fe3eba"
+    "sha256": "193de5acf1d04f30f572df73579268ef20e9062e2b28e4bbd00ffa9ca7958d7b"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

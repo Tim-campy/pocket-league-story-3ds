@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+import time
 import re
 import sys
 from pc_compiler import CMAKE,NINJA,environment,showincludes_prefix,audit_ninja_dependencies
@@ -66,7 +67,7 @@ def validate_diagnostic_manifest(folder,root=ROOT):
             raise ValueError('Uncompiled Game requires an explicit private precompile diagnostic with zero normal coverage')
     producer=canonical.get('producer')
     if not isinstance(producer,dict)or manifest.get('producer')!=producer:raise ValueError('Diagnostic producer differs from canonical generation')
-    for key,name in [('translator_source_sha256','translator/Translator.cs'),('driver_sha256','translator/translate.py')]:
+    for key,name in [('translator_source_sha256','translator/Translator.cs'),('emission_source_sha256','translator/EmissionUnits.cs'),('driver_sha256','translator/translate.py')]:
         if producer.get(key)!=digest(root/name):raise ValueError('Diagnostic producer source is stale')
     if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=digest(root/'translator/report_paths.py'):raise ValueError('Diagnostic path producer source is stale')
     for row in canonical.get('platform_adapter_sources',[]):
@@ -98,14 +99,29 @@ def validate_diagnostic_manifest(folder,root=ROOT):
     return manifest
 
 
-def source_snapshot(root=ROOT,diagnostic_folder=None):
+def source_snapshot(root=ROOT,diagnostic_folder=None,diagnostic_source=None):
     """Bind included chunks/headers too; a top-level .cpp hash is insufficient."""
     paths={p for p in (root/'src').rglob('*') if p.is_file() and p.suffix.lower() in {'.cpp','.hpp','.inc'}}
     paths|={p for p in (root/'build/generated/mono-collation').glob('*.inc') if p.is_file()}
     paths|={root/p for p in ['CMakeLists.txt','tools/build_pc.py','tools/pc_compiler.py','tools/run_native_process.py','translator/diagnostic_snapshot.py'] if (root/p).is_file()}
-    if diagnostic_folder:
-        paths|={p for p in Path(diagnostic_folder).rglob('*')if p.is_file()and(p.suffix.lower()in{'.cpp','.hpp','.inc'}or p.name=='manifest.json')}
+    for diagnostic in filter(None,(diagnostic_folder,diagnostic_source)):
+        paths|={p for p in Path(diagnostic).rglob('*')if p.is_file()and(p.suffix.lower()in{'.cpp','.hpp','.inc'}or p.name=='manifest.json')}
     return {p.relative_to(root).as_posix():digest(p) for p in sorted(paths)}
+
+
+def diagnostic_working_tree(source,manifest):
+    """Stable compiler paths; the named snapshot remains the immutable evidence."""
+    target=(ROOT/'build/game-diagnostic-current').resolve()
+    if not target.is_relative_to((ROOT/'build').resolve()):raise ValueError('Diagnostic working tree escapes build/')
+    target.mkdir(parents=True,exist_ok=True)
+    names={row['path']for row in manifest['generated_files']}|{'manifest.json'}
+    if any(Path(name).name!=name for name in names):raise ValueError('Diagnostic working tree requires flat generated filenames')
+    for name in names:
+        data=(source/name).read_bytes();path=target/name
+        if not path.exists()or path.read_bytes()!=data:path.write_bytes(data)
+    for path in target.iterdir():
+        if path.is_file()and(path.suffix.lower()in{'.cpp','.hpp','.inc'}or path.name=='manifest.json')and path.name not in names:path.unlink()
+    return target
 
 
 def image_readback(folder,apk,env):
@@ -149,14 +165,25 @@ def main():
     parser.add_argument('--asset-readback',action='store_true',help='Check all converted local images; requires --apk')
     parser.add_argument('--apk',type=Path)
     parser.add_argument('--run',action='store_true',help='Run only a successfully linked generated game, for up to 20 seconds')
+    parser.add_argument('--run-seconds',type=int,default=20,help='Bounded local run duration, 1..120 seconds (default20)')
     parser.add_argument('--metrics',action='store_true',help='Record opt-in native memory/frame measurements in the private run log; requires --run')
     parser.add_argument('--diagnostic-generated',type=Path,help='Private manifest-verified sources with fatal gap traps; separate build and isolated preferences')
     parser.add_argument('--configuration',choices=['Debug','Release'],default='Debug')
     parser.add_argument('--diagnostic-select-frame',type=int,action='append',help='Private deterministic Canvas KEY_SELECT after this completed frame (1..600); repeat for a sequence')
+    parser.add_argument('--diagnostic-key-frame',action='append',default=[],help='Private FRAME:KEY; KEY is SELECT/UP/DOWN/LEFT/RIGHT/SOFT1/SOFT2')
     args=parser.parse_args()
+    if not 1<=args.run_seconds<=120:parser.error('--run-seconds must be1..120')
     if args.diagnostic_generated and args.fixtures_only:parser.error('Diagnostic sources require a game build')
     if args.metrics and (not args.run or args.fixtures_only):parser.error('--metrics requires a game --run attempt')
     if args.diagnostic_select_frame is not None and(not args.diagnostic_generated or not args.run or any(not 1<=n<=600 for n in args.diagnostic_select_frame)or args.diagnostic_select_frame!=sorted(set(args.diagnostic_select_frame))):parser.error('Scripted input requires a private diagnostic run and strictly increasing frames1..600')
+    if args.diagnostic_key_frame:
+        if not args.diagnostic_generated or not args.run:parser.error('Scripted keys require a private diagnostic run')
+        frames=[]
+        for value in args.diagnostic_key_frame:
+            match=re.fullmatch(r'([0-9]+):(SELECT|UP|DOWN|LEFT|RIGHT|SOFT1|SOFT2)',value)
+            if not match or not 1<=int(match[1])<=600:parser.error('Expected FRAME:KEY with frame1..600 and a known Canvas key')
+            frames.append(int(match[1]))
+        if frames!=sorted(set(frames))or set(frames)&set(args.diagnostic_select_frame or []):parser.error('Scripted key frames must increase without duplicates or legacy SELECT collisions')
     if not args.fixtures_only:
         if not args.apk or not args.apk.is_file():parser.error('Forneça seu próprio APK local com --apk. Nenhum jogo é baixado.')
         if hashlib.sha256(args.apk.read_bytes()).hexdigest()!=APK_SHA:parser.error('APK diferente; confirme a versão no pipeline antes de compilar.')
@@ -164,9 +191,13 @@ def main():
     if not sdk.is_dir():parser.error('SDL2 development SDK missing; no dependency is installed automatically.')
     env=environment()
     if args.metrics:env['PLS_PC_METRICS']='1'
+    env.pop('PLS_PC_SELECT_FRAME',None)
     if args.diagnostic_select_frame is not None:env['PLS_PC_SELECT_FRAME']=','.join(str(n)for n in args.diagnostic_select_frame)
-    diagnostic_folder=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
-    diagnostic_manifest=validate_diagnostic_manifest(diagnostic_folder)if diagnostic_folder else None
+    env.pop('PLS_PC_KEY_FRAMES',None)
+    if args.diagnostic_key_frame:env['PLS_PC_KEY_FRAMES']=','.join(args.diagnostic_key_frame)
+    diagnostic_source=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
+    diagnostic_manifest=validate_diagnostic_manifest(diagnostic_source)if diagnostic_source else None
+    diagnostic_folder=diagnostic_working_tree(diagnostic_source,diagnostic_manifest)if diagnostic_source else None
     build_name='pc-diagnostic'if diagnostic_folder else 'pc'
     if args.configuration=='Release':build_name+='-release'
     folder=ROOT/'build'/build_name;folder.mkdir(parents=True,exist_ok=True)
@@ -175,7 +206,7 @@ def main():
     policy_file=folder/'compiler-prefix-policy.json'
     clean=not policy_file.exists()or json.loads(policy_file.read_text(encoding='utf8'))!=prefix_policy
     commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE='+args.configuration,'-DSDL2_DIR='+str(sdk),'-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else ''),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+prefix_probe['prefix']],
-              [CMAKE,'--build',folder,*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
+              [CMAKE,'--build',folder,'--parallel','2',*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
     if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
     if not args.fixtures_only:
         attempts=ROOT/('config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')
@@ -184,26 +215,31 @@ def main():
         attempt_folder=folder/'attempts'/str(attempt['number'])
         attempt_folder.mkdir(parents=True,exist_ok=False)
         attempt['scripted_select_frame']=args.diagnostic_select_frame
+        attempt['scripted_key_frame']=args.diagnostic_key_frame
         if args.metrics:env['PLS_PC_CAPTURE_DIR']=str((attempt_folder/'frames').resolve())
         if diagnostic_folder:
             attempt.update(diagnostic_only=True,diagnostic_manifest_sha256=digest(diagnostic_folder/'manifest.json'),trap_count=len(diagnostic_manifest['traps']),
                 canonical_report_sha256=diagnostic_manifest['canonical_report_sha256'],game_coverage_promoted=False)
+            attempt['diagnostic_snapshot']=diagnostic_source.relative_to(ROOT).as_posix()
+            attempt['diagnostic_compiler_tree']=diagnostic_folder.relative_to(ROOT).as_posix()
             attempt['precompile_diagnostic']=diagnostic_manifest.get('precompile_diagnostic',False)
             env['PLS_DIAGNOSTIC_SAVE_ROOT']=str((attempt_folder/'preferences').resolve())
         attempt['logs']=[]
-        inputs_before=source_snapshot(diagnostic_folder=diagnostic_folder)
+        inputs_before=source_snapshot(diagnostic_folder=diagnostic_folder,diagnostic_source=diagnostic_source)
         manifest=attempt_folder/'source-inputs.before.json'
         manifest.write_text(json.dumps(inputs_before,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
         attempt['source_inputs']=dict(path=manifest.relative_to(ROOT).as_posix(),sha256=digest(manifest),files=len(inputs_before))
         attempt['generated_game_sources']=[dict(path=p,sha256=h) for p,h in inputs_before.items() if p.startswith('src/game/')]
     for index,command in enumerate(commands):
+        step_started=time.perf_counter_ns()
         result=subprocess.run([str(p) for p in command],cwd=ROOT,env=env,capture_output=True)
+        step_elapsed_ns=time.perf_counter_ns()-step_started
         log=folder/f'step-{index}.log'
         log.write_bytes(result.stdout+result.stderr)
         if not args.fixtures_only:
             retained=attempt_folder/log.name
             retained.write_bytes(log.read_bytes())
-            attempt['logs'].append(dict(path=retained.relative_to(ROOT).as_posix(),sha256=digest(retained)))
+            attempt['logs'].append(dict(path=retained.relative_to(ROOT).as_posix(),sha256=digest(retained),elapsed_ns=step_elapsed_ns))
         if result.returncode:
             if not args.fixtures_only:
                 messages=(result.stdout+result.stderr).decode('utf-8',errors='replace')
@@ -211,15 +247,17 @@ def main():
                 attempt.update(stage='configure-failed' if index==0 else 'compile-or-link-failed',exit_code=result.returncode,diagnostics=diagnostics[:8],log_sha256=digest(folder/f'step-{index}.log'))
                 history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
+    portable_unit=next(iter(sorted((ROOT/'src/kairo/common/generated').glob('portable_generated_type_*.cpp'))),ROOT/'src/kairo/common/generated/portable_generated.cpp')
     required={'CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp',
-              'CMakeFiles/pls_portable_generated.dir/src/kairo/common/generated/portable_generated.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp'}
+              'CMakeFiles/pls_portable_generated.dir/'+portable_unit.relative_to(ROOT).as_posix()+'.obj':ROOT/'src/kairo/common/semantic_runtime.hpp'}
     if not args.fixtures_only:
-        game_unit=(diagnostic_folder or ROOT/'src/game')/'game_generated.cpp'
+        game_folder=diagnostic_folder or ROOT/'src/game'
+        game_unit=next(iter(sorted(game_folder.glob('game_generated_type_*.cpp'))),game_folder/'game_generated.cpp')
         required['CMakeFiles/pc_game.dir/'+game_unit.relative_to(ROOT).as_posix()+'.obj']=ROOT/'src/kairo/common/semantic_runtime.hpp'
     dependency_audit=audit_ninja_dependencies(folder,required,env)
     policy_file.write_text(json.dumps(prefix_policy,indent=2)+'\n',encoding='utf8',newline='\n')
     if not args.fixtures_only:
-        inputs_after=source_snapshot(diagnostic_folder=diagnostic_folder)
+        inputs_after=source_snapshot(diagnostic_folder=diagnostic_folder,diagnostic_source=diagnostic_source)
         if inputs_before!=inputs_after:
             changed=sorted(p for p in set(inputs_before)|set(inputs_after) if inputs_before.get(p)!=inputs_after.get(p))
             attempt.update(stage='concurrent-source-change',exit_code=0,changed_inputs=changed,game_boot=False)
@@ -230,13 +268,13 @@ def main():
             exe=folder/'pc_game.exe'
             if diagnostic_folder:
                 run=run_native_process([str(exe),str(ROOT/'assets')],cwd=ROOT,env=env,
-                    stdout_path=attempt_folder/'game-run.stdout',stderr_path=attempt_folder/'game-run.stderr',timeout_seconds=20,diagnostic=True)
+                    stdout_path=attempt_folder/'game-run.stdout',stderr_path=attempt_folder/'game-run.stderr',timeout_seconds=args.run_seconds,diagnostic=True)
                 attempt.update(run)
                 attempt['stopped_at_timeout']=run['stopped_reason']=='timeout'
                 exit_code=run['process_exit_code']
             else:
                 process=subprocess.Popen([str(exe),str(ROOT/'assets')],cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-                try:stdout,stderr=process.communicate(timeout=20)
+                try:stdout,stderr=process.communicate(timeout=args.run_seconds)
                 except subprocess.TimeoutExpired:process.terminate();stdout,stderr=process.communicate(timeout=10);attempt['stopped_at_timeout']=True
                 (attempt_folder/'game-run.stdout').write_bytes(stdout);(attempt_folder/'game-run.stderr').write_bytes(stderr)
                 exit_code=process.returncode

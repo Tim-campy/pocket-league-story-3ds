@@ -31,10 +31,10 @@ def main():
     if not all(row['emitted']for row in report['service_policy_emission']):raise ValueError('Not all requested fixture policies were emitted')
     name=lambda method:methods['M:SyntheticPolicy.Scenario.'+method]
     harness=folder/'service-policy-harness.cpp';exe=folder/'service-policy-harness.exe'
-    text='#include "portable_generated.cpp"\n#include <iostream>\nint main(int argc,char**argv){if(argc!=2)return 2;pls::services::OfflineServices services(argv[1]);pls::services::install(&services);int assertions=0;auto check=[&](bool condition){if(!condition)throw std::runtime_error("Generated service policy contract failed");++assertions;};\n'
+    text='#include "portable_generated.hpp"\n#include <iostream>\nint main(int argc,char**argv){if(argc!=2)return 2;pls::services::OfflineServices services(argv[1]);pls::services::install(&services);int assertions=0;auto check=[&](bool condition){if(!condition)throw std::runtime_error("Generated service policy contract failed");++assertions;};\n'
     text+='using namespace pls::generated;check('+name('Preserve')+'()==7305);check('+name('NullCaller')+'()==2);check('+name('Assignments')+'()==265);check('+name('Constants')+'());auto first='+name('Registration')+'();check(first.length()==5);check(first.at(0)==49&&first.at(1)==10&&first.at(2)==50&&first.at(3)==48&&first.at(4)==50);auto second='+name('Registration')+'();check(first!=second);first.at(0)=0;check(second.at(0)==49);check(!services.device_id().empty());std::cout<<assertions<<"\\n";return 0;}\n'
     harness.write_text(text,encoding='utf8',newline='\n');env=environment();cl=Path(shutil.which('cl.exe',path=env['PATH']))
-    sources=[harness,ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp',ROOT/'src/kairo/common/services.cpp']
+    sources=[harness,*sorted(output.glob('*.cpp')),ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp',ROOT/'src/kairo/common/services.cpp']
     command=[cl,'/nologo','/std:c++17','/EHsc','/Od','/fp:strict','/utf-8','/W4','/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(output),'/Fe:'+str(exe),'/Fo'+str(folder)+'/',*sources]
     inputs=set(output.glob('*.?pp'))|set(output.glob('*.inc'))|set((ROOT/'src/kairo/common').glob('*.hpp'))|{source,Path(__file__),ROOT/'translator/Translator.cs',ROOT/'src/kairo/api/services_managed.hpp'}|set(sources)
     before={p.relative_to(ROOT).as_posix():sha(p)for p in inputs};run(command,folder/'service-policy-compile.log',env)

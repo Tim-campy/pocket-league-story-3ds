@@ -210,7 +210,7 @@ CPP_FORMAT=r'''
 #if defined(_MSC_VER)
 #pragma optimize("",off)
 #endif
-#include "portable_generated.cpp"
+#include "portable_generated.hpp"
 using namespace pls::generated;
 static std::chrono::nanoseconds serialization_time{},hash_time{};
 static std::vector<const pls::cs::Object*>format_path;
@@ -393,13 +393,14 @@ def main():
     run(command,folder,'csharp-compile')
     env=environment();exe=folder/'Harness.exe'
     cpp_command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/Od','/fp:strict','/utf-8','/W4','/we4715','/bigobj',
-        '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/I'+str(options.generated),'/I'+str(ROOT/'build/generated/mono-collation'),'/Fe:'+str(exe),'/Fo'+str(folder)+'/',cpp_file,ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_streams.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp',ROOT/'src/kairo/common/managed_thread.cpp',ROOT/'src/kairo/common/managed_encoding.cpp',ROOT/'src/kairo/common/managed_regex.cpp',ROOT/'src/kairo/common/managed_stream_reader.cpp',ROOT/'src/kairo/common/managed_string_ops.cpp',ROOT/'src/kairo/common/managed_collation.cpp',ROOT/'src/kairo/common/managed_mono_character_data.cpp',ROOT/'src/kairo/platform/sdl/globalization.cpp','Advapi32.lib']
+        '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/I'+str(options.generated),'/I'+str(ROOT/'build/generated/mono-collation'),'/Fe:'+str(exe),'/Fo'+str(folder)+'/',cpp_file,*sorted(options.generated.glob('*.cpp')),ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_streams.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp',ROOT/'src/kairo/common/managed_thread.cpp',ROOT/'src/kairo/common/managed_encoding.cpp',ROOT/'src/kairo/common/managed_regex.cpp',ROOT/'src/kairo/common/managed_stream_reader.cpp',ROOT/'src/kairo/common/managed_string_ops.cpp',ROOT/'src/kairo/common/managed_collation.cpp',ROOT/'src/kairo/common/managed_mono_character_data.cpp',ROOT/'src/kairo/platform/sdl/globalization.cpp','Advapi32.lib']
     if report.get('oracle_native_setup') and 'FixtureApp' in report['oracle_native_setup']:
         cpp_command += [ROOT/'src/kairo/common/storage.cpp',ROOT/'src/kairo/common/asset_catalog.cpp',ROOT/'src/kairo/common/asset_reader.cpp']
     proof_inputs=set(options.generated.glob('*.?pp'))|set(options.generated.glob('*.inc'))|set((ROOT/'src/kairo/common').rglob('*.hpp'))|set((ROOT/'src/kairo/api').rglob('*.hpp'))|set((ROOT/'build/generated/mono-collation').glob('*.*'))|{Path(p) for p in cpp_command if Path(str(p)).suffix=='.cpp'}
     if abstract_fixture_source:proof_inputs.add(abstract_fixture_source)
     proof_before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in proof_inputs}
-    run(cpp_command,folder,'native-compile',env)
+    response=folder/'native-compile.rsp';response.write_text(subprocess.list2cmdline([str(p)for p in cpp_command[1:]])+'\n',encoding='utf8',newline='\n')
+    run([cpp_command[0],'@'+str(response)],folder,'native-compile',env)
     expected=run([runtime,oracle],folder,'managed-output',dict(env,MONO_PATH=str(framework))).splitlines();actual=run([exe],folder,'native-output',env).splitlines()
     if len(expected)!=len(cases) or len(actual)!=len(cases):raise ValueError('Missing differential output cases')
     failures=[dict(cases[i],expected=expected[i],actual=actual[i]) for i in range(len(cases)) if expected[i]!=actual[i]]

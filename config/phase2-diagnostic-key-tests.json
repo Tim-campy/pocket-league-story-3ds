@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "assertions": 19,
+  "operation": "own-PC-diagnostic-key-script-parser",
+  "inputs": {
+    "src/main/diagnostic_keys.hpp": "c9eb477f22079842f2d5fcabad94032e6a1c6f49c857311a20136b34dcddf051",
+    "tests/kairo/diagnostic_keys_fixtures.cpp": "76123dff0166f687881cc6996a790cf6f3c49bed5d0da58c4032b41a0d61a165",
+    "tools/test_diagnostic_keys.py": "9ba46649348a4def79477885a40d41637f8fae4cb87b151af0c92665b8a2252c"
+  },
+  "native_executable_sha256": "f86fd77a99c0a3578dc581e6679689ac5d6df6fdabdb7dad1d66146bce614c1e",
+  "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "game_executed": false,
+  "verified_boundary_ids": []
+}

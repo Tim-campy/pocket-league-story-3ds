@@ -38,13 +38,13 @@ def prepare():
     references=[framework/(name+'.dll') for name in libraries]+[compiler.parent/name for name in ['Microsoft.CodeAnalysis.dll','Microsoft.CodeAnalysis.CSharp.dll']]
     target=folder/'Translator.dll'
     args=['/nologo','/noconfig','/nostdlib+','/nullable:enable','/target:exe','/out:'+str(target)]
-    args+=['/r:'+str(p) for p in references]+[str(ROOT/'translator/Translator.cs')]
+    args+=['/r:'+str(p) for p in references]+[str(ROOT/'translator/Translator.cs'),str(ROOT/'translator/EmissionUnits.cs')]
     response=folder/'compile.rsp';response.write_text('\n'.join('"'+a+'"' for a in args if a!='/noconfig')+'\n',encoding='utf-8',newline='\n')
     run([compiler,'/noconfig','@'+str(response)],folder/'compiler.log')
     for p in references[-2:]:shutil.copy2(p,folder/p.name)
     (folder/'Translator.runtimeconfig.json').write_text(json.dumps({'runtimeOptions':{'tfm':'net10.0','framework':{'name':'Microsoft.NETCore.App','version':'10.0.10'}}})+'\n',encoding='utf-8',newline='\n')
     return folder,runtime,target,dict(compiler_sha256=digest(compiler),runtime_sha256=digest(runtime),
-        translator_source_sha256=digest(ROOT/'translator/Translator.cs'),driver_sha256=digest(Path(__file__)))
+        translator_source_sha256=digest(ROOT/'translator/Translator.cs'),emission_source_sha256=digest(ROOT/'translator/EmissionUnits.cs'),driver_sha256=digest(Path(__file__)))
 
 
 def main():
@@ -88,6 +88,8 @@ def main():
         supported_classes={'progress_concurrent','multi_writer_load_then_store','payload_published_by_state_candidate','lifecycle_handoff_reinit_unknown'}
         request['shared_fields']=[field['field']for field in concurrency['boot_field_classifications']if field['classification']in supported_classes]
         portable=json.loads((ROOT/'config/phase2-translation.json').read_text(encoding='utf-8'))
+        manifest=ROOT/'src/kairo/common/generated/emission_units.json'
+        if manifest.exists():request['external_unit_manifest']=str(manifest)
         request.update(select_all_source_methods=True,select_source_prefix="src/Assembly-CSharp/",
             external_types={c['id']:'pls::generated::'+c['cpp_name'].split('<')[0] for c in portable['generated_classes']},
             external_methods={m['id']:'pls::generated::'+m['cpp_name'] for m in portable['emitted_methods']},
@@ -126,6 +128,10 @@ def main():
             'M:kairo.unity.native.KairoPlugin.GetFepPanelResult':'pls::kairo::text_panel_result'})
         request['source_native_helpers']+=['M:kairo.unity.ui.Graphics.DrawText(System.String,System.Single,System.Single,System.Single,System.Int32)',
             'M:kairo.unity.ui.Graphics.DrawText(kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Single,System.Int32)']
+        request['external_methods'].update({
+            'M:kairo.unity.ui.Graphics.DrawArc(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)':'member:DrawArc',
+            'M:kairo.unity.ui.Graphics.DrawArc2(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)':'member:DrawArc2',
+            'M:kairo.unity.ui.Graphics.FillArc(System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)':'member:FillArc'})
         request['external_fields']['F:kairo.unity.ui.Canvas.statusBarPosition_']='source_status_bar_position'
         request['external_fields'].update({'F:kairo.unity.ui.Graphics.color_':'source_color()',
             'F:kairo.unity.ui.Graphics.font_':'source_font()',
@@ -190,6 +196,24 @@ def main():
             'UnityEngine.PlayerPrefs':'PlayerPrefs','UnityEngine.Application':'UnityApplication','UnityEngine.QualitySettings':'QualitySettings',
             'kairo.unity.surface.MotionEvent':'MotionEvent','kairo.unity.ui.KeyEvent':'KeyEvent','kairo.unity.ui.AppEvent':'AppEvent'}
         request['external_types'].update({'T:'+k:'pls::kairo::'+v for k,v in native_types.items()})
+        request['external_types']['T:kairo.unity.graphics.Offscreen']='pls::kairo::Offscreen'
+        request['external_types']['T:kairo.unity.graphics.MeshManager']='pls::kairo::MeshManager'
+        request['native_includes'].append('mesh.hpp')
+        request['external_methods'].update({
+            'M:kairo.unity.ui.Graphics.GetMeshManager':'member:GetMeshManager',
+            'M:kairo.unity.graphics.MeshManager.SetDepth(System.Int32,System.Boolean)':'member:SetDepth',
+            'M:kairo.unity.graphics.MeshManager.SetDepthFront':'member:SetDepthFront',
+            'M:kairo.unity.graphics.Offscreen.CreateOffscreen(kairo.unity.graphics.Offscreen.RenderMethod,kairo.unity.graphics.Offscreen.RenderMethod,kairo.unity.graphics.Offscreen.GetLayoutMethod,System.Int32)':'pls::kairo::Offscreen::CreateOffscreen',
+            'M:kairo.unity.graphics.Offscreen.Dispose':'member:Dispose',
+            'M:kairo.unity.graphics.Offscreen.get_Image':'member:get_Image'})
+        request['external_fields'].update({'F:kairo.unity.ui.Graphics.render_':'source_render_',
+            'F:kairo.unity.ui.Graphics.offscreen_':'offscreen_',
+            'F:kairo.unity.ui.Image.balloonRenderTasks_':'list-slot:source_balloon_tasks',
+            'F:kairo.unity.ui.Image.textRenderTasks_':'list-slot:source_text_tasks',
+            'F:kairo.unity.ui.Image.touchTasks_':'list-slot:source_touch_tasks',
+            'F:kairo.unity.graphics.Offscreen.dynamicTransform_':'dynamicTransform_'})
+        for name in ('GetClip','GetImageClip','ClearImageClip','SetImageClip(System.Single,System.Single,System.Single,System.Single)'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+name]='member:'+name.split('(')[0]
         request['external_complete_bases']+=['T:kairo.unity.form.FormBase','T:kairo.unity.form.FormManagerBase']
         request['native_includes']+=['graphics.hpp','font.hpp','sound.hpp','forms.hpp','canvas.hpp','storage.hpp','input.hpp','system.hpp']
         allow={
@@ -264,6 +288,9 @@ def main():
         request['native_includes'].append('forms_callbacks.hpp')
         request['external_value_types']['T:UnityEngine.Vector3']='pls::kairo::Vector3'
         request['external_value_types']['T:UnityEngine.Matrix4x4']='pls::kairo::Matrix4x4'
+        for column in range(4):
+            for row in range(4):
+                name=f'm{row}{column}';request['external_fields']['F:UnityEngine.Matrix4x4.'+name]=name
         request['native_includes'].append('matrix4.hpp')
         request['external_methods']['M:UnityEngine.Matrix4x4.get_identity']='pls::kairo::Matrix4x4::identity'
         request['external_methods']['M:UnityEngine.Matrix4x4.MultiplyPoint(UnityEngine.Vector3)']='value-member:MultiplyPoint'
@@ -376,7 +403,7 @@ def main():
         request['oracle_external_methods'].update({'M:kairo.unity.io.Storage.Read(System.Int32,System.Boolean,System.String)':'SyntheticAssets.Read','M:kairo.unity.ui.IApplication.GetCurrentApp':'SyntheticAssets.Current','M:UnityEngine.Resources.Load(System.String)':'UnityEngine.Resources.Load','M:UnityEngine.Resources.UnloadAsset(UnityEngine.Object)':'UnityEngine.Resources.UnloadAsset'})
         request['oracle_support']+='''
 public static class SyntheticAssets {public static byte[] Read(int media,bool security,string file){if(media!=3)throw new NotSupportedException();return null;}public static kairo.unity.ui.IApplication Current(){return new kairo.unity.ui.IApplication();}}
-namespace kairo.unity.ui { public class IApplication {public delegate object UIMethod();public object RunOnUiThread(UIMethod method,bool wait=false){return method();}public void RunOnUiThread(System.Threading.ThreadStart method,bool wait=false){method();}}}
+namespace kairo.unity.ui { public partial class IApplication {public object RunOnUiThread(UIMethod method,bool wait=false){return method();}public void RunOnUiThread(System.Threading.ThreadStart method,bool wait=false){method();}}}
 namespace kairo.unity.util {public static class DisplayMetrics {public static float Density {get{return 1.6f;}}}}
 namespace UnityEngine { public class Object {} public class TextAsset:Object{public byte[] bytes;public string text;}public static class Resources {public static Object Load(string name){return null;}public static void UnloadAsset(Object value){}}}
 '''
@@ -458,17 +485,19 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
     compiled=False;compile_evidence=None
     if args.compile and report['emitted_method_count']:
         env=environment();native=folder/'native';native.mkdir(exist_ok=True)
-        command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/fp:strict','/utf-8','/W4','/we4715','/bigobj','/c',
-            '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/Fo'+str(native/(args.assembly+'.obj')),str(output/('game_generated.cpp' if args.assembly=='Assembly-CSharp' else 'portable_generated.cpp'))]
+        from generated_build import compile_objects
+        units=sorted(p for p in output.glob('*.cpp')if p.name!='bootstrap_generated.cpp')
         inputs=sorted(set((ROOT/'src/kairo/common').rglob('*.hpp'))|set((ROOT/'src/kairo/common').rglob('*.inc'))|set((ROOT/'src/kairo/api').rglob('*.hpp'))|set(output.glob('*.?pp'))|set(output.glob('*.inc')))
         inputs+=list((ROOT/'src/kairo/platform/sdl').glob('*.hpp'))
         before={p.relative_to(ROOT).as_posix():digest(p) for p in inputs}
-        run(command,folder/('native-'+args.assembly+'-compile.log'),env)
+        evidence=compile_objects(units,native/args.assembly,[ROOT/'src/kairo/common',ROOT/'src/kairo/api',ROOT/'src',output],jobs=2)
         after={p.relative_to(ROOT).as_posix():digest(p) for p in inputs}
         if before!=after:raise RuntimeError('Native compile inputs changed concurrently; rerun translation before publishing a receipt')
         compiled=True
-        object_file=native/(args.assembly+'.obj')
-        compile_evidence=dict(compiler=dict(path=str(command[0]),sha256=digest(command[0])),object=dict(path=object_file.relative_to(ROOT).as_posix(),sha256=digest(object_file)),command=[str(c) for c in command],inputs=after)
+        compiler=shutil.which('cl.exe',path=env['PATH'])
+        compile_evidence=dict(compiler=dict(path=compiler,sha256=digest(compiler)),objects=[dict(path=Path(row['path']).relative_to(ROOT).as_posix(),sha256=row['sha256'])for row in evidence['objects']],incremental_build=evidence,inputs=after)
+    manifest=output/'emission_units.json'
+    if manifest.exists():report['unit_layout']=dict(path=manifest.relative_to(ROOT).as_posix(),sha256=digest(manifest),units=json.loads(manifest.read_text(encoding='utf8'))['units'])
     report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],platform_adapter_sources=adapter_sources,
         reference_commit='c7d097a847ca1f1a8e5fb7141ff11d338f5915c4',
         reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs],compiled=compiled,compile_evidence=compile_evidence,

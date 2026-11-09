@@ -407,16 +407,17 @@
   },
   "inputs": {
     "tests/kairo/image_lifetime_fixtures.cpp": "66b4ada98aa02fa55cb7b0ae444f7ebfe65801e4d9cecab7eb8d6a0cfe79e4a6",
-    "src/kairo/common/image_lifetime.cpp": "de739f797238366febc0a60a796630ddc7acdd703e92defa1f82d34ce33b1a1f",
-    "src/kairo/common/graphics.cpp": "d256186df9e6d75c48a4399bbfd0b303511bfa2b53bfe0c1e1c5d974810d423c",
+    "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
+    "src/kairo/common/graphics.cpp": "dd1a274aa50f43f7d78da5621f44fd6d0df1e6f91d9a913ef31b1d262e651630",
+    "src/kairo/common/mesh.cpp": "528cd60f55a4ee0642082cf1ac4ecfc1d978e34805f6d47ab39c12b1b0ea34fa",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "src/kairo/platform/sdl/font.cpp": "e24ec08f120d98203996ae50d14abe5f4a84f3804842af1ca4f7aad84a9e6065",
     "tests/kairo/ImageLifetimeOracle.cs": "9eada50ef9d686e508f9c5a03f6e4100e6705e2a9c0566624964afdadd7b6cbb",
-    "tools/test_image_lifetime.py": "7eef93d61e94288e6f0a54b062e8383df73e742dca71a97136ca1622aa861c45",
+    "tools/test_image_lifetime.py": "3aec921a96f2eede32249b96206956c90b4f8b3a1877e30a2bd6100fef4739ac",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/graphics.hpp": "c115b915285dee5d2d2eeb2449f5573bac6b0376ec2b31bf96b994ff3517f659",
+    "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "254281540812339895b95ca4c6c47a886efa5b24005f8501483e87e77c5fc965",
     "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
@@ -450,7 +451,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "8fc1c3da5a657ec599b95a99d34cb2bc1da67fac4fd4f5f07a9ac8f9c7f39e16"
+    "sha256": "d375be0f868023aa101410bcf2a9555be74e750fd8afc5d8e914c343e6a540c3"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

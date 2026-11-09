@@ -32,10 +32,10 @@ def main():
     methods=report['emitted_methods'];dynamic=next(m['cpp_name']for m in methods if m['id']=='M:BakedArrayFixtures.Dynamic(System.Int32)')
     field=next(f['cpp_accessor']for f in report['static_fields']if f['id']=='F:BakedArrayFixtures.trace')
     harness=work/'native.cpp'
-    harness.write_text('#include <iostream>\n#include "game_generated.cpp"\nint main(){pls::cs::runtime_profile=pls::cs::RuntimeProfile::UnityMono265;for(std::int32_t seed:{0,1,-1,9,2147483647,(-2147483647-1)}){auto value=pls::game::'+dynamic+'(seed);std::cout<<value.at(0)<<","<<value.at(1)<<","<<value.at(2)<<"|"<<pls::game::'+field+'<<"\\n";}return 0;}\n',encoding='utf8',newline='\n')
+    harness.write_text('#include <iostream>\n#include "game_generated.hpp"\nint main(){pls::cs::runtime_profile=pls::cs::RuntimeProfile::UnityMono265;for(std::int32_t seed:{0,1,-1,9,2147483647,(-2147483647-1)}){auto value=pls::game::'+dynamic+'(seed);std::cout<<value.at(0)<<","<<value.at(1)<<","<<value.at(2)<<"|"<<pls::game::'+field+'<<"\\n";}return 0;}\n',encoding='utf8',newline='\n')
     oracle=work/'source.exe';run([csc,'/nologo','/nostdlib+','/checked-','/out:'+str(oracle),'/r:'+str(framework/'mscorlib.dll'),original],work/'source-compile.log')
     env=environment();native=work/'native.exe'
-    units=[ROOT/'src/kairo/common'/name for name in ['semantic_runtime.cpp','managed_streams.cpp','managed_exceptions.cpp','managed_thread.cpp','managed_collation.cpp','managed_mono_character_data.cpp','managed_encoding.cpp','managed_regex.cpp','managed_stream_reader.cpp']]
+    units=sorted(output.glob('*.cpp'))+[ROOT/'src/kairo/common'/name for name in ['semantic_runtime.cpp','managed_streams.cpp','managed_exceptions.cpp','managed_thread.cpp','managed_collation.cpp','managed_mono_character_data.cpp','managed_encoding.cpp','managed_regex.cpp','managed_stream_reader.cpp']]
     command=[shutil.which('cl.exe',path=env['PATH']),'/nologo','/std:c++17','/EHsc','/fp:strict','/utf-8','/I'+str(output),'/I'+str(ROOT/'src'),'/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'build/generated/mono-collation'),'/Fe:'+str(native),'/Fo'+str(work)+'/',harness,*units]
     run(command,work/'native-compile.log',env)
     expected=subprocess.check_output([str(unity/'bin/mono.exe'),str(oracle)],env=dict(env,MONO_PATH=str(framework)))

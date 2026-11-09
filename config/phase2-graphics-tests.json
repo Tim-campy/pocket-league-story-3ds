@@ -12,10 +12,11 @@
   "original_renderrect_exception_preserved": true,
   "android_raster_comparison": "UNKNOWN",
   "sources": {
-    "tools/test_graphics.py": "3662ffc8f5e3471423e50c541871adeb195da8857b0add2e7c1f13e10b56a8c8",
-    "src/kairo/api/graphics.hpp": "c115b915285dee5d2d2eeb2449f5573bac6b0376ec2b31bf96b994ff3517f659",
-    "src/kairo/common/graphics.cpp": "d256186df9e6d75c48a4399bbfd0b303511bfa2b53bfe0c1e1c5d974810d423c",
-    "src/kairo/common/image_lifetime.cpp": "de739f797238366febc0a60a796630ddc7acdd703e92defa1f82d34ce33b1a1f",
+    "tools/test_graphics.py": "c02042a2015e3545a2a3fc8db9839c8e8101a09a000fb4b9b6616c33c74c88ce",
+    "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
+    "src/kairo/common/graphics.cpp": "dd1a274aa50f43f7d78da5621f44fd6d0df1e6f91d9a913ef31b1d262e651630",
+    "src/kairo/common/mesh.cpp": "528cd60f55a4ee0642082cf1ac4ecfc1d978e34805f6d47ab39c12b1b0ea34fa",
+    "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/platform/sdl/font.hpp": "58b6be7dbe6b8197bba1c16cef390919215c0a9d735222429c9523efd0d1c2c9",
@@ -23,7 +24,7 @@
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
-    "tests/kairo/graphics_api_test.cpp": "ba851ab3fb10b34047e7e2c4daa6fc55e20e17f489b27264276ad0562d4056bd",
+    "tests/kairo/graphics_api_test.cpp": "f7e65b44fe8bbd806a51a4bdf095f07e6a80b670bf769ac2dc0ab3117b2c74ce",
     "tests/kairo/asset_catalog_test.cpp": "b8655c27a68999031124fd3fa6232669e05fee5d42f60338a0dde9c97179b866",
     "src/kairo/common/semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
     "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
@@ -33,6 +34,7 @@
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66",
     "src/kairo/common/managed_exceptions.hpp": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b",
     "src/kairo/common/managed_guid_uri.hpp": "5fc456a9f8741dca1f28d7a4db3faa5c6e2bfce330a77494494ce8328c22b64e",
+    "src/kairo/common/managed_math.hpp": "ca297dfababd97f6f09e2415891a97fef7b9be39f9e8c40f14a454a8d1441abc",
     "src/kairo/common/managed_path.hpp": "545683f23b690b066bb420199b282ecf04ecff1a49207111febd8e86fbd9498c",
     "src/kairo/common/managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src/kairo/common/managed_reflection.hpp": "3b6fbecdf446ed74c45521e004b88724a22989df12d335469c943d4b50e756ad",
@@ -56,10 +58,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "4f4621ea1bb9be029aa71d992bc75e760918c935960d4f0944c32749e8392c89",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "fb0ce1e24aad748e013ced5ea76a58c6f58912db4c0992ea84c1b7aa1eb5ec20"
+    "build/graphics-tests/GraphicsOracle.dll": "557ae3c1a5a70c7a6c764aac5a875b00197a41f7f8776de8096fcaa541bfd0bb",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "564b3645699df27f1fe49b115ba1004bdeac19bceb4966a63b9dd5c8fc16e9b4"
   },
-  "executable_sha256": "e671c92587f058a65be5935bfeff129ef5f5bb50abd6989d032f879e5b5d2c3c",
+  "executable_sha256": "65a046966ae1ee5857ca559308bd7e0d91875c0cd591f4f41e2433388ca6a3f5",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

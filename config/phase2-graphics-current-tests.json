@@ -652,7 +652,7 @@
   "native_gc_thread_policy": {
     "assertions": 9,
     "worker_snapshots": 2000,
-    "collections": 498,
+    "collections": 246,
     "sticky_after_end": true,
     "snapshot_survives_overwrite": true,
     "old_target_collected_after_overwrite": true,
@@ -662,16 +662,17 @@
     "tests/kairo/graphics_current_fixtures.cpp": "3a66d5a5abf4e1c1f074988795d6010873ec85d39a4d0dc9f934e010d6c6e324",
     "src/kairo/common/canvas.cpp": "0d132bf3ab87ccee85f9523e621ecd8f23ef245d98bb74f7758296826da10981",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
-    "src/kairo/common/graphics.cpp": "d256186df9e6d75c48a4399bbfd0b303511bfa2b53bfe0c1e1c5d974810d423c",
-    "src/kairo/common/image_lifetime.cpp": "de739f797238366febc0a60a796630ddc7acdd703e92defa1f82d34ce33b1a1f",
+    "src/kairo/common/graphics.cpp": "dd1a274aa50f43f7d78da5621f44fd6d0df1e6f91d9a913ef31b1d262e651630",
+    "src/kairo/common/mesh.cpp": "528cd60f55a4ee0642082cf1ac4ecfc1d978e34805f6d47ab39c12b1b0ea34fa",
+    "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/platform/sdl/font.cpp": "e24ec08f120d98203996ae50d14abe5f4a84f3804842af1ca4f7aad84a9e6065",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
     "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
     "tests/kairo/GraphicsCurrentOracle.cs": "23d86113f2c4586c3af280aadf8649e3901e09e2042151a254baf5a0260dddbe",
-    "tools/test_graphics_current.py": "e9c4954de62a00819d735e2fd307f0df662b4e4e75cdfa2899a661086defa780",
+    "tools/test_graphics_current.py": "426870cb50ee15a72bfc461b6e8071beb7d376851a36e6869292d728f188f17f",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/graphics.hpp": "c115b915285dee5d2d2eeb2449f5573bac6b0376ec2b31bf96b994ff3517f659",
+    "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
     "src/kairo/api/canvas.hpp": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc",
     "src/kairo/api/input.hpp": "021a99799933471069df42f904fbc58d0c9a5cb5ef519f138c461396af839f71",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
@@ -726,7 +727,7 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "9d589cdfd92af6a3d094ba2f7aaa528309109014182dcbeea6ef3e9e8d600cf4"
+    "sha256": "efc4e56666906d4fdb8924f9acf37fc31254fd9f9862da094d6fdd6196dd3c80"
   },
   "verified_boundary_ids": [],
   "limits": [

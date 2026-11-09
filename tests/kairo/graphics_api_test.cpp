@@ -59,7 +59,7 @@ int main(int argc,char** argv){
     kairo::install_text_services({[&](cs::String s){++translations;return s;},[&]{return japanese;},[]{return false;},[]{return 100.0f;}});
     font->SetSize(1);auto width=font->StringWidthF(cs::String(u"A A"));require(width==font->raster().measure_utf16(u"A.A"));require(translations==1);font->StringWidth(cs::String(u"A A"));require(translations==3);
     int text_frames=0;
-    for(int language=0;language<2;++language)for(int style=0;style<3;++style){japanese=language!=0;font->SetStyle(style);auto canvas=Image::CreateImage(200,64,Image::Format::ARGB32);auto drawing=canvas->GetGraphics();drawing->SetFont(font);drawing->SetColor(0,255,0);drawing->DrawString(cs::String(u"Fixture A<1"),2,2);
+    for(int language=0;language<2;++language)for(int style=0;style<3;++style){japanese=language!=0;font->SetStyle(style);auto canvas=Image::CreateImage(200,64,Image::Format::ARGB32);auto drawing=cs::make_ref<Graphics>(canvas,true);drawing->SetFont(font);drawing->SetColor(0,255,0);drawing->DrawString(cs::String(u"Fixture A<1"),2,2);
         auto& pixels=canvas->pixels();std::size_t ink=0;for(std::size_t i=0;i<pixels.size();i+=4)if(pixels[i+3]){++ink;require(pixels[i]==0&&pixels[i+2]==0&&pixels[i+1]>0);}require(ink>0);++text_frames;}
     int markup_calls=0;kairo::TextServices text_services;
     text_services.translate=[](cs::String value){return value;};text_services.japanese=[](){return false;};text_services.localize_scale=[](){return false;};text_services.application_scale=[](){return 100.0f;};

@@ -213,8 +213,12 @@ public static class LoweringFixtures {
     public static string ObjectArrayConcat(int value){trace_=value;object[] a=value==0?null:new object[]{new Synthetic.ConcatValue(4),null,new Synthetic.ConcatValue(5,false,true),"z"};return string.Concat(a);}
     public static int ObjectArrayConcatThrow(int value){trace_=value;try{string.Concat(new object[]{new Synthetic.ConcatValue(4,true),new Synthetic.ConcatValue(5)});}catch(InvalidOperationException){return trace_;}return -1;}
     public static int MathDigits(int value){long v=value==0?long.MinValue:value==1?long.MaxValue:value==2?0:value<0?-10:999;try{return unchecked((int)Math.Log10(Math.Abs(v))+1);}catch(OverflowException){return -7;}}
+    public static float FloatPropertyCompound(int value){var p=new Synthetic.FloatProperty();p.Value=(float)value;p.Value*=0.25f;p.Value+=1.5f;p.Value-=0.5f;p.Value/=2f;return p.Value;}
+    public static int FloatPropertyOrder(int value){trace_=0;var p=new Synthetic.FloatProperty();p.Value=1;trace_=0;float answer=p.Value*=Synthetic.FloatProperty.Factor();return trace_;}
+    public static float FloatMin(int value){float[] a={0f,-0f,float.NaN,1f,float.NegativeInfinity,float.PositiveInfinity,-1f};int index=value&3;return Math.Min(a[index],a[index+1]);}
 }
 namespace Synthetic {
+    public class FloatProperty {private float value;public float Value{get{LoweringFixtures.Stamp(2);return value;}set{LoweringFixtures.Stamp(4);this.value=value;}}public static float Factor(){LoweringFixtures.Stamp(3);return 2f;}}
     public class StaticAuto {public static int Value{get;set;}public static bool Enabled{get;set;}public static string Text{get;set;}}
     public class StaticAutoOrder {public static int Value{get;set;}public static bool Enabled{get;set;}public static int first=Capture();private static int Capture(){int prior=Value;Value=3;return prior+7;}static StaticAutoOrder(){Value=Value+first;Enabled=true;}}
     public class OptionalCtor {public int value;public OptionalCtor():this(4){}public OptionalCtor(int value,int scale=3){this.value=value*scale;}}

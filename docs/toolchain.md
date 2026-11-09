@@ -412,3 +412,23 @@ recibos permanecem em build/android-original-comparison/, ignorado. São
 evidência visual, nunca fonte de assets e nunca arquivos distribuídos.
 O layout observado nesse aparelho é vertical; isso é observação do original,
 não escolha de distribuição das telas do Nintendo 3DS.
+
+### Compilação incremental e marco de gestão após a418890
+
+O emissor passou a gerar CPP/header por tipo, preservando arquivos inalterados
+e rastreando includes reais com Ninja/MSVC. Receita, corpus congelado, opções,
+tempos completos e recompilação de um tipo estão em
+[incremental-build.md](notes/incremental-build.md). Não foi instalada ferramenta
+nova. A compilação monolítica deixou de ser usada pelas fixtures do emissor.
+
+Os snapshots privados de diagnóstico são imutáveis. `tools/build_pc.py` os
+valida e sincroniza por conteúdo para `build/game-diagnostic-current/`, usado
+pelo CMake para conservar objetos entre tentativas. `--run-seconds` limita a
+execução a 1..120 segundos (padrão 20). `--diagnostic-key-frame FRAME:KEY`
+injeta pulsos Canvas, sem alterar o jogo; KEY pode ser SELECT, UP, DOWN, LEFT,
+RIGHT, SOFT1 ou SOFT2. Os registros das tentativas conservam a sequência.
+
+O menu de gestão foi inspecionado na tentativa Release 21, sem aparelho Android
+nesta continuidade. A [nota da rodada](notes/phase2-after-a418890.md) registra o
+fluxo, medições, capturas privadas por hash e limites da cobertura de memória.
+Não foram incorporados assets, capturas ou binários originais ao repositório.

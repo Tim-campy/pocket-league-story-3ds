@@ -2,10 +2,24 @@
 #include "semantic_runtime.hpp"
 #include "asset_catalog.hpp"
 #include "managed_shared_field.hpp"
+#include "matrix4.hpp"
 #include <array>
 namespace pls::kairo {
 class Graphics;
 class Font;
+class MeshManager;
+class Offscreen;
+struct GraphicsRuntimeBindings {
+    cs::Delegate<void()> shape_drawn;
+    cs::Delegate<void(cs::Ref<Graphics>,cs::Ref<class Image>,float,float,float,float,float,float,float,float)> image_balloons;
+    cs::Delegate<void(cs::Ref<Graphics>,cs::Ref<class Image>,float,float)> image_touches;
+    cs::Delegate<void(cs::Ref<Graphics>,cs::String,float,float,std::int32_t)> queue_text;
+    cs::Delegate<cs::Ref<cs::Object>(cs::Ref<class Image>)> begin_image_tasks;
+    cs::Delegate<void(cs::Ref<class Image>,cs::Ref<cs::Object>,cs::Ref<Offscreen>,bool)> finish_image_tasks;
+};
+void install_graphics_runtime(GraphicsRuntimeBindings);
+cs::Ref<cs::Object> begin_image_tasks(cs::Ref<class Image>);
+void finish_image_tasks(cs::Ref<class Image>,cs::Ref<cs::Object>,cs::Ref<Offscreen>,bool);
 void install_asset_catalog(const assets::Catalog*);
 struct ImageRuntimeBindings {
     cs::Delegate<std::int32_t()> check_count;
@@ -16,6 +30,18 @@ struct ImageRuntimeBindings {
 };
 void install_image_runtime(ImageRuntimeBindings);
 class Image : public cs::Object {
+    template<class T>struct BalloonTasks : cs::Object {
+        cs::List<T> values=cs::List<T>::make();
+        void trace_edges(const cs::EdgeVisitor&visit)const override{cs::trace_value(values,visit);}
+        void release_edges()override{cs::release_value(values);}
+    };
+    cs::Ref<cs::Object> balloon_tasks_,text_tasks_,touch_tasks_;
+    template<class T>cs::List<T>& task_slot(cs::Ref<cs::Object>&slot){
+        if(!slot)slot=cs::make_ref<BalloonTasks<T>>();
+        auto storage=std::dynamic_pointer_cast<BalloonTasks<T>>(slot);
+        if(!storage)throw cs::InvalidCastException("Image task slot has a different managed element type");
+        return storage->values;
+    }
     std::int32_t width_{},height_{},transparent_{},alpha_{255};
     bool alive_{},disposed_{},created_image_{},lock_expiration_{};
     std::int32_t check_count_{},validate_frames_{-1};
@@ -24,8 +50,11 @@ class Image : public cs::Object {
     cs::String file_,palette_file_;
     std::int32_t rs_id_{-1},rc_id_{-1};
     std::vector<std::uint8_t> rgba_;
+    std::int32_t alpha_type_{-1};
     static void track_created(const cs::Ref<Image>&,bool generated);
     friend class Graphics;
+    friend class MeshManager;
+    friend class Offscreen;
 public:
     enum class Format:std::int32_t { Default=-1,ARGB32=5,ARGB4444=2,RGB24=3,RGB565=7 };
     enum class Filter:std::int32_t { Default=-1,Point=0,Bilinear=1,Trilinear=2 };
@@ -60,6 +89,8 @@ public:
     std::int32_t GetWidth()const{return width_;}
     std::int32_t GetHeight()const{return height_;}
     std::int32_t GetAlpha()const{return alpha_;}
+    std::int32_t GetAlphaType();
+    void SetAlphaType(std::int32_t value){alpha_type_=value;}
     void SetAlpha(std::int32_t);
     void SetTransparentColor(std::int32_t c){transparent_=c;}
     std::int32_t GetTransparentColor()const{return transparent_;}
@@ -79,11 +110,39 @@ public:
     static std::array<std::int32_t,2> native_cache_size();
     static std::int32_t native_releases();
     void source_drawn();
+    template<class T>cs::List<T>& source_balloon_tasks(){
+        return task_slot<T>(balloon_tasks_);
+    }
+    template<class T>cs::List<T>& source_text_tasks(){return task_slot<T>(text_tasks_);}
+    template<class T>cs::List<T>& source_touch_tasks(){return task_slot<T>(touch_tasks_);}
+    bool source_has_balloon_tasks()const{return bool(balloon_tasks_)||bool(text_tasks_);}
+    bool source_has_touch_tasks()const{return bool(touch_tasks_);}
     void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
     const std::vector<std::uint8_t>& pixels()const;
 };
+class Offscreen : public cs::Object {
+    struct State;std::unique_ptr<State> state_;
+    void resize(std::int32_t,std::int32_t,Image::Format,Image::Filter,bool);
+    void render_frame();void cleanup();
+public:
+    using RenderMethod=cs::Delegate<bool(cs::Ref<Graphics>,cs::Ref<Offscreen>)>;
+    using GetLayoutMethod=cs::Delegate<void(std::int32_t&,std::int32_t&,Image::Format&,Image::Filter&)>;
+    Offscreen();~Offscreen()override;
+    Matrix4x4 dynamicTransform_=Matrix4x4::identity();
+    static std::string source_managed_type_name(){return "kairo.unity.graphics.Offscreen";}
+    std::string managed_type_name()const override{return source_managed_type_name();}
+    static cs::Ref<Offscreen> CreateOffscreen(RenderMethod,RenderMethod,GetLayoutMethod,std::int32_t order=0);
+    cs::Ref<Image> get_Image()const;
+    void Dispose();
+    static void RenderAll();static void EndFrame();static void DisposeAll();
+    static bool IsRendering();
+    static std::string LastRenderError();
+    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+};
 class Graphics : public cs::Object {
     friend class Canvas;
+    friend class MeshManager;
+    cs::Ref<MeshManager> mesh_manager_;
     inline static cs::SharedField<cs::Ref<Graphics>> current_;
     cs::Ref<Image> target_;
     bool is_gui_{},gl_render_{},clip_enabled_{};
@@ -111,14 +170,20 @@ class Graphics : public cs::Object {
     inline static bool auto_text_layout_{};
     inline static std::vector<bool> auto_text_layout_stack_;
     cs::Array<std::int32_t> render_result_=cs::Array<std::int32_t>::make(4);
+    cs::Array<std::int32_t> clip_result_=cs::Array<std::int32_t>::make(4);
+    cs::Array<float> image_clip_=cs::Array<float>::make(4);
     inline static cs::Array<std::int32_t> anchor_result_=cs::Array<std::int32_t>::make(2);
     void pixel(int,int,std::array<std::uint8_t,4>,bool textured=false);
     std::array<float,2> point(float,float)const;
     void update_world();
     void update_screen();
     bool begin_render_matrix(float&,float&);void end_render_matrix();
+    void begin_primitive(cs::Ref<Image> image={});
 public:
     explicit Graphics(cs::Ref<Image>,bool display_context=false);
+    cs::Ref<MeshManager> GetMeshManager();
+    cs::Ref<Image> source_render_;
+    cs::Ref<Offscreen> offscreen_;
     static cs::Ref<Graphics> GetCurrent(){return current_.load();}
     bool IsGUI()const{return is_gui_;}
     bool IsRenderGUIMode()const{return is_gui_&&!gl_render_;}
@@ -141,6 +206,10 @@ public:
     void BeginLocalCoordination(float&,float&);void BeginLocalCoordination(std::int32_t&,std::int32_t&);void BeginLocalCoordination(){std::int32_t x=0,y=0;BeginLocalCoordination(x,y);}
     void EndLocalCoordination();
     cs::Array<float> GetClipValues()const{return cs::Array<float>::from({clip_[0],clip_[1],clip_[2],clip_[3]});}
+    cs::Array<std::int32_t> GetClip(){for(std::int32_t i=0;i<4;++i)clip_result_.at(i)=cs::conv_i32(clip_[i]);return clip_result_;}
+    cs::Array<float> GetImageClip(){return std::isnan(image_clip_.at(0))?cs::Array<float>{}:image_clip_;}
+    void SetImageClip(float x,float y,float w,float h){image_clip_.at(0)=x;image_clip_.at(1)=y;image_clip_.at(2)=w;image_clip_.at(3)=h;}
+    void ClearImageClip(){for(std::int32_t i=0;i<4;++i)image_clip_.at(i)=std::numeric_limits<float>::quiet_NaN();}
     static std::int32_t GetColorOfRGB(std::int32_t,std::int32_t,std::int32_t);
     static std::int32_t GetColorOfRGB(std::int32_t,std::int32_t,std::int32_t,std::int32_t);
     static cs::Array<std::int32_t> GetAnchorPosition(std::int32_t,std::int32_t,std::int32_t,std::int32_t,std::int32_t);
@@ -188,6 +257,9 @@ public:
     void PopBlendMode(){if(blend_stack_.empty())return;auto value=blend_stack_.back();SetBlendMode(value[0],value[1]);blend_stack_.pop_back();}
     void FillRect(float,float,float,float);void DrawRect(float,float,float,float);
     void DrawLine(float,float,float,float,float=1.0f);
+    void DrawArc(float,float,float,float,float,float,float=1.0f);
+    void DrawArc2(float x,float y,float w,float h,float start,float sweep){DrawArc(x,y,w-1.0f,h-1.0f,start,sweep);}
+    void FillArc(float,float,float,float,float,float);
     void DrawImage(cs::Ref<Image>,float,float);
     void DrawImage(cs::Ref<Image>,float,float,std::int32_t,std::int32_t,std::int32_t,std::int32_t);
     void DrawScaledImage(cs::Ref<Image>,float,float,float,float,std::int32_t,std::int32_t,std::int32_t,std::int32_t);

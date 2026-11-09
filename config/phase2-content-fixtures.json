@@ -9,8 +9,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "7db39d1f56d02f38b3141b934542a7231af1f7c2d89fb1870756e3ec43dd8919",
-    "driver_sha256": "06d5a8c5013046df42d446d3a868c128d847282f7217beab1ea591712adc6a60"
+    "translator_source_sha256": "5aaab2c0372e73375340395c9da42691ed3a2b35d3b8332946edc1c80283ad6b",
+    "emission_source_sha256": "58b658a6436a9037a276914b77a8a04cf083d3b75375c43ba65eb1ecee031997",
+    "driver_sha256": "3a95f0effaeb4a81f9f00513697c31da978d7dc6d1195c6b0cac8cf9f0da67e4"
   },
   "inputs": [
     {
@@ -19,7 +20,15 @@
     },
     {
       "path": "translator/test_content_lowering.py",
-      "sha256": "e6e56587656450c6f28c0cdd2ffc56804b1153d20f9042c7227281be6c3adcad"
+      "sha256": "2b68ab8becb8404a872f661fb4e28443146a87ef57a6be7ff82872b9abfbb026"
+    },
+    {
+      "path": "build/translator/content-fixtures/generated/game_generated.cpp",
+      "sha256": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a"
+    },
+    {
+      "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
+      "sha256": "87189b116e62c5e2c71d4572dac23d1b528884f97695e5da06b4eb4c5449d13b"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -62,6 +71,10 @@
       "sha256": "c7a85271de77a6b1e024c327bdd0dffc9e867f0dfac75dfd1dc6b24b216689e2"
     },
     {
+      "path": "src/kairo/common/arc_raster.hpp",
+      "sha256": "cee9ea25f471c59335a7393261d836c03e1656ca18872476bb3ff6583e730f1f"
+    },
+    {
       "path": "src/kairo/common/asset_catalog.hpp",
       "sha256": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60"
     },
@@ -92,6 +105,10 @@
     {
       "path": "src/kairo/common/managed_guid_uri.hpp",
       "sha256": "5fc456a9f8741dca1f28d7a4db3faa5c6e2bfce330a77494494ce8328c22b64e"
+    },
+    {
+      "path": "src/kairo/common/managed_math.hpp",
+      "sha256": "ca297dfababd97f6f09e2415891a97fef7b9be39f9e8c40f14a454a8d1441abc"
     },
     {
       "path": "src/kairo/common/managed_path.hpp",
@@ -161,19 +178,35 @@
   "generated_files": [
     {
       "path": "build/translator/content-fixtures/generated/game_generated.cpp",
-      "sha256": "87ac7248df06fd4cbc32b4d18d171faf22a9807bbc9659e7726e8337afe2c557"
+      "sha256": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a"
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated.hpp",
-      "sha256": "f901ae9af0cf3cbc9475f4903e7965aaa23172664056ba1e49918e7b83ca2e78"
+      "sha256": "22a36da8ff18c2d1fdc0a08eb01655726fa85285c8ff7f49ed25122889fdc613"
+    },
+    {
+      "path": "build/translator/content-fixtures/generated/game_generated_forward.hpp",
+      "sha256": "b7e60182625c182da21fec3a4c3c4d8149b54f120a01d04f6c901ee45a61240e"
+    },
+    {
+      "path": "build/translator/content-fixtures/generated/game_generated_runtime.hpp",
+      "sha256": "fa35201fae4811d62cf100cf79467783d17864b3c92039a2ec5da789b45c55ef"
+    },
+    {
+      "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
+      "sha256": "87189b116e62c5e2c71d4572dac23d1b528884f97695e5da06b4eb4c5449d13b"
+    },
+    {
+      "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.hpp",
+      "sha256": "b8ad88a56aa78b43fc423a97205e335037e7fa8b127125ed554305c3dc9f28ca"
     }
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "c01f88f234139cdd8361e8ef7fad91340bdf18130e8434674714549f3c19a7b5"
+    "sha256": "e7ee6b6256de825766255dafae9e314df48f97166d2faa67198c8a76764649cd"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "b8b487f5af424731c6825dba3becc2de1bade18c9d474779a1d356c84cfebb2c"
+    "sha256": "16f04ffb7463e628775aedef46120988da1fde1e72bd8b62fa5190142c86616d"
   }
 }

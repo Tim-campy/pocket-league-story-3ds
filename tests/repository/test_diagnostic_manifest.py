@@ -23,9 +23,10 @@ class DiagnosticManifestTests(unittest.TestCase):
             header=canonical/'game.hpp';header.write_text('int own_fixture();\n')
             producer_dir=root/'translator';producer_dir.mkdir()
             source=producer_dir/'Translator.cs';source.write_text('// own source fixture\n')
+            emission=producer_dir/'EmissionUnits.cs';emission.write_text('// own emission fixture\n')
             driver=producer_dir/'translate.py';driver.write_text('# own driver fixture\n')
             diagnostic_generator=producer_dir/'diagnostic_snapshot.py';diagnostic_generator.write_text('# own diagnostic fixture\n')
-            producer=dict(translator_source_sha256=digest(source),driver_sha256=digest(driver))
+            producer=dict(translator_source_sha256=digest(source),emission_source_sha256=digest(emission),driver_sha256=digest(driver))
             rows=[dict(path=p.relative_to(root).as_posix(),sha256=digest(p))for p in [original,header]]
             report.write_text(json.dumps(dict(assembly='Assembly-CSharp',compiled=True,producer=producer,generated_files=rows)))
             output=root/'build/diagnostic';output.mkdir(parents=True)

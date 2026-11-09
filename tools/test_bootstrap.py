@@ -43,7 +43,7 @@ namespace kairo.unity.ui {public class IApplication {
  rsp=folder/'mono.rsp';rsp.write_text('\n'.join('"'+v+'"' for v in args)+'\n',encoding='utf-8',newline='\n')
  run([csc,'/noconfig','@'+str(rsp)],folder,'mono-compile')
  units=['tests/kairo/bootstrap_fixtures.cpp','src/kairo/common/bootstrap.cpp','src/kairo/common/forms_execution.cpp',
- 'src/kairo/common/forms.cpp','src/kairo/common/canvas.cpp','src/kairo/common/graphics.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp',
+ 'src/kairo/common/forms.cpp','src/kairo/common/canvas.cpp','src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp',
  'src/kairo/common/sound.cpp','src/kairo/common/semantic_runtime.cpp','src/kairo/common/asset_catalog.cpp',
  'src/kairo/platform/sdl/input.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/platform/sdl/audio.cpp']
  native_sources=[ROOT/p for p in units]

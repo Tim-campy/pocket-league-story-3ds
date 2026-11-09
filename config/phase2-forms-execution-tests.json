@@ -377,8 +377,9 @@
     "src/kairo/common/forms_execution.cpp": "86e184c48fff1401d9ad816d2098f060405ff5e6cdaedd7d5d05e8b48cc8beeb",
     "src/kairo/common/forms.cpp": "d5b2c1bc51b314377df1ac9d6831d57c7346b799ebd818854decafcc2b97afaa",
     "src/kairo/common/canvas.cpp": "0d132bf3ab87ccee85f9523e621ecd8f23ef245d98bb74f7758296826da10981",
-    "src/kairo/common/graphics.cpp": "d256186df9e6d75c48a4399bbfd0b303511bfa2b53bfe0c1e1c5d974810d423c",
-    "src/kairo/common/image_lifetime.cpp": "de739f797238366febc0a60a796630ddc7acdd703e92defa1f82d34ce33b1a1f",
+    "src/kairo/common/graphics.cpp": "dd1a274aa50f43f7d78da5621f44fd6d0df1e6f91d9a913ef31b1d262e651630",
+    "src/kairo/common/mesh.cpp": "528cd60f55a4ee0642082cf1ac4ecfc1d978e34805f6d47ab39c12b1b0ea34fa",
+    "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/common/sound.cpp": "0fdac91ca3ca0497f390b0e83d793e91c75fbcb4b75b2036706b12477957f183",
     "src/kairo/common/semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
@@ -387,9 +388,9 @@
     "src/kairo/platform/sdl/font.cpp": "e24ec08f120d98203996ae50d14abe5f4a84f3804842af1ca4f7aad84a9e6065",
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
     "tests/kairo/FormExecutionOracle.cs": "c980b862851872f0f8f3dc50c7a80250b3f77270170e728364adbc51d29e4287",
-    "tools/test_forms_execution.py": "fd63f42aaa1392c643492144413c0724d12d4126672cbe85a6e4b23dc10d8208",
+    "tools/test_forms_execution.py": "f6b86962a0d64ef692f1a0a08dbef9faf9a77a8a521fedaba0fd7523398689e7",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "tools/test_forms.py": "e69ea5875f556a587f7e8d91e6a532fe10237eb4b9126c23e2205858243d525a",
+    "tools/test_forms.py": "4d0b5e1f1964266ddcbbc537bb1513ca67e6f1666a6a10d9a9025bda8cf86b68",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/forms_execution.hpp": "438873bd6f8525f0b821f9b277da122e09c8fb936b1cdb5d015abe575ddbb028",
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
@@ -397,7 +398,7 @@
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/canvas.hpp": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc",
     "src/kairo/api/application.hpp": "254281540812339895b95ca4c6c47a886efa5b24005f8501483e87e77c5fc965",
-    "src/kairo/api/graphics.hpp": "c115b915285dee5d2d2eeb2449f5573bac6b0376ec2b31bf96b994ff3517f659",
+    "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
     "src/kairo/api/input.hpp": "021a99799933471069df42f904fbc58d0c9a5cb5ef519f138c461396af839f71",
@@ -479,7 +480,7 @@
   ],
   "native_executable": {
     "path": "build/forms-execution-tests/forms-execution-fixtures.exe",
-    "sha256": "c22f4aeafdcbebc8b8fc2c348ec54e93a3f6c0d17e85999b3bf8f07330c77d72"
+    "sha256": "cf56074ef24e18d34f03efde4a33cb3cf5c0e207226d591bf9cb71af5c33b317"
   },
   "limits": [
     "Synthetic services prove call order, states, forced save unlock, retries/finally and rendering through SurfaceManager; not a game boot.",

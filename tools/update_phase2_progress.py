@@ -139,6 +139,8 @@ def validate_emission(emitted,assembly):
     for row in emitted['generated_files']:expect_hash(ROOT/row['path'],row['sha256'])
     producer=emitted['producer']
     expect_hash(ROOT/'translator/Translator.cs',producer['translator_source_sha256'])
+    if 'emission_source_sha256'in producer:expect_hash(ROOT/'translator/EmissionUnits.cs',producer['emission_source_sha256'])
+    if 'unit_layout'in emitted:expect_hash(ROOT/emitted['unit_layout']['path'],emitted['unit_layout']['sha256'])
     expect_hash(ROOT/'translator/translate.py',producer['driver_sha256'])
     if 'report_paths_sha256'in producer:expect_hash(ROOT/'translator/report_paths.py',producer['report_paths_sha256'])
     if 'bootstrap_generator_sha256'in producer:expect_hash(ROOT/'translator/bootstrap_source.py',producer['bootstrap_generator_sha256'])
@@ -154,9 +156,13 @@ def validate_emission(emitted,assembly):
     proof=emitted.get('compile_evidence')
     if not proof:raise EvidencePending(assembly+' lacks compiler/object/input-bound compilation proof')
     expect_hash(proof['compiler']['path'],proof['compiler']['sha256'])
-    expect_hash(ROOT/proof['object']['path'],proof['object']['sha256'])
+    if 'objects'in proof:
+        if not proof['objects']:raise ValueError('Empty generated object receipt')
+        for obj in proof['objects']:expect_hash(ROOT/obj['path'],obj['sha256'])
+    else:expect_hash(ROOT/proof['object']['path'],proof['object']['sha256'])
     validate_inputs(proof)
-    if '/c' not in proof['command'] or '/fp:strict' not in proof['command']:raise ValueError('Unexpected native compilation contract')
+    command=proof.get('command',proof.get('incremental_build',{}).get('compiler_options',[]))
+    if '/c' not in command or '/fp:strict' not in command:raise ValueError('Unexpected native compilation contract')
     for row in emitted['generated_files']:
         if proof['inputs'].get(row['path'])!=row['sha256']:raise ValueError('Compilation does not bind every generated source/header')
     if emitted['compiled_method_count']!=len(methods):raise ValueError('Compiled method count differs')

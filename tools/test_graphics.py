@@ -126,7 +126,7 @@ g.SetBlendMode(2,37);Console.WriteLine("blend0="+g.GetBlendMode()+","+g.GetBlend
         catalog_records_verified=catalog_result['records_verified'],raw_resource_views_verified=catalog_result['raw_resources'],
         raw_resource_views_different_from_decoded=catalog_result['raw_decoded_different'],game_boot=False,
         original_renderrect_exception_preserved=True,android_raster_comparison='UNKNOWN',
-        sources={p:sha(ROOT/p) for p in ['tools/test_graphics.py','src/kairo/api/graphics.hpp','src/kairo/common/graphics.cpp','src/kairo/common/image_lifetime.cpp',
+        sources={p:sha(ROOT/p) for p in ['tools/test_graphics.py','src/kairo/api/graphics.hpp','src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp',
             'src/kairo/api/font.hpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.hpp','src/kairo/platform/sdl/font.cpp',
             'src/kairo/common/asset_catalog.hpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/sha256.hpp',
             'tests/kairo/graphics_api_test.cpp','tests/kairo/asset_catalog_test.cpp']},

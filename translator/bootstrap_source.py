@@ -5,10 +5,15 @@ authenticated field-copy plan and all values are emitted from readonly C#.
 """
 import hashlib
 import json
+import re
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 PREFIX='M:PlsPortGeneratedBootstrap.Source.'
+
+def write_stable(path,text):
+    data=text.encode('utf8')
+    if not path.exists()or path.read_bytes()!=data:path.write_bytes(data)
 
 PHASES={
     'create_config':PREFIX+'CreateConfig',
@@ -131,6 +136,60 @@ namespace PlsPortGeneratedBootstrap {
   }
   public static int CheckCount(){return Config.checkCount_;}
   public static bool CountEnabled(){return Config.COUNT_ENABLE;}
+  public static void ShapeDrawn(){if(Config.COUNT_ENABLE)Config.drawShapeCount_++;}
+  private static Font drawBitmapFont;
+  private sealed class ImageTaskState {
+   public System.Collections.Generic.List<Image.TextRenderTask> texts;
+   public System.Collections.Generic.List<Image.BalloonRenderTask> balloons;
+   public System.Collections.Generic.List<Image.TouchTask> touches;
+  }
+  public static object BeginImageTasks(Image image){
+   var saved=new ImageTaskState();saved.texts=image.textRenderTasks_;saved.balloons=image.balloonRenderTasks_;saved.touches=image.touchTasks_;
+   image.textRenderTasks_=new System.Collections.Generic.List<Image.TextRenderTask>();image.balloonRenderTasks_=new System.Collections.Generic.List<Image.BalloonRenderTask>();image.touchTasks_=new System.Collections.Generic.List<Image.TouchTask>();return saved;
+  }
+  public static void FinishImageTasks(Image image,object value,kairo.unity.graphics.Offscreen offscreen,bool commit){
+   var saved=(ImageTaskState)value;
+   if(!commit){image.textRenderTasks_=saved.texts;image.balloonRenderTasks_=saved.balloons;image.touchTasks_=saved.touches;return;}
+   saved.texts.Clear();for(int i=0;i<saved.touches.Count;i++)saved.touches[i].Component.hasCount--;saved.touches.Clear();
+   for(int i=0;i<image.textRenderTasks_.Count;i++){var task=image.textRenderTasks_[i];var point=offscreen.dynamicTransform_.MultiplyPoint(new UnityEngine.Vector3(task.X,-task.Y,0f));task.X=point.x;task.Y=-point.y;image.textRenderTasks_[i]=task;}
+   for(int i=0;i<image.balloonRenderTasks_.Count;i++){var task=image.balloonRenderTasks_[i];var point=offscreen.dynamicTransform_.MultiplyPoint(new UnityEngine.Vector3(task.X,-task.Y,0f));task.X=point.x;task.Y=-point.y;image.balloonRenderTasks_[i]=task;}
+  }
+  public static void QueueImageText(Graphics g,string text,float x,float y,int anchor){
+   if(g.render_==null)return;Font font=new Font(g.GetFont());var rectangle=g.GetTransRectGUI(0f,0f,font.GetWidth(),font.GetHeight(),null);
+   float a=rectangle.Width()/font.GetWidth(),b=rectangle.Height()/(float)font.GetHeight(),scale=a<b?a:b;
+   font.SetSize((int)((float)font.GetHeight()*scale),false);y+=((float)font.GetHeight()-(float)font.GetHeight()*scale/b)/2f;
+   g.render_.textRenderTasks_.Add(new Image.TextRenderTask(text,x,y,anchor,g.GetColor(),font));
+  }
+  public static void DrawImageTouches(Graphics g,Image image,float dx,float dy){
+   if(!g.IsGUI())return;
+   for(int i=0;i<image.touchTasks_.Count;i++){var task=image.touchTasks_[i];if(!task.Surface.ExistTouchComponent(task.Component)){
+    var component=new kairo.unity.surface.TouchComponent(task.Component);component.x=(int)((float)component.x+dx);component.y=(int)((float)component.y+dy);component.hasCount=0;if(component.option!=null)component.option.hasCount=0;task.Surface.AddTouchComponent(component);
+   }}
+  }
+  // Graphics._drawBitmap, original Graphics.cs:1998-2026. Called after the
+  // bitmap in a display context and before EndRenderMatrix. Tasks persist.
+  public static void DrawImageBalloons(Graphics g,Image image,float dx,float dy,float width,float height,float sx,float sy,float sw,float sh){
+   if(g.IsGUI()&&image.textRenderTasks_.Count>0){
+    g.ClipRect(dx,dy,width,height);int oldColor=g.GetColor();Font oldFont=g.GetFont();
+    try{Font.PushLocalizeSetting(false);for(int i=0;i<image.textRenderTasks_.Count;i++){
+     var task=image.textRenderTasks_[i];float ratio=Math.Min(width/sw,height/sh);if(drawBitmapFont==null)drawBitmapFont=new Font();Font font=drawBitmapFont;font.Copy(task.Font);font.SetSize((int)((float)font.GetHeight()*ratio+0.01f),false);g.SetFont(font);g.SetColor(task.Color);g.DrawString(task.Text,dx+(task.X-sx)*ratio,dy+(task.Y-sy)*ratio,task.Anchor);
+    }}finally{g.SetColor(oldColor);g.SetFont(oldFont);Font.PopLocalizeSetting();}g.PopClip();
+   }
+   if(!g.IsGUI()||image.balloonRenderTasks_.Count==0)return;
+   g.ClipRect(dx,dy,width,height);g.GetColor();g.GetFont();
+   try{
+    Font.PushLocalizeSetting(false);
+    for(int i=0;i<image.balloonRenderTasks_.Count;i++){
+     var task=image.balloonRenderTasks_[i];float scale=Math.Min(width/sw,height/sh);
+     UnityEngine.Matrix4x4 matrix=UnityEngine.Matrix4x4.identity;
+     if(task.Offscreen!=null){matrix=task.Offscreen.dynamicTransform_;matrix.m13=-matrix.m13;}
+     float previous=task.Balloon.scale2_;task.Balloon.scale2_*=scale;
+     task.Balloon.Draw(g,dx+(task.X-sx)*scale,dy+(task.Y-sy)*scale,matrix);
+     task.Balloon.scale2_=previous;
+    }
+   }finally{Font.PopLocalizeSetting();}
+   g.PopClip();
+  }
   public static void AdjustCreateArea(int delta){Config.createImageArea_+=delta;}
   public static bool DebugFlag(){return Config.DEBUG;}
   public static void DisableAds(){Config.ADMOB_ENABLE=false;}
@@ -161,7 +220,7 @@ def write(folder:Path):
         copies.append('Config.'+name+'=cfg.MyConfig.'+name+';')
     if len(copies)!=27:raise ValueError('Unexpected authenticated Config.Create copy count')
     target=folder/'bootstrap_source.cs'
-    target.write_text(SOURCE.replace('/*FIELD_COPIES*/','\n'.join(copies)),encoding='utf8',newline='\n')
+    write_stable(target,SOURCE.replace('/*FIELD_COPIES*/','\n'.join(copies)))
     return target
 
 
@@ -171,6 +230,9 @@ def selected():
     import re
     result=[]
     aliases={'KairoBase':'kairo.unity.system.KairoBase','FepPanel':'kairo.unity.panel.FepPanel','IApplication':'kairo.unity.ui.IApplication','Graphics':'kairo.unity.ui.Graphics','Font':'kairo.unity.ui.Font','TextFormat':'kairo.unity.ui.TextFormat','Matrix':'kairo.unity.ui.Matrix','bool':'System.Boolean','int':'System.Int32','long':'System.Int64','float':'System.Single','kairo.unity.graphics.RectangleF':'kairo.unity.graphics.RectangleF','string':'System.String','byte[]':'System.Byte[]'}
+    aliases['Image']='kairo.unity.ui.Image'
+    aliases['object']='System.Object'
+    aliases['kairo.unity.graphics.Offscreen']='kairo.unity.graphics.Offscreen'
     for name,parameters in re.findall(r'public static [\w.<>\[\]]+ (\w+)\(([^)]*)\)',SOURCE):
         types=[aliases[p.strip().split()[0]]for p in parameters.split(',')if p.strip()]
         result.append(PREFIX+name+('('+','.join(types)+')'if types else ''))
@@ -178,11 +240,11 @@ def selected():
 
 
 def header(output):
-    (output/'bootstrap_bindings.hpp').write_text('''// GENERATED platform bootstrap interface; no source gameplay replacement.
+    write_stable(output/'bootstrap_bindings.hpp','''// GENERATED platform bootstrap interface; no source gameplay replacement.
 #pragma once
 #include "bootstrap.hpp"
 namespace pls::game {void native_install_bootstrap_bindings();}
-''',encoding='utf8',newline='\n')
+''')
 
 
 def emit(output,report,portable):
@@ -216,6 +278,11 @@ namespace cs=pls::cs;namespace k=pls::kairo;
     text.append('k::Canvas::GetInstance()->host_input_config([]()->bool{return '+invoke('DebugFlag',result='bool')+';});\n')
     text.append('k::IApplication::host_platform(pls::sdl::device_model());\n')
     text.append('k::ImageRuntimeBindings images;images.check_count='+bind('std::int32_t()','CheckCount')+';images.count_enabled='+bind('bool()','CountEnabled')+';images.adjust_create_area='+bind('void(std::int32_t)','AdjustCreateArea',['delta'],'std::int32_t delta','(System.Int32)')+';images.read_source='+bind('cs::Array<std::uint8_t>(std::int32_t,std::int32_t,cs::String,cs::String)','ReadImageData',['rs','rc','file','palette'],'std::int32_t rs,std::int32_t rc,cs::String file,cs::String palette','(System.Int32,System.Int32,System.String,System.String)')+';images.measure_source='+bind('cs::Array<std::int32_t>(cs::Array<std::uint8_t>)','MeasureImage',['data'],'cs::Array<std::uint8_t> data','(System.Byte[])')+';k::install_image_runtime(std::move(images));\n')
+    text.append('k::GraphicsRuntimeBindings shapes;shapes.shape_drawn='+bind('void()','ShapeDrawn')+';shapes.image_balloons='+bind('void(cs::Ref<k::Graphics>,cs::Ref<k::Image>,float,float,float,float,float,float,float,float)','DrawImageBalloons',['g','image','x','y','w','h','sx','sy','sw','sh'],'cs::Ref<k::Graphics> g,cs::Ref<k::Image> image,float x,float y,float w,float h,float sx,float sy,float sw,float sh','(kairo.unity.ui.Graphics,kairo.unity.ui.Image,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)')+';')
+    text.append('shapes.queue_text='+bind('void(cs::Ref<k::Graphics>,cs::String,float,float,std::int32_t)','QueueImageText',['g','text','x','y','anchor'],'cs::Ref<k::Graphics> g,cs::String text,float x,float y,std::int32_t anchor','(kairo.unity.ui.Graphics,System.String,System.Single,System.Single,System.Int32)')+';')
+    text.append('shapes.image_touches='+bind('void(cs::Ref<k::Graphics>,cs::Ref<k::Image>,float,float)','DrawImageTouches',['g','image','x','y'],'cs::Ref<k::Graphics> g,cs::Ref<k::Image> image,float x,float y','(kairo.unity.ui.Graphics,kairo.unity.ui.Image,System.Single,System.Single)')+';')
+    text.append('shapes.begin_image_tasks='+bind('cs::Ref<cs::Object>(cs::Ref<k::Image>)','BeginImageTasks',['image'],'cs::Ref<k::Image> image','(kairo.unity.ui.Image)')+';')
+    text.append('shapes.finish_image_tasks='+bind('void(cs::Ref<k::Image>,cs::Ref<cs::Object>,cs::Ref<k::Offscreen>,bool)','FinishImageTasks',['image','saved','offscreen','commit'],'cs::Ref<k::Image> image,cs::Ref<cs::Object> saved,cs::Ref<k::Offscreen> offscreen,bool commit','(kairo.unity.ui.Image,System.Object,kairo.unity.graphics.Offscreen,System.Boolean)')+';k::install_graphics_runtime(std::move(shapes));\n')
     text.append('k::TextServices fonts;fonts.translate=[](cs::String value)->cs::String{return '+invoke('Translate',['value'],'(System.String)','cs::String')+';};fonts.japanese=[]()->bool{return '+invoke('Japanese',result='bool')+';};fonts.localize_scale=[]()->bool{return '+invoke('LocalizeScale',result='bool')+';};fonts.application_scale=[](){return k::IApplication::GetCurrentApp()->GetScaleRatio();};')
     text.append('fonts.markup_width=[](cs::Ref<k::Font> font,cs::String value)->float{return '+invoke('MarkupWidth',['font','value'],'(kairo.unity.ui.Font,System.String)','float')+';};')
     text.append('fonts.markup_draw=[](cs::Ref<k::Graphics> g,cs::String value,float x,float y,std::int32_t anchor){'+invoke('MarkupDraw',['g','value','x','y','anchor'],'(kairo.unity.ui.Graphics,System.String,System.Single,System.Single,System.Int32)')+';};k::install_text_services(std::move(fonts));}\n')
@@ -254,7 +321,22 @@ namespace cs=pls::cs;namespace k=pls::kairo;
     text.append('bindings.create_config=cs::Delegate<void()>::from_static("Config.Create<MyConfig>",[](){'+(config_init+'();'if config_init else 'PLS_BOOTSTRAP_GAP("T:kairo.common.cfg.Config::.cctor");')+invoke('CreateConfig')+';});\n')
     for field,name in [('initialize_platform','InitializePlatform'),('initialize_language','InitializeLanguage')]:text.append('bindings.'+field+'='+bind('void()',name)+';\n')
     text.append('bindings.load_library_resources=cs::Delegate<cs::Ref<cs::Object>()>::from_static("Awake.LibraryResources",[]()->cs::Ref<cs::Object>{return '+invoke('LoadLibraryResources',result='cs::Ref<cs::Object>')+';});\nk::configure_bootstrap(std::move(app),std::move(bindings));}\n}\n')
-    (output/'bootstrap_generated.cpp').write_text(''.join(text),encoding='utf8',newline='\n')
+    body=''.join(text);includes=set()
+    tokens=set(re.findall(r'\bcs_(?:init_)?[0-9a-f]{16}(?:_init|_value)?\b',body))
+    signatures=[]
+    for member in methods.values():
+        if member['cpp_name']in tokens:signatures.extend([member['return_type'],*[p['type']for p in member['parameters']]])
+    for cls in report.get('generated_classes',[])+portable.get('generated_classes',[]):
+        if any(re.search(r'(?<![\w.])'+re.escape(cls['type'])+r'(?![\w.])',signature)for signature in signatures):tokens.add(cls['cpp_name'].split('<',1)[0])
+    for path,prefix in [(output/'emission_units.json',''),(ROOT/'src/kairo/common/generated/emission_units.json','generated/')]:
+        if not path.exists():continue
+        symbols=json.loads(path.read_text(encoding='utf8'))['symbols']
+        for token in tokens:
+            if token in symbols:
+                row=symbols[token];includes.add(prefix+row['header'])
+                if row.get('templates'):includes.add(prefix+row['templates'])
+    if includes:body=body.replace('#include "game_generated.hpp"\n',''.join('#include "'+name+'"\n'for name in sorted(includes)))
+    write_stable(output/'bootstrap_generated.cpp',body)
     return dict(source='IApplication.Awake; Config.Create specialization; FormManagerBase.Execute/OnDraw',
                 config_field_copies=27,config_initialized_before_myconfig=True,missing_bindings=sorted(gaps),
                 recorder_null_proof='config/phase2-bootstrap-plan.json',original_game_methods_promoted=0)

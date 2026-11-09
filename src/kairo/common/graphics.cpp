@@ -2,9 +2,11 @@
 #include "sha256.hpp"
 #include "font.hpp"
 #include "../platform/sdl/font.hpp"
+#include "arc_raster.hpp"
+#include "mesh.hpp"
 #include <cmath>
 namespace pls::kairo {
-namespace {const assets::Catalog* catalog{};
+namespace {const assets::Catalog* catalog{};GraphicsRuntimeBindings graphics_runtime;
 bool alpha_format(Image::Format f){return f!=Image::Format::RGB24&&f!=Image::Format::RGB565;}
 std::array<std::uint8_t,4> channels(std::int32_t color){auto n=std::uint32_t(color);return {std::uint8_t(n>>16),std::uint8_t(n>>8),std::uint8_t(n),std::uint8_t(n>>24)};}
 std::int32_t coord(float v){return cs::conv_i32(v);}
@@ -25,6 +27,9 @@ template<class F>void quad(const Affine& m,float x,float y,float w,float h,int w
 }
 }
 void install_asset_catalog(const assets::Catalog* value){catalog=value;assets::install(value);}
+void install_graphics_runtime(GraphicsRuntimeBindings value){graphics_runtime=std::move(value);}
+cs::Ref<cs::Object> begin_image_tasks(cs::Ref<Image> image){if(!graphics_runtime.begin_image_tasks)throw cs::NotSupportedException("Generated image task transaction callback missing");return graphics_runtime.begin_image_tasks(std::move(image));}
+void finish_image_tasks(cs::Ref<Image> image,cs::Ref<cs::Object> previous,cs::Ref<Offscreen> offscreen,bool commit){if(!graphics_runtime.finish_image_tasks)throw cs::NotSupportedException("Generated image task completion callback missing");graphics_runtime.finish_image_tasks(std::move(image),std::move(previous),std::move(offscreen),commit);}
 cs::Ref<Image> Image::CreateImage(std::int32_t width,std::int32_t height,Format format,Filter filter){
     if(width<=0||height<=0||std::uint64_t(width)*std::uint64_t(height)>std::uint64_t(SIZE_MAX)/4)throw cs::ArgumentException("Invalid image dimensions");
     auto result=cs::make_ref<Image>();result->width_=width;result->height_=height;
@@ -47,6 +52,12 @@ cs::Ref<Image> Image::Load(cs::Array<std::uint8_t> bytes,Format format,Filter fi
     result->format=format==Format::Default?Format::ARGB32:format;result->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return result;
 }
 const std::vector<std::uint8_t>& Image::pixels()const{if(!alive_)throw cs::ObjectDisposedException();return rgba_;}
+std::int32_t Image::GetAlphaType(){
+    if(alpha_==0)return 1;if(alpha_<255)return 2;if(alpha_type_!=-1)return alpha_type_;
+    std::size_t transparent=0,partial=0,opaque=0;
+    for(std::size_t i=3;i<rgba_.size();i+=4){if(rgba_[i]<3)++transparent;else if(rgba_[i]<255)++partial;else ++opaque;}
+    alpha_type_=partial?(opaque?3:2):transparent?1:0;return alpha_type_;
+}
 cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(std::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
 void Image::SetAlpha(std::int32_t alpha){
     // Preserve the original guard, including its surprising direction (Image.cs:888).
@@ -61,7 +72,9 @@ void Image::SetTransparentEnabled(bool enabled){
     }
     if(!enabled)format=Format::RGB24;else if(was_rgb)format=Format::ARGB32;
 }
-Graphics::Graphics(cs::Ref<Image> target,bool display_context):target_(cs::nonnull(target)),is_gui_(display_context),font_(cs::make_ref<Font>()){ClearRenderRect();}
+Graphics::Graphics(cs::Ref<Image> target,bool display_context):target_(cs::nonnull(target)),is_gui_(display_context),font_(cs::make_ref<Font>()),source_render_(display_context?nullptr:target_){ClearRenderRect();}
+cs::Ref<MeshManager> Graphics::GetMeshManager(){if(!mesh_manager_)mesh_manager_=cs::make_ref<MeshManager>(std::dynamic_pointer_cast<Graphics>(shared_from_this()));return mesh_manager_;}
+void Graphics::begin_primitive(cs::Ref<Image> image){if(mesh_manager_&&mesh_manager_->capturing())mesh_manager_->BeginPrimitive(std::move(image),channels(color_),mode_,blend_,clip_enabled_);}
 void Graphics::ResetRender(){
     // Graphics.ResetRender: reset the states represented by the CPU backend;
     // construction/reset never publishes Graphics.current_. Only Canvas does.
@@ -70,6 +83,8 @@ void Graphics::ResetRender(){
     clip_enabled_stack_.clear();SetClipEnable(is_gui_);
     auto_text_layout_stack_.clear();
     fontScaleOffsetEnable_=true;
+    if(mesh_manager_)mesh_manager_->BeginMesh();
+    ClearImageClip();
     matrix_index_=-1;local_coordinate_count_=0;flip_mode_=0;
     local_coordinate_matrix_=identity;backup_world_.clear();
     Font::UnlockLocalizeSetting();Font::ClearLocalizeSettings();
@@ -103,6 +118,10 @@ void Graphics::DrawString(cs::String text,float x,float y,std::int32_t anchor){
 void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t anchor){
     const auto& content=text.code_units();const bool transformed=begin_render_matrix(x,y);
     cs::run_finally([&]{
+        if(!is_gui_){
+            if(!graphics_runtime.queue_text)throw cs::NotSupportedException("Generated deferred text callback missing");
+            graphics_runtime.queue_text(std::dynamic_pointer_cast<Graphics>(shared_from_this()),text,x,y,anchor);return;
+        }
         if(anchor&2)x-=font_->StringWidthF(text)/2.0f;else if(anchor&4)x-=font_->StringWidthF(text);
         if(anchor&32)y-=float(font_->GetHeight())/2.0f;else if(anchor&64)y-=float(font_->GetHeight());
         auto position=point(x,y);auto& raster=font_->raster(std::max(1,coord(float(font_->GetHeight())*std::fabs(scale_)/100.0f)));auto style=sdl::FontStyle(font_->GetStyle());
@@ -162,8 +181,8 @@ cs::Array<float> Graphics::GetMatrixValues(std::int32_t mode)const{
     auto result=cs::Array<float>::make(9);for(int i=0;i<9;++i)result.at(i)=value[std::size_t(i)];return result;
 }
 std::array<float,2> Graphics::point(float x,float y)const{return {screen_[0]*x+screen_[3]*y+screen_[6],screen_[1]*x+screen_[4]*y+screen_[7]};}
-void Graphics::trace_edges(const cs::EdgeVisitor& visitor)const{cs::Object::trace_edges(visitor);cs::trace_value(target_,visitor);cs::trace_value(font_,visitor);cs::trace_value(render_result_,visitor);for(const auto& f:fonts_)cs::trace_value(f,visitor);}
-void Graphics::release_edges(){cs::Object::release_edges();cs::release_value(target_);cs::release_value(font_);cs::release_value(render_result_);for(auto& f:fonts_)cs::release_value(f);fonts_.clear();}
+void Graphics::trace_edges(const cs::EdgeVisitor& visitor)const{cs::Object::trace_edges(visitor);cs::trace_value(mesh_manager_,visitor);cs::trace_value(target_,visitor);cs::trace_value(source_render_,visitor);cs::trace_value(offscreen_,visitor);cs::trace_value(font_,visitor);cs::trace_value(render_result_,visitor);cs::trace_value(clip_result_,visitor);cs::trace_value(image_clip_,visitor);for(const auto& f:fonts_)cs::trace_value(f,visitor);}
+void Graphics::release_edges(){cs::Object::release_edges();cs::release_value(mesh_manager_);cs::release_value(target_);cs::release_value(source_render_);cs::release_value(offscreen_);cs::release_value(font_);cs::release_value(render_result_);cs::release_value(clip_result_);cs::release_value(image_clip_);for(auto& f:fonts_)cs::release_value(f);fonts_.clear();}
 void Graphics::ClearRenderRect(){render_={0,0,target_->GetWidth(),target_->GetHeight()};SetOrigin(0,0);ClearClip();}
 void Graphics::ClearClip(){clip_={float(render_[0]),float(render_[1]),float(render_[2]),float(render_[3])};}
 void Graphics::SetClip(float x,float y,float w,float h){auto a=point(x,y),b=point(x+w,y+h);clip_={std::min(a[0],b[0]),std::min(a[1],b[1]),std::fabs(b[0]-a[0]),std::fabs(b[1]-a[1])};}
@@ -183,6 +202,7 @@ void Graphics::PopRenderMode(){if(modes_.empty())return;auto m=modes_.back();mod
 void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
     if(!target_->alive_)throw cs::ObjectDisposedException();
     if(x<0||y<0||x>=target_->width_||y>=target_->height_||float(x)<clip_[0]||float(y)<clip_[1]||float(x)>=clip_[0]+clip_[2]||float(y)>=clip_[1]+clip_[3])return;
+    if(mesh_manager_&&mesh_manager_->capturing()){mesh_manager_->Record(x,y,c);return;}
     if(mode_[1]<0||mode_[1]>255||mode_[2]<0||mode_[2]>255)throw cs::NotSupportedException("Out-of-unit render ratios need measured fixed-function clamping");
     auto i=(std::size_t(y)*target_->width_+x)*4;auto& destination=target_->rgba_;
     auto quantize=[](float v){return std::uint8_t(std::clamp(std::floor(v*255.0f+0.5f),0.0f,255.0f));};
@@ -212,10 +232,36 @@ void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
     if(mode_[1]>0)pass(source_alpha*float(mode_[1])/255.0f,1.0f,mode_[0]==1?1:3);
 }
 void Graphics::FillRect(float x,float y,float w,float h){
+    begin_primitive();
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{auto c=channels(color_);quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float,float){pixel(xx,yy,c);});},[&]{if(transformed)end_render_matrix();});
 }
 void Graphics::DrawRect(float x,float y,float w,float h){DrawLine(x,y,x+w,y);DrawLine(x+w,y,x+w,y+h);DrawLine(x+w,y+h,x,y+h);DrawLine(x,y+h,x,y);}
+void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,float stroke){
+    begin_primitive();
+    const bool transformed=begin_render_matrix(x,y);
+    cs::run_finally([&]{
+        const auto color=channels(color_);
+        auto map=[&](float a,float b){auto p=point(a,b);return geometry::ArcPoint{p[0],p[1]};};
+        auto paint=[&](int a,int b){pixel(a,b,color);};
+        geometry::ArcRasterSink sink(target_->GetWidth(),target_->GetHeight(),map,paint);
+        try{geometry::draw_arc({x,y,w,h,start,sweep,stroke},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
+        if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
+    },[&]{if(transformed)end_render_matrix();});
+}
+void Graphics::FillArc(float x,float y,float w,float h,float start,float sweep){
+    begin_primitive();
+    const bool transformed=begin_render_matrix(x,y);
+    cs::run_finally([&]{
+        const auto color=channels(color_);
+        auto map=[&](float a,float b){auto p=point(a,b);return geometry::ArcPoint{p[0],p[1]};};
+        auto paint=[&](int a,int b){pixel(a,b,color);};
+        geometry::ArcRasterSink sink(target_->GetWidth(),target_->GetHeight(),map,paint);
+        try{geometry::fill_arc({x,y,w,h,start,sweep,1.0f},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
+    },[&]{if(transformed)end_render_matrix();});
+    if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
+}
 void Graphics::DrawLine(float x,float y,float x2,float y2,float width){
+    begin_primitive();
     if(!std::isfinite(x+y+x2+y2+width)||width<=0)return;auto a=point(x,y),b=point(x2,y2);float dx=b[0]-a[0],dy=b[1]-a[1];auto length=std::max(std::fabs(dx),std::fabs(dy));
     if(length>float(std::max(target_->width_,target_->height_))*4)throw cs::NotSupportedException("Unbounded line needs geometric clipping");
     auto steps=std::max(1,int(std::ceil(length)));auto c=channels(color_);auto radius=std::max(0,coord(width*std::fabs(scale_)/200.0f));
@@ -229,13 +275,23 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
     image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
     auto source=image->pixels(); // Snapshot preserves overlap when drawing an image onto itself.
+    begin_primitive(image);
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{
+    if(is_gui_&&image->source_has_touch_tasks()){
+        if(!graphics_runtime.image_touches)throw cs::NotSupportedException("Generated image touch presentation callback missing");
+        graphics_runtime.image_touches(std::dynamic_pointer_cast<Graphics>(shared_from_this()),image,x-float(sx),y-float(sy));
+    }
     quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float tx,float ty){
         if(flip_mode_&1)tx=1.0f-tx;if(flip_mode_&2)ty=1.0f-ty;
         auto u=std::int64_t(sx)+std::int64_t(std::floor(tx*float(sw)));auto v=std::int64_t(sy)+std::int64_t(std::floor(ty*float(sh)));
         u=std::clamp<std::int64_t>(u,0,image->width_-1);v=std::clamp<std::int64_t>(v,0,image->height_-1);auto i=(std::size_t(v)*image->width_+std::size_t(u))*4;
         pixel(xx,yy,{source[i],source[i+1],source[i+2],source[i+3]},true);
     });
+    if(is_gui_&&image->source_has_balloon_tasks()){
+        if(!graphics_runtime.image_balloons)throw cs::NotSupportedException("Generated image balloon presentation callback is missing");
+        auto self=std::dynamic_pointer_cast<Graphics>(shared_from_this());
+        graphics_runtime.image_balloons(self,image,x,y,w,h,float(sx),float(sy),float(sw),float(sh));
+    }
     },[&]{if(transformed)end_render_matrix();});
     image->source_drawn();
 }

@@ -1,0 +1,59 @@
+{
+  "operation": "own-analytic-CPU-arc-raster-policy",
+  "status": "PASS",
+  "completed": true,
+  "compile_exit_code": 0,
+  "compile_log_sha256": "25c89a86b41132818634e4d9482903a584f9375b79cb9374b5541f7f528e436f",
+  "inputs": {
+    "tools/test_arc_raster.py": "31c9674831bdcaf2139eb8764f2d31f3964581430b4e96d6b83c0ac1ea2d36d8",
+    "src/kairo/common/arc_raster.hpp": "cee9ea25f471c59335a7393261d836c03e1656ca18872476bb3ff6583e730f1f",
+    "src/kairo/common/arc_geometry.hpp": "c7a85271de77a6b1e024c327bdd0dffc9e867f0dfac75dfd1dc6b24b216689e2",
+    "tests/kairo/arc_raster_fixtures.cpp": "dba3079236d472bb2eb8a997662019aa326382f2d60fb7cedee0e55684feb309",
+    "tools/pc_compiler.py": "3ff55795844fc0c4e8ef9dccc18516c4a5c9c7696a66d585cb9d827d630261ab"
+  },
+  "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "compiler_options": [
+    "/nologo",
+    "/std:c++17",
+    "/EHsc",
+    "/fp:strict",
+    "/permissive-",
+    "/W4",
+    "/WX",
+    "/utf-8",
+    "/O2",
+    "/Fe:C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\arc-raster-tests\\arc-raster-fixtures.exe",
+    "/Fo:C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\arc-raster-tests/",
+    "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\tests\\kairo\\arc_raster_fixtures.cpp"
+  ],
+  "verified_boundary_ids": [],
+  "source_oracle_used": false,
+  "game_boot": false,
+  "game_assets_used": false,
+  "original_binaries_executed": false,
+  "raster_android_verified": false,
+  "limits": [
+    "Binary32 geometry is mapped by the caller; the new CPU coverage policy uses binary64 edges/clipping.",
+    "Triangle pixel centers/top-left, winding normalization and viewport bounds are own analytic properties, not original GPU measurements.",
+    "GUI quads split [0,1,2] then [0,2,3]; different primitives preserve their own overdraw.",
+    "Lines use closed Bresenham traversal after continuous viewport clipping and endpoint flooring; zero-length lines paint nothing.",
+    "Color, blend and user scissor are external Pixel callback responsibilities and are not qualified by this fixture.",
+    "Viewport extents must be nonnegative int, positions finite binary32, mesh indices complete/in range, GUI groups complete.",
+    "A sink is UI-owned and callbacks cannot re-enter it. Default mesh budget is2000002 vertices; nonconvergent clipping is refused.",
+    "The historical Mono geometry FAIL remains separate and is not reclassified by a passing CPU coverage fixture."
+  ],
+  "run_exit_code": 0,
+  "native_executable": {
+    "path": "build/arc-raster-tests/arc-raster-fixtures.exe",
+    "sha256": "72f56a2d7dfce569f2b7c2711c897d1017bd350763ca776cd70c42d585a391d5"
+  },
+  "stdout_sha256": "441e287cccb0377f85df7cdb7128d83c8e28526f1ac020202183dfdd5b655ab2",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "native": {
+    "status": "PASS",
+    "scenarios": 34,
+    "assertions": 1568,
+    "raster_android_verified": false,
+    "game_boot": false
+  }
+}

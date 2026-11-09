@@ -36,13 +36,14 @@ cs::Ref<Graphics> Canvas::BeginAlterStaticRender(cs::Ref<Graphics> graphics,std:
 void Canvas::EndPaint(){EndPaint(graphics_);}
 void Canvas::EndPaint(cs::Ref<Graphics> graphics,std::int32_t mesh_id){
     cs::nonnull(graphics);if(!graphics->IsRenderGUIMode()&&(mesh_id<-1||mesh_id>0))throw cs::NotSupportedException("Multiple mesh managers are not implemented by the CPU backend");
-    // CPU commands are immediate, so there are no pending mesh/GL batches.
+    graphics->EndGLRender(true);
     if(graphics==graphics_&&graphics_){graphics_->Dispose(true);graphics_.reset();}
     is_alter_static_rendering_=false;
     // Original EndPaint does NOT clear current_ or restore an outer context.
 }
 void Canvas::EndAlterStaticRender(cs::Ref<Graphics> graphics,std::int32_t mesh_id){
     cs::nonnull(graphics);if(!graphics->IsRenderGUIMode()&&(mesh_id<-1||mesh_id>0))throw cs::NotSupportedException("Multiple mesh managers are not implemented by the CPU backend");
+    graphics->EndGLRender(true);
     if(graphics==graphics_&&graphics_){graphics_->Dispose(true);graphics_.reset();}
     // Source EndAlterStaticRender leaves isAlterStaticRendering_ unchanged.
 }

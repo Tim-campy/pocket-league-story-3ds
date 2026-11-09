@@ -646,23 +646,23 @@
   },
   "native_executable": {
     "path": "build/storage-tests/storage-fixtures.exe",
-    "sha256": "24366eeca2d0e6607989ba04c72a3726921b4984049725fefe21705b0ce40627"
+    "sha256": "452c980eb96d2fc4863c26456fa0dee8abe5604326067507d226e8337279588b"
   },
   "inputs": {
     "tests/kairo/storage_fixtures.cpp": "4eaf89f3f426286e3aaf3d9d6d9e48e10cdf00f84a61be0a94e700ed3c6ca4a2",
     "src/kairo/common/storage.cpp": "877f8898170328a10786e879e981d00b317025a0c6284595411a5c233cf7c4fa",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
-    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
     "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "tests/kairo/StorageOracle.cs": "da85e24ecd68a7e19b1ba21f98ecc69c71077fcdacef2d94d3cc86aedbe4a5cd",
     "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
     "tools/test_storage.py": "534a7258153f6afd94d28f3e266c293f63a45304fe49dfbb56ab3bf7fc489d1e",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
-    "src/kairo/common/managed_collation.hpp": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d",
+    "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
     "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0",
     "tools/setup_mono_collation.py": "3c2dff27fe1a098cdc68f6ee710f8e18bf5792ba1493106aa5ecdb7dafc745a6"

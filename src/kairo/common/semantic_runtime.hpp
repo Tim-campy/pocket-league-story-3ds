@@ -182,6 +182,7 @@ template<class T>struct has_managed_object<T,std::void_t<decltype(std::declval<T
 template<class T>void trace_value(const T&value,const EdgeVisitor&visitor);
 template<class T>void release_value(T&value);
 struct Object : std::enable_shared_from_this<Object> {
+    static bool source_reference_assignable(const std::type_info& target){return target==typeid(Object);}
     virtual ~Object()=default;
     std::recursive_mutex monitor;
     virtual bool equals(const std::shared_ptr<Object>&other)const{return other.get()==this;}
@@ -303,13 +304,17 @@ struct ArrayBase : Object {
     virtual std::int32_t get_Length()const=0;
     virtual const std::type_info& element_type()const noexcept=0;
     virtual bool copy_same_to(ArrayBase&dest,std::int32_t source_index,std::int32_t dest_index,std::int32_t count)const=0;
+    virtual bool reference_element_is_a(const std::type_info&)const{return false;}
+    virtual Ref<Object> reference_item(std::int32_t)const{throw ArrayTypeMismatchException();}
+    virtual void reference_item(std::int32_t,const Ref<Object>&){throw ArrayTypeMismatchException();}
+    virtual Ref<ArrayBase> clone_storage()const=0;
 };
 inline Ref<ArrayBase>array_cast(const Ref<Object>&value){auto result=std::dynamic_pointer_cast<ArrayBase>(value);if(value&&!result)throw InvalidCastException();return result;}
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count);
 
 template<class T>class Array;
 template<class T>struct managed_type_name_traits {
-    static std::string name(){throw NotSupportedException("Managed type name requires generated metadata for this value type");}
+    static std::string name(){throw NotSupportedException(std::string("Managed type name requires generated metadata for this value type: ")+typeid(T).name());}
 };
 #define PLS_CS_TYPE_NAME(cpp,managed) template<>struct managed_type_name_traits<cpp>{static std::string name(){return managed;}};
 PLS_CS_TYPE_NAME(bool,"System.Boolean")
@@ -327,7 +332,24 @@ PLS_CS_TYPE_NAME(double,"System.Double")
 PLS_CS_TYPE_NAME(String,"System.String")
 PLS_CS_TYPE_NAME(Ref<Object>,"System.Object")
 #undef PLS_CS_TYPE_NAME
+template<class T,class=void>struct generated_reference_type_name {
+    static std::string name(){throw NotSupportedException(std::string("Managed reference type lacks a generated name: ")+typeid(T).name());}
+};
+template<class T>struct generated_reference_type_name<T,std::void_t<decltype(T::source_managed_type_name())>>{
+    static std::string name(){return T::source_managed_type_name();}
+};
+template<class T>struct managed_type_name_traits<Ref<T>>{
+    static std::string name(){return generated_reference_type_name<T>::name();}
+};
 template<class T>struct managed_type_name_traits<Array<T>>{static std::string name(){return managed_type_name_traits<T>::name()+"[]";}};
+template<class T,class=void>struct reference_assignability {
+    // A CLR interface is an object reference even when its native ABI uses a
+    // separate polymorphic base. Other ancestry needs explicit source metadata.
+    static bool is_a(const std::type_info& target){return target==typeid(T)||target==typeid(Object);}
+};
+template<class T>struct reference_assignability<T,std::void_t<decltype(T::source_reference_assignable(std::declval<const std::type_info&>()))>>{
+    static bool is_a(const std::type_info& target){return target==typeid(T)||T::source_reference_assignable(target);}
+};
 
 template<class T> class Array {
     struct Storage : ArrayBase {
@@ -339,6 +361,21 @@ template<class T> class Array {
         const std::type_info&element_type()const noexcept override{return typeid(T);}
         void trace_edges(const EdgeVisitor&visitor)const override{for(std::int32_t i=0;i<size;++i)trace_value(values[static_cast<std::size_t>(i)],visitor);}
         void release_edges()override{for(std::int32_t i=0;i<size;++i)release_value(values[static_cast<std::size_t>(i)]);}
+        bool reference_element_is_a(const std::type_info& target)const override{
+            if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;return reference_assignability<E>::is_a(target);}
+            else return false;
+        }
+        Ref<Object> reference_item(std::int32_t index)const override{
+            if(index<0||index>=size)throw IndexOutOfRangeException();
+            if constexpr(is_shared_ref<T>::value)return std::dynamic_pointer_cast<Object>(values[static_cast<std::size_t>(index)]);
+            else throw ArrayTypeMismatchException();
+        }
+        void reference_item(std::int32_t index,const Ref<Object>& value)override{
+            if(index<0||index>=size)throw IndexOutOfRangeException();
+            if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;auto typed=std::dynamic_pointer_cast<E>(value);if(value&&!typed)throw ArrayTypeMismatchException();values[static_cast<std::size_t>(index)]=std::move(typed);}
+            else throw ArrayTypeMismatchException();
+        }
+        Ref<ArrayBase> clone_storage()const override{auto result=make_ref<Storage>(size);for(std::int32_t i=0;i<size;++i)result->values[static_cast<std::size_t>(i)]=values[static_cast<std::size_t>(i)];return result;}
         bool copy_same_to(ArrayBase&dest,std::int32_t source_index,std::int32_t dest_index,std::int32_t count)const override{
             auto target=dynamic_cast<Storage*>(&dest);if(!target)return false;
             if(target==this&&dest_index>source_index){for(std::int32_t i=count;i>0;--i)target->values[static_cast<std::size_t>(dest_index+i-1)]=values[static_cast<std::size_t>(source_index+i-1)];}
@@ -347,7 +384,8 @@ template<class T> class Array {
         }
     };
     std::shared_ptr<Storage> data_;
-    const Storage& require()const{if(!data_)throw NullReferenceException();return *data_;}
+    Ref<ArrayBase> view_;
+    const Storage& require()const{if(view_)throw ArrayTypeMismatchException();if(!data_)throw NullReferenceException();return *data_;}
 public:
     Array()noexcept=default;
     Array(std::nullptr_t)noexcept{}
@@ -363,19 +401,37 @@ public:
         Array result=make(static_cast<std::int32_t>(values.size()));
         std::copy(values.begin(),values.end(),result.data_->values.get());return result;
     }
-    bool is_null()const noexcept{return !data_;}
-    Ref<Object> as_object()const{return data_;}
-    static Array from_object(const Ref<Object>&object){Array result;if(object){result.data_=std::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
-    std::int32_t length()const{return require().size;}
+    bool is_null()const noexcept{return !data_&&!view_;}
+    Ref<Object> as_object()const{return view_?view_:data_;}
+    static Array from_object(const Ref<Object>&object){
+        Array result;if(!object)return result;result.data_=std::dynamic_pointer_cast<Storage>(object);if(result.data_)return result;
+        if constexpr(is_shared_ref<T>::value){auto array=std::dynamic_pointer_cast<ArrayBase>(object);if(array&&array->reference_element_is_a(typeid(typename is_shared_ref<T>::element_type))){result.view_=std::move(array);return result;}}
+        throw InvalidCastException();
+    }
+    template<class U>static Array covariant_from(const Array<U>& source){static_assert(is_shared_ref<T>::value&&is_shared_ref<U>::value);return from_object(source.as_object());}
+    std::int32_t length()const{if(view_)return view_->get_Length();return require().size;}
     T& at(std::int32_t index)const {
+        if(view_){if(index<0||index>=view_->get_Length())throw IndexOutOfRangeException();throw ArrayTypeMismatchException();}
         const auto& s=require();if(index<0 || index>=s.size)throw IndexOutOfRangeException();
         return s.values[static_cast<std::size_t>(index)];
     }
     T& operator[](std::int32_t index)const{return at(index);}
+    T get_Item(std::int32_t index)const{
+        if(!view_)return at(index);
+        if constexpr(is_shared_ref<T>::value){auto value=view_->reference_item(index);auto result=std::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
+        else throw ArrayTypeMismatchException();
+    }
+    void set_Item(std::int32_t index,T value)const{
+        if(!view_){at(index)=std::move(value);return;}
+        if constexpr(is_shared_ref<T>::value)view_->reference_item(index,std::dynamic_pointer_cast<Object>(value));
+        else throw ArrayTypeMismatchException();
+    }
     Array clone()const {
+        if(view_)return from_object(view_->clone_storage());
         Array result=make(length());for(std::int32_t i=0;i<length();++i)result.at(i)=at(i);return result;
     }
     static void copy(const Array& source,std::int32_t source_index,const Array& dest,std::int32_t dest_index,std::int32_t count) {
+        if(source.view_||dest.view_){array_copy(array_cast(source.as_object()),source_index,array_cast(dest.as_object()),dest_index,count);return;}
         if(source.is_null())throw ArgumentNullException();if(dest.is_null())throw ArgumentNullException();
         if(source_index<0 || dest_index<0 || count<0)throw ArgumentOutOfRangeException();
         if(static_cast<std::int64_t>(source_index)+count>source.length() || static_cast<std::int64_t>(dest_index)+count>dest.length())throw ArgumentException();
@@ -383,7 +439,7 @@ public:
             for(std::int32_t i=count;i>0;--i)dest.at(dest_index+i-1)=source.at(source_index+i-1);
         } else for(std::int32_t i=0;i<count;++i)dest.at(dest_index+i)=source.at(source_index+i);
     }
-    friend bool operator==(const Array&a,const Array&b)noexcept{return a.data_==b.data_;}
+    friend bool operator==(const Array&a,const Array&b)noexcept{return a.as_object()==b.as_object();}
     friend bool operator!=(const Array&a,const Array&b)noexcept{return !(a==b);}
 };
 
@@ -405,6 +461,7 @@ template<class F>bool exception_filter(F&&body)noexcept{try{return body();}catch
 // hierarchy. C# catch handlers cannot intercept a pending return.
 template<class T>struct ReturnFlow {T value;explicit ReturnFlow(T result):value(std::move(result)){}};
 template<>struct ReturnFlow<void> {};
+struct BranchFlow {enum class Kind{break_,continue_};std::int32_t target;Kind kind;};
 template<class T>[[noreturn]] T invalid_return_flow(){throw std::logic_error("Generated protected return reached an invalid fallthrough");}
 template<class F,class G>auto run_finally(F&&body,G&&cleanup)->std::invoke_result_t<F> {
     using R=std::invoke_result_t<F>;

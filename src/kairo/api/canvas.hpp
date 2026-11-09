@@ -35,6 +35,7 @@ class Canvas : public cs::Object {
 public:
     static constexpr std::int32_t KEY_LEFT=65536,KEY_RIGHT=262144,KEY_UP=131072,KEY_DOWN=524288,KEY_SELECT=1048576,KEY_SOFT1=2097152,KEY_SOFT2=4194304;
     Canvas();
+    std::int32_t source_status_bar_position{-1}; // Original field; no source assignments after its initializer.
     static std::int32_t& source_last_browser_frame(){return last_browser_frame_;}
     bool IsFullscreen()const{return DebugInput::get_fullScreen();}
     std::int32_t GetStatusBarHeight()const{return native_status_bar_height();}

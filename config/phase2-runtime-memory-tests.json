@@ -1,0 +1,33 @@
+{
+  "operation": "own-native-Windows-allocator-heap-payload",
+  "status": "PASS",
+  "assertions": 9,
+  "measurements": {
+    "status": "PASS",
+    "assertions": 9,
+    "private_heap_payload_compared_with_HeapSize": true,
+    "game_boot": false
+  },
+  "inputs_sha256": {
+    "tests/kairo/runtime_memory_fixtures.cpp": "ecbb232276bc1c7956ce0b095494f0cc5c0b66612443a295c8ceeb1968cf5b93",
+    "src/kairo/platform/sdl/runtime_memory.cpp": "37c11879a31b90d3a5329eac3f425f40de8e3789d5504eef17a6d96f49ac863a",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "src/kairo/api/runtime_memory.hpp": "f7259db3b1b33cf116351b6c91091f813e2e31040cffb2f3b603c177d620076c",
+    "src/kairo/platform/sdl/runtime_memory.hpp": "7569bdc728888006763d32a2b8e10596205354529e819f7f0b745f6b6a7ae549",
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+    "tools/test_runtime_memory.py": "a9dd6eb8b7a4171ab585de4b0009b90ecb9ecebfb8d76bce87bfa9716b40b18d"
+  },
+  "native_executable": {
+    "path": "build/runtime-memory-fixtures/heap-fixtures.exe",
+    "sha256": "d0c3ced39376894318f3ccbc361ca4810eba018b15c34ebc34f4cbd57994676c"
+  },
+  "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "verified_boundary_ids": [],
+  "game_boot": false,
+  "limits": [
+    "All native process heaps, not a Java VM or Mono reserved pool.",
+    "HeapWalk payload excludes overhead and virtual reserve; it is not resident memory.",
+    "Heaps are sampled sequentially under their individual locks; this is not an atomic process snapshot.",
+    "Only Windows implemented; other platform providers fail explicitly."
+  ]
+}

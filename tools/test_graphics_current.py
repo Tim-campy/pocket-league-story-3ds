@@ -8,7 +8,9 @@ from inventory import compiler_paths
 
 GRAPHICS=['public Graphics()','public Graphics(Image img, Camera camera = null)',
  'public static Graphics GetCurrent()','public bool IsGUI()','internal bool IsRenderGUIMode()',
- 'public void ResetRender()','public void Dispose(bool keep = false)','public void EndGLRender(bool force = false)']
+ 'public void ResetRender()','public void Dispose(bool keep = false)','public void EndGLRender(bool force = false)',
+ 'public void BeginGLRender(bool clipEnable = true)','public bool PushClipEnable(bool enable)',
+ 'public void PushClipEnable()','public void PopClipEnable()','public bool SetClipEnable(bool enable)','public bool IsClipEnable()']
 CANVAS=['public Graphics BeginPaint()','internal Graphics BeginPaint(Graphics g, int meshId = -1)',
  'internal Graphics BeginAlterStaticRender(Graphics g, int meshId = -1)','public void EndPaint()',
  'internal void EndPaint(Graphics g, int meshId = -1)','internal void EndAlterStaticRender(Graphics g, int meshId = -1)']
@@ -48,7 +50,7 @@ def main():
   native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),verified_boundary_ids=[],
   limits=['Own mesh/font/Unity collaborators isolate lifecycle and represented render state; no original Unity binary executes.',
           'Graphics.Init backend leaf is synthetic; constructors, ResetRender and Canvas Begin/End bodies are complete original source.',
-          'GL batches, multiple mesh managers and retained static mesh rendering are not exercised by the CPU lifecycle test.',
+          'GL batch control/clip-enable nesting is exercised; deferred GPU meshes, multiple managers and retained static mesh rendering are not.',
           'Current reference loads/stores are synchronized; mutable graphics state/Canvas buffer are UI-owned, not declared generally thread safe.'],
   game_assets_used=False,game_boot=False,original_binaries_executed=False)
  (ROOT/'config/phase2-graphics-current-tests.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')

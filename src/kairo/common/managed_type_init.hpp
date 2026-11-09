@@ -3,8 +3,17 @@
 #include <condition_variable>
 #include <thread>
 #include <unordered_map>
+#include <cstdio>
 
 namespace pls::cs {
+template<class F>auto evaluate_type_initializer_field(const char* id,F&& body)->std::invoke_result_t<F>{
+    (void)id;try{return body();}catch(...){
+#if defined(PLS_DIAGNOSTIC_BUILD)
+        std::fprintf(stderr,"PLS_TYPE_INIT_FIELD=%s\n",id);std::fflush(stderr);
+#endif
+        throw;
+    }
+}
 class TypeInitializationException : public SystemException {
     std::string initializing_type_;
     std::exception_ptr inner_;

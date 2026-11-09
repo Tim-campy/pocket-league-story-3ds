@@ -8,6 +8,7 @@ namespace {TextServices services;std::map<std::pair<std::string,int>,std::unique
 void install_text_services(TextServices value){services=std::move(value);rasters.clear();}
 cs::String translate_text(cs::String text){if(!services.translate)throw cs::InvalidOperationException("Generated Language.TranslateText bridge is not installed");return services.translate(text);}
 bool japanese_text(){if(!services.japanese)throw cs::InvalidOperationException("Generated Language.Japanese bridge is not installed");return services.japanese();}
+void draw_markup(cs::Ref<Graphics> g,cs::String value,float x,float y,std::int32_t anchor){if(!services.markup_draw)throw cs::NotSupportedException("Translated TextLayout draw bridge is not installed");services.markup_draw(std::move(g),std::move(value),x,y,anchor);}
 Font::Font(){font_scale_=requestFontScale;SetSize(0);SetStyle(0);}
 Font::Font(cs::Ref<Font> font){font_scale_=requestFontScale;Set(cs::nonnull(font));}
 void Font::SetSize(std::int32_t size,bool preset){
@@ -38,7 +39,7 @@ sdl::RasterFont& Font::raster(int pixel_height){
 }
 float Font::StringWidthF(cs::String text){
     if(text.is_null()||disposed_)return 0.0f;if(!LT_DISABLE_TEXTLAYOUT)text=translate_text(text);
-    auto content=text.code_units();if(Graphics::PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos)throw cs::NotSupportedException("TextLayout markup requires the translated layout engine");
+    auto content=text.code_units();if(Graphics::PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos){if(!services.markup_width)throw cs::NotSupportedException("Translated TextLayout width bridge is not installed");return services.markup_width(std::static_pointer_cast<Font>(shared_from_this()),text);}
     int previous=-1;if(IsNeedLocalizeScale()){previous=GetSize();SetSize(GetLocalizeScale());}
     float ratio=services.application_scale?services.application_scale():100.0f;int pixels=cs::conv_i32(float(used_)*ratio/100.0f+0.001f);
     for(auto& c:content)if(c==u' ')c=u'.';

@@ -5,10 +5,36 @@ public static class LoweringFixtures {
     private static int trace_;
     public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
     private static int Pair(int a, int b) { return a * 100 + b; }
+    public static int SourceAdapterCall(int seed){var target=new Synthetic.SourceAdapterTarget();target.value=seed;return target.Read(7)+target.Read();}
+    public static int SourceAdapterNull(int seed){trace_=0;Synthetic.SourceAdapterTarget target=null;try{return target.Read(Stamp(3));}catch(NullReferenceException){return trace_+seed;}}
+    public static int SourceAdapterDelegate(int seed){var target=new Synthetic.SourceAdapterTarget();target.value=seed;Func<int,int> call=target.Read;return call(3);}
+    public static int SourceStaticAdapter(int seed){Func<int,int> call=Synthetic.SourceStaticTarget.Read;return Synthetic.SourceStaticTarget.Read(seed)+call(3);}
+    public static int SourceAdapterRef(int seed){var target=new Synthetic.SourceAdapterTarget();target.value=37;int value=seed;int prior=target.Next(ref value);return prior+value;}
+    public static int SingleNaN(int seed){float[] values={float.NaN,float.PositiveInfinity,float.NegativeInfinity,0f,-0f,float.Epsilon,float.MaxValue};int result=0;foreach(float value in values)result=(result<<1)+(float.IsNaN(value)?1:0);return result;}
+    public static int DoubleNaN(int seed){double[] values={double.NaN,double.PositiveInfinity,double.NegativeInfinity,0d,-0d,double.Epsilon,double.MaxValue};int result=0;foreach(double value in values)result=(result<<1)+(double.IsNaN(value)?1:0);return result;}
+    public static int StringCompareTo(string value){return value.CompareTo("a");}
+    public static int StringCompareNull(string value){return value.CompareTo((string)null);}
+    public static int StrictHexParse(string value){return int.Parse(value,System.Globalization.NumberStyles.AllowHexSpecifier);}
+    public static float ParseSingle(string value){return float.Parse(value);}
+    public static int OptionalCtorInitializers(int seed){return new Synthetic.OptionalCtor().value+new Synthetic.OptionalDerived().value+seed;}
     public static bool GuidShape(int seed) {string a=Guid.NewGuid().ToString(),b=Guid.NewGuid().ToString();return a.Length==36&&a[8]=='-'&&a[13]=='-'&&a[14]=='4'&&(a[19]=='8'||a[19]=='9'||a[19]=='a'||a[19]=='b')&&a[18]=='-'&&a[23]=='-'&&a!=b;}
     public static string UriEscape(string value){return Uri.EscapeDataString(value);}
+    public static string HexByteValues(int seed){string result="";for(int i=0;i<256;++i)result+=((byte)i).ToString("X2");return result;}
+    public static string HexIntValues(int seed){return seed.ToString("x")+":"+seed.ToString("X2")+":"+seed.ToString("X10");}
     public static bool NullOrEmpty(string value){return string.IsNullOrEmpty(value);}
     public static string InsertText(string source,int index,string value){return source.Insert(index,value);}
+    public static string RemoveTail(string source,int index){return source.Remove(index);}
+    public static string RemovePart(string source,int index,int count){return source.Remove(index,count);}
+    public static int GenericDerivedArgument(int seed){var bucket=new Synthetic.GenericBucket<Synthetic.VirtualBase>();Synthetic.VirtualDerived value;bucket.Put(value=new Synthetic.VirtualDerived());return bucket.Read().Read()+value.Read()+seed;}
+    public static string GenericReferenceTypeName(int seed){object value=new Synthetic.GenericBucket<Synthetic.VirtualBase>();return value.ToString();}
+    public static int CovariantArray(int seed){var original=new Synthetic.VirtualDerived[2];Synthetic.VirtualBase[] view=original;view[0]=new Synthetic.VirtualDerived();object identity=view;var restored=(Synthetic.VirtualDerived[])identity;return original==view&&restored==original?view[0].Read()+seed:-1;}
+    public static bool CovariantStoreRejected(int seed){Synthetic.VirtualBase[] view=new Synthetic.VirtualDerived[1];try{view[0]=new Synthetic.VirtualBase();return false;}catch(ArrayTypeMismatchException){return true;}}
+    public static bool CovariantAddressRejected(int seed){Synthetic.VirtualBase[] view=new Synthetic.VirtualDerived[1];try{AliasBase(ref view[0]);return false;}catch(ArrayTypeMismatchException){return true;}}
+    private static void AliasBase(ref Synthetic.VirtualBase value){value=null;}
+    public static int CovariantForeach(int seed){Synthetic.VirtualBase[] view=new Synthetic.VirtualDerived[]{new Synthetic.VirtualDerived(),new Synthetic.VirtualDerived()};int total=seed;foreach(var item in view)total+=item.Read();return total;}
+    public static bool CovariantClone(int seed){Synthetic.VirtualBase[] view=new Synthetic.VirtualDerived[1];var clone=(Synthetic.VirtualBase[])view.Clone();clone[0]=new Synthetic.VirtualDerived();return view[0]==null&&((Synthetic.VirtualDerived[])clone)[0]!=null;}
+    public static int CovariantCopy(int seed){var source=new Synthetic.VirtualDerived[]{new Synthetic.VirtualDerived()};var target=new Synthetic.VirtualBase[1];Array.Copy(source,0,target,0,1);return target[0].Read()+seed;}
+    public static bool CovariantWrongCast(int seed){object value=new Synthetic.VirtualBase[0];try{var wrong=(Synthetic.VirtualDerived[])value;return wrong==null;}catch(InvalidCastException){return true;}}
     public static int ArrayCopyFive(int seed){var values=new int[]{seed,2,3,4};Array.Copy(values,0,values,1,3);return values[1]+values[2]+values[3];}
     public static int ArrayBaseAlias(int seed){Array a=new int[]{seed};Array b=a;Array.Copy(a,0,b,0,1);return ((int[])b)[0];}
     public static int TryParseText(string value){int result=37;bool success=int.TryParse(value,out result);return success?result:result-100;}
@@ -32,6 +58,16 @@ public static class LoweringFixtures {
         System.Collections.Generic.Dictionary<string,int> map=null;
         try { return map.Keys.ToArray().Length; } catch(NullReferenceException) { return seed; }
     }
+    public static string DictionaryIteration(int seed) {
+        var map=new System.Collections.Generic.Dictionary<string,int>();map.Add("a",1);map.Add("b",2);map.Remove("a");map.Add("c",3);
+        string result="";foreach(var pair in map){result+=pair.Key+pair.Value;}return result;
+    }
+    public static int DictionaryIterationVersion(int seed) {
+        var map=new System.Collections.Generic.Dictionary<int,int>();map.Add(1,seed);int count=0;
+        try{foreach(var pair in map){count++;map.Add(2,pair.Value);}}catch(InvalidOperationException){return count;}
+        return -1;
+    }
+    public static int KeyValuePairValue(int seed){var pair=new System.Collections.Generic.KeyValuePair<int,int>(seed,37);return pair.Key+pair.Value;}
     public static int StructFieldStores(int seed) { Synthetic.QueryValue item=default(Synthetic.QueryValue);item.value=seed;var copy=item;copy.value=37;return item.value+copy.value; }
     public static int StructArrayFieldStores(int seed) { var array=new Synthetic.QueryValue[1];array[0].value=seed;return array[0].value; }
     public static int UsingDisposeOrder(int seed) {
@@ -51,6 +87,17 @@ public static class LoweringFixtures {
     public static int FinallyNestedReturn(int seed) {trace_=0;try{try{if(seed<0)return seed;Stamp(1);}finally{Stamp(2);}}finally{Stamp(3);}return trace_;}
     public static int FinallyReplaceReturn(int seed) {try{try{return seed;}finally{throw new InvalidOperationException();}}catch(InvalidOperationException){return 37;}}
     public static int FinallyInternalBreak(int seed){trace_=seed;try{for(int i=0;i<3;i++){if(i==1)break;Stamp(1);}}finally{Stamp(2);}return trace_;}
+    public static int FinallyOuterBreak(int seed){trace_=0;for(int i=0;i<3;i++){try{Stamp(1);if(i==1)break;}finally{Stamp(2);}}return trace_+seed;}
+    public static int FinallyOuterContinue(int seed){trace_=0;for(int i=0;i<3;i++){try{if(i<2)continue;Stamp(1);}finally{Stamp(2);}}return trace_+seed;}
+    public static int FinallyNestedBreak(int seed){trace_=0;while(true){try{try{break;}finally{Stamp(1);}}finally{Stamp(2);}}return trace_+seed;}
+    public static int FinallyCatchBreak(int seed){trace_=0;while(true){try{throw new ArgumentException();}catch(ArgumentException){break;}finally{Stamp(3);}}return trace_+seed;}
+    public static int FinallySwitchBreak(int seed){trace_=0;switch(seed){case 0:try{Stamp(1);break;}finally{Stamp(2);}default:Stamp(3);break;}return trace_;}
+    public static int FinallySwitchContinue(int seed){trace_=0;foreach(int i in new int[]{0,1,2}){try{switch(i){case 1:continue;default:break;}Stamp(1);}finally{Stamp(2);}}return trace_+seed;}
+    public static int FinallyDoContinue(int seed){trace_=0;int i=0;do{try{++i;if(i<3)continue;Stamp(1);}finally{Stamp(2);}}while(i<3);return trace_+seed;}
+    public static int UsingOuterBreak(int seed){trace_=0;while(true){using(var a=new Synthetic.OwnDisposable(1)){Stamp(2);break;}}return trace_+seed;}
+    public static int UsingOuterContinue(int seed){trace_=0;for(int i=0;i<2;i++){using(var a=new Synthetic.OwnDisposable(1)){continue;}}return trace_+seed;}
+    public static int FinallyReplacesBreak(int seed){trace_=0;try{while(true){try{break;}finally{throw new InvalidOperationException();}}}catch(InvalidOperationException){Stamp(3);}return trace_+seed;}
+    public static int CatchOnlyLayout(int seed){try{throw new InvalidOperationException();}catch(Synthetic.CatchOnlyException){return 1;}catch(Exception){return seed;}}
     public static int ExplicitDelegateConstructor(int seed){var target=new Synthetic.DelegateTarget(seed);Action first=new Action(target.Run);first();return target.value;}
     public static int AutoProperty(int seed){var target=new Synthetic.AutoProperties();int previous=target.Value;target.Value=seed;return previous+target.Value;}
     public static string AutoPropertyReference(int seed){var target=new Synthetic.AutoProperties();string previous=target.Text;target.Text="own fixture";return previous==null?target.Text:"unexpected";}
@@ -160,6 +207,12 @@ public static class LoweringFixtures {
     public static int UnsupportedClosureGoto(int value) { Func<int> f=()=>value;if(value<0)goto done;value++;done:return f(); }
 }
 namespace Synthetic {
+    public class OptionalCtor {public int value;public OptionalCtor():this(4){}public OptionalCtor(int value,int scale=3){this.value=value*scale;}}
+    public class OptionalDerived:OptionalCtor {public OptionalDerived():base(5){}}
+    public class SourceAdapterTarget {public int value;public int Read(int delta=2){return value+delta;}public int Next(ref int delta){int prior=delta;delta=value;return prior;}}
+    public static class SourceAdapters {public static int Read(SourceAdapterTarget target,int delta){return target.value+delta;}public static int Next(SourceAdapterTarget target,ref int delta){int prior=delta;delta=target.value;return prior;}}
+    public static class SourceStaticTarget {public static int Read(int value){return value*3;}}
+    public static class SourceStaticAdapters {public static int Read(int value){return value*3;}}
     public class AutoProperties {public int Value{get;set;}public string Text{get;set;}}
     public class OwnDisposable:IDisposable {public int value;public bool fail;public OwnDisposable(int value,bool fail=false){this.value=value;this.fail=fail;}public void Dispose(){LoweringFixtures.Stamp(value);if(fail)throw new InvalidOperationException();}}
     public abstract class AbstractBase {public int seen;public AbstractBase(){seen=Read();}public abstract int Read();}
@@ -185,6 +238,8 @@ namespace Synthetic {
         public DerivedCtor() : this(2) { LoweringFixtures.Stamp(4); }
         public DerivedCtor(int value) : base(value) { LoweringFixtures.Stamp(3); }
     }
+    public class CatchOnlyException:Exception {}
+    public class GenericBucket<T>{private T value;public void Put(T item){value=item;}public T Read(){return value;}}
     public class VirtualBase { public int seen; public VirtualBase() { seen = Read(); } public virtual int Read() { return 1; } }
     public class VirtualDerived : VirtualBase { public int field = 9; public VirtualDerived() { } public override int Read() { return field; } }
     public class StaticOrder {

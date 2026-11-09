@@ -1,5 +1,46 @@
 #include "managed_string_ops.hpp"
+#include <charconv>
 namespace pls::cs {
+float single_parse_legacy(const String& value){
+    if(value.is_null())throw ArgumentNullException();
+    if(runtime_profile!=RuntimeProfile::UnityMono265)throw NotSupportedException("Single parser implements only the historical Mono profile");
+    auto text=value.code_units();auto end=text.find(char16_t(0));if(end!=std::u16string::npos)text.resize(end);
+    auto white=[](char16_t c){return c==32||(c>=9&&c<=13)||c==0x85||c==0xa0||c==0x1680||(c>=0x2000&&c<=0x200b)||c==0x2028||c==0x2029||c==0x202f||c==0x205f||c==0x3000;};
+    std::size_t first=0,last=text.size();while(first<last&&white(text[first]))++first;while(last>first&&white(text[last-1]))--last;
+    auto token=text.substr(first,last-first);
+    if(token==u"NaN")return bit_copy<float>(std::uint32_t(0xffc00000));
+    if(token==u"Infinity")return std::numeric_limits<float>::infinity();if(token==u"-Infinity")return -std::numeric_limits<float>::infinity();
+    std::string number;bool fraction=false,exponent=false;for(auto c:token){if(c==u','&&!fraction&&!exponent)continue;if(c>127)throw FormatException();if(c==u'.')fraction=true;if(c==u'e'||c==u'E')exponent=true;number.push_back(static_cast<char>(c));}
+    if(!number.empty()&&number.front()=='+')number.erase(0,1);if(number.empty())throw FormatException();
+    // from_chars is locale-independent. Explicit grammar excludes its special
+    // inf/nan tokens and preserves historical thousands/NUL behavior above.
+    bool digit=false,point_seen=false,exp_seen=false,exp_digit=false;
+    for(std::size_t i=0;i<number.size();++i){char c=number[i];if(c>='0'&&c<='9'){if(exp_seen)exp_digit=true;else digit=true;continue;}if(c=='-'&&i==0)continue;if((c=='+'||c=='-')&&i>0&&(number[i-1]=='e'||number[i-1]=='E'))continue;if(c=='.'&&!point_seen&&!exp_seen){point_seen=true;continue;}if((c=='e'||c=='E')&&digit&&!exp_seen){exp_seen=true;continue;}throw FormatException();}
+    if(!digit||(exp_seen&&!exp_digit))throw FormatException();
+    double parsed=0;const auto result=std::from_chars(number.data(),number.data()+number.size(),parsed);
+    if(result.ptr!=number.data()+number.size())throw FormatException();
+    if(result.ec==std::errc::result_out_of_range){
+        auto ep=number.find_first_of("eE");std::int64_t power=0;
+        if(ep!=std::string::npos){std::size_t pos=ep+1;bool minus=number[pos]=='-';if(number[pos]=='+'||minus)++pos;for(;pos<number.size();++pos)power=std::min<std::int64_t>(1000000,power*10+(number[pos]-'0'));if(minus)power=-power;}
+        const auto stop=ep==std::string::npos?number.size():ep;auto dot=number.find('.');if(dot==std::string::npos||dot>stop)dot=stop;
+        std::size_t significant=number[0]=='-'?1:0;while(significant<stop&&(number[significant]=='0'||number[significant]=='.'))++significant;
+        power+=static_cast<std::int64_t>(dot)-static_cast<std::int64_t>(significant)-(significant<dot?1:0);
+        if(power<0)return number[0]=='-'?-0.0f:0.0f;throw OverflowException();
+    }
+    if(result.ec!=std::errc{})throw FormatException();
+    // Single.Parse in this core checks only the positive edge before casting.
+    // The asymmetry and double-rounding are confirmed by the SDK oracle.
+    if(parsed-static_cast<double>(std::numeric_limits<float>::max())>3.6147112457961776e29&&!std::isinf(parsed))throw OverflowException();
+    return static_cast<float>(parsed);
+}
+String string_remove(const String& value,std::int32_t start){
+    const auto& text=value.code_units();if(start<0||static_cast<std::size_t>(start)>=text.size())throw ArgumentOutOfRangeException();
+    return String(text.substr(0,static_cast<std::size_t>(start)));
+}
+String string_remove(const String& value,std::int32_t start,std::int32_t count){
+    const auto& text=value.code_units();if(start<0||count<0||static_cast<std::size_t>(start)>text.size()||static_cast<std::size_t>(count)>text.size()-static_cast<std::size_t>(start))throw ArgumentOutOfRangeException();
+    if(count==0)return value;auto result=text;result.erase(static_cast<std::size_t>(start),static_cast<std::size_t>(count));return String(std::move(result));
+}
 String string_insert(const String& source,std::int32_t index,const String& value){
     const auto& text=source.code_units();if(value.is_null())throw ArgumentNullException();
     if(index<0||static_cast<std::size_t>(index)>text.size())throw ArgumentOutOfRangeException();
@@ -36,12 +77,12 @@ String format_i32_hex(std::int32_t value,std::int32_t width,bool uppercase){
     while(text.size()<static_cast<std::size_t>(width))text.push_back(u'0');
     std::reverse(text.begin(),text.end());return String(std::move(text));
 }
-std::int32_t int32_parse_hex_number(const String& value){
+std::int32_t int32_parse_hex_number(const String& value,bool allow_spaces){
     if(value.is_null())throw ArgumentNullException();
     const auto& text=value.code_units();std::size_t pos=0;
     auto white=[](char16_t c){if(c==u' '||(c>=9&&c<=13))return true;
         return runtime_profile==RuntimeProfile::UnityMono265&&(c==0x85||c==0xa0||c==0x1680||(c>=0x2000&&c<=0x200b)||c==0x2028||c==0x2029||c==0x202f||c==0x205f||c==0x3000);};
-    while(pos<text.size()&&white(text[pos]))++pos;
+    if(allow_spaces)while(pos<text.size()&&white(text[pos]))++pos;
     bool digit_found=false,overflow=false;std::uint32_t bits=0;
     for(;pos<text.size();++pos){auto c=text[pos];std::uint32_t digit;
         if((c>=u'0'&&c<=u'9')||(runtime_profile==RuntimeProfile::UnityMono265&&historical_digit(c)))digit=c-u'0';else if(c>=u'a'&&c<=u'f')digit=c-u'a'+10u;else if(c>=u'A'&&c<=u'F')digit=c-u'A'+10u;else break;
@@ -49,7 +90,7 @@ std::int32_t int32_parse_hex_number(const String& value){
         if(overflow&&runtime_profile==RuntimeProfile::UnityMono265)throw OverflowException();
         if(!overflow)bits=bits*16u+digit;
     }
-    while(pos<text.size()&&white(text[pos]))++pos;
+    if(allow_spaces)while(pos<text.size()&&white(text[pos]))++pos;
     if(runtime_profile==RuntimeProfile::UnityMono265){if(pos<text.size()&&text[pos]==0)pos=text.size();}
     else while(pos<text.size()&&text[pos]==0)++pos;
     if(!digit_found||pos!=text.size())throw FormatException();

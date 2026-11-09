@@ -14,6 +14,8 @@ template<class T>std::uint32_t dictionary_hash(const T&value){
 }
 template<class K,class V>struct KeyValuePair {
     K key{};V value{};
+    KeyValuePair()=default;
+    KeyValuePair(K first,V second):key(std::move(first)),value(std::move(second)){}
     K get_Key()const{return key;}V get_Value()const{return value;}
     void trace_edges(const EdgeVisitor&visitor)const{trace_value(key,visitor);trace_value(value,visitor);}
     void release_edges(){release_value(key);release_value(value);}

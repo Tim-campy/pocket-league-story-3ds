@@ -28,5 +28,8 @@ public:
     void present() override;
     platform::Memory memory() const override;
     std::string preference_path() const;
+    void reset_default_orientation();
+    void set_fullscreen(bool);
+    std::uint32_t native_window_id()const{return window_?SDL_GetWindowID(window_):0;}
 };
 }

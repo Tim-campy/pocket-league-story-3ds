@@ -8,12 +8,12 @@
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
-  "executable_sha256": "008bc299596c3c5a60a974970e99bc90bb978facc68ab7b2eaa7ab40eaded637",
+  "executable_sha256": "1b4463cff9beffc64514119ee42edb8ed5472b108b7e5e90b74ab1617cdf3e29",
   "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
   "sources": [
     {
       "path": "tools/build_pc.py",
-      "sha256": "6366f08bd93f6f8d229061e61a29accc2d00f8b1c8163206d54f6c2561f36ad6"
+      "sha256": "dac9a867417b69d688cbfb914ae2fedf00863517fb22656e2c5e7e65372b1405"
     },
     {
       "path": "tests/kairo/asset_roundtrip.cpp",
@@ -21,11 +21,11 @@
     },
     {
       "path": "src/kairo/platform/sdl/backend.cpp",
-      "sha256": "4223ed6aceaef9538f6205914f9b65689b3533357edc5217f49141c3ec23e1b8"
+      "sha256": "83b60d6036414d8b838c521c32624baf995786f49826df9aa27cc758689e64f9"
     },
     {
       "path": "src/kairo/platform/sdl/backend.hpp",
-      "sha256": "81cf34cc2fc084428aef4eb4ea6f080bbe98047e429de15b9f35955105281d1e"
+      "sha256": "ab187a6cd19a2a75e7e50b8a326e6ecd6df1d77d5da3bbfc4f0006b79395a5be"
     },
     {
       "path": "src/kairo/api/platform.hpp",
@@ -33,15 +33,15 @@
     },
     {
       "path": "src/kairo/platform/sdl/debug_input.cpp",
-      "sha256": "1d57dc2c03766a09a2493cc03574c0f193348a1fdbd541d472c8d001bc6cb4c3"
+      "sha256": "86501ba92f2fbb7a02525a811ea4078ce941564bac47bd3fc5de408de150c84c"
     },
     {
       "path": "src/kairo/platform/sdl/debug_input.hpp",
-      "sha256": "858d11a2fcbd123f72f37726010d22241b49195fc7309ae798adc72a36fc7bd9"
+      "sha256": "16f336aef15e5c9cff125f1c59a89f4b4dd1ce3e219f1e2a4fa8e83173e9a218"
     },
     {
       "path": "src/kairo/api/debug_input.hpp",
-      "sha256": "a5a942c732f63d6bd9f757c1e4702cca9d001ee5b07e8ae23a5bf2d8d4d1eb31"
+      "sha256": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918"
     },
     {
       "path": "src/kairo/api/vector3.hpp",
@@ -49,11 +49,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9"
+      "sha256": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d"
+      "sha256": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070"
     }
   ]
 }

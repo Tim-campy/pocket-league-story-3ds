@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 import subprocess
+from report_paths import unpack_source_paths
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -11,12 +12,12 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--commit',default='0b9d3e7')
     args=parser.parse_args()
-    def old(name):return json.loads(subprocess.check_output(['git','show',args.commit+':config/'+name],cwd=ROOT))
+    def old(name):return unpack_source_paths(json.loads(subprocess.check_output(['git','show',args.commit+':config/'+name],cwd=ROOT)))
     previous=old('phase2-translation.json');previous_diff=old('phase2-portable-differential.json')
     previous_game=old('phase2-game-translation.json')
     current=json.loads((ROOT/'config/phase2-translation.json').read_text())
     differential=json.loads((ROOT/'config/phase2-portable-differential.json').read_text())
-    current_game=json.loads((ROOT/'config/phase2-game-translation.json').read_text())
+    current_game=unpack_source_paths(json.loads((ROOT/'config/phase2-game-translation.json').read_text()))
     before={m['id']for m in previous['emitted_methods']};after={m['id']for m in current['emitted_methods']}
     before_roots={m['id']for m in previous['emitted_methods']if m['root']};after_roots={m['id']for m in current['emitted_methods']if m['root']}
     # The old receipt predates per-ID qualification and recorded all cases equal.

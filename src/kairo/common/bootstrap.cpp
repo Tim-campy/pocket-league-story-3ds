@@ -36,6 +36,7 @@ cs::Ref<BootstrapContext> configure_bootstrap(cs::Ref<IApplication> app,Bootstra
     ApplicationInitializationBridge bridge;
     bridge.before_create=[weak]{auto value=weak.lock();if(!value)throw BootstrapContractError("Awake preparation owner has expired");value->BeforeCreate();};
     bridge.after_create=[weak]{auto value=weak.lock();if(!value)throw BootstrapContractError("Language initialization owner has expired");value->AfterCreate();};
+    bridge.library_resources=[weak]{auto value=weak.lock();if(!value)throw BootstrapContractError("Library resource owner has expired");return value->resource_object();};
     app->host_initialization(std::move(bridge),context);return context;
 }
 }

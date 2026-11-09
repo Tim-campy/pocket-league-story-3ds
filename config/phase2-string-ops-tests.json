@@ -1,17 +1,17 @@
 {
   "operation": "own-StringOps-source-differential",
   "status": "PASS",
-  "cases": 395166,
-  "passed": 395166,
+  "cases": 526290,
+  "passed": 526290,
   "profiles": {
     "UnityMono265": {
-      "cases": 197583,
-      "passed": 197583,
+      "cases": 263145,
+      "passed": 263145,
       "mismatches": []
     },
     "DotNet": {
-      "cases": 197583,
-      "passed": 197583,
+      "cases": 263145,
+      "passed": 263145,
       "mismatches": []
     }
   },
@@ -22,22 +22,22 @@
     "core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
     "profile": "unity"
   },
-  "producer_sha256": "a55bd9bb817012554f65edf5f19a8821e26f48aa512ff9d0468d0c739a0892a9",
+  "producer_sha256": "b62a47493c2bbb3e30cd0cb89ab98568190dc153fa3db7e1ddc61b42dbc162bb",
   "inputs_sha256": {
-    "tests/translator/string_ops_fixtures.cpp": "4e9da5b84fa99050a4ba233172bec21df0ea1569cc288040fa8d507a8f9eea2c",
-    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
-    "src/kairo/common/managed_string_ops.cpp": "6823b5673e63b67efb9b083df1d23e8b3943e058d507280675d18be88da39aed",
-    "tests/translator/StringOpsFixtures.cs": "7eadbec491724507977dac4ae8a4e53f06e23ea43526e9c7505807dd20508492",
-    "src/kairo/common/managed_string_ops.hpp": "f4b80433baa859e13fd2f860fccef1f9f723a165fc8a69eaac376292ec0a9525",
-    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "tests/translator/string_ops_fixtures.cpp": "ff58061afea187b3ebd490513a654c29ba4030501e8205633bd90e57c87c01f3",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "src/kairo/common/managed_string_ops.cpp": "ac16ad3a3fe4d449a35982f1e170ceb7ffc75eef1e307bddb9d5d3de603126d1",
+    "tests/translator/StringOpsFixtures.cs": "3001a4c92f08d0a8f595b1b551a91263abebcf6cf90fa6b332802d6186b329c1",
+    "src/kairo/common/managed_string_ops.hpp": "48b397e67a19e92784a66aa8c6d8a3f51500b3ba848d8180571fd64759b3647e",
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
     "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0"
   },
   "native_executable": {
     "path": "build/string-ops-fixtures/string-ops-fixtures.exe",
-    "sha256": "e991eed72fb23f5bb8c83aee44e26e9052821f5930a3ae13e1001a8603e35e42"
+    "sha256": "dd902c23bd444e3767aba767bf73aa8695f7fb3d21df6a174dfb68886bd04416"
   },
-  "profile_differences": 219,
+  "profile_differences": 411,
   "production_methods_promoted": 0,
   "original_game_binary_loaded": false,
   "limitations": [
@@ -51,6 +51,8 @@
     "hex_number_bmp": 208,
     "split_bmp": 2,
     "hex_number_edges": 3,
+    "hex_specifier_bmp": 188,
+    "hex_specifier_edges": 4,
     "split_explicit": 2,
     "replace": 0
   }

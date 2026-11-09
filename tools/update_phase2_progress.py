@@ -9,6 +9,8 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'translator'))
+from report_paths import unpack_source_paths
 EXPECTED = 'd557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 REFERENCE = 'c7d097a847ca1f1a8e5fb7141ff11d338f5915c4'
 csv.field_size_limit(2_000_000)
@@ -23,7 +25,7 @@ def sha(path):
 
 
 def load(path):
-    return json.loads((ROOT/path).read_text(encoding='utf-8-sig'))
+    return unpack_source_paths(json.loads((ROOT/path).read_text(encoding='utf-8-sig')))
 
 
 def expect_hash(path, expected):
@@ -138,6 +140,7 @@ def validate_emission(emitted,assembly):
     producer=emitted['producer']
     expect_hash(ROOT/'translator/Translator.cs',producer['translator_source_sha256'])
     expect_hash(ROOT/'translator/translate.py',producer['driver_sha256'])
+    if 'report_paths_sha256'in producer:expect_hash(ROOT/'translator/report_paths.py',producer['report_paths_sha256'])
     if 'bootstrap_generator_sha256'in producer:expect_hash(ROOT/'translator/bootstrap_source.py',producer['bootstrap_generator_sha256'])
     sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
     from inventory import compiler_paths

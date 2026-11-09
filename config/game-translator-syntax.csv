@@ -41,7 +41,7 @@ DivideAssignmentExpression,14,True,observed-in-emitted-body
 DivideExpression,1552,True,observed-in-emitted-body
 ElementAccessExpression,11408,True,observed-in-emitted-body
 ElseClause,2406,False,NOT_YET_VALIDATED
-EmptyStatement,11,False,NOT_YET_VALIDATED
+EmptyStatement,11,True,observed-in-emitted-body
 EnumDeclaration,4,False,NOT_YET_VALIDATED
 EnumMemberDeclaration,11,False,NOT_YET_VALIDATED
 EqualsExpression,3749,True,observed-in-emitted-body
@@ -93,7 +93,7 @@ ParenthesizedLambdaExpression,3,True,observed-in-emitted-body
 PostDecrementExpression,131,True,observed-in-emitted-body
 PostIncrementExpression,1618,True,observed-in-emitted-body
 PredefinedType,16523,False,NOT_YET_VALIDATED
-PreIncrementExpression,1,False,NOT_YET_VALIDATED
+PreIncrementExpression,1,True,observed-in-emitted-body
 PropertyDeclaration,5,False,NOT_YET_VALIDATED
 QualifiedName,851,False,NOT_YET_VALIDATED
 ReturnStatement,1698,True,observed-in-emitted-body

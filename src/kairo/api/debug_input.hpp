@@ -12,6 +12,9 @@ public:
     static Vector3 get_mousePosition();
     static std::int32_t screen_height();
     static std::int32_t get_touchCount();
+    // This SDL backend accepts every real (device,finger) identity. It does
+    // not turn mouse events into fingers or select the later 3DS input design.
+    static bool get_multiTouchEnabled(){return true;}
     static float get_dpi();
     static bool get_fullScreen();
 };

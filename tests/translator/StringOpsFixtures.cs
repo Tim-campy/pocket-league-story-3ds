@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 class StringOpsFixtures {
     static string Hex(string s){if(s==null)return "NULL";string r="";foreach(char c in s)r+=((int)c).ToString("x4");return r;}
-    static string Parse(string s){try{return int.Parse(s,NumberStyles.HexNumber,CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);}catch(Exception e){return e.GetType().FullName;}}
+    static string Parse(string s,bool allowSpaces=true){try{return int.Parse(s,allowSpaces?NumberStyles.HexNumber:NumberStyles.AllowHexSpecifier,CultureInfo.InvariantCulture).ToString(CultureInfo.InvariantCulture);}catch(Exception e){return e.GetType().FullName;}}
     static string Replace(string s,string old,string to){try{string result=s.Replace(old,to);return Hex(result)+";same="+Object.ReferenceEquals(s,result);}catch(Exception e){return e.GetType().FullName;}}
     static string ReplaceChar(string s,char old,char to){try{string result=s.Replace(old,to);return Hex(result)+";same="+Object.ReferenceEquals(s,result);}catch(Exception e){return e.GetType().FullName;}}
     static string Split(string s,char[] separators){try{string[] parts=s.Split(separators);string result=parts.Length+";";foreach(string part in parts)result+="["+Hex(part)+"]"+(Object.ReferenceEquals(part,s)?"^":"");return result;}catch(Exception e){return e.GetType().FullName;}}
@@ -18,8 +18,10 @@ class StringOpsFixtures {
         int[] numbers={0,1,15,16,255,256,int.MaxValue,int.MinValue,-1,-2,-256};int[] widths={0,1,2,7,8,9,16,99};
         foreach(int n in numbers)foreach(int w in widths)foreach(bool upper in new bool[]{false,true})Console.WriteLine("hex-"+n+"-"+w+"-"+upper+"\t"+n.ToString((upper?"X":"x")+w,CultureInfo.InvariantCulture));
         for(int c=0;c<65536;c++)Console.WriteLine("parse-bmp-"+c+"\t"+Parse(new string(new char[]{(char)c,'f',(char)c})));
+        for(int c=0;c<65536;c++)Console.WriteLine("strict-bmp-"+c+"\t"+Parse(new string(new char[]{(char)c,'f',(char)c}),false));
         string[] parses={null,""," ","0","f","FFFFFFFF","80000000","100000000","100000000X","FFFFFFFFF ","+1","-1","0x1","1\0","1\0X","1\0 ","1 \0","1\0\0","\0","\0f"," f "," f\t","00000000000000000f","FFFFFFFFX","1 2","\ufefff\ufeff"};
         for(int i=0;i<parses.Length;i++)Console.WriteLine("parse-"+i+"\t"+Parse(parses[i]));
+        for(int i=0;i<parses.Length;i++)Console.WriteLine("strict-"+i+"\t"+Parse(parses[i],false));
         string[] replaceValues={null,"","aaa","ababa",new string('a',205),"\0a\0","\uff21a","a\ud800a"};
         string[] oldValues={null,"","a","aa","aba","\0","\ud800","\uff21","longerthaninput"};string[] newValues={null,"","a","aa","Z","\0"};
         for(int i=0;i<replaceValues.Length;i++)for(int j=0;j<oldValues.Length;j++)for(int k=0;k<newValues.Length;k++)Console.WriteLine("replace-"+i+"-"+j+"-"+k+"\t"+Replace(replaceValues[i],oldValues[j],newValues[k]));

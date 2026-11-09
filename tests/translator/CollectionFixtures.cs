@@ -40,5 +40,6 @@ public static class CollectionFixtures {
         object instance=new Item();IMarker marker=(IMarker)instance;
         Console.WriteLine("interface-object="+Object.ReferenceEquals(instance,(object)marker));
         List<IMarker> interfaces=new List<IMarker>();interfaces.Add(marker);Console.WriteLine("interface-equality="+interfaces.Contains((IMarker)instance));
+        IMarker[] source=interfaces.ToArray();object[] view=source;Console.WriteLine("interface-array-identity="+Object.ReferenceEquals(source,view));Console.WriteLine("interface-array-element="+Object.ReferenceEquals(view[0],instance));Console.WriteLine("interface-array-store="+Error(delegate{view[0]=37;}));
     }
 }

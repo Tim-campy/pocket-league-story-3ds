@@ -43,12 +43,12 @@
   "generated_http_integration": "PENDING",
   "inputs": {
     "tests/kairo/offline_http_fixtures.cpp": "c8d7d8904ffe95213b19a0b1267f9126c2100a15ef02c1bb0034a447a2373f33",
-    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
     "tests/kairo/OfflineHttpOracle.cs": "6f4e04c001cbe05a6bdd1d8246b428c2a1c5585774140b226686c0ed206ed43d",
     "tools/test_offline_http.py": "64c55fcce30fd8fbd4756719867758d6f1f7c6d2cda8d95f9fec7a95149fb0ac",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/offline_http.hpp": "c39eed01b83d05b14a8156903cb76fdc504b5ace449cc02341653bb1757b714d",
-    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d"
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070"
   },
   "source_manifest": [
     {
@@ -58,7 +58,7 @@
   ],
   "native_executable": {
     "path": "build/offline-http-tests/offline-http-fixtures.exe",
-    "sha256": "1497f23c4ca6185d432f81a7cd9acd3ed3a43eaba8e7b84efd749682c66dd7c6"
+    "sha256": "141320e5d1bfe6fa117614c8bf8ffd412b67702c469d2600e124f60aae475094"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

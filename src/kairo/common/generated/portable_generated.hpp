@@ -62,7 +62,7 @@ template<class T> static T cs_network_to_host(T value){
 template<class T> pls::cs::String cs_integer_string(T value) {
  auto text=std::to_string(value);if(!text.empty()&&text[0]=='-')return pls::cs::String::concat(pls::cs::integer_number_format.negative_sign,pls::cs::String::from_utf8(text.substr(1)));return pls::cs::String::from_utf8(text);
 }
-template<class T> pls::cs::Array<T> cs_clone_array(pls::cs::Array<T> value){return value.clone();}
+template<class T> pls::cs::Ref<pls::cs::Object> cs_clone_array(pls::cs::Array<T> value){return value.clone().as_object();}
 template<class T> pls::cs::Array<std::uint8_t> cs_bit_bytes(T value) {
  using U=std::conditional_t<sizeof(T)==8,std::uint64_t,std::conditional_t<sizeof(T)==4,std::uint32_t,std::uint16_t>>;
  U bits{};std::memcpy(&bits,&value,sizeof(T));auto result=pls::cs::Array<std::uint8_t>::make(sizeof(T));
@@ -114,23 +114,29 @@ struct cs_bd164c3c94a49e2a;
 struct cs_c20c229ea63037d8;
 struct cs_bb652fbb61000386;
 struct cs_a0dc211eb3feb56d {virtual ~cs_a0dc211eb3feb56d()=default;
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_a0dc211eb3feb56d)||target==typeid(pls::cs::Object);}
 virtual pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_virtual_60122bb6c899278e()=0;
 };
 struct cs_c4521f4960c4f908 {virtual ~cs_c4521f4960c4f908()=default;
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_c4521f4960c4f908)||target==typeid(pls::cs::Object);}
 virtual void cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream)=0;
 virtual void cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream)=0;
 };
 struct cs_64732f8c8acf2fd3 : pls::cs::ExceptionObject {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_64732f8c8acf2fd3)||target==typeid(pls::cs::ExceptionObject)||pls::cs::ExceptionObject::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::ExceptionObject::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.EOFException";}
+static std::string source_managed_type_name(){return "java.io.EOFException";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 };
 struct cs_e7a5499b363ef51b : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_e7a5499b363ef51b)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_bb7347310506b971")return "M:java.io.InputStream.Available";if(slot=="cs_virtual_4546aef6e4846446")return "M:java.io.InputStream.Close";if(slot=="cs_virtual_baf1496cdc1c93d8")return "M:java.io.InputStream.Mark(System.Int32)";if(slot=="cs_virtual_7dfe14f35a6a22dd")return "M:java.io.InputStream.MarkSupported";if(slot=="cs_virtual_d49800fd6633bd98")return "M:java.io.InputStream.Read";if(slot=="cs_virtual_e3637c1f0ab57ef5")return "M:java.io.InputStream.Read(System.Byte[])";if(slot=="cs_virtual_4614e302bc22aa99")return "M:java.io.InputStream.Read(System.Byte[],System.Int32,System.Int32)";if(slot=="cs_virtual_a1f672a1edc7446d")return "M:java.io.InputStream.Reset";if(slot=="cs_virtual_c6a293635ddab59b")return "M:java.io.InputStream.Skip(System.Int64)";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.InputStream";}
+static std::string source_managed_type_name(){return "java.io.InputStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 std::int64_t cs_8aa92818c04571d3{};
 pls::cs::Ref<pls::cs::Stream> cs_e65a8825426ed7a3{};
 pls::cs::Ref<pls::cs::Stream> cs_0f6af5e5e6987974{};
@@ -145,10 +151,12 @@ virtual void cs_virtual_a1f672a1edc7446d();
 virtual std::int64_t cs_virtual_c6a293635ddab59b(std::int64_t v_cnt);
 };
 struct cs_ea324a0bbfe717fe : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_ea324a0bbfe717fe)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:java.io.OutputStream.Close";if(slot=="cs_virtual_2adf924bd0d7d65a")return "M:java.io.OutputStream.Flush";if(slot=="cs_virtual_a2a7e1a6575cae4c")return "M:java.io.OutputStream.Write(System.Int32)";if(slot=="cs_virtual_109456b2dd9e2d77")return "M:java.io.OutputStream.Write(System.Byte[])";if(slot=="cs_virtual_eeffa75bcd0cd73d")return "M:java.io.OutputStream.Write(System.Byte[],System.Int32,System.Int32)";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.OutputStream";}
+static std::string source_managed_type_name(){return "java.io.OutputStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<pls::cs::Stream> cs_f48613bc1c6327b8{};
 virtual void cs_virtual_0d912191800a0b86();
 virtual void cs_virtual_2adf924bd0d7d65a();
@@ -157,10 +165,12 @@ virtual void cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b);
 virtual void cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_offset,std::int32_t v_len);
 };
 struct cs_a09270023ec48eca : pls::cs::Stream {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_a09270023ec48eca)||target==typeid(pls::cs::Stream)||pls::cs::Stream::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Close")return "M:java.io.WrappedSystemStream.Close";if(slot=="Flush")return "M:java.io.WrappedSystemStream.Flush";if(slot=="Read")return "M:java.io.WrappedSystemStream.Read(System.Byte[],System.Int32,System.Int32)";if(slot=="ReadByte")return "M:java.io.WrappedSystemStream.ReadByte";if(slot=="Seek")return "M:java.io.WrappedSystemStream.Seek(System.Int64,System.IO.SeekOrigin)";if(slot=="SetLength")return "M:java.io.WrappedSystemStream.SetLength(System.Int64)";if(slot=="Write")return "M:java.io.WrappedSystemStream.Write(System.Byte[],System.Int32,System.Int32)";if(slot=="WriteByte")return "M:java.io.WrappedSystemStream.WriteByte(System.Byte)";if(slot=="get_CanRead")return "M:java.io.WrappedSystemStream.get_CanRead";if(slot=="get_CanSeek")return "M:java.io.WrappedSystemStream.get_CanSeek";if(slot=="get_CanWrite")return "M:java.io.WrappedSystemStream.get_CanWrite";if(slot=="get_Length")return "M:java.io.WrappedSystemStream.get_Length";if(slot=="get_Position")return "M:java.io.WrappedSystemStream.get_Position";if(slot=="set_Position")return "M:java.io.WrappedSystemStream.set_Position(System.Int64)";return pls::cs::Stream::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.WrappedSystemStream";}
+static std::string source_managed_type_name(){return "java.io.WrappedSystemStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<cs_e7a5499b363ef51b> cs_39cd957faf78264b{};
 pls::cs::Ref<cs_ea324a0bbfe717fe> cs_929af7514695a90d{};
 std::int32_t cs_5e4e8e9b761e8c94{};
@@ -181,94 +191,116 @@ virtual std::int64_t get_Position();
 virtual void set_Position(std::int64_t v_value);
 };
 struct cs_7de6788b61a5af56 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_7de6788b61a5af56)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:java.lang.JInteger.ToString";if(slot=="Equals")return "M:java.lang.JInteger.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.lang.JInteger.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.lang.JInteger";}
+static std::string source_managed_type_name(){return "java.lang.JInteger";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 std::int32_t cs_159529d7b41663da{};
 virtual pls::cs::String ToString();
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
 struct cs_42d69496680e17fc : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_42d69496680e17fc)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.lang.JRuntime";}
+static std::string source_managed_type_name(){return "java.lang.JRuntime";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 };
 struct cs_a465028bea3432a3 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_a465028bea3432a3)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.JCalendar.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.util.JCalendar.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.util.JCalendar";}
+static std::string source_managed_type_name(){return "java.util.JCalendar";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<cs_66dbad5679f8ab87> cs_03197f755fcefa4b{};
 pls::cs::Ref<cs_f59223d2c773f078> cs_99f3f6ad5516299e{};
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
 struct cs_66dbad5679f8ab87 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_66dbad5679f8ab87)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.JDate.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.util.JDate.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.util.JDate";}
+static std::string source_managed_type_name(){return "java.util.JDate";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::DateTime cs_672aeddf6395a59c{};
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
 struct cs_c0fae45144034cf9 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_c0fae45144034cf9)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.JLocale.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.util.JLocale.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.util.JLocale";}
+static std::string source_managed_type_name(){return "java.util.JLocale";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::String cs_c8e01a4bd3e5d216{};
 pls::cs::String cs_c7b2df62ecfb4014{};
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
 struct cs_a0cf9aef6a251bfd : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_a0cf9aef6a251bfd)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.util.JRandom";}
+static std::string source_managed_type_name(){return "java.util.JRandom";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<pls::cs::Random> cs_51f4a63dee24d947{};
 };
 struct cs_f59223d2c773f078 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_f59223d2c773f078)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.util.JTimeZone";}
+static std::string source_managed_type_name(){return "java.util.JTimeZone";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::String cs_05e71bcde75517db{};
 std::int64_t cs_0350607f8ec43af6{};
 pls::cs::Ref<pls::cs::TimeZoneInfo> cs_59055747f3e8f843{};
 };
 template<typename T_T>
 struct cs_51222df74ac70bab : pls::cs::Object, cs_a0dc211eb3feb56d {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_51222df74ac70bab)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target)||target==typeid(cs_a0dc211eb3feb56d);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.Vector`1.Equals(System.Object)";if(slot=="ToString")return "M:java.util.Vector`1.ToString";if(slot=="cs_virtual_60122bb6c899278e")return "M:java.util.Vector`1.get_List";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return std::string("java.util.Vector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
+static std::string source_managed_type_name(){return std::string("java.util.Vector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_056e387f40164bd6{};
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual pls::cs::String ToString();
 virtual pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_virtual_60122bb6c899278e();
 };
 struct cs_e7d772862db62924 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_e7d772862db62924)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.common.cfg.Config";}
+static std::string source_managed_type_name(){return "kairo.common.cfg.Config";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 };
 struct cs_7254e4706a01e4e7 : pls::cs::ExceptionObject {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_7254e4706a01e4e7)||target==typeid(pls::cs::ExceptionObject)||pls::cs::ExceptionObject::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::ExceptionObject::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.io.ConnectionException";}
+static std::string source_managed_type_name(){return "kairo.unity.io.ConnectionException";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 };
 struct cs_3c64e1d398f2e00f : pls::cs::Object, cs_c4521f4960c4f908 {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_3c64e1d398f2e00f)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target)||target==typeid(cs_c4521f4960c4f908);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_8d925e3b30750eb6")return "M:kairo.unity.m3d4.util3d.Vector3D.Serialize(java.io.OutputStream)";if(slot=="cs_virtual_f2ab7f0a88763f04")return "M:kairo.unity.m3d4.util3d.Vector3D.Deserialize(java.io.InputStream)";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.m3d4.util3d.Vector3D";}
+static std::string source_managed_type_name(){return "kairo.unity.m3d4.util3d.Vector3D";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 float cs_5940b7db44d7fcc3{};
 float cs_3f971496b3e90e07{};
 float cs_992193a3ad58af68{};
@@ -276,10 +308,12 @@ virtual void cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_str
 virtual void cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream);
 };
 struct cs_922b87749168eb15 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_922b87749168eb15)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.Compressor+Node";}
+static std::string source_managed_type_name(){return "kairo.unity.util.Compressor+Node";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<cs_922b87749168eb15> cs_51d08ca6eed04eda{};
 pls::cs::Ref<cs_922b87749168eb15> cs_8e6817a8d663aa67{};
 pls::cs::Ref<cs_922b87749168eb15> cs_0d73049ca9cd4bf6{};
@@ -288,10 +322,12 @@ std::int32_t cs_57d6fb57c6af0de7{};
 };
 template<typename T_T>
 struct cs_67cd241ab51652f1 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_67cd241ab51652f1)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="GetHashCode")return "M:kairo.unity.util.FastVector`1.GetHashCode";if(slot=="ToString")return "M:kairo.unity.util.FastVector`1.ToString";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return std::string("kairo.unity.util.FastVector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
+static std::string source_managed_type_name(){return std::string("kairo.unity.util.FastVector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 std::int32_t cs_f025835c3cf7842a{};
 std::int32_t cs_965b7a32b9c12921{};
 pls::cs::Array<T_T> cs_6d298c7f8339f4aa{};
@@ -300,38 +336,46 @@ virtual std::int32_t GetHashCode();
 virtual pls::cs::String ToString();
 };
 struct cs_52158c8b20364c2b : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_52158c8b20364c2b)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.JarInflater";}
+static std::string source_managed_type_name(){return "kairo.unity.util.JarInflater";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_bfe2a01361163e7a>> cs_6f69af47bcfae216{};
 pls::cs::Array<std::uint8_t> cs_8f27992211ad5e96{};
 pls::cs::String cs_578ed5fb729c9567{};
 };
 struct cs_bfe2a01361163e7a : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_bfe2a01361163e7a)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.JarInflater+FileInfo";}
+static std::string source_managed_type_name(){return "kairo.unity.util.JarInflater+FileInfo";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::String cs_638e5d654c077b59{};
 std::int32_t cs_6ec368f1de920152{};
 std::int32_t cs_45a972d6cedcd20a{};
 std::uint8_t cs_83fbaf866783c8ce{};
 };
 struct cs_98f0a1bec2084c3c : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_98f0a1bec2084c3c)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.Language+LangPackFormat";}
+static std::string source_managed_type_name(){return "kairo.unity.util.Language+LangPackFormat";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::String cs_a0cee6b194388bb1{};
 char16_t cs_96513160b9f9c6b8{};
 char16_t cs_37e0eb7044938cba{};
 };
 struct cs_9487cb83e3a46e0a : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_9487cb83e3a46e0a)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.Language+LangPackRecord";}
+static std::string source_managed_type_name(){return "kairo.unity.util.Language+LangPackRecord";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 std::int32_t cs_c85df0bf60809784{};
 pls::cs::String cs_05293b75838ad9b4{};
 pls::cs::List<cs_ab1b1085a7ab32b9> cs_11bb01ff7e196717{};
@@ -348,10 +392,12 @@ std::int32_t cs_018ea348c0cf88c0{};
 pls::cs::Ref<cs_9487cb83e3a46e0a> cs_5043ee31a67ae639{};
 };
 struct cs_8c57b816bbc8fd6e : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_8c57b816bbc8fd6e)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.Property";}
+static std::string source_managed_type_name(){return "kairo.unity.util.Property";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Array<pls::cs::Ref<cs_8c57b816bbc8fd6e>> cs_4fa0b3a7eea3a844{};
 pls::cs::Array<std::int32_t> cs_72da38f2b646e254{};
 pls::cs::Array<std::int64_t> cs_cfccd28f4d6b847a{};
@@ -359,10 +405,12 @@ pls::cs::Array<pls::cs::String> cs_d5b37f60e20607b6{};
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_ba76615c0cb37783{};
 };
 struct cs_bd164c3c94a49e2a : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_bd164c3c94a49e2a)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:kairo.unity.util.SecureNumber.ToString";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureNumber.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.SecureNumber";}
+static std::string source_managed_type_name(){return "kairo.unity.util.SecureNumber";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 std::int64_t cs_7e5e9d5195f577e0{};
 std::int64_t cs_83418f44729261df{};
 std::int64_t cs_79a097054602f289{};
@@ -370,10 +418,12 @@ virtual pls::cs::String ToString();
 virtual std::int32_t GetHashCode();
 };
 struct cs_c20c229ea63037d8 : pls::cs::Object {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_c20c229ea63037d8)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return pls::cs::Object::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.SecureProperty";}
+static std::string source_managed_type_name(){return "kairo.unity.util.SecureProperty";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Array<pls::cs::Ref<cs_c20c229ea63037d8>> cs_3a492b4165f9d5db{};
 pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> cs_6747c51e21a34296{};
 pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> cs_1393912ba87bd2f6{};
@@ -381,40 +431,50 @@ pls::cs::Array<pls::cs::Ref<cs_bb652fbb61000386>> cs_4e32a5d73d9793f0{};
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_26072971e2305223{};
 };
 struct cs_3b41638e424b9ee0 : cs_e7a5499b363ef51b {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_3b41638e424b9ee0)||target==typeid(cs_e7a5499b363ef51b)||cs_e7a5499b363ef51b::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_bb7347310506b971")return "M:java.io.ByteArrayInputStream.Available";return cs_e7a5499b363ef51b::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.ByteArrayInputStream";}
+static std::string source_managed_type_name(){return "java.io.ByteArrayInputStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 virtual std::int32_t cs_virtual_bb7347310506b971();
 };
 struct cs_fb60578b3098a284 : cs_ea324a0bbfe717fe {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_fb60578b3098a284)||target==typeid(cs_ea324a0bbfe717fe)||cs_ea324a0bbfe717fe::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:java.io.ByteArrayOutputStream.Close";if(slot=="ToString")return "M:java.io.ByteArrayOutputStream.ToString";return cs_ea324a0bbfe717fe::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.ByteArrayOutputStream";}
+static std::string source_managed_type_name(){return "java.io.ByteArrayOutputStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 virtual void cs_virtual_0d912191800a0b86();
 virtual pls::cs::String ToString();
 };
 struct cs_8d93189702e4084b : cs_e7a5499b363ef51b {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_8d93189702e4084b)||target==typeid(cs_e7a5499b363ef51b)||cs_e7a5499b363ef51b::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_4546aef6e4846446")return "M:java.io.DataInputStream.Close";return cs_e7a5499b363ef51b::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.io.DataInputStream";}
+static std::string source_managed_type_name(){return "java.io.DataInputStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<pls::cs::BinaryReader> cs_783a5dc8c7385bc4{};
 virtual void cs_virtual_4546aef6e4846446();
 };
 struct cs_f8b20a4d1d9d695f : cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>> {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_f8b20a4d1d9d695f)||target==typeid(cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>)||cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>::source_reference_assignable(target)||target==typeid(cs_a0dc211eb3feb56d);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.Vector.Equals(System.Object)";return cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "java.util.Vector";}
+static std::string source_managed_type_name(){return "java.util.Vector";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 };
 struct cs_832d81e198eeeec2 : cs_ea324a0bbfe717fe {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_832d81e198eeeec2)||target==typeid(cs_ea324a0bbfe717fe)||cs_ea324a0bbfe717fe::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:kairo.unity.io.ByteListOutputStream.Close";if(slot=="cs_virtual_eeffa75bcd0cd73d")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[],System.Int32,System.Int32)";if(slot=="cs_virtual_109456b2dd9e2d77")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[])";if(slot=="cs_virtual_a2a7e1a6575cae4c")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Int32)";if(slot=="cs_virtual_2adf924bd0d7d65a")return "M:kairo.unity.io.ByteListOutputStream.Flush";return cs_ea324a0bbfe717fe::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.io.ByteListOutputStream";}
+static std::string source_managed_type_name(){return "kairo.unity.io.ByteListOutputStream";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_dc88a962e561cf72{};
 std::int32_t cs_96bf466f63c1692d{};
 std::int32_t cs_565b1ab091133717{};
@@ -426,32 +486,40 @@ virtual void cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b);
 virtual void cs_virtual_2adf924bd0d7d65a();
 };
 struct cs_15e3f7b692b3f380 : cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>> {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_15e3f7b692b3f380)||target==typeid(cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>)||cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.FastVector";}
+static std::string source_managed_type_name(){return "kairo.unity.util.FastVector";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 };
 struct cs_7fd3b635ed6929d0 : cs_bd164c3c94a49e2a {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_7fd3b635ed6929d0)||target==typeid(cs_bd164c3c94a49e2a)||cs_bd164c3c94a49e2a::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:kairo.unity.util.SecureInt.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureInt.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.SecureInt";}
+static std::string source_managed_type_name(){return "kairo.unity.util.SecureInt";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
 struct cs_924db3d974bae2af : cs_bd164c3c94a49e2a {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_924db3d974bae2af)||target==typeid(cs_bd164c3c94a49e2a)||cs_bd164c3c94a49e2a::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:kairo.unity.util.SecureLong.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureLong.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.SecureLong";}
+static std::string source_managed_type_name(){return "kairo.unity.util.SecureLong";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 virtual bool Equals(pls::cs::Ref<pls::cs::Object> const& v_obj);
 virtual std::int32_t GetHashCode();
 };
 struct cs_bb652fbb61000386 : cs_bd164c3c94a49e2a {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_bb652fbb61000386)||target==typeid(cs_bd164c3c94a49e2a)||cs_bd164c3c94a49e2a::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:kairo.unity.util.SecureString.ToString";if(slot=="Equals")return "M:kairo.unity.util.SecureString.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureString.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
-std::string managed_type_name()const override{return "kairo.unity.util.SecureString";}
+static std::string source_managed_type_name(){return "kairo.unity.util.SecureString";}
+std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::String cs_3a4ab2d19bbedee8{};
 pls::cs::Array<char16_t> cs_23af4da78e1ad81f{};
 pls::cs::Array<char16_t> cs_3af0cc4416bce0e0{};
@@ -1087,7 +1155,7 @@ return T_T{};
 }
 pls::cs::Ref<pls::cs::RuntimeType> v_typeFromHandle_191 = pls::cs::runtime_type_of<T_T>();
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<pls::cs::RuntimeType> { auto cs_receiver = pls::generated::cs_require(v_typeFromHandle_191)->get_Assembly(); auto cs_arg0 = ([&]() -> pls::cs::String { auto cs_arg0 = pls::generated::cs_require(v_typeFromHandle_191)->get_FullName(); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg2 = ([&]() -> std::int32_t { auto cs_left = (pls::generated::cs_require(v_typeFromHandle_191)->get_FullName()).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return pls::generated::cs_substring2(cs_arg0,cs_arg1,cs_arg2); }()); return pls::generated::cs_require(cs_receiver)->GetType(cs_arg0); }()); v_typeFromHandle_191 = cs_value; return cs_value; }());
-return pls::cs::unbox<T_T>(pls::cs::box(([&]() -> pls::cs::Ref<pls::cs::ArrayBase> { auto cs_arg0 = v_typeFromHandle_191; auto cs_arg1 = v_counts; auto cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_c751cd2e64c3775f(cs_arg0,cs_arg1,cs_arg2); }())));
+return pls::cs::unbox<T_T>(pls::cs::box(([&]() -> pls::cs::Ref<pls::cs::ArrayBase> { pls::cs::Ref<pls::cs::RuntimeType> cs_arg0 = v_typeFromHandle_191; pls::cs::Array<std::int32_t> cs_arg1 = v_counts; std::int32_t cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_c751cd2e64c3775f(cs_arg0,cs_arg1,cs_arg2); }())));
 }
 }
 // M:java.util.Vector`1.#ctor
@@ -1103,7 +1171,7 @@ void cs_946b70ecd88b233a_init(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this) {
 template<typename T_T>
 void cs_56f64dc33bbaf552(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_obj) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_51222df74ac70bab<T_T>>>(cs_this); auto cs_arg0 = v_obj; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_84f04a1c6da0e1ea(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_51222df74ac70bab<T_T>>>(cs_this); T_T cs_arg0 = v_obj; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_84f04a1c6da0e1ea(cs_receiver,cs_arg0); }());
 }
 }
 // M:java.util.Vector`1.AddElement(`0)
@@ -1237,7 +1305,7 @@ cs_this->cs_f025835c3cf7842a = pls::cs::cast_integral<std::int32_t>(std::uint64_
 template<typename T_T>
 void cs_7969ffc067486ca6(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_obj) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<T_T>>>(cs_this); auto cs_arg0 = v_obj; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b6a40aa7b6cac314(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<T_T>>>(cs_this); T_T cs_arg0 = v_obj; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b6a40aa7b6cac314(cs_receiver,cs_arg0); }());
 }
 }
 // M:kairo.unity.util.FastVector`1.AddElement(`0)
@@ -1247,12 +1315,12 @@ void cs_b6a40aa7b6cac314(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_ob
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); return (cs_left > cs_right); }())) {
 pls::cs::Array<T_T> v_dst_750 = pls::cs::Array<T_T>::make(([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f025835c3cf7842a; }()); return pls::cs::add_i32(cs_left,cs_right); }()));
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
-([&]() -> void { auto cs_arg0 = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg2 = pls::cs::box(v_dst_750); auto cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg4 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
+([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(v_dst_750); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg4 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 }
 ([&]() { auto cs_target = cs_this; auto cs_value = v_dst_750; pls::generated::cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); pls::generated::cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
 }
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_value = v_obj; cs_target.at(cs_index) = cs_value; return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_value = v_obj;cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 ([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::add_i32(cs_old,1); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
 }
 }
@@ -1261,7 +1329,7 @@ template<typename T_T>
 bool cs_c08c9d3910849f27(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_elem) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
 for (std::int32_t v_i_1479 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_1479; auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_1479; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_1479 = cs_new; return cs_old; }())) {
-if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.at(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.at(cs_index); }())); return pls::generated::cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
+if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.get_Item(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1479; return cs_array.get_Item(cs_index); }())); return pls::generated::cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
 return true;
 }
 }
@@ -1272,14 +1340,14 @@ return false;
 template<typename T_T>
 T_T cs_4b357a5c06369f9d(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,std::int32_t v_index) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; return cs_array.at(cs_index); }());
+return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; return cs_array.get_Item(cs_index); }());
 }
 }
 // M:kairo.unity.util.FastVector`1.FirstElement
 template<typename T_T>
 T_T cs_656627fbbe890703(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.at(cs_index); }());
+return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }());
 }
 }
 // M:kairo.unity.util.FastVector`1.GetHashCode
@@ -1294,7 +1362,7 @@ template<typename T_T>
 std::int32_t cs_5149fb87b013384f(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_elem) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
 for (std::int32_t v_i_1713 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_1713; auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_1713; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_1713 = cs_new; return cs_old; }())) {
-if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.at(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.at(cs_index); }())); return pls::generated::cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
+if ((([&]() { auto cs_left = pls::cs::box(pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.get_Item(cs_index); }()))); auto cs_right = pls::cs::box(pls::cs::box(v_elem)); return cs_left == cs_right; }()) || (((pls::cs::box(v_elem) != pls::cs::Ref<pls::cs::Object>{}) && ([&]() { auto cs_receiver = pls::cs::box(v_elem); auto cs_argument = pls::cs::box(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_1713; return cs_array.get_Item(cs_index); }())); return pls::generated::cs_require(cs_receiver)->Equals(cs_argument); }()))))) {
 return v_i_1713;
 }
 }
@@ -1308,15 +1376,15 @@ void cs_58bd30f4afc5bccd(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_ob
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); return (cs_left > cs_right); }())) {
 pls::cs::Array<T_T> v_dst_3382 = pls::cs::Array<T_T>::make(([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f025835c3cf7842a; }()); return pls::cs::add_i32(cs_left,cs_right); }()));
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
-([&]() -> void { auto cs_arg0 = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg2 = pls::cs::box(v_dst_3382); auto cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg4 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
+([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(v_dst_3382); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg4 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }()); cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 }
 ([&]() { auto cs_target = cs_this; auto cs_value = v_dst_3382; pls::generated::cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); pls::generated::cs_require(cs_target)->cs_c59f41a6c3bb514a = cs_value; return cs_value; }());
 }
 for (std::int32_t v_num_3592 = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); ([&]() -> bool { auto cs_left = v_num_3592; auto cs_right = v_index; return (cs_left >= cs_right); }()); ([&]() { auto cs_old = v_num_3592; auto cs_new = pls::cs::sub_i32(cs_old,1); v_num_3592 = cs_new; return cs_old; }())) {
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_num_3592; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); auto cs_value = ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_num_3592; return cs_array.at(cs_index); }()); cs_target.at(cs_index) = cs_value; return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_num_3592; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); auto cs_value = ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_num_3592; return cs_array.get_Item(cs_index); }());cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; auto cs_value = v_obj; cs_target.at(cs_index) = cs_value; return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; auto cs_value = v_obj;cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 ([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::add_i32(cs_old,1); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
 }
 }
@@ -1324,16 +1392,16 @@ for (std::int32_t v_num_3592 = ([&]() -> std::int32_t { auto cs_left = ([&]() { 
 template<typename T_T>
 T_T cs_35a9e1dd2dec15e2(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return cs_array.at(cs_index); }());
+return ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return cs_array.get_Item(cs_index); }());
 }
 }
 // M:kairo.unity.util.FastVector`1.RemoveAllElements
 template<typename T_T>
 void cs_8d9a155f846a51f0(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-if (([&]() { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_right = pls::cs::Array<T_T>{}; return cs_left != cs_right; }())) {
+if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())); auto cs_right = pls::cs::box(pls::cs::Array<T_T>{}); return cs_left != cs_right; }())) {
 for (std::int32_t v_i_4689 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_4689; auto cs_right = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }())).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_4689; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_4689 = cs_new; return cs_old; }())) {
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_4689; auto cs_value = T_T{}; cs_target.at(cs_index) = cs_value; return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_4689; auto cs_value = T_T{};cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<T_T>{}; pls::generated::cs_require(cs_target)->cs_6d298c7f8339f4aa = cs_value; return cs_value; }());
 }
@@ -1352,11 +1420,11 @@ void cs_8e64ae9ae7382110(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!c
 template<typename T_T>
 bool cs_dcec283a3ce35483(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,T_T v_obj) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-std::int32_t v_num_4426 = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<T_T>>>(cs_this); auto cs_arg0 = v_obj; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_5149fb87b013384f(cs_receiver,cs_arg0); }());
+std::int32_t v_num_4426 = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<T_T>>>(cs_this); T_T cs_arg0 = v_obj; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_5149fb87b013384f(cs_receiver,cs_arg0); }());
 if (([&]() -> bool { auto cs_left = v_num_4426; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left == cs_right); }())) {
 return false;
 }
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<T_T>>>(cs_this); auto cs_arg0 = v_num_4426; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_cc1549d9ed88f4a6(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<T_T>>>(cs_this); std::int32_t cs_arg0 = v_num_4426; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_cc1549d9ed88f4a6(cs_receiver,cs_arg0); }());
 return true;
 }
 }
@@ -1364,9 +1432,9 @@ return true;
 template<typename T_T>
 void cs_cc1549d9ed88f4a6(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this,std::int32_t v_index) { if(!cs_this)throw pls::cs::NullReferenceException();
 {
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; auto cs_value = T_T{}; cs_target.at(cs_index) = cs_value; return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_index; auto cs_value = T_T{};cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 for (std::int32_t v_i_5118 = ([&]() -> std::int32_t { auto cs_left = v_index; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); ([&]() -> bool { auto cs_left = v_i_5118; auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_965b7a32b9c12921; }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_5118; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_5118 = cs_new; return cs_old; }())) {
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_i_5118; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); auto cs_value = ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_5118; return cs_array.at(cs_index); }()); cs_target.at(cs_index) = cs_value; return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_i_5118; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); auto cs_value = ([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6d298c7f8339f4aa; }()); auto cs_index = v_i_5118; return cs_array.get_Item(cs_index); }());cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
 ([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921; auto cs_new = pls::cs::sub_i32(cs_old,1); pls::generated::cs_require(cs_target)->cs_965b7a32b9c12921 = cs_new; return cs_old; }());
 }

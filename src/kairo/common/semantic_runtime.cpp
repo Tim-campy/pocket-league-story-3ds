@@ -124,6 +124,10 @@ void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<
     if(source_index<0||dest_index<0||count<0)throw ArgumentOutOfRangeException();
     if(static_cast<std::int64_t>(source_index)+count>source->get_Length()||static_cast<std::int64_t>(dest_index)+count>dest->get_Length())throw ArgumentException();
     if(source->copy_same_to(*dest,source_index,dest_index,count))return;
+    if(source->reference_element_is_a(typeid(Object))&&dest->reference_element_is_a(typeid(Object))){
+        try{for(std::int32_t i=0;i<count;++i)dest->reference_item(dest_index+i,source->reference_item(source_index+i));}
+        catch(const ArrayTypeMismatchException&){throw InvalidCastException();}return;
+    }
     if(source->element_type()==typeid(float)&&dest->element_type()==typeid(std::int32_t)){
         if(count==0&&runtime_profile==RuntimeProfile::UnityMono265)return;
         throw ArrayTypeMismatchException();

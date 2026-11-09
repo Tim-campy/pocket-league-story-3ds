@@ -12464,7 +12464,7 @@
   "generated_chunks": [
     {
       "file": "portable_generated.hpp",
-      "bytes": 134262
+      "bytes": 144565
     },
     {
       "file": "portable_generated.cpp",
@@ -12472,15 +12472,15 @@
     },
     {
       "file": "portable_generated_cpp_part_0000.inc",
-      "bytes": 899901
+      "bytes": 899990
     },
     {
       "file": "portable_generated_cpp_part_0001.inc",
-      "bytes": 899985
+      "bytes": 899971
     },
     {
       "file": "portable_generated_cpp_part_0002.inc",
-      "bytes": 81892
+      "bytes": 104354
     }
   ],
   "oracle_native_setup": "pls::kairo::install_globalization_provider({[](){return pls::cs::String(u\"Fixture/Zone\");},[](const pls::cs::String&id){if(id.is_null())throw pls::cs::ArgumentNullException();return id==pls::cs::String(u\"Fixture/Zone\")?32400000:0;},[](){return pls::cs::Array<pls::cs::String>::from({pls::cs::String(u\"en\"),pls::cs::String(u\"US\")});}});struct FixtureApp:pls::kairo::IApplication{void OnUpdate()override{}void OnDraw()override{}pls::cs::Ref<pls::kairo::FormManagerBase> GetFormManager()override{return {};}};auto fixtureApp=pls::cs::make_ref<FixtureApp>();fixtureApp->source_Init(fixtureApp);fixtureApp->host_configure(240,280,{},[](){});",
@@ -13289,8 +13289,8 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "5a19975b0664ae85008e1d5a273cfe6d1ccb95bcea69baa23a1144f3ce993e87",
-    "driver_sha256": "00ac1505f18cad102cae6671f2889f6c49ec1a06300cae6f6418766ad64593b3"
+    "translator_source_sha256": "514688352117df393e86b75bfef0f981f2991bead595541c5084acac248fb557",
+    "driver_sha256": "cd42306a41d246efa8bef1c67a28d7d743a4a15290720a38f46a04c514248ee1"
   },
   "source_manifest": [
     {
@@ -13973,7 +13973,7 @@
     },
     "object": {
       "path": "build/translator/native/KairoLibrary.obj",
-      "sha256": "482c5abe24180bfbb60c33fed163e19ed7820a445e1a591b5be6ed1d6a021f3f"
+      "sha256": "f0c983e27721893023fbe0b274f9a529dca5cfd2de7962ec759e313b90c9ff99"
     },
     "command": [
       "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
@@ -13993,40 +13993,41 @@
       "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated.cpp"
     ],
     "inputs": {
-      "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
+      "src/kairo/api/application.hpp": "280d2510630a9eccb8d887cccc44249141ee5ca65a8a1d6775706c8ac703bd4d",
       "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
       "src/kairo/api/bootstrap.hpp": "30d97bada49ba6093e9c01329ddfb8de79a9440afe20b93b8bf388130fad4b83",
-      "src/kairo/api/canvas.hpp": "302f78420eab27c2246980748700967f13a69f07e70c5eed89949d49ce8f44df",
-      "src/kairo/api/debug_input.hpp": "a5a942c732f63d6bd9f757c1e4702cca9d001ee5b07e8ae23a5bf2d8d4d1eb31",
+      "src/kairo/api/canvas.hpp": "ac806a6493c2b1f55449bb33fea804ae6e26415d52089a749a219c17831a12fd",
+      "src/kairo/api/debug_input.hpp": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918",
       "src/kairo/api/dialog_service.hpp": "76af044e7b00e41cbef4f5c7e407fca5d111fcc57c9acda01315af15b9e9947e",
       "src/kairo/api/display_metrics.hpp": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70",
-      "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
+      "src/kairo/api/font.hpp": "9b850acb6dff45b6e983ebb158e1188cf8cd111dd3ac2be7efb3ca2d51db1cf3",
       "src/kairo/api/forms.hpp": "e638ba99874ba14a9f91aa5c50acea6de78aad0c20083cbaabf3fabe2c57097a",
       "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
       "src/kairo/api/forms_execution.hpp": "438873bd6f8525f0b821f9b277da122e09c8fb936b1cdb5d015abe575ddbb028",
       "src/kairo/api/game_entry.hpp": "6736ddf6d64fba58b99b09a0a8c520915c96c0616675c2c1d2567b3bdfa102a2",
       "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
-      "src/kairo/api/graphics.hpp": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f",
+      "src/kairo/api/graphics.hpp": "02c9a18ed75a55924b98ab0224817be7c81aaec7ab00b042a38b882e079c5509",
       "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
       "src/kairo/api/offline_http.hpp": "c39eed01b83d05b14a8156903cb76fdc504b5ace449cc02341653bb1757b714d",
       "src/kairo/api/platform.hpp": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1",
+      "src/kairo/api/runtime_memory.hpp": "f7259db3b1b33cf116351b6c91091f813e2e31040cffb2f3b603c177d620076c",
       "src/kairo/api/services_managed.hpp": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5",
       "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
       "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
-      "src/kairo/api/system.hpp": "aa18b85e1ca16a943f4818a206d69f53b9a5bd3c52026505fa34144be95a23e3",
+      "src/kairo/api/system.hpp": "e1635a68b0bea9a832fbde829ed10d34814c6158195c24b86facea667c837f05",
       "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
       "src/kairo/api/vector2.hpp": "09ab95478fdd27af71e0a03d0de8e3084c6388b7842d86ea6915ef68204315e9",
       "src/kairo/api/vector3.hpp": "f95494b057b1f7a43f8e53efc9942641c592d32030f7f35c592fcce8407e4707",
       "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
       "src/kairo/common/baked_arrays.hpp": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf",
       "src/kairo/common/generated/portable_generated.cpp": "0e084a10858ff3c8c1f2d47d9c1d9aeb85aaa7302df3946ea314ee0c741f50e0",
-      "src/kairo/common/generated/portable_generated.hpp": "63b05b2d9ba13b39b06662ddfe997a43533f2df1af5f15dc6d5adfce0aa5a1cf",
-      "src/kairo/common/generated/portable_generated_cpp_part_0000.inc": "b2fd9978ae058da98fa6dc46489996e29f20e0d634dce25ce254d75d43189e44",
-      "src/kairo/common/generated/portable_generated_cpp_part_0001.inc": "3453d07fb4c9414161987db7b37cea530d9631e804e7bfab2046934c1a60d059",
-      "src/kairo/common/generated/portable_generated_cpp_part_0002.inc": "ca41268ed420ece9262c2c0478e4a6c58550abeb47c96cd2729147f92b27e160",
-      "src/kairo/common/managed_collation.hpp": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d",
+      "src/kairo/common/generated/portable_generated.hpp": "c308d988524e5cb680a2b7c739a94a503e5a412aef717b2777b4b073c20abb93",
+      "src/kairo/common/generated/portable_generated_cpp_part_0000.inc": "eb3e75d3c0277393ee2277e62e708dc20b7deba1a11da55c11d3df9fac3f9e62",
+      "src/kairo/common/generated/portable_generated_cpp_part_0001.inc": "c3e681543af41f4911cc37e6b60c1e085ec7fec46eba8aed92e163915e21ac4c",
+      "src/kairo/common/generated/portable_generated_cpp_part_0002.inc": "5fdaac8e802070cb463a7a8438544bdd3c8050a9c8f110d60eac794c07647c69",
+      "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
       "src/kairo/common/managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
-      "src/kairo/common/managed_dictionary.hpp": "42cb1b3df9c690ba4225d86cce74157a04ee9ef9c11d4c6244b4d3c8f76984f8",
+      "src/kairo/common/managed_dictionary.hpp": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab",
       "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66",
       "src/kairo/common/managed_exceptions.hpp": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b",
       "src/kairo/common/managed_guid_uri.hpp": "5fc456a9f8741dca1f28d7a4db3faa5c6e2bfce330a77494494ce8328c22b64e",
@@ -14037,22 +14038,23 @@
       "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
       "src/kairo/common/managed_stream_reader.hpp": "96e53adda06be397ec8372a91ab7045358e88866ea5a017acb4eaf215c8ae538",
       "src/kairo/common/managed_streams.hpp": "ef93cc1d080d67a78c4718efd2ea260e31ecf4bdf41b4db1191cd398077d6c7d",
-      "src/kairo/common/managed_string_ops.hpp": "f4b80433baa859e13fd2f860fccef1f9f723a165fc8a69eaac376292ec0a9525",
+      "src/kairo/common/managed_string_ops.hpp": "48b397e67a19e92784a66aa8c6d8a3f51500b3ba848d8180571fd64759b3647e",
       "src/kairo/common/managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
       "src/kairo/common/managed_thread.hpp": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b",
       "src/kairo/common/managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
-      "src/kairo/common/managed_type_init.hpp": "2d54016e820fe8e9356a24b28ef72e8d30ce266850c11daccd14fb008ab406d2",
+      "src/kairo/common/managed_type_init.hpp": "950dbc37e6f92b64b49b0e2018090f8cbe0f0eec929826271e7ab53fef164681",
       "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
       "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
-      "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+      "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
       "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
       "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
       "src/kairo/platform/sdl/audio.hpp": "3924ab5bdad7e14e2ea50b1578ac9780bc4e111649424ae0988a4631378c0ad8",
-      "src/kairo/platform/sdl/backend.hpp": "81cf34cc2fc084428aef4eb4ea6f080bbe98047e429de15b9f35955105281d1e",
-      "src/kairo/platform/sdl/debug_input.hpp": "858d11a2fcbd123f72f37726010d22241b49195fc7309ae798adc72a36fc7bd9",
+      "src/kairo/platform/sdl/backend.hpp": "ab187a6cd19a2a75e7e50b8a326e6ecd6df1d77d5da3bbfc4f0006b79395a5be",
+      "src/kairo/platform/sdl/debug_input.hpp": "16f336aef15e5c9cff125f1c59a89f4b4dd1ce3e219f1e2a4fa8e83173e9a218",
       "src/kairo/platform/sdl/dialog.hpp": "50ed8ff49fe1b27b83dfdf2462274cf283ed85dec0e1b6c4c5f2fe8a76d9c189",
       "src/kairo/platform/sdl/font.hpp": "45e78aaa49c5ae6a0b17dab6c49a1fc7d7135b203e25adf1a52c78890261d8dd",
       "src/kairo/platform/sdl/globalization.hpp": "9a5f11c69a8a41c03cc026741da7d4d6c7ef5d95afe94d228f2630871669c2d7",
+      "src/kairo/platform/sdl/runtime_memory.hpp": "7569bdc728888006763d32a2b8e10596205354529e819f7f0b745f6b6a7ae549",
       "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706"
     }
   },
@@ -14067,19 +14069,19 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated.hpp",
-      "sha256": "63b05b2d9ba13b39b06662ddfe997a43533f2df1af5f15dc6d5adfce0aa5a1cf"
+      "sha256": "c308d988524e5cb680a2b7c739a94a503e5a412aef717b2777b4b073c20abb93"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_cpp_part_0000.inc",
-      "sha256": "b2fd9978ae058da98fa6dc46489996e29f20e0d634dce25ce254d75d43189e44"
+      "sha256": "eb3e75d3c0277393ee2277e62e708dc20b7deba1a11da55c11d3df9fac3f9e62"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_cpp_part_0001.inc",
-      "sha256": "3453d07fb4c9414161987db7b37cea530d9631e804e7bfab2046934c1a60d059"
+      "sha256": "c3e681543af41f4911cc37e6b60c1e085ec7fec46eba8aed92e163915e21ac4c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_cpp_part_0002.inc",
-      "sha256": "ca41268ed420ece9262c2c0478e4a6c58550abeb47c96cd2729147f92b27e160"
+      "sha256": "5fdaac8e802070cb463a7a8438544bdd3c8050a9c8f110d60eac794c07647c69"
     }
   ]
 }

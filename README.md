@@ -21,10 +21,10 @@ Corrigir o tradutor e regenerar seus arquivos; nunca editar `src/game/` ou os fo
 
 - [Fronteira](docs/boundary.md): 775 símbolos KairoLibrary — 254 portáveis, 452 a reimplementar, 69 a remover — e 18 símbolos UnityEngine diretos. Os 254 símbolos portáveis incluem tipos/campos/propriedades: não são 254 métodos.
 - [Contrato do tradutor](docs/translator.md): UTF-16, overflow definido, avaliação ordenada, exceções, classes, capturas e limites atuais. Os 123 SyntaxKinds medidos não estão todos implementados.
-- [Serviços offline](docs/design/services.md): registro local com identificador de aparelho persistente; cobrança indisponível preservando saves, sem concessões; anúncios, licenciamento e notificações removidos. Dezoito das 53 políticas foram alcançadas na emissão; sua execução no jogo ainda aguarda o boot.
+- [Serviços offline](docs/design/services.md): registro local com identificador de aparelho persistente; cobrança indisponível preservando saves, sem concessões; anúncios, licenciamento e notificações removidos. 27 das 53 políticas foram alcançadas na emissão; sua execução no jogo ainda aguarda o boot.
 - [Assets](docs/assets.md): inventário, formatos e estimativas; [MAP/CSV](docs/notes/phase2-legacy-assets.md) identificados sem publicar conteúdo.
 - [Toolchain e reprodução](docs/toolchain.md). Não há backend 3DS nem decisão sobre telas/controles nesta fase.
-- [Consolidação de 1.220 corpos](docs/notes/checkpoint-1220.md): 84 checks aprovados; 110 corpos adicionais e zero perdas frente a cde8988. Compilação e fixtures não equivalem a título/menu executados.
+- [Consolidação de 1.220 corpos](docs/notes/checkpoint-1220.md): os 110 corpos locais foram verificados e publicados antes da continuação. O [checkpoint de 1.676 corpos](docs/notes/checkpoint-1676.md) e o [diário do boot](docs/notes/phase2-boot-integration-20261109.md) registram os diagnósticos Release, correções e limitações. Compilação e fixtures não equivalem a título/menu executados.
 
 ## Pipeline local e testes
 
@@ -48,7 +48,7 @@ python tools/build-pc --fixtures-only
 python tools/build-pc --fixtures-only --asset-readback --apk 'CAMINHO_DO_SEU_APK'
 ```
 
-Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e tenta compilar e ligar o jogo gerado; os callbacks ainda sem corpo impedem o link, sem stubs de menu. FreeType e o mixer Vorbis já rasterizam as fontes e reproduzem áudio em streaming nos testes nativos; o boot continua pendente. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
+Esses comandos executam fixtures, não iniciam o jogo. O build normal exige o APK e tenta compilar e ligar o jogo gerado; slots virtuais ainda sem corpo impedem o link. Os quatro callbacks de Main já são traduzidos. As execuções diagnósticas usam cópias privadas com armadilhas fatais identificadas, sem criar stubs de menu ou promover métodos a runs. FreeType e o mixer Vorbis já rasterizam as fontes e reproduzem áudio em streaming nos testes nativos; o boot continua pendente. Testes diferenciais e comandos do tradutor estão descritos na toolchain e no contrato semântico. As DLLs de API originais são lidas externamente apenas pelo front-end; não são copiadas nem vinculadas ao port.
 
 FreeType, libogg e libvorbis foram autorizados e preparados localmente, sem instalação global. O [catálogo privado](docs/notes/phase2-private-catalog.md) associa recursos a identificadores e mantém os inicializadores numéricos classificados fora do C++ público. Armazenamento, entrada, formulários e som têm [provas separadas](docs/notes/phase2-storage-input-ui.md); isso não comprova sua execução dentro do jogo.
 

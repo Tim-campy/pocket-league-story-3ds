@@ -8,6 +8,21 @@ namespace {const assets::Catalog* catalog{};
 bool alpha_format(Image::Format f){return f!=Image::Format::RGB24&&f!=Image::Format::RGB565;}
 std::array<std::uint8_t,4> channels(std::int32_t color){auto n=std::uint32_t(color);return {std::uint8_t(n>>16),std::uint8_t(n>>8),std::uint8_t(n),std::uint8_t(n>>24)};}
 std::int32_t coord(float v){return cs::conv_i32(v);}
+using Affine=std::array<float,9>;
+constexpr Affine identity{1,0,0,0,1,0,0,0,1};
+Affine concat(const Affine& a,const Affine& b){Affine result{};for(int j=0;j<3;++j)for(int k=0;k<3;++k)for(int l=0;l<3;++l)result[std::size_t(j*3+k)]+=a[std::size_t(j*3+l)]*b[std::size_t(l*3+k)];return result;}
+template<class F>void quad(const Affine& m,float x,float y,float w,float h,int width,int height,F&& pixel){
+    const auto point=[&](float px,float py){return std::array<float,2>{m[0]*px+m[3]*py+m[6],m[1]*px+m[4]*py+m[7]};};
+    const auto a=point(x,y),b=point(x+w,y),c=point(x,y+h),d=point(x+w,y+h);
+    for(const auto& p:{a,b,c,d})if(!std::isfinite(p[0])||!std::isfinite(p[1]))return;
+    const float dx=b[0]-a[0],dy=b[1]-a[1],ex=c[0]-a[0],ey=c[1]-a[1],det=dx*ey-dy*ex;
+    if(det==0||!std::isfinite(det))return;
+    const auto left=int(std::clamp(std::ceil(std::min({a[0],b[0],c[0],d[0]})-0.5f),0.0f,float(width)));
+    const auto top=int(std::clamp(std::ceil(std::min({a[1],b[1],c[1],d[1]})-0.5f),0.0f,float(height)));
+    const auto right=int(std::clamp(std::ceil(std::max({a[0],b[0],c[0],d[0]})-0.5f),0.0f,float(width)));
+    const auto bottom=int(std::clamp(std::ceil(std::max({a[1],b[1],c[1],d[1]})-0.5f),0.0f,float(height)));
+    for(int yy=top;yy<bottom;++yy)for(int xx=left;xx<right;++xx){const float px=float(xx)+0.5f-a[0],py=float(yy)+0.5f-a[1],u=(px*ey-py*ex)/det,v=(dx*py-dy*px)/det;if(u>=0&&u<1&&v>=0&&v<1)pixel(xx,yy,u,v);}
+}
 }
 void install_asset_catalog(const assets::Catalog* value){catalog=value;assets::install(value);}
 cs::Ref<Image> Image::CreateImage(std::int32_t width,std::int32_t height,Format format,Filter filter){
@@ -51,10 +66,26 @@ void Graphics::ResetRender(){
     // Graphics.ResetRender: reset the states represented by the CPU backend;
     // construction/reset never publishes Graphics.current_. Only Canvas does.
     clips_.clear();origins_.clear();modes_.clear();fonts_.clear();
+    blend_stack_.clear();SetBlendMode(0);
+    clip_enabled_stack_.clear();SetClipEnable(is_gui_);
+    auto_text_layout_stack_.clear();
+    fontScaleOffsetEnable_=true;
+    matrix_index_=-1;local_coordinate_count_=0;flip_mode_=0;
+    local_coordinate_matrix_=identity;backup_world_.clear();
     Font::UnlockLocalizeSetting();Font::ClearLocalizeSettings();
     font_->SetFace(2);font_->SetSize(0);font_->SetStyle(0);
     color_=GetColorOfRGB(0,0,0);origin_x_=origin_y_=0;scale_=100.0f;
     world_={1,0,0,0,1,0,0,0,1};mode_={0,255,0};ClearRenderRect();
+}
+void Graphics::BeginGLRender(bool clip_enable){
+    if(!is_gui_)return;
+    if(gl_render_)FlushGLRender();else gl_render_=true;
+    gl_render_count_=cs::add_i32(gl_render_count_,1);PushClipEnable(clip_enable);
+}
+void Graphics::EndGLRender(bool force){
+    if(!is_gui_||!gl_render_)return;
+    PopClipEnable();gl_render_count_=cs::sub_i32(gl_render_count_,1);
+    if(gl_render_count_<=0||force){FlushGLRender(false);gl_render_count_=0;gl_render_=false;}
 }
 void Graphics::SetFont(cs::Ref<Font> font){font_->Copy(cs::nonnull(font));font_->AdjustFontSize(GetScale());}
 cs::Ref<Font> Graphics::GetFont(cs::Ref<Font> copy){if(!copy)return cs::make_ref<Font>(font_);copy->Copy(font_);return copy;}
@@ -65,8 +96,12 @@ std::int32_t Graphics::StringWidth(cs::String text){return font_->StringWidth(te
 void Graphics::DrawString(cs::String text,float x,float y){DrawString(text,x,y,17);}
 void Graphics::DrawString(cs::String text,float x,float y,std::int32_t anchor){
     text=translate_text(text);const auto& content=text.code_units();
-    if(auto_text_layout_&&content.find(u'<')!=std::u16string::npos)throw cs::NotSupportedException("TextLayout markup requires the translated layout engine");
+    if((PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos)||(lineSpacing_!=0&&content.find(u'\n')!=std::u16string::npos)){draw_markup(std::static_pointer_cast<Graphics>(shared_from_this()),text,x,y,anchor);return;}
     int previous=-1;if(font_->IsNeedLocalizeScale()){previous=font_->GetSize();auto height=font_->GetHeight();font_->SetSize(font_->GetLocalizeScale());if((anchor&0x60)==0)y+=float(height-font_->GetHeight())/2.0f;Font::LockLocalizeSetting();}
+    cs::run_finally([&]{DrawPreparedString(text,x,y,anchor);},[&]{if(previous!=-1){Font::UnlockLocalizeSetting();font_->SetSize(previous);}});
+}
+void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t anchor){
+    const auto& content=text.code_units();const bool transformed=begin_render_matrix(x,y);
     cs::run_finally([&]{
         if(anchor&2)x-=font_->StringWidthF(text)/2.0f;else if(anchor&4)x-=font_->StringWidthF(text);
         if(anchor&32)y-=float(font_->GetHeight())/2.0f;else if(anchor&64)y-=float(font_->GetHeight());
@@ -78,7 +113,7 @@ void Graphics::DrawString(cs::String text,float x,float y,std::int32_t anchor){
             for(int gy=0;gy<glyph.height;++gy)for(int gx=0;gx<glyph.width;++gx){auto value=tint;value[3]=std::uint8_t(unsigned(tint[3])*glyph.rgba8[(std::size_t(gy)*glyph.width+gx)*4+3]/255);pixel(coord(cursor+float(glyph.left+gx)),coord(baseline-float(glyph.top)+float(gy)),value);}
             cursor+=glyph.advance_x;previous_glyph=glyph.glyph_index;
         }
-    },[&]{if(previous!=-1){Font::UnlockLocalizeSetting();font_->SetSize(previous);}});
+    },[&]{if(transformed)end_render_matrix();});
 }
 std::int32_t Graphics::GetColorOfRGB(std::int32_t r,std::int32_t g,std::int32_t b){return GetColorOfRGB(r,g,b,255);}
 std::int32_t Graphics::GetColorOfRGB(std::int32_t r,std::int32_t g,std::int32_t b,std::int32_t a){
@@ -99,8 +134,34 @@ void Graphics::update_world(){
     if(std::isnan(factor))throw cs::ArgumentException();
     for(int i=0;i<6;++i)world_[i]*=factor;
     translate(float(origin_x_),float(origin_y_));
+    update_screen();
 }
-std::array<float,2> Graphics::point(float x,float y)const{return {world_[0]*x+world_[3]*y+world_[6],world_[1]*x+world_[4]*y+world_[7]};}
+void Graphics::update_screen(){auto local=matrix_index_<0?identity:concat(matrix_stack_[std::size_t(matrix_index_)][0],matrix_stack_[std::size_t(matrix_index_)][1]);screen_=concat(local,world_);}
+void Graphics::SetMatrixValues(cs::Array<float> values){auto value=identity;if(!values.is_null())for(int i=0;i<9;++i)value[std::size_t(i)]=values.at(i);if(matrix_index_<0)world_=value;else matrix_stack_[std::size_t(matrix_index_)][0]=value;update_screen();}
+void Graphics::PushMatrixValues(cs::Array<float> values){
+    matrix_index_=cs::add_i32(matrix_index_,1);if(std::size_t(matrix_index_)>=matrix_stack_.size())matrix_stack_.resize(std::size_t(matrix_index_)+1,{identity,identity});
+    matrix_stack_[std::size_t(matrix_index_)][1]=matrix_index_==0?identity:concat(matrix_stack_[std::size_t(matrix_index_-1)][0],matrix_stack_[std::size_t(matrix_index_-1)][1]);SetMatrixValues(values);
+}
+void Graphics::PopMatrix(){matrix_index_=std::max(-1,cs::sub_i32(matrix_index_,1));update_screen();}
+void Graphics::BeginLocalCoordination(float& x,float& y){
+    if(!CheckLocalMatrix())return;local_coordinate_count_=cs::add_i32(local_coordinate_count_,1);
+    auto value=cs::Array<float>::from({1,0,0,0,1,0,x,y,1});
+    if(local_coordinate_count_==1){local_coordinate_matrix_=identity;local_coordinate_matrix_[6]=x;local_coordinate_matrix_[7]=y;update_screen();}else PushMatrixValues(value);x=y=0;
+}
+void Graphics::BeginLocalCoordination(std::int32_t& x,std::int32_t& y){float fx=float(x),fy=float(y);BeginLocalCoordination(fx,fy);if(CheckLocalMatrix()){x=0;y=0;}}
+void Graphics::EndLocalCoordination(){local_coordinate_count_=cs::sub_i32(local_coordinate_count_,1);if(local_coordinate_count_<=0)local_coordinate_count_=0;else PopMatrix();}
+bool Graphics::begin_render_matrix(float& x,float& y){
+    if(!CheckLocalMatrix())return false;backup_world_.push_back(world_);
+    if(local_coordinate_count_==0){world_[6]+=world_[0]*x+world_[3]*y;world_[7]+=world_[1]*x+world_[4]*y;world_[8]+=world_[2]*x+world_[5]*y;update_screen();}
+    else{world_=concat(local_coordinate_matrix_,world_);PushMatrixValues(cs::Array<float>::from({1,0,0,0,1,0,x,y,1}));}
+    x=y=0;return true;
+}
+void Graphics::end_render_matrix(){if(backup_world_.empty())return;world_=backup_world_.back();backup_world_.pop_back();if(local_coordinate_count_==0)update_screen();else PopMatrix();}
+cs::Array<float> Graphics::GetMatrixValues(std::int32_t mode)const{
+    Affine value;if(mode==0)value=matrix_index_<0?world_:matrix_stack_[std::size_t(matrix_index_)][0];else if(mode==1)value=matrix_index_<0?identity:concat(matrix_stack_[std::size_t(matrix_index_)][0],matrix_stack_[std::size_t(matrix_index_)][1]);else if(mode==2)value=screen_;else throw cs::ArgumentException();
+    auto result=cs::Array<float>::make(9);for(int i=0;i<9;++i)result.at(i)=value[std::size_t(i)];return result;
+}
+std::array<float,2> Graphics::point(float x,float y)const{return {screen_[0]*x+screen_[3]*y+screen_[6],screen_[1]*x+screen_[4]*y+screen_[7]};}
 void Graphics::trace_edges(const cs::EdgeVisitor& visitor)const{cs::Object::trace_edges(visitor);cs::trace_value(target_,visitor);cs::trace_value(font_,visitor);cs::trace_value(render_result_,visitor);for(const auto& f:fonts_)cs::trace_value(f,visitor);}
 void Graphics::release_edges(){cs::Object::release_edges();cs::release_value(target_);cs::release_value(font_);cs::release_value(render_result_);for(auto& f:fonts_)cs::release_value(f);fonts_.clear();}
 void Graphics::ClearRenderRect(){render_={0,0,target_->GetWidth(),target_->GetHeight()};SetOrigin(0,0);ClearClip();}
@@ -119,18 +180,23 @@ void Graphics::SetRenderMode(std::int32_t op,std::int32_t src){SetRenderMode(op,
 void Graphics::SetRenderMode(std::int32_t op,std::int32_t src,std::int32_t dst){if(op==1&&cs::add_i32(src,dst)==256)dst=cs::sub_i32(dst,1);mode_={op,src,dst};}
 void Graphics::PushRenderMode(std::int32_t op,std::int32_t src,std::int32_t dst){PushRenderMode();SetRenderMode(op,src,dst);}
 void Graphics::PopRenderMode(){if(modes_.empty())return;auto m=modes_.back();modes_.pop_back();SetRenderMode(m[0],m[1],m[2]);}
-void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c){
+void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
     if(!target_->alive_)throw cs::ObjectDisposedException();
     if(x<0||y<0||x>=target_->width_||y>=target_->height_||float(x)<clip_[0]||float(y)<clip_[1]||float(x)>=clip_[0]+clip_[2]||float(y)>=clip_[1]+clip_[3])return;
     if(mode_[1]<0||mode_[1]>255||mode_[2]<0||mode_[2]>255)throw cs::NotSupportedException("Out-of-unit render ratios need measured fixed-function clamping");
     auto i=(std::size_t(y)*target_->width_+x)*4;auto& destination=target_->rgba_;
     auto quantize=[](float v){return std::uint8_t(std::clamp(std::floor(v*255.0f+0.5f),0.0f,255.0f));};
     float source_alpha=float(c[3])/255.0f;
+    std::array<float,3> rgb{float(c[0])/255.0f,float(c[1])/255.0f,float(c[2])/255.0f};
+    auto blend=channels(blend_[1]);const float blend_alpha=float(blend[3])/255.0f;
+    if(blend_[0]==1)for(int k=0;k<3;++k)rgb[k]=float(blend[k])/255.0f*(textured?source_alpha:1.0f)*blend_alpha+rgb[k]*(1.0f-blend_alpha);
+    else if(blend_[0]==2)for(int k=0;k<3;++k)rgb[k]=float(blend[k])/255.0f*blend_alpha*rgb[k];
+    else if(blend_[0]==3&&textured){const float grey=(rgb[0]+rgb[1]+rgb[2])/3.0f;rgb={grey,grey,grey};}
     // Graphics.GetRenderPass and ShaderBuilder.GetCode select these passes.
     // In normal mode the source ratio modulates RGB, not alpha.
     auto pass=[&](float a,float color_ratio,int operation){
         float da=float(destination[i+3])/255.0f;
-        for(int k=0;k<3;++k){float s=float(c[k])/255.0f*color_ratio,d=float(destination[i+k])/255.0f,result{};
+        for(int k=0;k<3;++k){float s=rgb[k]*color_ratio,d=float(destination[i+k])/255.0f,result{};
             if(operation==0)result=s*a+d*(1.0f-a);
             else if(operation==1)result=s*a+d;
             else if(operation==2)result=d*(1.0f-a);
@@ -146,11 +212,7 @@ void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c){
     if(mode_[1]>0)pass(source_alpha*float(mode_[1])/255.0f,1.0f,mode_[0]==1?1:3);
 }
 void Graphics::FillRect(float x,float y,float w,float h){
-    auto a=point(x,y),end=point(x+w,y+h);if(!std::isfinite(a[0]+a[1]+end[0]+end[1]))return;
-    if(end[0]<a[0])std::swap(end[0],a[0]);if(end[1]<a[1])std::swap(end[1],a[1]);w=end[0]-a[0];h=end[1]-a[1];if(w==0||h==0)return;
-    auto l=int(std::clamp(std::ceil(a[0]-0.5f),0.0f,float(target_->width_)));auto t=int(std::clamp(std::ceil(a[1]-0.5f),0.0f,float(target_->height_)));
-    auto r=int(std::clamp(std::ceil(end[0]-0.5f),0.0f,float(target_->width_)));auto b=int(std::clamp(std::ceil(end[1]-0.5f),0.0f,float(target_->height_)));auto c=channels(color_);
-    for(int yy=t;yy<b;++yy)for(int xx=l;xx<r;++xx)pixel(xx,yy,c);
+    const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{auto c=channels(color_);quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float,float){pixel(xx,yy,c);});},[&]{if(transformed)end_render_matrix();});
 }
 void Graphics::DrawRect(float x,float y,float w,float h){DrawLine(x,y,x+w,y);DrawLine(x+w,y,x+w,y+h);DrawLine(x+w,y+h,x,y+h);DrawLine(x,y+h,x,y);}
 void Graphics::DrawLine(float x,float y,float x2,float y2,float width){
@@ -163,17 +225,18 @@ void Graphics::DrawLine(float x,float y,float x2,float y2,float width){
 void Graphics::DrawImage(cs::Ref<Image> image,float x,float y){if(image)DrawScaledImage(image,x,y,float(image->GetWidth()),float(image->GetHeight()),0,0,image->GetWidth(),image->GetHeight());}
 void Graphics::DrawImage(cs::Ref<Image> image,float x,float y,std::int32_t sx,std::int32_t sy,std::int32_t w,std::int32_t h){if(image)DrawScaledImage(image,x,y,float(w),float(h),sx,sy,w,h);}
 void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,float h,std::int32_t sx,std::int32_t sy,std::int32_t sw,std::int32_t sh){
-    if(!image)return;auto a=point(x,y),end=point(x+w,y+h);w=end[0]-a[0];h=end[1]-a[1];if(w==0||h==0||!std::isfinite(a[0]+a[1]+w+h))return;
+    if(!image||w==0||h==0||!std::isfinite(x+y+w+h))return;
     image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
     auto source=image->pixels(); // Snapshot preserves overlap when drawing an image onto itself.
-    auto l=int(std::clamp(std::ceil(std::min(a[0],end[0])-0.5f),0.0f,float(target_->width_))),t=int(std::clamp(std::ceil(std::min(a[1],end[1])-0.5f),0.0f,float(target_->height_)));
-    auto r=int(std::clamp(std::ceil(std::max(a[0],end[0])-0.5f),0.0f,float(target_->width_))),b=int(std::clamp(std::ceil(std::max(a[1],end[1])-0.5f),0.0f,float(target_->height_)));
-    for(int yy=t;yy<b;++yy)for(int xx=l;xx<r;++xx){
-        auto u=std::int64_t(sx)+std::int64_t(std::floor((float(xx)+0.5f-a[0])*float(sw)/w));auto v=std::int64_t(sy)+std::int64_t(std::floor((float(yy)+0.5f-a[1])*float(sh)/h));
+    const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{
+    quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float tx,float ty){
+        if(flip_mode_&1)tx=1.0f-tx;if(flip_mode_&2)ty=1.0f-ty;
+        auto u=std::int64_t(sx)+std::int64_t(std::floor(tx*float(sw)));auto v=std::int64_t(sy)+std::int64_t(std::floor(ty*float(sh)));
         u=std::clamp<std::int64_t>(u,0,image->width_-1);v=std::clamp<std::int64_t>(v,0,image->height_-1);auto i=(std::size_t(v)*image->width_+std::size_t(u))*4;
-        pixel(xx,yy,{source[i],source[i+1],source[i+2],source[i+3]});
-    }
+        pixel(xx,yy,{source[i],source[i+1],source[i+2],source[i+3]},true);
+    });
+    },[&]{if(transformed)end_render_matrix();});
     image->source_drawn();
 }
 }

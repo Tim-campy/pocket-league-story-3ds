@@ -5,10 +5,13 @@ import json
 from pathlib import Path
 import subprocess
 import re
-from pc_compiler import CMAKE,NINJA,environment
+import sys
+from pc_compiler import CMAKE,NINJA,environment,showincludes_prefix,audit_ninja_dependencies
 from run_native_process import run_native_process
 
 ROOT=Path(__file__).resolve().parents[1]
+sys.path.insert(0,str(ROOT/'translator'))
+from report_paths import unpack_source_paths
 APK_SHA='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 
 
@@ -56,12 +59,13 @@ def validate_diagnostic_manifest(folder,root=ROOT):
     manifest_path=folder/'manifest.json';manifest=json.loads(manifest_path.read_text(encoding='utf8'))
     if manifest.get('diagnostic_only')is not True:raise ValueError('Diagnostic-only manifest required')
     if manifest.get('canonical_report_sha256')!=digest(root/'config/phase2-game-translation.json'):raise ValueError('Diagnostic canonical report is stale')
-    canonical=json.loads((root/'config/phase2-game-translation.json').read_text(encoding='utf8'))
+    canonical=unpack_source_paths(json.loads((root/'config/phase2-game-translation.json').read_text(encoding='utf8')))
     if canonical.get('assembly')!='Assembly-CSharp'or canonical.get('compiled')is not True:raise ValueError('Compiled canonical Game report required')
     producer=canonical.get('producer')
     if not isinstance(producer,dict)or manifest.get('producer')!=producer:raise ValueError('Diagnostic producer differs from canonical generation')
     for key,name in [('translator_source_sha256','translator/Translator.cs'),('driver_sha256','translator/translate.py')]:
         if producer.get(key)!=digest(root/name):raise ValueError('Diagnostic producer source is stale')
+    if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=digest(root/'translator/report_paths.py'):raise ValueError('Diagnostic path producer source is stale')
     for row in canonical.get('platform_adapter_sources',[]):
         path=(root/row['path']).resolve(strict=True)
         if not path.is_relative_to(root)or digest(path)!=row['sha256']:raise ValueError('Diagnostic bootstrap source is stale')
@@ -160,8 +164,12 @@ def main():
     build_name='pc-diagnostic'if diagnostic_folder else 'pc'
     if args.configuration=='Release':build_name+='-release'
     folder=ROOT/'build'/build_name;folder.mkdir(parents=True,exist_ok=True)
-    commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE='+args.configuration,'-DSDL2_DIR='+str(sdk),'-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else '')],
-              [CMAKE,'--build',folder,*(['--clean-first'] if args.fixtures_only else ['--target','pc_game'])]]
+    prefix_probe=showincludes_prefix(folder/'compiler-prefix-probe',env)
+    prefix_policy=dict(version=1,prefix=prefix_probe['prefix'],compiler_sha256=prefix_probe['compiler_sha256'])
+    policy_file=folder/'compiler-prefix-policy.json'
+    clean=not policy_file.exists()or json.loads(policy_file.read_text(encoding='utf8'))!=prefix_policy
+    commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE='+args.configuration,'-DSDL2_DIR='+str(sdk),'-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else ''),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+prefix_probe['prefix']],
+              [CMAKE,'--build',folder,*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
     if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
     if not args.fixtures_only:
         attempts=ROOT/('config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')
@@ -194,6 +202,13 @@ def main():
                 attempt.update(stage='configure-failed' if index==0 else 'compile-or-link-failed',exit_code=result.returncode,diagnostics=diagnostics[:8],log_sha256=digest(folder/f'step-{index}.log'))
                 history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
+    required={'CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp',
+              'CMakeFiles/pls_portable_generated.dir/src/kairo/common/generated/portable_generated.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp'}
+    if not args.fixtures_only:
+        game_unit=(diagnostic_folder or ROOT/'src/game')/'game_generated.cpp'
+        required['CMakeFiles/pc_game.dir/'+game_unit.relative_to(ROOT).as_posix()+'.obj']=ROOT/'src/kairo/common/semantic_runtime.hpp'
+    dependency_audit=audit_ninja_dependencies(folder,required,env)
+    policy_file.write_text(json.dumps(prefix_policy,indent=2)+'\n',encoding='utf8',newline='\n')
     if not args.fixtures_only:
         inputs_after=source_snapshot(diagnostic_folder=diagnostic_folder)
         if inputs_before!=inputs_after:
@@ -201,7 +216,7 @@ def main():
             attempt.update(stage='concurrent-source-change',exit_code=0,changed_inputs=changed,game_boot=False)
             history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError('Native inputs changed during compilation; no process was launched. Retry after the producers are stable.')
-        attempt.update(stage='linked',exit_code=0)
+        attempt.update(stage='linked',exit_code=0,dependency_audit=dependency_audit,clean_for_dependency_policy=clean)
         if args.run:
             exe=folder/'pc_game.exe'
             if diagnostic_folder:
@@ -225,7 +240,7 @@ def main():
                 attempt['metrics_recorded']=attempt['metrics_log_summary']['records']>0
         history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
         print(json.dumps(attempt));return
-    result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,
+    result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,dependency_audit=dependency_audit,
                 compiler='existing MSVC',sdl2='2.32.10',game_assets_used=False)
     (ROOT/'config/phase2-sdl-verification.json').write_text(json.dumps(result,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(result))

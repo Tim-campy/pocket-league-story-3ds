@@ -11,6 +11,8 @@ int identify(cs::Ref<kairo::Graphics> g){if(!g)return 0;const auto found=ids.fin
 const char* B(bool value){return value?"True":"False";}
 void P(const char* name,cs::Ref<kairo::Canvas> canvas){auto current=kairo::Graphics::GetCurrent();std::cout<<name<<'='<<identify(current)<<':'<<identify(canvas->GetGraphicsInstance())<<':'<<B(canvas->source_IsAlterStaticRendering())<<':'<<B(current&&current->IsGUI())<<'\n';}
 cs::Ref<kairo::Image> image(){return kairo::Image::FromRgba(2,2,std::vector<std::uint8_t>(16));}
+void G(const std::string& name,cs::Ref<kairo::Graphics> g){std::cout<<name<<'='<<B(g->IsRenderGUIMode())<<':'<<B(g->IsClipEnable())<<'\n';}
+void Batch(cs::Ref<kairo::Graphics> g,cs::Ref<kairo::Canvas> c,const std::string& prefix){g->ResetRender();G(prefix+"-reset",g);g->BeginGLRender(false);G(prefix+"-begin",g);g->BeginGLRender(true);G(prefix+"-nested",g);g->EndGLRender();G(prefix+"-end-inner",g);g->EndGLRender();G(prefix+"-end-outer",g);g->EndGLRender();G(prefix+"-extra-end",g);g->BeginGLRender(false);g->BeginGLRender(true);g->EndGLRender(true);G(prefix+"-force",g);g->PopClipEnable();G(prefix+"-pop-after-force",g);g->BeginGLRender(false);g->ResetRender();G(prefix+"-reset-active",g);g->EndGLRender();G(prefix+"-end-after-reset",g);g->BeginGLRender(false);c->EndPaint(g);G(prefix+"-end-paint",g);g->BeginGLRender(false);c->EndAlterStaticRender(g);G(prefix+"-end-alter",g);}
 int policy(){
  cs::GcMutatorScope mutator;int checks=0;auto require=[&](bool v){if(!v)throw cs::InvalidOperationException("Graphics current lifetime/GC policy failed");++checks;};require(!kairo::Graphics::GetCurrent());
  auto canvas=cs::make_ref<kairo::Canvas>();auto first_image=image(),second_image=image();auto a=first_image->GetGraphics(),b=second_image->GetGraphics();require(!kairo::Graphics::GetCurrent());
@@ -34,4 +36,5 @@ int main(int argc,char**){
  try{c->EndPaint();std::cout<<"null-end=no-error\n";}catch(const cs::Exception& e){std::cout<<"null-end="<<e.type_name()<<'\n';}P("after-null-end",c);
  c->BeginAlterStaticRender(offscreen);P("begin-alter",c);c->EndAlterStaticRender(offscreen);P("end-alter-flag-retained",c);c->EndPaint(offscreen);P("normal-end-clears-alter-flag",c);
  c->BeginAlterStaticRender({});P("alter-default",c);c->EndPaint();P("alter-default-ended",c);auto other=cs::make_ref<kairo::Graphics>(image(),true);(void)other;offscreen->Dispose();P("new-dispose-no-current-write",c);
+ Batch(cs::make_ref<kairo::Graphics>(image(),true),c,"display");Batch(image()->GetGraphics(),c,"image");
 }

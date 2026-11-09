@@ -11,6 +11,7 @@
 #include "storage.hpp"
 #include "managed_collation.hpp"
 #include "managed_thread.hpp"
+#include "managed_exceptions.hpp"
 #include "pc_metrics.hpp"
 #include "../kairo/platform/sdl/globalization.hpp"
 #include <exception>
@@ -76,6 +77,8 @@ int main(int argc,char** argv){
         if(!app)throw pls::cs::InvalidOperationException("Generated Main factory returned null");
         // Termination must be connected to the translated event/finish handlers.
         app->host_configure(240,280,pls::cs::String::from_utf8(preferences),{});
+        app->host_orientation_reset([&backend]{backend.reset_default_orientation();});
+        app->host_fullscreen_writer([&backend](bool enabled){backend.set_fullscreen(enabled);});
         pls::game::configure_application(app);
         app->host_start();
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
@@ -102,6 +105,6 @@ int main(int argc,char** argv){
             if(metrics.frame(timing.finish()))metrics.memory("first_presented_frame",payload());
         }
         app->host_stop();return 0;
-    }catch(const pls::cs::Exception& error){if(!metrics.finished()){metrics.memory("failure_after_setup_unwind",{});metrics.finish("exception_before_metrics_guard");}std::cerr<<error.type_name()<<": "<<error.what()<<"\n";return 1;}
+    }catch(const pls::cs::Exception& error){if(!metrics.finished()){metrics.memory("failure_after_setup_unwind",{});metrics.finish("exception_before_metrics_guard");}std::cerr<<pls::cs::capture_exception(error)->ToString().utf8()<<"\n";return 1;}
      catch(const std::exception& error){if(!metrics.finished()){metrics.memory("failure_after_setup_unwind",{});metrics.finish("exception_before_metrics_guard");}std::cerr<<"Native platform exception: "<<error.what()<<"\n";return 1;}
 }

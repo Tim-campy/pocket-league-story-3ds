@@ -1,8 +1,8 @@
 {
   "operation": "original-Canvas-Graphics-current-paint-lifecycle",
   "status": "PASS",
-  "fixture_cases": 44,
-  "passed": 44,
+  "fixture_cases": 92,
+  "passed": 92,
   "cases": [
     {
       "profile": "dotnet",
@@ -159,6 +159,174 @@
       "passed": true
     },
     {
+      "profile": "dotnet",
+      "case": "display-reset",
+      "expected": "display-reset=True:True",
+      "actual": "display-reset=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-begin",
+      "expected": "display-begin=False:False",
+      "actual": "display-begin=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-nested",
+      "expected": "display-nested=False:True",
+      "actual": "display-nested=False:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-end-inner",
+      "expected": "display-end-inner=False:False",
+      "actual": "display-end-inner=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-end-outer",
+      "expected": "display-end-outer=True:True",
+      "actual": "display-end-outer=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-extra-end",
+      "expected": "display-extra-end=True:True",
+      "actual": "display-extra-end=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-force",
+      "expected": "display-force=True:False",
+      "actual": "display-force=True:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-pop-after-force",
+      "expected": "display-pop-after-force=True:True",
+      "actual": "display-pop-after-force=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-reset-active",
+      "expected": "display-reset-active=False:True",
+      "actual": "display-reset-active=False:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-end-after-reset",
+      "expected": "display-end-after-reset=True:True",
+      "actual": "display-end-after-reset=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-end-paint",
+      "expected": "display-end-paint=True:True",
+      "actual": "display-end-paint=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "display-end-alter",
+      "expected": "display-end-alter=True:True",
+      "actual": "display-end-alter=True:True",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-reset",
+      "expected": "image-reset=False:False",
+      "actual": "image-reset=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-begin",
+      "expected": "image-begin=False:False",
+      "actual": "image-begin=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-nested",
+      "expected": "image-nested=False:False",
+      "actual": "image-nested=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-end-inner",
+      "expected": "image-end-inner=False:False",
+      "actual": "image-end-inner=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-end-outer",
+      "expected": "image-end-outer=False:False",
+      "actual": "image-end-outer=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-extra-end",
+      "expected": "image-extra-end=False:False",
+      "actual": "image-extra-end=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-force",
+      "expected": "image-force=False:False",
+      "actual": "image-force=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-pop-after-force",
+      "expected": "image-pop-after-force=False:False",
+      "actual": "image-pop-after-force=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-reset-active",
+      "expected": "image-reset-active=False:False",
+      "actual": "image-reset-active=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-end-after-reset",
+      "expected": "image-end-after-reset=False:False",
+      "actual": "image-end-after-reset=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-end-paint",
+      "expected": "image-end-paint=False:False",
+      "actual": "image-end-paint=False:False",
+      "passed": true
+    },
+    {
+      "profile": "dotnet",
+      "case": "image-end-alter",
+      "expected": "image-end-alter=False:False",
+      "actual": "image-end-alter=False:False",
+      "passed": true
+    },
+    {
       "profile": "mono",
       "case": "initial",
       "expected": "initial=0:0:False:False",
@@ -311,36 +479,204 @@
       "expected": "new-dispose-no-current-write=1:0:False:True",
       "actual": "new-dispose-no-current-write=1:0:False:True",
       "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-reset",
+      "expected": "display-reset=True:True",
+      "actual": "display-reset=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-begin",
+      "expected": "display-begin=False:False",
+      "actual": "display-begin=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-nested",
+      "expected": "display-nested=False:True",
+      "actual": "display-nested=False:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-end-inner",
+      "expected": "display-end-inner=False:False",
+      "actual": "display-end-inner=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-end-outer",
+      "expected": "display-end-outer=True:True",
+      "actual": "display-end-outer=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-extra-end",
+      "expected": "display-extra-end=True:True",
+      "actual": "display-extra-end=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-force",
+      "expected": "display-force=True:False",
+      "actual": "display-force=True:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-pop-after-force",
+      "expected": "display-pop-after-force=True:True",
+      "actual": "display-pop-after-force=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-reset-active",
+      "expected": "display-reset-active=False:True",
+      "actual": "display-reset-active=False:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-end-after-reset",
+      "expected": "display-end-after-reset=True:True",
+      "actual": "display-end-after-reset=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-end-paint",
+      "expected": "display-end-paint=True:True",
+      "actual": "display-end-paint=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "display-end-alter",
+      "expected": "display-end-alter=True:True",
+      "actual": "display-end-alter=True:True",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-reset",
+      "expected": "image-reset=False:False",
+      "actual": "image-reset=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-begin",
+      "expected": "image-begin=False:False",
+      "actual": "image-begin=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-nested",
+      "expected": "image-nested=False:False",
+      "actual": "image-nested=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-end-inner",
+      "expected": "image-end-inner=False:False",
+      "actual": "image-end-inner=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-end-outer",
+      "expected": "image-end-outer=False:False",
+      "actual": "image-end-outer=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-extra-end",
+      "expected": "image-extra-end=False:False",
+      "actual": "image-extra-end=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-force",
+      "expected": "image-force=False:False",
+      "actual": "image-force=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-pop-after-force",
+      "expected": "image-pop-after-force=False:False",
+      "actual": "image-pop-after-force=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-reset-active",
+      "expected": "image-reset-active=False:False",
+      "actual": "image-reset-active=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-end-after-reset",
+      "expected": "image-end-after-reset=False:False",
+      "actual": "image-end-after-reset=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-end-paint",
+      "expected": "image-end-paint=False:False",
+      "actual": "image-end-paint=False:False",
+      "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "image-end-alter",
+      "expected": "image-end-alter=False:False",
+      "actual": "image-end-alter=False:False",
+      "passed": true
     }
   ],
   "native_gc_thread_policy": {
     "assertions": 9,
     "worker_snapshots": 2000,
-    "collections": 354,
+    "collections": 511,
     "sticky_after_end": true,
     "snapshot_survives_overwrite": true,
     "old_target_collected_after_overwrite": true,
     "game_boot": false
   },
   "inputs": {
-    "tests/kairo/graphics_current_fixtures.cpp": "675f7d7b3bcc25a43138f711cf9ee2f4519b9b61c345f25cc9d7784261601952",
-    "src/kairo/common/canvas.cpp": "61f3ab3d2ce08706d94f0bcd55dad2c8f07d902b0d0a43cda9427354b2bf5818",
+    "tests/kairo/graphics_current_fixtures.cpp": "3a66d5a5abf4e1c1f074988795d6010873ec85d39a4d0dc9f934e010d6c6e324",
+    "src/kairo/common/canvas.cpp": "0d132bf3ab87ccee85f9523e621ecd8f23ef245d98bb74f7758296826da10981",
     "src/kairo/platform/sdl/input.cpp": "a3777b82d4516f7aac30968b721dc1ba5fe339657c8ac5933bba7d1142bb8135",
-    "src/kairo/common/graphics.cpp": "026f54aa1ceb88fe1b54c1e3e120548ff41c7c231da72a7b7459c57268048fec",
-    "src/kairo/common/image_lifetime.cpp": "46eb7b0f818d28f48cedf6cef4542ea0026178d8e0b9ff300f5391b349abba86",
-    "src/kairo/common/font.cpp": "5677da6a6540845d36b3d790547d22335baef45b5cc45bf85f003c196b2bd890",
+    "src/kairo/common/graphics.cpp": "d256186df9e6d75c48a4399bbfd0b303511bfa2b53bfe0c1e1c5d974810d423c",
+    "src/kairo/common/image_lifetime.cpp": "de739f797238366febc0a60a796630ddc7acdd703e92defa1f82d34ce33b1a1f",
+    "src/kairo/common/font.cpp": "7a12d94f6b6010de8a096a5aeefec1998fccb1212fe5e18c713accfb151cc87c",
     "src/kairo/platform/sdl/font.cpp": "8691f8e2f4bd4508aef57d8a4a5e089f466250096ecb706c29dea1a993a24984",
     "src/kairo/common/asset_catalog.cpp": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387",
-    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
-    "tests/kairo/GraphicsCurrentOracle.cs": "99a1fa2fd8c3ce292351be701edaab59560efcdeab0a5b7e0b11578562ab7ef2",
-    "tools/test_graphics_current.py": "37f0a0de4db7d6da6be76a9621f827dc11aef5823aa36da543c8f81a3b2f38dc",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "tests/kairo/GraphicsCurrentOracle.cs": "23d86113f2c4586c3af280aadf8649e3901e09e2042151a254baf5a0260dddbe",
+    "tools/test_graphics_current.py": "e9c4954de62a00819d735e2fd307f0df662b4e4e75cdfa2899a661086defa780",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/graphics.hpp": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f",
-    "src/kairo/api/canvas.hpp": "302f78420eab27c2246980748700967f13a69f07e70c5eed89949d49ce8f44df",
+    "src/kairo/api/graphics.hpp": "02c9a18ed75a55924b98ab0224817be7c81aaec7ab00b042a38b882e079c5509",
+    "src/kairo/api/canvas.hpp": "ac806a6493c2b1f55449bb33fea804ae6e26415d52089a749a219c17831a12fd",
     "src/kairo/api/input.hpp": "5e59e57c8efcde8b33e4293477c545c23814eea71e65e86598e25ca31d8bf94d",
-    "src/kairo/api/font.hpp": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee",
-    "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
-    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "src/kairo/api/font.hpp": "9b850acb6dff45b6e983ebb158e1188cf8cd111dd3ac2be7efb3ca2d51db1cf3",
+    "src/kairo/api/application.hpp": "280d2510630a9eccb8d887cccc44249141ee5ca65a8a1d6775706c8ac703bd4d",
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -365,7 +701,13 @@
       "internal bool IsRenderGUIMode()",
       "public void ResetRender()",
       "public void Dispose(bool keep = false)",
-      "public void EndGLRender(bool force = false)"
+      "public void EndGLRender(bool force = false)",
+      "public void BeginGLRender(bool clipEnable = true)",
+      "public bool PushClipEnable(bool enable)",
+      "public void PushClipEnable()",
+      "public void PopClipEnable()",
+      "public bool SetClipEnable(bool enable)",
+      "public bool IsClipEnable()"
     ],
     "Canvas": [
       "public Graphics BeginPaint()",
@@ -384,13 +726,13 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "c559fc0d24b193a94f75220b814d857a2f86f8bc63935f921b5dbea5a88c5b91"
+    "sha256": "51e4526419160e28084bb732e6aff99ad0d0224bc6fb677ce604ac9c7f7e0c4c"
   },
   "verified_boundary_ids": [],
   "limits": [
     "Own mesh/font/Unity collaborators isolate lifecycle and represented render state; no original Unity binary executes.",
     "Graphics.Init backend leaf is synthetic; constructors, ResetRender and Canvas Begin/End bodies are complete original source.",
-    "GL batches, multiple mesh managers and retained static mesh rendering are not exercised by the CPU lifecycle test.",
+    "GL batch control/clip-enable nesting is exercised; deferred GPU meshes, multiple managers and retained static mesh rendering are not.",
     "Current reference loads/stores are synchronized; mutable graphics state/Canvas buffer are UI-owned, not declared generally thread safe."
   ],
   "game_assets_used": false,

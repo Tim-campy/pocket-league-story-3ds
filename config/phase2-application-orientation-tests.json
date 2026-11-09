@@ -1,8 +1,8 @@
 {
   "operation": "original-source-IApplication-orientation-getters-differential",
   "status": "PASS",
-  "fixture_cases": 40,
-  "passed": 40,
+  "fixture_cases": 54,
+  "passed": 54,
   "cases": [
     {
       "profile": "UnityMono265",
@@ -104,6 +104,55 @@
     },
     {
       "profile": "UnityMono265",
+      "case": "reset-0",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "reset-1",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "reset-2",
+      "expected": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
+      "actual": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "reset-3",
+      "expected": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
+      "actual": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "reset-4",
+      "expected": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
+      "actual": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "reset-5",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
+      "case": "reset-99",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
+      "passed": true
+    },
+    {
+      "profile": "UnityMono265",
       "case": "side-reread-0",
       "expected": "True;gets=2;auto_gets=0;sets=0;stored=3",
       "actual": "True;gets=2;auto_gets=0;sets=0;stored=3",
@@ -244,6 +293,55 @@
     },
     {
       "profile": "DotNet",
+      "case": "reset-0",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "reset-1",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "reset-2",
+      "expected": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
+      "actual": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "reset-3",
+      "expected": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
+      "actual": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "reset-4",
+      "expected": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
+      "actual": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "reset-5",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
+      "case": "reset-99",
+      "expected": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
+      "actual": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
+      "passed": true
+    },
+    {
+      "profile": "DotNet",
       "case": "side-reread-0",
       "expected": "True;gets=2;auto_gets=0;sets=0;stored=3",
       "actual": "True;gets=2;auto_gets=0;sets=0;stored=3",
@@ -287,9 +385,10 @@
   ],
   "native_policy": {
     "status": "PASS",
-    "assertions": 8,
+    "assertions": 10,
     "monitor_sensor_used": false,
-    "setter_autorotate_implemented": false
+    "setter_autorotate_implemented": false,
+    "default_reset_callback_implemented": true
   },
   "verified_boundary_ids": [
     "M:kairo.unity.ui.IApplication.GetOrientation",
@@ -324,20 +423,20 @@
     }
   ],
   "inputs_sha256": {
-    "tests/kairo/application_orientation_fixtures.cpp": "7218c3ff1db3b072010354f9f01de243a66752f8c56b62847bcdd020f66d3472",
-    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
+    "tests/kairo/application_orientation_fixtures.cpp": "d73b8e68639f872bff4684dd93de6a0dfbaefc0b95384671ef4248edb58de24e",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
     "tests/kairo/ApplicationOrientationOracle.cs": "85a9c1016610bbe4c389bba607ee2e147c05a7e7501067187baae3282f1b264e",
     "tests/kairo/UnityScreenMetadata.cs": "a662fea60d991e954ef51bd91947a669585d771df4ae68fab479efeb6fc56297",
-    "tools/test_application_orientation.py": "12cf3b6c998d3f0586789dc71a1a23ca1f2d10b6451ed0b44a94e441e5e4d31f",
+    "tools/test_application_orientation.py": "b5b0d563d09329f4d6a316af893bcead3c50fba329e2fda38481a3b3212a5fe9",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/api/application.hpp": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0",
-    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "src/kairo/api/application.hpp": "280d2510630a9eccb8d887cccc44249141ee5ca65a8a1d6775706c8ac703bd4d",
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
   },
   "native_executable": {
     "path": "build/application-orientation-tests/application-orientation-fixtures.exe",
-    "sha256": "4825d98ead17d24f749de2cf332d516d6a24a915ea7d90835b9ff70f7ca760d9"
+    "sha256": "ebe8b0edd8e320ef3dd06ce762656e1ff02965c261da2425ec5863423c6a1ea9"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "external_unity_api_metadata": {
@@ -388,13 +487,6 @@
         "set-270": "3/True/False;gets=2;auto_gets=1;sets=1;stored=3",
         "set-360": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
         "set-2147483647": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
-        "reset-0": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
-        "reset-1": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
-        "reset-2": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
-        "reset-3": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
-        "reset-4": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
-        "reset-5": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
-        "reset-99": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
         "reset-before-awake": "0;gets=1;auto_gets=0;sets=1;stored=0",
         "set-does-not-change-autorotate-False-0": "False;gets=0;auto_gets=1;sets=1;stored=1",
         "set-does-not-change-autorotate-False-4": "False;gets=0;auto_gets=1;sets=1;stored=5",
@@ -435,13 +527,6 @@
         "set-270": "3/True/False;gets=2;auto_gets=1;sets=1;stored=3",
         "set-360": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
         "set-2147483647": "0/False/False;gets=4;auto_gets=1;sets=1;stored=5",
-        "reset-0": "0/False;gets=5;auto_gets=0;sets=2;stored=0",
-        "reset-1": "0/False;gets=5;auto_gets=0;sets=2;stored=1",
-        "reset-2": "2/False;gets=5;auto_gets=0;sets=2;stored=2",
-        "reset-3": "3/True;gets=3;auto_gets=0;sets=2;stored=3",
-        "reset-4": "1/True;gets=5;auto_gets=0;sets=2;stored=4",
-        "reset-5": "0/False;gets=5;auto_gets=0;sets=2;stored=5",
-        "reset-99": "0/False;gets=5;auto_gets=0;sets=2;stored=99",
         "reset-before-awake": "0;gets=1;auto_gets=0;sets=1;stored=0",
         "set-does-not-change-autorotate-False-0": "False;gets=0;auto_gets=1;sets=1;stored=1",
         "set-does-not-change-autorotate-False-4": "False;gets=0;auto_gets=1;sets=1;stored=5",
@@ -453,7 +538,7 @@
     }
   ],
   "limits": [
-    "Only IsSide/GetOrientation are native source-differential proofs; setter/reset/autorotate remain source-only context and are not implemented.",
+    "IsSide/GetOrientation and default reset are source-differential observations. General setter/autorotate remain source-only context and are not implemented.",
     "Window aspect policy is explicit PC behavior, not evidence of original Unity desktop or Android sensor behavior.",
     "The provider is installed before managed workers; captures must be native only and synchronization of mutable provider state is the host obligation.",
     "No SDL monitor orientation, Android global configuration flag or Nintendo 3DS layout is selected."

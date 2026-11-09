@@ -5,13 +5,13 @@
   "operation": "PC-native-frame-control-and-service-platform-leaves",
   "inputs": {
     "tests/kairo/system_fixtures.cpp": "ad9d92ca978c177e18469778b4bb188ba342955f6c97ebaac6533d9b4355ac32",
-    "src/kairo/common/semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
+    "src/kairo/common/semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
     "tools/test_system.py": "459c62d9adee04c4f34ab5dc46bb07b223c630b53482906d55c78ab0ae20fa20",
-    "src/kairo/api/system.hpp": "aa18b85e1ca16a943f4818a206d69f53b9a5bd3c52026505fa34144be95a23e3",
-    "src/kairo/common/semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d"
+    "src/kairo/api/system.hpp": "e1635a68b0bea9a832fbde829ed10d34814c6158195c24b86facea667c837f05",
+    "src/kairo/common/semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070"
   },
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
-  "executable_sha256": "29388dfe77811f54fd5261c867bc5db93ccdec86ed6a2138c182807723d48332",
+  "executable_sha256": "07321f176502dc59ae7f3a46b479404a45d0e2c9a38e9f0fc3eaf98927df33bc",
   "original_source_methods": [
     "main.Main.OnCreate",
     "main.Main.OnUpdate",

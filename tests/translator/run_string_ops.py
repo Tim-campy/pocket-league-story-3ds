@@ -7,7 +7,7 @@ from run_semantic_fixtures import compiler_paths,msvc_environment
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
     folder=ROOT/'build/string-ops-fixtures';folder.mkdir(parents=True,exist_ok=True)
-    case_count=65536+9*7+1+11*8*2+65536+26+8*9*6+8*5*5+65536+11*7
+    case_count=65536+9*7+1+11*8*2+2*(65536+26)+8*9*6+8*5*5+65536+11*7
     def run(command,name,env=None,input_data=None):
         r=subprocess.run([str(v) for v in command],cwd=ROOT,env=env,input=input_data,capture_output=True,timeout=90);(folder/(name+'.stdout')).write_bytes(r.stdout);(folder/(name+'.stderr')).write_bytes(r.stderr)
         if r.returncode:raise RuntimeError('See build/string-ops-fixtures/'+name+'.stdout/.stderr')
@@ -32,6 +32,8 @@ def main():
     differences={k for k,v in oracles['UnityMono265'].items() if v!=oracles['DotNet'][k]}
     report['profile_differences_by_family']={family:sum(k.startswith(prefix) for k in differences) for family,prefix in [('trim_bmp','bmp-'),('trim_explicit','set-'),('hex_number_bmp','parse-bmp-'),('split_bmp','split-bmp-')]}
     report['profile_differences_by_family']['hex_number_edges']=sum(k.startswith('parse-') and not k.startswith('parse-bmp-') for k in differences)
+    report['profile_differences_by_family']['hex_specifier_bmp']=sum(k.startswith('strict-bmp-') for k in differences)
+    report['profile_differences_by_family']['hex_specifier_edges']=sum(k.startswith('strict-')and not k.startswith('strict-bmp-')for k in differences)
     report['profile_differences_by_family']['split_explicit']=sum(k.startswith('split-') and not k.startswith('split-bmp-') for k in differences)
     report['profile_differences_by_family']['replace']=sum(k.startswith('replace-') for k in differences)
     (ROOT/'config/phase2-string-ops-tests.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps(dict(status=report['status'],cases=report['cases'],passed=report['passed'],profiles={k:dict(cases=v['cases'],passed=v['passed']) for k,v in profiles.items()})))

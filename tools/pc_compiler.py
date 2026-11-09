@@ -1,5 +1,8 @@
 """Use the existing Visual Studio C++ environment without installing anything."""
 import os
+import hashlib
+import json
+import shutil
 from pathlib import Path
 import subprocess
 
@@ -21,3 +24,39 @@ def environment():
     env['LIB']=';'.join(str(p) for p in [vc/'lib/x64',kits/'Lib'/version/'ucrt/x64',kits/'Lib'/version/'um/x64'])
     env['PATH']=str(vc/'bin/Hostx64/x64')+';'+str(kits/'bin'/version/'x64')+';'+env['PATH']
     return env
+
+
+def showincludes_prefix(folder,env):
+    """Probe actual compiler bytes: VSLANG can be ignored without English MUI."""
+    folder=Path(folder).resolve();folder.mkdir(parents=True,exist_ok=True)
+    header=folder/'own_prefix.hpp';source=folder/'own_prefix.cpp'
+    header.write_text('constexpr int own_prefix_value=1;\n',encoding='utf8',newline='\n')
+    source.write_text('#include "own_prefix.hpp"\nint own_prefix(){return own_prefix_value;}\n',encoding='utf8',newline='\n')
+    compiler=Path(shutil.which('cl.exe',path=env['PATH']))
+    result=subprocess.run([str(compiler),'/nologo','/c','/showIncludes','/Fo'+str(folder/'own_prefix.obj'),str(source)],cwd=folder,env=env,capture_output=True,timeout=60)
+    raw=result.stdout+result.stderr;(folder/'compiler.log').write_bytes(raw)
+    if result.returncode:raise RuntimeError('MSVC include-prefix probe failed')
+    needle=str(header).encode('utf8');matches=[line[:line.index(needle)]for line in raw.splitlines()if needle in line]
+    if len(matches)!=1:raise RuntimeError('Cannot identify unique MSVC include prefix')
+    prefix=matches[0].decode('utf8')
+    if not prefix or '\n'in prefix or '\r'in prefix:raise RuntimeError('Invalid MSVC include prefix')
+    proof=dict(compiler_sha256=hashlib.sha256(compiler.read_bytes()).hexdigest(),prefix=prefix,stdout_sha256=hashlib.sha256(raw).hexdigest(),vslang_requested=env.get('VSLANG'))
+    (folder/'probe.json').write_text(json.dumps(proof,indent=2)+'\n',encoding='utf8',newline='\n')
+    return proof
+
+
+def audit_ninja_dependencies(folder,objects,env):
+    """Refuse zero-dependency objects or a missing required project header."""
+    folder=Path(folder).resolve();proof={}
+    for obj,header in objects.items():
+        result=subprocess.run([str(NINJA),'-C',str(folder),'-t','deps',obj],env=env,capture_output=True,timeout=60)
+        if result.returncode:raise RuntimeError('Ninja dependency query failed')
+        text=result.stdout.decode('utf8');lines=text.splitlines();header=Path(header).resolve()
+        import re
+        match=re.search(r'#deps (\d+)',lines[0]if lines else '')
+        count=int(match.group(1))if match else 0
+        dependencies=[Path(line.strip())for line in lines[1:]if line.strip()]
+        if count<=0 or not any((path if path.is_absolute()else folder/path).resolve()==header for path in dependencies):
+            raise RuntimeError('Ninja omitted required header dependencies: '+obj)
+        proof[obj]=dict(dependencies=count,required_header=str(header),header_sha256=hashlib.sha256(header.read_bytes()).hexdigest(),ninja_stdout_sha256=hashlib.sha256(result.stdout).hexdigest())
+    return proof

@@ -45,6 +45,9 @@ struct NativePluginContext {std::int32_t language{};bool logging{};bool initiali
 // KairoPlugin._getPackageName's non-Android/non-UnityEditor result. SDL does
 // not load UnityEditor.PlayerSettings or impersonate an Android package.
 inline cs::String native_package_name(){return cs::String(u"");}
+// KairoPlugin._getRelease non-Android branch, kept as the source platform
+// compatibility value; this is not the Windows/3DS operating-system version.
+inline cs::String native_release(){return cs::String(u"5.0");}
 // KairoPlugin._getStatusBarHeight/_getStatusBarPosition non-Android branches.
 inline std::int32_t native_status_bar_height(){return 0;}
 inline std::int32_t native_status_bar_position(){return 0;}

@@ -14,6 +14,7 @@ sys.path.insert(0,str(ROOT/'tools'))
 sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
 from inventory import compiler_paths
 from pc_compiler import environment
+from report_paths import pack_source_paths
 
 csv.field_size_limit(2_000_000)
 
@@ -105,6 +106,54 @@ def main():
         request['external_methods'].update({app+'GetPackageName':'member:GetPackageName','M:kairo.unity.native.KairoPlugin.GetPackageName':'pls::kairo::native_package_name'})
         request['external_methods'][app+'GetTotalFrames']='member:GetTotalFrames'
         request['source_native_helpers']=['M:kairo.unity.ui.Graphics.GetColorOfName(System.Int32)','M:kairo.unity.ui.Canvas.OpenBrowser(System.String)']
+        request['source_native_helpers']+=['M:kairo.unity.ui.Graphics.DrawRect2(System.Single,System.Single,System.Single,System.Single)']
+        request['source_native_helpers']+=['M:kairo.unity.ui.Font.Draw(kairo.unity.ui.Graphics,System.String,System.Single,System.Single)']
+        request['source_native_helpers']+=['M:kairo.unity.ui.Graphics.GetLineSpace','M:kairo.unity.ui.Graphics.SetLineSpace(System.Int32)']
+        request['external_fields']['F:kairo.unity.ui.Graphics.lineSpacing_']='pls::kairo::Graphics::lineSpacing_'
+        request['source_native_helpers']+=['M:kairo.unity.ui.Canvas.VersionUp(System.String)','M:kairo.unity.ui.Canvas.IsGetStatusBarHeight',
+            'M:kairo.unity.ui.Canvas.IsGetStatusBarPosition','M:kairo.unity.ui.Canvas.SetLinearFilterEnable(System.Boolean)',
+            'M:kairo.unity.ui.Canvas.Fullscreen(System.Boolean)']
+        request['external_fields']['F:kairo.unity.ui.Canvas.statusBarPosition_']='source_status_bar_position'
+        request['external_fields'].update({'F:kairo.unity.ui.Graphics.color_':'source_color()',
+            'F:kairo.unity.ui.Graphics.font_':'source_font()',
+            'F:kairo.unity.ui.Graphics.outlineWidth_':'pls::kairo::Graphics::outlineWidth_',
+            'F:kairo.unity.ui.Graphics.outlineQuality_':'pls::kairo::Graphics::outlineQuality_',
+            'F:kairo.unity.ui.Font.requestFontScale_':'pls::kairo::Font::requestFontScale',
+            'F:kairo.unity.ui.Font.LT_DISABLE_TEXTLAYOUT':'pls::kairo::Font::LT_DISABLE_TEXTLAYOUT'})
+        for name in ('DrawStringBold','DrawStringBold2'):
+            for parameters in ('System.String,System.Single,System.Single,System.Int32',
+                               'System.String,System.Single,System.Single,System.Int32,System.Int32',
+                               'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32',
+                               'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32,System.Int32'):
+                request['source_native_helpers'].append('M:kairo.unity.ui.Graphics.'+name+'('+parameters+')')
+        for parameters in ('System.String,System.Single,System.Single','System.String,System.Single,System.Single,System.Int32',
+                           'System.String,System.Single,System.Single,System.Int32,System.Int32',
+                           'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single',
+                           'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32',
+                           'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32,System.Int32'):
+            request['source_native_helpers'].append('M:kairo.unity.ui.Graphics.DrawString2('+parameters+')')
+        request['source_native_helpers']+=['M:kairo.unity.ui.Image.'+s for s in (
+            'GetFileFormat(System.Byte[])','GetAreaSize(System.Byte[])','GetPaletteInfo(System.Byte[])',
+            'OverwritePaletteData(System.Byte[],System.Byte[])','OverwritePaletteData(System.Byte[],System.Byte[],System.Int32,System.Int32,System.Int32)',
+            'LoadOptimize(java.io.InputStream,kairo.unity.ui.Image[])','LoadOptimize(System.Byte[],kairo.unity.ui.Image[])',
+            'GetOptimize(System.Int32,System.Int32,System.Int32)','GetOptimizeSeb(System.Int32)',
+        )]
+        for field in ('useBin_','standardWidth_','standardHeight_','renderQueue_','imageAtlasId_','optimize_','optimizeAccess_',
+                      'optimizeSeb_','optimizeEx_','optimizeAccessL_','optimizeSebEx_','images_',
+                      'optimizeWidthNum_','optimizeHeightNum_','optimizePass_','optimizeBlockWidth_','optimizeBlockHeight_','name_'):
+            request['external_fields']['F:kairo.unity.ui.Image.'+field]=field
+        for field in ('DEFAULT_FORMAT','DEFAULT_FILTER','getOptimize_result','getOptimizeSeb_result','getPaletteInfo_result','getAreaSize_result'):
+            request['external_fields']['F:kairo.unity.ui.Image.'+field]='pls::kairo::Image::'+field
+        for signature,binding in {
+            '#ctor':'pls::cs::make_ref<pls::kairo::Image>',
+            '#ctor(System.Byte[],kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)':'pls::kairo::Image::FromBytes',
+            '#ctor(System.String,kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)':'pls::kairo::Image::FromFile',
+            '#ctor(System.String,System.String,kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)':'pls::kairo::Image::FromFile',
+            '#ctor(System.Int32,System.Int32,System.String,System.String,kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)':'pls::kairo::Image::FromRecord',
+            'SetStandardResolution(System.Int32,System.Int32)':'member:SetStandardResolution',
+            'SetImageAtlasId(System.Int32)':'member:SetImageAtlasId',
+            'SetName(System.String)':'member:SetName','GetName':'member:GetName',
+        }.items():request['external_methods']['M:kairo.unity.ui.Image.'+signature]=binding
         request['external_fields']['F:kairo.unity.ui.Canvas.lastOpenBrowserFrame_']='pls::kairo::Canvas::source_last_browser_frame()'
         request['external_methods']['M:UnityEngine.Application.OpenURL(System.String)']='pls::kairo::UnityApplication::OpenURL'
         request['external_methods']['M:kairo.unity.native.KairoPlugin.ShowDialog(System.Int32,System.String,System.String,System.String)']='pls::kairo::show_dialog'
@@ -205,6 +254,59 @@ def main():
         request['external_methods'].update({'M:UnityEngine.Input.GetKey(UnityEngine.KeyCode)':'pls::kairo::DebugInput::GetKey','M:UnityEngine.Input.GetMouseButton(System.Int32)':'pls::kairo::DebugInput::GetMouseButton','M:UnityEngine.Input.GetMouseButtonDown(System.Int32)':'pls::kairo::DebugInput::GetMouseButtonDown','M:UnityEngine.Input.get_mousePosition':'pls::kairo::DebugInput::get_mousePosition','M:UnityEngine.Screen.get_height':'pls::kairo::DebugInput::screen_height'})
         request['native_includes'].append('debug_input.hpp')
         request['external_methods']['M:UnityEngine.Input.get_touchCount']='pls::kairo::DebugInput::get_touchCount'
+        request['external_methods']['M:UnityEngine.Input.get_multiTouchEnabled']='pls::kairo::DebugInput::get_multiTouchEnabled'
+        request['external_methods']['M:kairo.unity.ui.SoundOGG.Load(System.String)']='pls::kairo::SoundOGG::Load'
+        request['external_methods']['M:kairo.unity.ui.SoundBase.SetName(System.String)']='member:SetName'
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.GetRelease']='pls::kairo::native_release'
+        request['external_methods']['M:kairo.unity.ui.IApplication.Terminate']='member:Terminate'
+        request['external_methods']['M:kairo.unity.ui.IApplication.ResetOrientation']='member:ResetOrientation'
+        request['external_methods']['M:kairo.unity.ui.IApplication.GetResource']='source-adapter:M:PlsPortGeneratedBootstrap.Source.GetApplicationResource(kairo.unity.ui.IApplication)'
+        request['native_includes'].append('runtime_memory.hpp')
+        for name in ('Free','Total'):
+            request['external_methods']['M:java.native.JavaPlugin.'+name+'Memory']='source-static:M:PlsPortGeneratedBootstrap.Source.'+name+'HeapMemory'
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.ShowToast(System.String,System.Int32)']='source-static:M:PlsPortGeneratedBootstrap.Source.ShowToast(System.String,System.Int32)'
+        for name in ('GetRenderModeOperator','GetRenderModeSrcRatio','GetRenderModeDstRatio'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+name]='member:'+name
+        for name in ('LockLocalizeSetting','UnlockLocalizeSetting'):
+            request['external_methods']['M:kairo.unity.ui.Font.'+name]='pls::kairo::Font::'+name
+        for name in ('GetWidth','GetStyle','GetLocalizeScale'):
+            request['external_methods']['M:kairo.unity.ui.Font.'+name]='member:'+name
+        request['external_methods']['M:kairo.unity.ui.Font.AdjustFontSize(System.Single)']='member:AdjustFontSize'
+        request['external_methods']['M:kairo.unity.ui.Font.SetStyle(System.Int32)']='member:SetStyle'
+        # Transitive library callers also use these exact native overloads;
+        # membership in the direct Game boundary is not an emission condition.
+        for signature in ('GetSize','GetHeight','GetWidth','GetStyle','GetFace','SetSize(System.Int32,System.Boolean)',
+                          'SetStyle(System.Int32)','SetFace(System.Int32)','AdjustFontSize(System.Single)',
+                          'Copy(kairo.unity.ui.Font)','Set(kairo.unity.ui.Font)','Equals(kairo.unity.ui.Font)',
+                          'StringWidth(System.String)','StringWidthF(System.String)','Dispose',
+                          'PushLocalizeSetting(System.Boolean)','PopLocalizeSetting','ClearLocalizeSettings',
+                          'LockLocalizeSetting','UnlockLocalizeSetting','IsNeedLocalizeScale','GetLocalizeScale'):
+            request['external_methods']['M:kairo.unity.ui.Font.'+signature]='native'
+        for name in ('PeekAutoTextLayout','PopAutoTextLayout'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+name]='pls::kairo::Graphics::'+name
+        request['external_methods']['M:kairo.unity.ui.Graphics.PushAutoTextLayout(System.Boolean)']='pls::kairo::Graphics::PushAutoTextLayout'
+        request['external_methods']['M:kairo.unity.ui.Graphics.GetTransRectGUI(System.Single,System.Single,System.Single,System.Single,kairo.unity.graphics.RectangleF)']='source-adapter:M:PlsPortGeneratedBootstrap.Source.GetGraphicsTransRectGUI(kairo.unity.ui.Graphics,System.Single,System.Single,System.Single,System.Single,kairo.unity.graphics.RectangleF)'
+        for signature in ('','(System.Single@,System.Single@)','(System.Int32@,System.Int32@)'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.BeginLocalCoordination'+signature]='member:BeginLocalCoordination'
+        request['external_methods']['M:kairo.unity.ui.Graphics.EndLocalCoordination']='member:EndLocalCoordination'
+        for signature in ('SetBlendMode(System.Int32,System.Int32)','SetBlendMode(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)',
+                          'PushBlendMode','PushBlendMode(System.Int32,System.Int32)','PushBlendMode(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)',
+                          'PopBlendMode','GetBlendMode','GetBlendColor'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+signature]='native'
+        request['external_fields']['F:kairo.unity.ui.Graphics.fontScaleOffsetEnable_']='fontScaleOffsetEnable_'
+        for parameters in ('System.Int64,System.Single,System.Single','System.Int64,System.Single,System.Single,System.Int32',
+                           'System.String,System.Single,System.Single,System.Int32,System.Int32',
+                           'kairo.unity.ui.TextFormat,System.Int64,System.Single,System.Single',
+                           'kairo.unity.ui.TextFormat,System.Int64,System.Single,System.Single,System.Int32',
+                           'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single',
+                           'kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32,System.Int32'):
+            member='M:kairo.unity.ui.Graphics.DrawString('+parameters+')';request['external_methods'].pop(member,None);request['source_native_helpers'].append(member)
+        request['external_methods']['M:kairo.unity.ui.Graphics.DrawString(kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32)']='source-adapter:M:PlsPortGeneratedBootstrap.Source.DrawGraphicsText(kairo.unity.ui.Graphics,kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Int32)'
+        for name,adapter in [('PushMatrix','PushGraphicsMatrix'),('SetMatrix','SetGraphicsMatrix'),('GetMatrix','GetGraphicsMatrix'),('GetLocalMatrix','GetGraphicsLocalMatrix'),('GetScreenMatrix','GetGraphicsScreenMatrix')]:
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+name+'(kairo.unity.ui.Matrix)']='source-adapter:M:PlsPortGeneratedBootstrap.Source.'+adapter+'(kairo.unity.ui.Graphics,kairo.unity.ui.Matrix)'
+        for name in ('PopMatrix','CheckLocalMatrix','ClearLocalMatrix'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+name]='member:'+name
+        request['external_methods']['M:kairo.unity.ui.Graphics.SetFlipMode(System.Int32)']='member:SetFlipMode'
         request['external_methods'].update({'M:UnityEngine.Screen.get_dpi':'pls::kairo::DebugInput::get_dpi','M:UnityEngine.Screen.get_fullScreen':'pls::kairo::DebugInput::get_fullScreen',
             'M:kairo.unity.native.KairoPlugin.IsFullscreen':'pls::kairo::DebugInput::get_fullScreen',
             'M:kairo.unity.native.KairoPlugin.GetStatusBarHeight':'pls::kairo::native_status_bar_height','M:kairo.unity.native.KairoPlugin.GetStatusBarPosition':'pls::kairo::native_status_bar_position',
@@ -212,6 +314,19 @@ def main():
             'M:kairo.unity.ui.IApplication.GetResolutionScaleRatio':'member:GetResolutionScaleRatio'})
         request['external_methods'].update({'M:kairo.unity.ui.Graphics.GetCurrent':'pls::kairo::Graphics::GetCurrent','M:kairo.unity.ui.Graphics.IsGUI':'member:IsGUI','M:kairo.unity.ui.Graphics.ResetRender':'member:ResetRender'})
         request['external_fields']['F:kairo.unity.ui.Graphics.current_']='readonly:pls::kairo::Graphics::GetCurrent()'
+        for signature in ('BeginGLRender(System.Boolean)','EndGLRender(System.Boolean)','FlushGLRender(System.Boolean)',
+                          'IsRenderGUIMode','SetClipEnable(System.Boolean)','IsClipEnable',
+                          'PushClipEnable','PushClipEnable(System.Boolean)','PopClipEnable'):
+            request['external_methods']['M:kairo.unity.ui.Graphics.'+signature]='member:'+signature.split('(')[0]
+        request['external_methods']['M:kairo.unity.ui.Font.SetScale(System.Int32)']='pls::kairo::Font::SetScale'
+        request['external_methods']['M:kairo.unity.io.Storage.Write(System.Int32,System.Boolean,System.String,System.Byte[])']='pls::kairo::Storage::Write'
+        request['external_methods']['M:kairo.unity.io.Storage.Exists(System.Int32,System.String)']='pls::kairo::Storage::Exists'
+        for signature in ('GetAction','GetX','GetY','GetX(System.Int32)','GetY(System.Int32)',
+                          'GetDeltaX','GetDeltaY','GetDeltaTime','GetDeltaX(System.Int32)','GetDeltaY(System.Int32)','GetDeltaTime(System.Int32)',
+                          'IsMousePointer','GetPointerCount','GetPointerId(System.Int32)'):
+            request['external_methods']['M:kairo.unity.surface.MotionEvent.'+signature]='member:'+signature.split('(')[0]
+        for name in ('IsNeedLocalizeScale','GetLocalizeScale'):
+            request['external_methods']['M:kairo.unity.ui.Font.'+name]='member:'+name
         request['native_includes']+=['vector2.hpp']
         request['external_types']['T:kairo.unity.surface.TouchValueAccessor']='pls::kairo::TouchValueAccessor'
         request['native_includes']+=['touch_value_accessor.hpp']
@@ -257,10 +372,21 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         request['native_includes'].append('bootstrap_bindings.hpp')
         request['external_methods'].update({
             'M:PlsPortGeneratedBootstrap.Host.InstallNativeBindings':'pls::game::native_install_bootstrap_bindings',
+            'M:PlsPortGeneratedBootstrap.Host.PushGraphicsMatrix(kairo.unity.ui.Graphics,System.Single[])':'pls::kairo::native_graphics_push_matrix',
+            'M:PlsPortGeneratedBootstrap.Host.SetGraphicsMatrix(kairo.unity.ui.Graphics,System.Single[])':'pls::kairo::native_graphics_set_matrix',
+            'M:PlsPortGeneratedBootstrap.Host.ReadGraphicsMatrix(kairo.unity.ui.Graphics,System.Int32)':'pls::kairo::native_graphics_read_matrix',
+            'M:PlsPortGeneratedBootstrap.Host.ReadGraphicsClip(kairo.unity.ui.Graphics)':'pls::kairo::native_graphics_read_clip',
+            'M:PlsPortGeneratedBootstrap.Host.ReadGraphicsFont(kairo.unity.ui.Graphics)':'pls::kairo::native_graphics_read_font',
+            'M:PlsPortGeneratedBootstrap.Host.DrawPreparedText(kairo.unity.ui.Graphics,System.String,System.Single,System.Single,System.Int32)':'pls::kairo::native_graphics_draw_prepared',
+            'M:PlsPortGeneratedBootstrap.Host.ReadApplicationResource(kairo.unity.ui.IApplication)':'pls::kairo::native_application_resource',
+            'M:PlsPortGeneratedBootstrap.Host.FreeHeapMemory':'pls::kairo::native_heap_free',
+            'M:PlsPortGeneratedBootstrap.Host.TotalHeapMemory':'pls::kairo::native_heap_total',
+            'M:PlsPortGeneratedBootstrap.Host.SetWindowFullscreen(System.Boolean)':'pls::kairo::native_window_fullscreen',
             'M:kairo.unity.native.KairoPlugin.Init(System.Int32,System.Boolean,System.String)':'pls::kairo::native_plugin_init',
             'M:kairo.unity.util.DisplayMetrics.#ctor':'pls::cs::make_ref<pls::kairo::DisplayMetrics>',
             'M:kairo.unity.ui.Image.SetExpiration(System.Boolean,System.Int32)':'member:SetExpiration'})
         producer['bootstrap_generator_sha256']=digest(ROOT/'translator/bootstrap_source.py')
+        request['external_methods']['M:kairo.unity.native.KairoPlugin.Fullscreen(System.Boolean)']='source-static:M:PlsPortGeneratedBootstrap.Source.SetWindowFullscreen(System.Boolean)'
         if not args.diagnostics_only:
             output.mkdir(parents=True,exist_ok=True)
             bootstrap_adapter.header(output)
@@ -283,11 +409,17 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
                 for key in ('source','node_source'):
                     path=Path(value[key]) if isinstance(value.get(key),str) else None
                     if path is not None and path.is_absolute() and path.is_relative_to(ROOT):value[key]=path.relative_to(ROOT).as_posix()
+            if args.assembly=='Assembly-CSharp' and 'node_source' in value and value['node_source']==value.get('source'):
+                value.pop('node_source')
             for child in value.values():redact_sites(child)
         elif isinstance(value,list):
             for child in value:redact_sites(child)
     redact_sites(report)
-    if args.assembly=='Assembly-CSharp':report['source_path_base']='repository_root'
+    if args.assembly=='Assembly-CSharp':
+        report['source_path_base']='repository_root'
+        report['node_source_default']='source'
+        pack_source_paths(report)
+        producer['report_paths_sha256']=digest(ROOT/'translator/report_paths.py')
     if args.diagnostics_only:
         report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],platform_adapter_sources=adapter_sources,reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs])
         target_report=ROOT/'config'/('phase2-game-diagnostics.json' if args.assembly=='Assembly-CSharp' else 'phase2-portable-diagnostics.json')

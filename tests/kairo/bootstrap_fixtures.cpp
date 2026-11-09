@@ -12,10 +12,10 @@ BootstrapBindings bindings(){BootstrapBindings b;b.forms=pls::cs::make_ref<Callb
 void run(const char* name,int error){trace.clear();failure=error;auto app=pls::cs::make_ref<App>();app->source_Init(app);auto context=configure_bootstrap(app,bindings());try{app->host_start();}catch(const pls::cs::Exception& e){trace+="error:"+std::string(e.type_name())+";";}std::cout<<name<<'='<<trace<<'/'<<(context->resource_object()?1:0)<<'\n';}
 int policy(){unsigned int n=0;auto check=[&](bool v){if(!v)throw std::runtime_error("Bootstrap policy failed");++n;};
  auto app=pls::cs::make_ref<App>();auto incomplete=bindings();incomplete.create_config={};bool failed=false;try{configure_bootstrap(app,std::move(incomplete));}catch(const BootstrapContractError&){failed=true;}check(failed);
- auto context=configure_bootstrap(app,bindings());failed=false;try{context->AfterCreate();}catch(const BootstrapContractError&){failed=true;}check(failed);
+ auto context=configure_bootstrap(app,bindings());check(!app->source_resource_object());failed=false;try{context->AfterCreate();}catch(const BootstrapContractError&){failed=true;}check(failed);
  auto bad=bindings();bad.load_library_resources=pls::cs::Delegate<pls::cs::Ref<pls::cs::Object>()>::from_static("invalid-null-loader",[]{return pls::cs::Ref<pls::cs::Object>{};});context=configure_bootstrap(app,std::move(bad));failure=0;failed=false;try{context->BeforeCreate();}catch(const BootstrapContractError&){failed=true;}check(failed);
  std::weak_ptr<BootstrapContext> weak;
- {auto owner=pls::cs::make_ref<App>();owner->source_Init(owner);auto b=bindings();auto raw=owner.get();b.create_config=pls::cs::Delegate<void()>::bind(owner,"bound-owner",[raw]{(void)raw;});auto c=configure_bootstrap(owner,std::move(b));weak=c;owner->host_start();owner->host_stop();}
+ {auto owner=pls::cs::make_ref<App>();owner->source_Init(owner);auto b=bindings();auto raw=owner.get();b.create_config=pls::cs::Delegate<void()>::bind(owner,"bound-owner",[raw]{(void)raw;});auto c=configure_bootstrap(owner,std::move(b));weak=c;owner->host_start();check(owner->source_resource_object()==c->resource_object()&&bool(c->resource_object()));owner->host_stop();}
  install_form_runtime({});pls::cs::gc_collect();check(weak.expired());
  std::cout<<"{\"assertions\":"<<n<<",\"critical_missing_bindings_rejected\":true,\"null_resource_success_rejected\":true,\"bootstrap_owner_cycle_collected\":true,\"game_boot\":false}\n";return 0;}
 }

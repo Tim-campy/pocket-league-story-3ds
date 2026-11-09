@@ -31,13 +31,26 @@ cs::Ref<Image> Image::FromLoader(cs::Delegate<cs::Array<std::uint8_t>()> loader,
     if(!loader)throw cs::ArgumentNullException();auto image=cs::make_ref<Image>();image->source_loader_=std::move(loader);image->width_=image->height_=240;
     image->format=f==Format::Default?Format::ARGB32:f;image->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return image;
 }
+cs::Ref<Image> Image::FromBytes(cs::Array<std::uint8_t> bytes,Format f,Filter filter){
+    if(!runtime.measure_source)throw cs::InvalidOperationException("Generated image header reader is not installed");
+    const auto size=runtime.measure_source(bytes);auto image=cs::make_ref<Image>();
+    image->width_=size.at(0);image->height_=size.at(1);image->source_bytes_=bytes;
+    image->format=f==Format::Default?DEFAULT_FORMAT:f;image->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return image;
+}
+cs::Ref<Image> Image::FromRecord(std::int32_t rs,std::int32_t rc,cs::String file,cs::String palette,Format f,Filter filter){
+    auto image=cs::make_ref<Image>();image->width_=image->height_=240;image->rs_id_=rs;image->rc_id_=rc;image->file_=file;image->palette_file_=palette;
+    image->format=f==Format::Default?DEFAULT_FORMAT:f;image->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return image;
+}
 void Image::Use(){
-    if(alive_||disposed_||(source_bytes_.is_null()&&!source_loader_))return;
+    if(alive_||disposed_||(source_bytes_.is_null()&&!source_loader_&&file_.is_null()))return;
     if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
         auto self=std::dynamic_pointer_cast<Image>(shared_from_this());auto raw=self.get();
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Use",[raw]{raw->Use();}),true);return;
     }
-    auto bytes=source_bytes_;if(bytes.is_null())bytes=source_loader_();if(bytes.is_null())return;
+    auto bytes=source_bytes_;if(bytes.is_null()){
+        if(source_loader_)bytes=source_loader_();
+        else{if(!runtime.read_source)throw cs::InvalidOperationException("Generated image source reader is not installed");bytes=runtime.read_source(rs_id_,rc_id_,file_,palette_file_);}
+    }if(bytes.is_null())return;
     const auto& entry=source_entry(bytes);auto decoded=assets::installed_catalog->read(entry);
     width_=static_cast<std::int32_t>(entry.width);height_=static_cast<std::int32_t>(entry.height);rgba_=std::move(decoded);alive_=true;check_count_=now();
     auto self=std::dynamic_pointer_cast<Image>(shared_from_this());source_images.push_back(self);
@@ -53,7 +66,7 @@ void Image::Use(){
     }
 }
 void Image::Unuse(){
-    if(!alive_||(!created_image_&&source_bytes_.is_null()&&!source_loader_))return;
+    if(!alive_||(!created_image_&&source_bytes_.is_null()&&!source_loader_&&file_.is_null()))return;
     if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
         auto self=std::dynamic_pointer_cast<Image>(shared_from_this());auto raw=self.get();
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Unuse",[raw]{raw->Unuse();}),true);return;
@@ -65,7 +78,7 @@ void Image::Unuse(){
 }
 void Image::Dispose(){
     Unuse();if(alive_){area(cs::neg_i32(cs::mul_i32(width_,height_)));release_count=cs::add_i32(release_count,1);}
-    alive_=false;std::vector<std::uint8_t>().swap(rgba_);source_bytes_={};source_loader_={};width_=height_=0;disposed_=true;
+    alive_=false;std::vector<std::uint8_t>().swap(rgba_);source_bytes_={};source_loader_={};file_={};palette_file_={};images_={};optimize_={};width_=height_=0;disposed_=true;
 }
 void Image::SetSourceImageMaxCount(std::int32_t value){max_count=value;}
 void Image::SetSourceImageMaxPixels(std::int32_t value){max_pixels=value;}
@@ -79,6 +92,6 @@ void Image::UnuseExpirationImages(){
 void Image::source_drawn(){check_count_=now();}
 std::array<std::int32_t,2> Image::native_cache_size(){return {static_cast<std::int32_t>(source_images.size()),source_pixels};}
 std::int32_t Image::native_releases(){return release_count;}
-void Image::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(source_bytes_,visitor);cs::trace_value(source_loader_,visitor);}
-void Image::release_edges(){cs::release_value(source_bytes_);cs::release_value(source_loader_);}
+void Image::trace_edges(const cs::EdgeVisitor& visitor)const{cs::Object::trace_edges(visitor);cs::trace_value(source_bytes_,visitor);cs::trace_value(source_loader_,visitor);cs::trace_value(file_,visitor);cs::trace_value(palette_file_,visitor);cs::trace_value(name_,visitor);cs::trace_value(images_,visitor);cs::trace_value(optimize_,visitor);cs::trace_value(optimizeAccess_,visitor);cs::trace_value(optimizeSeb_,visitor);cs::trace_value(optimizeEx_,visitor);cs::trace_value(optimizeAccessL_,visitor);cs::trace_value(optimizeSebEx_,visitor);}
+void Image::release_edges(){cs::Object::release_edges();cs::release_value(source_bytes_);cs::release_value(source_loader_);cs::release_value(file_);cs::release_value(palette_file_);cs::release_value(name_);cs::release_value(images_);cs::release_value(optimize_);cs::release_value(optimizeAccess_);cs::release_value(optimizeSeb_);cs::release_value(optimizeEx_);cs::release_value(optimizeAccessL_);cs::release_value(optimizeSebEx_);}
 }

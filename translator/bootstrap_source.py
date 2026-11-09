@@ -27,10 +27,31 @@ using kairo.unity.native;
 using kairo.unity.analytics;
 using kairo.unity.system;
 using kairo.unity.panel;
+using kairo.unity.form;
 namespace PlsPortGeneratedBootstrap {
  public static class Host {
   [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
   public static extern void InstallNativeBindings();
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern void PushGraphicsMatrix(Graphics g,float[] values);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern void SetGraphicsMatrix(Graphics g,float[] values);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern float[] ReadGraphicsMatrix(Graphics g,int mode);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern void SetWindowFullscreen(bool enabled);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern float[] ReadGraphicsClip(Graphics g);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern Font ReadGraphicsFont(Graphics g);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern void DrawPreparedText(Graphics g,string text,float x,float y,int anchor);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern object ReadApplicationResource(IApplication app);
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern long FreeHeapMemory();
+  [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.InternalCall)]
+  public static extern long TotalHeapMemory();
  }
  public static class Source {
   public static void CreateConfig(){/*FIELD_COPIES*/}
@@ -39,6 +60,7 @@ namespace PlsPortGeneratedBootstrap {
    KairoPlugin.CancelNotifications(true,false);
    KairoPlugin.SetNotificationBackground(false);
    AnalyticsTracker.Setup();
+   if(!Config.FULLSCREEN)KairoPlugin.Fullscreen(false);
    var metrics=new DisplayMetrics();
    Canvas.GetInstance().SetDisplayCurrent(IApplication.GetCurrentApp());
    Host.InstallNativeBindings();
@@ -50,6 +72,47 @@ namespace PlsPortGeneratedBootstrap {
    return manager;
   }
   public static void InitializeLanguage(){Language.Init();}
+  public static ResourceManager GetApplicationResource(IApplication app){return (ResourceManager)Host.ReadApplicationResource(app);}
+  public static long FreeHeapMemory(){return (long)IApplication.GetCurrentApp().RunOnUiThread(()=>Host.FreeHeapMemory(),true);}
+  public static long TotalHeapMemory(){return (long)IApplication.GetCurrentApp().RunOnUiThread(()=>Host.TotalHeapMemory(),true);}
+  public static void ShowToast(string text,int duration){IApplication.GetCurrentApp().RunOnUiThread(delegate{UnityEngine.Debug.Log(text);},true);}
+  public static void SetWindowFullscreen(bool enabled){
+   if(Config.FULLSCREEN)return;
+   IApplication.GetCurrentApp().RunOnUiThread(delegate{Host.SetWindowFullscreen(enabled);},true);
+  }
+  public static void TerminateApplication(){
+   FormManagerBase.ProcessEvent(AppEventType.Exit,new object[0]);
+   var kairo=KairoBase.GetInstance();if(kairo!=null)kairo.Finish();ClockTime.Destroy();
+  }
+  public static byte[] ReadImageData(int rs,int rc,string file,string palette){
+   byte[] data;
+   if(rs==-1){data=Storage.Read(3,false,file);if(palette!=null)Image.OverwritePaletteData(data,Storage.Read(3,false,palette));}
+   else{var jar=ResourceManager.OpenJarCache(rs,rc);data=jar.GetData(file);if(palette!=null)Image.OverwritePaletteData(data,jar.GetData(palette));}
+   return data;
+  }
+  public static int[] MeasureImage(byte[] data){return Image.GetAreaSize(data);}
+  public static float[] MatrixValues(Matrix value){if(value==null)return null;var values=new float[9];value.GetValues(values);return values;}
+  public static void DrawGraphicsText(Graphics g,TextFormat lf,string str,float x,float y,int anchor){
+   str=Language.TranslateText(str);
+   if((Graphics.PeekAutoTextLayout()&&str.IndexOf('<')!=-1)||(Graphics.GetLineSpace()!=0&&str.IndexOf('\\n')!=-1)){TextLayout.Draw(null,g,str,x,y,g.GetColor(),anchor);return;}
+   var font=Host.ReadGraphicsFont(g);int previous=-1;
+   if(!Language.Japanese()&&lf!=null){if(lf.GetFont()!=-1&&lf.GetFont()!=font.GetSize()){previous=font.GetSize();font.SetSize(lf.GetFont());}x=lf.GetX(x);y=lf.GetY(y);anchor=lf.GetAnchor(anchor);}
+   bool localize=(lf==null||lf.GetFont()==-1)&&font.IsNeedLocalizeScale();
+   if(localize){previous=font.GetSize();int height=font.GetHeight();font.SetSize(font.GetLocalizeScale());if((anchor&0x60)==0)y+=(height-font.GetHeight())/2f;Font.LockLocalizeSetting();}
+   try{Host.DrawPreparedText(g,str,x,y,anchor);}finally{if(localize)Font.UnlockLocalizeSetting();if(previous!=-1)font.SetSize(previous);}
+  }
+  public static void PushGraphicsMatrix(Graphics g,Matrix value){Host.PushGraphicsMatrix(g,MatrixValues(value));}
+  public static void SetGraphicsMatrix(Graphics g,Matrix value){Host.SetGraphicsMatrix(g,MatrixValues(value));}
+  public static Matrix GetGraphicsMatrix(Graphics g,Matrix value){if(value==null)value=new Matrix();value.SetValues(Host.ReadGraphicsMatrix(g,0));return value;}
+  public static Matrix GetGraphicsLocalMatrix(Graphics g,Matrix value){if(value==null)value=new Matrix();value.SetValues(Host.ReadGraphicsMatrix(g,1));return value;}
+  public static Matrix GetGraphicsScreenMatrix(Graphics g,Matrix value){if(value==null)value=new Matrix();value.SetValues(Host.ReadGraphicsMatrix(g,2));return value;}
+  public static kairo.unity.graphics.RectangleF GetGraphicsTransRectGUI(Graphics g,float x,float y,float width,float height,kairo.unity.graphics.RectangleF dst){
+   if(dst==null)dst=new kairo.unity.graphics.RectangleF();dst.Set(x,y,x+width,y+height);
+   float left=dst.left,top=dst.top,right=dst.right,bottom=dst.bottom;var matrix=g.GetScreenMatrix();
+   matrix.MapPoints(ref left,ref top);matrix.MapPoints(ref right,ref bottom);
+   dst.Set(left,top,right,bottom);var clip=Host.ReadGraphicsClip(g);
+   dst.left-=clip[0];dst.right-=clip[0];dst.top-=clip[1];dst.bottom-=clip[1];return dst;
+  }
   public static KairoBase GetKairo(){return KairoBase.GetInstance();}
   public static bool IsPlaying(KairoBase value){return value.IsGamePlaying();}
   public static void SetGameState(KairoBase value,bool playing){value.SetGameState(playing);}
@@ -73,6 +136,8 @@ namespace PlsPortGeneratedBootstrap {
   public static void DisableAds(){Config.ADMOB_ENABLE=false;}
   public static void CloseJarCache(){ResourceManager.CloseJarCache();}
   public static string Translate(string value){return Language.TranslateText(value);}
+  public static float MarkupWidth(Font font,string value){return TextLayout.StringWidthF(null,font,value);}
+  public static void MarkupDraw(Graphics g,string value,float x,float y,int anchor){TextLayout.Draw(null,g,value,x,y,g.GetColor(),anchor);}
   public static bool Japanese(){return Language.Japanese();}
   public static bool LocalizeScale(){return Config.LOCALIZE_FONT_SCALE;}
   public static long Millis(){return java.lang.JSystem.CurrentTimeMillis();}
@@ -105,8 +170,8 @@ def selected():
     # adapters, excluded from the original Game method denominator.
     import re
     result=[]
-    aliases={'KairoBase':'kairo.unity.system.KairoBase','FepPanel':'kairo.unity.panel.FepPanel','bool':'System.Boolean','int':'System.Int32','long':'System.Int64','string':'System.String'}
-    for name,parameters in re.findall(r'public static [\w<>]+ (\w+)\(([^)]*)\)',SOURCE):
+    aliases={'KairoBase':'kairo.unity.system.KairoBase','FepPanel':'kairo.unity.panel.FepPanel','IApplication':'kairo.unity.ui.IApplication','Graphics':'kairo.unity.ui.Graphics','Font':'kairo.unity.ui.Font','TextFormat':'kairo.unity.ui.TextFormat','Matrix':'kairo.unity.ui.Matrix','bool':'System.Boolean','int':'System.Int32','long':'System.Int64','float':'System.Single','kairo.unity.graphics.RectangleF':'kairo.unity.graphics.RectangleF','string':'System.String','byte[]':'System.Byte[]'}
+    for name,parameters in re.findall(r'public static [\w.<>\[\]]+ (\w+)\(([^)]*)\)',SOURCE):
         types=[aliases[p.strip().split()[0]]for p in parameters.split(',')if p.strip()]
         result.append(PREFIX+name+('('+','.join(types)+')'if types else ''))
     return result
@@ -150,9 +215,11 @@ namespace cs=pls::cs;namespace k=pls::kairo;
     text.append(invoke('DisableAds')+';\n')
     text.append('k::Canvas::GetInstance()->host_input_config([]()->bool{return '+invoke('DebugFlag',result='bool')+';});\n')
     text.append('k::IApplication::host_platform(pls::sdl::device_model());\n')
-    text.append('k::ImageRuntimeBindings images;images.check_count='+bind('std::int32_t()','CheckCount')+';images.count_enabled='+bind('bool()','CountEnabled')+';images.adjust_create_area='+bind('void(std::int32_t)','AdjustCreateArea',['delta'],'std::int32_t delta','(System.Int32)')+';k::install_image_runtime(std::move(images));\n')
-    text.append('k::TextServices fonts;fonts.translate=[](cs::String value)->cs::String{return '+invoke('Translate',['value'],'(System.String)','cs::String')+';};fonts.japanese=[]()->bool{return '+invoke('Japanese',result='bool')+';};fonts.localize_scale=[]()->bool{return '+invoke('LocalizeScale',result='bool')+';};fonts.application_scale=[](){return k::IApplication::GetCurrentApp()->GetScaleRatio();};k::install_text_services(std::move(fonts));}\n')
-    text.append('void configure_application(cs::Ref<k::IApplication> app){\nk::FormCallbacks forms;\n')
+    text.append('k::ImageRuntimeBindings images;images.check_count='+bind('std::int32_t()','CheckCount')+';images.count_enabled='+bind('bool()','CountEnabled')+';images.adjust_create_area='+bind('void(std::int32_t)','AdjustCreateArea',['delta'],'std::int32_t delta','(System.Int32)')+';images.read_source='+bind('cs::Array<std::uint8_t>(std::int32_t,std::int32_t,cs::String,cs::String)','ReadImageData',['rs','rc','file','palette'],'std::int32_t rs,std::int32_t rc,cs::String file,cs::String palette','(System.Int32,System.Int32,System.String,System.String)')+';images.measure_source='+bind('cs::Array<std::int32_t>(cs::Array<std::uint8_t>)','MeasureImage',['data'],'cs::Array<std::uint8_t> data','(System.Byte[])')+';k::install_image_runtime(std::move(images));\n')
+    text.append('k::TextServices fonts;fonts.translate=[](cs::String value)->cs::String{return '+invoke('Translate',['value'],'(System.String)','cs::String')+';};fonts.japanese=[]()->bool{return '+invoke('Japanese',result='bool')+';};fonts.localize_scale=[]()->bool{return '+invoke('LocalizeScale',result='bool')+';};fonts.application_scale=[](){return k::IApplication::GetCurrentApp()->GetScaleRatio();};')
+    text.append('fonts.markup_width=[](cs::Ref<k::Font> font,cs::String value)->float{return '+invoke('MarkupWidth',['font','value'],'(kairo.unity.ui.Font,System.String)','float')+';};')
+    text.append('fonts.markup_draw=[](cs::Ref<k::Graphics> g,cs::String value,float x,float y,std::int32_t anchor){'+invoke('MarkupDraw',['g','value','x','y','anchor'],'(kairo.unity.ui.Graphics,System.String,System.Single,System.Single,System.Int32)')+';};k::install_text_services(std::move(fonts));}\n')
+    text.append('void configure_application(cs::Ref<k::IApplication> app){\napp->host_termination([](){'+invoke('TerminateApplication')+';});\nk::FormCallbacks forms;\n')
     # Bind source singleton lookup lazily. Every operation below retains the
     # exact object returned by that one lookup; it never re-queries a singleton.
     get_kairo=PREFIX+'GetKairo'

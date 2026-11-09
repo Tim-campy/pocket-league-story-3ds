@@ -335,3 +335,44 @@ bytes e alternativas. `python tools/audit_collation_license.py` recompila quatro
 providers privados e compara 25.704 observações sintéticas por variante; não
 altera a produção. A retirada do bitmap muda 124 observações en-US. Os dados
 continuam sob a autorização anterior; a licença do port não foi escolhida.
+
+## Dependências de cabeçalhos no build PC
+
+tools/pc_compiler.py mede o prefixo real de /showIncludes com um header próprio.
+VSLANG=1033 é solicitado, mas não se presume que existam recursos de mensagens
+ingleses no MSVC instalado. tools/build_pc.py passa PLS_MSVC_SHOWINCLUDES_PREFIX
+ao CMake; CMakeLists.txt o aplica depois de project(), evitando a detecção OEM
+corrompida observada neste ambiente com mensagens UTF-8 em português.
+
+O primeiro build com essa política ou um prefixo/compilador diferente usa
+--clean-first. Antes de executar o jogo, o builder consulta ninja -t deps e exige
+semantic_runtime.hpp nos objetos do runtime, da biblioteca portátil e do Game.
+Um objeto sem dependências é rejeitado. Logs/política ficam em build/; a tentativa
+de execução registra a auditoria. python tools/test_cmake_dependencies.py prova
+que editar apenas um header recompila um executável próprio. Nenhum arquivo do
+Ninja ou objeto é corrigido à mão, e nenhuma ferramenta adicional é instalada.
+
+Os recibos Game usam source-file-table-v1: source/node_source numéricos indexam
+source_files, relativos à raiz; node_source ausente herda source. A função
+unpack_source_paths de translator/report_paths.py recupera os localizadores.
+O produtor desse formato também é vinculado por SHA-256 no recibo.
+
+Os registros emitted_methods/emitted_kairo_dependencies também admitem
+method_record_encoding=defaults-v1. O mapa method_record_defaults explicita os
+valores comuns de seis campos de metadados; apenas ocorrências exatamente iguais
+são deduplicadas. IDs, parâmetros, flags não padrão e todos os registros são
+conservados. unpack_source_paths também expande esses defaults. Os consumidores
+do progresso, comparação e snapshots usam essa expansão. A sonda sobre o recibo
+de 1.669 corpos conservou os 2.170 registros: 2.020.448 para 1.667.073 bytes,
+com igualdade integral após a expansão. Não houve alteração do limite do CI.
+
+## ADB existente para comparação Android
+
+Localizado sem download em
+`C:/Users/l_abn/Documents/Projetos/Kairosoft/external/android-45f4d63113e8/platform-tools/adb.exe`.
+Versão medida: Android Debug Bridge 1.0.41, Platform-Tools
+37.0.1-15733141; SHA-256
+`b4a6b455702684652cccf7b46258b29e653538904359a58fd4931cf3ef286b3f`.
+Essa ferramenta externa não entra no build nem no repositório. A consulta
+`adb devices -l` nesta continuação retornou lista vazia. A comparação visual
+com o original permanece UNKNOWN; nenhum APK foi instalado ou substituído.

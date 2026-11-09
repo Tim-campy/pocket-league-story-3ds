@@ -47,6 +47,16 @@ Backend::~Backend() {
     if(window_) SDL_DestroyWindow(window_);
     SDL_Quit();
 }
+void Backend::reset_default_orientation(){
+    // The PC host has a fixed logical framebuffer, no orientation sensor.
+    // Restore its actual initial window shape, not a fabricated Android value.
+    if(window_)SDL_SetWindowSize(window_,width_,height_);
+}
+void Backend::set_fullscreen(bool enabled){
+    if(!window_)throw cs::InvalidOperationException("Fullscreen needs an SDL window");
+    check(SDL_SetWindowFullscreen(window_,enabled?SDL_WINDOW_FULLSCREEN_DESKTOP:0));
+    debug_input_fullscreen(fullscreen(window_));
+}
 void Backend::clear(platform::Color c) { check(SDL_SetRenderDrawColor(renderer_,c.r,c.g,c.b,c.a));check(SDL_RenderClear(renderer_)); }
 void Backend::fill(platform::Rect r,platform::Color c) { auto native=rect(r);check(SDL_SetRenderDrawColor(renderer_,c.r,c.g,c.b,c.a));check(SDL_RenderFillRect(renderer_,&native)); }
 void Backend::line(int x,int y,int x2,int y2,platform::Color c) { check(SDL_SetRenderDrawColor(renderer_,c.r,c.g,c.b,c.a));check(SDL_RenderDrawLine(renderer_,x,y,x2,y2)); }

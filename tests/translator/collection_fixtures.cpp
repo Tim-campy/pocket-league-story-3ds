@@ -39,4 +39,5 @@ int main(int argc,char**argv){
     auto instance=box(make_ref<Item>());auto marker=unbox<Ref<IMarker>>(instance);
     std::cout<<"interface-object="<<boolean(instance==box(marker))<<'\n';
     auto interfaces=List<Ref<IMarker>>::make();interfaces.add(marker);std::cout<<"interface-equality="<<boolean(interfaces.contains(unbox<Ref<IMarker>>(instance)))<<'\n';
+    auto source=interfaces.to_array();auto view=Array<Ref<Object>>::covariant_from(source);std::cout<<"interface-array-identity="<<boolean(source.as_object()==view.as_object())<<'\n';std::cout<<"interface-array-element="<<boolean(view.get_Item(0)==instance)<<'\n';std::cout<<"interface-array-store="<<error([&]{view.set_Item(0,box(I(37)));})<<'\n';
 }

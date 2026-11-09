@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from report_paths import unpack_source_paths
 
 ROOT=Path(__file__).resolve().parents[1]
 
@@ -19,10 +20,11 @@ def main():
     options=parser.parse_args();output=options.output.resolve()
     if not output.is_relative_to((ROOT/'build').resolve()):raise ValueError('Diagnostic output must stay below the ignored build directory')
     if output.exists()and any(output.iterdir()):raise ValueError('Use a new empty directory for each diagnostic snapshot')
-    report_file=ROOT/'config/phase2-game-translation.json';report=json.loads(report_file.read_text(encoding='utf8'));producer=report['producer']
+    report_file=ROOT/'config/phase2-game-translation.json';report=unpack_source_paths(json.loads(report_file.read_text(encoding='utf8')));producer=report['producer']
     if not report.get('compiled'):raise ValueError('A compiled canonical snapshot is required')
     for key,path in [('translator_source_sha256',ROOT/'translator/Translator.cs'),('driver_sha256',ROOT/'translator/translate.py')]:
         if producer.get(key)!=sha(path):raise ValueError('Canonical producer is stale; regenerate normal Game first')
+    if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=sha(ROOT/'translator/report_paths.py'):raise ValueError('Canonical path producer is stale')
     for entry in report.get('platform_adapter_sources',[]):
         if sha(ROOT/entry['path'])!=entry['sha256']:raise ValueError('Bootstrap producer/source is stale')
     canonical=report['generated_files'];names=set()
@@ -34,6 +36,9 @@ def main():
     traps=report['missing_virtual_definitions']
     if any('cpp_signature'not in row for row in traps):raise ValueError('Canonical report lacks typed trap signatures; regenerate normal Game')
     output.mkdir(parents=True,exist_ok=True)
+    # Keep the exact canonical evidence with this private snapshot, so a later
+    # canonical regeneration does not leave historical runs with only a hash.
+    (output/'canonical_report.json').write_bytes(report_file.read_bytes())
     for entry in canonical:(output/Path(entry['path']).name).write_bytes((ROOT/entry['path']).read_bytes())
     helper='''// GENERATED diagnostic helper. No normal ledger or game-body promotion.
 #pragma once

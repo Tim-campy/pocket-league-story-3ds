@@ -1,10 +1,10 @@
 {
   "operation": "own-source-CSharp-versus-Cpp-runtime-semantic-fixtures",
   "status": "PASS",
-  "fixture_cases": 60,
-  "passed": 60,
-  "expected_lines": 30,
-  "actual_lines": 30,
+  "fixture_cases": 66,
+  "passed": 66,
+  "expected_lines": 33,
+  "actual_lines": 33,
   "native_collector_tests": null,
   "production_methods_translated": 0,
   "production_translator_exercised": false,
@@ -17,14 +17,14 @@
     "cpp_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00"
   },
   "inputs": {
-    "tests\\translator\\CollectionFixtures.cs": "28e2cd187e33c4eb72c6308542d527bc09d27d246a73292f499734776829602b",
-    "tests\\translator\\collection_fixtures.cpp": "378abefa04d67aed5840293ad6ef5a5f07ed877a3b6f9144a78b212ae3427909",
-    "src\\kairo\\common\\semantic_runtime.cpp": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9",
-    "src\\kairo\\common\\semantic_runtime.hpp": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d",
+    "tests\\translator\\CollectionFixtures.cs": "12591efaac2aac05a5482696e8a0add038e2ba7eaba3adeb20b75ac911c36572",
+    "tests\\translator\\collection_fixtures.cpp": "035d201cc43cc4b5ed0de2490e56dc0144df4e79c5f4eedac6384629717ef044",
+    "src\\kairo\\common\\semantic_runtime.cpp": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7",
+    "src\\kairo\\common\\semantic_runtime.hpp": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
     "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "b96b014a1879c0beed2a42a1376690321e60dd4adac7d59c5121c314ae02983b",
-    "src\\kairo\\common\\managed_dictionary.hpp": "42cb1b3df9c690ba4225d86cce74157a04ee9ef9c11d4c6244b4d3c8f76984f8",
+    "src\\kairo\\common\\managed_dictionary.hpp": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab",
     "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
     "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97"
   },
@@ -228,6 +228,24 @@
       "expected": "interface-equality=True",
       "actual": "interface-equality=True",
       "passed": true
+    },
+    {
+      "case": "interface-array-identity",
+      "expected": "interface-array-identity=True",
+      "actual": "interface-array-identity=True",
+      "passed": true
+    },
+    {
+      "case": "interface-array-element",
+      "expected": "interface-array-element=True",
+      "actual": "interface-array-element=True",
+      "passed": true
+    },
+    {
+      "case": "interface-array-store",
+      "expected": "interface-array-store=System.ArrayTypeMismatchException",
+      "actual": "interface-array-store=System.ArrayTypeMismatchException",
+      "passed": true
     }
   ],
   "historical_cases": [
@@ -409,6 +427,24 @@
       "case": "interface-equality",
       "expected": "interface-equality=True",
       "actual": "interface-equality=True",
+      "passed": true
+    },
+    {
+      "case": "interface-array-identity",
+      "expected": "interface-array-identity=True",
+      "actual": "interface-array-identity=True",
+      "passed": true
+    },
+    {
+      "case": "interface-array-element",
+      "expected": "interface-array-element=True",
+      "actual": "interface-array-element=True",
+      "passed": true
+    },
+    {
+      "case": "interface-array-store",
+      "expected": "interface-array-store=System.ArrayTypeMismatchException",
+      "actual": "interface-array-store=System.ArrayTypeMismatchException",
       "passed": true
     }
   ],

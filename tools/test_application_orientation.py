@@ -1,7 +1,7 @@
 """Exact source orientation getters, preserving successive provider reads.
 
-Setter/reset/autorotate source observations are context only: those native APIs
-are deliberately absent until a backend can implement actual window behavior.
+Setter/autorotate observations remain context only. Default reset is exercised
+through the host callback; SDL's actual window reset has a separate CTest.
 """
 import hashlib,json,os,sys
 from pathlib import Path
@@ -47,7 +47,7 @@ public class OriginalOrientation {ScreenOrientation defaultOrientation_;public v
     native_sources=[ROOT/'tests/kairo/application_orientation_fixtures.cpp',ROOT/'src/kairo/common/semantic_runtime.cpp'];native=folder/'application-orientation-fixtures.exe';compiler=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe'
     run([compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/utf-8','/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src/kairo/common'),'/Fe:'+str(native),'/Fo:'+str(folder)+'/',*native_sources],folder,'native-compile',environment())
     actual=dict(line.split('\t',1) for line in run([native],folder,'native-cases',environment()).splitlines())
-    if len(actual)!=20:raise ValueError('Incomplete native getter corpus')
+    if len(actual)!=27:raise ValueError('Incomplete native getter/reset corpus')
     cases=[];context=[]
     for profile,command,childenv in [('UnityMono265',[mono,old],env),('DotNet',[dotnet,modern],None)]:
         observed=dict(line.split('\t',1) for line in run(command,folder,profile+'-source-oracle',childenv).splitlines())
@@ -55,18 +55,18 @@ public class OriginalOrientation {ScreenOrientation defaultOrientation_;public v
         cases.extend(dict(profile=profile,case=k,expected=observed[k],actual=v,passed=observed[k]==v) for k,v in actual.items())
         context.append(dict(profile=profile,native_verified=False,observations={k:v for k,v in observed.items() if k not in actual}))
     policy=json.loads(run([native,'policy'],folder,'native-policy',environment()))
-    if policy.get('status')!='PASS' or policy.get('assertions')!=8 or policy.get('setter_autorotate_implemented') is not False:raise ValueError('Incomplete own host orientation policy fixture')
+    if policy.get('status')!='PASS' or policy.get('assertions')!=10 or policy.get('setter_autorotate_implemented') is not False or policy.get('default_reset_callback_implemented')is not True:raise ValueError('Incomplete own host orientation policy fixture')
     passed=all(row['passed'] for row in cases)
     inputs=[*native_sources,source,metadata_source,ROOT/'tools/test_application_orientation.py',ROOT/'tools/test_input.py',ROOT/'tools/native_api_proof.py',ROOT/'src/kairo/api/application.hpp',ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/managed_shared_field.hpp']
     receipt=dict(operation='original-source-IApplication-orientation-getters-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,native_policy=policy,
         verified_boundary_ids=boundary_ids(exact=['M:kairo.unity.ui.IApplication.IsSide','M:kairo.unity.ui.IApplication.GetOrientation']) if passed else [],
         source_manifest=[dict(path=original.relative_to(ROOT/'reference').as_posix(),sha256=sha(original))],original_method_spans=[dict(signature=s,sha256=hashlib.sha256(b.encode('utf-8')).hexdigest()) for s,b in zip(signatures,bodies)],
         inputs_sha256={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),historical_core_sha256=sha(core),external_unity_api_metadata=dict(sha256=sha(external),observations=metadata),source_only_context=context,
-        limits=['Only IsSide/GetOrientation are native source-differential proofs; setter/reset/autorotate remain source-only context and are not implemented.',
+        limits=['IsSide/GetOrientation and default reset are source-differential observations. General setter/autorotate remain source-only context and are not implemented.',
                 'Window aspect policy is explicit PC behavior, not evidence of original Unity desktop or Android sensor behavior.',
                 'The provider is installed before managed workers; captures must be native only and synchronization of mutable provider state is the host obligation.',
                 'No SDL monitor orientation, Android global configuration flag or Nintendo 3DS layout is selected.'],game_boot=False,game_assets_used=False,original_binaries_executed=False,original_unity_binary_copied=False)
-    (ROOT/'config/phase2-application-orientation-tests.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps(dict(status=receipt['status'],fixture_cases=len(cases),passed=receipt['passed'],native_assertions=8,verified_boundary_ids=receipt['verified_boundary_ids'])))
+    (ROOT/'config/phase2-application-orientation-tests.json').write_text(json.dumps(receipt,indent=2)+'\n',encoding='utf-8',newline='\n');print(json.dumps(dict(status=receipt['status'],fixture_cases=len(cases),passed=receipt['passed'],native_assertions=policy['assertions'],verified_boundary_ids=receipt['verified_boundary_ids'])))
     if not passed:print(json.dumps([c for c in cases if not c['passed']],indent=2));return 1
     return 0
 if __name__=='__main__':sys.exit(main())

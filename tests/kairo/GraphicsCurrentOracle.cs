@@ -1,7 +1,7 @@
 // Own rendering collaborators around complete original Canvas lifecycle,
 // Graphics constructors/GetCurrent/ResetRender/Dispose method bodies.
 using System;using System.Collections.Generic;using kairo.unity.ui;
-namespace UnityEngine {public class Camera{}public class GUIStyle{public object font,fontStyle;public int fontSize;}}
+namespace UnityEngine {public class Camera{}public struct Matrix4x4{public static Matrix4x4 identity{get{return new Matrix4x4();}}}public class GUIStyle{public object font,fontStyle;public int fontSize;}}
 namespace kairo.unity.graphics {
  public class MeshBuilder{public class Group{public bool change;}public class Layer{public List<Group> groups=new List<Group>();}public Dictionary<int,Layer> layers=new Dictionary<int,Layer>();}
  public class MeshManager{public Dictionary<int,MeshBuilder> meshList_=new Dictionary<int,MeshBuilder>();public MeshManager(Graphics value){}public void BeginMesh(){}public void EndMesh(){}public void EndAlterRender(){}public void Clear(){}}
@@ -14,14 +14,14 @@ namespace kairo.unity.ui {
  public class CacheFake{public void Reset(){}}
  public partial class Graphics {
   internal static Graphics current_;internal kairo.unity.graphics.MeshManager[] meshManList_=new kairo.unity.graphics.MeshManager[1];
-  bool isGUI_,glRender_;object offscreen_;int glRenderCount_;
+  bool isGUI_,glRender_,clipEnable_;object offscreen_;int glRenderCount_,glTextCount_;UnityEngine.Matrix4x4 glMatrix_;List<bool> clipEnableStack_=new List<bool>();
   UnityEngine.GUIStyle defaultGuiStyle_,guiStyle_;bool isGuiGroupRect_,fontScaleOffsetEnable_,isClipRegionGL,setFigureClip_,useFigureClip_;
   int renderModeCount_,blendModeCount_,originCount_,fontCount_,clipCount_,clipEnableCount_,renderQueueCount_,imageClipCount_,stackStateCount_,autoTextLayoutCount_,meshId_,cameraDepth_,localMatrixIndex_,localCoordinateCount_;
   int originX_,originY_,color;float scale_;Font font_=new Font();CacheFake renderCache_=new CacheFake();MatrixFake worldMatrix_=new MatrixFake(),localCoordinateMatrix_=new MatrixFake();
   internal void Init(object ignored,Image image,UnityEngine.Camera camera=null){ResetRender();}
   public void SetFont(Font value){font_.Copy(value);font_.AdjustFontSize(GetScale());}
-  public void SetCurrentMeshManager(int id){}public void PopClipEnable(){}public void FlushGLRender(bool value){}
-  public void ClearImageClip(){}public void SetClipEnable(bool value){}public void ClearRenderRect(){}public void SetRenderMode(int op,int a,int b){}
+  public void SetCurrentMeshManager(int id){}public void FlushGLRender(bool value=false){}public bool IsStencil(){return true;}
+  public void ClearImageClip(){}public void ClearRenderRect(){}public void SetRenderMode(int op,int a,int b){}
   public void SetFlipMode(int mode){}public void SetColor(int value){color=value;}public void SetPictoColorEnabled(bool value){}public void ClearClip(){}public void SetRenderQueue(int value){}public void SetBlendMode(int value){}
   public static int GetColorOfRGB(int r,int g,int b){return unchecked((int)0xff000000)|(r<<16)|(g<<8)|b;}
   public void SetOrigin(int x,int y){originX_=x;originY_=y;}public void Scale(float value){scale_=value;}public float GetScale(){return scale_;}
@@ -34,6 +34,8 @@ namespace kairo.unity.ui {
 class GraphicsCurrentOracle {
  static readonly Dictionary<Graphics,int> ids=new Dictionary<Graphics,int>();static int Identify(Graphics g){if(g==null)return 0;int value;if(!ids.TryGetValue(g,out value)){value=ids.Count+1;ids.Add(g,value);}return value;}
  static void P(string name,Canvas c){Console.WriteLine(name+"="+Identify(Graphics.GetCurrent())+":"+Identify(c.graphics_)+":"+c.isAlterStaticRendering_+":"+(Graphics.GetCurrent()!=null&&Graphics.GetCurrent().IsGUI()));}
+ static void G(string name,Graphics g){Console.WriteLine(name+"="+g.IsRenderGUIMode()+":"+g.IsClipEnable());}
+ static void Batch(Graphics g,Canvas c,string prefix){g.ResetRender();G(prefix+"-reset",g);g.BeginGLRender(false);G(prefix+"-begin",g);g.BeginGLRender(true);G(prefix+"-nested",g);g.EndGLRender();G(prefix+"-end-inner",g);g.EndGLRender();G(prefix+"-end-outer",g);g.EndGLRender();G(prefix+"-extra-end",g);g.BeginGLRender(false);g.BeginGLRender(true);g.EndGLRender(true);G(prefix+"-force",g);g.PopClipEnable();G(prefix+"-pop-after-force",g);g.BeginGLRender(false);g.ResetRender();G(prefix+"-reset-active",g);g.EndGLRender();G(prefix+"-end-after-reset",g);g.BeginGLRender(false);c.EndPaint(g);G(prefix+"-end-paint",g);g.BeginGLRender(false);c.EndAlterStaticRender(g);G(prefix+"-end-alter",g);}
  static void Main(){var c=new Canvas();P("initial",c);var image=new Graphics(new Image());var created=new Graphics();P("new-does-not-publish",c);
   var first=c.BeginPaint();P("begin-default",c);Console.WriteLine("nested-default="+Object.ReferenceEquals(first,c.BeginPaint()));Console.WriteLine("explicit-null-active="+(c.BeginPaint(null)==null));P("after-null",c);
   first.SetOrigin(9,7);first.Scale(300);first.SetColor(17);c.BeginPaint();Console.WriteLine("reset-default="+first.State());
@@ -44,5 +46,6 @@ class GraphicsCurrentOracle {
   c.BeginAlterStaticRender(image);P("begin-alter",c);c.EndAlterStaticRender(image);P("end-alter-flag-retained",c);c.EndPaint(image);P("normal-end-clears-alter-flag",c);
   c.BeginAlterStaticRender(null);P("alter-default",c);c.EndPaint();P("alter-default-ended",c);
   new Graphics();image.Dispose();P("new-dispose-no-current-write",c);
+  Batch(new Graphics(),c,"display");Batch(new Graphics(new Image()),c,"image");
  }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "semantic_runtime.hpp"
+#include "managed_string_ops.hpp"
 #include <functional>
 #include <string>
 #include <vector>
@@ -36,6 +37,8 @@ const CollationCulture& current_collation_culture();
 std::size_t collation_resource_bytes() noexcept;
 
 std::int32_t culture_compare(const String& left, const String& right, bool ignore_case = false);
+inline std::int32_t culture_compare_to(const String& receiver,const String& value){receiver.length();return culture_compare(receiver,value,false);}
+inline float culture_parse_single(const String& value){const auto& culture=current_collation_culture();if(culture.lcid!=127&&culture.lcid!=1033)throw NotSupportedException("Single.Parse currently covers only the measured invariant/en-US number format");return single_parse_legacy(value);}
 bool culture_equals_ignore_case(const String& left, const String& right);
 // Historical Mono's one-argument overload explicitly requests Ordinal, whereas
 // the overloads with start/count use CurrentCulture. Keep these distinct.

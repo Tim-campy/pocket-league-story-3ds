@@ -17,6 +17,7 @@ enum class WindowOrientation:std::int32_t {unknown=0,portrait=1,portrait_upside_
 struct ApplicationInitializationBridge {
     std::function<void()> before_create; // Config.Create + platform/Canvas/library-resource initialization.
     std::function<void()> after_create;  // Original Language.Init, after Main.OnCreate.
+    std::function<cs::Ref<cs::Object>()> library_resources;
 };
 // Lifecycle adapter for generated subclasses. Empty defaults correspond to the
 // original empty virtual hooks; required game Update/Draw remain abstract.
@@ -35,6 +36,8 @@ class IApplication : public cs::Object {
     // Installed only during host setup, before workers. Captures are native
     // state, never hidden managed references; each call is a separate read.
     std::function<WindowOrientation()> orientation_reader_;
+    std::function<void()> orientation_reset_;
+    std::function<void(bool)> fullscreen_writer_;
     ApplicationInitializationBridge initialization_;
     cs::Ref<cs::Object> initialization_owner_;
     cs::String data_path_;
@@ -78,6 +81,10 @@ public:
     std::int32_t GetHeight2()const{return cs::conv_i32(float(screen_height_)*100.0f/resolution_scale_+0.01f);}
     float GetResolutionScaleRatio()const{return resolution_scale_;}
     void host_orientation_reader(std::function<WindowOrientation()> reader){if(!reader)throw cs::ArgumentException("Host window orientation reader must be nonempty");if(created_)throw cs::InvalidOperationException("Window orientation reader is host-setup-only");orientation_reader_=std::move(reader);}
+    void host_orientation_reset(std::function<void()> reset){if(!reset)throw cs::ArgumentException();if(created_)throw cs::InvalidOperationException("Window orientation reset is host-setup-only");orientation_reset_=std::move(reset);}
+    void ResetOrientation(){if(!orientation_reset_)throw cs::InvalidOperationException("Host default window orientation reset is not installed");orientation_reset_();}
+    void host_fullscreen_writer(std::function<void(bool)> writer){if(!writer)throw cs::ArgumentException();if(created_)throw cs::InvalidOperationException("Fullscreen writer is host-setup-only");fullscreen_writer_=std::move(writer);}
+    void source_set_fullscreen(bool enabled){if(!CheckUiThread())throw cs::InvalidOperationException("Fullscreen update must run on the UI thread");if(!fullscreen_writer_)throw cs::InvalidOperationException("Host fullscreen writer is not installed");fullscreen_writer_(enabled);}
     bool IsSide()const{
         // Preserve both LandscapeLeft tests and the original 1/2/3 read counts.
         if(read_orientation()!=WindowOrientation::landscape_left&&read_orientation()!=WindowOrientation::landscape_left)return read_orientation()==WindowOrientation::landscape_right;
@@ -123,7 +130,9 @@ public:
     }
     bool RunOnUpdate(cs::Delegate<void()> method){if(updating_){method();return true;}std::lock_guard<std::mutex> lock(tasks_mutex_);update_tasks_.push_back([method]{method();});return false;}
     void host_configure(std::int32_t w,std::int32_t h,cs::String data_path,std::function<void()> terminate){screen_width_=w;screen_height_=h;data_path_=std::move(data_path);termination_handler_=std::move(terminate);if(!orientation_reader_)orientation_reader_=[this]{return screen_width_>screen_height_?WindowOrientation::landscape_left:WindowOrientation::portrait;};}
+    void host_termination(std::function<void()> terminate){termination_handler_=std::move(terminate);}
     void host_initialization(ApplicationInitializationBridge bridge,cs::Ref<cs::Object> owner={}){initialization_=std::move(bridge);initialization_owner_=std::move(owner);}
+    cs::Ref<cs::Object> source_resource_object()const{return initialization_.library_resources?initialization_.library_resources():cs::Ref<cs::Object>{};}
     void host_start(){
         if(!initialization_.before_create||!initialization_.after_create)throw cs::InvalidOperationException("Original Config/Awake/Language initialization bridge is not installed");
         ui_thread_=std::this_thread::get_id();initialization_.before_create();created_=true;OnCreate();initialization_.after_create();OnStart();visible_=true;
@@ -137,4 +146,6 @@ public:
     void host_focus(bool focus){if(focused_==focus)return;focused_=focus;if(focus)OnResume();else OnSuspend();}
     void host_stop(){if(!created_)return;OnStop();OnDestroy();visible_=false;created_=false;current_.store(nullptr);}
 };
+inline void native_window_fullscreen(bool enabled){cs::nonnull(IApplication::GetCurrentApp())->source_set_fullscreen(enabled);}
+inline cs::Ref<cs::Object> native_application_resource(cs::Ref<IApplication> app){return cs::nonnull(app)->source_resource_object();}
 }

@@ -13,6 +13,9 @@ def main():
     source=ROOT/'tests/translator/LoweringFixtures.cs'
     framework=Path('C:/Users/l_abn/AppData/Local/Programs/Unity/5.3.4f1/Editor/Data/Mono/lib/mono/unity')
     request=dict(assembly='LoweringFixtures',sources=[str(source)],references=[str(framework/(n+'.dll')) for n in ['mscorlib','System','System.Core']],selected=[],select_all_source_methods=True,output=str(output))
+    request['external_methods']={'M:Synthetic.SourceAdapterTarget.Read(System.Int32)':'source-adapter:M:Synthetic.SourceAdapters.Read(Synthetic.SourceAdapterTarget,System.Int32)'}
+    request['external_methods']['M:Synthetic.SourceStaticTarget.Read(System.Int32)']='source-static:M:Synthetic.SourceStaticAdapters.Read(System.Int32)'
+    request['external_methods']['M:Synthetic.SourceAdapterTarget.Next(System.Int32@)']='source-adapter:M:Synthetic.SourceAdapters.Next(Synthetic.SourceAdapterTarget,System.Int32@)'
     req=folder/'lowering-input.json';report_file=folder/'lowering-report.json'
     req.write_text(json.dumps(request),encoding='utf-8',newline='\n')
     run([runtime,tool,req,report_file],folder/'lowering-translator.log')

@@ -1,0 +1,31 @@
+{
+  "operation": "MSVC-Ninja-header-only-rebuild",
+  "status": "PASS",
+  "cases": 4,
+  "passed": 4,
+  "initial_output": "1",
+  "header_only_output": "2",
+  "cpp_unchanged": true,
+  "prefix_probe": {
+    "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+    "prefix": "Observa\u00e7\u00e3o: incluindo arquivo: ",
+    "stdout_sha256": "311459fb43fd274462d06b86b825d4bcdc01757fdc1a7914a9a5312668d1c665",
+    "vslang_requested": "1033"
+  },
+  "dependency_audit": {
+    "CMakeFiles/own_probe.dir/main.cpp.obj": {
+      "dependencies": 1,
+      "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\cmake-dependency-tests\\source\\own_value.hpp",
+      "header_sha256": "ba7bdb4e92982adb542a97fb7312daa91ddf6716598f633e45c22a87188a6757",
+      "ninja_stdout_sha256": "2f593f3ed582ca64f02a947a6849958e094cf81f0fbd235cd2c62dc27e4fd745"
+    }
+  },
+  "inputs": {
+    "tools/test_cmake_dependencies.py": "2167441188fa91b7ba8bad582e5c1f3f85a2286fa2920d0f8421cacc540b66a3",
+    "tools/pc_compiler.py": "3ff55795844fc0c4e8ef9dccc18516c4a5c9c7696a66d585cb9d827d630261ab",
+    "CMakeLists.txt": "473d84c8752f187f4723941968808e7d0c53ca39c4924ec6a7f63ed2b0078e0b",
+    "tools/build_pc.py": "dac9a867417b69d688cbfb914ae2fedf00863517fb22656e2c5e7e65372b1405"
+  },
+  "game_boot": false,
+  "original_assets_used": false
+}

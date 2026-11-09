@@ -51,6 +51,7 @@ int main(int argc,char**){const bool policy=argc>1;
         const auto previous=DebugInput::get_mousePosition();pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_event(motion(99,100));check(DebugInput::get_mousePosition().x==previous.x,"Unpublished half-frame invisible");pls::sdl::debug_input_publish_frame();check(DebugInput::get_mousePosition().x==99&&DebugInput::get_mousePosition().y==180,"Whole snapshot published");
         failed=false;try{pls::sdl::debug_input_publish_frame();}catch(const pls::cs::InvalidOperationException&){failed=true;}check(failed,"Double publication refused");
         check(DebugInput::get_touchCount()==0,"Mouse input is not a touch finger");
+        check(DebugInput::get_multiTouchEnabled(),"SDL accepts multiple real finger identities");
         check(DebugInput::get_dpi()==0&&!DebugInput::get_fullScreen(),"Headless has unknown DPI and no fullscreen window");
         pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_screen(160.0f,true);check(DebugInput::get_dpi()==0&&!DebugInput::get_fullScreen(),"Unpublished display metadata invisible");pls::sdl::debug_input_publish_frame();check(DebugInput::get_dpi()==160.0f&&DebugInput::get_fullScreen(),"Whole display metadata published");
         const auto touch_frame=[&](SDL_Event event){pls::sdl::debug_input_begin_frame(280);pls::sdl::debug_input_event(event);pls::sdl::debug_input_publish_frame();};

@@ -4,6 +4,20 @@
   "title": false,
   "menu": false,
   "match": false,
+  "dependency_audit": {
+    "CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj": {
+      "dependencies": 2,
+      "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\semantic_runtime.hpp",
+      "header_sha256": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+      "ninja_stdout_sha256": "91a58fe5194442ee3c0aa035352a76faab9e661b00ea33583f7c3210c4763c2a"
+    },
+    "CMakeFiles/pls_portable_generated.dir/src/kairo/common/generated/portable_generated.cpp.obj": {
+      "dependencies": 30,
+      "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\semantic_runtime.hpp",
+      "header_sha256": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070",
+      "ninja_stdout_sha256": "8b6be6687fcf7425f4b06aa8311b7d92ad0cb61f1143015c838d01e36c10ced1"
+    }
+  },
   "compiler": "existing MSVC",
   "sdl2": "2.32.10",
   "game_assets_used": false

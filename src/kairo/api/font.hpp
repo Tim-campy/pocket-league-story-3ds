@@ -3,15 +3,19 @@
 #include <functional>
 namespace pls::sdl {class RasterFont;}
 namespace pls::kairo {
+class Font;class Graphics;
 struct TextServices {
     std::function<cs::String(cs::String)> translate;
     std::function<bool()> japanese;
     std::function<bool()> localize_scale;
     std::function<float()> application_scale;
+    std::function<float(cs::Ref<Font>,cs::String)> markup_width;
+    std::function<void(cs::Ref<Graphics>,cs::String,float,float,std::int32_t)> markup_draw;
 };
 void install_text_services(TextServices);
 cs::String translate_text(cs::String);
 bool japanese_text();
+void draw_markup(cs::Ref<Graphics>,cs::String,float,float,std::int32_t);
 class Font : public cs::Object {
     int size_{},used_{12},style_{},face_{2},font_scale_{100};bool preset_{true};float scale_{1.0f};
     bool disposed_{};
@@ -19,6 +23,7 @@ class Font : public cs::Object {
     inline static bool localize_locked_{};
 public:
     inline static int requestFontScale=100;
+    static void SetScale(std::int32_t value){requestFontScale=value;}
     inline static bool LT_DISABLE_TEXTLAYOUT=false;
     Font();explicit Font(cs::Ref<Font>);
     void SetSize(std::int32_t,bool=true);int GetSize()const{return size_;}int GetHeight()const{return used_;}

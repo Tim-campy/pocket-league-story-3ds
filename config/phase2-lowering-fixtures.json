@@ -1,10 +1,11 @@
 {
   "operation": "differential-generated-portable-method-source-oracle",
-  "cases": 812,
-  "passed": 812,
-  "methods": 116,
+  "cases": 1183,
+  "passed": 1183,
+  "methods": 169,
   "verified_method_ids": [
     "M:LoweringFixtures.AbstractCtorDispatch",
+    "M:LoweringFixtures.AliasBase(Synthetic.VirtualBase@)",
     "M:LoweringFixtures.ArgumentOrder(System.Int32)",
     "M:LoweringFixtures.ArrayBaseAlias(System.Int32)",
     "M:LoweringFixtures.ArrayBounds(System.Int32)",
@@ -15,32 +16,56 @@
     "M:LoweringFixtures.AutoPropertyReference(System.Int32)",
     "M:LoweringFixtures.BoxedToString(System.Object)",
     "M:LoweringFixtures.CaptureParameter(System.Int32)",
+    "M:LoweringFixtures.CatchOnlyLayout(System.Int32)",
     "M:LoweringFixtures.ChainedDefaultStatic",
     "M:LoweringFixtures.ClosureForeach(System.Int32)",
     "M:LoweringFixtures.ClosureLoop(System.Int32)",
     "M:LoweringFixtures.ConcatArgument(System.Int32,System.Object)",
     "M:LoweringFixtures.ConstructorOrder(System.Int32)",
     "M:LoweringFixtures.ConstructorVirtualDispatch",
+    "M:LoweringFixtures.CovariantAddressRejected(System.Int32)",
+    "M:LoweringFixtures.CovariantArray(System.Int32)",
+    "M:LoweringFixtures.CovariantClone(System.Int32)",
+    "M:LoweringFixtures.CovariantCopy(System.Int32)",
+    "M:LoweringFixtures.CovariantForeach(System.Int32)",
+    "M:LoweringFixtures.CovariantStoreRejected(System.Int32)",
+    "M:LoweringFixtures.CovariantWrongCast(System.Int32)",
+    "M:LoweringFixtures.DictionaryIteration(System.Int32)",
+    "M:LoweringFixtures.DictionaryIterationVersion(System.Int32)",
     "M:LoweringFixtures.DictionaryKeysNull(System.Int32)",
     "M:LoweringFixtures.DictionaryKeysSnapshot(System.Int32)",
     "M:LoweringFixtures.DictionaryOut(System.Int32)",
     "M:LoweringFixtures.Divide(System.Int32,System.Int32)",
+    "M:LoweringFixtures.DoubleNaN(System.Int32)",
     "M:LoweringFixtures.ExceptionHierarchy(System.Int32)",
     "M:LoweringFixtures.ExplicitDelegateConstructor(System.Int32)",
+    "M:LoweringFixtures.FinallyCatchBreak(System.Int32)",
+    "M:LoweringFixtures.FinallyDoContinue(System.Int32)",
     "M:LoweringFixtures.FinallyFallthrough(System.Int32)",
     "M:LoweringFixtures.FinallyInternalBreak(System.Int32)",
     "M:LoweringFixtures.FinallyMixedReturn(System.Int32)",
+    "M:LoweringFixtures.FinallyNestedBreak(System.Int32)",
     "M:LoweringFixtures.FinallyNestedReturn(System.Int32)",
+    "M:LoweringFixtures.FinallyOuterBreak(System.Int32)",
+    "M:LoweringFixtures.FinallyOuterContinue(System.Int32)",
     "M:LoweringFixtures.FinallyReplaceReturn(System.Int32)",
+    "M:LoweringFixtures.FinallyReplacesBreak(System.Int32)",
     "M:LoweringFixtures.FinallyReturn(System.Int32)",
+    "M:LoweringFixtures.FinallySwitchBreak(System.Int32)",
+    "M:LoweringFixtures.FinallySwitchContinue(System.Int32)",
+    "M:LoweringFixtures.GenericDerivedArgument(System.Int32)",
+    "M:LoweringFixtures.GenericReferenceTypeName(System.Int32)",
     "M:LoweringFixtures.GotoLoop(System.Int32)",
     "M:LoweringFixtures.GuidShape(System.Int32)",
+    "M:LoweringFixtures.HexByteValues(System.Int32)",
     "M:LoweringFixtures.HexInterpolation(System.Int32)",
+    "M:LoweringFixtures.HexIntValues(System.Int32)",
     "M:LoweringFixtures.HexParse(System.String)",
     "M:LoweringFixtures.ImplicitConstructorScope",
     "M:LoweringFixtures.InsertText(System.String,System.Int32,System.String)",
     "M:LoweringFixtures.InstanceClosure(System.Int32)",
     "M:LoweringFixtures.InterfaceMethodGroup(System.Int32)",
+    "M:LoweringFixtures.KeyValuePairValue(System.Int32)",
     "M:LoweringFixtures.ListRange(System.Int32)",
     "M:LoweringFixtures.ManagedList(System.Int32)",
     "M:LoweringFixtures.MethodGroups(System.Int32)",
@@ -54,6 +79,7 @@
     "M:LoweringFixtures.ObjectConcatSingle(System.Int32)",
     "M:LoweringFixtures.ObjectConcatThrow(System.Int32)",
     "M:LoweringFixtures.ObjectLockIdentity(System.Int32)",
+    "M:LoweringFixtures.OptionalCtorInitializers(System.Int32)",
     "M:LoweringFixtures.Overflow(System.Int32,System.Int32)",
     "M:LoweringFixtures.Pair(System.Int32,System.Int32)",
     "M:LoweringFixtures.ParamsEmpty(System.Int32)",
@@ -62,9 +88,18 @@
     "M:LoweringFixtures.ParamsNullElement(System.Int32)",
     "M:LoweringFixtures.ParamsOne(System.Int32)",
     "M:LoweringFixtures.ParamsOrder(System.Int32)",
+    "M:LoweringFixtures.ParseSingle(System.String)",
+    "M:LoweringFixtures.RemovePart(System.String,System.Int32,System.Int32)",
+    "M:LoweringFixtures.RemoveTail(System.String,System.Int32)",
     "M:LoweringFixtures.Replacement(System.String)",
     "M:LoweringFixtures.ReturnUnderMonitor(System.Object)",
     "M:LoweringFixtures.SharedClosure(System.Int32)",
+    "M:LoweringFixtures.SingleNaN(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterCall(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterDelegate(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterNull(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterRef(System.Int32)",
+    "M:LoweringFixtures.SourceStaticAdapter(System.Int32)",
     "M:LoweringFixtures.SplitTrim(System.String)",
     "M:LoweringFixtures.StackEmpty",
     "M:LoweringFixtures.StackIdentity",
@@ -72,6 +107,9 @@
     "M:LoweringFixtures.Stamp(System.Int32)",
     "M:LoweringFixtures.StaticInitializationCycle",
     "M:LoweringFixtures.StaticInitializationOrder",
+    "M:LoweringFixtures.StrictHexParse(System.String)",
+    "M:LoweringFixtures.StringCompareNull(System.String)",
+    "M:LoweringFixtures.StringCompareTo(System.String)",
     "M:LoweringFixtures.StringParams(System.String[])",
     "M:LoweringFixtures.StringSwitch(System.Int32)",
     "M:LoweringFixtures.StringUnit(System.String,System.Int32)",
@@ -91,6 +129,8 @@
     "M:LoweringFixtures.UsingDisposeOrder(System.Int32)",
     "M:LoweringFixtures.UsingExceptionReplacement(System.Int32)",
     "M:LoweringFixtures.UsingNull(System.Int32)",
+    "M:LoweringFixtures.UsingOuterBreak(System.Int32)",
+    "M:LoweringFixtures.UsingOuterContinue(System.Int32)",
     "M:LoweringFixtures.UsingReturn(System.Int32)",
     "M:Synthetic.AbstractDerived.#ctor",
     "M:Synthetic.AbstractDerived.Read",
@@ -108,12 +148,25 @@
     "M:Synthetic.DelegateTarget.Run",
     "M:Synthetic.DerivedCtor.#ctor",
     "M:Synthetic.DerivedCtor.#ctor(System.Int32)",
+    "M:Synthetic.GenericBucket`1.#ctor",
+    "M:Synthetic.GenericBucket`1.Put(`0)",
+    "M:Synthetic.GenericBucket`1.Read",
     "M:Synthetic.ImplicitScope.#ctor",
+    "M:Synthetic.OptionalCtor.#ctor",
+    "M:Synthetic.OptionalCtor.#ctor(System.Int32,System.Int32)",
+    "M:Synthetic.OptionalDerived.#ctor",
     "M:Synthetic.OwnDisposable.#ctor(System.Int32,System.Boolean)",
     "M:Synthetic.OwnDisposable.Dispose",
     "M:Synthetic.QueryValue.#ctor(System.Int32)",
     "M:Synthetic.QueryValue.Alias",
     "M:Synthetic.QueryValue.Positive",
+    "M:Synthetic.SourceAdapters.Next(Synthetic.SourceAdapterTarget,System.Int32@)",
+    "M:Synthetic.SourceAdapters.Read(Synthetic.SourceAdapterTarget,System.Int32)",
+    "M:Synthetic.SourceAdapterTarget.#ctor",
+    "M:Synthetic.SourceAdapterTarget.Next(System.Int32@)",
+    "M:Synthetic.SourceAdapterTarget.Read(System.Int32)",
+    "M:Synthetic.SourceStaticAdapters.Read(System.Int32)",
+    "M:Synthetic.SourceStaticTarget.Read(System.Int32)",
     "M:Synthetic.StaticOrder.ReadFirst",
     "M:Synthetic.StaticWriteA.Init",
     "M:Synthetic.VirtualBase.#ctor",
@@ -125,6 +178,7 @@
   "unexpected_failures": [],
   "executed_method_ids": [
     "M:LoweringFixtures.AbstractCtorDispatch",
+    "M:LoweringFixtures.AliasBase(Synthetic.VirtualBase@)",
     "M:LoweringFixtures.ArgumentOrder(System.Int32)",
     "M:LoweringFixtures.ArrayBaseAlias(System.Int32)",
     "M:LoweringFixtures.ArrayBounds(System.Int32)",
@@ -135,32 +189,56 @@
     "M:LoweringFixtures.AutoPropertyReference(System.Int32)",
     "M:LoweringFixtures.BoxedToString(System.Object)",
     "M:LoweringFixtures.CaptureParameter(System.Int32)",
+    "M:LoweringFixtures.CatchOnlyLayout(System.Int32)",
     "M:LoweringFixtures.ChainedDefaultStatic",
     "M:LoweringFixtures.ClosureForeach(System.Int32)",
     "M:LoweringFixtures.ClosureLoop(System.Int32)",
     "M:LoweringFixtures.ConcatArgument(System.Int32,System.Object)",
     "M:LoweringFixtures.ConstructorOrder(System.Int32)",
     "M:LoweringFixtures.ConstructorVirtualDispatch",
+    "M:LoweringFixtures.CovariantAddressRejected(System.Int32)",
+    "M:LoweringFixtures.CovariantArray(System.Int32)",
+    "M:LoweringFixtures.CovariantClone(System.Int32)",
+    "M:LoweringFixtures.CovariantCopy(System.Int32)",
+    "M:LoweringFixtures.CovariantForeach(System.Int32)",
+    "M:LoweringFixtures.CovariantStoreRejected(System.Int32)",
+    "M:LoweringFixtures.CovariantWrongCast(System.Int32)",
+    "M:LoweringFixtures.DictionaryIteration(System.Int32)",
+    "M:LoweringFixtures.DictionaryIterationVersion(System.Int32)",
     "M:LoweringFixtures.DictionaryKeysNull(System.Int32)",
     "M:LoweringFixtures.DictionaryKeysSnapshot(System.Int32)",
     "M:LoweringFixtures.DictionaryOut(System.Int32)",
     "M:LoweringFixtures.Divide(System.Int32,System.Int32)",
+    "M:LoweringFixtures.DoubleNaN(System.Int32)",
     "M:LoweringFixtures.ExceptionHierarchy(System.Int32)",
     "M:LoweringFixtures.ExplicitDelegateConstructor(System.Int32)",
+    "M:LoweringFixtures.FinallyCatchBreak(System.Int32)",
+    "M:LoweringFixtures.FinallyDoContinue(System.Int32)",
     "M:LoweringFixtures.FinallyFallthrough(System.Int32)",
     "M:LoweringFixtures.FinallyInternalBreak(System.Int32)",
     "M:LoweringFixtures.FinallyMixedReturn(System.Int32)",
+    "M:LoweringFixtures.FinallyNestedBreak(System.Int32)",
     "M:LoweringFixtures.FinallyNestedReturn(System.Int32)",
+    "M:LoweringFixtures.FinallyOuterBreak(System.Int32)",
+    "M:LoweringFixtures.FinallyOuterContinue(System.Int32)",
     "M:LoweringFixtures.FinallyReplaceReturn(System.Int32)",
+    "M:LoweringFixtures.FinallyReplacesBreak(System.Int32)",
     "M:LoweringFixtures.FinallyReturn(System.Int32)",
+    "M:LoweringFixtures.FinallySwitchBreak(System.Int32)",
+    "M:LoweringFixtures.FinallySwitchContinue(System.Int32)",
+    "M:LoweringFixtures.GenericDerivedArgument(System.Int32)",
+    "M:LoweringFixtures.GenericReferenceTypeName(System.Int32)",
     "M:LoweringFixtures.GotoLoop(System.Int32)",
     "M:LoweringFixtures.GuidShape(System.Int32)",
+    "M:LoweringFixtures.HexByteValues(System.Int32)",
     "M:LoweringFixtures.HexInterpolation(System.Int32)",
+    "M:LoweringFixtures.HexIntValues(System.Int32)",
     "M:LoweringFixtures.HexParse(System.String)",
     "M:LoweringFixtures.ImplicitConstructorScope",
     "M:LoweringFixtures.InsertText(System.String,System.Int32,System.String)",
     "M:LoweringFixtures.InstanceClosure(System.Int32)",
     "M:LoweringFixtures.InterfaceMethodGroup(System.Int32)",
+    "M:LoweringFixtures.KeyValuePairValue(System.Int32)",
     "M:LoweringFixtures.ListRange(System.Int32)",
     "M:LoweringFixtures.ManagedList(System.Int32)",
     "M:LoweringFixtures.MethodGroups(System.Int32)",
@@ -174,6 +252,7 @@
     "M:LoweringFixtures.ObjectConcatSingle(System.Int32)",
     "M:LoweringFixtures.ObjectConcatThrow(System.Int32)",
     "M:LoweringFixtures.ObjectLockIdentity(System.Int32)",
+    "M:LoweringFixtures.OptionalCtorInitializers(System.Int32)",
     "M:LoweringFixtures.Overflow(System.Int32,System.Int32)",
     "M:LoweringFixtures.Pair(System.Int32,System.Int32)",
     "M:LoweringFixtures.ParamsEmpty(System.Int32)",
@@ -182,9 +261,18 @@
     "M:LoweringFixtures.ParamsNullElement(System.Int32)",
     "M:LoweringFixtures.ParamsOne(System.Int32)",
     "M:LoweringFixtures.ParamsOrder(System.Int32)",
+    "M:LoweringFixtures.ParseSingle(System.String)",
+    "M:LoweringFixtures.RemovePart(System.String,System.Int32,System.Int32)",
+    "M:LoweringFixtures.RemoveTail(System.String,System.Int32)",
     "M:LoweringFixtures.Replacement(System.String)",
     "M:LoweringFixtures.ReturnUnderMonitor(System.Object)",
     "M:LoweringFixtures.SharedClosure(System.Int32)",
+    "M:LoweringFixtures.SingleNaN(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterCall(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterDelegate(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterNull(System.Int32)",
+    "M:LoweringFixtures.SourceAdapterRef(System.Int32)",
+    "M:LoweringFixtures.SourceStaticAdapter(System.Int32)",
     "M:LoweringFixtures.SplitTrim(System.String)",
     "M:LoweringFixtures.StackEmpty",
     "M:LoweringFixtures.StackIdentity",
@@ -192,6 +280,9 @@
     "M:LoweringFixtures.Stamp(System.Int32)",
     "M:LoweringFixtures.StaticInitializationCycle",
     "M:LoweringFixtures.StaticInitializationOrder",
+    "M:LoweringFixtures.StrictHexParse(System.String)",
+    "M:LoweringFixtures.StringCompareNull(System.String)",
+    "M:LoweringFixtures.StringCompareTo(System.String)",
     "M:LoweringFixtures.StringParams(System.String[])",
     "M:LoweringFixtures.StringSwitch(System.Int32)",
     "M:LoweringFixtures.StringUnit(System.String,System.Int32)",
@@ -211,6 +302,8 @@
     "M:LoweringFixtures.UsingDisposeOrder(System.Int32)",
     "M:LoweringFixtures.UsingExceptionReplacement(System.Int32)",
     "M:LoweringFixtures.UsingNull(System.Int32)",
+    "M:LoweringFixtures.UsingOuterBreak(System.Int32)",
+    "M:LoweringFixtures.UsingOuterContinue(System.Int32)",
     "M:LoweringFixtures.UsingReturn(System.Int32)",
     "M:Synthetic.AbstractDerived.#ctor",
     "M:Synthetic.AbstractDerived.Read",
@@ -228,12 +321,25 @@
     "M:Synthetic.DelegateTarget.Run",
     "M:Synthetic.DerivedCtor.#ctor",
     "M:Synthetic.DerivedCtor.#ctor(System.Int32)",
+    "M:Synthetic.GenericBucket`1.#ctor",
+    "M:Synthetic.GenericBucket`1.Put(`0)",
+    "M:Synthetic.GenericBucket`1.Read",
     "M:Synthetic.ImplicitScope.#ctor",
+    "M:Synthetic.OptionalCtor.#ctor",
+    "M:Synthetic.OptionalCtor.#ctor(System.Int32,System.Int32)",
+    "M:Synthetic.OptionalDerived.#ctor",
     "M:Synthetic.OwnDisposable.#ctor(System.Int32,System.Boolean)",
     "M:Synthetic.OwnDisposable.Dispose",
     "M:Synthetic.QueryValue.#ctor(System.Int32)",
     "M:Synthetic.QueryValue.Alias",
     "M:Synthetic.QueryValue.Positive",
+    "M:Synthetic.SourceAdapters.Next(Synthetic.SourceAdapterTarget,System.Int32@)",
+    "M:Synthetic.SourceAdapters.Read(Synthetic.SourceAdapterTarget,System.Int32)",
+    "M:Synthetic.SourceAdapterTarget.#ctor",
+    "M:Synthetic.SourceAdapterTarget.Next(System.Int32@)",
+    "M:Synthetic.SourceAdapterTarget.Read(System.Int32)",
+    "M:Synthetic.SourceStaticAdapters.Read(System.Int32)",
+    "M:Synthetic.SourceStaticTarget.Read(System.Int32)",
     "M:Synthetic.StaticOrder.ReadFirst",
     "M:Synthetic.StaticWriteA.Init",
     "M:Synthetic.VirtualBase.#ctor",
@@ -251,24 +357,24 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.5176228999625891,
-    "native-compile": 8.02549559995532,
-    "managed-output": 0.8399676999542862,
-    "native-output": 0.4931160998530686
+    "csharp-compile": 0.5992766001727432,
+    "native-compile": 9.096679500071332,
+    "managed-output": 0.8102180999703705,
+    "native-output": 0.6178981999401003
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
-  "source_oracle_sha256": "ac86e71a983c07a55f9faa40bed5d955c8971dd28df26903dcb360b47d75bc86",
-  "cpp_generated_sha256": "e9203e7187ede37832b37003878aaedfc562c0a586e6077703f41f617519fd5d",
-  "hpp_generated_sha256": "b3f2825ea86486403335b782ace30af28f589ece95e3a621396deddfa71d6012",
+  "source_oracle_sha256": "2de81ff436a64251afe8338496f022363a11cd48ae7f78a098574f1b2b2d49ee",
+  "cpp_generated_sha256": "e397d6c8b24d51dfd5fb40884b5c4e59e051d73bdc6cc411acda315ca51c209f",
+  "hpp_generated_sha256": "349e7ac4b2eab13b25de8120a8a780c5aeef24c15091fa6b7b581632b44f7657",
   "generated_files": [
     {
       "path": "build/translator/lowering-generated/portable_generated.cpp",
-      "sha256": "e9203e7187ede37832b37003878aaedfc562c0a586e6077703f41f617519fd5d"
+      "sha256": "e397d6c8b24d51dfd5fb40884b5c4e59e051d73bdc6cc411acda315ca51c209f"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.hpp",
-      "sha256": "b3f2825ea86486403335b782ace30af28f589ece95e3a621396deddfa71d6012"
+      "sha256": "349e7ac4b2eab13b25de8120a8a780c5aeef24c15091fa6b7b581632b44f7657"
     }
   ],
   "native_compiler_options": [
@@ -284,11 +390,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "1056b5f9c6205a95c94a44d0ed958c8fa7ebbff7c261c18cc6d452a5d56e98d9"
+    "sha256": "bdf211a9fc144d494fe3519deee4b6b3d445c332de8745c7ac91964efbb3b930"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "27c82bd61891e58fa2510115ed8ff2021bffe2a21f004979f51dc1d90cb5c080"
+    "sha256": "35212ef05a04dfc3d7f74249016f0bbf36ef53f40a797f8d214769659e4dbdcd"
   },
   "differential_runner_sha256": "4357918fc3974e480943708c5e7a8520d3353c520bddee52c0ed830cb1018387",
   "runtime_sources": [
@@ -306,19 +412,19 @@
     },
     {
       "path": "build/translator/lowering-differential/Harness.cpp",
-      "sha256": "f7f4c56268295f1f47e45af401903c7030d7627937857104ee53fe1977f31c61"
+      "sha256": "86c422f5e71a2a2c2063525be25e1cd10b6bf1cadea1056b90918c8919f3e1a9"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.cpp",
-      "sha256": "e9203e7187ede37832b37003878aaedfc562c0a586e6077703f41f617519fd5d"
+      "sha256": "e397d6c8b24d51dfd5fb40884b5c4e59e051d73bdc6cc411acda315ca51c209f"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.hpp",
-      "sha256": "b3f2825ea86486403335b782ace30af28f589ece95e3a621396deddfa71d6012"
+      "sha256": "349e7ac4b2eab13b25de8120a8a780c5aeef24c15091fa6b7b581632b44f7657"
     },
     {
       "path": "src/kairo/api/application.hpp",
-      "sha256": "56af645e36f2dd9a0e8e9b55961f3a9ce451c21aa947c420738469bd03704df0"
+      "sha256": "280d2510630a9eccb8d887cccc44249141ee5ca65a8a1d6775706c8ac703bd4d"
     },
     {
       "path": "src/kairo/api/asset_reader.hpp",
@@ -330,11 +436,11 @@
     },
     {
       "path": "src/kairo/api/canvas.hpp",
-      "sha256": "302f78420eab27c2246980748700967f13a69f07e70c5eed89949d49ce8f44df"
+      "sha256": "ac806a6493c2b1f55449bb33fea804ae6e26415d52089a749a219c17831a12fd"
     },
     {
       "path": "src/kairo/api/debug_input.hpp",
-      "sha256": "a5a942c732f63d6bd9f757c1e4702cca9d001ee5b07e8ae23a5bf2d8d4d1eb31"
+      "sha256": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918"
     },
     {
       "path": "src/kairo/api/dialog_service.hpp",
@@ -346,7 +452,7 @@
     },
     {
       "path": "src/kairo/api/font.hpp",
-      "sha256": "308bffc91c08f85e34a13ce40c67bf04bdf307a92d3da5ac3e117f98b9dcd7ee"
+      "sha256": "9b850acb6dff45b6e983ebb158e1188cf8cd111dd3ac2be7efb3ca2d51db1cf3"
     },
     {
       "path": "src/kairo/api/forms.hpp",
@@ -370,7 +476,7 @@
     },
     {
       "path": "src/kairo/api/graphics.hpp",
-      "sha256": "02d93a894343fe964be02f8a18f09d18f9e4daa490a9ea65fc39e9fa54a25a9f"
+      "sha256": "02c9a18ed75a55924b98ab0224817be7c81aaec7ab00b042a38b882e079c5509"
     },
     {
       "path": "src/kairo/api/input.hpp",
@@ -383,6 +489,10 @@
     {
       "path": "src/kairo/api/platform.hpp",
       "sha256": "b704e2e6e9111b673ef5abc74623952183d7a50e1bcc9825276cf99da70cfeb1"
+    },
+    {
+      "path": "src/kairo/api/runtime_memory.hpp",
+      "sha256": "f7259db3b1b33cf116351b6c91091f813e2e31040cffb2f3b603c177d620076c"
     },
     {
       "path": "src/kairo/api/services_managed.hpp",
@@ -398,7 +508,7 @@
     },
     {
       "path": "src/kairo/api/system.hpp",
-      "sha256": "aa18b85e1ca16a943f4818a206d69f53b9a5bd3c52026505fa34144be95a23e3"
+      "sha256": "e1635a68b0bea9a832fbde829ed10d34814c6158195c24b86facea667c837f05"
     },
     {
       "path": "src/kairo/api/touch_value_accessor.hpp",
@@ -422,7 +532,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated.hpp",
-      "sha256": "63b05b2d9ba13b39b06662ddfe997a43533f2df1af5f15dc6d5adfce0aa5a1cf"
+      "sha256": "c308d988524e5cb680a2b7c739a94a503e5a412aef717b2777b4b073c20abb93"
     },
     {
       "path": "src/kairo/common/managed_collation.cpp",
@@ -430,7 +540,7 @@
     },
     {
       "path": "src/kairo/common/managed_collation.hpp",
-      "sha256": "e7da32ded318595e935e1b82da90052031df890c0005e1e41526b1ede5ffab8d"
+      "sha256": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d"
     },
     {
       "path": "src/kairo/common/managed_collections.hpp",
@@ -438,7 +548,7 @@
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "42cb1b3df9c690ba4225d86cce74157a04ee9ef9c11d4c6244b4d3c8f76984f8"
+      "sha256": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab"
     },
     {
       "path": "src/kairo/common/managed_encoding.cpp",
@@ -506,11 +616,11 @@
     },
     {
       "path": "src/kairo/common/managed_string_ops.cpp",
-      "sha256": "6823b5673e63b67efb9b083df1d23e8b3943e058d507280675d18be88da39aed"
+      "sha256": "ac16ad3a3fe4d449a35982f1e170ceb7ffc75eef1e307bddb9d5d3de603126d1"
     },
     {
       "path": "src/kairo/common/managed_string_ops.hpp",
-      "sha256": "f4b80433baa859e13fd2f860fccef1f9f723a165fc8a69eaac376292ec0a9525"
+      "sha256": "48b397e67a19e92784a66aa8c6d8a3f51500b3ba848d8180571fd64759b3647e"
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
@@ -530,15 +640,15 @@
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "2d54016e820fe8e9356a24b28ef72e8d30ce266850c11daccd14fb008ab406d2"
+      "sha256": "950dbc37e6f92b64b49b0e2018090f8cbe0f0eec929826271e7ab53fef164681"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "561cfc27d84190d7e49cb99045ee7318fe05fe108f3e6409dd82e9ef6f8980d9"
+      "sha256": "64f6a5e019010f4685b6192c3287eb45931aa595ed7c18fc637baac9bd313bf7"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "d219a36adfe5ba855f84139e802dcab4a97936da9d530c295226dcdc7ffbda4d"
+      "sha256": "dba909ffc04858921d6c3757af89378f496f7592500cf25f4417de7fc55b2070"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -572,8 +682,8 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "5a19975b0664ae85008e1d5a273cfe6d1ccb95bcea69baa23a1144f3ce993e87",
-    "driver_sha256": "00ac1505f18cad102cae6671f2889f6c49ec1a06300cae6f6418766ad64593b3"
+    "translator_source_sha256": "514688352117df393e86b75bfef0f981f2991bead595541c5084acac248fb557",
+    "driver_sha256": "cd42306a41d246efa8bef1c67a28d7d743a4a15290720a38f46a04c514248ee1"
   },
   "negative_control": {
     "id": "M:LoweringFixtures.UnsupportedClosureGoto(System.Int32)",
@@ -589,5 +699,5 @@
     "expected_seen": 9,
     "factory_defined": false
   },
-  "fixture_source_sha256": "458c3bb56d8e363e990a299e7d8476ecb3e3863d3b32a12e555bab48e1bda807"
+  "fixture_source_sha256": "2aeee2fb740022b2885889443352cc28f0ad76f370ecccb6f6dbae25c854bbf6"
 }

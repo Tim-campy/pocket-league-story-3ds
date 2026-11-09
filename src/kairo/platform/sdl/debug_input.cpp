@@ -57,5 +57,6 @@ void debug_input_event(const SDL_Event&event){
     else if(event.type==SDL_WINDOWEVENT&&event.window.event==SDL_WINDOWEVENT_FOCUS_LOST){pump.frame.left_shift=pump.frame.right_shift=false;pump.frame.held={false,false};pump.fingers.clear();}
 }
 void debug_input_publish_frame(){pump.require();if(!pump.open)throw cs::InvalidOperationException("SDL debug input publish outside backend pump");publish();pump.open=false;}
+void debug_input_fullscreen(bool fullscreen){pump.require();pump.frame.fullscreen=fullscreen;publish();}
 void debug_input_shutdown(){pump.require();{std::lock_guard<std::mutex>lock(published_mutex);available=false;published={};}pump={};}
 }

@@ -74,13 +74,13 @@ As fixtures confirmaram uma distinção importante: em `array[index()] = rhs()`,
 
 ## Arrays, exceções e capturas
 
-`Array<T>` é uma referência a storage, com tamanho imutável, inicialização default e null separado de array vazio. Atribuir a referência preserva alias; clone é shallow. O índice é verificado. `Array<T>::from({})` cria vazio não null; não confundir isso com o construtor default. Arrays de arrays preservam a nulidade/referência de cada elemento. Copy sobreposto conserva a semântica de memmove por direção. Rank multidimensional, covariance e casts de arrays ainda exigem suporte adicional; não são aprovados pelas fixtures de rank1.
+`Array<T>` é uma referência a storage, com tamanho imutável, inicialização default e null separado de array vazio. Atribuir a referência preserva alias; clone é shallow. O índice é verificado. `Array<T>::from({})` cria vazio não null; não confundir isso com o construtor default. Arrays de arrays preservam a nulidade/referência de cada elemento. Copy sobreposto conserva a semântica de memmove por direção. Rank multidimensional permanece sem suporte geral. A covariância entre arrays de referências de classes/interfaces conserva a identidade do storage e verifica o tipo real do elemento em cada escrita; as fixtures de coleções incluem casts, aliases, leitura via object[] e ArrayTypeMismatchException. Covariância envolvendo o wrapper String ou arrays aninhados não foi comprovada por esses testes.
 
-Storage deriva de `ArrayBase`. `array_cast` conserva null e recusa objetos não-array; `array_copy` implementa cópia apagando tipo quando os elementos têm o mesmo tipo C++, com 42 casos diferenciais incluindo bounds, overlap, referências, structs numéricos e jagged shallow. Há prova específica de `float[] → int[]`: count positivo lança ArrayTypeMismatchException nos dois oráculos; count zero passa no Mono e lança no .NET10. Esse comportamento preserva o bug de `Graphics.GetRenderRect`, sem converter números manualmente. Outros casos cross-element, inclusive widening/boxing/covariance, ainda lançam NotSupported explícito, em vez de fingir uma cópia fiel.
+Storage deriva de `ArrayBase`. `array_cast` conserva null e recusa objetos não-array; `array_copy` implementa cópia apagando tipo quando os elementos têm o mesmo tipo C++, com 42 casos diferenciais incluindo bounds, overlap, referências, structs numéricos e jagged shallow. Há prova específica de `float[] → int[]`: count positivo lança ArrayTypeMismatchException nos dois oráculos; count zero passa no Mono e lança no .NET10. Esse comportamento preserva o bug de `Graphics.GetRenderRect`, sem converter números manualmente. A cópia entre elementos de referência valida os tipos reais do storage. Widening/boxing numérico e demais casos cross-element sem implementação específica continuam recusados explicitamente; não se presume suporte por semelhança de representação C++.
 
 Exceções C++ mantêm herança, tipo dinâmico e rethrow sem slicing. A hierarquia inicial inclui Exception/SystemException, Arithmetic/DivideByZero/Overflow, Argument/ArgumentNull/ArgumentOutOfRange, NullReference, IndexOutOfRange, InvalidCast, IO/EndOfStream e outros tipos básicos. Mensagens localizadas/stack traces não foram declaradas idênticas ao CLR. Catch filters precisam avaliar antes de unwinding conforme CLR; não se substituem cegamente por catches C++.
 
-`run_finally(body, cleanup)` executa cleanup fora do unwinding ativo do C++. Assim, uma exceção de finally substitui a pendente, e retorno é calculado antes de finally. Um destrutor RAII que lança durante outra exceção terminaria o processo, portanto não é a tradução válida. Return/break/continue/goto saindo de regiões protegidas ainda precisam da representação de continuação do emissor; possuir o helper não comprova todo esse lowering.
+`run_finally(body, cleanup)` executa cleanup fora do unwinding ativo do C++. Assim, uma exceção de finally substitui a pendente, e retorno é calculado antes de finally. Um destrutor RAII que lança durante outra exceção terminaria o processo, portanto não é a tradução válida. O emissor representa retornos e break/continue que atravessam finally/using por continuações, com o alvo léxico preservado; BranchFlow fica fora da hierarquia de exceções C# para não ser capturado pelo jogo. Goto através de regiões protegidas continua recusado. As fixtures de lowering exercitam os casos admitidos; possuir o helper não comprova formas adicionais.
 
 Capturas são classes explicitamente geradas, com células compartilhadas para variáveis e lifetimes preservados após o retorno do método externo. A fixture nativa possui uma classe sintética de closure; não usa uma lambda C++ como substituto silencioso da classe C# gerada. `Delegate<Signature>` fornece lista multicast, identidade por target/método e remoção da última subsequência igual. A lista de invocação é snapshot durante uma chamada.
 
@@ -117,7 +117,7 @@ São **26 casos diferenciais** de preservação de raízes, callbacks, arrays/co
 
 Os aliases virtuais Pascal `Equals`, `GetHashCode` e `ToString` não são const: overrides C# podem alterar o objeto. Os helpers internos `equals`/`get_hash_code` permanecem const. `managed_type_name` fornece o nome qualificado para Object.ToString; o emissor deve sobrescrevê-lo nas classes geradas. Os 40 casos de dispatch incluem efeitos mutáveis via Object/List/Dictionary, identidade do String.ToString boxed e formatting de bool/char/integrais com sinal cultural. Boxed float/double/enum/struct ToString ainda exige lowering próprio e lança NotSupported; não retorna texto inventado.
 
-`box`/`unbox` cobrem valores primitivos e referências, incluindo crosscast via interface e wrappers String, Array e List com storage Object. Unboxing numérico exige o tipo exato, null para tipo valor lança NullReference e tipo incompatível lança InvalidCast. Equals de double/float trata NaN como igual a NaN, conforme a API .NET Equals, diferentemente de `==`. Equals de String boxed compara conteúdo ordinal. Equals/hash de structs arbitrárias, covariance e todo reflection continuam sem implementação geral.
+`box`/`unbox` cobrem valores primitivos e referências, incluindo crosscast via interface e wrappers String, Array e List com storage Object. Unboxing numérico exige o tipo exato, null para tipo valor lança NullReference e tipo incompatível lança InvalidCast. Equals de double/float trata NaN como igual a NaN, conforme a API .NET Equals, diferentemente de `==`. Equals de String boxed compara conteúdo ordinal. Equals/hash de structs arbitrárias, covariância fora do subconjunto de arrays de referências descrito acima e reflection continuam sem implementação geral.
 
 `managed_collections.hpp` implementa `List<T>` com alias, Count, Capacity, indexer, Add/Insert/Remove/Clear, ranges, ToArray, TrimExcess e enumerador genérico/não genérico. O construtor default representa null; `List<T>::make()` cria lista vazia. A atribuição ao indexer usa `set`/`set_Item`, porque ela afeta o versionamento conforme o perfil; não pode ser traduzida como store direto em Array.
 
@@ -166,12 +166,12 @@ python tests/translator/run_semantic_fixtures.py --fixture GcFixtures
 
 O script usa Roslyn/.NET10 e smcs/Mono Unity já existentes para compilar somente o C# sintético selecionado de `tests/translator/`. Usa MSVC C++17 existente com `/EHsc /fp:strict /permissive- /W4 /WX /utf-8`. Nenhuma DLL/player do jogo/Unity é copiada para build; os executáveis de compilador/runtime existentes são apenas ferramentas externas. Cada fixture tem sua saída em um subdiretório de `build/`, ignorado.
 
-Foram obtidos **1.158/1.158 casos diferenciais**, divididos igualmente entre os dois oráculos/perfis. Os primeiros 60 cobrem overflow/wrap, divisão/resto de negativos/bordas, casts integrais, shifts, avaliação de argumentos/array stores, UTF-16/null/ordinal, arrays/alias/bounds, hierarquia/rethrow/finally, capturas, evento, propriedades, switch, goto e bits/larguras float/double. Streams têm seu contrato e recibo separados em `docs/notes/managed-streams.md`.
+Foram obtidos **1.164/1.164 casos diferenciais**, divididos igualmente entre os dois oráculos/perfis. Os primeiros 60 cobrem overflow/wrap, divisão/resto de negativos/bordas, casts integrais, shifts, avaliação de argumentos/array stores, UTF-16/null/ordinal, arrays/alias/bounds, hierarquia/rethrow/finally, capturas, evento, propriedades, switch, goto e bits/larguras float/double. Streams têm seu contrato e recibo separados em `docs/notes/managed-streams.md`.
 
 | Recibo sintético | .NET10 | Mono Unity | Casos com resultado diferente entre oráculos |
 |---|---:|---:|---:|
 | runtime | 30/30 | 30/30 | 2 |
-| collections | 30/30 | 30/30 | 4 |
+| collections | 33/33 | 33/33 | 4 |
 | encoding | 36/36 | 36/36 | 10 |
 | conversion | 38/38 | 38/38 | 5 |
 | integer-parse | 157/157 | 157/157 | 41 |
@@ -184,7 +184,7 @@ Foram obtidos **1.158/1.158 casos diferenciais**, divididos igualmente entre os 
 | object-dispatch | 20/20 | 20/20 | 0 |
 | timezone | 16/16 | 16/16 | 3 |
 | gc | 13/13 | 13/13 | 3 |
-| Total | 579/579 | 579/579 | 142 |
+| Total | 582/582 | 582/582 | 142 |
 
 Os 142 são observações de fixtures, não 142 famílias de bugs nem diferenças provadas no jogo Android. Cada recibo contém `historical_profile_differences` com os resultados dos dois oráculos. Os perfis nativos correspondentes passaram todos os casos. Os 21 invariantes nativos de GC são contados separadamente dos diferenciais.
 

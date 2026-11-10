@@ -9,7 +9,26 @@ import zipfile
 ROOT=Path(__file__).resolve().parents[1]
 EXPECTED='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 PIN='f08f8a27bfe3aafda4e430ee2365dec73c1070d7'
+SOURCE_HASHES={
+    'sysmath.c':'d351166f89fc03c2712971acfec19073f1df254bbf231bc7983b5d961b2e85b4',
+    'icall-def.h':'2b6e68c19819da0cf44099d4be4edfcd3187f5e7cb2519156978391b976d9fda',
+}
 def sha(data):return hashlib.sha256(data).hexdigest()
+
+def pinned_source(name,cache_root=ROOT/'build/deps/mono-math-source'):
+    expected=SOURCE_HASHES[name]
+    path=cache_root/PIN/name
+    if path.is_file():
+        data=path.read_bytes()
+    else:
+        url=f'https://raw.githubusercontent.com/mono/mono/{PIN}/mono/metadata/{name}'
+        data=urllib.request.urlopen(url,timeout=30).read()
+        if sha(data)!=expected:raise ValueError('Pinned source digest differs: '+name)
+        path.parent.mkdir(parents=True,exist_ok=True)
+        path.write_bytes(data)
+    if sha(data)!=expected:raise ValueError('Cached source digest differs: '+name)
+    return data
+
 def imports(data):
     if data[:6]!=b'\x7fELF\x01\x01':raise ValueError('Only ELF32 little endian supported')
     header=struct.unpack_from('<16sHHIIIIIHHHHHH',data)
@@ -46,7 +65,7 @@ def main():
     sources=[]
     for name,needle in [('sysmath.c','return sin (x);'),('icall-def.h','ICALL(MATH_14, "Sin", ves_icall_System_Math_Sin)')]:
         url=f'https://raw.githubusercontent.com/mono/mono/{PIN}/mono/metadata/{name}'
-        data=urllib.request.urlopen(url,timeout=30).read();lines=data.decode().splitlines()
+        data=pinned_source(name);lines=data.decode().splitlines()
         hits=[i+1 for i,line in enumerate(lines) if needle in line]
         if len(hits)!=1:raise ValueError('Pinned source mapping changed')
         sources.append(dict(url=url,revision=PIN,sha256=sha(data),line=hits[0],finding=needle))

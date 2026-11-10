@@ -82,13 +82,13 @@ Categorias por simbolo/linha e informacao de inlining. Nao sao ciclos, nem conta
 
 ## Tamanho por metodo ARM
 
-ELF `438eab432a3dcbcf08107577d2f317a050d7932d565e881c46c7b1dce6a4aea2`. 1198 metodos com simbolos vinculados e IL mapeado; 18 identidades ainda sem mapeamento neste analisador. Inclui auxiliares exclusivos; funcoes compartilhadas nao sao cobradas duas vezes. A parcela nao atribuida/compartilhada soma 7922324 bytes. Isso ainda nao mede duplicacao por inlining.
+ELF `438eab432a3dcbcf08107577d2f317a050d7932d565e881c46c7b1dce6a4aea2`. 1201 metodos com simbolos vinculados e IL mapeado; zero identidades sem mapeamento apos normalizar / para + nos tipos aninhados do dump. As 18 identidades antes pendentes foram resolvidas; tres possuem simbolos vinculados adicionais, os demais nao acrescentam um simbolo exclusivo. Inclui auxiliares exclusivos; funcoes compartilhadas nao sao cobradas duas vezes. A parcela nao atribuida/compartilhada soma 7918468 bytes. Isso ainda nao mede duplicacao por inlining.
 
 | Faixa de codigo | Metodos | Bytes codigo | Bytes IL |
 |---|---:|---:|---:|
 | 0?256 | 143 | 22124 | 7099 |
 | 257?1024 | 356 | 206260 | 13629 |
-| 1025?4096 | 324 | 714284 | 29227 |
+| 1025?4096 | 327 | 718140 | 29336 |
 | 4097?16384 | 226 | 1854700 | 77031 |
 | 16385?1099511627776 | 149 | 9922464 | 371158 |
 

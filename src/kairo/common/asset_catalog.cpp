@@ -2,8 +2,11 @@
 #include "sha256.hpp"
 #include "semantic_runtime.hpp"
 #include <fstream>
-#include <array>
 #include <limits>
+#if defined(__3DS__)
+#include <sys/iosupport.h>
+#include <cstring>
+#endif
 #if defined(__3DS__) && defined(PLS_NULL_BACKEND)
 #include <cstdio>
 #endif
@@ -13,6 +16,23 @@ constexpr char expected[]="d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e
 std::uint64_t number(std::istream& f,int bytes){std::uint64_t n{};for(int i=0;i<bytes;++i){int c=f.get();if(c<0)throw cs::EndOfStreamException("Truncated private asset index");n|=std::uint64_t(c)<<(i*8);}return n;}
 std::string text(std::istream& f,std::size_t n){if(n>1048576)throw cs::IOException("Asset index field too long");std::string s(n,'\0');if(n&&!f.read(s.data(),std::streamsize(n)))throw cs::EndOfStreamException();return s;}
 std::string field(std::istream& f){return text(f,std::size_t(number(f,4)));}
+std::filesystem::path canonical_asset_path(const std::filesystem::path& root,const std::filesystem::path& relative){
+#if defined(__3DS__)
+    // libctru's SD archive has no symlinks: stat and lstat use archive_stat.
+    // For normal paths one final status query checks existence without opening
+    // every ancestor. Preserve canonical's behavior for all other cases/devices.
+    bool normal=!relative.empty()&&!relative.filename().empty()&&relative==relative.lexically_normal();
+    for(const auto& part:relative)
+        if(part=="."||part==".."||part.native().find(':')!=std::string::npos||part.native().find('\\')!=std::string::npos)normal=false;
+    auto candidate=root/relative;
+    const auto* device=GetDeviceOpTab(candidate.c_str());
+    if(normal&&device&&device->name&&std::strcmp(device->name,"sdmc")==0){
+        std::error_code error;
+        if(std::filesystem::exists(candidate,error)&&!error)return candidate;
+    }
+#endif
+    return std::filesystem::canonical(root/relative);
+}
 }
 Catalog::Catalog(std::filesystem::path root):root_(std::filesystem::canonical(root)){
     std::ifstream file(root_/"converted/catalog.idx",std::ios::binary);
@@ -36,13 +56,15 @@ std::vector<const Entry*> Catalog::entries(Kind kind)const{std::vector<const Ent
 std::filesystem::path Catalog::path(const Entry& entry)const{
     auto relative=std::filesystem::u8path(entry.path);
     if(relative.is_absolute()||relative.has_root_path())throw cs::IOException("Absolute asset path refused");
-    auto result=std::filesystem::canonical(root_/relative);auto under=result.lexically_relative(root_);
+    auto result=canonical_asset_path(root_,relative);auto under=result.lexically_relative(root_);
     if(under.empty()||*under.begin()=="..")throw cs::IOException("Asset path escapes local root");return result;
 }
 void Catalog::verify(const Entry& entry)const{
     auto target=path(entry);if(std::filesystem::file_size(target)!=entry.size)throw cs::IOException("Asset extent differs");
     std::ifstream file(target,std::ios::binary);if(!file)throw cs::IOException("Asset cannot be opened");
-    Sha256 hash;std::array<std::uint8_t,65536> block{};
+    // The ARM main/worker stacks default to 32 KiB. Keep the streaming
+    // chunk and all integrity checks unchanged without a 64 KiB stack frame.
+    Sha256 hash;std::vector<std::uint8_t> block(65536);
     while(file){file.read(reinterpret_cast<char*>(block.data()),std::streamsize(block.size()));hash.update(block.data(),std::size_t(file.gcount()));}
     if(!file.eof()||hash.finish()!=entry.sha256)throw cs::IOException("Asset payload digest differs");
 }

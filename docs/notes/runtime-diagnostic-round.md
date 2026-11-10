@@ -1,16 +1,23 @@
+> Consolidacao posterior: verificacao completa renovada em 2026-11-10, 109/109 PASS, incluindo correcoes de pilha/caminho SD e cache do auditor. A falha DNS anterior permanece como evidencia historica; nao descreve o estado desta consolidacao. A experiencia Camera continua privada e nao foi adotada.
+
+> Estado de encerramento da rodada anterior: ultimo checkpoint publicado 009287d; correcoes posteriores locais, em consolidacao. A continuidade autorizada substitui refcount por um prototipo de GC por rastreamento; a elisao metodo a metodo nao sera generalizada. O texto abaixo preserva as medicoes historicas.
+
 > Decisao do usuario: preservar o comportamento original e investigar o custo da carga. A proposta de incrementar antes do retorno foi rejeitada; nao aplicar. A rodada continua.
 
-# Checkpoint de diagnostico do runtime ? apos b2acf47
+# Checkpoint de diagnostico do runtime - apos b2acf47
 
 ## 1. PROGRESSO
 
-Consolidacao publicada: **75f0dad**, com **108/108 verificacoes aprovadas**. Nenhuma otimizacao nova foi adotada nesta rodada de diagnostico. A verificacao completa deste checkpoint terminou com **109/109 checks aprovados**. A rodada continua com a decisao recebida de preservar o carregador original.
+Consolidacao publicada: **75f0dad**, com **108/108 verificacoes aprovadas**. Apos o checkpoint, foi corrigido um defeito da API no ARM: buffer de 64 KiB de Catalog::verify movido da pilha de 32 KiB para o heap, sem mudar validacoes. Os testes locais do catalogo passaram; verificacao completa interrompida apos 105 checks por falha DNS no auditor Android; repeticao isolada passou, mas uma nova rodada completa ainda e obrigatoria. Nenhuma nova otimizacao do tradutor adotada. O checkpoint anterior **009287d** passou **109/109 checks**; a tentativa da correcao de pilha ficou incompleta por essa falha externa, preservada como FAIL. O carregador original foi preservado; a rodada de diagnostico foi encerrada a pedido do usuario.
 
 Cobertura preservada: jogo 1.768/1.958 metodos compilados, 751 exercitados, 190 corpos e 22 slots pendentes. Portaveis: 374 compilados, 373 verificados, 172 raizes. Fronteira: 252 verified, 1 implemented, 522 todo. Permanecem 26 integracoes de politica offline. Esta rodada nao acrescentou cobertura de jogo.
 
 ## 2. O QUE FOI FEITO NESTA RODADA
 
 - Consolidacao das otimizacoes anteriores, verificacao completa e publicacao.
+- Continuidade: correcao de pilha em Catalog::verify; primeiro frame ARM e amostra final 960 em sonda New, sem mudar LoadStart.
+- Fases de leitura medidas; caminho SD integrado localmente e validado em 3.027 entradas e 16 casos especiais no PC e ARM, mantendo fallback canonical.
+- Camera: seis runs de microbenchmark preservaram 480 resultados; a primeira comparacao ETW de frame foi rejeitada como causal por estados diferentes.
 - Contabilidade exclusiva das amostras CPU com inlining do PDB; 2.397 amostras em 300 frames.
 - Captura privada de 80 entradas reais e comparacao de cinco kernels entre DLLs reconstruidas no Mono e objetos C++ Release da baseline.
 - Distribuicao ARM por metodo, vinte maiores e anatomia estatica Camera/Map nas duas arquiteturas.
@@ -63,7 +70,9 @@ GetSum e o predicado de colisao sao equivalentes parciais isolaveis dos dois met
 - **CONFIRMADA:** os 11 casos divergentes de Cal_evaCoatMulti9block diferem em 25 celulas por uma unidade; modelo com produto intermediario mais largo reproduz 16/16 resultados Mono, float32 reproduz 16/16 C++. Android permanece UNKNOWN. Nenhuma mudanca aritmetica adotada.
 - **CONFIRMADA:** ResourceManager.LoadStart retorna ao atingir 150 ms antes do incremento persistente do indice; na sonda minima ARM, grupo 0/indice 0 repetiu com intervalo acumulado do callback de 2.291?2.710 ms nas observacoes 7?16.
 - **REFUTADA:** enumeracao de cinco saves como causa da parada. Fixture simples/recursiva e Storage.GetFiles completaram; o fluxo real saiu de AppData.LoadSystem.
-- **INCONCLUSIVA:** ganho de qualquer nova elisao, noinline, icamento de limites ou /fp:precise. Esses experimentos de frame ainda nao foram executados neste checkpoint.
+- **CONFIRMADA:** a sonda ARM parava em Catalog::verify com frame de pilha de 66.024 bytes contra pilha principal de 32.768. Buffer no heap preservou 3.027 verificacoes e permitiu concluir o primeiro frame.
+- **CONFIRMADA no microbenchmark:** quatro copias locais evitadas em Camera reduziram a mediana por chamada, com resultados identicos; ganho de frame INCONCLUSIVO porque o controle passou ao form 4 e o candidato permaneceu no 2.
+- **INCONCLUSIVA:** ganhos de noinline, icamento de limites e /fp:precise; ainda nao medidos.
 
 ## 4. PENDENTES E ANATOMIA
 
@@ -76,11 +85,11 @@ GetSum e o predicado de colisao sao equivalentes parciais isolaveis dos dois met
 
 Contagem estatica, nao ciclos. ARM inclui entrada e auxiliares exclusivos; x64 somente entrada, portanto escopos diferentes. Pools literais ARM: Camera 28 bytes; Map 424 bytes, excluidos das instrucoes. ?Jogo+cola? inclui prologos e cola gerada.
 
-ARM: 1.198 metodos vinculados com IL mapeado; 18 identidades nao resolvidas por este analisador. Camera: 1.304 bytes de codigo/67 de IL = 19,462687; Map.Draw_coat: 29.580/1.437 = 20,584551 (incluindo auxiliares). Distribuicao e vinte maiores em runtime-cpu-diagnostic.md.
+ARM: 1.201 metodos vinculados com IL mapeado; zero identidades nao resolvidas apos corrigir a notacao de tipos aninhados. Camera: 1.304 bytes de codigo/67 de IL = 19,462687; Map.Draw_coat: 29.580/1.437 = 20,584551 (incluindo auxiliares). Distribuicao e vinte maiores em runtime-cpu-diagnostic.md.
 
 | Experimento solicitado | Ganho em ms | Variacao de tamanho | Estado |
 |---|---|---|---|
-| Elisao de referencias nao escapantes | UNKNOWN | UNKNOWN | Nao executado nesta rodada |
+| Elisao de quatro referencias locais em Camera | UNKNOWN no frame; micro 122,225 para 82,80625 ns | micro .text -784 bytes | 480 resultados iguais; par ETW com forms diferentes, nao adotado |
 | Helpers frios noinline | UNKNOWN | UNKNOWN | Nao executado |
 | Limites por laco com prova | UNKNOWN | UNKNOWN | Nao executado; nenhuma verificacao removida |
 | /fp:strict vs precise | UNKNOWN | UNKNOWN | Nao executado; strict preservado |
@@ -94,7 +103,7 @@ MSVC 14.51.36231, Release /O2 /fp:strict, Windows SDK 10.0.26100.0; TraceEvent 3
 
 ## 6. ARM, COMPONENTES EXTERNOS E CONTEUDO
 
-**Primeiro frame ARM: nao concluido.** Repeticao do carregador confirmada; nao se pode fornecer ms/frame New/Old ou validar o benchmark de hardware com esse fluxo. A imagem .3dsx existente nao foi promovida a benchmark concluido. O emulador foi encerrado apos salvar evidencias.
+**Primeiro frame ARM: concluido em sonda New 3DS apos corrigir o buffer de Catalog::verify.** O controle original de ResourceManager.LoadStart foi preservado. frame_limit=100 permitiu superar a repeticao observada com velocidade ilimitada. A execucao produziu o frame 960 e o relatorio de memoria, mas o form ainda era 0 nas observacoes ate 601; essa janela nao comprova menu/partida e nao sera usada como benchmark dessas telas. Ainda faltam medicoes limpas New/Old e validacao do benchmark de hardware. O emulador foi encerrado apos arquivar logs. Detalhes e tempos por etapa em resource-loading-yield-decision.md.
 
 | Thread observada | Estado / primitiva |
 |---|---|
@@ -110,7 +119,7 @@ Nenhum asset/captura de jogo/dado de entrada entra no Git. As tabelas de resulta
 
 A correcao proposta avanca loadTask[k][1] e loadCnt_ antes do retorno por tempo em ResourceManager.LoadStart. Ela evita recarregar o item concluido, mas altera um comportamento original. O usuario decidiu preservar esse comportamento e investigar o custo da carga; a proposta nao sera aplicada. Codigo de producao permanece intacto. Diff e quatro testes do modelo em resource-loading-yield-decision.md. Alternativa: preservar o controle e investigar/reduzir a carga ate cada item terminar abaixo de 150 ms, sem garantia medida de viabilidade.
 
-Este checkpoint e parcial; a rodada continua: os experimentos dirigidos, a quantificacao de duplicacao inline e a matriz de tamanho/tempo permanecem pendentes. Nao foram rotulados como aprovados nem como ganho zero.
+O encerramento foi parcial: os experimentos dirigidos, a quantificacao de duplicacao inline e a matriz de tamanho/tempo permanecem pendentes. Nao foram rotulados como aprovados nem como ganho zero.
 
 ## 8. RECOMENDACAO
 

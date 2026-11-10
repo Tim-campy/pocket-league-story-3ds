@@ -15,6 +15,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from update_phase2_progress import map_game_identities
 
 
+def original_identity(stable_id):
+    # The reconstruction's IL dumper uses '/' for nested metadata types;
+    # the port's immutable method ledger uses '+'. Neither changes the DLL.
+    return 'Assembly-CSharp::'+stable_id.replace('/', '+')
+
+
 def main():
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--elf',type=Path,required=True)
@@ -23,10 +29,10 @@ def main():
     a=p.parse_args()
     report=json.loads(Path('config/phase2-game-translation.json').read_text())
     original=json.loads(a.original_dump.read_text(encoding='utf-8-sig'))['selected_methods']
-    ledger=[dict(id='Assembly-CSharp::'+m['stable_id']) for m in original]
+    ledger=[dict(id=original_identity(m['stable_id'])) for m in original]
     mapping,unknown=map_game_identities(report['emitted_methods'],ledger)
     inverse={v:k for k,v in mapping.items()}
-    original_sizes={'Assembly-CSharp::'+m['stable_id']:m.get('header',{}).get('code_size',0) for m in original}
+    original_sizes={original_identity(m['stable_id']):m.get('header',{}).get('code_size',0) for m in original}
     names={m['cpp_name']:m for m in report['emitted_methods'] if m['id'] in inverse}
     data=collections.defaultdict(list);unassigned=0; seen=set()
     proc=subprocess.Popen(['C:/devkitPro/devkitARM/bin/arm-none-eabi-nm.exe','-S','-C','--defined-only',str(a.elf)],stdout=subprocess.PIPE,text=True,encoding='utf8',errors='replace')

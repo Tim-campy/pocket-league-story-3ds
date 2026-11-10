@@ -68,7 +68,7 @@
   "inputs": {
     "tests/kairo/asset_reader_fixtures.cpp": "0b45697e86033bf0c22a285db7c68dae439d3f215700130c39c2ac8eedc7db27",
     "src/kairo/common/asset_reader.cpp": "bf8d107a15993bea7a77c980f8eaf2d47a5bfe9fc24b329103a5d54d03c35669",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/common/managed_encoding.cpp": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20",
     "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "tests/kairo/DisplayMetricsOracle.cs": "c9bec8a1773c09a235f7cda9bbe13f307545c2f4b4683383ffaaf525d8a4c02b",
@@ -90,7 +90,7 @@
   ],
   "native_executable": {
     "path": "build/asset-reader-tests/asset-reader-fixtures.exe",
-    "sha256": "e1c7334ced569901505617842a661628366f3a3b35dfcac93cc2601a6566e0e2"
+    "sha256": "8a1253f4f4d8dcc0ed31a583a789c69cbf94fc4ef3aa85a5cc320cb9b3ec544e"
   },
   "game_assets_used": true,
   "original_binaries_executed": false,

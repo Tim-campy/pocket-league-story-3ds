@@ -411,7 +411,7 @@
     "src/kairo/common/graphics.cpp": "9e7221a6e3cd8f5078384b204ec2e531ad7c5ae1172ade9b23c3391721cb35f0",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
     "tests/kairo/ImageLifetimeOracle.cs": "9eada50ef9d686e508f9c5a03f6e4100e6705e2a9c0566624964afdadd7b6cbb",
@@ -451,7 +451,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "2aec9239236117b94f99a500c70400b6613f34e81ffa066089f4d2547d3c9b81"
+    "sha256": "286167915a5755c30d9db0896b314760f7a352b6e45daab1dea560798d0cdf02"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

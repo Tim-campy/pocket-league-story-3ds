@@ -8,7 +8,7 @@
     "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
-    "CMakeLists.txt": "07d1a5e0b2796e95c8270f5de6ed73d3fa2747ebe03f103e3978cd710e963e83",
+    "CMakeLists.txt": "5974179a274167019eeb035d789e3501bb71143c0561acf9dafdce996287516c",
     "src/kairo/api/application.hpp": "441d6543843272b0d42911a243d975bd1dad2add43282cb417d353d18bd5708d",
     "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
     "src/kairo/api/bootstrap.hpp": "30d97bada49ba6093e9c01329ddfb8de79a9440afe20b93b8bf388130fad4b83",
@@ -42,7 +42,7 @@
     "src/kairo/common/allocation_probe.hpp": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19",
     "src/kairo/common/arc_geometry.hpp": "c7a85271de77a6b1e024c327bdd0dffc9e867f0dfac75dfd1dc6b24b216689e2",
     "src/kairo/common/arc_raster.hpp": "cee9ea25f471c59335a7393261d836c03e1656ca18872476bb3ff6583e730f1f",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/asset_reader.cpp": "bf8d107a15993bea7a77c980f8eaf2d47a5bfe9fc24b329103a5d54d03c35669",
     "src/kairo/common/baked_arrays.hpp": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf",
@@ -246,7 +246,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "60bbc6d9c7d3439a40df8dc1c71739182e0fe2a46140ac58a14ebbd881d3ab6c"
+    "sha256": "326cc942c6bd32ea4a9dd98d24a7b88deab8f8244df66ee8b0f5bf07967f2144"
   },
   "verified_boundary_ids": [],
   "limitations": [

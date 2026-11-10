@@ -109,7 +109,7 @@
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/common/sound.cpp": "79a10a4779c11383dede65ed97c32af1f6ab9f001cae45ca065207bd977adbc5",
     "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/platform/sdl/input.cpp": "98895936ed7906c7cf71c5edfcfe3fe54001d0bdd0dcd75e1f092059528ca139",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
@@ -145,7 +145,7 @@
   ],
   "native_executable": {
     "path": "build/bootstrap-tests/bootstrap-fixtures.exe",
-    "sha256": "66985866d28c78ddf9aef2cfb3898eb9cd1477856fde7089d832e33e6719d7a9"
+    "sha256": "e5b49269d1b955c277e99ec36f51c1325c727d472459893f57d514e6f99f346e"
   },
   "limits": [
     "Own collaborators with the exact original Awake body prove callback ordering, optional-resource exception behavior and ownership only.",

@@ -1,7 +1,7 @@
 {
   "operation": "static-Android-Math-Sin-provenance",
   "status": "PASS",
-  "producer_sha256": "83d155267aa016a6d72c494bd73aed313a10683d89a779b0e346c2551535f98d",
+  "producer_sha256": "76993c389ecee87eb0c050245044a8cd8be3749b9a2739159a23c56e5dd6d624",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "sources": [
     {

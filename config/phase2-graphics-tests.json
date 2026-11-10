@@ -7,12 +7,14 @@
   "text_frames": 6,
   "catalog_records_verified": 3027,
   "raw_resource_views_verified": 21,
+  "catalog_path_records_verified": 3027,
+  "catalog_path_edge_cases": 16,
   "raw_resource_views_different_from_decoded": 15,
   "game_boot": false,
   "original_renderrect_exception_preserved": true,
   "android_raster_comparison": "UNKNOWN",
   "sources": {
-    "tools/test_graphics.py": "c02042a2015e3545a2a3fc8db9839c8e8101a09a000fb4b9b6616c33c74c88ce",
+    "tools/test_graphics.py": "56aaf4f2bd872bb684a595349c6cb140e8062e570b8af10188f23ec4ad215985",
     "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
     "src/kairo/common/graphics.cpp": "9e7221a6e3cd8f5078384b204ec2e531ad7c5ae1172ade9b23c3391721cb35f0",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -22,10 +24,11 @@
     "src/kairo/platform/sdl/font.hpp": "58b6be7dbe6b8197bba1c16cef390919215c0a9d735222429c9523efd0d1c2c9",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "tests/kairo/graphics_api_test.cpp": "f7e65b44fe8bbd806a51a4bdf095f07e6a80b670bf769ac2dc0ab3117b2c74ce",
     "tests/kairo/asset_catalog_test.cpp": "b8655c27a68999031124fd3fa6232669e05fee5d42f60338a0dde9c97179b866",
+    "tests/kairo/asset_path_test.cpp": "9c9f2a46d2a1f6480fe2d9956728d9745698b17620ad9a2c455239dc61ea4987",
     "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
     "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
@@ -59,10 +62,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "a8e744d002ed779ade111ca1dfa5784546274981b4463e31a23e3eb81be3cef5",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "c03b1285304c25441879ce7d573549f5155d4a136670292e636f891528528580"
+    "build/graphics-tests/GraphicsOracle.dll": "486301bc96d980403d2d10fcf27e65cfb53e5dce551bddd09655b2b9428d9351",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "892d161f52811660937e4a8924e600d330aaf23b196a03592637e308f8113a65"
   },
-  "executable_sha256": "6b13588daff6f2c7e668db43175246d9faf9e0e24ce1ece5a5875f9e15fdd4f7",
+  "executable_sha256": "5a19c61ce80dbfed13b12fcca94e7e6056529c7e00d23d0b74ee6e448c4e82f0",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

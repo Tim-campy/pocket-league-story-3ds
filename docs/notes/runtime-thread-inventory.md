@@ -99,7 +99,9 @@ threads visiveis:
 
 RSP fornece registradores/contextos e memoria de pilha. As palavras da pilha
 nao foram tratadas como um unwind certificado, nem os contextos salvos como
-prova de deadlock. O primeiro host_update continua sem terminar por repeticao
-do indice 0 em ResourceManager.LoadStart; detalhes e proposta nao aplicada em
-resource-loading-yield-decision.md. O emulador foi encerrado apos preservar
-logs e registradores; nao ficou um benchmark preso rodando em segundo plano.
+prova de deadlock. Essas capturas pertencem a execucao com velocidade ilimitada. Em controle
+posterior, o mesmo binario com frame_limit=100 concluiu host_update e chegou
+a host_draw, preservando LoadStart. Portanto a repeticao do indice 0 nao e
+um bloqueio invariavel do port: o relogio emulado/limite de velocidade
+interfere no diagnostico. Detalhes em resource-loading-yield-decision.md.
+Os processos dessas observacoes foram encerrados apos arquivar evidencias.

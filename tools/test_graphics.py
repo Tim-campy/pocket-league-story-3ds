@@ -118,18 +118,24 @@ g.SetBlendMode(2,37);Console.WriteLine("blend0="+g.GetBlendMode()+","+g.GetBlend
     rows=native.splitlines();summary=json.loads(rows.pop());trace='\n'.join(rows)+'\n'
     if trace!=modern or trace!=historical:raise ValueError('Native API differs from original-source oracle')
     catalog_result=json.loads(run([ROOT/'build/pc/asset_catalog_test.exe',ROOT/'assets'],'catalog'))
+    path_trace=run([ROOT/'build/pc/asset_path_test.exe',ROOT/'assets'],'asset-paths')
+    path_line=next(line for line in path_trace.splitlines() if line.startswith('PATH_PASS '))
+    path_result={key:int(value) for key,value in (field.split('=',1) for field in path_line.split()[1:])}
+    if path_result['records']!=catalog_result['records_verified'] or path_result['edge_cases']!=16:
+        raise ValueError('Catalog path fixture coverage differs')
     proof=json.loads((ROOT/'config/phase2-resource-catalog.json').read_text(encoding='utf-8'))
     if sha(ROOT/'assets/converted/catalog.idx')!=proof['catalog_sha256']:raise ValueError('Private catalog changed')
     report=dict(operation='native-Kairo-graphics-and-source-oracles',status='PASS',source_oracle_cases=2*len(rows),
         native_assertions=summary['native_assertions'],png_occurrences_loaded=summary['png_occurrences_loaded'],
         text_frames=summary['text_frames'],
         catalog_records_verified=catalog_result['records_verified'],raw_resource_views_verified=catalog_result['raw_resources'],
+        catalog_path_records_verified=path_result['records'],catalog_path_edge_cases=path_result['edge_cases'],
         raw_resource_views_different_from_decoded=catalog_result['raw_decoded_different'],game_boot=False,
         original_renderrect_exception_preserved=True,android_raster_comparison='UNKNOWN',
         sources={p:sha(ROOT/p) for p in ['tools/test_graphics.py','src/kairo/api/graphics.hpp','src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp',
             'src/kairo/api/font.hpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.hpp','src/kairo/platform/sdl/font.cpp',
             'src/kairo/common/asset_catalog.hpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/sha256.hpp',
-            'tests/kairo/graphics_api_test.cpp','tests/kairo/asset_catalog_test.cpp']},
+            'tests/kairo/graphics_api_test.cpp','tests/kairo/asset_catalog_test.cpp','tests/kairo/asset_path_test.cpp']},
         original_source_sha256=sha(original),font_original_source_sha256=sha(font_original),catalog_sha256=proof['catalog_sha256'],
         original_sources={str(p.relative_to(ROOT)).replace('\\','/'):sha(p) for p in [original,font_original,matrix_original]},
         oracle_artifacts={str(p.relative_to(ROOT)).replace('\\','/'):sha(p) for p in [oracle,target,old]},

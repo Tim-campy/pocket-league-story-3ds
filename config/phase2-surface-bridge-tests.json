@@ -189,7 +189,7 @@
     "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "tests/kairo/SurfaceBridgeOracle.cs": "647d04d52e86789e2c5807f42317a0dec2fd011d109613781e8d02a756b95ccc",
     "tools/test_surface_bridge.py": "070e997aa28bcbf175d1c3da5e6fba6dce672782968709d9e0b05423880e3c5c",
@@ -244,7 +244,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "53c6a2d2c756a1691d689db601a0d0e23e324c53a0e80ded5e355afb166a09c4"
+    "sha256": "85a2e453295dba8267d83f0fe18239925ad02aef1b369cf9689c5b095d19a585"
   },
   "verified_boundary_ids": [],
   "ordering": {

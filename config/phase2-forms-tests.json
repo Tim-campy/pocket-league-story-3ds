@@ -516,9 +516,9 @@
   },
   "native_concurrent_fields": {
     "status": "PASS",
-    "assertions": 8980,
+    "assertions": 10611,
     "writer_iterations": 2000,
-    "collections_while_writer_registered": 1283,
+    "collections_while_writer_registered": 1516,
     "whole_method_lock": false,
     "game_boot": false
   },
@@ -532,7 +532,7 @@
     "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
-    "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
+    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
     "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "tests/kairo/FormsOracle.cs": "704d67129441ac52cd0a29ba5e14159a201835e06b7e78dbffa9e4543c3139b3",
     "tools/test_forms.py": "4d0b5e1f1964266ddcbbc537bb1513ca67e6f1666a6a10d9a9025bda8cf86b68",
@@ -616,7 +616,7 @@
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "57b76d217cc4e3ea24ec99ea4ce2fe3874ce2842957a02d9b753a265e3470d56"
+    "sha256": "a70a07e3c7b9d07d6f9482e68f0bc1bee66778e5de1592bb039529a4a9031f7a"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

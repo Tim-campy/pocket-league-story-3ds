@@ -46,13 +46,14 @@ def main():
     parser.add_argument('--samples',type=int,default=3)
     parser.add_argument('--all-threads',action='store_true')
     args=parser.parse_args()
+    initial_log_time=args.log.stat().st_mtime_ns if args.log.exists() else 0
     remote=Remote(args.port);observations=[]
     print('connected '+remote.command('qSupported'),flush=True)
     print('initial '+remote.command('?'),flush=True)
     remote.send('c')
     try:
         deadline=time.monotonic()+240
-        while not args.log.exists() or 'PLS_NULL_WARMUP_BEGIN=1' not in args.log.read_text(errors='replace'):
+        while not args.log.exists() or args.log.stat().st_mtime_ns<=initial_log_time or 'PLS_NULL_WARMUP_BEGIN=1' not in args.log.read_text(errors='replace'):
             if time.monotonic()>deadline:raise TimeoutError('Warmup marker not reached')
             time.sleep(1)
         for sample in range(args.samples):
@@ -61,9 +62,12 @@ def main():
             threads=remote.command('qfThreadInfo')
             if args.all_threads:
                 states=[]
-                for tid in threads.removeprefix('m').split(','):
+                thread_ids=[]
+                while threads.startswith('m'):
+                    thread_ids.extend(threads[1:].split(','));threads=remote.command('qsThreadInfo')
+                for tid in thread_ids:
                     if remote.command('Hg'+tid)!='OK':raise RuntimeError('Thread selection failed')
-                    regs={name:int.from_bytes(bytes.fromhex(remote.command(f'p{index:x}')),'little')for name,index in [('sp',13),('lr',14),('pc',15)]}
+                    regs={name:int.from_bytes(bytes.fromhex(remote.command(f'p{index:x}')),'little')for name,index in [(f'r{i}',i)for i in range(13)]+[('sp',13),('lr',14),('pc',15)]}
                     raw=remote.command(f"m{regs['sp']:x},1000")
                     words=[]if raw.startswith('E')else[int.from_bytes(bytes.fromhex(raw[i:i+8]),'little')for i in range(0,len(raw),8)]
                     states.append(dict(thread=tid,registers=regs,stack_words=words))

@@ -4,11 +4,11 @@
   "cases": [
     {
       "fixture": "diagnostic_profile_test",
-      "executable_sha256": "0a0cc2c800f3cdf8442b20516530956d4592b6660b5c2a8ebadf0cd85cbe2f49"
+      "executable_sha256": "72fc3402b46bd2c634b1cdeac9c3aae861f2237e0e61a460d8167f184e462a0b"
     },
     {
       "fixture": "capture_test",
-      "executable_sha256": "2c9c101c65c7d6b45ffac2b278bd0f045b9c5350405f901daec9aeae734afe30"
+      "executable_sha256": "7718698a168b0e0d046640ce38e2c2a0e78d3d0a7550f5395eb6d9ca3447882f"
     }
   ],
   "inputs_sha256": {

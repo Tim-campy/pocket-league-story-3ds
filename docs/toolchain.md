@@ -506,3 +506,31 @@ O pequeno leitor C# usa o Roslyn e o runtime .NET 10.0.10 já presentes no
 Visual Studio; não foi instalado SDK .NET. WPR/xperf são os já presentes no
 Windows Performance Toolkit. O perfil externo é separado dos contadores por
 método do jogo. Os ETLs e os símbolos permanecem em `build/`.
+
+## Diagnostico de kernels apos 75f0dad
+
+O oraculo usa as DLLs recompiladas da reconstrucao; UnityEngine e apenas referencia
+externa do oraculo, nao dependencia do nativo. O processo Mono Windows e x86;
+seu banner identifica JIT 2.0 (Visual Studio built mono), e nao se substitui
+esse banner por uma versao inferida. Opcoes do harness: smcs -optimize+,
+Mono sem flags extras de otimizacao; nativo /O2 /fp:strict, ligado aos objetos
+Release existentes. Compilacao/inicializadores fora da medicao.
+
+| Insumo local | SHA-256 |
+|---|---|
+| Assembly-CSharp.dll | `3a3939e52bee4404097083fb2ab3c7397b7107917dff551691735d59e2f5ee32` |
+| KairoLibrary.dll | `114f39eb77f294d33288915b7dc11bf3401478b9c7ed9beb6f94980bba02d376` |
+| UnityEngine.dll | `7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421` |
+| hot_methods.exe | `7521ca294ae2ba9e007c0d968e6ecd90b0489f77154f4fa8f0c3c241041968ea` |
+| HotMethodsMono.exe | `4bf78a32a9e95f12661310ded22e3c53230b9874cb825161d0bdb6f8cc3a3fe5` |
+| mono.exe | `3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076` |
+
+Ferramentas de reproducao: tools/profiling/capture_hot_inputs.py e
+tools/profiling/run_hot_methods.py. Recibos e valores ficam em build/. A captura
+registra valores de entrada e estado mutado; o benchmark recusa globais distintos
+num lote. Resultados e limitacoes: docs/notes/runtime-hot-methods.md.
+
+A contabilidade de CPU usa TraceEvent 3.2.8 ja registrado e as APIs DbgHelp
+SymAddrIncludeInlineTrace, SymQueryInlineTrace, SymFromInlineContext e
+SymGetLineFromInlineContext para preservar a origem do codigo embutido.
+Amostras nao resolvidas nao sao transferidas para a categoria de logica do jogo.

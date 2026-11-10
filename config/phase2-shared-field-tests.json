@@ -21,7 +21,7 @@
   },
   "native_executable": {
     "path": "build/shared-field-fixtures/shared-field-fixtures.exe",
-    "sha256": "b3cbdd361e46c7e13ea0fe3708ee0221ad715e35c575f8274678ed57239c3502"
+    "sha256": "4fa92655943abf59b6158a706bd41849ce19c4e25f9229247ffe5879b2439699"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

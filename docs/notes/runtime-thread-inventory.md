@@ -64,3 +64,42 @@ estão aprovadas por este inventário. Para propor qualquer uma delas será prec
 provar confinamento/transferência dos objetos e medir o ganho. Os caminhos de
 serviços removidos/offline precisam ser vinculados aos overrides efetivamente
 gerados antes de serem excluídos da análise.
+
+## Auditoria ARM desta rodada (apos 75f0dad)
+
+Os 24 sitios acima convergem para JThread/Thread.Start; isso e um inventario
+estatico, nao prova de que todos os 24 foram executados. O caminho comum usa
+std::thread -> __gthread_create -> pthread_create -> __syscall_thread_create
+-> threadCreate. O header instalado gthr-default.h (armv6k/fpu, GCC 16.1.0),
+linhas 706?709, encaminha para pthread_create com atributos NULL.
+
+No ELF autenticado da baseline (SHA 438eab432a3dcbcf08107577d2f317a050d7932d565e881c46c7b1dce6a4aea2),
+__syscall_thread_create, 0x0141cfd0, passa prioridade 0x3f, pilha default
+0x8000 bytes, core_id=0 e detached=false para threadCreate. Esses argumentos
+foram lidos do disassembly ARM; nao foram inferidos do numero de nucleos.
+O header instalado libctru/include/3ds/thread.h identifica o core 0 como o
+nucleo da aplicacao, sempre disponivel. Portanto esse caminho de criacao nao
+exige um segundo nucleo de aplicacao no Old3DS. O custo e progresso reais
+nesse perfil continuam sem medicao de frames.
+
+Mutexes/condicoes continuam sincronizados. __syscall_cond_wait, 0x0141cf78,
+encaminha para CondVar_WaitTimeout; Thread.Sleep/Join fazem esperas com prazo,
+e platform_condition_wait reavalia o predicado protegido a cada 1 ms no ARM.
+Nao se adotou contagem nao atomica nem retirada de locks. A fixture anterior
+com espera indefinida que falhou nao demonstra, sozinha, defeito da libctru.
+
+Durante a repeticao do carregador, duas capturas RSP enumeraram todas as tres
+threads visiveis:
+
+| Thread | Estado observado | Primitiva / limite da evidencia |
+|---|---|---|
+| 1 | Executando conversao de caixa/collation na primeira captura; chamada de FS na segunda | PC em std::_Function_base::_M_empty, LR em culture_to_lower; depois svcSendSyncRequest/FSUSER_OpenDirectory. Os marcadores provam repeticao ativa de carga. |
+| 2 | Espera do servico APT | svcWaitSynchronizationN, LR aptEventHandler. |
+| 3 | Espera com prazo | svcArbitrateAddress, LR CondVar_WaitTimeout; registradores mostram prazo proximo de 1 ms. O chamador logico acima dessa primitiva permanece UNKNOWN. |
+
+RSP fornece registradores/contextos e memoria de pilha. As palavras da pilha
+nao foram tratadas como um unwind certificado, nem os contextos salvos como
+prova de deadlock. O primeiro host_update continua sem terminar por repeticao
+do indice 0 em ResourceManager.LoadStart; detalhes e proposta nao aplicada em
+resource-loading-yield-decision.md. O emulador foi encerrado apos preservar
+logs e registradores; nao ficou um benchmark preso rodando em segundo plano.

@@ -52,6 +52,7 @@ def main():
     if managed.is_relative_to(ROOT):p.error('Original API binaries must remain outside the port repository')
     commands=[
         ('repository-tests',['-m','unittest','discover','-s','tests/repository','-p','test_*.py']),
+        ('resource-yield-control-model',['tests/kairo/resource_yield_model.py']),
         ('syntax-inventory-tests',['tools/csharp_subset/test_inventory.py']),
         ('reference',['tools/check_reference.py']),
         ('cmake-header-dependencies',['tools/test_cmake_dependencies.py']),

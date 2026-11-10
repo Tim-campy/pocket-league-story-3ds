@@ -21,7 +21,7 @@ void cs_96c54d9323f24f8e::release_edges(){pls::cs::Object::release_edges();pls::
 static pls::cs::Ref<cs_f1dd8f2aa583774c> cs_846238cb57fd2bbf_value{};
 
 void cs_init_96c54d9323f24f8e(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Balloon",[](){
-cs_846238cb57fd2bbf_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.ui.Balloon.Draw_tmp",[&](){return ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());});
+cs_846238cb57fd2bbf_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.ui.Balloon.Draw_tmp",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1465",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));});
 
 });}
 
@@ -33,10 +33,10 @@ pls::cs::Ref<cs_96c54d9323f24f8e> cs_188280dcda94b686(pls::cs::Ref<cs_96c54d9323
 }
 
 void cs_188280dcda94b686_init(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::Ref<cs_96c54d9323f24f8e> v_balloon) {
-cs_this->cs_26d7ee92947806bd = pls::cs::List<pls::cs::Ref<cs_9f5a071d05c1d020>>::make();
-cs_this->cs_34be2585a809d78b = ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());
-cs_this->cs_4b66e3dd8daf3086 = ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());
-cs_this->cs_939495bac7ddc94f = ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());
+cs_this->cs_26d7ee92947806bd = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1239",pls::cs::List<pls::cs::Ref<cs_9f5a071d05c1d020>>::make());
+cs_this->cs_34be2585a809d78b = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1292",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
+cs_this->cs_4b66e3dd8daf3086 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1349",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
+cs_this->cs_939495bac7ddc94f = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1407",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_96c54d9323f24f8e>>(cs_this); pls::cs::Ref<cs_96c54d9323f24f8e> cs_arg0 = v_balloon; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_4a16cab6837c29db(cs_receiver,cs_arg0); }());
@@ -50,10 +50,10 @@ pls::cs::Ref<cs_96c54d9323f24f8e> cs_c46e5f8db55f0d51(pls::cs::String v_text,std
 }
 
 void cs_c46e5f8db55f0d51_init(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::String v_text,std::int32_t v_color) {
-cs_this->cs_26d7ee92947806bd = pls::cs::List<pls::cs::Ref<cs_9f5a071d05c1d020>>::make();
-cs_this->cs_34be2585a809d78b = ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());
-cs_this->cs_4b66e3dd8daf3086 = ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());
-cs_this->cs_939495bac7ddc94f = ([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }());
+cs_this->cs_26d7ee92947806bd = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1239",pls::cs::List<pls::cs::Ref<cs_9f5a071d05c1d020>>::make());
+cs_this->cs_34be2585a809d78b = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1292",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
+cs_this->cs_4b66e3dd8daf3086 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1349",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
+cs_this->cs_939495bac7ddc94f = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1407",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_96c54d9323f24f8e>>(cs_this); pls::cs::String cs_arg0 = v_text; std::int32_t cs_arg1 = v_color; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_4254bc66f1000052(cs_receiver,cs_arg0,cs_arg1); }());
@@ -66,7 +66,7 @@ void cs_97aa074fb6571df9(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Balloon.Draw(kairo.unity.ui.Graphics,System.Single,System.Single,UnityEngine.Matrix4x4)",kairo);
 {
-([&]() { auto cs_receiver = cs_this; auto cs_rhs = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = cs_this; return cs_a3796b472b90bedf(static_cast<pls::cs::Ref<cs_96c54d9323f24f8e>>(cs_receiver)); }()); auto cs_arg1 = pls::cs::String(std::u16string(u"",0)); return cs_334563e946ad4962(cs_arg0,cs_arg1); }()); auto cs_value = cs_rhs; cs_bc64dbfb155d02c7(static_cast<pls::cs::Ref<cs_96c54d9323f24f8e>>(cs_receiver),cs_value); return cs_value; }());
+([&]() { auto cs_receiver = cs_this; auto cs_rhs = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = cs_this; return cs_a3796b472b90bedf(static_cast<pls::cs::Ref<cs_96c54d9323f24f8e>>(cs_receiver)); }()); auto cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}()); return cs_334563e946ad4962(cs_arg0,cs_arg1); }()); auto cs_value = cs_rhs; cs_bc64dbfb155d02c7(static_cast<pls::cs::Ref<cs_96c54d9323f24f8e>>(cs_receiver),cs_value); return cs_value; }());
 if ((!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->IsGUI(); }());})))) {
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->source_render_; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
 std::int32_t v_num_4349 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3cull));
@@ -502,7 +502,7 @@ void cs_bc64dbfb155d02c7(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::Stri
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Balloon.set_Text(System.String)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; auto cs_arg1 = pls::cs::String(std::u16string(u"",0)); return cs_334563e946ad4962(cs_arg0,cs_arg1); }()); pls::game::cs_require(cs_target)->cs_1d5abc90d11ab0c5 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; auto cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}()); return cs_334563e946ad4962(cs_arg0,cs_arg1); }()); pls::game::cs_require(cs_target)->cs_1d5abc90d11ab0c5 = cs_value; return cs_value; }());
 }
 }
 }

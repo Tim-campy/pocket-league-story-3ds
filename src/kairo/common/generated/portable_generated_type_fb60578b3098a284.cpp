@@ -24,7 +24,7 @@ void cs_10f86e0fa81e1b57_init(pls::cs::Ref<cs_fb60578b3098a284> cs_this) {
 ([&]() { cs_60f0f6dd217b8877_init(std::static_pointer_cast<cs_ea324a0bbfe717fe>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayOutputStream.#ctor",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { return pls::cs::make_ref<pls::cs::MemoryStream>(); }()); pls::generated::cs_require(cs_target)->cs_f48613bc1c6327b8 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/io/ByteArrayOutputStream.cs:M:java.io.ByteArrayOutputStream.#ctor:161",([&]() { return pls::cs::make_ref<pls::cs::MemoryStream>(); }())); pls::generated::cs_require(cs_target)->cs_f48613bc1c6327b8 = cs_value; return cs_value; }());
 }
 }
 }

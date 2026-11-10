@@ -18,8 +18,8 @@ pls::cs::Ref<cs_51fd12cb14e568f9> cs_711d8c323ca1c807() { cs_init_51fd12cb14e568
 }
 
 void cs_711d8c323ca1c807_init(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this) {
-cs_this->cs_707c7a72abb82ec1 = pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_b169f360ee9f1108>>::make();
-cs_this->cs_3bdfea24b8fa4dd4 = pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_a42daea58251b089>>::make();
+cs_this->cs_707c7a72abb82ec1 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/util/Inventory.cs:M:system.billing.util.Inventory.#ctor:165",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_b169f360ee9f1108>>::make());
+cs_this->cs_3bdfea24b8fa4dd4 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/util/Inventory.cs:M:system.billing.util.Inventory.#ctor:259",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_a42daea58251b089>>::make());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Inventory.#ctor",game);
 {
 

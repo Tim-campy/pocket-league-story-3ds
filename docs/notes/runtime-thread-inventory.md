@@ -27,6 +27,26 @@ Seu `CurrentThread` também cria um wrapper JThread, mas associa Thread.CurrentT
 isso **não** inicia outro worker. Contar esse wrapper como criação de thread seria
 incorreto.
 
+A varredura dos dois assemblies encontra 27 ocorrências de construção:
+18 no jogo e nove na KairoLibrary. Das nove, duas são os construtores de
+`JThread` encaminhando para `Thread`, e uma é o wrapper de `CurrentThread`.
+Restam 24 sítios de criação no nível dos consumidores (18 + 6), não 24
+threads simultâneas. Instâncias reais dependem do fluxo e de chamadas repetidas.
+Os sítios estão em `BootForm.cs:120`, `SpForm.cs:318/325`,
+`KairoService.cs:198`, `BillingForm.cs:957`,
+`FriendForm.cs:231/371/470/678/724/788/837/911/957`, `HttpForm.cs:108`,
+`MatchForm.cs:362`, `RestoreForm.cs:33`, `BillingManager.cs:903`,
+`FormManagerBase.cs:872/1097`, `AnalyticsTracker.cs:103`,
+`Handler.cs:48/61` e `SaveRecorder.cs:224`, sob os respectivos assemblies
+em `reference/src/`.
+
+No C++ da API/runtime, a criação explícita de worker `std::thread` é
+centralizada em `managed_thread.cpp`, `Thread::Start`, linha 69 nesta rodada.
+Isso não inclui threads internas das bibliotecas/plataforma. O fluxo offline
+de registro troca a operação de rede em `AppData.CgiRegist`; não elimina por
+si só o worker de `BootForm.Init`. Da mesma forma, tornar cobrança indisponível
+não prova que todas as classes de formulários/rede deixaram de ser acessíveis.
+
 O runtime C++ implementa Thread::Start/entry em
 `src/kairo/common/managed_thread.cpp`: o worker retém a instância Thread, registra
 GcMutatorScope e coopera com safepoints. A fila de UI de IApplication usa mutex

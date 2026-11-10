@@ -15,12 +15,12 @@ void MeshManager::BeginPrimitive(cs::Ref<Image> image,std::array<std::uint8_t,4>
     if(mode[1]<0||mode[1]>255||mode[2]<0||mode[2]>255)throw cs::NotSupportedException("Offscreen ratios outside0..255 are not admitted");
     const int original_alpha=image?image->GetAlphaType():-1;
     const float color_alpha=image?1.0f:float(brush[3])/255.0f;
-    std::vector<std::array<std::int32_t,3>> passes;
+    std::array<std::array<std::int32_t,3>,2> passes{};
+    std::size_t count=0;
     if((mode[0]==1||mode[0]==2)&&cs::add_i32(mode[1],mode[2])!=255){
-        if(mode[2]<255)passes.push_back({mode[0],0,mode[2]});
-        if(mode[1]>0)passes.push_back({mode[0],mode[1],255});
-    }else passes.push_back(mode);
-    const auto count=passes.size();
+        if(mode[2]<255)passes[count++]={mode[0],0,mode[2]};
+        if(mode[1]>0)passes[count++]={mode[0],mode[1],255};
+    }else passes[count++]=mode;
     for(int split=0;split<(original_alpha==3?2:1);++split)for(std::size_t p=0;p<count;++p){
         const auto actual=passes[p];const int filter=original_alpha==3?split+1:0;
         int op=actual[0];if(op==1&&actual[1]==255&&actual[2]==0)op=0;

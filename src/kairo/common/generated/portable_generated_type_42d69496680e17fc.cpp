@@ -40,7 +40,7 @@ pls::cs::Ref<cs_42d69496680e17fc> cs_232fa563e68dcabb() { cs_init_42d69496680e17
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.GetRuntime",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_c1bf1420af51dac4()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_42d69496680e17fc> { return cs_8fb57d859eee275a(); }()); cs_c1bf1420af51dac4() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JRuntime.cs:M:java.lang.JRuntime.GetRuntime:206",([&]() -> pls::cs::Ref<cs_42d69496680e17fc> { return cs_8fb57d859eee275a(); }())); cs_c1bf1420af51dac4() = cs_value; return cs_value; }());
 }
 return cs_c1bf1420af51dac4();
 }

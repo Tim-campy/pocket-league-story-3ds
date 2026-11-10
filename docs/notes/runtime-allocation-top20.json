@@ -1,0 +1,683 @@
+[
+  {
+    "scenario": "menu",
+    "frames": 300,
+    "allocations": 84000,
+    "bytes": 10612800,
+    "executable_sha256": "af3bb4cf4dadfc54756a3f481ea143ffa842c2ce7ea20895153840be12b67716",
+    "source_operations": 11100,
+    "source_kinds": {
+      "generic_boxing_conversion": 6300,
+      "concat_operator": 3900,
+      "new_array": 300,
+      "new_object": 600
+    },
+    "clr_heap_equivalence": false,
+    "top": {
+      "count": [
+        {
+          "symbol": "pls::cs::register_managed_object",
+          "file": "semantic_runtime.cpp",
+          "line": 52,
+          "count": 28800,
+          "bytes": 1843200,
+          "classification": "Introduzido: registro do coletor"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::String::Storage,std::basic_string<char16_t,std::char_traits<char16_t>,std::allocator<char16_t> > >",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 14700,
+          "bytes": 2234400,
+          "classification": "Misto: strings de várias origens e control blocks"
+        },
+        {
+          "symbol": "pls::assets::Catalog::path",
+          "file": "asset_catalog.cpp",
+          "line": 39,
+          "count": 3600,
+          "bytes": 537600,
+          "classification": "Introduzido: catálogo do port"
+        },
+        {
+          "symbol": "pls::kairo::MeshManager::BeginPrimitive",
+          "file": "mesh.cpp",
+          "line": 46,
+          "count": 3000,
+          "bytes": 2438400,
+          "classification": "Introduzido: vetor de batches do backend"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::kairo::Font,std::shared_ptr<pls::kairo::Font> &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 3000,
+          "bytes": 456000,
+          "classification": "Original: Graphics.GetFont cria Font; control block é introduzido"
+        },
+        {
+          "symbol": "pls::kairo::Font::raster",
+          "file": "font.cpp",
+          "line": 37,
+          "count": 2400,
+          "bytes": 192000,
+          "classification": "Introduzido: chave/cache de rasterização"
+        },
+        {
+          "symbol": "pls::assets::Catalog::entries",
+          "file": "asset_catalog.cpp",
+          "line": 35,
+          "count": 2400,
+          "bytes": 19200,
+          "classification": "Introduzido: catálogo do port"
+        },
+        {
+          "symbol": "pls::kairo::Font::StringWidthF",
+          "file": "font.cpp",
+          "line": 43,
+          "count": 2100,
+          "bytes": 72000,
+          "classification": "Misto: Replace existe no C#; cópia nativa é incondicional"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1800,
+          "bytes": 259200,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<std::shared_ptr<pls::game::cs_3a3d09f9e75a32d2> >::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 163200,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(bool)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<bool __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_2> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<pls::game::cs_5841296a01607078>::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_8> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 35,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 33,
+          "count": 600,
+          "bytes": 38400,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 31,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 37,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 32,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        }
+      ],
+      "bytes": [
+        {
+          "symbol": "pls::kairo::MeshManager::BeginPrimitive",
+          "file": "mesh.cpp",
+          "line": 46,
+          "count": 3000,
+          "bytes": 2438400,
+          "classification": "Introduzido: vetor de batches do backend"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::String::Storage,std::basic_string<char16_t,std::char_traits<char16_t>,std::allocator<char16_t> > >",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 14700,
+          "bytes": 2234400,
+          "classification": "Misto: strings de várias origens e control blocks"
+        },
+        {
+          "symbol": "pls::cs::register_managed_object",
+          "file": "semantic_runtime.cpp",
+          "line": 52,
+          "count": 28800,
+          "bytes": 1843200,
+          "classification": "Introduzido: registro do coletor"
+        },
+        {
+          "symbol": "pls::assets::Catalog::path",
+          "file": "asset_catalog.cpp",
+          "line": 39,
+          "count": 3600,
+          "bytes": 537600,
+          "classification": "Introduzido: catálogo do port"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::kairo::Font,std::shared_ptr<pls::kairo::Font> &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 3000,
+          "bytes": 456000,
+          "classification": "Original: Graphics.GetFont cria Font; control block é introduzido"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1800,
+          "bytes": 259200,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::kairo::Font::raster",
+          "file": "font.cpp",
+          "line": 37,
+          "count": 2400,
+          "bytes": 192000,
+          "classification": "Introduzido: chave/cache de rasterização"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(bool)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<bool __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<std::shared_ptr<pls::game::cs_3a3d09f9e75a32d2> >::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 163200,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::kairo::CallbackFormKairo,pls::kairo::KairoCallbacks>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 158400,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::List<std::shared_ptr<pls::game::cs_3a3d09f9e75a32d2> >::Storage>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 96000,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<int __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 86400,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(int)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 86400,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_2> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<pls::game::cs_5841296a01607078>::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_8> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_5> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::Delegate<bool __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_4> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_3> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        }
+      ]
+    }
+  },
+  {
+    "scenario": "match",
+    "frames": 300,
+    "allocations": 47563,
+    "bytes": 6580264,
+    "executable_sha256": "af3bb4cf4dadfc54756a3f481ea143ffa842c2ce7ea20895153840be12b67716",
+    "source_operations": 12062,
+    "source_kinds": {
+      "generic_boxing_conversion": 10810,
+      "new_array": 352,
+      "new_object": 900
+    },
+    "clr_heap_equivalence": false,
+    "top": {
+      "count": [
+        {
+          "symbol": "pls::cs::register_managed_object",
+          "file": "semantic_runtime.cpp",
+          "line": 52,
+          "count": 15695,
+          "bytes": 1004480,
+          "classification": "Introduzido: registro do coletor"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::String::Storage,std::basic_string<char16_t,std::char_traits<char16_t>,std::allocator<char16_t> > >",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 3012,
+          "bytes": 457824,
+          "classification": "Misto: strings de várias origens e control blocks"
+        },
+        {
+          "symbol": "pls::kairo::MeshManager::BeginPrimitive",
+          "file": "mesh.cpp",
+          "line": 46,
+          "count": 2855,
+          "bytes": 2048640,
+          "classification": "Introduzido: vetor de batches do backend"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1814,
+          "bytes": 261216,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<std::shared_ptr<pls::game::cs_3a3d09f9e75a32d2> >::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 163200,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::kairo::Font,std::shared_ptr<pls::kairo::Font> &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 182400,
+          "classification": "Original: Graphics.GetFont cria Font; control block é introduzido"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(bool)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<bool __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_2> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<pls::game::cs_5841296a01607078>::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_8> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 35,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 33,
+          "count": 600,
+          "bytes": 38400,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 31,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 37,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 32,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::kairo::Font::StringWidthF",
+          "file": "font.cpp",
+          "line": 43,
+          "count": 600,
+          "bytes": 19200,
+          "classification": "Misto: Replace existe no C#; cópia nativa é incondicional"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_5> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::kairo::Font::raster",
+          "file": "font.cpp",
+          "line": 37,
+          "count": 600,
+          "bytes": 48000,
+          "classification": "Introduzido: chave/cache de rasterização"
+        },
+        {
+          "symbol": "`pls::game::configure_application'::`2'::<lambda_2>::operator()",
+          "file": "bootstrap_generated.cpp",
+          "line": 36,
+          "count": 600,
+          "bytes": 28800,
+          "classification": "Introduzido: adaptador do bootstrap"
+        }
+      ],
+      "bytes": [
+        {
+          "symbol": "pls::kairo::MeshManager::BeginPrimitive",
+          "file": "mesh.cpp",
+          "line": 46,
+          "count": 2855,
+          "bytes": 2048640,
+          "classification": "Introduzido: vetor de batches do backend"
+        },
+        {
+          "symbol": "pls::cs::register_managed_object",
+          "file": "semantic_runtime.cpp",
+          "line": 52,
+          "count": 15695,
+          "bytes": 1004480,
+          "classification": "Introduzido: registro do coletor"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::String::Storage,std::basic_string<char16_t,std::char_traits<char16_t>,std::allocator<char16_t> > >",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 3012,
+          "bytes": 457824,
+          "classification": "Misto: strings de várias origens e control blocks"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1814,
+          "bytes": 261216,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::kairo::Font,std::shared_ptr<pls::kairo::Font> &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 182400,
+          "classification": "Original: Graphics.GetFont cria Font; control block é introduzido"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(bool)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<bool __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 172800,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<std::shared_ptr<pls::game::cs_3a3d09f9e75a32d2> >::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 1200,
+          "bytes": 163200,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::kairo::CallbackFormKairo,pls::kairo::KairoCallbacks>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 158400,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::game::cs_6517d63c01870958>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 300,
+          "bytes": 103200,
+          "classification": "Original: objeto do jogo; control block é introduzido"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::List<std::shared_ptr<pls::game::cs_3a3d09f9e75a32d2> >::Storage>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 96000,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<int __cdecl(void)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 86400,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Delegate<void __cdecl(int)>::InvocationList>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 86400,
+          "classification": "Introduzido: representação nativa de delegate; origem da criação exige a pilha"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_2> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<pls::game::cs_5841296a01607078>::Storage,int &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_8> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(bool)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_5> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::Delegate<bool __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_4> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::Delegate<void __cdecl(void)>::bind<pls::game::cs_b489b0d33bb37bb8,``pls::game::configure_application'::`2'::<lambda_2>::operator()'::`2'::<lambda_3> >",
+          "file": "semantic_runtime.hpp",
+          "line": 523,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Introduzido: adaptador do bootstrap"
+        },
+        {
+          "symbol": "pls::cs::make_ref<pls::cs::Array<pls::game::cs_fbfef5c19ac20749>::Storage,int const &>",
+          "file": "semantic_runtime.hpp",
+          "line": 248,
+          "count": 600,
+          "bytes": 81600,
+          "classification": "Misto/UNKNOWN: armazenamento gerenciado, buffer e control block"
+        }
+      ]
+    }
+  }
+]

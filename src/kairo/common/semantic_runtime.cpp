@@ -1,10 +1,12 @@
 #include "semantic_runtime.hpp"
 #include "allocation_probe.hpp"
+#include "platform_condition.hpp"
 #include <condition_variable>
 #include <thread>
 #include <unordered_map>
 #include <unordered_set>
 #include <chrono>
+#include <string_view>
 
 namespace pls::cs {
 MonitorScope::MonitorScope(Ref<Object> target):target_(std::move(target)){
@@ -26,7 +28,7 @@ struct CollectorState {
 CollectorState&collector_state(){static CollectorState state;return state;}
 void wait_for_collection(CollectorState&state,std::unique_lock<std::mutex>&lock){
     const auto thread=std::this_thread::get_id();if(!state.requested||state.collector==thread)return;
-    state.parked.insert(thread);state.condition.notify_all();state.condition.wait(lock,[&]{return !state.requested;});state.parked.erase(thread);
+    state.parked.insert(thread);state.condition.notify_all();platform_condition_wait(state.condition,lock,[&]{return !state.requested;});state.parked.erase(thread);
 }
 struct CollectionPause {
     CollectorState&state;
@@ -82,7 +84,7 @@ void gc_safepoint(){
     if(state.native_blocked.count(thread))throw InvalidOperationException("Managed safepoint inside a native blocking scope");
     if(!state.requested||state.collector==thread)return;
     state.parked.insert(thread);state.condition.notify_all();
-    state.condition.wait(lock,[&]{return !state.requested;});state.parked.erase(thread);
+    platform_condition_wait(state.condition,lock,[&]{return !state.requested;});state.parked.erase(thread);
 }
 GcNativeBlockingScope::GcNativeBlockingScope(){
     auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);
@@ -97,7 +99,7 @@ GcNativeBlockingScope::~GcNativeBlockingScope(){
     if(it->second>1){--it->second;return;}
     // Keep the last depth visible while awaiting reentry. Do not erase another
     // wait's parked marker, nor let the collector wait for this native thread.
-    state.condition.wait(lock,[&]{return !state.requested;});
+    platform_condition_wait(state.condition,lock,[&]{return !state.requested;});
     state.native_blocked.erase(thread);state.condition.notify_all();
 }
 GcCollectionStats gc_last_collection(){auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);return state.last;}
@@ -109,7 +111,7 @@ void gc_collect(std::int32_t generation){
         if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Collection inside a native blocking scope");
         if(state.requested){
             const auto thread=std::this_thread::get_id();if(state.collector==thread)throw InvalidOperationException("A recursive collection is already active");
-            state.parked.insert(thread);state.condition.notify_all();state.condition.wait(lock,[&]{return !state.requested;});state.parked.erase(thread);
+            state.parked.insert(thread);state.condition.notify_all();platform_condition_wait(state.condition,lock,[&]{return !state.requested;});state.parked.erase(thread);
         }
         state.requested=true;state.collector=std::this_thread::get_id();
     }
@@ -162,6 +164,20 @@ void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<
         throw ArrayTypeMismatchException();
     }
     throw NotSupportedException("Cross-element System.Array.Copy requires measured conversion lowering");
+}
+String String::literal(const char16_t*text,std::size_t length){
+    if(!text)throw ArgumentNullException();
+    // Only compiler-emitted C# constants use this pool. Asset text and runtime
+    // strings keep their normal ownership. Views refer to immutable storage
+    // retained by the pool, so the key does not duplicate the UTF-16 payload.
+    static std::mutex mutex;
+    static std::unordered_map<std::u16string_view,Ref<Storage>> literals;
+    std::lock_guard<std::mutex> lock(mutex);
+    const std::u16string_view key(text,length);auto found=literals.find(key);
+    String result;
+    if(found!=literals.end()){result.data_=found->second;return result;}
+    result.data_=make_ref<Storage>(std::u16string(text,length));
+    literals.emplace(std::u16string_view(result.data_->value),result.data_);return result;
 }
 String String::from_utf8(const std::string& text) {
     std::u16string units;

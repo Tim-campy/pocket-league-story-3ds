@@ -16,7 +16,7 @@ pls::cs::Ref<cs_408ac5c74e5f3515> cs_8aaa473de163f748() { cs_init_408ac5c74e5f35
 }
 
 void cs_8aaa473de163f748_init(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this) {
-cs_this->cs_71dbc351ecc57982 = pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<pls::cs::Object>>::make();
+cs_this->cs_71dbc351ecc57982 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/form/HttpForm.cs:M:system.form.HttpForm.ResultData.#ctor:375",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<pls::cs::Object>>::make());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.ResultData.#ctor",game);
 {}
 }

@@ -6,10 +6,10 @@
     "tools/audit_collation_license.py": "5ba73169d1809c39681b5e4206afae5368584e7bb570462fb6a4d4899265ec48",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "tests/translator/mono_collation_edge_fixtures.cpp": "116cc94ef9de17f26cb0380c4067c702b759905d4a723ea0e078ef340b51bbe6",
-    "src/kairo/common/managed_collation.cpp": "97d6acf200c9668ba8db6fe0d829693dfe15f251c63c27002543430cf36d7778",
-    "src/kairo/common/semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
+    "src/kairo/common/managed_collation.cpp": "59b6c07ae3acc9005e751372998b2a77f85b5ca526b2211ea9db15ab256f7d76",
+    "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
-    "src/kairo/common/semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
+    "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
     "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
     "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
     "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
@@ -25,7 +25,7 @@
       "en_us_operations": {},
       "witnesses": [],
       "provider_sha256": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
-      "executable_sha256": "5acc855b9a3d55e74bebdfb2918d2b3430f37af5011406a954dd8886948c2161",
+      "executable_sha256": "815acf9a1d29843ab99ee3f283a34a7db5ed8d0b032611eb9266d47f5614d91b",
       "stdout_sha256": "299e5c22d454d7b4346b717fb6428288bd41739ca59f415dc7e12edd3c81257b"
     },
     "without_case_tables": {
@@ -55,7 +55,7 @@
         }
       ],
       "provider_sha256": "48dbaa6555d660728af2698b1388628735187d05daaad1ce5ce5efbfe28b5bdf",
-      "executable_sha256": "90dfcb665c75a293dcf4fab211ca7ce5a0d4800111e3af27c4b6228250bf322e",
+      "executable_sha256": "1538dbf873866b6287355d0a83bef81322c6cf99105e355895f8a19876ff2815",
       "stdout_sha256": "a2ceffbd008394e3f220899ec759104d12954d9f33252642d6ffadcf24694309"
     },
     "without_unassigned_bitmap": {
@@ -134,7 +134,7 @@
         }
       ],
       "provider_sha256": "88e53a6b2814e2550fc9287f9d061a013ff94f6d136f0345373ada8e10f15c9a",
-      "executable_sha256": "9b70cb348fc2c1c244df6fc3e82e79b8a2e951557b6282033c891904b5a2ba4e",
+      "executable_sha256": "2b347bb429d801d4a63c0be23a64e94fb61c5ef0855c7fb6a87f3499e9f28f46",
       "stdout_sha256": "f06d06d4dc179b830ad53fb31424cf22de9b85c5ab0416b11d04fb366cb4c406"
     },
     "without_both": {
@@ -220,7 +220,7 @@
         }
       ],
       "provider_sha256": "57c7b885c0bff8f3c63cec1cd357edd6d94e4fde2549a28df2896ca9526b3ed2",
-      "executable_sha256": "3d7a1b5fd0c8e19b923d7a833e44563a427fd38e65b9b41d3ae42d768d8e3fdd",
+      "executable_sha256": "bbe15842ff217d180d447eef4c9f8d4ae71d9a4423d48091060a5c51bfaedc74",
       "stdout_sha256": "506dcad362f23eec103e14cb9a3290d0c37fff9f93903c8ecd046327d9a6ac3a"
     }
   },

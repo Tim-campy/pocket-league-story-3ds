@@ -9,15 +9,21 @@ def main():
     p.add_argument('--apk',type=Path,required=True);p.add_argument('--snapshot',type=Path,required=True)
     p.add_argument('--run',choices=['menu','match']);p.add_argument('--skip-build',action='store_true')
     p.add_argument('--sample',action='store_true');p.add_argument('--allocations',action='store_true')
+    p.add_argument('--profile-dir',type=Path)
+    p.add_argument('--memory-categories',action='store_true')
     p.add_argument('--jobs',type=int,default=2)
     a=p.parse_args()
+    if a.profile_dir and not a.sample:raise ValueError('--profile-dir requires --sample')
+    if a.profile_dir and not a.profile_dir.resolve().is_relative_to(ROOT/'build'):raise ValueError('Profile synchronization must remain under ignored build/')
+    if a.memory_categories and (a.sample or a.allocations):raise ValueError('Memory categories require a separate run')
     if not 1<=a.jobs<=8:raise ValueError('Build jobs must be in 1..8')
     if digest(a.apk)!=APK_SHA:raise ValueError('Expected owned APK hash required')
     source=a.snapshot.resolve();validate_diagnostic_manifest(source)
-    folder=ROOT/('build/null-pc-allocations'if a.allocations else'build/null-pc');folder.mkdir(parents=True,exist_ok=True)
+    folder=ROOT/('build/null-pc-memory'if a.memory_categories else'build/null-pc-allocations'if a.allocations else'build/null-pc');folder.mkdir(parents=True,exist_ok=True)
     env=environment();probe=showincludes_prefix(folder,env)
     commands=[[str(CMAKE),'-S',str(ROOT/'tools/null-benchmark'),'-B',str(folder),'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE=Release','-DPLS_GENERATED='+str(source),'-DCMAKE_PREFIX_PATH='+str(ROOT/'build/deps/native-media'),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+probe['prefix'],'-DPLS_REPORT_ALLOCATION_FAILURE=OFF'], [str(CMAKE),'--build',str(folder),'--parallel',str(a.jobs)]]
     commands[0].append('-DPLS_ALLOCATION_PROBE='+('ON'if a.allocations else'OFF'))
+    commands[0].append('-DPLS_MEMORY_CATEGORIES='+('ON'if a.memory_categories else'OFF'))
     def snapshot():
         paths=[q for base in ['src','tools/null-benchmark','tests/kairo']for q in (ROOT/base).rglob('*')if q.is_file()and q.suffix in ['.cpp','.hpp','.inc','.txt']]
         paths.extend(q for q in source.iterdir()if q.suffix in ['.cpp','.hpp','.inc','.json'])
@@ -56,10 +62,12 @@ def main():
     assets=ROOT/'assets'
     cmd=[str(folder/'null_game.exe'),str(assets),str(preferences),str(replay),str(last),str(first),str(last)]
     if a.sample:
-        sync=ROOT/'build/null-pc'/a.run
+        profile=a.profile_dir.resolve()if a.profile_dir else ROOT/'build/null-pc'
+        profile.mkdir(parents=True,exist_ok=True)
+        sync=profile/a.run
         if any(Path(str(sync)+suffix).exists()for suffix in ['.request','.ready','.done']):raise ValueError('Sampling synchronization files already exist; use a fresh explicit collector')
         env['PLS_NULL_PROFILE_SYNC']=str(sync)
-    metadata=dict(scenario=a.run,source_attempt=number,save_attempt=prior,apk_sha256=APK_SHA,executable_sha256=digest(folder/'null_game.exe'),replay_sha256=digest(replay),command=cmd,method_instrumentation=False,rasterization=False,presentation=False,external_sampling=a.sample,allocation_probe=a.allocations,source_stamp_sha256=digest(stamp))
+    metadata=dict(scenario=a.run,source_attempt=number,save_attempt=prior,apk_sha256=APK_SHA,executable_sha256=digest(folder/'null_game.exe'),replay_sha256=digest(replay),command=cmd,method_instrumentation=False,rasterization=False,presentation=False,external_sampling=a.sample,allocation_probe=a.allocations,memory_categories=a.memory_categories,source_stamp_sha256=digest(stamp))
     (attempt/'inputs.json').write_text(json.dumps(metadata,indent=2)+'\n',encoding='utf8')
     with (attempt/'stdout.log').open('wb')as out,(attempt/'stderr.log').open('wb')as err:
         r=subprocess.run(cmd,cwd=ROOT,env=env,stdout=out,stderr=err,timeout=last/20+90)

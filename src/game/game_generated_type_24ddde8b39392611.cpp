@@ -30,7 +30,7 @@ void cs_5ff6954fb3a61a02(pls::cs::Ref<cs_24ddde8b39392611> cs_this,std::int32_t 
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.PurchaseLogView.SetLog(System.Int32,System.String,System.Boolean)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_num; pls::game::cs_require(cs_target)->cs_050458c631e7a9c0 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; pls::cs::String cs_arg1 = pls::cs::String(std::u16string(u"\x003c" u"\x0062" u"\x0072" u"\x003e" u"",4)); pls::cs::String cs_arg2 = pls::cs::String(std::u16string(u"\x000a" u"",1)); return pls::generated::cs_8857a152f901dbe0(cs_arg0,cs_arg1,cs_arg2); }());}); pls::game::cs_require(cs_target)->cs_e9473a0af87a54bc = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003c" u"\x0062" u"\x0072" u"\x003e" u"",4);return cs_literal;}()); pls::cs::String cs_arg2 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x000a" u"",1);return cs_literal;}()); return pls::generated::cs_8857a152f901dbe0(cs_arg0,cs_arg1,cs_arg2); }());}); pls::game::cs_require(cs_target)->cs_e9473a0af87a54bc = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_log; pls::game::cs_require(cs_target)->cs_04a5436ce9dc3d38 = cs_value; return cs_value; }());
 }
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include "semantic_runtime.hpp"
+#include "platform_condition.hpp"
 #include <condition_variable>
 #include <thread>
 #include <unordered_map>
@@ -75,7 +76,7 @@ public:
             // not claim to detect arbitrary user mutex/Join deadlocks.
             if(type_init_detail::would_cycle(engine,thread,owner_))return;
             engine.waits[thread]=owner_;
-            engine.changed.wait(guard,[&]{return status_!=Status::running;});
+            platform_condition_wait(engine.changed,guard,[&]{return status_!=Status::running;});
             engine.waits.erase(thread);
         }
         guard.unlock();std::exception_ptr failed;

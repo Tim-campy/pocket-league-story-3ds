@@ -14,7 +14,7 @@ std::int32_t cs_89c0d586cfe20341::GetHashCode() {return cs_d33c547c634b2bdf(std:
 static pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>> cs_110a219403a49c59_value{};
 
 void cs_init_89c0d586cfe20341(){static pls::cs::TypeInitState state;state.run("java.lang.JThread",[](){
-cs_110a219403a49c59_value = pls::cs::evaluate_type_initializer_field("F:java.lang.JThread.threadBuffer_",[&](){return pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>>::make();});
+cs_110a219403a49c59_value = pls::cs::evaluate_type_initializer_field("F:java.lang.JThread.threadBuffer_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.CurrentThread:321",pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>>::make());});
 
 });}
 
@@ -41,7 +41,7 @@ pls::cs::Ref<cs_89c0d586cfe20341> cs_bab91f84bee2e3d9(pls::cs::Ref<cs_4c145fe8f0
 void cs_bab91f84bee2e3d9_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Ref<cs_4c145fe8f008af05> v_target) {
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.#ctor(java.lang.JRunnable)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_arg0 = ([&](){auto cs_target=static_cast<pls::cs::Ref<cs_4c145fe8f008af05>>(v_target);if(!cs_target)throw pls::cs::NullReferenceException();return pls::cs::Delegate<void()>::bind(cs_target,pls::cs::box(cs_target)->managed_delegate_method_id("cs_virtual_6cb47d5f5df8e7cc"),[cs_weak=std::weak_ptr<cs_4c145fe8f008af05>(cs_target)]()->void{auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();cs_receiver->cs_virtual_6cb47d5f5df8e7cc();});}()); return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }()); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):715",([&]() { auto cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):726",([&](){auto cs_target=static_cast<pls::cs::Ref<cs_4c145fe8f008af05>>(v_target);if(!cs_target)throw pls::cs::NullReferenceException();return pls::cs::Delegate<void()>::bind(cs_target,pls::cs::box(cs_target)->managed_delegate_method_id("cs_virtual_6cb47d5f5df8e7cc"),[cs_weak=std::weak_ptr<cs_4c145fe8f008af05>(cs_target)]()->void{auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();cs_receiver->cs_virtual_6cb47d5f5df8e7cc();});}())); return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
 }
 }
 }
@@ -54,7 +54,7 @@ pls::cs::Ref<cs_89c0d586cfe20341> cs_6ac8ad3def9eea9e(pls::cs::Delegate<void()> 
 void cs_6ac8ad3def9eea9e_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Delegate<void()> v_start) {
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.#ctor(System.Threading.ThreadStart)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_arg0 = v_start; return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }()); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(System.Threading.ThreadStart):797",([&]() { auto cs_arg0 = v_start; return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
 }
 }
 }
@@ -75,7 +75,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
-pls::cs::Ref<cs_89c0d586cfe20341> v_jThread_2019 = ([&]() -> pls::cs::Ref<cs_89c0d586cfe20341> { return cs_f8a8e5cab3297e6d(); }());
+pls::cs::Ref<cs_89c0d586cfe20341> v_jThread_2019 = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.CurrentThread:2029",([&]() -> pls::cs::Ref<cs_89c0d586cfe20341> { return cs_f8a8e5cab3297e6d(); }()));
 ([&]() { auto cs_target = v_jThread_2019; auto cs_value = pls::cs::Thread::get_CurrentThread(); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = cs_110a219403a49c59(); auto cs_arg0 = v_jThread_2019; cs_receiver.Add(cs_arg0); }());});
 return v_jThread_2019;

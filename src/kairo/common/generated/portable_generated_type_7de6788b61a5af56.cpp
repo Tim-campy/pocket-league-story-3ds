@@ -98,7 +98,7 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::
 pls::cs::Ref<cs_7de6788b61a5af56> cs_908687d09e1c5f78(pls::cs::String v_s) { cs_init_7de6788b61a5af56();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JInteger.ValueOf(System.String)",kairo);
 {
-return ([&]() -> pls::cs::Ref<cs_7de6788b61a5af56> { std::int32_t cs_arg0 = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_s; return cs_2dbfed27c63e8b3d(cs_arg0); }()); return cs_6ebf505bf86af890(cs_arg0); }());
+return pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JInteger.cs:M:java.lang.JInteger.ValueOf(System.String):540",([&]() -> pls::cs::Ref<cs_7de6788b61a5af56> { std::int32_t cs_arg0 = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_s; return cs_2dbfed27c63e8b3d(cs_arg0); }()); return cs_6ebf505bf86af890(cs_arg0); }()));
 }
 }
 }

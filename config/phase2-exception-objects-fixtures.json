@@ -19,8 +19,8 @@
   "inputs": {
     "tests\\translator\\ExceptionObjectFixtures.cs": "3cf9fd172ebd131e9534376790959303060cedd808048019d52e7bf291b15ed6",
     "tests\\translator\\exception_object_fixtures.cpp": "38fff1ab25d179af5380dc68766f8e2c5aaecbba890aa3c2d188d60f583d2c79",
-    "src\\kairo\\common\\semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
-    "src\\kairo\\common\\semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
+    "src\\kairo\\common\\semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
+    "src\\kairo\\common\\semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
     "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0",
@@ -30,7 +30,7 @@
     "src\\kairo\\common\\managed_exceptions.cpp": "11a6246026a684a187b3df7e5d7210a415ccec54b381a0dedcd6b4723e340488",
     "tools\\test_exception_objects.py": "996b8cb52ba09e04d504db66a05637f10f0a782fbec51bd0d259cf561f942906",
     "src\\kairo\\common\\managed_exceptions.hpp": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b",
-    "src\\kairo\\common\\managed_type_init.hpp": "6260b413336acc69aaa0983754e14d546fc41d123acaee7843462762d956c04c",
+    "src\\kairo\\common\\managed_type_init.hpp": "feef05b9c438edba38437e06beb149baf4305b35c33a2a30d18f886083f14701",
     "src\\kairo\\common\\managed_thread.hpp": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b"
   },
   "historical_oracle": {

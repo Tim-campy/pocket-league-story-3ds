@@ -21,8 +21,8 @@ pls::cs::Ref<cs_22115ea4236d0eaa> cs_624a0425464d274a() { cs_init_22115ea4236d0e
 }
 
 void cs_624a0425464d274a_init(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this) {
-cs_this->cs_db96c721c151249c = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }());
-cs_this->cs_0ba613afa6875a18 = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }());
+cs_this->cs_db96c721c151249c = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor:168",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
+cs_this->cs_0ba613afa6875a18 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor:214",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendPlayTimeData.#ctor",game);
 {
 
@@ -36,13 +36,13 @@ pls::cs::Ref<cs_22115ea4236d0eaa> cs_d95d2ae3639f5d06(pls::cs::String v_friendId
 }
 
 void cs_d95d2ae3639f5d06_init(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this,pls::cs::String v_friendId,std::int32_t v_minute,std::int32_t v_state) {
-cs_this->cs_db96c721c151249c = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }());
-cs_this->cs_0ba613afa6875a18 = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }());
+cs_this->cs_db96c721c151249c = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32):168",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
+cs_this->cs_0ba613afa6875a18 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32):214",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = v_friendId; return pls::generated::cs_376859ff51e2fc37(cs_arg0); }());}); pls::game::cs_require(cs_target)->cs_2940d449a6dc2c58 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = v_minute; return pls::generated::cs_891849d99054b970(cs_arg0); }()); pls::game::cs_require(cs_target)->cs_db96c721c151249c = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = v_state; return pls::generated::cs_891849d99054b970(cs_arg0); }()); pls::game::cs_require(cs_target)->cs_0ba613afa6875a18 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32):403",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = v_minute; return pls::generated::cs_891849d99054b970(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_db96c721c151249c = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32):438",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = v_state; return pls::generated::cs_891849d99054b970(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_0ba613afa6875a18 = cs_value; return cs_value; }());
 }
 }
 }
@@ -53,8 +53,8 @@ void cs_9b78afe85b06708d(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this,pls::cs::Ref<
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendPlayTimeData.Deserialize(java.io.InputStream)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_50da92fdb560017f(cs_arg0); }());}); return pls::generated::cs_376859ff51e2fc37(cs_arg0); }());}); pls::game::cs_require(cs_target)->cs_2940d449a6dc2c58 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_3715f8f52a079812(cs_arg0); }());}); return pls::generated::cs_891849d99054b970(cs_arg0); }()); pls::game::cs_require(cs_target)->cs_db96c721c151249c = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_3715f8f52a079812(cs_arg0); }());}); return pls::generated::cs_891849d99054b970(cs_arg0); }()); pls::game::cs_require(cs_target)->cs_0ba613afa6875a18 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.Deserialize(java.io.InputStream):796",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_3715f8f52a079812(cs_arg0); }());}); return pls::generated::cs_891849d99054b970(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_db96c721c151249c = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.Deserialize(java.io.InputStream):851",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_3715f8f52a079812(cs_arg0); }());}); return pls::generated::cs_891849d99054b970(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_0ba613afa6875a18 = cs_value; return cs_value; }());
 }
 }
 }

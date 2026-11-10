@@ -13,7 +13,7 @@ template<typename T_T>
 void cs_946b70ecd88b233a_init(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this) {
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector\u00601.#ctor",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::List<pls::cs::Ref<pls::cs::Object>>::make(); pls::generated::cs_require(cs_target)->cs_056e387f40164bd6 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/Vector`1.cs:M:java.util.Vector`1.#ctor:855",pls::cs::List<pls::cs::Ref<pls::cs::Object>>::make()); pls::generated::cs_require(cs_target)->cs_056e387f40164bd6 = cs_value; return cs_value; }());
 }
 }
 }
@@ -33,7 +33,7 @@ template<typename T_T>
 void cs_84f04a1c6da0e1ea(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_obj) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector\u00601.AddElement(\u00600)",kairo);
 {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = pls::cs::box(v_obj); cs_receiver.Add(cs_arg0); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = pls::source_allocations::completed("generic_boxing_conversion","src/KairoLibrary/java/util/Vector`1.cs:M:java.util.Vector`1.AddElement(`0):1136",pls::cs::box(v_obj)); cs_receiver.Add(cs_arg0); }());});
 }
 }
 }
@@ -94,7 +94,7 @@ template<typename T_T>
 std::int32_t cs_3a643b1c499c91f2(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_elem) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector\u00601.IndexOf(\u00600)",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = pls::cs::box(v_elem); return cs_receiver.IndexOf(cs_arg0); }());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = pls::source_allocations::completed("generic_boxing_conversion","src/KairoLibrary/java/util/Vector`1.cs:M:java.util.Vector`1.IndexOf(`0):2056",pls::cs::box(v_elem)); return cs_receiver.IndexOf(cs_arg0); }());});
 }
 }
 }
@@ -104,7 +104,7 @@ template<typename T_T>
 void cs_b9d1ea00d1f689ef(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_obj,std::int32_t v_index) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector\u00601.InsertElementAt(\u00600,System.Int32)",kairo);
 {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = v_index; auto cs_arg1 = pls::cs::box(v_obj); cs_receiver.Insert(cs_arg0,cs_arg1); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = v_index; auto cs_arg1 = pls::source_allocations::completed("generic_boxing_conversion","src/KairoLibrary/java/util/Vector`1.cs:M:java.util.Vector`1.InsertElementAt(`0,System.Int32):2230",pls::cs::box(v_obj)); cs_receiver.Insert(cs_arg0,cs_arg1); }());});
 }
 }
 }
@@ -143,7 +143,7 @@ template<typename T_T>
 bool cs_f00b3f34dd8da63e(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_obj) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector\u00601.RemoveElement(\u00600)",kairo);
 {
-std::int32_t v_num_2774 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = pls::cs::box(v_obj); return cs_receiver.IndexOf(cs_arg0); }());});
+std::int32_t v_num_2774 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_arg0 = pls::source_allocations::completed("generic_boxing_conversion","src/KairoLibrary/java/util/Vector`1.cs:M:java.util.Vector`1.RemoveElement(`0):2794",pls::cs::box(v_obj)); return cs_receiver.IndexOf(cs_arg0); }());});
 if (([&]() -> bool { auto cs_left = v_num_2774; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left == cs_right); }())) {
 return false;
 }
@@ -168,7 +168,7 @@ template<typename T_T>
 void cs_221133265c339075(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,T_T v_obj,std::int32_t v_index) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector\u00601.SetElementAt(\u00600,System.Int32)",kairo);
 {
-([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_index = v_index; auto cs_value = pls::cs::box(v_obj); cs_target.set_Item(cs_index,cs_value); return cs_value; }());
+([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }()); auto cs_index = v_index; auto cs_value = pls::source_allocations::completed("generic_boxing_conversion","src/KairoLibrary/java/util/Vector`1.cs:M:java.util.Vector`1.SetElementAt(`0,System.Int32):3176",pls::cs::box(v_obj)); cs_target.set_Item(cs_index,cs_value); return cs_value; }());
 }
 }
 }

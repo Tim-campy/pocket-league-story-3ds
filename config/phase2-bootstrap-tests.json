@@ -104,11 +104,11 @@
     "src/kairo/common/forms.cpp": "d5b2c1bc51b314377df1ac9d6831d57c7346b799ebd818854decafcc2b97afaa",
     "src/kairo/common/canvas.cpp": "0d132bf3ab87ccee85f9523e621ecd8f23ef245d98bb74f7758296826da10981",
     "src/kairo/common/graphics.cpp": "9e7221a6e3cd8f5078384b204ec2e531ad7c5ae1172ade9b23c3391721cb35f0",
-    "src/kairo/common/mesh.cpp": "5b05875ff81fa14c7fdbe700b858ff5fc2f5614b3d2a336a9fe9aec5ee17b637",
+    "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
     "src/kairo/common/image_lifetime.cpp": "ced1e9fd10d1c8b973e6e380f6436357a2409dec7ad7fc422c328c71b8ede46e",
     "src/kairo/common/font.cpp": "65bcba00100cd1fdebf7d1a46d48a106e6d28ea226f7615071907eeff4b9fd91",
     "src/kairo/common/sound.cpp": "79a10a4779c11383dede65ed97c32af1f6ab9f001cae45ca065207bd977adbc5",
-    "src/kairo/common/semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
+    "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "src/kairo/common/asset_catalog.cpp": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7",
     "src/kairo/platform/sdl/input.cpp": "98895936ed7906c7cf71c5edfcfe3fe54001d0bdd0dcd75e1f092059528ca139",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
@@ -122,12 +122,12 @@
     "src/kairo/api/forms.hpp": "a6acf91d89e5a9502b11d66246f66082ef760b3828a2fa3fe6ae8cdce1f05bbb",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/canvas.hpp": "bbb012ebfc98d48b7b475c8ec759992c838e61dec6be32ffc3a649b43b52edcc",
-    "src/kairo/api/application.hpp": "254281540812339895b95ca4c6c47a886efa5b24005f8501483e87e77c5fc965",
+    "src/kairo/api/application.hpp": "441d6543843272b0d42911a243d975bd1dad2add43282cb417d353d18bd5708d",
     "src/kairo/api/graphics.hpp": "9d9d9be7e142fb469ed74a06c30bc12d35b838142843e0768e7e8fb4f136c7c1",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/sound.hpp": "ee70dac49c71807a81095aaa7f124b2e083dba2aea1d8fd15c0888130fd7acd0",
     "src/kairo/api/input.hpp": "021a99799933471069df42f904fbc58d0c9a5cb5ef519f138c461396af839f71",
-    "src/kairo/common/semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
+    "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -145,7 +145,7 @@
   ],
   "native_executable": {
     "path": "build/bootstrap-tests/bootstrap-fixtures.exe",
-    "sha256": "0ad2107c401d4918c5bdef06ade8f735633aec75c027264cd5fd03122f7a68f3"
+    "sha256": "cac72f5099907347d5dc67fab8323f3905befa29d5eaefe53f93bb542f7a0d2f"
   },
   "limits": [
     "Own collaborators with the exact original Awake body prove callback ordering, optional-resource exception behavior and ownership only.",

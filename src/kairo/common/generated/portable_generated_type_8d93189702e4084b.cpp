@@ -23,7 +23,7 @@ void cs_606370a03155bf34_init(pls::cs::Ref<cs_8d93189702e4084b> cs_this,pls::cs:
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.DataInputStream.#ctor(java.io.InputStream)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_value = v_stream; return cs_010114ded9156773(cs_value); }()); pls::generated::cs_require(cs_target)->cs_e65a8825426ed7a3 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_arg0 = ([&]() { auto cs_value = v_stream; return cs_010114ded9156773(cs_value); }()); return pls::cs::make_ref<pls::cs::BinaryReader>(cs_arg0); }()); pls::generated::cs_require(cs_target)->cs_783a5dc8c7385bc4 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/io/DataInputStream.cs:M:java.io.DataInputStream.#ctor(java.io.InputStream):257",([&]() { auto cs_arg0 = ([&]() { auto cs_value = v_stream; return cs_010114ded9156773(cs_value); }()); return pls::cs::make_ref<pls::cs::BinaryReader>(cs_arg0); }())); pls::generated::cs_require(cs_target)->cs_783a5dc8c7385bc4 = cs_value; return cs_value; }());
 }
 }
 }

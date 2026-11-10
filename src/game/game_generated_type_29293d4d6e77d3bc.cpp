@@ -40,7 +40,7 @@ void cs_022bc790768beecd(pls::cs::Ref<cs_29293d4d6e77d3bc> cs_this) { cs_init_29
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.MapObject.Init",game);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))); pls::game::cs_require(cs_target)->cs_1f0b9be8292dcf69 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/MapObject.cs:M:game.MapObject.Init:315",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)))); pls::game::cs_require(cs_target)->cs_1f0b9be8292dcf69 = cs_value; return cs_value; }());
 }
 }
 }

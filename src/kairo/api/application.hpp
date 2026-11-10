@@ -1,6 +1,7 @@
 #pragma once
 #include "semantic_runtime.hpp"
 #include "managed_shared_field.hpp"
+#include "platform_condition.hpp"
 #include "system.hpp"
 #include <thread>
 #include <future>
@@ -126,14 +127,14 @@ public:
         if(CheckUiThread()){try{method();}catch(const cs::Exception&){if(wait)throw;}return;}
         auto task=std::make_shared<std::packaged_task<void()>>([method]{method();});auto done=task->get_future();
         {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
-        if(wait){{cs::GcNativeBlockingScope parked;done.wait();}done.get();}
+        if(wait){{cs::GcNativeBlockingScope parked;cs::platform_future_wait(done);}done.get();}
     }
     cs::Ref<cs::Object> RunOnUiThread(UIMethod method,bool wait=false){
         if(CheckUiThread()){try{return method();}catch(const cs::Exception&){if(wait)throw;return {};}}
         auto task=std::make_shared<std::packaged_task<cs::Ref<cs::Object>()>>([method]{return method();});auto done=task->get_future();
         {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
         if(!wait)return nullptr;
-        {cs::GcNativeBlockingScope parked;done.wait();}return done.get();
+        {cs::GcNativeBlockingScope parked;cs::platform_future_wait(done);}return done.get();
     }
     bool RunOnUpdate(cs::Delegate<void()> method){if(updating_){method();return true;}std::lock_guard<std::mutex> lock(tasks_mutex_);update_tasks_.push_back([method]{method();});return false;}
     void host_configure(std::int32_t w,std::int32_t h,cs::String data_path,std::function<void()> terminate){screen_width_=w;screen_height_=h;data_path_=std::move(data_path);termination_handler_=std::move(terminate);if(!orientation_reader_)orientation_reader_=[this]{return screen_width_>screen_height_?WindowOrientation::landscape_left:WindowOrientation::portrait;};}

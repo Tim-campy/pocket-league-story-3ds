@@ -16,12 +16,12 @@ pls::cs::Ref<cs_672083a5397f2913> cs_0fb4b76eec65aa76() { cs_init_672083a5397f29
 }
 
 void cs_0fb4b76eec65aa76_init(pls::cs::Ref<cs_672083a5397f2913> cs_this) {
-cs_this->cs_892fee32e48ccc2a = ([&](){auto cs_initial_array_268=pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::make(1);cs_initial_array_268.at(0)=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)));return cs_initial_array_268;}());
-cs_this->cs_46be5d13750c48b7 = pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)));
-cs_this->cs_af8004110cb79aa4 = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)));
-cs_this->cs_adf957d75456082a = pls::cs::Array<std::int16_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)));
-cs_this->cs_868c2bf8c835789a = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull)));
-cs_this->cs_13421d3977fbd718 = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull)));
+cs_this->cs_892fee32e48ccc2a = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:213",([&](){auto cs_initial_array_268=pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::make(1);cs_initial_array_268.at(0)=pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:230",pls::cs::Array<pls::cs::Array<std::int32_t>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));return cs_initial_array_268;}()));
+cs_this->cs_46be5d13750c48b7 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:279",pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
+cs_this->cs_af8004110cb79aa4 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:340",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
+cs_this->cs_adf957d75456082a = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:398",pls::cs::Array<std::int16_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
+cs_this->cs_868c2bf8c835789a = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:447",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull))));
+cs_this->cs_13421d3977fbd718 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.WorkStaticValue.#ctor:495",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull))));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Seb.WorkStaticValue.#ctor",kairo);
 {}
 }

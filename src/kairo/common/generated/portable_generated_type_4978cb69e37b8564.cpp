@@ -5,7 +5,7 @@ namespace pls::generated {
 static pls::cs::Array<std::uint8_t> cs_1c11d615d9916ed8_value{};
 
 void cs_init_4978cb69e37b8564(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Encrypter",[](){
-cs_1c11d615d9916ed8_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.Encrypter.key_",[&](){return pls::cs::Array<std::uint8_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)));});
+cs_1c11d615d9916ed8_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.Encrypter.key_",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/Encrypter.cs:M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[]):101",pls::cs::Array<std::uint8_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))));});
 
 });}
 

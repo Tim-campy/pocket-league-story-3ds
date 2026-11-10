@@ -14,6 +14,7 @@
 #include "kairo/platform/sdl/globalization.hpp"
 #include "diagnostic_keys.hpp"
 #include "allocation_probe.hpp"
+#include "native_allocation_sites.hpp"
 #include <fstream>
 #include <iostream>
 #include <chrono>
@@ -38,6 +39,29 @@ static_assert(sizeof(void*)==4 && sizeof(std::int32_t)==4 && sizeof(float)==4 &&
 #endif
 namespace {
 using Clock=std::chrono::steady_clock;
+void memory_categories(const char*stage){
+#if defined(PLS_MEMORY_CATEGORIES)
+    using Range=std::pair<std::uintptr_t,std::uintptr_t>;
+    std::array<std::vector<Range>,4> ranges;
+    auto visit=[&](const void*pointer,std::size_t size,pls::memory::Category category){
+        if(!pointer||!size)return;
+        const auto begin=reinterpret_cast<std::uintptr_t>(pointer);
+        if(size>std::numeric_limits<std::uintptr_t>::max()-begin)throw std::overflow_error("Memory range overflow");
+        ranges.at(static_cast<std::size_t>(category)).push_back({begin,begin+size});
+    };
+    pls::cs::visit_managed_memory(visit,[&]{pls::kairo::visit_font_memory(visit);});
+    std::array<std::uint64_t,4> bytes{};
+    for(std::size_t i=0;i<ranges.size();++i){
+        auto&items=ranges[i];std::sort(items.begin(),items.end());std::uintptr_t end=0;
+        for(const auto&item:items){if(item.second>end)bytes[i]+=item.second-std::max(item.first,end);end=std::max(end,item.second);}
+    }
+    std::fprintf(stderr,"PLS_NULL_KNOWN_MEMORY stage=%s textures=%llu audio=%llu fonts=%llu managed_heap=%llu meaning=union_of_registered_ranges_not_allocator_or_RSS\n",stage,
+        static_cast<unsigned long long>(bytes[0]),static_cast<unsigned long long>(bytes[1]),
+        static_cast<unsigned long long>(bytes[2]),static_cast<unsigned long long>(bytes[3]));std::fflush(stderr);
+#else
+    (void)stage;
+#endif
+}
 void memory_report(){
     const auto registry=pls::cs::gc_registry_stats();
     std::fprintf(stderr,"PLS_NULL_GC_REGISTRY entries=%llu expired=%llu\n",static_cast<unsigned long long>(registry.entries),static_cast<unsigned long long>(registry.expired));std::fflush(stderr);
@@ -91,6 +115,13 @@ int main(int argc,char**argv){
         argc=7;argv=pointers.data();
     }
     if(!std::freopen("sdmc:/pls-benchmark/stdout.log","w",stdout)||!std::freopen("sdmc:/pls-benchmark/stderr.log","w",stderr))return 2;
+    bool new_model=false;u8 model=255;
+    const auto new_result=APT_CheckNew3DS(&new_model);
+    const auto config_result=cfguInit();
+    const auto model_result=R_SUCCEEDED(config_result)?CFGU_GetSystemModel(&model):config_result;
+    if(R_SUCCEEDED(config_result))cfguExit();
+    std::fprintf(stdout,"PLS_NULL_ARM_MODEL model=%u model_result=%ld new3ds=%d new3ds_result=%ld speedup_requested=1 clock=system_tick\n",unsigned(model),long(model_result),int(new_model),long(new_result));
+    std::fflush(stdout);
 #endif
     if(argc!=7){std::cerr<<"Expected assets preferences replay total_frames sample_first sample_last\n";return 2;}
     try{
@@ -115,6 +146,7 @@ int main(int argc,char**argv){
         app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::portrait;});app->host_orientation_reader([&]{return orientation;});app->host_orientation_writer([&](auto v){orientation=v;});app->host_fullscreen_writer([](bool){});
         std::cerr<<"PLS_NULL_STAGE=bootstrap\n";std::cerr.flush();
         pls::game::configure_application(app);app->host_start();
+        memory_categories("after_bootstrap");
         std::cerr<<"PLS_NULL_STAGE=frames\n";std::cerr.flush();
         struct Sample{std::uint64_t frame,cpu,wall,begin,end;int form;pls::allocation_probe::Snapshot memory;};std::vector<Sample>samples;samples.reserve(last-first+1);
 #if defined(_WIN32)
@@ -124,23 +156,33 @@ int main(int argc,char**argv){
         pls::allocation_probe::enabled=true;
 #endif
         for(std::uint64_t completed=0;completed<total&&!app->IsTermination();++completed){
+            if(completed+1==first)memory_categories("before_window");
+            // Startup diagnosis only, outside the measured window and timer.
+            if(completed+1<first&&completed%60==0){std::fprintf(stderr,"PLS_NULL_WARMUP_BEGIN=%llu\n",static_cast<unsigned long long>(completed+1));std::fflush(stderr);}
             if(completed+1==first)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC")){
                 std::ofstream(std::string(sync)+".request")<<"ready\n";const auto deadline=Clock::now()+std::chrono::seconds(60);
                 while(!std::filesystem::exists(std::string(sync)+".ready")){if(Clock::now()>deadline)throw std::runtime_error("External sampling collector did not start");std::this_thread::sleep_for(std::chrono::milliseconds(20));}
             }
+            pls::allocation_sites::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);
+            pls::source_allocations::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);
             const auto before=pls::allocation_probe::snapshot();const auto start=Clock::now();const auto cpu=cpu_ns();const auto begin=qpc();pls::cs::gc_safepoint();
             for(const auto&key:inputs)if(key.frame==completed){const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;canvas->KeyClick(code);}
             app->host_update();pls::kairo::Offscreen::RenderAll();if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error("Null offscreen error: "+pls::kairo::Offscreen::LastRenderError());
             sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();
             const auto end=qpc();const auto elapsed_cpu=cpu_ns()-cpu;const auto elapsed_wall=std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();
             auto after=pls::allocation_probe::snapshot();after.allocations-=before.allocations;after.bytes-=before.bytes;after.collections-=before.collections;after.collection_ns-=before.collection_ns;
+            pls::allocation_sites::window(-1);
+            pls::source_allocations::window(-1);
             if(completed+1>=first&&completed+1<=last){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;samples.push_back({completed+1,elapsed_cpu,std::uint64_t(elapsed_wall),begin,end,form?form->GetId():-1,after});}
             if(completed+1==first||completed+1==last){std::cerr<<"PLS_NULL_WINDOW="<<(completed+1)<<"\n";std::cerr.flush();}
+            if(completed+1<first&&completed%60==0){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;std::fprintf(stderr,"PLS_NULL_WARMUP_END=%llu form=%d\n",static_cast<unsigned long long>(completed+1),form?form->GetId():-1);std::fflush(stderr);}
             if(completed+1==last)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC"))std::ofstream(std::string(sync)+".done")<<"done\n";
             pls::kairo::UnityApplication::pace(start);
         }
         for(const auto&s:samples)std::cout<<"PLS_NULL_FRAME={\"frame\":"<<s.frame<<",\"cpu_ns\":"<<s.cpu<<",\"wall_ns\":"<<s.wall<<",\"form_id\":"<<s.form<<",\"cpp_allocations\":"<<s.memory.allocations<<",\"cpp_allocation_bytes\":"<<s.memory.bytes<<",\"collections\":"<<s.memory.collections<<",\"collection_ns\":"<<s.memory.collection_ns<<",\"longest_collection_ns\":"<<s.memory.longest_collection_ns<<"}\n";
         for(const auto&s:samples)std::cout<<"PLS_NULL_QPC="<<s.frame<<","<<s.begin<<","<<s.end<<"\n";
-        memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==last-first+1?0:3;
+        pls::allocation_sites::dump(stdout);
+        pls::source_allocations::dump(stdout);
+        memory_categories("after_window");memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==last-first+1?0:3;
     }catch(const pls::cs::Exception&e){memory_report();std::cerr<<e.what()<<'\n';return 1;}catch(const std::exception&e){memory_report();std::cerr<<e.what()<<'\n';return 1;}
 }

@@ -33,8 +33,8 @@ static pls::cs::Array<std::int32_t> cs_864b76c890b6c7c8_value{};
 static pls::cs::Array<std::int32_t> cs_6ad190858ba4c086_value{};
 
 void cs_init_0f74b892eb1cdde4(){static pls::cs::TypeInitState state;state.run("game.TBall",[](){
-cs_6ad190858ba4c086_value = pls::cs::evaluate_type_initializer_field("F:game.TBall.camera_pos_shadow",[&](){return pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)));});
-cs_864b76c890b6c7c8_value = pls::cs::evaluate_type_initializer_field("F:game.TBall.camera_pos_dribble",[&](){return pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)));});
+cs_6ad190858ba4c086_value = pls::cs::evaluate_type_initializer_field("F:game.TBall.camera_pos_shadow",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TBall.cs:M:game.TBall.#ctor(System.Int32):392",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
+cs_864b76c890b6c7c8_value = pls::cs::evaluate_type_initializer_field("F:game.TBall.camera_pos_dribble",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TBall.cs:M:game.TBall.#ctor(System.Int32):449",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 
 });}
 
@@ -48,8 +48,8 @@ pls::cs::Ref<cs_0f74b892eb1cdde4> cs_cc3d747d1ea58bfa(std::int32_t v_tId) { cs_i
 }
 
 void cs_cc3d747d1ea58bfa_init(pls::cs::Ref<cs_0f74b892eb1cdde4> cs_this,std::int32_t v_tId) {
-cs_this->cs_409f13300b9da5ca = ([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }());
-cs_this->cs_7caf816b84606c2b = ([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }());
+cs_this->cs_409f13300b9da5ca = pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/TBall.cs:M:game.TBall.#ctor(System.Int32):489",([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }()));
+cs_this->cs_7caf816b84606c2b = pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/TBall.cs:M:game.TBall.#ctor(System.Int32):544",([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }()));
 ([&]() { cs_448c380432b8df0e_init(std::static_pointer_cast<cs_86b804989f2a95bb>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.TBall.#ctor(System.Int32)",game);
 {

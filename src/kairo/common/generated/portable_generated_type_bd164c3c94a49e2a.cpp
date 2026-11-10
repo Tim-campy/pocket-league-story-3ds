@@ -86,7 +86,7 @@ pls::cs::Ref<cs_bd164c3c94a49e2a> cs_322ad21e82d893d1(pls::cs::Ref<cs_bd164c3c94
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureNumber.SetLong(System.Int64)",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_1e58df81cbed8f35()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_a0cf9aef6a251bfd> { return cs_783c2dc4bd688739(); }()); cs_1e58df81cbed8f35() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/SecureNumber.cs:M:kairo.unity.util.SecureNumber.SetLong(System.Int64):521",([&]() -> pls::cs::Ref<cs_a0cf9aef6a251bfd> { return cs_783c2dc4bd688739(); }())); cs_1e58df81cbed8f35() = cs_value; return cs_value; }());
 }
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int64_t>(([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x22ull)); auto cs_right = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_a0cf9aef6a251bfd>>(cs_1e58df81cbed8f35()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_1811bb4f9e389c4b(cs_receiver); }()); return (cs_left | cs_right); }())); pls::generated::cs_require(cs_target)->cs_7e5e9d5195f577e0 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_value; pls::generated::cs_require(cs_target)->cs_83418f44729261df = cs_value; return cs_value; }());

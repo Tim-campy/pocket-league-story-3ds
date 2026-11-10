@@ -21,7 +21,7 @@ void cs_init_1ff3292665c8e0c4(){static pls::cs::TypeInitState state;state.run("k
 pls::cs::String cs_d7ec43a7abb0b748(pls::cs::String v_text) { cs_init_1ff3292665c8e0c4();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.Escape(System.String)",kairo);
 {
-pls::cs::Ref<pls::cs::StringBuilder> v_stringBuilder_3305 = ([&]() { return pls::cs::make_ref<pls::cs::StringBuilder>(); }());
+pls::cs::Ref<pls::cs::StringBuilder> v_stringBuilder_3305 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Escape(System.String):3321",([&]() { return pls::cs::make_ref<pls::cs::StringBuilder>(); }()));
 std::int32_t v_num_3349 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
 while (([&]() -> bool { auto cs_left = v_num_3349; auto cs_right = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_text; return cs_8eed6765a32617b7(cs_arg0); }()); return (cs_left < cs_right); }())) {
 std::int32_t v_num2_3402 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_arg0 = v_text; auto cs_arg1 = char16_t(92); auto cs_arg2 = v_num_3349; return pls::generated::cs_index_char2(cs_arg0,cs_arg1,cs_arg2); }());});
@@ -51,16 +51,16 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::
 pls::cs::String cs_b1be14b163e17dea(pls::cs::String v_value,std::int32_t v_len,char16_t v_padding,bool v_left) { cs_init_1ff3292665c8e0c4();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean)",kairo);
 {
-pls::cs::String v_text_4289 = pls::cs::String(std::u16string(u"",0));
+pls::cs::String v_text_4289 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}());
 std::int32_t v_num_4307 = (([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { char16_t cs_arg0 = v_padding; return cs_f8c13f883911de4b(cs_arg0); }()); return cs_a8e45b955b78e04d(cs_arg0); }())).length();
 std::int32_t v_num2_4364 = ([&]() -> std::int32_t { auto cs_left = v_len; auto cs_right = (([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = v_value; return cs_a8e45b955b78e04d(cs_arg0); }())).length(); return pls::cs::sub_i32(cs_left,cs_right); }());
 for (std::int32_t v_i_4414 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_4414; auto cs_right = v_num2_4364; return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_4414; auto cs_rhs = v_num_4307; auto cs_value = pls::cs::add_i32(cs_old,cs_rhs); v_i_4414 = cs_value; return cs_value; }())) {
-([&]() { auto cs_old = v_text_4289; auto cs_rhs = v_padding; auto cs_value = pls::cs::String::concat(cs_old,pls::generated::cs_char_string(cs_rhs)); v_text_4289 = cs_value; return cs_value; }());
+pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean):4450",([&]() { auto cs_old = v_text_4289; auto cs_rhs = v_padding; auto cs_value = pls::cs::String::concat(cs_old,pls::generated::cs_char_string(cs_rhs)); v_text_4289 = cs_value; return cs_value; }()));
 }
 if (v_left) {
-return ([&]() { auto cs_left = v_value; auto cs_right = v_text_4289; return pls::cs::String::concat(cs_left,cs_right); }());
+return pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean):4501",([&]() { auto cs_left = v_value; auto cs_right = v_text_4289; return pls::cs::String::concat(cs_left,cs_right); }()));
 }
-return ([&]() { auto cs_left = v_text_4289; auto cs_right = v_value; return pls::cs::String::concat(cs_left,cs_right); }());
+return pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.FormatString(System.String,System.Int32,System.Char,System.Boolean):4530",([&]() { auto cs_left = v_text_4289; auto cs_right = v_value; return pls::cs::String::concat(cs_left,cs_right); }()));
 }
 }
 }
@@ -88,7 +88,7 @@ pls::cs::String cs_4cdefdb4e661cd56(pls::cs::Array<std::uint8_t> v_bytes) { cs_i
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.GetCode(System.Byte[])",kairo);
 {
 std::uint8_t v_recoveredPdbConstByte_6203 = pls::cs::cast_integral<std::uint8_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)));
-pls::cs::Array<pls::cs::String> v_array_6242 = ([&](){auto cs_initial_array_517=pls::cs::Array<pls::cs::String>::make(2);cs_initial_array_517.at(0)=pls::cs::String(std::u16string(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5));cs_initial_array_517.at(1)=pls::cs::String(std::u16string(u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9));return cs_initial_array_517;}());
+pls::cs::Array<pls::cs::String> v_array_6242 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.GetCode(System.Byte[]):6250",([&](){auto cs_initial_array_517=pls::cs::Array<pls::cs::String>::make(2);cs_initial_array_517.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5);return cs_literal;}());cs_initial_array_517.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9);return cs_literal;}());return cs_initial_array_517;}()));
 if (([&]() -> bool { auto cs_left = (v_bytes).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
 return ([&]() { auto cs_array = v_array_6242; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }());
 }
@@ -116,7 +116,7 @@ for (std::int32_t v_k_6802 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(
 if (((([&]() -> bool { auto cs_left = v_num2_6743; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x6ull)); return (cs_left <= cs_right); }()) || ([&]() -> bool { auto cs_left = v_num2_6743; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7full)); return (cs_left == cs_right); }())) || ([&]() -> bool { auto cs_left = v_num2_6743; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull)); return (cs_left == cs_right); }()))) {
 ([&]() { auto cs_value = true; v_flag2_6775 = cs_value; return cs_value; }());
 if (((([&]() -> bool { auto cs_left = v_num2_6743; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }()) && ([&]() -> bool { auto cs_left = v_k_6802; auto cs_right = ([&]() -> std::int32_t { auto cs_left = v_num_6716; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return (cs_left < cs_right); }())) && ([&]() -> bool { auto cs_left = (([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_array = v_bytes; auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_k_6802; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); return cs_array.get_Item(cs_index); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull)); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7full)); return (cs_left <= cs_right); }()))) {
-return pls::cs::String(std::u16string(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0031" u"\x0036" u"",6));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0031" u"\x0036" u"",6);return cs_literal;}());
 }
 }
 }
@@ -132,7 +132,7 @@ break;
 }
 }
 if (v_flag3_7094) {
-return pls::cs::String(std::u16string(u"\x0041" u"\x0053" u"\x0043" u"\x0049" u"\x0049" u"",5));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0041" u"\x0053" u"\x0043" u"\x0049" u"\x0049" u"",5);return cs_literal;}());
 }
 for (std::int32_t v_m_7314 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_m_7314; auto cs_right = ([&]() -> std::int32_t { auto cs_left = v_num_6716; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_m_7314; auto cs_new = pls::cs::add_i32(cs_old,1); v_m_7314 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_value = ([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_array = v_bytes; auto cs_index = v_m_7314; return cs_array.get_Item(cs_index); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull)); return (cs_left & cs_right); }()); v_num2_6743 = cs_value; return cs_value; }());
@@ -142,24 +142,24 @@ if (([&]() -> bool { auto cs_left = v_num2_6743; auto cs_right = pls::cs::cast_i
 continue;
 }
 if ((([&]() -> bool { auto cs_left = v_num3_6749; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x24ull)); return (cs_left == cs_right); }()) && ([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x40ull)); return (cs_left == cs_right); }()))) {
-return pls::cs::String(std::u16string(u"\x004a" u"\x0049" u"\x0053" u"",3));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004a" u"\x0049" u"\x0053" u"",3);return cs_literal;}());
 }
 if ((([&]() -> bool { auto cs_left = v_num3_6749; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x24ull)); return (cs_left == cs_right); }()) && ([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x42ull)); return (cs_left == cs_right); }()))) {
-return pls::cs::String(std::u16string(u"\x004a" u"\x0049" u"\x0053" u"",3));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004a" u"\x0049" u"\x0053" u"",3);return cs_literal;}());
 }
 if ((([&]() -> bool { auto cs_left = v_num3_6749; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x28ull)); return (cs_left == cs_right); }()) && ((([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x42ull)); return (cs_left == cs_right); }()) || ([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4aull)); return (cs_left == cs_right); }()))))) {
-return pls::cs::String(std::u16string(u"\x004a" u"\x0049" u"\x0053" u"",3));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004a" u"\x0049" u"\x0053" u"",3);return cs_literal;}());
 }
 if ((([&]() -> bool { auto cs_left = v_num3_6749; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x28ull)); return (cs_left == cs_right); }()) && ([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x49ull)); return (cs_left == cs_right); }()))) {
-return pls::cs::String(std::u16string(u"\x004a" u"\x0049" u"\x0053" u"",3));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004a" u"\x0049" u"\x0053" u"",3);return cs_literal;}());
 }
 if (([&]() -> bool { auto cs_left = v_m_7314; auto cs_right = ([&]() -> std::int32_t { auto cs_left = v_num_6716; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return (cs_left < cs_right); }())) {
 ([&]() { auto cs_value = ([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_array = v_bytes; auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_m_7314; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); return pls::cs::add_i32(cs_left,cs_right); }()); return cs_array.get_Item(cs_index); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull)); return (cs_left & cs_right); }()); v_num5_6761 = cs_value; return cs_value; }());
 if (((([&]() -> bool { auto cs_left = v_num3_6749; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x24ull)); return (cs_left == cs_right); }()) && ([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x28ull)); return (cs_left == cs_right); }())) && ([&]() -> bool { auto cs_left = v_num5_6761; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x44ull)); return (cs_left == cs_right); }()))) {
-return pls::cs::String(std::u16string(u"\x004a" u"\x0049" u"\x0053" u"",3));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004a" u"\x0049" u"\x0053" u"",3);return cs_literal;}());
 }
 if ((((((([&]() -> bool { auto cs_left = v_m_7314; auto cs_right = ([&]() -> std::int32_t { auto cs_left = v_num_6716; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return (cs_left < cs_right); }()) && ([&]() -> bool { auto cs_left = v_num3_6749; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x26ull)); return (cs_left == cs_right); }())) && ([&]() -> bool { auto cs_left = v_num4_6755; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x40ull)); return (cs_left == cs_right); }())) && ([&]() -> bool { auto cs_left = v_num5_6761; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1bull)); return (cs_left == cs_right); }())) && ([&]() -> bool { auto cs_left = (([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_array = v_bytes; auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_m_7314; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); return pls::cs::add_i32(cs_left,cs_right); }()); return cs_array.get_Item(cs_index); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull)); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x24ull)); return (cs_left == cs_right); }())) && ([&]() -> bool { auto cs_left = (([&]() -> std::int32_t { auto cs_left = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_array = v_bytes; auto cs_index = ([&]() -> std::int32_t { auto cs_left = v_m_7314; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull)); return pls::cs::add_i32(cs_left,cs_right); }()); return cs_array.get_Item(cs_index); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull)); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x42ull)); return (cs_left == cs_right); }()))) {
-return pls::cs::String(std::u16string(u"\x004a" u"\x0049" u"\x0053" u"",3));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004a" u"\x0049" u"\x0053" u"",3);return cs_literal;}());
 }
 }
 }
@@ -202,8 +202,8 @@ if ((((((([&]() -> bool { auto cs_left = pls::cs::cast_integral<std::int32_t>(st
 }
 }
 }
-pls::cs::Array<std::int32_t> v_array2_9360 = ([&](){auto cs_initial_array_518=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_518.at(0)=([&]() -> std::int32_t { auto cs_left = v_num8_8114; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xaull)); return pls::cs::mul_i32(cs_left,cs_right); }());cs_initial_array_518.at(1)=([&]() -> std::int32_t { auto cs_left = v_num6_8080; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xaull)); return pls::cs::mul_i32(cs_left,cs_right); }());return cs_initial_array_518;}());
-pls::cs::Array<pls::cs::String> v_array3_9432 = ([&](){auto cs_initial_array_519=pls::cs::Array<pls::cs::String>::make(2);cs_initial_array_519.at(0)=pls::cs::String(std::u16string(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5));cs_initial_array_519.at(1)=pls::cs::String(std::u16string(u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9));return cs_initial_array_519;}());
+pls::cs::Array<std::int32_t> v_array2_9360 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.GetCode(System.Byte[]):9369",([&](){auto cs_initial_array_518=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_518.at(0)=([&]() -> std::int32_t { auto cs_left = v_num8_8114; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xaull)); return pls::cs::mul_i32(cs_left,cs_right); }());cs_initial_array_518.at(1)=([&]() -> std::int32_t { auto cs_left = v_num6_8080; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xaull)); return pls::cs::mul_i32(cs_left,cs_right); }());return cs_initial_array_518;}()));
+pls::cs::Array<pls::cs::String> v_array3_9432 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.GetCode(System.Byte[]):9441",([&](){auto cs_initial_array_519=pls::cs::Array<pls::cs::String>::make(2);cs_initial_array_519.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5);return cs_literal;}());cs_initial_array_519.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9);return cs_literal;}());return cs_initial_array_519;}()));
 if (([&]() -> bool { auto cs_left = cs_fe98f159e1f0c2a7(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return (cs_left == cs_right); }())) {
 ([&]() { auto cs_array = v_array2_9360; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_old = cs_array.at(cs_index); auto cs_new = pls::cs::add_i32(cs_old,1); cs_array.at(cs_index) = cs_new; return cs_old; }());
 } else if (([&]() -> bool { auto cs_left = cs_fe98f159e1f0c2a7(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); return (cs_left == cs_right); }())) {
@@ -264,7 +264,7 @@ return ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = v_byte
 pls::cs::Array<pls::cs::String> cs_38c511d0555671a7(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream,bool v_zeroSkip) { cs_init_1ff3292665c8e0c4();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.LoadStringArray(java.io.InputStream,System.Boolean)",kairo);
 {
-return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_328fe8bffc5f5352(cs_arg0); }()); return cs_0062608f682073ef(cs_arg0); }()); pls::cs::String cs_arg1 = pls::cs::String(std::u16string(u"\x000a" u"",1)); bool cs_arg2 = false; bool cs_arg3 = v_zeroSkip; bool cs_arg4 = false; return cs_0f7a7a73dac52ca4(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
+return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_328fe8bffc5f5352(cs_arg0); }()); return cs_0062608f682073ef(cs_arg0); }()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x000a" u"",1);return cs_literal;}()); bool cs_arg2 = false; bool cs_arg3 = v_zeroSkip; bool cs_arg4 = false; return cs_0f7a7a73dac52ca4(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 }
 }
 }
@@ -306,7 +306,7 @@ std::int32_t v_num_567 = pls::diagnostic::api_call([&]() -> decltype(auto) {retu
 if (([&]() -> bool { auto cs_left = v_num_567; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left == cs_right); }())) {
 break;
 }
-([&]() { auto cs_value = ([&]() { auto cs_left = ([&]() { auto cs_left = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg2 = v_num_567; return cs_c8a33d0ecbcf0b78(cs_arg0,cs_arg1,cs_arg2); }()); auto cs_right = v_newStr; return pls::cs::String::concat(cs_left,cs_right); }()); auto cs_right = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; std::int32_t cs_arg1 = ([&]() -> std::int32_t { auto cs_left = v_num_567; auto cs_right = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_oldStr; return cs_8eed6765a32617b7(cs_arg0); }()); return pls::cs::add_i32(cs_left,cs_right); }()); return cs_51d6c186b8b049a1(cs_arg0,cs_arg1); }()); return pls::cs::String::concat(cs_left,cs_right); }()); v_value = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Replace(System.String,System.String,System.String):651",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Replace(System.String,System.String,System.String):651",([&]() { auto cs_left = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg2 = v_num_567; return cs_c8a33d0ecbcf0b78(cs_arg0,cs_arg1,cs_arg2); }()); auto cs_right = v_newStr; return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; std::int32_t cs_arg1 = ([&]() -> std::int32_t { auto cs_left = v_num_567; auto cs_right = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_oldStr; return cs_8eed6765a32617b7(cs_arg0); }()); return pls::cs::add_i32(cs_left,cs_right); }()); return cs_51d6c186b8b049a1(cs_arg0,cs_arg1); }()); return pls::cs::String::concat(cs_left,cs_right); }())); v_value = cs_value; return cs_value; }());
 }
 return v_value;
 }
@@ -317,9 +317,9 @@ return v_value;
 pls::cs::String cs_abfabf5a341e90ae(pls::cs::String v_value,pls::cs::String v_args) { cs_init_1ff3292665c8e0c4();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.Replace(System.String,System.String)",kairo);
 {
-pls::cs::Array<pls::cs::String> v_array_253 = ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_args; pls::cs::String cs_arg1 = pls::cs::String(std::u16string(u"\x0009" u"",1)); bool cs_arg2 = false; bool cs_arg3 = false; bool cs_arg4 = false; return cs_0f7a7a73dac52ca4(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
+pls::cs::Array<pls::cs::String> v_array_253 = ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_args; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0009" u"",1);return cs_literal;}()); bool cs_arg2 = false; bool cs_arg3 = false; bool cs_arg4 = false; return cs_0f7a7a73dac52ca4(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 for (std::int32_t v_i_313 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_313; auto cs_right = (v_array_253).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_313; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_313 = cs_new; return cs_old; }())) {
-([&]() { auto cs_value = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; pls::cs::String cs_arg1 = ([&]() { auto cs_left = ([&]() { auto cs_left = pls::cs::String(std::u16string(u"\x003c" u"",1)); auto cs_right = pls::generated::cs_integer_string(v_i_313); return pls::cs::String::concat(cs_left,cs_right); }()); auto cs_right = pls::cs::String(std::u16string(u"\x003e" u"",1)); return pls::cs::String::concat(cs_left,cs_right); }()); pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() { auto cs_array = v_array_253; auto cs_index = v_i_313; return cs_array.get_Item(cs_index); }()); bool cs_arg1 = false; return cs_519a2204b16d0770(cs_arg0,cs_arg1); }()); return cs_8857a152f901dbe0(cs_arg0,cs_arg1,cs_arg2); }()); v_value = cs_value; return cs_value; }());
+([&]() { auto cs_value = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; pls::cs::String cs_arg1 = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Replace(System.String,System.String):375",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Replace(System.String,System.String):375",([&]() { auto cs_left = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003c" u"",1);return cs_literal;}()); auto cs_right = pls::generated::cs_integer_string(v_i_313); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003e" u"",1);return cs_literal;}()); return pls::cs::String::concat(cs_left,cs_right); }())); pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() { auto cs_array = v_array_253; auto cs_index = v_i_313; return cs_array.get_Item(cs_index); }()); bool cs_arg1 = false; return cs_519a2204b16d0770(cs_arg0,cs_arg1); }()); return cs_8857a152f901dbe0(cs_arg0,cs_arg1,cs_arg2); }()); v_value = cs_value; return cs_value; }());
 }
 return v_value;
 }
@@ -342,21 +342,21 @@ std::int32_t v_num4_2067{};
 std::int32_t v_j_2464{};
 {
 if ((([&]() { auto cs_left = pls::cs::box(v_text); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }()) || ([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_text; return cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }()))) {
-return pls::cs::Array<pls::cs::String>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)));
+return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):1170",pls::cs::Array<pls::cs::String>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
 }
 v_fastVector_1202 = pls::cs::Ref<cs_15e3f7b692b3f380>{};
 v_num_1218 = std::int32_t{};
 v_text2_1230 = pls::cs::String{};
 v_array_1246 = pls::cs::Array<pls::cs::String>{};
 v_num2_1257 = std::int32_t{};
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_15e3f7b692b3f380> { return cs_617649d3cca73756(); }()); v_fastVector_1202 = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):1276",([&]() -> pls::cs::Ref<cs_15e3f7b692b3f380> { return cs_617649d3cca73756(); }())); v_fastVector_1202 = cs_value; return cs_value; }());
 ([&]() { auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); v_num_1218 = cs_value; return cs_value; }());
-([&]() { auto cs_value = pls::cs::String(std::u16string(u"",0)); v_text2_1230 = cs_value; return cs_value; }());
+([&]() { auto cs_value = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}()); v_text2_1230 = cs_value; return cs_value; }());
 do {
 cs_label_IL_0020: ;
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_arg0 = v_text; auto cs_arg1 = v_sep; auto cs_arg2 = v_num_1218; return pls::cs::culture_index_of(cs_arg0,cs_arg1,cs_arg2); }());}); v_num2_1257 = cs_value; return cs_value; }());
 if (([&]() -> bool { auto cs_left = v_num2_1257; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left == cs_right); }())) {
-([&]() { auto cs_old = v_text2_1230; auto cs_rhs = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text; auto cs_arg1 = v_num_1218; return pls::generated::cs_substring1(cs_arg0,cs_arg1); }());}); auto cs_value = pls::cs::String::concat(cs_old,cs_rhs); v_text2_1230 = cs_value; return cs_value; }());
+pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):1412",([&]() { auto cs_old = v_text2_1230; auto cs_rhs = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text; auto cs_arg1 = v_num_1218; return pls::generated::cs_substring1(cs_arg0,cs_arg1); }());}); auto cs_value = pls::cs::String::concat(cs_old,cs_rhs); v_text2_1230 = cs_value; return cs_value; }()));
 } else {
 if (v_escape) {
 v_flag_1498 = true;
@@ -369,12 +369,12 @@ break;
 ([&]() { auto cs_old = v_num3_1521; auto cs_new = pls::cs::sub_i32(cs_old,1); v_num3_1521 = cs_new; return cs_old; }());
 }
 if ((!(v_flag_1498))) {
-([&]() { auto cs_value = ([&]() { auto cs_left = ([&]() { auto cs_left = v_text2_1230; auto cs_right = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; std::int32_t cs_arg1 = v_num_1218; std::int32_t cs_arg2 = ([&]() -> std::int32_t { auto cs_left = v_num2_1257; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return cs_c8a33d0ecbcf0b78(cs_arg0,cs_arg1,cs_arg2); }()); return pls::cs::String::concat(cs_left,cs_right); }()); auto cs_right = v_sep; return pls::cs::String::concat(cs_left,cs_right); }()); v_text2_1230 = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):1693",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):1693",([&]() { auto cs_left = v_text2_1230; auto cs_right = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; std::int32_t cs_arg1 = v_num_1218; std::int32_t cs_arg2 = ([&]() -> std::int32_t { auto cs_left = v_num2_1257; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); return cs_c8a33d0ecbcf0b78(cs_arg0,cs_arg1,cs_arg2); }()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = v_sep; return pls::cs::String::concat(cs_left,cs_right); }())); v_text2_1230 = cs_value; return cs_value; }());
 ([&]() { auto cs_value = ([&]() -> std::int32_t { auto cs_left = v_num2_1257; auto cs_right = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_sep; return cs_8eed6765a32617b7(cs_arg0); }()); return pls::cs::add_i32(cs_left,cs_right); }()); v_num_1218 = cs_value; return cs_value; }());
 goto cs_label_IL_0020;
 }
 }
-([&]() { auto cs_old = v_text2_1230; auto cs_rhs = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; std::int32_t cs_arg1 = v_num_1218; std::int32_t cs_arg2 = v_num2_1257; return cs_c8a33d0ecbcf0b78(cs_arg0,cs_arg1,cs_arg2); }()); auto cs_value = pls::cs::String::concat(cs_old,cs_rhs); v_text2_1230 = cs_value; return cs_value; }());
+pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):1814",([&]() { auto cs_old = v_text2_1230; auto cs_rhs = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; std::int32_t cs_arg1 = v_num_1218; std::int32_t cs_arg2 = v_num2_1257; return cs_c8a33d0ecbcf0b78(cs_arg0,cs_arg1,cs_arg2); }()); auto cs_value = pls::cs::String::concat(cs_old,cs_rhs); v_text2_1230 = cs_value; return cs_value; }()));
 ([&]() { auto cs_value = ([&]() -> std::int32_t { auto cs_left = v_num2_1257; auto cs_right = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_sep; return cs_8eed6765a32617b7(cs_arg0); }()); return pls::cs::add_i32(cs_left,cs_right); }()); v_num_1218 = cs_value; return cs_value; }());
 }
 if (v_escape) {
@@ -395,7 +395,7 @@ break;
 ([&]() { auto cs_old = v_num4_2067; auto cs_new = pls::cs::sub_i32(cs_old,1); v_num4_2067 = cs_new; return cs_old; }());
 }
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { auto cs_left = v_num4_2067; auto cs_right = v_i_1974; return pls::cs::sub_i32(cs_left,cs_right); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left < cs_right); }())) {
-([&]() { auto cs_value = pls::cs::String(std::u16string(u"",0)); v_text2_1230 = cs_value; return cs_value; }());
+([&]() { auto cs_value = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}()); v_text2_1230 = cs_value; return cs_value; }());
 } else {
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text2_1230; auto cs_arg1 = v_i_1974; auto cs_arg2 = ([&]() -> std::int32_t { auto cs_left = ([&]() -> std::int32_t { auto cs_left = v_num4_2067; auto cs_right = v_i_1974; return pls::cs::sub_i32(cs_left,cs_right); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); return pls::generated::cs_substring2(cs_arg0,cs_arg1,cs_arg2); }());}); v_text2_1230 = cs_value; return cs_value; }());
 }
@@ -403,9 +403,9 @@ if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { auto cs_left = v_nu
 if (((!(v_excludeZeroLength)) || ([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_text2_1230; return cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }()))) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>>>(v_fastVector_1202); pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_text2_1230); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b6a40aa7b6cac314(cs_receiver,cs_arg0); }());
 }
-([&]() { auto cs_value = pls::cs::String(std::u16string(u"",0)); v_text2_1230 = cs_value; return cs_value; }());
+([&]() { auto cs_value = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}()); v_text2_1230 = cs_value; return cs_value; }());
 } while (([&]() -> bool { auto cs_left = v_num2_1257; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left != cs_right); }()));
-([&]() { auto cs_value = pls::cs::Array<pls::cs::String>::make(([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>>>(v_fastVector_1202); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_66a816fe45ab90e7(cs_receiver); }())); v_array_1246 = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean):2421",pls::cs::Array<pls::cs::String>::make(([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>>>(v_fastVector_1202); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_66a816fe45ab90e7(cs_receiver); }()))); v_array_1246 = cs_value; return cs_value; }());
 for (v_j_2464 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_j_2464; auto cs_right = (v_array_1246).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_j_2464; auto cs_new = pls::cs::add_i32(cs_old,1); v_j_2464 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_target = v_array_1246; auto cs_index = v_j_2464; auto cs_value = pls::cs::unbox<pls::cs::String>(([&]() -> pls::cs::Ref<pls::cs::Object> { auto cs_receiver = static_cast<pls::cs::Ref<cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>>>(v_fastVector_1202); std::int32_t cs_arg0 = v_j_2464; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_4b357a5c06369f9d(cs_receiver,cs_arg0); }()));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
@@ -429,7 +429,7 @@ pls::cs::Array<std::int32_t> cs_deba8d22dc04f33a(pls::cs::String v_src,pls::cs::
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)",kairo);
 {
 pls::cs::Array<pls::cs::String> v_array_5692 = ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_src; pls::cs::String cs_arg1 = v_sep; bool cs_arg2 = true; bool cs_arg3 = true; bool cs_arg4 = false; return cs_0f7a7a73dac52ca4(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
-pls::cs::Array<std::int32_t> v_array2_5745 = pls::cs::Array<std::int32_t>::make((v_array_5692).length());
+pls::cs::Array<std::int32_t> v_array2_5745 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String):5754",pls::cs::Array<std::int32_t>::make((v_array_5692).length()));
 for (std::int32_t v_i_5789 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_5789; auto cs_right = (v_array2_5745).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_5789; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_5789 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_target = v_array2_5745; auto cs_index = v_i_5789; auto cs_value = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = ([&]() { auto cs_array = v_array_5692; auto cs_index = v_i_5789; return cs_array.get_Item(cs_index); }()); return cs_2dbfed27c63e8b3d(cs_arg0); }());cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }

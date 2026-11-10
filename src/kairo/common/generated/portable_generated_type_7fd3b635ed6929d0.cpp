@@ -61,9 +61,9 @@ void cs_891849d99054b970_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,std::int
 pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> cs_5d4aff714c1aa3f1(std::int32_t v_n) { cs_init_7fd3b635ed6929d0();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureInt.Array(System.Int32)",kairo);
 {
-pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> v_array_1301 = pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>>::make(v_n);
+pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>> v_array_1301 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/SecureInt.cs:M:kairo.unity.util.SecureInt.Array(System.Int32):1309",pls::cs::Array<pls::cs::Ref<cs_7fd3b635ed6929d0>>::make(v_n));
 for (std::int32_t v_i_1339 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_1339; auto cs_right = (v_array_1301).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_1339; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_1339 = cs_new; return cs_old; }())) {
-([&]() { auto cs_target = v_array_1301; auto cs_index = v_i_1339; auto cs_value = ([&]() -> pls::cs::Ref<cs_7fd3b635ed6929d0> { return cs_26fc017eba499603(); }());cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+([&]() { auto cs_target = v_array_1301; auto cs_index = v_i_1339; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/SecureInt.cs:M:kairo.unity.util.SecureInt.Array(System.Int32):1389",([&]() -> pls::cs::Ref<cs_7fd3b635ed6929d0> { return cs_26fc017eba499603(); }()));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
 return v_array_1301;
 }
@@ -119,7 +119,7 @@ return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_7
 pls::cs::Ref<cs_7fd3b635ed6929d0> cs_9aee68341f2c87b1(std::int32_t v_s) { cs_init_7fd3b635ed6929d0();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureInt.op_Implicit(System.Int32)~kairo.unity.util.SecureInt",kairo);
 {
-return ([&]() -> pls::cs::Ref<cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = v_s; return cs_891849d99054b970(cs_arg0); }());
+return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/SecureInt.cs:M:kairo.unity.util.SecureInt.op_Implicit(System.Int32)~kairo.unity.util.SecureInt:233",([&]() -> pls::cs::Ref<cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = v_s; return cs_891849d99054b970(cs_arg0); }()));
 }
 }
 }

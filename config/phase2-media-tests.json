@@ -22,7 +22,7 @@
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
     "src/kairo/platform/sdl/backend.cpp": "432bc993e2a184f19b0a5ac5b37021c8c240c74cbb87437b634b6dbb05bc2b12",
     "src/kairo/platform/sdl/debug_input.cpp": "2f8b1f59a88d07ddfc4730e785d7188bac7af5ff19799cd385e5e61b4313e577",
-    "src/kairo/common/semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
+    "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
     "src/kairo/platform/sdl/font.hpp": "58b6be7dbe6b8197bba1c16cef390919215c0a9d735222429c9523efd0d1c2c9",
     "src/kairo/platform/sdl/audio.hpp": "48f5a2e458820594abcc6653538034e43e4c3d87184dba64ce0083d7dfd0ac9e",
     "src/kairo/platform/sdl/backend.hpp": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df",
@@ -31,13 +31,13 @@
     "src/kairo/api/debug_input.hpp": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918",
     "src/kairo/api/vector3.hpp": "4830f223a65124ea07c7e49f119e14a581d8ef2eee901c1a37c9c863f6bfac81",
     "src/kairo/api/system.hpp": "35ef88ea81d5683d5264f95ff987fdcc9029b75ae343b4b0743a9e031e05eb6e",
-    "src/kairo/common/semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
+    "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
     "tools/test_media.py": "7f4a8fbba1f054855f8650ee93652d207a48dd0c91dd4375e90fa107d75c2bef"
   },
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "c11a9223e42363d8bf072e4f265266c013e7c20d190541da7c960d779c572ad5",
+  "native_executable_sha256": "6849bfb29b73a59ce7016e7ad66ee4230d335580fd9ab998e73c48e74f77088a",
   "native_stdout_sha256": "f7e22611b94817300732dc4814164b68a6f05067271bc5dcedba6adad1241811",
   "ffmpeg_comparisons": [
     {

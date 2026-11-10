@@ -38,7 +38,7 @@ std::int32_t v_days_529 = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_
 pls::cs::Ref<cs_f59223d2c773f078> cs_0ccfddc5d383b7b6() { cs_init_f59223d2c773f078();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JTimeZone.GetDefault",kairo);
 {
-return ([&]() -> pls::cs::Ref<cs_f59223d2c773f078> { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { return pls::kairo::native_timezone_id(); }());}); return cs_bcb3a1c31d9b5d23(cs_arg0); }());
+return pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JTimeZone.cs:M:java.util.JTimeZone.GetDefault:735",([&]() -> pls::cs::Ref<cs_f59223d2c773f078> { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { return pls::kairo::native_timezone_id(); }());}); return cs_bcb3a1c31d9b5d23(cs_arg0); }()));
 }
 }
 }

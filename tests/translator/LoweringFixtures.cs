@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 public static class LoweringFixtures {
     private static int trace_;
+    private static string LiteralOther(){return "ab\0\uD800";}
+    public static int LiteralIdentity(int seed){string a="ab\0\uD800";string b=LiteralOther();string dynamicValue=new string(new char[]{'a','b','\0','\uD800'});return (object.ReferenceEquals(a,b)?1:0)+(object.ReferenceEquals(a,dynamicValue)?2:0)+(a==dynamicValue?4:0)+seed;}
+    public static int EmptyLiteralIdentity(int seed){string a="";string b=seed==0?"":"";return object.ReferenceEquals(a,b)?seed+1:seed-1;}
     public static int FloatingConcatOrder(int seed){trace_=0;string value=""+(float)Stamp(1)+":"+(double)Stamp(2)+":"+1.5f+":"+(-2.25d);return value=="1:2:1.5:-2.25"&&trace_==12?seed+1:seed-1;}
     public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
     private static int Pair(int a, int b) { return a * 100 + b; }

@@ -27,8 +27,8 @@ pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_58437f0f251471b8() { cs_init_4e9b1f0e9e3baf
 }
 
 void cs_58437f0f251471b8_init(pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_this) {
-cs_this->cs_7532de0b2467e888 = ([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_9b21b86f0d2914e0>>(); }());
-cs_this->cs_7cc420fdd246795c = ([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_9b21b86f0d2914e0>>(); }());
+cs_this->cs_7532de0b2467e888 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/TouchEffectManager.cs:M:surface.TouchEffectManager.#ctor:260",([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_9b21b86f0d2914e0>>(); }()));
+cs_this->cs_7cc420fdd246795c = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/TouchEffectManager.cs:M:surface.TouchEffectManager.#ctor:343",([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_9b21b86f0d2914e0>>(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.TouchEffectManager.#ctor",game);
 {
 
@@ -62,7 +62,7 @@ continue;
 break;
 }
 if (([&]() { auto cs_left = pls::cs::box(v_touchEffect_2818); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7cc420fdd246795c; }())); pls::cs::Ref<cs_9b21b86f0d2914e0> cs_arg0 = ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_9b21b86f0d2914e0> { return cs_2a1179e902640c2a(); }()); v_touchEffect_2818 = cs_value; return cs_value; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_7969ffc067486ca6(cs_receiver,cs_arg0); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7cc420fdd246795c; }())); pls::cs::Ref<cs_9b21b86f0d2914e0> cs_arg0 = ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/TouchEffectManager.cs:M:surface.TouchEffectManager.AddEffect(kairo.unity.surface.SurfaceBase,System.Int32,System.Single,System.Single,kairo.unity.surface.TouchComponent,System.Object):3118",([&]() -> pls::cs::Ref<cs_9b21b86f0d2914e0> { return cs_2a1179e902640c2a(); }())); v_touchEffect_2818 = cs_value; return cs_value; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_7969ffc067486ca6(cs_receiver,cs_arg0); }());});
 }
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9b21b86f0d2914e0>>(v_touchEffect_2818); pls::cs::Ref<cs_9326c27a92cfea3a> cs_arg0 = v_surface; std::int32_t cs_arg1 = v_id; float cs_arg2 = v_x; float cs_arg3 = v_y; pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_arg4 = v_component; pls::cs::Ref<pls::cs::Object> cs_arg5 = v_arg; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_5e534500fa7e2dfa(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_4e9b1f0e9e3baf25>>(cs_this); pls::cs::Ref<cs_9b21b86f0d2914e0> cs_arg0 = v_touchEffect_2818; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_95d1f01cac020884(cs_receiver,cs_arg0); }());
@@ -143,7 +143,7 @@ pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_81e284f6e842da85() { cs_init_4e9b1f0e9e3baf
 if (([&]() { auto cs_left = pls::cs::box(cs_f0c6ab846fbc94dd()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
 return cs_f0c6ab846fbc94dd();
 }
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_4e9b1f0e9e3baf25> { return cs_58437f0f251471b8(); }()); cs_f0c6ab846fbc94dd() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/TouchEffectManager.cs:M:surface.TouchEffectManager.GetInstance:541",([&]() -> pls::cs::Ref<cs_4e9b1f0e9e3baf25> { return cs_58437f0f251471b8(); }())); cs_f0c6ab846fbc94dd() = cs_value; return cs_value; }());
 return cs_f0c6ab846fbc94dd();
 }
 }

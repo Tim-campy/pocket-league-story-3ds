@@ -101,7 +101,7 @@ pls::cs::Ref<pls::cs::Stream> cs_a8c261103d5c33e8(pls::cs::Ref<cs_e7a5499b363ef5
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.InputStream.GetWrappedStream",kairo);
 {
-return ([&]() -> pls::cs::Ref<cs_a09270023ec48eca> { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = cs_this; return cs_f4af9cf35590567d(cs_arg0); }());
+return pls::source_allocations::completed("new_object","src/KairoLibrary/java/io/InputStream.cs:M:java.io.InputStream.GetWrappedStream:2565",([&]() -> pls::cs::Ref<cs_a09270023ec48eca> { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = cs_this; return cs_f4af9cf35590567d(cs_arg0); }()));
 }
 }
 }

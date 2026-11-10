@@ -29,7 +29,9 @@ struct Str {
     Str() = default;
     Str(std::nullptr_t) {}
     explicit Str(std::u16string text):value(std::make_shared<const std::u16string>(std::move(text))),Length(static_cast<int>(value->size())){}
-    explicit Str(const String& text):Str(text.code_units()){}
+    // The C# collator receives the existing immutable String. Alias its
+    // storage instead of allocating/copying a native string adapter per call.
+    explicit Str(const String& text):value(text.as_object(),&text.code_units()),Length(text.length()){}
     char16_t operator[](int index) const {if(index<0 || index>=Length)throw IndexOutOfRangeException();return (*value)[static_cast<std::size_t>(index)];}
     bool same_storage(const Str& other)const noexcept{return value==other.value;}
     bool operator==(std::nullptr_t)const noexcept{return !value;}

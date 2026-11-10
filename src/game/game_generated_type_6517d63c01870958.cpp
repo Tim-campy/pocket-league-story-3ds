@@ -11,7 +11,7 @@ void cs_6517d63c01870958::release_edges(){pls::cs::Object::release_edges();pls::
 static pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>> cs_6cb933168d711678_value{};
 
 void cs_init_6517d63c01870958(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchOption",[](){
-cs_6cb933168d711678_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.surface.TouchOption.buffer",[&](){return ([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_6517d63c01870958>>(); }());});
+cs_6cb933168d711678_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.surface.TouchOption.buffer",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.SurfaceManagerBase.BeginTouchRegist(kairo.unity.ui.Graphics):997",([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_6517d63c01870958>>(); }()));});
 
 });}
 
@@ -23,7 +23,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_8d483d962b875686() { cs_init_6517d63c018709
 }
 
 void cs_8d483d962b875686_init(pls::cs::Ref<cs_6517d63c01870958> cs_this) {
-cs_this->cs_c71933e9bca11daa = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)));
+cs_this->cs_c71933e9bca11daa = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor:886",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.#ctor",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6517d63c01870958>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_aeddbf9e363c37fe(cs_receiver); }());
@@ -37,7 +37,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_a791f152e6170c69(pls::cs::Ref<cs_6517d63c01
 }
 
 void cs_a791f152e6170c69_init(pls::cs::Ref<cs_6517d63c01870958> cs_this,pls::cs::Ref<cs_6517d63c01870958> v_copy) {
-cs_this->cs_c71933e9bca11daa = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)));
+cs_this->cs_c71933e9bca11daa = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):886",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6517d63c01870958>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_aeddbf9e363c37fe(cs_receiver); }());
@@ -47,23 +47,23 @@ cs_this->cs_c71933e9bca11daa = pls::cs::Array<std::int32_t>::make(pls::cs::cast_
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f1365c978e9c4cae; }()); pls::game::cs_require(cs_target)->cs_f1365c978e9c4cae = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = true; pls::game::cs_require(cs_target)->cs_a404a90eff0aeb13 = cs_value; return cs_value; }());
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bc3ed6e7ac2c682a; }())); auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{}); return cs_left != cs_right; }())) {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bc3ed6e7ac2c682a; }())).length()); pls::game::cs_require(cs_target)->cs_bc3ed6e7ac2c682a = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):1314",pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bc3ed6e7ac2c682a; }())).length())); pls::game::cs_require(cs_target)->cs_bc3ed6e7ac2c682a = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_source = ([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bc3ed6e7ac2c682a; }()); auto cs_dest = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bc3ed6e7ac2c682a; }()); auto cs_count = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bc3ed6e7ac2c682a; }())).length(); pls::cs::Array<std::int32_t>::copy(cs_source,0,cs_dest,0,cs_count); }());});
 }
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b5f7390e18875f50; }())); auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{}); return cs_left != cs_right; }())) {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b5f7390e18875f50; }())).length()); pls::game::cs_require(cs_target)->cs_b5f7390e18875f50 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):1450",pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b5f7390e18875f50; }())).length())); pls::game::cs_require(cs_target)->cs_b5f7390e18875f50 = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_source = ([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b5f7390e18875f50; }()); auto cs_dest = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b5f7390e18875f50; }()); auto cs_count = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b5f7390e18875f50; }())).length(); pls::cs::Array<std::int32_t>::copy(cs_source,0,cs_dest,0,cs_count); }());});
 }
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_907bdb29f23c20f6; }())); auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{}); return cs_left != cs_right; }())) {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_907bdb29f23c20f6; }())).length()); pls::game::cs_require(cs_target)->cs_907bdb29f23c20f6 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):1574",pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_907bdb29f23c20f6; }())).length())); pls::game::cs_require(cs_target)->cs_907bdb29f23c20f6 = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_source = ([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_907bdb29f23c20f6; }()); auto cs_dest = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_907bdb29f23c20f6; }()); auto cs_count = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_907bdb29f23c20f6; }())).length(); pls::cs::Array<std::int32_t>::copy(cs_source,0,cs_dest,0,cs_count); }());});
 }
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58d9bdebab2ca99e; }())); auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{}); return cs_left != cs_right; }())) {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58d9bdebab2ca99e; }())).length()); pls::game::cs_require(cs_target)->cs_58d9bdebab2ca99e = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):1718",pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58d9bdebab2ca99e; }())).length())); pls::game::cs_require(cs_target)->cs_58d9bdebab2ca99e = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_source = ([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58d9bdebab2ca99e; }()); auto cs_dest = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58d9bdebab2ca99e; }()); auto cs_count = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58d9bdebab2ca99e; }())).length(); pls::cs::Array<std::int32_t>::copy(cs_source,0,cs_dest,0,cs_count); }());});
 }
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4be9171376316f3b; }())); auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{}); return cs_left != cs_right; }())) {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4be9171376316f3b; }())).length()); pls::game::cs_require(cs_target)->cs_4be9171376316f3b = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):1870",pls::cs::Array<std::int32_t>::make((([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4be9171376316f3b; }())).length())); pls::game::cs_require(cs_target)->cs_4be9171376316f3b = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_source = ([&]() { auto cs_receiver = v_copy; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4be9171376316f3b; }()); auto cs_dest = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4be9171376316f3b; }()); auto cs_count = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4be9171376316f3b; }())).length(); pls::cs::Array<std::int32_t>::copy(cs_source,0,cs_dest,0,cs_count); }());});
 }
 }
@@ -83,7 +83,7 @@ break;
 }
 }
 if (([&]() { auto cs_left = pls::cs::box(v_touchOption_2240); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>>>(cs_6cb933168d711678()); pls::cs::Ref<cs_6517d63c01870958> cs_arg0 = ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_6517d63c01870958> { return cs_8d483d962b875686(); }()); v_touchOption_2240 = cs_value; return cs_value; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_7969ffc067486ca6(cs_receiver,cs_arg0); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>>>(cs_6cb933168d711678()); pls::cs::Ref<cs_6517d63c01870958> cs_arg0 = ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.Create:2499",([&]() -> pls::cs::Ref<cs_6517d63c01870958> { return cs_8d483d962b875686(); }())); v_touchOption_2240 = cs_value; return cs_value; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_7969ffc067486ca6(cs_receiver,cs_arg0); }());});
 }
 ([&]() { auto cs_target = v_touchOption_2240; auto cs_value = true; pls::game::cs_require(cs_target)->cs_a404a90eff0aeb13 = cs_value; return cs_value; }());
 return v_touchOption_2240;
@@ -118,7 +118,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_5620e4317abf431d(std::int32_t v_x,std::int3
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.Drag(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",kairo);
 {
 pls::cs::Ref<cs_6517d63c01870958> v_touchOption_3638 = ([&]() -> pls::cs::Ref<cs_6517d63c01870958> { return cs_4b4ad350b14ef767(); }());
-([&]() { auto cs_target = v_touchOption_3638; auto cs_value = ([&](){auto cs_initial_array_701=pls::cs::Array<std::int32_t>::make(6);cs_initial_array_701.at(0)=v_x;cs_initial_array_701.at(1)=v_y;cs_initial_array_701.at(2)=v_w;cs_initial_array_701.at(3)=v_h;cs_initial_array_701.at(4)=v_xcells;cs_initial_array_701.at(5)=v_ycells;return cs_initial_array_701;}()); pls::game::cs_require(cs_target)->cs_bc3ed6e7ac2c682a = cs_value; return cs_value; }());
+([&]() { auto cs_target = v_touchOption_3638; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.Drag(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32):3688",([&](){auto cs_initial_array_701=pls::cs::Array<std::int32_t>::make(6);cs_initial_array_701.at(0)=v_x;cs_initial_array_701.at(1)=v_y;cs_initial_array_701.at(2)=v_w;cs_initial_array_701.at(3)=v_h;cs_initial_array_701.at(4)=v_xcells;cs_initial_array_701.at(5)=v_ycells;return cs_initial_array_701;}())); pls::game::cs_require(cs_target)->cs_bc3ed6e7ac2c682a = cs_value; return cs_value; }());
 ([&]() { auto cs_target = v_touchOption_3638; auto cs_value = v_flag; pls::game::cs_require(cs_target)->cs_e751c7c04a2d6904 = cs_value; return cs_value; }());
 return v_touchOption_3638;
 }
@@ -161,7 +161,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_6f3af12bb51c6a25(pls::cs::Ref<cs_6517d63c01
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.ExtendValues(System.Int32)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&](){auto cs_initial_array_659=pls::cs::Array<std::int32_t>::make(1);cs_initial_array_659.at(0)=v_value;return cs_initial_array_659;}()); pls::game::cs_require(cs_target)->cs_58d9bdebab2ca99e = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.ExtendValues(System.Int32):4365",([&](){auto cs_initial_array_659=pls::cs::Array<std::int32_t>::make(1);cs_initial_array_659.at(0)=v_value;return cs_initial_array_659;}())); pls::game::cs_require(cs_target)->cs_58d9bdebab2ca99e = cs_value; return cs_value; }());
 return cs_this;
 }
 }
@@ -206,7 +206,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_de6cd246e5da5ce1(pls::cs::Ref<cs_6517d63c01
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.Margin(System.Int32,System.Int32,System.Int32,System.Int32)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&](){auto cs_initial_array_658=pls::cs::Array<std::int32_t>::make(4);cs_initial_array_658.at(0)=v_left;cs_initial_array_658.at(1)=v_right;cs_initial_array_658.at(2)=v_top;cs_initial_array_658.at(3)=v_bottom;return cs_initial_array_658;}()); pls::game::cs_require(cs_target)->cs_907bdb29f23c20f6 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.Margin(System.Int32,System.Int32,System.Int32,System.Int32):4045",([&](){auto cs_initial_array_658=pls::cs::Array<std::int32_t>::make(4);cs_initial_array_658.at(0)=v_left;cs_initial_array_658.at(1)=v_right;cs_initial_array_658.at(2)=v_top;cs_initial_array_658.at(3)=v_bottom;return cs_initial_array_658;}())); pls::game::cs_require(cs_target)->cs_907bdb29f23c20f6 = cs_value; return cs_value; }());
 return cs_this;
 }
 }

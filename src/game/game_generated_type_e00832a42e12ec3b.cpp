@@ -30,7 +30,7 @@ pls::cs::Ref<cs_e00832a42e12ec3b> cs_9cfcc2afb24b5e63() { cs_init_e00832a42e12ec
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.lineup.MyLineup.GetInstance",game);
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_eb626cd1b0f88bfd()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_e00832a42e12ec3b> { return cs_1da4a6941cbe6a25(); }()); cs_eb626cd1b0f88bfd() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/lineup/MyLineup.cs:M:system.lineup.MyLineup.GetInstance:258",([&]() -> pls::cs::Ref<cs_e00832a42e12ec3b> { return cs_1da4a6941cbe6a25(); }())); cs_eb626cd1b0f88bfd() = cs_value; return cs_value; }());
 }
 return pls::cs::unbox<pls::cs::Ref<cs_e00832a42e12ec3b>>(pls::cs::box(cs_eb626cd1b0f88bfd()));
 }

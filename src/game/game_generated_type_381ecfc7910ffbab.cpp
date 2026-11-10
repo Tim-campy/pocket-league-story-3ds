@@ -67,7 +67,7 @@ if ((((([&]() -> bool { auto cs_left = pls::cs::cast_integral<std::int32_t>(char
 }
 }
 if (([&]() -> bool { auto cs_left = (v_text_3019).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
-([&]() { auto cs_value = pls::cs::String(std::u16string(u"\x0037" u"\x002e" u"\x0030" u"",3)); v_text_3019 = cs_value; return cs_value; }());
+([&]() { auto cs_value = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0037" u"\x002e" u"\x0030" u"",3);return cs_literal;}()); v_text_3019 = cs_value; return cs_value; }());
 }
 return v_text_3019;
 }

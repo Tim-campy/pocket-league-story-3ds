@@ -89,7 +89,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->PopOrigin(); }());});
 if ((pls::generated::cs_b0827224162a4f93() && (!(cs_40a53d57b75c7593())))) {
 if ((!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { return pls::kairo::Graphics::IsAutoTextLayout(); }());})))) {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::String cs_arg0 = pls::cs::String(std::u16string(u"\x81ea" u"\x52d5" u"\x30c6" u"\x30ad" u"\x30b9" u"\x30c8" u"\x30ec" u"\x30a4" u"\x30a2" u"\x30a6" u"\x30c8" u"\x304c" u"\x7121" u"\x52b9" u"\x306b" u"\x306a" u"\x3063" u"\x3066" u"\x3044" u"\x307e" u"\x3059" u"\x3002" u"\x000a" u"\x0047" u"\x0072" u"\x0061" u"\x0070" u"\x0068" u"\x0069" u"\x0063" u"\x0073" u"\x002e" u"\x0053" u"\x0065" u"\x0074" u"\x0041" u"\x0075" u"\x0074" u"\x006f" u"\x0054" u"\x0065" u"\x0078" u"\x0074" u"\x004c" u"\x0061" u"\x0079" u"\x006f" u"\x0075" u"\x0074" u"\x0028" u"\x0029" u"\x0020" u"\x3092" u"\x4f7f" u"\x3063" u"\x3066" u"\x6709" u"\x52b9" u"\x306b" u"\x3059" u"\x308b" u"\x4e8b" u"\x3092" u"\x63a8" u"\x5968" u"\x3057" u"\x307e" u"\x3059" u"\x3002" u"",69)); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_4d9093772b7b2178(cs_arg0,cs_arg1); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x81ea" u"\x52d5" u"\x30c6" u"\x30ad" u"\x30b9" u"\x30c8" u"\x30ec" u"\x30a4" u"\x30a2" u"\x30a6" u"\x30c8" u"\x304c" u"\x7121" u"\x52b9" u"\x306b" u"\x306a" u"\x3063" u"\x3066" u"\x3044" u"\x307e" u"\x3059" u"\x3002" u"\x000a" u"\x0047" u"\x0072" u"\x0061" u"\x0070" u"\x0068" u"\x0069" u"\x0063" u"\x0073" u"\x002e" u"\x0053" u"\x0065" u"\x0074" u"\x0041" u"\x0075" u"\x0074" u"\x006f" u"\x0054" u"\x0065" u"\x0078" u"\x0074" u"\x004c" u"\x0061" u"\x0079" u"\x006f" u"\x0075" u"\x0074" u"\x0028" u"\x0029" u"\x0020" u"\x3092" u"\x4f7f" u"\x3063" u"\x3066" u"\x6709" u"\x52b9" u"\x306b" u"\x3059" u"\x308b" u"\x4e8b" u"\x3092" u"\x63a8" u"\x5968" u"\x3057" u"\x307e" u"\x3059" u"\x3002" u"",69);return cs_literal;}()); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_4d9093772b7b2178(cs_arg0,cs_arg1); }());});
 }
 ([&]() { auto cs_value = true; cs_40a53d57b75c7593() = cs_value; return cs_value; }());
 }
@@ -157,7 +157,7 @@ if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = v_component_6624
 switch (([&]() { auto cs_receiver = v_e; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4c4f6c2ffd41c9ca; }())) {
 case 1:
 {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(v_instance_6664); pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = ([&]() -> pls::cs::Ref<cs_c9cd56cdd30ecf7a> { return cs_b8786f8cf097476e(); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->Push(cs_arg0); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(v_instance_6664); pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/form/LanguageForm.cs:M:system.form.LanguageForm.OnTouchEvent(kairo.unity.surface.TouchEvent):6812",([&]() -> pls::cs::Ref<cs_c9cd56cdd30ecf7a> { return cs_b8786f8cf097476e(); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->Push(cs_arg0); }());});
 break;
 }
 }
@@ -174,7 +174,7 @@ pls::cs::String cs_e349d7428c1381fa(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this) {
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.LanguageForm.ToString",game);
 {
-return pls::cs::String(std::u16string(u"\x004c" u"\x0061" u"\x006e" u"\x0067" u"\x0075" u"\x0061" u"\x0067" u"\x0065" u"\x0046" u"\x006f" u"\x0072" u"\x006d" u"",12));
+return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x004c" u"\x0061" u"\x006e" u"\x0067" u"\x0075" u"\x0061" u"\x0067" u"\x0065" u"\x0046" u"\x006f" u"\x0072" u"\x006d" u"",12);return cs_literal;}());
 }
 }
 }

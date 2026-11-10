@@ -27,8 +27,8 @@
   "inputs": {
     "tests\\translator\\GcFixtures.cs": "35addd4dfa00ea78e658528ee991b9960bc748d3bb30d9b6f0aa4e85b8c1d48a",
     "tests\\translator\\gc_fixtures.cpp": "43e46037d39a238820076c089eef121f4956f0162043879c22bb3f3fc7dfc221",
-    "src\\kairo\\common\\semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
-    "src\\kairo\\common\\semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
+    "src\\kairo\\common\\semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
+    "src\\kairo\\common\\semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
     "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0",

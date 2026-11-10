@@ -327,7 +327,8 @@ sealed partial class Lowerer {
         }
         if(to.SpecialType==SpecialType.System_Object) {
             if(from is INamedTypeSymbol nativeValue&&externalValueTypes.ContainsKey(Id(nativeValue)))throw new Unsupported(node,"native value boxing requires an exact Equals/hash/ToString contract");
-            Type(from,node);return "pls::cs::box("+value+")";
+            Type(from,node);var boxed="pls::cs::box("+value+")";
+            return from?.IsValueType==true?SourceAllocation(node,"boxing",boxed):from is ITypeParameterSymbol?SourceAllocation(node,"generic_boxing_conversion",boxed):boxed;
         }
         if(to.ToDisplayString()=="System.Array"&&from?.SpecialType==SpecialType.System_Object)return "pls::cs::array_cast("+value+")";
         if(to.ToDisplayString()=="System.Array"&&from is IArrayTypeSymbol)return "pls::cs::array_cast(pls::cs::box("+value+"))";
@@ -349,7 +350,7 @@ sealed partial class Lowerer {
         if(value==null)return Type(type,node)+"{}";
         if(type is INamedTypeSymbol{TypeKind:TypeKind.Enum} enumeration)return "static_cast<"+Type(type,node)+">("+Constant(value,enumeration.EnumUnderlyingType,node)+")";
         if(value is string text) {
-            return "pls::cs::String(std::u16string(u\""+String.Concat(text.Select(c=>"\\x"+((int)c).ToString("x4",CultureInfo.InvariantCulture)+"\" u\""))+"\","+text.Length+"))";
+            return "([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u\""+String.Concat(text.Select(c=>"\\x"+((int)c).ToString("x4",CultureInfo.InvariantCulture)+"\" u\""))+"\","+text.Length+");return cs_literal;}())";
         }
         if(value is char ch)return "char16_t("+((int)ch).ToString(CultureInfo.InvariantCulture)+")";
         if(value is bool b)return b?"true":"false";
@@ -436,6 +437,10 @@ sealed partial class Lowerer {
         return Cast(Expr(node),model.GetTypeInfo(node).Type,to,node);
     }
     string Anonymous(AnonymousFunctionExpressionSyntax node,INamedTypeSymbol delegateType){
+        var expression=AnonymousCore(node,delegateType);
+        return SourceAllocation(node,"delegate_evaluation",expression);
+    }
+    string AnonymousCore(AnonymousFunctionExpressionSyntax node,INamedTypeSymbol delegateType){
         Used(node);var symbol=model.GetSymbolInfo(node).Symbol as IMethodSymbol;
         if(symbol==null||symbol.Parameters.Any(p=>p.RefKind!=RefKind.None))throw new Unsupported(node,"anonymous ref/out signature not lowered");
         if(hoistLocals)throw new Unsupported(node,"closure in method with goto requires scope-lifetime lowering");
@@ -459,9 +464,12 @@ sealed partial class Lowerer {
         var key="std::string(\""+current+":"+node.SpanStart+"\")"+String.Concat(captures.Skip(1).Select(c=>"+std::to_string(reinterpret_cast<std::uintptr_t>("+Local(c)+"_cell.get()))"));
         var identity=captures.Length!=0?Local(captures[0])+"_cell.get()":captureThis?"cs_this.get()":"nullptr";
         var parameters=String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)));var arguments=String.Join(",",symbol.Parameters.Select(Local));
-        builder.Append("return "+Type(delegateType,node)+"::bind_identity(cs_closure,"+identity+","+key+",[weak=std::weak_ptr<"+name+">(cs_closure)]("+parameters+")->"+result+"{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();"+(symbol.ReturnsVoid?"":"return ")+"target->Invoke("+arguments+");});}())");return builder.ToString();
+        builder.Append("return "+Type(delegateType,node)+"::bind_identity(cs_closure,"+identity+","+key+",[weak=std::weak_ptr<"+name+">(cs_closure)]("+parameters+")->"+result+"{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();"+(symbol.ReturnsVoid?"":"return ")+"target->Invoke("+arguments+");});}())");return captures.Length!=0||captureThis?SourceAllocation(node,"closure_evaluation",builder.ToString()):builder.ToString();
     }
     string MethodGroup(ExpressionSyntax site,IMethodSymbol target,INamedTypeSymbol delegateType){
+        return SourceAllocation(site,"delegate_evaluation",MethodGroupCore(site,target,delegateType));
+    }
+    string MethodGroupCore(ExpressionSyntax site,IMethodSymbol target,INamedTypeSymbol delegateType){
         if(target.ContainingType.IsValueType)throw new Unsupported(site,"value-type method groups require boxed target lifetime semantics");
         var invoke=delegateType.DelegateInvokeMethod!;if(target.Parameters.Length!=invoke.Parameters.Length)throw new Unsupported(site,"delegate binding parameter arity differs");
         if(invoke.Parameters.Any(p=>p.RefKind is not (RefKind.None or RefKind.Ref or RefKind.Out))||!invoke.Parameters.Zip(target.Parameters).All(pair=>pair.First.RefKind==pair.Second.RefKind&&(pair.First.RefKind==RefKind.None||SymbolEqualityComparer.Default.Equals(pair.First.Type,pair.Second.Type))))throw new Unsupported(site,"by-reference delegate requires identical ref/out kinds and element types");
@@ -509,7 +517,22 @@ sealed partial class Lowerer {
         var setup=receiver==null?"":"auto cs_receiver = "+receiver+"; ";
         return "([&]() -> "+Type(property.Type,site)+" { "+setup+"return "+AccessorCall(property.GetMethod,receiver==null?null:"cs_receiver",arguments,site)+"; }())";
     }
+    string SourceAllocation(SyntaxNode node,string kind,string expression){
+        var source=request.source_root.Length==0?compilation.AssemblyName:Path.GetRelativePath(request.source_root,node.SyntaxTree.FilePath).Replace('\\','/');
+        if(source.StartsWith("../",StringComparison.Ordinal))return expression; // Generated host adapters are not original C#.
+        var site=source+":"+current+":"+node.SpanStart;
+        return "pls::source_allocations::completed(\""+kind+"\",\""+site.Replace("\\","\\\\").Replace("\"","\\\"")+"\","+expression+")";
+    }
     string Expr(ExpressionSyntax n) {
+        var expression=ExprCore(n);var type=model.GetTypeInfo(n).Type??model.GetTypeInfo(n).ConvertedType;
+        if(n is ObjectCreationExpressionSyntax&&type?.IsReferenceType==true&&type.TypeKind!=TypeKind.Delegate)return SourceAllocation(n,"new_object",expression);
+        if(n is ArrayCreationExpressionSyntax or ImplicitArrayCreationExpressionSyntax||n is InitializerExpressionSyntax&&type is IArrayTypeSymbol)return SourceAllocation(n,"new_array",expression);
+        if(n is InvocationExpressionSyntax&&model.GetSymbolInfo(n).Symbol is IMethodSymbol called&&called.ContainingType.SpecialType==SpecialType.System_String&&called.Name=="Concat")return SourceAllocation(n,"concat_call",expression);
+        if(n is BinaryExpressionSyntax&&n.IsKind(SyntaxKind.AddExpression)&&type?.SpecialType==SpecialType.System_String&&!model.GetConstantValue(n).HasValue)return SourceAllocation(n,"concat_operator",expression);
+        if(n is AssignmentExpressionSyntax&&n.IsKind(SyntaxKind.AddAssignmentExpression)&&type?.SpecialType==SpecialType.System_String)return SourceAllocation(n,"concat_operator",expression);
+        return expression;
+    }
+    string ExprCore(ExpressionSyntax n) {
         if(compilation.AssemblyName=="Assembly-CSharp"&&Path.GetRelativePath(request.source_root,n.SyntaxTree.FilePath).Replace('\\','/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)) {
             var initializer=n is ArrayCreationExpressionSyntax creation?creation.Initializer:n is ImplicitArrayCreationExpressionSyntax implicitArray?implicitArray.Initializer:null;
             if(initializer!=null&&initializer.Expressions.Count>0&&initializer.Expressions.All(element=>model.GetConstantValue(element).HasValue)&&model.GetTypeInfo(n).Type is IArrayTypeSymbol arrayType&&BakedScalar(arrayType.ElementType)) {
@@ -1095,7 +1118,7 @@ sealed partial class Lowerer {
         }
         for(int i=fixedCount;i<(expanded?paramsIndex:method.Parameters.Length);i++)b.Append("auto cs_arg"+i+" = "+Constant(method.Parameters[i].ExplicitDefaultValue,method.Parameters[i].Type,site)+"; ");
         if(expanded){
-            b.Append("auto cs_arg"+paramsIndex+" = "+Type(paramsArray,site)+"::make("+Math.Max(0,args.Count-paramsIndex)+"); ");
+            b.Append("auto cs_arg"+paramsIndex+" = "+SourceAllocation(site,"params_array",Type(paramsArray,site)+"::make("+Math.Max(0,args.Count-paramsIndex)+")")+"; ");
             for(int i=paramsIndex;i<args.Count;i++)b.Append("cs_arg"+paramsIndex+".at("+(i-paramsIndex)+") = "+Converted(args[i],paramsArray!.ElementType)+"; ");
         }
         if(receiver!=null)b.Append("if(!cs_receiver)throw pls::cs::NullReferenceException(); ");

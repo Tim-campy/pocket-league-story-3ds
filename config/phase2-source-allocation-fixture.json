@@ -1,0 +1,46 @@
+{
+  "operation": "source-allocation-operation-probe",
+  "status": "PASS",
+  "categories": {
+    "new_object": [
+      2,
+      0
+    ],
+    "new_array": [
+      1,
+      0
+    ],
+    "boxing": [
+      1,
+      0
+    ],
+    "concat_operator": [
+      1,
+      0
+    ],
+    "closure_evaluation": [
+      1,
+      0
+    ],
+    "delegate_evaluation": [
+      1,
+      0
+    ]
+  },
+  "source_trace_matches_mono": true,
+  "clr_heap_allocation_equivalence": false,
+  "producer": {
+    "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+    "translator_source_sha256": "1dfa16a9f8aa25639b584fb26215bd976dcbe72516c7e1292e61c20315df501d",
+    "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
+    "driver_sha256": "85fa47a5c277d68f9492d132f8699c81f71a5370936b1f8475062bd408c9677b"
+  },
+  "inputs": {
+    "translator/test_source_allocations.py": "a032e2fb87ed1c26612fea084da1302d98282218096acbf8cdeb6f350207f32b",
+    "tests/translator/SourceAllocationFixtures.cs": "ff3918db366044ae2139ace9216a2f0b1f76154a9c770588aa27c2aba2e1e2e6",
+    "translator/Translator.cs": "1dfa16a9f8aa25639b584fb26215bd976dcbe72516c7e1292e61c20315df501d",
+    "src/kairo/common/source_allocation_probe.hpp": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83",
+    "src/main/allocation_probe.cpp": "4d18ccc9a0cbe2bb728c362131d82496bf90d8a8c9da3e4c81c31a94da6b7678"
+  }
+}

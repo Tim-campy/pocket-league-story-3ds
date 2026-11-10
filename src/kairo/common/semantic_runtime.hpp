@@ -1,4 +1,5 @@
 #pragma once
+#include "source_allocation_probe.hpp"
 #include "memory_ranges.hpp"
 // New implementation of the measured C# language contract; no original assets.
 #include <algorithm>
@@ -275,6 +276,7 @@ public:
         if(text)data_=make_ref<Storage>(std::u16string(text,length));
     }
     explicit String(std::u16string text):data_(make_ref<Storage>(std::move(text))){}
+    static String literal(const char16_t* text,std::size_t length);
     static String from_utf8(const std::string& text);
     std::string utf8()const;
     bool is_null()const noexcept{return !data_;}
@@ -492,7 +494,24 @@ template<class F,class G>auto run_finally(F&&body,G&&cleanup)->std::invoke_resul
 template<class Signature>class Delegate;
 template<class R,class...Args>class Delegate<R(Args...)> {
     struct Binding{std::shared_ptr<void>target;std::weak_ptr<Object>managed_target;std::string method;std::function<R(Args...)>function;const void* identity=nullptr;};
-    std::vector<Binding> bindings_;
+    // A C# delegate is immutable. Invocation retains its list rather than
+    // allocating a copy of every binding. The list is a managed node so the
+    // cycle collector sees shared ownership once, not duplicate target edges
+    // from each value-wrapper copy.
+    struct InvocationList final:Object {
+        std::vector<Binding> bindings;
+        void trace_edges(const EdgeVisitor&visitor)const override{
+            Object::trace_edges(visitor);
+            for(const auto&binding:bindings)if(auto target=binding.managed_target.lock())visitor(target);
+        }
+        void release_edges()override{Object::release_edges();bindings.clear();}
+        void memory_ranges(const memory::RangeVisitor&visitor)const override{
+            Object::memory_ranges(visitor);
+            if(bindings.capacity())visitor(bindings.data(),bindings.capacity()*sizeof(Binding),memory::Category::managed_heap);
+        }
+    };
+    Ref<InvocationList> list_;
+    std::size_t count()const noexcept{return list_?list_->bindings.size():0;}
     static bool equal_binding(const Binding&a,const Binding&b){return a.identity==b.identity&&a.method==b.method;}
 public:
     Delegate()=default;
@@ -501,35 +520,48 @@ public:
         if constexpr(std::is_base_of_v<Object,T>)managed=target;
         else if constexpr(std::is_polymorphic_v<T>)managed=std::dynamic_pointer_cast<Object>(target);
         std::shared_ptr<void>identity=target;if(auto object=managed.lock())identity=object;
-        Delegate result;const void*key=identity.get();result.bindings_.push_back({identity,managed,std::move(method),std::forward<F>(function),key});return result;
+        Delegate result;const void*key=identity.get();result.list_=make_ref<InvocationList>();result.list_->bindings.push_back({identity,managed,std::move(method),std::forward<F>(function),key});return result;
     }
-    template<class T,class F>static Delegate bind_identity(std::shared_ptr<T>target,const void*identity,std::string method,F&&function){auto result=bind(std::move(target),std::move(method),std::forward<F>(function));result.bindings_[0].identity=identity;return result;}
+    template<class T,class F>static Delegate bind_identity(std::shared_ptr<T>target,const void*identity,std::string method,F&&function){auto result=bind(std::move(target),std::move(method),std::forward<F>(function));result.list_->bindings[0].identity=identity;return result;}
     template<class F>static Delegate from_static(std::string method,F&&function) {
         return bind(std::shared_ptr<void>(),std::move(method),std::forward<F>(function));
     }
-    bool is_null()const noexcept{return bindings_.empty();}
+    bool is_null()const noexcept{return count()==0;}
     explicit operator bool()const noexcept{return !is_null();}
-    void trace_edges(const EdgeVisitor&visitor)const{for(const auto&binding:bindings_)if(auto target=binding.managed_target.lock())visitor(target);}
-    void release_edges(){bindings_.clear();}
+    void trace_edges(const EdgeVisitor&visitor)const{if(list_)visitor(list_);}
+    void release_edges(){list_.reset();}
     R operator()(Args...args)const {
         if(is_null())throw NullReferenceException();
-        const auto snapshot=bindings_; // Removing handlers during invocation affects the next call.
-        if constexpr(std::is_void_v<R>) {for(const auto&b:snapshot)b.function(args...);}
-        else {std::optional<R>result;for(const auto&b:snapshot)result.emplace(b.function(args...));return std::move(*result);}
+        const auto snapshot=list_; // Removing handlers during invocation affects the next call.
+        if constexpr(std::is_void_v<R>) {for(const auto&b:snapshot->bindings)b.function(args...);}
+        else {std::optional<R>result;for(const auto&b:snapshot->bindings)result.emplace(b.function(args...));return std::move(*result);}
     }
-    Delegate& operator+=(const Delegate&other){bindings_.insert(bindings_.end(),other.bindings_.begin(),other.bindings_.end());return *this;}
+    Delegate& operator+=(const Delegate&other){
+        if(other.is_null())return *this;
+        if(is_null()){list_=other.list_;return *this;}
+        auto next=make_ref<InvocationList>();next->bindings.reserve(count()+other.count());
+        next->bindings.insert(next->bindings.end(),list_->bindings.begin(),list_->bindings.end());
+        next->bindings.insert(next->bindings.end(),other.list_->bindings.begin(),other.list_->bindings.end());
+        list_=std::move(next);return *this;
+    }
     Delegate& operator-=(const Delegate&other) {
-        if(other.bindings_.empty() || other.bindings_.size()>bindings_.size())return *this;
-        for(std::size_t end=bindings_.size();end>=other.bindings_.size();--end) {
-            const std::size_t start=end-other.bindings_.size();bool equal=true;
-            for(std::size_t i=0;i<other.bindings_.size();++i)if(!equal_binding(bindings_[start+i],other.bindings_[i])){equal=false;break;}
-            if(equal){bindings_.erase(bindings_.begin()+static_cast<std::ptrdiff_t>(start),bindings_.begin()+static_cast<std::ptrdiff_t>(end));break;}
+        if(other.is_null() || other.count()>count())return *this;
+        for(std::size_t end=count();end>=other.count();--end) {
+            const std::size_t start=end-other.count();bool equal=true;
+            for(std::size_t i=0;i<other.count();++i)if(!equal_binding(list_->bindings[start+i],other.list_->bindings[i])){equal=false;break;}
+            if(equal){
+                if(other.count()==count()){list_.reset();break;}
+                auto next=make_ref<InvocationList>();next->bindings.reserve(count()-other.count());
+                next->bindings.insert(next->bindings.end(),list_->bindings.begin(),list_->bindings.begin()+static_cast<std::ptrdiff_t>(start));
+                next->bindings.insert(next->bindings.end(),list_->bindings.begin()+static_cast<std::ptrdiff_t>(end),list_->bindings.end());
+                list_=std::move(next);break;
+            }
         }
         return *this;
     }
     friend Delegate operator+(Delegate a,const Delegate&b){a+=b;return a;}
     friend Delegate operator-(Delegate a,const Delegate&b){a-=b;return a;}
-    friend bool operator==(const Delegate&a,const Delegate&b){if(a.bindings_.size()!=b.bindings_.size())return false;for(std::size_t i=0;i<a.bindings_.size();++i)if(!equal_binding(a.bindings_[i],b.bindings_[i]))return false;return true;}
+    friend bool operator==(const Delegate&a,const Delegate&b){if(a.count()!=b.count())return false;for(std::size_t i=0;i<a.count();++i)if(!equal_binding(a.list_->bindings[i],b.list_->bindings[i]))return false;return true;}
     friend bool operator!=(const Delegate&a,const Delegate&b){return !(a==b);}
 };
 String convert_to_base64_string(const Array<std::uint8_t>& value);

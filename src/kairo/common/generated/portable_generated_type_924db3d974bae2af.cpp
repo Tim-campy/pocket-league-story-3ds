@@ -47,9 +47,9 @@ void cs_8b6e6e5ae1d900bd_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this,std::int
 pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> cs_6f0c7cad5125d866(std::int32_t v_n) { cs_init_924db3d974bae2af();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureLong.Array(System.Int32)",kairo);
 {
-pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> v_array_1536 = pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>>::make(v_n);
+pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>> v_array_1536 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/SecureLong.cs:M:kairo.unity.util.SecureLong.Array(System.Int32):1544",pls::cs::Array<pls::cs::Ref<cs_924db3d974bae2af>>::make(v_n));
 for (std::int32_t v_i_1575 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_1575; auto cs_right = (v_array_1536).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_1575; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_1575 = cs_new; return cs_old; }())) {
-([&]() { auto cs_target = v_array_1536; auto cs_index = v_i_1575; auto cs_value = ([&]() -> pls::cs::Ref<cs_924db3d974bae2af> { return cs_74758feb8d7ec688(); }());cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+([&]() { auto cs_target = v_array_1536; auto cs_index = v_i_1575; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/SecureLong.cs:M:kairo.unity.util.SecureLong.Array(System.Int32):1625",([&]() -> pls::cs::Ref<cs_924db3d974bae2af> { return cs_74758feb8d7ec688(); }()));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
 return v_array_1536;
 }
@@ -105,7 +105,7 @@ return ([&]() -> std::int64_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_9
 pls::cs::Ref<cs_924db3d974bae2af> cs_867c5dd84cdc90b1(std::int64_t v_s) { cs_init_924db3d974bae2af();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureLong.op_Implicit(System.Int64)~kairo.unity.util.SecureLong",kairo);
 {
-return ([&]() -> pls::cs::Ref<cs_924db3d974bae2af> { std::int64_t cs_arg0 = v_s; return cs_8b6e6e5ae1d900bd(cs_arg0); }());
+return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/SecureLong.cs:M:kairo.unity.util.SecureLong.op_Implicit(System.Int64)~kairo.unity.util.SecureLong:238",([&]() -> pls::cs::Ref<cs_924db3d974bae2af> { std::int64_t cs_arg0 = v_s; return cs_8b6e6e5ae1d900bd(cs_arg0); }()));
 }
 }
 }

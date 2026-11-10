@@ -37,7 +37,7 @@ pls::cs::Ref<cs_dc09c88a279424b5> cs_e5cc191a31275eff(pls::cs::String v_format) 
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.TextFormat.Create(System.String)",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_a0e59a75dec69092()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_dc09c88a279424b5> { return cs_d337fafafa1bc98d(); }()); cs_a0e59a75dec69092() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/TextFormat.cs:M:kairo.unity.ui.TextFormat.Create(System.String):448",([&]() -> pls::cs::Ref<cs_dc09c88a279424b5> { return cs_d337fafafa1bc98d(); }())); cs_a0e59a75dec69092() = cs_value; return cs_value; }());
 }
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_dc09c88a279424b5>>(cs_a0e59a75dec69092()); pls::cs::String cs_arg0 = v_format; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_470e46d1c0096c27(cs_receiver,cs_arg0); }());
 return cs_a0e59a75dec69092();
@@ -136,7 +136,7 @@ void cs_470e46d1c0096c27(pls::cs::Ref<cs_dc09c88a279424b5> cs_this,pls::cs::Stri
 if (([&]() { auto cs_left = pls::cs::box(v_format); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 return;
 }
-pls::cs::Array<pls::cs::String> v_array_677 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_format; pls::cs::String cs_arg1 = pls::cs::String(std::u16string(u"\x002c" u"",1)); return pls::generated::cs_aed90764bf1359a3(cs_arg0,cs_arg1); }());});
+pls::cs::Array<pls::cs::String> v_array_677 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_format; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x002c" u"",1);return cs_literal;}()); return pls::generated::cs_aed90764bf1359a3(cs_arg0,cs_arg1); }());});
 for (std::int32_t v_i_728 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_728; auto cs_right = (v_array_677).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_728; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_728 = cs_new; return cs_old; }())) {
 pls::cs::String v_text_774 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = ([&]() { auto cs_array = v_array_677; auto cs_index = v_i_728; return cs_array.get_Item(cs_index); }()); return pls::cs::string_trim(cs_arg0); }());});
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = v_text_774; return pls::generated::cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
@@ -151,7 +151,7 @@ if ((((([&]() -> bool { auto cs_left = pls::cs::cast_integral<std::int32_t>(v_c_
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text_774; auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::game::cs_substring1(cs_arg0,cs_arg1); }());}); v_text_774 = cs_value; return cs_value; }());
 }
 std::int32_t v_num_1089 = pls::cs::conv_i32((([&]() -> float { auto cs_left = ([&]() -> float { pls::cs::String cs_arg0 = v_text_774; return cs_128bfc9b6545e4ca(cs_arg0); }()); auto cs_right = pls::game::cs_f32(0x41200000u); return (cs_left * cs_right); }())));
-pls::cs::Array<std::int32_t> v_array2_1144 = pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)));
+pls::cs::Array<std::int32_t> v_array2_1144 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/TextFormat.cs:M:kairo.unity.ui.TextFormat.Init(System.String):1153",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 if ((([&]() -> bool { auto cs_left = pls::cs::cast_integral<std::int32_t>(v_c_959); auto cs_right = pls::cs::cast_integral<std::int32_t>(char16_t(43)); return (cs_left == cs_right); }()))) {
 ([&]() { auto cs_target = v_array2_1144; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 } else if ((([&]() -> bool { auto cs_left = pls::cs::cast_integral<std::int32_t>(v_c_959); auto cs_right = pls::cs::cast_integral<std::int32_t>(char16_t(45)); return (cs_left == cs_right); }()))) {

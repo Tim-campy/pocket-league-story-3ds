@@ -22,7 +22,7 @@ void cs_c3a84083a67ee263_init(pls::cs::Ref<cs_3b41638e424b9ee0> cs_this,pls::cs:
 ([&]() { cs_7c187221d1d7c346_init(std::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_arg0 = v_data; return pls::cs::make_ref<pls::cs::MemoryStream>(cs_arg0); }()); pls::generated::cs_require(cs_target)->cs_e65a8825426ed7a3 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/io/ByteArrayInputStream.cs:M:java.io.ByteArrayInputStream.#ctor(System.Byte[]):150",([&]() { auto cs_arg0 = v_data; return pls::cs::make_ref<pls::cs::MemoryStream>(cs_arg0); }())); pls::generated::cs_require(cs_target)->cs_e65a8825426ed7a3 = cs_value; return cs_value; }());
 }
 }
 }

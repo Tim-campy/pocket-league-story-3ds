@@ -1,0 +1,19 @@
+{
+  "operation": "interned-literal-runtime",
+  "status": "PASS",
+  "cached_reads": 20000,
+  "allocations": 0,
+  "bytes": 0,
+  "concurrent_callers": 8,
+  "identity_and_utf16": true,
+  "inputs": {
+    "tools/test_literal_runtime.py": "a067a26c9a9beb6ccd7abd9091b26f29846fa039bad51ea68af1ecc5032105fb",
+    "tests/kairo/literal_runtime.cpp": "6d0fc3104d1d5da4bfeebcefde08be7dae7a1a0a60cfaf2e8e4344027e7f3a81",
+    "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
+    "src/main/allocation_probe.cpp": "4d18ccc9a0cbe2bb728c362131d82496bf90d8a8c9da3e4c81c31a94da6b7678",
+    "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
+    "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
+    "src/kairo/common/allocation_probe.hpp": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19",
+    "src/main/native_allocation_sites.hpp": "b0236c6107302fea92b4aa1b763c91770f579e0c37e20a5c4efcc4c6a8b90d02"
+  }
+}

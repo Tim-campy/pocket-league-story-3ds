@@ -34,7 +34,7 @@ std::int32_t cs_15f31d4f046b09a8::GetHashCode() {return cs_d860de92f53afc6c(std:
 static pls::cs::Array<std::uint8_t> cs_0ab9b09ba01c1501_value{};
 
 void cs_init_15f31d4f046b09a8(){static pls::cs::TypeInitState state;state.run("system.billing.ui.Receipt",[](){
-cs_0ab9b09ba01c1501_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.Receipt.PASSKEY",[&](){return pls::assets::baked_array<std::uint8_t>("61736f320d2d2e922d39112d814fc89624178f8ca851f942effda611d7d9bb89");});
+cs_0ab9b09ba01c1501_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.Receipt.PASSKEY",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.Save(java.io.OutputStream):505",pls::assets::baked_array<std::uint8_t>("61736f320d2d2e922d39112d814fc89624178f8ca851f942effda611d7d9bb89"));});
 
 });}
 
@@ -103,7 +103,7 @@ void cs_82519cef4853816c(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) { cs_init_15
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.DebugVerificationReceipt",game);
 {
-([&]() -> void { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }()); pls::cs::String cs_arg1 = pls::cs::String(std::u16string(u"\x0074" u"\x006f" u"\x006b" u"\x0065" u"\x006e" u"",5)); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); cs_c3cd5afb73d8cc54(cs_arg0); }());
+([&]() -> void { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0074" u"\x006f" u"\x006b" u"\x0065" u"\x006e" u"",5);return cs_literal;}()); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); cs_c3cd5afb73d8cc54(cs_arg0); }());
 }
 }
 }
@@ -162,7 +162,7 @@ return pls::cs::String{};
 pls::cs::String cs_9f1744905f403ec8(std::int32_t v_type) { cs_init_15f31d4f046b09a8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetItemType(UnityEngine.Purchasing.ProductType)",game);
 {
-return ((([&]() -> bool { auto cs_left = v_type; auto cs_right = static_cast<std::int32_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))); return (cs_left == cs_right); }())) ? pls::cs::String(std::u16string(u"\x0073" u"\x0075" u"\x0062" u"\x0073" u"",4)) : pls::cs::String(std::u16string(u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5)));
+return ((([&]() -> bool { auto cs_left = v_type; auto cs_right = static_cast<std::int32_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))); return (cs_left == cs_right); }())) ? ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0073" u"\x0075" u"\x0062" u"\x0073" u"",4);return cs_literal;}()) : ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5);return cs_literal;}()));
 }
 }
 }
@@ -172,7 +172,7 @@ pls::cs::String cs_f228db45ed90d23f(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) {
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetJson",game);
 {
-return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_76d45a6ec5e37940(cs_receiver); }()); pls::cs::String cs_arg1 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_69ca60609ca07561(cs_receiver); }()); pls::cs::String cs_arg2 = ([&]() { auto cs_left = pls::cs::String(u""); auto cs_right = pls::game::cs_object_string(pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6541be3d4c391c46; }()))); return pls::cs::String::concat(cs_left,cs_right); }()); return cs_29cfbbc6ef724690(cs_arg0,cs_arg1,cs_arg2); }());
+return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_76d45a6ec5e37940(cs_receiver); }()); pls::cs::String cs_arg1 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_69ca60609ca07561(cs_receiver); }()); pls::cs::String cs_arg2 = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.GetJson:1666",([&]() { auto cs_left = pls::cs::String(u""); auto cs_right = pls::game::cs_object_string(pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6541be3d4c391c46; }()))); return pls::cs::String::concat(cs_left,cs_right); }())); return cs_29cfbbc6ef724690(cs_arg0,cs_arg1,cs_arg2); }());
 }
 }
 }
@@ -194,7 +194,7 @@ pls::cs::String cs_e8fea88a1ccd74d6(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) {
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetOrderId",game);
 {
-return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); pls::cs::String cs_arg0 = pls::cs::String(std::u16string(u"\x006f" u"\x0072" u"\x0064" u"\x0065" u"\x0072" u"\x0049" u"\x0064" u"",7)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3401b30298b4eb96(cs_receiver,cs_arg0); }());
+return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x006f" u"\x0072" u"\x0064" u"\x0065" u"\x0072" u"\x0049" u"\x0064" u"",7);return cs_literal;}()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3401b30298b4eb96(cs_receiver,cs_arg0); }());
 }
 }
 }
@@ -228,7 +228,7 @@ pls::cs::Ref<cs_a42daea58251b089> cs_9766d64ee1bba541(pls::cs::Ref<cs_15f31d4f04
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetPurchase",game);
 {
 pls::cs::String v_json_1219 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }());
-return ([&]() -> pls::cs::Ref<cs_a42daea58251b089> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { std::int32_t cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_59d0e1ae203981e5; }()); return cs_9f1744905f403ec8(cs_arg0); }()); pls::cs::String cs_arg1 = v_json_1219; pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_json_1219; pls::cs::String cs_arg1 = pls::cs::String(std::u16string(u"\x0073" u"\x0069" u"\x0067" u"\x006e" u"\x0061" u"\x0074" u"\x0075" u"\x0072" u"\x0065" u"",9)); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); return cs_f7abaa335be13394(cs_arg0,cs_arg1,cs_arg2); }());
+return pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.GetPurchase:1247",([&]() -> pls::cs::Ref<cs_a42daea58251b089> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { std::int32_t cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_59d0e1ae203981e5; }()); return cs_9f1744905f403ec8(cs_arg0); }()); pls::cs::String cs_arg1 = v_json_1219; pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_json_1219; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0073" u"\x0069" u"\x0067" u"\x006e" u"\x0061" u"\x0074" u"\x0075" u"\x0072" u"\x0065" u"",9);return cs_literal;}()); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); return cs_f7abaa335be13394(cs_arg0,cs_arg1,cs_arg2); }()));
 }
 }
 }
@@ -280,7 +280,7 @@ return ([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!
 pls::cs::Ref<cs_15f31d4f046b09a8> cs_fb33e792a02d6245(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) { cs_init_15f31d4f046b09a8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.Load(java.io.InputStream)",game);
 {
-pls::cs::Ref<cs_15f31d4f046b09a8> v_receipt_2975 = ([&]() -> pls::cs::Ref<cs_15f31d4f046b09a8> { return cs_9c5286d2f0a31d6e(); }());
+pls::cs::Ref<cs_15f31d4f046b09a8> v_receipt_2975 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.Load(java.io.InputStream):2985",([&]() -> pls::cs::Ref<cs_15f31d4f046b09a8> { return cs_9c5286d2f0a31d6e(); }()));
 ([&]() { auto cs_target = v_receipt_2975; auto cs_value = ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_50da92fdb560017f(cs_arg0); }());}); return pls::generated::cs_7047562b1e051211(cs_value); }()); pls::game::cs_require(cs_target)->cs_faf2053d989419ff = cs_value; return cs_value; }());
 ([&]() { auto cs_target = v_receipt_2975; auto cs_value = ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_50da92fdb560017f(cs_arg0); }());}); return pls::generated::cs_7047562b1e051211(cs_value); }()); pls::game::cs_require(cs_target)->cs_519713e3b629623c = cs_value; return cs_value; }());
 ([&]() { auto cs_target = v_receipt_2975; auto cs_value = ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> cs_arg0 = v_stream; return pls::generated::cs_3715f8f52a079812(cs_arg0); }());}); return pls::generated::cs_9aee68341f2c87b1(cs_value); }()); pls::game::cs_require(cs_target)->cs_b713199635bb1058 = cs_value; return cs_value; }());
@@ -302,7 +302,7 @@ pls::cs::run_finally([&]() {{
 pls::cs::Array<std::uint8_t> v_array_4303 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = v_src; return pls::generated::cs_45659d3497c243a5(cs_arg0); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Array<std::uint8_t> cs_arg0 = v_array_4303; pls::cs::Array<std::uint8_t> cs_arg1 = cs_0ab9b09ba01c1501(); pls::generated::cs_33fd658d45a27eb0(cs_arg0,cs_arg1); }());});
 std::int64_t v_num_4378 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { pls::cs::Array<std::uint8_t> cs_arg0 = v_array_4303; auto cs_arg1 = false; return pls::generated::cs_a02a33f2a801ef0d(cs_arg0,cs_arg1); }());});
-pls::cs::Array<std::uint8_t> v_array2_4428 = pls::cs::Array<std::uint8_t>::make(([&]() -> std::int32_t { auto cs_left = (v_array_4303).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); return pls::cs::sub_i32(cs_left,cs_right); }()));
+pls::cs::Array<std::uint8_t> v_array2_4428 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.PasswordDecodeToBytes(System.String):4437",pls::cs::Array<std::uint8_t>::make(([&]() -> std::int32_t { auto cs_left = (v_array_4303).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); return pls::cs::sub_i32(cs_left,cs_right); }())));
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_array_4303); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(v_array2_4428); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg4 = (v_array2_4428).length(); pls::generated::cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());});
 if (([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { pls::cs::Array<std::uint8_t> cs_arg0 = v_array2_4428; return pls::generated::cs_4d36dd315e2118af(cs_arg0); }());}); auto cs_right = v_num_4378; return (cs_left != cs_right); }())) {
 throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{pls::cs::Array<std::uint8_t>{}};
@@ -333,7 +333,7 @@ std::int32_t v_num_3658 = (v_src).length();
 pls::cs::run_finally([&]() {{
 ([&]() { auto cs_value = false; pls::generated::cs_4cc76a7a43706693() = cs_value; return cs_value; }());
 pls::cs::Array<std::uint8_t> v_array_3725 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Array<std::uint8_t> cs_arg0 = v_src; return pls::generated::cs_e44260e02e247abd(cs_arg0); }());});
-([&]() { auto cs_value = pls::cs::Array<std::uint8_t>::make(([&]() -> std::int32_t { auto cs_left = (v_array_3725).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); return pls::cs::add_i32(cs_left,cs_right); }())); v_src = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.PasswordEncode(System.Byte[]):3769",pls::cs::Array<std::uint8_t>::make(([&]() -> std::int32_t { auto cs_left = (v_array_3725).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); return pls::cs::add_i32(cs_left,cs_right); }()))); v_src = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { std::int64_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { pls::cs::Array<std::uint8_t> cs_arg0 = v_array_3725; return pls::generated::cs_4d36dd315e2118af(cs_arg0); }());}); auto cs_arg1 = false; return pls::generated::cs_afc3ba06e9b75538(cs_arg0,cs_arg1); }());})); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(v_src); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg4 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); pls::generated::cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_array_3725); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::Ref<pls::cs::Object> cs_arg2 = pls::cs::box(v_src); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); std::int32_t cs_arg4 = (v_array_3725).length(); pls::generated::cs_d7f58c7ab5ff68b6(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Array<std::uint8_t> cs_arg0 = v_src; pls::cs::Array<std::uint8_t> cs_arg1 = cs_0ab9b09ba01c1501(); pls::generated::cs_17e1939c126befd5(cs_arg0,cs_arg1); }());});

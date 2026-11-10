@@ -61,7 +61,7 @@ pls::cs::Array<std::uint8_t> cs_95c81bd3d12349d3(pls::cs::Array<std::uint8_t> v_
 if (pls::generated::cs_is_little_endian()) {
 pls::cs::Array<std::uint8_t> v_array_5681 = v_data;
 if (([&]() -> bool { auto cs_left = (v_array_5681).length(); auto cs_right = v_length; return (cs_left != cs_right); }())) {
-([&]() { auto cs_value = pls::cs::Array<std::uint8_t>::make(v_length); v_array_5681 = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/EncodeUtil.cs:M:kairo.unity.util.EncodeUtil.ConvertEndian(System.Byte[],System.Int32):5746",pls::cs::Array<std::uint8_t>::make(v_length)); v_array_5681 = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_source = v_data; auto cs_dest = v_array_5681; auto cs_count = v_length; pls::cs::Array<std::uint8_t>::copy(cs_source,0,cs_dest,0,cs_count); }());});
 }
 for (std::int32_t v_num_5821 = ([&]() -> std::int32_t { auto cs_left = ([&]() -> std::int32_t { auto cs_left = (v_array_5681).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::div_i32(cs_left,cs_right); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); ([&]() -> bool { auto cs_left = v_num_5821; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left >= cs_right); }()); ([&]() { auto cs_old = v_num_5821; auto cs_new = pls::cs::sub_i32(cs_old,1); v_num_5821 = cs_new; return cs_old; }())) {

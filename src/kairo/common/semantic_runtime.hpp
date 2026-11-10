@@ -214,6 +214,8 @@ std::int32_t gc_max_generation()noexcept;
 std::int32_t gc_generation(const Ref<Object>&object);
 struct GcCollectionStats {std::size_t tracked=0,roots=0,unreachable=0,collected=0;};
 GcCollectionStats gc_last_collection();
+struct GcRegistryStats {std::size_t entries=0,expired=0;};
+GcRegistryStats gc_registry_stats(); // Read-only bookkeeping measurement, outside timed frames.
 // Every worker mutating managed objects must register and reach safepoints.
 // The collector does not suspend operating-system threads or inspect stacks.
 class GcMutatorScope {

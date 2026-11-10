@@ -1,5 +1,7 @@
 #include "input.hpp"
+#if !defined(PLS_NULL_BACKEND)
 #include <SDL.h>
+#endif
 #include <array>
 
 namespace pls::kairo {
@@ -35,10 +37,14 @@ void CanvasKeyState::PhysicalDown(std::int32_t code,bool debug){const auto id=Ge
 void CanvasKeyState::PhysicalUp(std::int32_t code,bool debug){const auto id=GetKeyID(code,debug);if(id!=-1){const auto bit=cs::shl_i32(1,id);if((disabled_&bit)==0){work_&=~bit;if(on_key_up)on_key_up(id);}}}
 namespace {
 std::int32_t unity_key(std::int32_t key) {
+#if defined(PLS_NULL_BACKEND)
+    return key; // Null replay supplies Canvas key codes, never SDL events.
+#else
     switch(key){case SDLK_KP_0:return 256;case SDLK_KP_1:return 257;case SDLK_KP_2:return 258;case SDLK_KP_3:return 259;case SDLK_KP_4:return 260;case SDLK_KP_5:return 261;
         case SDLK_KP_6:return 262;case SDLK_KP_7:return 263;case SDLK_KP_8:return 264;case SDLK_KP_9:return 265;case SDLK_KP_DIVIDE:return 267;case SDLK_KP_MULTIPLY:return 268;
         case SDLK_KP_ENTER:return 271;case SDLK_UP:return 273;case SDLK_DOWN:return 274;case SDLK_RIGHT:return 275;case SDLK_LEFT:return 276;case SDLK_HOME:return 278;
         case SDLK_LSHIFT:return 304;case SDLK_RSHIFT:return 303;case SDLK_LCTRL:return 306;case SDLK_RCTRL:return 305;default:return key;}
+#endif
 }
 }
 void PcInputAdapter::feed(const platform::Input& event) {

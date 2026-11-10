@@ -29,24 +29,24 @@ Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f591
 - MAP: quatro projeções runtime GMAP comprovadas; ferramenta autoral UNKNOWN. Três CSV vinculados a Language; dados preservados localmente.
 - Classificação estática dos literais da Fase 1 preservada; a decisão posterior do usuário permite literais do C# em C++ gerado. Assets/textos extraídos continuam locais.
 - Memória e frame time do menu PC têm medição parcial em Release; cobertura completa e medições 3DS continuam pendentes. O 3DS antigo não foi descartado.
-- SDL2 SDK 2.32.10 preparado com autorização; toolchain 3DS/Azahar continuam ausentes e reservados à Fase 4. Não foram instalados.
+- SDL2 SDK preparado. Toolchain ARM11 e Azahar inventariados em config/phase2-arm11-tools.json para o benchmark autorizado; isso não comprova desempenho no hardware nem implementação do backend gráfico 3DS.
 
 Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets](docs/assets.md), [toolchain](docs/toolchain.md), [serviços offline](docs/notes/offline-behavior.md).
 
 ## Evidência atual da Fase 2
 
 - Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 172 raízes + 202 dependências emitidas/compiladas; 374 métodos exercitados e 373 verificados. 2617/2618 observações diferenciais aprovadas; 1 diferenças de plataforma explicitamente retidas, sem promoção a verified.
-- Fronteira: 252/775 símbolos verificados: 171 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend CTR ainda não compilado.
+- Fronteira: 252/775 símbolos verificados: 171 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend grafico CTR ainda nao implementado; o benchmark ARM11 usa backend nulo.
 - Assembly-CSharp: 1768 corpos emitidos, 1768 compilados em objeto C++; 1768/1958 (90.30%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4841 identidades declaradas; o pedido atual inclui 1900 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
 - Sintaxe: 69/123 SyntaxKinds na união dos corpos emitidos (63 Kairo, 69 Game); observação não comprova cobertura semântica integral de cada construção.
 - Serviços: 53 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.
 - Assets: 654 RGBA8 únicos (16933248 bytes) com readback integral; 2 TTF e 27 Ogg exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.
-- Diagnósticos privados Release: até 900 frames apresentados com logs locais autenticados. Isso não promove métodos a runs/verified nem comprova a tela por inferência. Inspeções do cadastro, campo e menu de gestão, comparação Android pendente e medições com cobertura parcial: [continuidade](docs/notes/phase2-after-a418890.md). Partida completa ainda UNKNOWN.
-- Próxima integração: ampliar tradução e bindings exigidos pelo caminho à primeira partida e depois à partida completa. Nenhuma decisão de telas 3DS foi tomada.
+- Marco de partida completa e retorno ao menu registrado em [recibo](config/phase2-match-complete.json) e [evidencia](docs/notes/phase2-match-complete.md). Cobertura por metodo depende dos recibos autenticados; comparacao Android pendente.
+- Próxima integração: completar corpos, slots e serviços restantes; medir o runtime sem rasterização. Nenhuma decisão de telas 3DS foi tomada.
 
 ## Limites das contagens e dos bindings
 
-translated significa apenas que o corpo C++ gerado compilou em objeto, com produtor, fontes, headers, compilador e objeto ancorados por hash. Não comprova link completo, bootstrap executado, chamada de todas as APIs ou comportamento em aparelho. runs/verified do jogo permanecem zero até prova de execução apropriada.
+translated significa apenas que o corpo C++ gerado compilou em objeto, com produtor, fontes, headers, compilador e objeto ancorados por hash. Não comprova link completo, bootstrap executado, chamada de todas as APIs ou comportamento em aparelho. runs depende dos recibos de retorno normal; verified exige comparação de comportamento. As contagens atuais estão no inventário acima.
 O vínculo do jogo usa tipo declarante, nome, todos os tipos de parâmetros e retorno; construtores retornam System.Void. Não há vínculo só por aridade. Correspondências ambíguas, assinaturas abertas e DocIDs sem identidade IL única ficam registrados como UNKNOWN no recibo. Métodos gerados/auxiliares do IL não são contados como traduzidos por haver uma declaração fonte relacionada.
 Provas de framework/SDL, fontes e áudio não equivalem a bindings do jogo. Somente IDs explícitos exercitados por um oráculo de API promovem a fronteira. Alterações transitórias em produtores/headers/gerados suspendem a publicação inteira; preserva-se o último conjunto consistente de documentos/CSVs até os recibos serem regenerados.
 

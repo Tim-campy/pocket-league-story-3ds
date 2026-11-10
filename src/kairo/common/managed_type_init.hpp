@@ -4,6 +4,8 @@
 #include <thread>
 #include <unordered_map>
 #include <cstdio>
+#include <atomic>
+#include <string_view>
 
 namespace pls::cs {
 template<class F>auto evaluate_type_initializer_field(const char* id,F&& body)->std::invoke_result_t<F>{
@@ -51,13 +53,17 @@ inline bool would_cycle(const Coordinator& engine,std::thread::id waiting,std::t
 class TypeInitState {
     enum class Status {fresh,running,done,failed};
     Status status_{Status::fresh};
+    std::atomic<bool> completed_{false};
     std::thread::id owner_;
     std::exception_ptr failure_;
 public:
     TypeInitState()=default;
     TypeInitState(const TypeInitState&)=delete;
     TypeInitState& operator=(const TypeInitState&)=delete;
-    template<class F>void run(const std::string& name,F&& action){
+    template<class F>void run(std::string_view name,F&& action){
+        // Publish successful initialization only after all initializer writes.
+        // Recursion, failure caching and cross-thread cycles keep the slow path.
+        if(completed_.load(std::memory_order_acquire))return;
         auto& engine=type_init_detail::coordinator();const auto thread=std::this_thread::get_id();
         std::unique_lock<std::mutex> guard(engine.mutex);
         for(;;){
@@ -76,10 +82,11 @@ public:
         try{std::forward<F>(action)();}
         catch(...){
             auto inner=std::current_exception();
-            try{throw TypeInitializationException(name,std::move(inner));}
+            try{throw TypeInitializationException(std::string(name),std::move(inner));}
             catch(...){failed=std::current_exception();}
         }
         guard.lock();owner_={};failure_=failed;status_=failed?Status::failed:Status::done;
+        if(!failed)completed_.store(true,std::memory_order_release);
         guard.unlock();engine.changed.notify_all();
         if(failed)std::rethrow_exception(failed);
     }

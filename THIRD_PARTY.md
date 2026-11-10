@@ -138,3 +138,14 @@ The pinned source files and generated table stay in ignored `build/`.
 Run `tools/setup_number_format.py --apk <your-local-apk>`; the source URLs,
 SHA-256 and license-header checks are recorded in
 `config/phase2-number-format-sources.json`. No game asset is involved.
+
+## Microsoft TraceEvent (MIT; development tool only)
+
+The official NuGet package Microsoft.Diagnostics.Tracing.TraceEvent 3.2.8 is
+used locally to read Windows ETW traces. It is not linked into the port.
+`tools/setup_etw_reader.py` pins the package SHA-256, checks its MIT license
+declaration and retains the package metadata under ignored
+`build/deps/trace-parser`. The upstream source is
+https://github.com/microsoft/perfview; its license is
+https://github.com/microsoft/perfview/blob/main/LICENSE.TXT.
+Package hash and runtime requirements are recorded in `docs/toolchain.md`.

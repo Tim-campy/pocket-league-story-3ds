@@ -34,7 +34,7 @@ def abstract_fixture(type):
 def run(command,folder,name,env=None):
     started=time.perf_counter()
     try:
-        p=subprocess.run([str(v) for v in command],cwd=ROOT,capture_output=True,env=env,timeout=180 if name=='native-compile' else 60)
+        p=subprocess.run([str(v) for v in command],cwd=ROOT,capture_output=True,env=env,timeout=600 if name=='native-compile' else 60)
     except subprocess.TimeoutExpired as failure:
         stdout=failure.stdout or b'';stderr=failure.stderr or b''
         (folder/(name+'.stdout')).write_bytes(stdout);(folder/(name+'.stderr')).write_bytes(stderr)

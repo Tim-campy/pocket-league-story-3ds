@@ -3,6 +3,7 @@
 #include <condition_variable>
 #include <mutex>
 #include <utility>
+#include <system_error>
 
 namespace pls::cs {
 namespace {

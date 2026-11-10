@@ -32,7 +32,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592"
+      "sha256": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012"
     },
     {
       "path": "src/kairo/common/managed_streams.cpp",
@@ -44,7 +44,7 @@
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
-      "sha256": "76ddd5568410670d790f953dc3111976ff48144364ad088724eebf3e61feadaf"
+      "sha256": "c634296db40f099b6929dc8a3eed8dac052d8fa87326ba07547dc25d96a9f4f6"
     },
     {
       "path": "src/kairo/common/managed_collation.cpp",
@@ -65,6 +65,10 @@
     {
       "path": "src/kairo/common/managed_stream_reader.cpp",
       "sha256": "ae83f5638ede4fbbb157181d0ae305771d5194747f7e948cc35d77a9b694c721"
+    },
+    {
+      "path": "src/kairo/common/allocation_probe.hpp",
+      "sha256": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19"
     },
     {
       "path": "src/kairo/common/arc_geometry.hpp",
@@ -152,7 +156,7 @@
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
-      "sha256": "5b8f6473cf2693e88357e3567980934c883662ebbf49898bd4bf53993751fc81"
+      "sha256": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0"
     },
     {
       "path": "src/kairo/common/managed_thread.hpp",
@@ -164,15 +168,19 @@
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "950dbc37e6f92b64b49b0e2018090f8cbe0f0eec929826271e7ab53fef164681"
+      "sha256": "6260b413336acc69aaa0983754e14d546fc41d123acaee7843462762d956c04c"
     },
     {
       "path": "src/kairo/common/memory_ranges.hpp",
       "sha256": "237593f45c5bc1b201793228f4615d4fa493bdedded05eae30bc6e107ff2305e"
     },
     {
+      "path": "src/kairo/common/render_mode.hpp",
+      "sha256": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0"
+    },
+    {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49"
+      "sha256": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -211,10 +219,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "f211013e03f1a7e70dd53247b0f5fb3b5353715fca96cf4feff06da17d419482"
+    "sha256": "ed5cccf1e61e856b3f0960741566e3e37a35dd9aa5f70148de47fdb5f12048b9"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "26e76684ca6224c8a1850206deecbfcad044005603ce2f3a2f63848e1d847da7"
+    "sha256": "b31bce4ae470f49892f1cda046acb858368e98a1d7a07400358aec9d6d248c00"
   }
 }

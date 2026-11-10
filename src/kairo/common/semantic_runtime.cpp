@@ -1,4 +1,5 @@
 #include "semantic_runtime.hpp"
+#include "allocation_probe.hpp"
 #include <condition_variable>
 #include <thread>
 #include <unordered_map>
@@ -16,6 +17,7 @@ struct CollectorState {
     std::mutex mutex;std::condition_variable condition;
     struct Entry{std::weak_ptr<Object>object;std::int32_t generation=0;std::size_t body_bytes=0;const void*body_begin=nullptr;};
     std::unordered_map<Object*,Entry>objects;
+    std::size_t registrations_since_sweep=0;
     std::unordered_map<std::thread::id,std::size_t>mutators;
     std::unordered_map<std::thread::id,std::size_t>native_blocked;
     std::unordered_set<std::thread::id>parked;
@@ -35,6 +37,15 @@ void register_managed_object(const Ref<Object>&object,std::size_t body_bytes,con
     auto&state=collector_state();std::unique_lock<std::mutex>lock(state.mutex);
     if(state.native_blocked.count(std::this_thread::get_id()))throw InvalidOperationException("Managed allocation inside a native blocking scope");
     wait_for_collection(state,lock);
+    // Expired weak entries describe objects already destroyed by reference
+    // counting. Retaining their control blocks until an explicit GC grows
+    // bookkeeping indefinitely; pruning them does not collect any live object.
+    if(++state.registrations_since_sweep>=std::max<std::size_t>(1024,state.objects.size()/4)){
+        for(auto entry=state.objects.begin();entry!=state.objects.end();){
+            if(entry->second.object.expired())entry=state.objects.erase(entry);else ++entry;
+        }
+        state.registrations_since_sweep=0;
+    }
     auto it=state.objects.find(object.get());
     if(it==state.objects.end()||it->second.object.expired())state.objects[object.get()]={object,0,body_bytes,body_begin};
 }
@@ -90,6 +101,7 @@ GcNativeBlockingScope::~GcNativeBlockingScope(){
     state.native_blocked.erase(thread);state.condition.notify_all();
 }
 GcCollectionStats gc_last_collection(){auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);return state.last;}
+GcRegistryStats gc_registry_stats(){auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);GcRegistryStats result{state.objects.size(),0};for(const auto&entry:state.objects)if(entry.second.object.expired())++result.expired;return result;}
 void gc_collect(std::int32_t generation){
     if(generation<0)throw ArgumentOutOfRangeException();auto&state=collector_state();
     {
@@ -101,6 +113,7 @@ void gc_collect(std::int32_t generation){
         }
         state.requested=true;state.collector=std::this_thread::get_id();
     }
+    [[maybe_unused]] allocation_probe::Collection allocation_measurement;
     CollectionPause pause{state};
     try{
         std::vector<Ref<Object>>objects;std::vector<std::int32_t>ages;

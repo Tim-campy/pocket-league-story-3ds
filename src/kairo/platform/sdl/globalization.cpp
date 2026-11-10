@@ -46,7 +46,9 @@ cs::String detail::device_model_from_registry(const DeviceModelRegistryReader&re
     return fallback();
 }
 cs::String device_model(){
-#if defined(_WIN32)
+#if defined(__3DS__) && defined(PLS_NULL_BACKEND)
+    return cs::String(u"ARM11 benchmark");
+#elif defined(_WIN32)
     static_assert(sizeof(wchar_t)==sizeof(char16_t));
     return detail::device_model_from_registry([](void*data,std::uint32_t&size){
         DWORD bytes=size;
@@ -98,7 +100,9 @@ cs::Array<cs::String> locale(){wchar_t name[LOCALE_NAME_MAX_LENGTH]{};if(GetUser
 }
 #endif
 void install_globalization_backend(){
-#if defined(_WIN32)
+#if defined(__3DS__) && defined(PLS_NULL_BACKEND)
+    kairo::install_globalization_provider({[]{return cs::String(u"UTC");},[](const cs::String& id){if(id!=cs::String(u"UTC"))throw cs::NotSupportedException("Benchmark timezone is UTC");return 0;},[]{return cs::Array<cs::String>::from({cs::String(u"en"),cs::String(u"US")});}});
+#elif defined(_WIN32)
     kairo::install_globalization_provider({timezone_id,timezone_raw_offset,locale});
 #else
     throw cs::NotSupportedException("Native globalization backend has not been implemented on this host");

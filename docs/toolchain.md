@@ -455,3 +455,54 @@ as an implementation of modern .NET formatting. Production scope is Mono265
 Single G7 / Double G15, including negative zero, NaN, infinities and exponents.
 General format strings and full CultureInfo numeric data are not implemented.
 Android numerical formatting remains UNKNOWN. License attribution: THIRD_PARTY.md.
+
+
+## Benchmark ARM11 antecipado (autorizado após 0bc12c3)
+
+A autorização desta rodada antecipa somente a instalação e a medição sem vídeo; não implementa o backend gráfico 3DS nem decide telas/controles. O SDK está em `C:/devkitPro`; Azahar portátil está em `build/deps/arm11-tools/`, ignorado.
+
+Fontes oficiais: [instalador devkitPro](https://github.com/devkitPro/installer), [repositório de pacotes](https://pkg.devkitpro.org/packages) e [Azahar 2126.2](https://github.com/azahar-emu/azahar/releases/tag/2126.2). O pacman manteve a checagem de assinaturas e integridade. O arquivo inicial MSYS2 `msys-2.10.0.1.7z` tem SHA-256 `60297bd72a30b642262b6112e337699876b7d0781f1c7151b89146bdbaf8d0aa`.
+
+| Componente | Versão do pacote | SHA-256 do pacote oficial |
+|---|---|---|
+| 3ds-cmake | 1.5.2-1 | `552d7fc61e14a73e9b46a4fce1464fec985a7c0a983ddf34238540807cb7341c` |
+| 3ds-pkg-config | 0.28-5 | `e6cec3633cb2ee7bd55378976683560217e2d3b65fea19eeee8a9dde9706176c` |
+| 3dslink | 0.6.3-1 | `c5dbf12090c2542c4dec144248fd3acc0f21a2db998f4349b1db19f0406c7c44` |
+| 3dstools | 1.3.1-3 | `cdbfcaab36889442483a864b64a2d08be493a3e3e7432e158c0580b3e817f7d8` |
+| citro2d | 1.7.0-1 | `f239175cc3d114081187b790d9098dd670717f6e701318202266fc8c25a36cd4` |
+| citro3d | 1.7.1-2 | `8c9a7caa7c8dc6d641f33dfac5e2ac6aee671c0bd4f1beb5a208b66d27757354` |
+| devkitARM | r68-1 | `7c5dd0864f7dab505fbe9cf7699100a90f15bb8563b858740064f9842db48370` |
+| devkitarm-binutils | 2.46.0-1 | `d19277f5ae8d7967fdef316faa6129fde44053a3fdf2057890148398d167e966` |
+| devkitarm-cmake | 1.2.4-1 | `2a9d5c2bcf954f0aa711da8a8cd33011953212ea4015d32b7ddb20f56b613385` |
+| devkitarm-crtls | 1.2.6-1 | `65faf10f62c219a1a8a3a182b0c4c56da7992599035ea32b3d79e39e79f964bb` |
+| devkitarm-gcc | 16.1.0-1 | `e88fd817412cd026fa50bf92ad40db04e03aed0253bd9f3bca77e28a86db0f6b` |
+| devkitarm-newlib | 4.6.0.20260123-5 | `d314c644c143bd5b104bd82cdc27602f6449cf907cb9c37ccfb8c0707182f89d` |
+| devkitarm-rules | 1.6.0-4 | `35023b2b5f07a2dcfb600063854c712206341fb5df3ffbaf8ff825d3cbc15fcc` |
+| libctru | 2.7.1-1 | `cb47403414c9b1c4f6655d142d424f281b01694b10eb1265a435ef5ae51f9fb3` |
+| picasso | 2.7.2-3 | `f46dc7f9a44e262bd4a8fa514dc3a6b80fef7fe4705c479d1ed1f3a81042a8fb` |
+| tex3ds | 2.3.0-4 | `a000c670bf49c5af203b688ff4c0ba0beaaf2a5b0cf4356f3da8c0ebb68848b4` |
+
+| Artefato instalado | Bytes | SHA-256 |
+|---|---:|---|
+| arm-none-eabi-g++.exe | 3512832 | `419459e56974f9017c59974cbbde15fe860d3874888e4414f1921a9da840d266` |
+| libctru.a | 3664470 | `8b3d268f40e69d2e4ca3006ce2dae9b0cc4900ae2981b7f765ecc9c65a6847e5` |
+| libcitro2d.a | 205320 | `f6c5352a838639c486b806b8dc847c74a1a190d98b09eb469d5c30a02ae6542f` |
+| libcitro3d.a | 686282 | `3f34eff859c1f1e60ebe597b6df9cf5e5e74563d9e64ca01a7b3292fde63016a` |
+| azahar-windows-msvc-2126.2.zip | 43941048 | `4412eac8d13123c8840f11890fc26e5b0e4c76d16aa28a608941377b948a9db0` |
+| azahar.exe | 35499008 | `e6d76f0bdf35a935e128265100a6db39ff559f1e14c5af6520175be65f89e84e` |
+| libfreetype.a | 5265552 | `8b1a5b3e52e739355941c61dadb0608dc5c453af8030129a44bfb478b04edeb3` |
+
+FreeType ARM11 foi compilado dos mesmos fontes oficiais 2.15.0 já autenticados nesta documentação, com `-DFT_DISABLE_ZLIB=TRUE -DFT_DISABLE_BZIP2=TRUE -DFT_DISABLE_PNG=TRUE -DFT_DISABLE_HARFBUZZ=TRUE -DFT_DISABLE_BROTLI=TRUE`, em Release, usando `/opt/devkitpro/cmake/3DS.cmake`. É usado para métricas de texto; o backend nulo não rasteriza glifos.
+
+Resultados negativos de preparação: HTTP 403 inicial no servidor de downloads; o download oficial funcionou com o identificador do instalador. O CMake fornecido pelo Visual Studio é recusado pelo arquivo de toolchain oficial, que exige MSYS2. Foi necessário atualizar o ambiente MSYS2 e suas dependências para executar seu CMake. Nenhuma checagem de assinatura foi desabilitada.
+
+Inventário regenerável: `python tools/inventory_arm11.py`; recibo `config/phase2-arm11-tools.json`. A instalação destas ferramentas não comprova build ou execução do jogo no ARM11; essas provas ficam nos recibos específicos do benchmark.
+
+Para ler os eventos ETW locais, foi preparado em `build/deps/trace-parser` o
+pacote oficial Microsoft.Diagnostics.Tracing.TraceEvent 3.2.8 (MIT, declaração
+no `.nuspec`), do NuGet oficial. SHA-256 do `.nupkg`:
+`37284f885e75326bbd1858bf19f20c9da2818fec7a3bd49803209209be5fd38d`.
+O pequeno leitor C# usa o Roslyn e o runtime .NET 10.0.10 já presentes no
+Visual Studio; não foi instalado SDK .NET. WPR/xperf são os já presentes no
+Windows Performance Toolkit. O perfil externo é separado dos contadores por
+método do jogo. Os ETLs e os símbolos permanecem em `build/`.

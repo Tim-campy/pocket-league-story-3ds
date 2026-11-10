@@ -12,6 +12,14 @@ template<class F>std::string error(F work){try{work();return "none";}catch(const
 static const char*tf(bool value){return value?"True":"False";}
 static int own_native_tests(){
     std::size_t passed=0;auto check=[&](bool value){if(!value)throw std::runtime_error("Own native GC invariant failed");++passed;};
+    {gc_collect();auto root=Array<std::int32_t>::from({37});std::weak_ptr<Node>cycle,dead;
+        {auto node=make_ref<Node>();node->next=node;cycle=node;}
+        const auto baseline=gc_registry_stats();const auto generation=gc_generation(root.as_object());
+        for(int i=0;i<8192;++i){auto temporary=make_ref<Node>();temporary->value=i;dead=temporary;}
+        const auto after=gc_registry_stats();
+        check(after.entries<baseline.entries+4096);check(dead.expired());
+        check(!cycle.expired()&&root[0]==37&&gc_generation(root.as_object())==generation);
+        gc_collect();check(cycle.expired());}
     {struct Left{virtual ~Left()=default;std::uint64_t padding=7;};struct Offset:Left,Object{};auto value=make_ref<Offset>();bool found=false;visit_managed_memory([&](const void*data,std::size_t bytes,pls::memory::Category){if(data==value.get()&&bytes==sizeof(Offset))found=true;});check(found);}
     {auto node=make_ref<Node>();node->next=node;const auto generation=gc_generation(node);auto array=Array<int>::make(23);String text(u"own snapshot fixture string");std::size_t bytes=0;bool finished=false;
         visit_managed_memory([&](const void*,std::size_t n,pls::memory::Category){bytes+=n;},[&]{finished=true;});

@@ -7,6 +7,7 @@ const assets::Catalog* sound_catalog{};
 cs::Ref<SoundOutput> sound_output;
 void ui(std::function<void()> action){auto app=IApplication::GetCurrentApp();if(!app)throw cs::NullReferenceException();app->RunOnUiThread(cs::Delegate<void()>::from_static("native-sound-ui",std::move(action)),true);}
 template<class F>auto audio_call(F&& body)->decltype(body()){try{return body();}catch(const cs::Exception&){throw;}catch(const std::exception& error){throw cs::IOException(error.what());}}
+#if !defined(PLS_NULL_BACKEND)
 class StreamingOutput : public SoundOutput {
     sdl::AudioMixer* mixer_;
     struct Port {cs::Ref<SoundData> clip;float volume{1.0f};bool loop{};};
@@ -25,9 +26,12 @@ public:
     void trace_edges(const cs::EdgeVisitor& v)const override{for(const auto& port:ports_)cs::trace_value(port.clip,v);}
     void release_edges()override{for(auto& port:ports_)port.clip.reset();}
 };
+#endif
 }
 void configure_sound(const assets::Catalog* catalog,cs::Ref<SoundOutput> output){sound_catalog=catalog;sound_output=std::move(output);}
+#if !defined(PLS_NULL_BACKEND)
 void configure_sound(const assets::Catalog* catalog,sdl::AudioMixer* mixer){configure_sound(catalog,cs::make_ref<StreamingOutput>(mixer));}
+#endif
 SoundPlayer::SoundPlayer(cs::Ref<SoundOutput> output):output_(std::move(output)){if(!output_)throw cs::InvalidOperationException("Sound host was not configured");}
 cs::Ref<SoundPlayer> SoundPlayer::GetInstance(){if(!instance_)instance_=cs::make_ref<SoundPlayer>(sound_output);return instance_;}
 void SoundPlayer::Init(bool){

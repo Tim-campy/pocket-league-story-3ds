@@ -1,4 +1,5 @@
 #include "diagnostic_profile.hpp"
+#include "render_mode.hpp"
 #include "graphics.hpp"
 #include "sha256.hpp"
 #include "font.hpp"
@@ -15,6 +16,7 @@ using Affine=std::array<float,9>;
 constexpr Affine identity{1,0,0,0,1,0,0,0,1};
 Affine concat(const Affine& a,const Affine& b){Affine result{};for(int j=0;j<3;++j)for(int k=0;k<3;++k)for(int l=0;l<3;++l)result[std::size_t(j*3+k)]+=a[std::size_t(j*3+l)]*b[std::size_t(l*3+k)];return result;}
 template<class F>void quad(const Affine& m,float x,float y,float w,float h,int width,int height,F&& pixel){PLS_PROFILE_AREA(raster);
+    if constexpr(null_render_backend)return;
     const auto point=[&](float px,float py){return std::array<float,2>{m[0]*px+m[3]*py+m[6],m[1]*px+m[4]*py+m[7]};};
     const auto a=point(x,y),b=point(x+w,y),c=point(x,y+h),d=point(x+w,y+h);
     for(const auto& p:{a,b,c,d})if(!std::isfinite(p[0])||!std::isfinite(p[1]))return;
@@ -62,7 +64,7 @@ std::int32_t Image::GetAlphaType(){
 cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(std::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
 void Image::SetAlpha(std::int32_t alpha){
     // Preserve the original guard, including its surprising direction (Image.cs:888).
-    if(!alive_||alpha_!=alpha)return;alpha_=alpha;auto a=std::uint8_t(std::clamp(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;
+    if(!alive_||alpha_!=alpha)return;alpha_=alpha;auto a=std::uint8_t(std::clamp<std::int32_t>(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;
 }
 void Image::SetTransparentEnabled(bool enabled){
     if(!alive_)throw cs::ObjectDisposedException();auto c=channels(transparent_);bool was_rgb=!alpha_format(format);
@@ -125,7 +127,8 @@ void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t a
         }
         if(anchor&2)x-=font_->StringWidthF(text)/2.0f;else if(anchor&4)x-=font_->StringWidthF(text);
         if(anchor&32)y-=float(font_->GetHeight())/2.0f;else if(anchor&64)y-=float(font_->GetHeight());
-        auto position=point(x,y);auto& raster=font_->raster(std::max(1,coord(float(font_->GetHeight())*std::fabs(scale_)/100.0f)));auto style=sdl::FontStyle(font_->GetStyle());
+        if constexpr(null_render_backend)return; // Layout/queue callbacks above are still executed.
+        auto position=point(x,y);auto& raster=font_->raster(std::max<std::int32_t>(1,coord(float(font_->GetHeight())*std::fabs(scale_)/100.0f)));auto style=sdl::FontStyle(font_->GetStyle());
         float cursor=position[0],baseline=position[1]+raster.metrics().ascent;std::uint32_t previous_glyph=0;auto tint=channels(color_);
         for(std::size_t i=0;i<content.size();++i){char32_t c=content[i];if(c>=0xd800&&c<=0xdbff&&i+1<content.size()&&content[i+1]>=0xdc00&&content[i+1]<=0xdfff)c=0x10000+((c-0xd800)<<10)+(content[++i]-0xdc00);
             if(c==u'\n'){cursor=position[0];baseline+=raster.metrics().line_height;previous_glyph=0;continue;}
@@ -139,7 +142,7 @@ void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t a
 }
 std::int32_t Graphics::GetColorOfRGB(std::int32_t r,std::int32_t g,std::int32_t b){return GetColorOfRGB(r,g,b,255);}
 std::int32_t Graphics::GetColorOfRGB(std::int32_t r,std::int32_t g,std::int32_t b,std::int32_t a){
-    auto n=(std::uint32_t(std::clamp(a,0,255))<<24)|(std::uint32_t(std::clamp(r,0,255))<<16)|(std::uint32_t(std::clamp(g,0,255))<<8)|std::uint32_t(std::clamp(b,0,255));return cs::bit_copy<std::int32_t>(n);
+    auto n=(std::uint32_t(std::clamp<std::int32_t>(a,0,255))<<24)|(std::uint32_t(std::clamp<std::int32_t>(r,0,255))<<16)|(std::uint32_t(std::clamp<std::int32_t>(g,0,255))<<8)|std::uint32_t(std::clamp<std::int32_t>(b,0,255));return cs::bit_copy<std::int32_t>(n);
 }
 cs::Array<std::int32_t> Graphics::GetAnchorPosition(std::int32_t x,std::int32_t y,std::int32_t w,std::int32_t h,std::int32_t anchor){
     if(anchor&2)x=cs::sub_i32(x,w/2);else if(anchor&4)x=cs::sub_i32(x,w);
@@ -164,7 +167,7 @@ void Graphics::PushMatrixValues(cs::Array<float> values){
     matrix_index_=cs::add_i32(matrix_index_,1);if(std::size_t(matrix_index_)>=matrix_stack_.size())matrix_stack_.resize(std::size_t(matrix_index_)+1,{identity,identity});
     matrix_stack_[std::size_t(matrix_index_)][1]=matrix_index_==0?identity:concat(matrix_stack_[std::size_t(matrix_index_-1)][0],matrix_stack_[std::size_t(matrix_index_-1)][1]);SetMatrixValues(values);
 }
-void Graphics::PopMatrix(){matrix_index_=std::max(-1,cs::sub_i32(matrix_index_,1));update_screen();}
+void Graphics::PopMatrix(){matrix_index_=std::max<std::int32_t>(-1,cs::sub_i32(matrix_index_,1));update_screen();}
 void Graphics::BeginLocalCoordination(float& x,float& y){
     if(!CheckLocalMatrix())return;local_coordinate_count_=cs::add_i32(local_coordinate_count_,1);
     auto value=cs::Array<float>::from({1,0,0,0,1,0,x,y,1});
@@ -203,6 +206,7 @@ void Graphics::SetRenderMode(std::int32_t op,std::int32_t src,std::int32_t dst){
 void Graphics::PushRenderMode(std::int32_t op,std::int32_t src,std::int32_t dst){PushRenderMode();SetRenderMode(op,src,dst);}
 void Graphics::PopRenderMode(){if(modes_.empty())return;auto m=modes_.back();modes_.pop_back();SetRenderMode(m[0],m[1],m[2]);}
 void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
+    if constexpr(null_render_backend)return;
     if(!target_->alive_)throw cs::ObjectDisposedException();
     if(x<0||y<0||x>=target_->width_||y>=target_->height_||float(x)<clip_[0]||float(y)<clip_[1]||float(x)>=clip_[0]+clip_[2]||float(y)>=clip_[1]+clip_[3])return;
     if(mesh_manager_&&mesh_manager_->capturing()){mesh_manager_->Record(x,y,c);return;}
@@ -247,7 +251,7 @@ void Graphics::DrawArc(float x,float y,float w,float h,float start,float sweep,f
         auto map=[&](float a,float b){auto p=point(a,b);return geometry::ArcPoint{p[0],p[1]};};
         auto paint=[&](int a,int b){pixel(a,b,color);};
         geometry::ArcRasterSink sink(target_->GetWidth(),target_->GetHeight(),map,paint);
-        try{geometry::draw_arc({x,y,w,h,start,sweep,stroke},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
+        if constexpr(!null_render_backend)try{geometry::draw_arc({x,y,w,h,start,sweep,stroke},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
         if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
     },[&]{if(transformed)end_render_matrix();});
 }
@@ -259,15 +263,16 @@ void Graphics::FillArc(float x,float y,float w,float h,float start,float sweep){
         auto map=[&](float a,float b){auto p=point(a,b);return geometry::ArcPoint{p[0],p[1]};};
         auto paint=[&](int a,int b){pixel(a,b,color);};
         geometry::ArcRasterSink sink(target_->GetWidth(),target_->GetHeight(),map,paint);
-        try{geometry::fill_arc({x,y,w,h,start,sweep,1.0f},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
+        if constexpr(!null_render_backend)try{geometry::fill_arc({x,y,w,h,start,sweep,1.0f},IsRenderGUIMode(),sink);}catch(const std::domain_error&e){throw cs::NotSupportedException(e.what());}
     },[&]{if(transformed)end_render_matrix();});
     if(graphics_runtime.shape_drawn)graphics_runtime.shape_drawn();
 }
 void Graphics::DrawLine(float x,float y,float x2,float y2,float width){PLS_PROFILE_AREA(raster);
     begin_primitive();
+    if constexpr(null_render_backend)return;
     if(!std::isfinite(x+y+x2+y2+width)||width<=0)return;auto a=point(x,y),b=point(x2,y2);float dx=b[0]-a[0],dy=b[1]-a[1];auto length=std::max(std::fabs(dx),std::fabs(dy));
     if(length>float(std::max(target_->width_,target_->height_))*4)throw cs::NotSupportedException("Unbounded line needs geometric clipping");
-    auto steps=std::max(1,int(std::ceil(length)));auto c=channels(color_);auto radius=std::max(0,coord(width*std::fabs(scale_)/200.0f));
+    auto steps=std::max(1,int(std::ceil(length)));auto c=channels(color_);auto radius=std::max<std::int32_t>(0,coord(width*std::fabs(scale_)/200.0f));
     if(radius>std::max(target_->width_,target_->height_))throw cs::NotSupportedException("Very wide lines need geometric clipping");
     for(int i=0;i<=steps;++i){auto xx=coord(std::floor(a[0]+dx*float(i)/float(steps))),yy=coord(std::floor(a[1]+dy*float(i)/float(steps)));for(int v=-radius;v<=radius;++v)for(int u=-radius;u<=radius;++u){auto px=std::int64_t(xx)+u,py=std::int64_t(yy)+v;if(px>=0&&py>=0&&px<target_->width_&&py<target_->height_)pixel(int(px),int(py),c);}}
 }
@@ -277,7 +282,7 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
     if(!image||w==0||h==0||!std::isfinite(x+y+w+h))return;
     image->Use();if(!image->native_resident())return;
     if(image->filter!=Image::Filter::Point)throw cs::NotSupportedException("Bilinear sampler not implemented yet");
-    std::vector<std::uint8_t> source;{PLS_PROFILE_AREA(raster);source=image->pixels();} // CPU sampler snapshot preserves overlapping draws.
+    std::vector<std::uint8_t> source;if constexpr(!null_render_backend){PLS_PROFILE_AREA(raster);source=image->pixels();} // CPU sampler snapshot preserves overlapping draws.
     begin_primitive(image);
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{
     if(is_gui_&&image->source_has_touch_tasks()){

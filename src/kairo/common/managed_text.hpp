@@ -12,7 +12,7 @@ class StringBuilder : public Object {
         if(size>std::numeric_limits<std::int32_t>::max())throw OutOfMemoryException();
         if(size>capacity_){
             if(historical_){const auto base=cached_same_&&capacity_<16?16:capacity_;const auto doubled=static_cast<std::int64_t>(base)*2;capacity_=static_cast<std::int32_t>(std::min<std::int64_t>(std::numeric_limits<std::int32_t>::max(),std::max(size,doubled)));}
-            else {const auto old_capacity=capacity_;const auto next_size=std::max<std::int64_t>(size-old_capacity,std::min(old_capacity,8000));chunk_offsets_.push_back(old_capacity);capacity_=static_cast<std::int32_t>(old_capacity+next_size);}
+            else {const auto old_capacity=capacity_;const auto next_size=std::max<std::int64_t>(size-old_capacity,std::min<std::int32_t>(old_capacity,8000));chunk_offsets_.push_back(old_capacity);capacity_=static_cast<std::int32_t>(old_capacity+next_size);}
         }
         cached_=cached_same_=false;
     }

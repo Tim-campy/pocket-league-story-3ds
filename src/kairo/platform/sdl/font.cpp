@@ -1,4 +1,5 @@
 #include "../../common/diagnostic_profile.hpp"
+#include "../../common/render_mode.hpp"
 #include "font.hpp"
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -54,14 +55,14 @@ const RasterGlyph& RasterFont::glyph(char32_t codepoint,FontStyle style) {
     if(style==FontStyle::bold)FT_GlyphSlot_Embolden(p.face->glyph);
     else if(style==FontStyle::italic)FT_GlyphSlot_Oblique(p.face->glyph);
     else if(style!=FontStyle::plain)throw std::invalid_argument("Unknown font style");
-    ft_check(FT_Render_Glyph(p.face->glyph,FT_RENDER_MODE_NORMAL));
+    if constexpr(!kairo::null_render_backend)ft_check(FT_Render_Glyph(p.face->glyph,FT_RENDER_MODE_NORMAL));
     const auto slot=p.face->glyph;
     const auto& bitmap=slot->bitmap;
     if(bitmap.width>static_cast<unsigned int>(std::numeric_limits<int>::max())||bitmap.rows>static_cast<unsigned int>(std::numeric_limits<int>::max()))throw std::length_error("Glyph extent too large");
-    const auto pixels=static_cast<std::uint64_t>(bitmap.width)*bitmap.rows;
+    const auto pixels=kairo::null_render_backend?std::uint64_t(0):static_cast<std::uint64_t>(bitmap.width)*bitmap.rows;
     if(pixels>p.limit/4)throw std::length_error("Single glyph exceeds configured cache budget");
     RasterGlyph result;
-    result.width=static_cast<int>(bitmap.width);result.height=static_cast<int>(bitmap.rows);
+    result.width=kairo::null_render_backend?0:static_cast<int>(bitmap.width);result.height=kairo::null_render_backend?0:static_cast<int>(bitmap.rows);
     result.left=slot->bitmap_left;result.top=slot->bitmap_top;
     result.advance_x=static_cast<float>(slot->advance.x)/64.0f;
     result.glyph_index=FT_Get_Char_Index(p.face,static_cast<FT_ULong>(codepoint));

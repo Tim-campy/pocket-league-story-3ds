@@ -25,7 +25,7 @@ void write_capture_png(const std::filesystem::path&path,const Image&image){
  std::ofstream file(path,std::ios::binary);file.write(reinterpret_cast<const char*>(png.data()),png.size());if(!file)throw cs::IOException("Capture file could not be written");
 }
 void configure_capture(const std::filesystem::path&path){if(path.empty())throw cs::ArgumentException("Capture output directory is required");root=std::filesystem::absolute(path);std::filesystem::create_directories(root);}
-void queue_capture(cs::Ref<FormManagerBase> manager,int x,int y,int w,int h,cs::Array<cs::String>tables,CaptureCompleted completed,bool tmp){
+void queue_capture(cs::Ref<FormManagerBase> manager,std::int32_t x,std::int32_t y,std::int32_t w,std::int32_t h,cs::Array<cs::String>tables,CaptureCompleted completed,bool tmp){
  cs::nonnull(manager);if(root.empty())throw cs::InvalidOperationException("Capture backend was not configured");if(w<=0||h<=1)throw cs::ArgumentException("Capture surface extent is invalid");
  auto job=cs::make_ref<Job>();job->manager=manager;job->x=x;job->y=y;job->w=w;job->h=h;job->tables=tables;job->completed=std::move(completed);job->pause=manager->IsPause();job->tmp=tmp;
  jobs.push_back(job);manager->capturing_=true;manager->SetPause(true);
@@ -36,7 +36,7 @@ void finish_captures(cs::Ref<Image>display){
    for(int i=0;i<tables.length();++i){auto text=tables.at(i).utf8();const auto comma=text.find(',');auto dims=text.substr(0,comma);int w=job->w,h=job->h-1;
     if(!dims.empty()){const auto colon=dims.find(':');if(colon==std::string::npos)throw cs::FormatException();try{std::size_t n=0;w=std::stoi(dims.substr(0,colon),&n);if(n!=colon)throw cs::FormatException();auto rest=dims.substr(colon+1);h=std::stoi(rest,&n);if(n!=rest.size())throw cs::FormatException();}catch(const std::invalid_argument&){throw cs::FormatException();}catch(const std::out_of_range&){throw cs::OverflowException();}}
     if(w<=0||h<=0||w>8192||h>8192)throw cs::ArgumentOutOfRangeException();std::vector<std::uint8_t> pixels(std::size_t(w)*h*4);const auto&source=display->pixels();
-    for(int yy=0;yy<h;++yy)for(int xx=0;xx<w;++xx){const auto sx=std::clamp(job->x+int((double(xx)+.5)*job->w/w),0,display->GetWidth()-1),sy=std::clamp(job->y+int((double(yy)+.5)*(job->h-1)/h),0,display->GetHeight()-1);const auto from=(std::size_t(sy)*display->GetWidth()+sx)*4,to=(std::size_t(yy)*w+xx)*4;std::copy_n(source.data()+from,4,pixels.data()+to);}
+    for(int yy=0;yy<h;++yy)for(int xx=0;xx<w;++xx){const auto sx=std::clamp<std::int32_t>(job->x+int((double(xx)+.5)*job->w/w),0,display->GetWidth()-1),sy=std::clamp<std::int32_t>(job->y+int((double(yy)+.5)*(job->h-1)/h),0,display->GetHeight()-1);const std::size_t from=(std::size_t(sy)*display->GetWidth()+sx)*4,to=(std::size_t(yy)*w+xx)*4;std::copy_n(source.data()+from,4,pixels.data()+to);}
     auto image=Image::FromRgba(w,h,std::move(pixels));
     auto folder=root/(job->tmp?"temporary":"saved");std::filesystem::create_directories(folder);std::filesystem::path path;
     do{path=folder/("capture-"+std::to_string(++serial)+".png");}while(std::filesystem::exists(path));write_capture_png(path,*image);files.Add(cs::String::from_utf8(path.u8string()));

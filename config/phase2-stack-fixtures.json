@@ -19,11 +19,11 @@
   "inputs": {
     "tests\\translator\\StackFixtures.cs": "df6cd6bea323490fe22b6134e1cf2bc2c0c9fe8acbb7710d89004e0f9ae5b484",
     "tests\\translator\\stack_fixtures.cpp": "09be6bd0e617fd708776bf9c3dcd214c50e6de1f1c6723199b2c74f8b307f58a",
-    "src\\kairo\\common\\semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
-    "src\\kairo\\common\\semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+    "src\\kairo\\common\\semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
     "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
-    "src\\kairo\\common\\managed_text.hpp": "5b8f6473cf2693e88357e3567980934c883662ebbf49898bd4bf53993751fc81",
+    "src\\kairo\\common\\managed_text.hpp": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0",
     "src\\kairo\\common\\managed_dictionary.hpp": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab",
     "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
     "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97",
@@ -315,10 +315,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "d486e1b9dd0009a517a1ecf729ed8fe10ff46c9ddf57847a20abe2418f06cda0"
+    "sha256": "53648333f6f41b32fc3b3b599e6c34ea93439b1377ab408da45c5dbdef23c5b3"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "d2473f55d41979c9ed3a61001552c100c73ead49dd27a2f305e8edeaec515d15"
+    "sha256": "06d796ec5ef1015d4fb6516f5e83a60cb10108635d5f75c1fa0a4c5d3b2d086e"
   }
 }

@@ -4,18 +4,18 @@
   "cases": [
     {
       "fixture": "diagnostic_profile_test",
-      "executable_sha256": "894129a311c7fa18425178c76abe720c8403ab17470d3520508f354cb4af92bf"
+      "executable_sha256": "89fa8f8f89114ee49e61bff4a25cec637fea6628b105b39dd82e4bcf1854fac9"
     },
     {
       "fixture": "capture_test",
-      "executable_sha256": "16e0090d165306c2929e835dff34b3e57b55fb9a249a12b124688404dbb166d4"
+      "executable_sha256": "4cbabdf34adf8defdc4fedde9231c2c64e08acf43eee9ba732c0bf183c91fa72"
     }
   ],
   "inputs_sha256": {
     "tools/test_diagnostic_instrumentation.py": "16b7763ac2fe4eefe6be0ac02f6359649bd50f95cc04ced2b6ed9ea0ba2c3856",
     "CMakeLists.txt": "07d1a5e0b2796e95c8270f5de6ed73d3fa2747ebe03f103e3978cd710e963e83",
     "src/kairo/common/diagnostic_profile.hpp": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca",
-    "src/kairo/platform/sdl/capture.cpp": "47a03bc8ebb712142a89ea1f4a3e310fb76b9ae09d6bf7755f7f5b01a22583e9",
+    "src/kairo/platform/sdl/capture.cpp": "2a4a8c690d8d048e26b310515be61a17ef287f41d1d3cbeb18d7cf9888066faf",
     "src/kairo/platform/sdl/capture.hpp": "cbfc3301bea5853a5cfd6d6596f14f7251f2440da8475c07b78d40ea982416b4",
     "tests/kairo/capture_fixtures.cpp": "2f0c5366f001c3048a2722b5b7b14d5f6a74006d7be0e3fe8da4e19662574c6d",
     "tests/kairo/diagnostic_profile_fixtures.cpp": "ae0becbe1d9b47e0a2605e94346c126a997ad3f0737573dbfca1924ce0fa857d",

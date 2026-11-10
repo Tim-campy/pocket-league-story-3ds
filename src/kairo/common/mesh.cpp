@@ -1,5 +1,6 @@
 #include "diagnostic_profile.hpp"
 #include "mesh.hpp"
+#include "render_mode.hpp"
 #include <limits>
 namespace pls::kairo {
 void MeshManager::SetDepth(std::int32_t depth,bool back){
@@ -55,6 +56,7 @@ void MeshManager::Record(std::int32_t x,std::int32_t y,std::array<std::uint8_t,4
     }}catch(const std::bad_alloc&){throw cs::OutOfMemoryException();}
 }
 void MeshManager::Render(const cs::Ref<Image>&target,const Commands&dynamic,const Commands&statics){
+    if constexpr(null_render_backend){cs::nonnull(target);for(const auto*commands:{&dynamic,&statics})for(const auto&batch:*commands)if(batch.image){batch.image->Use();batch.image->source_drawn();}return;}
     auto image=cs::nonnull(target);auto painter=cs::make_ref<Graphics>(image);painter->ClearClip();
     struct Item{const Batch*batch;std::size_t manager,index;};std::vector<Item> sorted;
     for(std::size_t manager=0;manager<2;++manager){const auto&commands=manager?statics:dynamic;for(std::size_t index=0;index<commands.size();++index)sorted.push_back({&commands[index],manager,index});}

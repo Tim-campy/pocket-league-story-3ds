@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.3782839998602867,
-    "native-compile": 74.16736699989997,
-    "managed-output": 15.187097599962726,
-    "native-output": 25.087067800108343
+    "csharp-compile": 1.67535990010947,
+    "native-compile": 87.79005179996602,
+    "managed-output": 16.280801400076598,
+    "native-output": 26.58930190000683
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1274,13 +1274,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "3afd306f899100069657829f20fb3e7337bdaa6cec3fdb91f3f7cd76f76c2e61"
+    "sha256": "be745b572399f8df909f65da298ed5904652321f2f32f5ca52dfd6b1c0c6fac9"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "7b72459c48fb2edbd3dc81e96d55ba837c7c3723df5a1c3db08581b277ba8810"
+    "sha256": "490b3b4bc3f1170c1db591432e5f69f76310d70a999e07b4dc4cbed4cc35eb1d"
   },
-  "differential_runner_sha256": "fd025cc467909a8266130b9bf90a197ea4760ea3d20188a9710c5362e2ec44b0",
+  "differential_runner_sha256": "17883229f4fa2f4b6ed2618821cbc38921a0fab1839940c369ea680e02da1212",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -1419,6 +1419,10 @@
       "sha256": "4830f223a65124ea07c7e49f119e14a581d8ef2eee901c1a37c9c863f6bfac81"
     },
     {
+      "path": "src/kairo/common/allocation_probe.hpp",
+      "sha256": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19"
+    },
+    {
       "path": "src/kairo/common/arc_geometry.hpp",
       "sha256": "c7a85271de77a6b1e024c327bdd0dffc9e867f0dfac75dfd1dc6b24b216689e2"
     },
@@ -1428,7 +1432,7 @@
     },
     {
       "path": "src/kairo/common/asset_catalog.cpp",
-      "sha256": "d61d870035883fbe52aecaaf1fe36af874f7332b139e217a09c4ba603dea1387"
+      "sha256": "032a85d53ed08ed2f750d31058d80fd3590e871d5ce07db2475b3bf57d7dddd7"
     },
     {
       "path": "src/kairo/common/asset_catalog.hpp",
@@ -2016,11 +2020,11 @@
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
-      "sha256": "5b8f6473cf2693e88357e3567980934c883662ebbf49898bd4bf53993751fc81"
+      "sha256": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0"
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
-      "sha256": "76ddd5568410670d790f953dc3111976ff48144364ad088724eebf3e61feadaf"
+      "sha256": "c634296db40f099b6929dc8a3eed8dac052d8fa87326ba07547dc25d96a9f4f6"
     },
     {
       "path": "src/kairo/common/managed_thread.hpp",
@@ -2032,19 +2036,23 @@
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "950dbc37e6f92b64b49b0e2018090f8cbe0f0eec929826271e7ab53fef164681"
+      "sha256": "6260b413336acc69aaa0983754e14d546fc41d123acaee7843462762d956c04c"
     },
     {
       "path": "src/kairo/common/memory_ranges.hpp",
       "sha256": "237593f45c5bc1b201793228f4615d4fa493bdedded05eae30bc6e107ff2305e"
     },
     {
+      "path": "src/kairo/common/render_mode.hpp",
+      "sha256": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0"
+    },
+    {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592"
+      "sha256": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49"
+      "sha256": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -2060,7 +2068,7 @@
     },
     {
       "path": "src/kairo/platform/sdl/globalization.cpp",
-      "sha256": "7072332bae2f9696c2fc6113311574bcae887e8edb0443bff35f07c07cc9d4c3"
+      "sha256": "16c4af626da9c714b35485ac86f85e1f24e9438f3c4959226fd7dba531edc018"
     },
     {
       "path": "tests/translator/AbstractSecureNumberHarness.cs",

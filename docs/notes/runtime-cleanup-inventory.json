@@ -1,0 +1,114 @@
+[
+  {
+    "path": "build/null-pc/menu-events.csv",
+    "bytes": 16879650,
+    "sha256": "737558B79689E947EF0419211B045730D6040741E3EC180A084FA4EB9D396334",
+    "reason": "Derived CSV; original ETL and reader preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/null-pc/match-events.csv",
+    "bytes": 7399026,
+    "sha256": "B7F6A22356382853F42E913DFB7E56890AE26F88F165384D657BFF9704AA41A9",
+    "reason": "Derived CSV; original ETL and reader preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/null-draft/null_sound.hpp",
+    "bytes": 3217,
+    "sha256": "BE8F3BC4B8DB30947AE7873CDA4060EC78E0B0025B1047A49E2A139C482FDBDC",
+    "reason": "Superseded draft; current implementation in src/kairo/platform/null/sound.hpp",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/asset_catalog_test.ilk",
+    "bytes": 4122678,
+    "sha256": "C2D9B25C04B61C8805D9C5F7C5A0CAB9C3A667F3186555C8A01FD467B3741DCC",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/asset_roundtrip_test.ilk",
+    "bytes": 4617054,
+    "sha256": "25B92293364E4C99E006A19C44519082702D8E9B9BE5B0E8D3794342198D9A0E",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/capture_test.ilk",
+    "bytes": 13816630,
+    "sha256": "4B476CB8477BC4AA92F058E578087923A54E352435EC334C9EAFC9F5D65E6F26",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/debug_input_test.ilk",
+    "bytes": 4166566,
+    "sha256": "E28468ABF02F8804CA3F49BF7A667C48D1EEA84246C2223DF490016E22F584FF",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/diagnostic_profile_test.ilk",
+    "bytes": 2108646,
+    "sha256": "A5693216B7C37F5A63C15F0218FBB3C8EB7F21B9BA14F92ED16F276E70A8BBE3",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/graphics_api_test.ilk",
+    "bytes": 11047910,
+    "sha256": "2BF85AE633CCDFFCA5633CBFFE1819CD30AD30D3EE056FE051FF36BCE76EF1B1",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/graphics_arcs_test.ilk",
+    "bytes": 10708006,
+    "sha256": "814E357E90B0B4B876F614D08836C3ED0F3C249BD3DBF40D705467B1A16CE492",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/mesh_test.ilk",
+    "bytes": 10539166,
+    "sha256": "6DF0CBC6E3F0E344D89BCB9938668EBF603456C11367E065AEADADCD4A1D02B5",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/offscreen_test.ilk",
+    "bytes": 13478694,
+    "sha256": "E714B8282EE2ADB4C7A953A0C5340168DAD1288DA552E64FD83481AEDE2545CF",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/pc_metrics_test.ilk",
+    "bytes": 2616590,
+    "sha256": "8E3B745F127C4AF33318AA5A5EFF7C6AAFE8C0ABAFD2E3CACEA3A6303ABF339E",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/sdl_backend_test.ilk",
+    "bytes": 3787630,
+    "sha256": "A614AB947FAE966C80C00DE4B549E8E0B26B92B04F7E7C4A18AFC642A01BA308",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/text_input_test.ilk",
+    "bytes": 13921750,
+    "sha256": "3E48F595AAF0980CC5E749ADC59BF8D6B6A170DAD91BC41ADE4537547DA36D4C",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  },
+  {
+    "path": "build/pc/window_orientation_reset_test.ilk",
+    "bytes": 3992070,
+    "sha256": "714B50CE2986806447DADF554F7575AAC68C3640ADE8FFA1E74D51CB3D97A2E8",
+    "reason": "Rebuildable incremental linker cache; binaries, symbols and objects preserved",
+    "status": "removed"
+  }
+]

@@ -19,18 +19,18 @@
   "inputs": {
     "tests\\translator\\ExceptionObjectFixtures.cs": "3cf9fd172ebd131e9534376790959303060cedd808048019d52e7bf291b15ed6",
     "tests\\translator\\exception_object_fixtures.cpp": "38fff1ab25d179af5380dc68766f8e2c5aaecbba890aa3c2d188d60f583d2c79",
-    "src\\kairo\\common\\semantic_runtime.cpp": "df552359ef76d1d83009e44ce36051f745368253890370f6ecebb2ca36b0a592",
-    "src\\kairo\\common\\semantic_runtime.hpp": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+    "src\\kairo\\common\\semantic_runtime.cpp": "4bdad6d3a23cf8e891b4bd6a2932f7dd954ec390381176a1444b7e94e37fa012",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8fbd45591d94d2f8513742649eb3e4645ea620a750302719ff9bf70365012eaa",
     "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
-    "src\\kairo\\common\\managed_text.hpp": "5b8f6473cf2693e88357e3567980934c883662ebbf49898bd4bf53993751fc81",
+    "src\\kairo\\common\\managed_text.hpp": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0",
     "src\\kairo\\common\\managed_dictionary.hpp": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab",
     "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
     "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97",
     "src\\kairo\\common\\managed_exceptions.cpp": "11a6246026a684a187b3df7e5d7210a415ccec54b381a0dedcd6b4723e340488",
     "tools\\test_exception_objects.py": "996b8cb52ba09e04d504db66a05637f10f0a782fbec51bd0d259cf561f942906",
     "src\\kairo\\common\\managed_exceptions.hpp": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b",
-    "src\\kairo\\common\\managed_type_init.hpp": "950dbc37e6f92b64b49b0e2018090f8cbe0f0eec929826271e7ab53fef164681",
+    "src\\kairo\\common\\managed_type_init.hpp": "6260b413336acc69aaa0983754e14d546fc41d123acaee7843462762d956c04c",
     "src\\kairo\\common\\managed_thread.hpp": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b"
   },
   "historical_oracle": {

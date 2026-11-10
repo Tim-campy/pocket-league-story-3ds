@@ -9,10 +9,10 @@ Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f591
 | Inventário | Total | Estado medido |
 |---|---:|---|
 | Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 522, 'verified': 252, 'implemented': 1} |
-| Métodos a traduzir | 1958 | {'todo': 190, 'translated': 1091, 'runs': 677} |
+| Métodos a traduzir | 1958 | {'todo': 190, 'translated': 1017, 'runs': 751} |
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1768/1958 identidades originais com C++ compilado; 677 com retorno normal registrado em jogo; 0 verificadas.**
+**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1768/1958 identidades originais com C++ compilado; 751 com retorno normal registrado em jogo; 0 verificadas.**
 
 ## Preparação e medições da Fase 1 preservadas
 

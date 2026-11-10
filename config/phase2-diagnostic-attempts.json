@@ -33744,6 +33744,2119 @@
           "bytes": 268922
         }
       ]
+    },
+    {
+      "number": 35,
+      "configuration": "Release",
+      "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
+      "generated_game_sources": [
+        {
+          "path": "src/game/bootstrap_bindings.hpp",
+          "sha256": "3dd5771acfc6523fd27ac6a977c538c95c8d9d82cb719f9db31f82e2f0d45474"
+        },
+        {
+          "path": "src/game/bootstrap_generated.cpp",
+          "sha256": "342cd405957dee230db30006326c2c32e3292a4c19189460278d37c051b25698"
+        },
+        {
+          "path": "src/game/game_generated.cpp",
+          "sha256": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a"
+        },
+        {
+          "path": "src/game/game_generated.hpp",
+          "sha256": "a841ed0d2f78e1fdd5f2dc7caa9a1b6791a3185837f430fc6626809b0ea15672"
+        },
+        {
+          "path": "src/game/game_generated_forward.hpp",
+          "sha256": "9e4cb78e379596d4b06387c80b62a92b7da04cd16f64a9d5dc6d17a242cf5ee7"
+        },
+        {
+          "path": "src/game/game_generated_runtime.hpp",
+          "sha256": "8fc4e9be2ca2404d959989107c174f9fd9e684819ce388a4cc222fece8c0f694"
+        },
+        {
+          "path": "src/game/game_generated_type_0286a0dbe9da0b33.cpp",
+          "sha256": "20d528c8b73c476fd0e1dd010843c511d4ba65942d50f2a91057f5437c91a8ec"
+        },
+        {
+          "path": "src/game/game_generated_type_0286a0dbe9da0b33.hpp",
+          "sha256": "fce4a7820a9328023e2c146eea4ecdec52cc0841ea8eb4d027c1e254e0ccb406"
+        },
+        {
+          "path": "src/game/game_generated_type_072159abb3229c71.cpp",
+          "sha256": "eda8a198444598d65cdf668b6a5c84b05de14c418728d908024bc752d4f39655"
+        },
+        {
+          "path": "src/game/game_generated_type_072159abb3229c71.hpp",
+          "sha256": "869413953ab0f2a2d616472e59fc42d72bca33b76905ef54164e17919fb85afb"
+        },
+        {
+          "path": "src/game/game_generated_type_08829eb6a4df2a40.cpp",
+          "sha256": "f6b45c948fa690b5e63245d9e4bf63df8d81f504f9066621ee4661be20de1790"
+        },
+        {
+          "path": "src/game/game_generated_type_08829eb6a4df2a40.hpp",
+          "sha256": "01aca21cd881051c088c0db13de518f4896a1f3e06be00e686cc838992a261ed"
+        },
+        {
+          "path": "src/game/game_generated_type_0ca2ef5bfa869b6b.cpp",
+          "sha256": "fa773ab7c60039049287862b051a30764541f5a6456b333e2ee6fe024fa0637d"
+        },
+        {
+          "path": "src/game/game_generated_type_0ca2ef5bfa869b6b.hpp",
+          "sha256": "17afe633c5faeba5e6c69e66bc875fd2cb61c04da9bd34f9cc122be0582f02ce"
+        },
+        {
+          "path": "src/game/game_generated_type_0db347231f2257f9.cpp",
+          "sha256": "369c5649cf4dcc0f77aa51891e2c3ce9b2a57ca24724f7def850b240c31bdaad"
+        },
+        {
+          "path": "src/game/game_generated_type_0db347231f2257f9.hpp",
+          "sha256": "28eeb131d72d6395621f36c95f264f801238e1de735c55a14dcff2d506eeb9d0"
+        },
+        {
+          "path": "src/game/game_generated_type_0f74b892eb1cdde4.cpp",
+          "sha256": "62c1be396ddf77d279086355912e8f8275e4ec1b03833a112c34d52ce0fe7ea9"
+        },
+        {
+          "path": "src/game/game_generated_type_0f74b892eb1cdde4.hpp",
+          "sha256": "3d00c25bb9f61475f7226397ba4290ebd00c985a978fcd1bba1934a4efb9e0a4"
+        },
+        {
+          "path": "src/game/game_generated_type_10edc785c24978fc.cpp",
+          "sha256": "4d2318b397f145cf24d14375f50ee968bc1133a56e9b18049ecd86e10085b1dd"
+        },
+        {
+          "path": "src/game/game_generated_type_10edc785c24978fc.hpp",
+          "sha256": "60900e640b972b905173581c5b583e8006f0a34db2d95b25408f755c7b367d19"
+        },
+        {
+          "path": "src/game/game_generated_type_11e0490f60fdc166.cpp",
+          "sha256": "3d43b4b2a60804dcbf2b92209cbfeed489910eb84b1f0fb7717a3edc708f9fd9"
+        },
+        {
+          "path": "src/game/game_generated_type_11e0490f60fdc166.hpp",
+          "sha256": "beec811f98f7ea601310cb2687b55c65657ef204d15ff626b0838a3d9a0fadcb"
+        },
+        {
+          "path": "src/game/game_generated_type_130519c307b90f46.cpp",
+          "sha256": "074c4a3db95ec465a711a0d01cb48a9338e33047a4664ba0aafabd721eb35cd6"
+        },
+        {
+          "path": "src/game/game_generated_type_130519c307b90f46.hpp",
+          "sha256": "c4ddea3dfdd2dadfb05e55bca050f8a13df0ea32373aa75bd0a1e82ad78aab9d"
+        },
+        {
+          "path": "src/game/game_generated_type_1406fd70a8ee6f2f.cpp",
+          "sha256": "6a3b8cd7cdf9e809659d6bba83d734efae4430eeb1d663b79feed773da8f290a"
+        },
+        {
+          "path": "src/game/game_generated_type_1406fd70a8ee6f2f.hpp",
+          "sha256": "8d8df2bc48d0c836babeaf3aa8755487ec62296c0c6472592b5ed7eeef215fe6"
+        },
+        {
+          "path": "src/game/game_generated_type_15f31d4f046b09a8.cpp",
+          "sha256": "453bdc39028daeeb77d78d27ff95ffd18ce1c6da5c950b560b33d891a1986446"
+        },
+        {
+          "path": "src/game/game_generated_type_15f31d4f046b09a8.hpp",
+          "sha256": "082cbad4fd2da66e1d425c6c0ceb93f596a7b9fae2a28d10f3a05f81a46d6958"
+        },
+        {
+          "path": "src/game/game_generated_type_169021fb033627ed.cpp",
+          "sha256": "b7d65dd6805bcabb439b8eafe1200549f10015e8a772849a1035f686b6c18fa2"
+        },
+        {
+          "path": "src/game/game_generated_type_169021fb033627ed.hpp",
+          "sha256": "d79fbda2cf0813644d466db8059ac663e07c6c8bed03aa49be1dcd38bde618ea"
+        },
+        {
+          "path": "src/game/game_generated_type_17bc7a5b28fcdc2a.cpp",
+          "sha256": "93a776fb7a24e1dca0a4a98908641173a40e3f5b8e1be886b25e41b87776116a"
+        },
+        {
+          "path": "src/game/game_generated_type_17bc7a5b28fcdc2a.hpp",
+          "sha256": "a869e2ffb6fcd58c0766489a992b4be3efb14718c064069223bfc8b26d81dc4a"
+        },
+        {
+          "path": "src/game/game_generated_type_1815a6964debf82a.cpp",
+          "sha256": "11143028270fea23994b589ac68e94ec461cc5469a36fc300dac94ffd191d510"
+        },
+        {
+          "path": "src/game/game_generated_type_1815a6964debf82a.hpp",
+          "sha256": "4cde1381d298fe2d8a70afc80a4e023ddaf111ad7fd4aa4ebb8c503407aeadc1"
+        },
+        {
+          "path": "src/game/game_generated_type_18d5b680efad7752.cpp",
+          "sha256": "6b8c4854c626f58f75b932a700dbcbacd83dec4b53ee928cdfe6ecfe4256645a"
+        },
+        {
+          "path": "src/game/game_generated_type_18d5b680efad7752.hpp",
+          "sha256": "da64e00ab4af3000eda49cd428240ccd55e55bad0a0e30e789b4de4328d4e97d"
+        },
+        {
+          "path": "src/game/game_generated_type_1ab688350081022a.cpp",
+          "sha256": "75e251fc1f7f71013e45f7f73c487f58e3451c5906ebab9fef573e57d7eac047"
+        },
+        {
+          "path": "src/game/game_generated_type_1ab688350081022a.hpp",
+          "sha256": "2f1045320774f0d5afd273e54113e2040e5bbba7580bc841e10ef9c7ae6d936b"
+        },
+        {
+          "path": "src/game/game_generated_type_1fc419a676702252.cpp",
+          "sha256": "16ab318e0d2d3f96c1d7b218e1ef3a2985e8df9d71c3e017b6a40ecb554c96fe"
+        },
+        {
+          "path": "src/game/game_generated_type_1fc419a676702252.hpp",
+          "sha256": "ebc126dbdd1f0c254ac7e47d1e3cc86bda3ca00f988c1b0b1b20cf5d55e0ddd5"
+        },
+        {
+          "path": "src/game/game_generated_type_20db1845606f1f3b.cpp",
+          "sha256": "8e30aa53d29bb1646438a7cdffa686d7c2a966d2307fcc78e181bc62504d74f9"
+        },
+        {
+          "path": "src/game/game_generated_type_20db1845606f1f3b.hpp",
+          "sha256": "bdab3b1bce0a5222ac5849f3015eb8831b87a6ce941d7360e566f6d2d10629b2"
+        },
+        {
+          "path": "src/game/game_generated_type_22115ea4236d0eaa.cpp",
+          "sha256": "77db4c68ecad0c1e47bb107a54f5390748ad2e994359b1bb2b50ca7d7312846b"
+        },
+        {
+          "path": "src/game/game_generated_type_22115ea4236d0eaa.hpp",
+          "sha256": "b56b12b470780fc9abd6b686a7bb64e073aebdb5bebc5a2dd6aa7638594c894b"
+        },
+        {
+          "path": "src/game/game_generated_type_23a020152d468724.cpp",
+          "sha256": "90b2d7cf5aa0f9f4e28247f7aa74bba5679fbb5c6395a09b33e8f01a26fe0dd1"
+        },
+        {
+          "path": "src/game/game_generated_type_23a020152d468724.hpp",
+          "sha256": "59be3549accd3e99a9a09e661de56539ebf781507e057d017a3bf634ba73349c"
+        },
+        {
+          "path": "src/game/game_generated_type_23ed5cbd0e3922f3.cpp",
+          "sha256": "317b24213d970521b229ab1775d3f9fa45a11acacb2151acb4c58a65c7b3b10e"
+        },
+        {
+          "path": "src/game/game_generated_type_23ed5cbd0e3922f3.hpp",
+          "sha256": "f398f1257b73ad6ae9c370005c9d7292536131f1575934e4e7c7fefb3305b029"
+        },
+        {
+          "path": "src/game/game_generated_type_24ddde8b39392611.cpp",
+          "sha256": "73edf67d041e9af29ea2e05d77a4a5266661223e23176693bf815a0faf1e8fbc"
+        },
+        {
+          "path": "src/game/game_generated_type_24ddde8b39392611.hpp",
+          "sha256": "e07c826f24c363339099e282c9106542496a72e5a9ed3d43b11589dbd6f18191"
+        },
+        {
+          "path": "src/game/game_generated_type_27b8baf7307cff9f.cpp",
+          "sha256": "c61df8599c8a80aab8c2a1fb6f1c431761a7450d5bc2d9a3a20356f294a74e9f"
+        },
+        {
+          "path": "src/game/game_generated_type_27b8baf7307cff9f.hpp",
+          "sha256": "d4f0b63b93bc533e4ccc6d0482d35015220e2867e982bb9ee674c1d668eedc99"
+        },
+        {
+          "path": "src/game/game_generated_type_29293d4d6e77d3bc.cpp",
+          "sha256": "b53fd0fbad88681db3a756dc49ade4df2ae55bd6aab6e53f0bf49713a1e42f18"
+        },
+        {
+          "path": "src/game/game_generated_type_29293d4d6e77d3bc.hpp",
+          "sha256": "c790af74ba0bf1cd573a890fc09ed26afe6676ed7cf66892eb9ee8cbab0c8dcf"
+        },
+        {
+          "path": "src/game/game_generated_type_2b1e88c9c4c08d03.cpp",
+          "sha256": "cb049bfc05cc1d6d2ad81251e897f4f24a29d7053153b6c14285d1605f6b1572"
+        },
+        {
+          "path": "src/game/game_generated_type_2b1e88c9c4c08d03.hpp",
+          "sha256": "bb4110c1de06032af75f14a146e8c45bac95acfdb4a8e8c35ce90db327a777d3"
+        },
+        {
+          "path": "src/game/game_generated_type_2c2ce8625d613473.cpp",
+          "sha256": "2fa2b6002b854ad32f66d491e7efabe7ff30e3c135fbb8db97b1d07ffc78a98a"
+        },
+        {
+          "path": "src/game/game_generated_type_2c2ce8625d613473.hpp",
+          "sha256": "5dda6501454223809262625d2ce0fb87234c4573ea5110c4f7cafe2d3099ff03"
+        },
+        {
+          "path": "src/game/game_generated_type_2d2e25a6914f7709.cpp",
+          "sha256": "28862360a2ac588e905f0a861386fc60b7ede3589bb5c735f23fa2043c2f66a3"
+        },
+        {
+          "path": "src/game/game_generated_type_2d2e25a6914f7709.hpp",
+          "sha256": "bd9391c3fa569ea899f8b1bf7c5bbc874e3b52cab0421854239c285ba1caa335"
+        },
+        {
+          "path": "src/game/game_generated_type_2e79f4f38b707be7.cpp",
+          "sha256": "ede52cf1299c4564c8079d3e8479f71ee16a6792236b6ac1449236a5840f4ea6"
+        },
+        {
+          "path": "src/game/game_generated_type_2e79f4f38b707be7.hpp",
+          "sha256": "0011ba9daffc8fb722b69456908d3f757a0ac739928dab2c1e5a879cb0531c9d"
+        },
+        {
+          "path": "src/game/game_generated_type_2eedf806ae9938c7.cpp",
+          "sha256": "78b62824dffdc933db579b0d8188f2be6b961fd276d4379f8a4ff9ebf854c517"
+        },
+        {
+          "path": "src/game/game_generated_type_2eedf806ae9938c7.hpp",
+          "sha256": "0a2f6d6ffaee01a80afce28b41c91595cb81e55d4b2488b387f0e6569bf96945"
+        },
+        {
+          "path": "src/game/game_generated_type_2ef6641b828546ac.cpp",
+          "sha256": "906bb8bb64fe4d9a541ac7e628de867bced8148dcae1a682c6570a7aacf8fafd"
+        },
+        {
+          "path": "src/game/game_generated_type_2ef6641b828546ac.hpp",
+          "sha256": "ab164392bc39550c42b3a153bb5737937310151dc83dc021ba6774ca1650d105"
+        },
+        {
+          "path": "src/game/game_generated_type_2ffa6f51468590ea.cpp",
+          "sha256": "d95aa6c846c48ee39977c3abbf2d0febd0a1b118e9225ccaf688ea8f202441f5"
+        },
+        {
+          "path": "src/game/game_generated_type_2ffa6f51468590ea.hpp",
+          "sha256": "46da259201a86a9d4bc0d95d23e4516c094c0c132cfcf889b41a47b854772da2"
+        },
+        {
+          "path": "src/game/game_generated_type_2ffa6f51468590ea_cpp_part_0000.inc",
+          "sha256": "f301b1b38d44fd0a340efc5a921cfbe5fbc6d763503530171e1c77208b2a685b"
+        },
+        {
+          "path": "src/game/game_generated_type_2ffa6f51468590ea_cpp_part_0001.inc",
+          "sha256": "802ff778cfb48c0c53e3d87a9b7a9e60cdd93968375968bb9586245978bd23e7"
+        },
+        {
+          "path": "src/game/game_generated_type_381ecfc7910ffbab.cpp",
+          "sha256": "dd33eb6d05e3f6a831180ec70fa36db4d30fdb1b28ac94d31654be80231a477b"
+        },
+        {
+          "path": "src/game/game_generated_type_381ecfc7910ffbab.hpp",
+          "sha256": "81e331fb1d1bf6413051d6fe4570fb41da1738ee982db44c97ab6e8316d306f8"
+        },
+        {
+          "path": "src/game/game_generated_type_3855bfc5096e5e16.cpp",
+          "sha256": "a6fe5ef1f9ac2255a4a506d9b5f54ecc5d11a69dd753ed20f251b0ea8225b30a"
+        },
+        {
+          "path": "src/game/game_generated_type_3855bfc5096e5e16.hpp",
+          "sha256": "5b82f1f81820d891f9abb284bfcc370c4ff6dae01e9d7fd1b3af864604b4941d"
+        },
+        {
+          "path": "src/game/game_generated_type_3a3d09f9e75a32d2.cpp",
+          "sha256": "905f63fbb136325688ce1670daafe1c0cdfb4f80f52b2e934c3ffda034e634c9"
+        },
+        {
+          "path": "src/game/game_generated_type_3a3d09f9e75a32d2.hpp",
+          "sha256": "0a0a25394b0793825560a66e397ac0328e885239837cc6e5735d77015fb182e9"
+        },
+        {
+          "path": "src/game/game_generated_type_3da6da0799f0bdf8.cpp",
+          "sha256": "1ae4ed77c32555eed828118eaf9d3871df8a33e5d0bd43717230907daf1cf01d"
+        },
+        {
+          "path": "src/game/game_generated_type_3da6da0799f0bdf8.hpp",
+          "sha256": "5f1c0e0f11335167b931c154a67121c09fd85aa83be3b73e832e5342b10dadae"
+        },
+        {
+          "path": "src/game/game_generated_type_3e5b0d35ae6be8e7.cpp",
+          "sha256": "f4c68ec6c8e0cb62c36e2b2148434a4bef50c504e98d55bfb7cd3798ba5ad09f"
+        },
+        {
+          "path": "src/game/game_generated_type_3e5b0d35ae6be8e7.hpp",
+          "sha256": "52059d9ad833226a256e921f59a07dc2b6f7d01e4b7fb92fa2a8a12d3d9ca176"
+        },
+        {
+          "path": "src/game/game_generated_type_3ee77977aa791047.cpp",
+          "sha256": "dc33e44951814e98279e5b5515f1e0a023f5dad2884100d70f8dbd453220158e"
+        },
+        {
+          "path": "src/game/game_generated_type_3ee77977aa791047.hpp",
+          "sha256": "df7daeb93904b81037576c9fcaa2552c35f0f0f0994c92c76f52ae8e7d3b58a9"
+        },
+        {
+          "path": "src/game/game_generated_type_403f4e6631bd3667.cpp",
+          "sha256": "735fc8f1921a223832e3d540104b63e198641d2983eaddbdeec4332a12e5918c"
+        },
+        {
+          "path": "src/game/game_generated_type_403f4e6631bd3667.hpp",
+          "sha256": "fb17b6080ae05d11ec595d9d8cb8ba33b89756326580c412fb4c6e402f4101e7"
+        },
+        {
+          "path": "src/game/game_generated_type_408ac5c74e5f3515.cpp",
+          "sha256": "d844c97664e80d6ab3a3e61703d14a55159c9d4082af23751415d16f8e7be0e7"
+        },
+        {
+          "path": "src/game/game_generated_type_408ac5c74e5f3515.hpp",
+          "sha256": "8eed25320f18708a235104a2054d8c8d1171ba9f4c354538e6858abfaedd1e27"
+        },
+        {
+          "path": "src/game/game_generated_type_42d69496680e17fc.cpp",
+          "sha256": "45f8ba222dc5146bc34d146542c8f2b4b942252789020ae54e5676a80d196c27"
+        },
+        {
+          "path": "src/game/game_generated_type_42d69496680e17fc.hpp",
+          "sha256": "8d7c31db782bde88f6262c9be066c10e6572b436021030d364b39a58d3aacd51"
+        },
+        {
+          "path": "src/game/game_generated_type_43347b50b6a10e65.cpp",
+          "sha256": "13a7a1eefbf8092ce89af2243cc5d4d7eadb87d10006b01e032314850c6b7807"
+        },
+        {
+          "path": "src/game/game_generated_type_43347b50b6a10e65.hpp",
+          "sha256": "069926f95bf0ca5b74652e923f49e3541204c502f34002a450e8653f8b05f67d"
+        },
+        {
+          "path": "src/game/game_generated_type_4368d694d01424b0.cpp",
+          "sha256": "182739c9b99392c08857dab1140885bca9335493b876834dae4dccd3cde968f8"
+        },
+        {
+          "path": "src/game/game_generated_type_4368d694d01424b0.hpp",
+          "sha256": "1d2b271452efe68265800e54333bd5359e478f17420ec02157e153011f7f7acb"
+        },
+        {
+          "path": "src/game/game_generated_type_4489b86073532f79.cpp",
+          "sha256": "a3c1b0ebe0b77e4c229b4d0d56a31151f2e8e1b25213a989efb283309dfe2d8a"
+        },
+        {
+          "path": "src/game/game_generated_type_4489b86073532f79.hpp",
+          "sha256": "eb06d9200dfef1d6ff82db27491385d9475dff6624c9163670bb145d3ac88a8c"
+        },
+        {
+          "path": "src/game/game_generated_type_456d3d004decc356.cpp",
+          "sha256": "05798588ecbc8947805ad2a1dd627abfb80c5864819c3e02ed073188847d329d"
+        },
+        {
+          "path": "src/game/game_generated_type_456d3d004decc356.hpp",
+          "sha256": "059841c487a813ef45cdb50d2ac9fe90d219eda18c7b9afa53dd4b1caa6558d9"
+        },
+        {
+          "path": "src/game/game_generated_type_487b2c2b346d5c73.cpp",
+          "sha256": "2a1d94aa68466c74346985ab35c41961b6b1f061405791ef68f90d06bccfda80"
+        },
+        {
+          "path": "src/game/game_generated_type_487b2c2b346d5c73.hpp",
+          "sha256": "cb9fe0f49e9864c3d5b393da513ba8f845e7c94a9e4791669775ebb24901cdda"
+        },
+        {
+          "path": "src/game/game_generated_type_4a8bef2ab48b32d7.cpp",
+          "sha256": "f916691816843c2a7db842999abc3916fb58ad476b0daa45286da1b1d37da218"
+        },
+        {
+          "path": "src/game/game_generated_type_4a8bef2ab48b32d7.hpp",
+          "sha256": "8101bdc11c2c0e9c1d19318639dccd02aae09f6de193881a77647484512bc6d7"
+        },
+        {
+          "path": "src/game/game_generated_type_4c00a0e0c6e6e2e5.cpp",
+          "sha256": "5ad6f5babff5ddce27a4b4ea51447cb623e15499dedf21d37d9dffe3ff105d9f"
+        },
+        {
+          "path": "src/game/game_generated_type_4c00a0e0c6e6e2e5.hpp",
+          "sha256": "4caaa28f1a6b8508994dc28e7b97cb7129e7843feb3c007da47c1d3cd6127dcf"
+        },
+        {
+          "path": "src/game/game_generated_type_4c145fe8f008af05.cpp",
+          "sha256": "4e102a34c8b0c1d72d27ff655e152a0c17bc3a14684e6bbddaa6d7afcb90ef03"
+        },
+        {
+          "path": "src/game/game_generated_type_4c145fe8f008af05.hpp",
+          "sha256": "07d53d03706858a2c4ab133a7329c4e97a67f9f0edd4723d61baa6f6be7f8ae2"
+        },
+        {
+          "path": "src/game/game_generated_type_4ccab99c775ca4c5.cpp",
+          "sha256": "4e62ccf5729b2e22b7cff231a4a69f89f7fe50abdca610bc21ef4eb7b6174827"
+        },
+        {
+          "path": "src/game/game_generated_type_4ccab99c775ca4c5.hpp",
+          "sha256": "f8d58a43cf2015951d1c8d15dbf309222ca84a4c7f2fabb5676a7e3d7f22c186"
+        },
+        {
+          "path": "src/game/game_generated_type_4e9b1f0e9e3baf25.cpp",
+          "sha256": "d737286eb407b0de306fffbc8256b3c51c7a978f28fee3b646086f52856f2e8f"
+        },
+        {
+          "path": "src/game/game_generated_type_4e9b1f0e9e3baf25.hpp",
+          "sha256": "09449a19f07617bd21f0c05cf511c3de819b28f9f6010f1e3416b655e60cbde9"
+        },
+        {
+          "path": "src/game/game_generated_type_4feff672b530e53a.cpp",
+          "sha256": "90cd4b1b660d4db91e1068fada3f21ccd847556b8bf2c83f53172927f49433a0"
+        },
+        {
+          "path": "src/game/game_generated_type_4feff672b530e53a.hpp",
+          "sha256": "849aed8fc1e979e0bfababa36de0ddff661403254ae2c16eae7275f96ed4e9c5"
+        },
+        {
+          "path": "src/game/game_generated_type_50c5a567a6876ee3.cpp",
+          "sha256": "fd43984dd872fbd7ac7e33cc999bf84e7b28ae3d943069025fb0755ea7664fcc"
+        },
+        {
+          "path": "src/game/game_generated_type_50c5a567a6876ee3.hpp",
+          "sha256": "a4b83c89c775f7df6ccaa5a7c4d81bbbff6a3a91965e96986477cdc784a4f3a7"
+        },
+        {
+          "path": "src/game/game_generated_type_51222df74ac70bab.cpp",
+          "sha256": "068aee994bb829c66778bd2ab0a20824c5313336713a9d072784a524e782d84e"
+        },
+        {
+          "path": "src/game/game_generated_type_51222df74ac70bab.hpp",
+          "sha256": "d5b80a089ab859bf41705a09308ea07d75663bea89bfce2833f18f41a6197749"
+        },
+        {
+          "path": "src/game/game_generated_type_51222df74ac70bab_templates.hpp",
+          "sha256": "4dd5af1b44fe7f5fd57d487e5c224354d5cfdcdcf6e5d3979d1080ee5a5acca2"
+        },
+        {
+          "path": "src/game/game_generated_type_51fd12cb14e568f9.cpp",
+          "sha256": "d4f84e932992df80674dcbd311518950c3dd6638100696771ab6bbb1f77bb951"
+        },
+        {
+          "path": "src/game/game_generated_type_51fd12cb14e568f9.hpp",
+          "sha256": "4b186f8022175c6ae71d201e7c4e586afcb5d75b5925c30a01dc48e108f925a0"
+        },
+        {
+          "path": "src/game/game_generated_type_52158c8b20364c2b.cpp",
+          "sha256": "ec8d1ba0e379dd7eb64c8d4fe55938186f73fd49d0c18de90099e2c0164fe925"
+        },
+        {
+          "path": "src/game/game_generated_type_52158c8b20364c2b.hpp",
+          "sha256": "dda07e7f12044a81f2ec1c3131cf4e656d03737cb9d00dc8bf88791f7f43d13f"
+        },
+        {
+          "path": "src/game/game_generated_type_5451b2154f09f4c5.cpp",
+          "sha256": "677d1c90c1d6136f3723fa71d55bef0315ea17ceb90f1a8e96b0ce821a1fd932"
+        },
+        {
+          "path": "src/game/game_generated_type_5451b2154f09f4c5.hpp",
+          "sha256": "79d98e87d0a88be96d0a2800c4b14e4a9654c4401c39dde1be11f3739496d9a9"
+        },
+        {
+          "path": "src/game/game_generated_type_57e2b41d1ee1c149.cpp",
+          "sha256": "af3b325fbffd17278a0fbd056f195409b529edbbd14dc74d0179dc1f2a3ec813"
+        },
+        {
+          "path": "src/game/game_generated_type_57e2b41d1ee1c149.hpp",
+          "sha256": "bde2e4f1bdf98ba87fd6dad6306fc0c8a32d9c631d2a39baa76751d3f8e40c52"
+        },
+        {
+          "path": "src/game/game_generated_type_5841296a01607078.cpp",
+          "sha256": "e92c2c1619377ea1f61eefe76979f065ed0293b7113a1c4da36f1b71721ce3fc"
+        },
+        {
+          "path": "src/game/game_generated_type_5841296a01607078.hpp",
+          "sha256": "e1fa57063f81617db1b3953a36af6b4325b72e65b1a1af42250ccb073d8a45cf"
+        },
+        {
+          "path": "src/game/game_generated_type_5ac9304f9db0671e.cpp",
+          "sha256": "ba127680a7e2400432a22a1fc7d087cbe86bf348a1fbc2ac48f1362bc062511d"
+        },
+        {
+          "path": "src/game/game_generated_type_5ac9304f9db0671e.hpp",
+          "sha256": "167c91442fff84246af353049a4c1d080a9645296aff1896cd44d94d780130ab"
+        },
+        {
+          "path": "src/game/game_generated_type_5ad2213598dfcd5d.cpp",
+          "sha256": "eccc31b208ad2b431d943f3fa46daaf7270352e6a6c25c350289c72a1985a16e"
+        },
+        {
+          "path": "src/game/game_generated_type_5ad2213598dfcd5d.hpp",
+          "sha256": "d3cfd66930bd84c0c5771ceb2368e937bd1ba390b78ab3cdde85d9d472c9f52c"
+        },
+        {
+          "path": "src/game/game_generated_type_5beb6285da308d06.cpp",
+          "sha256": "fe9068aa21f62f4c79c533a9f2a6fabfdabd55af63e19b0d6f1c9bf85d00a41d"
+        },
+        {
+          "path": "src/game/game_generated_type_5beb6285da308d06.hpp",
+          "sha256": "4d10281652eef84b390d314efca28b940a014144c162c7050fa19aa797d40aad"
+        },
+        {
+          "path": "src/game/game_generated_type_5dc998c2cffb18c8.cpp",
+          "sha256": "c6dbbc300bacb1cb6371c3697fc21882fbeedbd97b1d0df19e7244fc0b89af05"
+        },
+        {
+          "path": "src/game/game_generated_type_5dc998c2cffb18c8.hpp",
+          "sha256": "5db013c5eb1bcee9cbe4078202137912a8d13dd87353eb7e0533a58d92ed4d71"
+        },
+        {
+          "path": "src/game/game_generated_type_5df8265429cd2423.cpp",
+          "sha256": "42318a3355ab3914ea1d4295eb7dafdc2b280a04d0578f0dd1cf6956a048563f"
+        },
+        {
+          "path": "src/game/game_generated_type_5df8265429cd2423.hpp",
+          "sha256": "e865f93707e23433080b5724736c5cec919aca8dffb71c8f2010b5895294220e"
+        },
+        {
+          "path": "src/game/game_generated_type_63cc285eb997c6a4.cpp",
+          "sha256": "3a75e1da397d8b2b0faeb0b751ced302b3074f3a35072c96c1c79fd60e3a9e44"
+        },
+        {
+          "path": "src/game/game_generated_type_63cc285eb997c6a4.hpp",
+          "sha256": "196b2fd5136330aec9d25d1560cfa0d0a176a27b967e0b0cd90f9da0f3325c50"
+        },
+        {
+          "path": "src/game/game_generated_type_6485f92c2f04639f.cpp",
+          "sha256": "78e8197f70158656f520a0bead709d49fbe869522eaa6f323315e866ff29bbe2"
+        },
+        {
+          "path": "src/game/game_generated_type_6485f92c2f04639f.hpp",
+          "sha256": "5d9c49188e1eafc56f71b20f8f37dd09aa413e0664ff846a47e0173c0381bc59"
+        },
+        {
+          "path": "src/game/game_generated_type_6517d63c01870958.cpp",
+          "sha256": "20a3ab26c48c55fd80a8e7a0a93056d01193d0fa955aa7c76d174e186bc4790f"
+        },
+        {
+          "path": "src/game/game_generated_type_6517d63c01870958.hpp",
+          "sha256": "5410d1f7521dbd13c18497651aa988a82ff961f9d79f0440d6ca1b462c574e21"
+        },
+        {
+          "path": "src/game/game_generated_type_65bcdaa7ea8c7d7a.cpp",
+          "sha256": "d7678dc9a0b691c1dd21434b18fc11716d08d6588251569aa4f6328b278437a8"
+        },
+        {
+          "path": "src/game/game_generated_type_65bcdaa7ea8c7d7a.hpp",
+          "sha256": "4c328e5916ea798290c20796a4aba03a5f34142a54e07e3e29c0663c5b8a5ab0"
+        },
+        {
+          "path": "src/game/game_generated_type_65bcdaa7ea8c7d7a_cpp_part_0000.inc",
+          "sha256": "0cfdb154c0bbfda5f168d98fdd76a4821008c6c16d41f8cad426c003291f8a27"
+        },
+        {
+          "path": "src/game/game_generated_type_65bcdaa7ea8c7d7a_cpp_part_0001.inc",
+          "sha256": "97bafbd67ffbfd4e0bcc2464275c782e35a0f389cbb22925f3b3effac3e97186"
+        },
+        {
+          "path": "src/game/game_generated_type_66eb7014769dfe80.cpp",
+          "sha256": "ec42b9efa53c2db6794eca4e12d9f3c517dd875191bbe50b90df4709ddb227aa"
+        },
+        {
+          "path": "src/game/game_generated_type_66eb7014769dfe80.hpp",
+          "sha256": "cdab485a72c3f33483141f861b3a52300b11741971b156d6c5ce79e06a04ac01"
+        },
+        {
+          "path": "src/game/game_generated_type_66eb7014769dfe80_cpp_part_0000.inc",
+          "sha256": "5c7b634a30a12a5ea589174661c709c85339840c67902ecc852cf933c2b6644f"
+        },
+        {
+          "path": "src/game/game_generated_type_66eb7014769dfe80_cpp_part_0001.inc",
+          "sha256": "718bcc5ef9817e289dd23dbad4c6747402e247369ae01ba41ee02677552f94ca"
+        },
+        {
+          "path": "src/game/game_generated_type_672083a5397f2913.cpp",
+          "sha256": "2f5a597917e0ea61b387f2acd04c6282670daff6a2e1a59337fb634987a6fad4"
+        },
+        {
+          "path": "src/game/game_generated_type_672083a5397f2913.hpp",
+          "sha256": "a497dc89856a787f6d649b74f757b21491aa1b70a5203734adf4841a78dd39bd"
+        },
+        {
+          "path": "src/game/game_generated_type_6803fd77f880b974.cpp",
+          "sha256": "6adccdd28eeb9b2031e9c5e1ee31a9789e74761f90e8d1d8734aaff7031ad2b3"
+        },
+        {
+          "path": "src/game/game_generated_type_6803fd77f880b974.hpp",
+          "sha256": "22507cd887bbd0cf2b8077c9f41c861c2667d96dcca1840aeef5a4f44ceda020"
+        },
+        {
+          "path": "src/game/game_generated_type_68277163e843ed70.cpp",
+          "sha256": "94d0a4e1d5ef8b855bf66884f673e7a7b92d4dff152189dc882a17f3bf8fe1e8"
+        },
+        {
+          "path": "src/game/game_generated_type_68277163e843ed70.hpp",
+          "sha256": "8f9adba7dae1f743f72ae8bba6926fdf049274e142835872bb68108a11c5b298"
+        },
+        {
+          "path": "src/game/game_generated_type_69a97d2bf5ede86d.cpp",
+          "sha256": "cfe5bafbad127cab6cbaccfa7dd7776543e4b40215ac3a738f6c0c1964ed76ea"
+        },
+        {
+          "path": "src/game/game_generated_type_69a97d2bf5ede86d.hpp",
+          "sha256": "63c5c4f453506316fc0563ceb98c6d250c6bf0622d4c7f36b06ed645a78f84ad"
+        },
+        {
+          "path": "src/game/game_generated_type_6ee7d14059be1acf.cpp",
+          "sha256": "dff454071ac4f3abe1617f25ed6b57ac8103aaf987dae23a12b419ac6c61455a"
+        },
+        {
+          "path": "src/game/game_generated_type_6ee7d14059be1acf.hpp",
+          "sha256": "11614a66c418f178f53d435441e8aa989cdb6548d3af5eec9ed8fdda9276cce3"
+        },
+        {
+          "path": "src/game/game_generated_type_70a14a9a721e329a.cpp",
+          "sha256": "72a2861c22696f17dd0c922a983a04f2b6041b19f01b98d4092fe53daf720748"
+        },
+        {
+          "path": "src/game/game_generated_type_70a14a9a721e329a.hpp",
+          "sha256": "abbbe8040887b4487e272ebef66956b4c04bc13dc10690e9f4d3801ec06014a0"
+        },
+        {
+          "path": "src/game/game_generated_type_70b7974d356d68ab.cpp",
+          "sha256": "fa6415fee7f5f686d95146fa92b13725a744348f998f6f5a194a63c5e76b8d42"
+        },
+        {
+          "path": "src/game/game_generated_type_70b7974d356d68ab.hpp",
+          "sha256": "09fe03c180bdd14fd50545dcedd888ad61038dcfc21d2ddbae18f4fafece2417"
+        },
+        {
+          "path": "src/game/game_generated_type_70c4092da329e972.cpp",
+          "sha256": "af1b2475defda2eb0c9b9a5db87b51148e089bca6c0fc37c987098334b4aa7c3"
+        },
+        {
+          "path": "src/game/game_generated_type_70c4092da329e972.hpp",
+          "sha256": "e423a0eb994acf553527d303cc72be019021b8bdbc3e174d0d2f73d4b7bb7adf"
+        },
+        {
+          "path": "src/game/game_generated_type_72d9658ed61145d6.cpp",
+          "sha256": "a8aad9709f4d144718bc3f2bb3ac22bd796095b2e4e0bff4ec5424275c12fcb3"
+        },
+        {
+          "path": "src/game/game_generated_type_72d9658ed61145d6.hpp",
+          "sha256": "ff48a408e7c85253826afed3202e6b15191ce5b1e80dc41cae194f5434e20396"
+        },
+        {
+          "path": "src/game/game_generated_type_75707aa3f1629c85.cpp",
+          "sha256": "15bc76a98a96434c030cf699b1827014df7893154518bfd32509704234f9849f"
+        },
+        {
+          "path": "src/game/game_generated_type_75707aa3f1629c85.hpp",
+          "sha256": "73b8c1423554d497fb58f1ed0953e3e25ccd68ebb4a9bd5041857373f671a837"
+        },
+        {
+          "path": "src/game/game_generated_type_75707aa3f1629c85_cpp_part_0000.inc",
+          "sha256": "51a417de231ceb350db736c095d2470352190ce8b89ef438919a53a3ab3bcf16"
+        },
+        {
+          "path": "src/game/game_generated_type_75707aa3f1629c85_cpp_part_0001.inc",
+          "sha256": "cbc76ef7e6a46d0ad36da90ef239adf3345a66037eb7ae2f1a1b08ecbb3385de"
+        },
+        {
+          "path": "src/game/game_generated_type_757516ce190cf813.cpp",
+          "sha256": "d3040a9c2726cba346101c01a6a9f018c43c1a3d319816aea875730a9f7ea56e"
+        },
+        {
+          "path": "src/game/game_generated_type_757516ce190cf813.hpp",
+          "sha256": "0b4fa6a35d2e79cdc40c6c3160c49a7764a9cbe8504e79e6ca14f72fbfceb613"
+        },
+        {
+          "path": "src/game/game_generated_type_764e04aa5493d588.cpp",
+          "sha256": "cac8e91ffb42f06295e9dda3bc4431ff0c27c6261cdb502c18cb549367aecea7"
+        },
+        {
+          "path": "src/game/game_generated_type_764e04aa5493d588.hpp",
+          "sha256": "e67f57e9a219ae91afc556b7953632673e6ce81ff95ec2cf8b34635a84c66d61"
+        },
+        {
+          "path": "src/game/game_generated_type_76884ad002dceb7a.cpp",
+          "sha256": "b8cf66e0bc433e0632280941922c2e435f9c5c77b52d8c7f630c7fd4b7b8bb39"
+        },
+        {
+          "path": "src/game/game_generated_type_76884ad002dceb7a.hpp",
+          "sha256": "1b406cb1220a85a75e4c160a0805d1836448d9b9685d7991e66d3d9e6f787e1e"
+        },
+        {
+          "path": "src/game/game_generated_type_77de402a688eeb9d.cpp",
+          "sha256": "027892f19f4bd569b5acd7282bd954edf61a3c6c025b673621e29f72eac8cd1b"
+        },
+        {
+          "path": "src/game/game_generated_type_77de402a688eeb9d.hpp",
+          "sha256": "8e0885c7a1cd3457b641fed3c252c02a6ce73f8d8d65fd77aad8fe0bcad006ab"
+        },
+        {
+          "path": "src/game/game_generated_type_792a6372766eb19f.cpp",
+          "sha256": "2a75c03f60cdbb877321d9eaa7756002fbf221d23b0bb6d08f93cf781a7c8315"
+        },
+        {
+          "path": "src/game/game_generated_type_792a6372766eb19f.hpp",
+          "sha256": "e27b606b670294125b64f6d9f0b61a18011bf85bc1c3ac6226868b56956740f1"
+        },
+        {
+          "path": "src/game/game_generated_type_7a470603d6db57af.cpp",
+          "sha256": "6b8299456b9cd8ca0659df110c602d956c48e170276c87360ccaed47b72fd3ca"
+        },
+        {
+          "path": "src/game/game_generated_type_7a470603d6db57af.hpp",
+          "sha256": "36ab1597fe5438f29b0278839b1abdac7d944ef1874c85f10f9c8e3447cd7abe"
+        },
+        {
+          "path": "src/game/game_generated_type_7a8a85ab4c0396df.cpp",
+          "sha256": "c1c9b81a301c83f9f94669809ea013bd80d6de27b7624aec23e02864721e80d1"
+        },
+        {
+          "path": "src/game/game_generated_type_7a8a85ab4c0396df.hpp",
+          "sha256": "c13b23b2fbe8d1e5e408f9a0e47521afc1f640934615a47cb65710ac04fb195d"
+        },
+        {
+          "path": "src/game/game_generated_type_7c0f60cfdd8cf265.cpp",
+          "sha256": "6b848b6ab66ad64fcc53f84d9a97eae5287d9b4309806f57f5b648a996acc310"
+        },
+        {
+          "path": "src/game/game_generated_type_7c0f60cfdd8cf265.hpp",
+          "sha256": "a5342d25e2a9c7ce7baa0c68504ce17f33272b2a964d79e0bb1178270124a59d"
+        },
+        {
+          "path": "src/game/game_generated_type_7de6788b61a5af56.cpp",
+          "sha256": "bb3b6dd000acacd15c0fed4a2b924e2701699b18e85d5de0ca2c599538a8d2b7"
+        },
+        {
+          "path": "src/game/game_generated_type_7de6788b61a5af56.hpp",
+          "sha256": "42de9d77a873cf5941386527bb1332fffa4bc4cba632086e7505a5c0574a3bc5"
+        },
+        {
+          "path": "src/game/game_generated_type_7eb0a1119bc141dc.cpp",
+          "sha256": "c810330f5cecb76f61c889da51ec9118823756283144467c05dcdc97be00a5f9"
+        },
+        {
+          "path": "src/game/game_generated_type_7eb0a1119bc141dc.hpp",
+          "sha256": "fde84f79a0f7d2301676c0b664e0da56a2d7a3c2cbfb90008225b3e03fa2c71a"
+        },
+        {
+          "path": "src/game/game_generated_type_7eeafe36a056776c.cpp",
+          "sha256": "6f93280df5c1497cd58cbe0a638eebeba1c067277bec089a6e75b76be22a814a"
+        },
+        {
+          "path": "src/game/game_generated_type_7eeafe36a056776c.hpp",
+          "sha256": "83634441a15d237cb8fb6593900bd99ed5343ad48f4a94faae1e92909574ad64"
+        },
+        {
+          "path": "src/game/game_generated_type_7f70540c4f85d74f.cpp",
+          "sha256": "34432bdf42b69d7903c77faf77164307135fc44396ad67c235161a3422bc05d4"
+        },
+        {
+          "path": "src/game/game_generated_type_7f70540c4f85d74f.hpp",
+          "sha256": "a859800711adfc164aab76356c1fb0a49cd3d44e6e6331ff9f13ab93918dc853"
+        },
+        {
+          "path": "src/game/game_generated_type_80d72c9d6f5bfcfe.cpp",
+          "sha256": "1d27059cc72227220e6bd50521f2872af4a5b30279d40960b5e1cb3ed2d26c0e"
+        },
+        {
+          "path": "src/game/game_generated_type_80d72c9d6f5bfcfe.hpp",
+          "sha256": "bbf6c92733be0cf947ddef249dd3ee30e60c616d10c580bfd16c3bcf58b4ac0e"
+        },
+        {
+          "path": "src/game/game_generated_type_834c8c593e682d3f.cpp",
+          "sha256": "9623d880f03f242d6a04946525d3e1588828e88a3dd64c96d53f1337af5a2cb4"
+        },
+        {
+          "path": "src/game/game_generated_type_834c8c593e682d3f.hpp",
+          "sha256": "50fae1d4c280e7d4d401bdf7de0710ab9e7a23b47d1b687228e48bc0396819e6"
+        },
+        {
+          "path": "src/game/game_generated_type_83a7bc36395d16bd.cpp",
+          "sha256": "b13f63d9b0b5a8311b3d8978970cef023b31da5d70d0e627c4797c167177e838"
+        },
+        {
+          "path": "src/game/game_generated_type_83a7bc36395d16bd.hpp",
+          "sha256": "66ba24433b36bee78f9944f613e6419dbfd1859156f5740b05bd8658d1ff1d31"
+        },
+        {
+          "path": "src/game/game_generated_type_83b311c3bf434048.cpp",
+          "sha256": "4e86c9f9f1b5e884d9cd739769deffb7c180add09d0aa899ce83492f9f6f0a9d"
+        },
+        {
+          "path": "src/game/game_generated_type_83b311c3bf434048.hpp",
+          "sha256": "1db1d3e0f29031e7426dc92357066153927f9c1eee1acd03e1a95ef1d735187f"
+        },
+        {
+          "path": "src/game/game_generated_type_851a96be86c28dd2.cpp",
+          "sha256": "18d4ad2e33c001510df65526480893bae69fcd7138fa0a2b12ad39683257c317"
+        },
+        {
+          "path": "src/game/game_generated_type_851a96be86c28dd2.hpp",
+          "sha256": "49039897961bad55445bb490a8a01f9e86141d8ce2e2a4879a2a2c40f76530f1"
+        },
+        {
+          "path": "src/game/game_generated_type_86b804989f2a95bb.cpp",
+          "sha256": "9620c92dc8a1f263f1fe882cf728acec76ded514379fecdffb11e69d6d1f4454"
+        },
+        {
+          "path": "src/game/game_generated_type_86b804989f2a95bb.hpp",
+          "sha256": "1b80dd3caf0f251537054dfa71b75138ee5134944dc72c14f5af8d536c064a4c"
+        },
+        {
+          "path": "src/game/game_generated_type_87fb4d668ea5580b.cpp",
+          "sha256": "28a9b6cb4ce909ca740d94c4ec5478259986c9848fdf559e4e270dd2c2e3021f"
+        },
+        {
+          "path": "src/game/game_generated_type_87fb4d668ea5580b.hpp",
+          "sha256": "71e72d94dd0f7531591610ecb93b9583e2ca87d0faf42f6c003acf170c80deba"
+        },
+        {
+          "path": "src/game/game_generated_type_89c0d586cfe20341.cpp",
+          "sha256": "1caf7f4bced4246e7b3c79b6d422ed076ee707779abe594dc1585bf06f269632"
+        },
+        {
+          "path": "src/game/game_generated_type_89c0d586cfe20341.hpp",
+          "sha256": "08a1a155b706b598f8281c024bf6e08d354b3b8c6660890b12774f01165a092e"
+        },
+        {
+          "path": "src/game/game_generated_type_8bf13b560e1e05e9.cpp",
+          "sha256": "dcee9f8ccd99f62cbbeb0f2023491c17b78feb2d0985e840454ba1511483c663"
+        },
+        {
+          "path": "src/game/game_generated_type_8bf13b560e1e05e9.hpp",
+          "sha256": "689365118f09ef40c9279e256447f94891307077a5884bccb4e413b0400999f6"
+        },
+        {
+          "path": "src/game/game_generated_type_8d93189702e4084b.cpp",
+          "sha256": "e330402486cf61516839c7aa8b3a08e0109253688f98ffdcc4105abab77ca50b"
+        },
+        {
+          "path": "src/game/game_generated_type_8d93189702e4084b.hpp",
+          "sha256": "691e9c7ad5928fd20bb8cba43d66ef730a6a2c0e7601a787e5ee55c904e44ac4"
+        },
+        {
+          "path": "src/game/game_generated_type_8e2bf0f8fe011785.cpp",
+          "sha256": "3d8fd7551c0d0b4cf1115637591021a6ddc570658c55f1f12e7f92350f0657d3"
+        },
+        {
+          "path": "src/game/game_generated_type_8e2bf0f8fe011785.hpp",
+          "sha256": "b9c47519577ba6304c070b47f639c4523df527c12b52910c56a235f49efe8fb8"
+        },
+        {
+          "path": "src/game/game_generated_type_8f8054b388e3f93e.cpp",
+          "sha256": "b0cb69ab0cd809a8fcb69bd54dc5af93c0d2c3483bddd1ff4d576802a746621b"
+        },
+        {
+          "path": "src/game/game_generated_type_8f8054b388e3f93e.hpp",
+          "sha256": "9483871914987463cfd7d629e54174bf495b3b73eeae0f9bcbc08b07ef76bf59"
+        },
+        {
+          "path": "src/game/game_generated_type_90cdc908fbacdc4d.cpp",
+          "sha256": "813f281290b46cdfa7b447e2d578125ea0f9958f2af4c248f53fee0f9e398864"
+        },
+        {
+          "path": "src/game/game_generated_type_90cdc908fbacdc4d.hpp",
+          "sha256": "b2ce6f777eea461d2dc4678a3856e2d3603110be86efd61ba3fe7b0ee11af9af"
+        },
+        {
+          "path": "src/game/game_generated_type_925b3cf054e42b78.cpp",
+          "sha256": "be55f2fbbc8bb579448f6f1e2beb9458a5bbdc2606a36f3e49ac8f10f5c3d393"
+        },
+        {
+          "path": "src/game/game_generated_type_925b3cf054e42b78.hpp",
+          "sha256": "b909eb8e305db460707f53d343430fb6931df705135818458b8cf83868375719"
+        },
+        {
+          "path": "src/game/game_generated_type_931908081ea62151.cpp",
+          "sha256": "6d3b1558da6ff00f4f2826228ebd17e58993483d86bbfa7d99dc55721b7a4078"
+        },
+        {
+          "path": "src/game/game_generated_type_931908081ea62151.hpp",
+          "sha256": "67692b4b083b68af7d0a149ee9b7750903e6100185b2f47083e5a8a7cc257d6b"
+        },
+        {
+          "path": "src/game/game_generated_type_9326c27a92cfea3a.cpp",
+          "sha256": "6e3484af6a40c593ad60d819cbf0380324fe03ffbb70420314ce7196f637ec56"
+        },
+        {
+          "path": "src/game/game_generated_type_9326c27a92cfea3a.hpp",
+          "sha256": "077d1f1402ec235b96fd7cb6c12039666a8fea2b82b0a8ebbd2deda638477f75"
+        },
+        {
+          "path": "src/game/game_generated_type_9465f7541f51c47e.cpp",
+          "sha256": "dec55b16ae92f977f8bdc51b0580c297e1dbf1f836e7f371b79c381dedefb21b"
+        },
+        {
+          "path": "src/game/game_generated_type_9465f7541f51c47e.hpp",
+          "sha256": "7249d972b142edfc12a7c801a48eac44381a8048684599d52b67feb48c6596a1"
+        },
+        {
+          "path": "src/game/game_generated_type_9487cb83e3a46e0a.cpp",
+          "sha256": "3b2afae57dd65228bbd3fe39e1e8caf7bf3ed1b8af445c398b617e930ba6f369"
+        },
+        {
+          "path": "src/game/game_generated_type_9487cb83e3a46e0a.hpp",
+          "sha256": "4a24e72e6c2002be6b6c047240d9c93662f8c6f6fafba525c32cacb925e5f91c"
+        },
+        {
+          "path": "src/game/game_generated_type_96c54d9323f24f8e.cpp",
+          "sha256": "4cce04e5aad6832125c2aa8001fda0ed896860a06899cc4003cc205eee0ba076"
+        },
+        {
+          "path": "src/game/game_generated_type_96c54d9323f24f8e.hpp",
+          "sha256": "4d82ef7242a5deef33fbf2ef8731c94c834f02585a9bdfe31e18676fc0bd7e0b"
+        },
+        {
+          "path": "src/game/game_generated_type_984a870e890b3788.cpp",
+          "sha256": "9377bd84e6ae3929fb704eaaf7a38e7784feb0b8d5f4eaea3c297c6eea73ea4f"
+        },
+        {
+          "path": "src/game/game_generated_type_984a870e890b3788.hpp",
+          "sha256": "9a1755cd41393531867a70100164a42d89b4495fe64820ae5d60d2fdfbd2d6c8"
+        },
+        {
+          "path": "src/game/game_generated_type_9896b6da0c305f81.cpp",
+          "sha256": "d1232a93cf5188a5a89e967803dc1f0fc3e264655246596212169dba68a9865f"
+        },
+        {
+          "path": "src/game/game_generated_type_9896b6da0c305f81.hpp",
+          "sha256": "c6ba4b14064f1e6e540e855f37eff84b57ab8866d3d235b87686ccaeae8b1922"
+        },
+        {
+          "path": "src/game/game_generated_type_98f0a1bec2084c3c.cpp",
+          "sha256": "6cc2b1fd17fd4fe72b708899d6adb9dcb205fb6bf70aae8ae1a2819e666952e5"
+        },
+        {
+          "path": "src/game/game_generated_type_98f0a1bec2084c3c.hpp",
+          "sha256": "d0e290af3165c8908c2be3263487076a3d7ae7f0c9f23e9a78e1aace32149d13"
+        },
+        {
+          "path": "src/game/game_generated_type_993f37861f29c68e.cpp",
+          "sha256": "aa6961ec576acc902b63c0bd74eac00d93506367f58b03cba99e45d26914bc4d"
+        },
+        {
+          "path": "src/game/game_generated_type_993f37861f29c68e.hpp",
+          "sha256": "463a2a210c64e25cfbc438856d092e4088625b92cee91c72873fd1afcaa83c00"
+        },
+        {
+          "path": "src/game/game_generated_type_9b21b86f0d2914e0.cpp",
+          "sha256": "6a0208dd7b0ae4ad4fad051897620c1ebdd62615b22b51d49ceafc754580b387"
+        },
+        {
+          "path": "src/game/game_generated_type_9b21b86f0d2914e0.hpp",
+          "sha256": "b0acab78282b074a955946981219e7d9412b3dff58d2d54e198cc803d890417d"
+        },
+        {
+          "path": "src/game/game_generated_type_9cade6927d6e0bf3.cpp",
+          "sha256": "9cb67e2dce5cefe01e2cf3619d746e95aeaa2697a358477f12ef19e5d9fd53eb"
+        },
+        {
+          "path": "src/game/game_generated_type_9cade6927d6e0bf3.hpp",
+          "sha256": "33eedcae994f41c65bc70bf4fa3bde1ad11363f5f7e6f938c7ff08763090c792"
+        },
+        {
+          "path": "src/game/game_generated_type_9f5a071d05c1d020.cpp",
+          "sha256": "be18807ea61b19e2baaad1c44ec54664885c1344d2c1af20f65c24919fb3de87"
+        },
+        {
+          "path": "src/game/game_generated_type_9f5a071d05c1d020.hpp",
+          "sha256": "3f53e95e9882ab4b7908f532d501a5038f66eae99ea4142fbd1e6aacabedf4d2"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5.cpp",
+          "sha256": "4587dbce6e2d876f5b15ec11d43e7777e89ff93bad0d08eb21555fa245539d15"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5.hpp",
+          "sha256": "97bd28a665a980035bdc94ec02aa2b2619a4779a7e1b341c1198e067ccc8f59e"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5_cpp_part_0000.inc",
+          "sha256": "634048aa9d0d6cd84172ed8d43b3254117469a99ca85b33ddc9c10f517c4782d"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5_cpp_part_0001.inc",
+          "sha256": "97f2a0b02e05d76caa17bc232be8142cc9918b6ef4016d68a6cecaaafcc3b888"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5_cpp_part_0002.inc",
+          "sha256": "696a172b6ffe4dab01b78a92bae543552d807ce59b9e7883329c4ff6f988c886"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5_cpp_part_0003.inc",
+          "sha256": "db61a00fd2e78ebba3d91a8c5c817b6eb6b4e00addcd01e50a745fafcdb83f1a"
+        },
+        {
+          "path": "src/game/game_generated_type_a2cea92715051fa5_cpp_part_0004.inc",
+          "sha256": "2d066499d1a62cd2e76a8a6fa85f0338bb4ce701a6d77f626e5118b21541732f"
+        },
+        {
+          "path": "src/game/game_generated_type_a42daea58251b089.cpp",
+          "sha256": "2bdc1ae09de4acc0dda6907d433b647f47bdaa3c1743a4aa964d82e0e00c2e19"
+        },
+        {
+          "path": "src/game/game_generated_type_a42daea58251b089.hpp",
+          "sha256": "2cc1a886e54365449f6b66721cfbc3c0e5029fdc680f9cc351814b34444330d1"
+        },
+        {
+          "path": "src/game/game_generated_type_a9f43a9b869eaae8.cpp",
+          "sha256": "b2b7a07f49c4454dbe20cc60407be0efa13de62a6b3332e123559cb60700af6e"
+        },
+        {
+          "path": "src/game/game_generated_type_a9f43a9b869eaae8.hpp",
+          "sha256": "a319912b1fe77aeec25c2aa5fa9baf7bd69d10f7a0811d2efe8b655513ec5670"
+        },
+        {
+          "path": "src/game/game_generated_type_ab1b1085a7ab32b9.cpp",
+          "sha256": "3dc04fa95c07ae708ea994d5ae9fe6d00ab62fca49d325bc9caa7bb5ae07aa45"
+        },
+        {
+          "path": "src/game/game_generated_type_ab1b1085a7ab32b9.hpp",
+          "sha256": "90a234f74d7881f72869907467c1dea5e51f93905979e4d5539cb62218f36ea4"
+        },
+        {
+          "path": "src/game/game_generated_type_acb158b492b43017.cpp",
+          "sha256": "ccaab0140b92b14ef81ecc6333b71f0a676f80e4175b87e1f8e6b34266bd98b3"
+        },
+        {
+          "path": "src/game/game_generated_type_acb158b492b43017.hpp",
+          "sha256": "9566654179ccace4028d5d18f63978d3872abc4757ecaa6a77bb651a28a14690"
+        },
+        {
+          "path": "src/game/game_generated_type_af32d28251411c95.cpp",
+          "sha256": "4320e0af3e6f3a627fecb96014b052f93a9bf468c03c9d3051919981f8eba7c4"
+        },
+        {
+          "path": "src/game/game_generated_type_af32d28251411c95.hpp",
+          "sha256": "03e06108d588755b755f11eaa76972773d4115f5eeac19e3f2951e087f315ffb"
+        },
+        {
+          "path": "src/game/game_generated_type_b08d770c239489bf.cpp",
+          "sha256": "930fe04426a12966f1710629c03e0562e5eecd2695f4956550943aa197ac2b1e"
+        },
+        {
+          "path": "src/game/game_generated_type_b08d770c239489bf.hpp",
+          "sha256": "d590a28c47b3d15019d065de8502d556f55c12d1b07ea84222f28867986f7ca8"
+        },
+        {
+          "path": "src/game/game_generated_type_b0a790cec818ceb0.cpp",
+          "sha256": "4b7c1dc5df3a98695ab77ae81d30c9830052adb1804231fa6a5bdfbbb5edbceb"
+        },
+        {
+          "path": "src/game/game_generated_type_b0a790cec818ceb0.hpp",
+          "sha256": "010ae748fba3c7aea92b86736e6d2a1f505f081b95321cc484b8fc1ca7337218"
+        },
+        {
+          "path": "src/game/game_generated_type_b169f360ee9f1108.cpp",
+          "sha256": "9ec75009bb36e90693e7d56eeca0c8aa90d1fb7e62d3dae44dc27c561f8bdadd"
+        },
+        {
+          "path": "src/game/game_generated_type_b169f360ee9f1108.hpp",
+          "sha256": "06b8ae49f5b38bf9c0c44de59996cc7ee1fb2c6bdd9252836f48c50b03ef4b8f"
+        },
+        {
+          "path": "src/game/game_generated_type_b489b0d33bb37bb8.cpp",
+          "sha256": "b79fe766a987a4214191e20ffcc6060293856f4491fc9b26776a6e7bc4c4cf4d"
+        },
+        {
+          "path": "src/game/game_generated_type_b489b0d33bb37bb8.hpp",
+          "sha256": "a6860835303826903cbede9323844078b4d744b955167b23c15bf9732ab31857"
+        },
+        {
+          "path": "src/game/game_generated_type_b68aa9c3dd5cf14c.cpp",
+          "sha256": "fa7283748371a5446714fff91a4fbe4d030c9893745b2cb89de2d2a12248e121"
+        },
+        {
+          "path": "src/game/game_generated_type_b68aa9c3dd5cf14c.hpp",
+          "sha256": "c46b02549ff277edbaa492a07d5095f3ee4e96bb8a546d61206bb9914bed312b"
+        },
+        {
+          "path": "src/game/game_generated_type_b728593e3dcffe31.cpp",
+          "sha256": "d18861b310e34031646503a85bf85d46c71933a576ff447f11558c5d62b185cb"
+        },
+        {
+          "path": "src/game/game_generated_type_b728593e3dcffe31.hpp",
+          "sha256": "a955a453175b71f051cc1bc597d5dffaf82e80cda88606d1fcdaa36947d1ff46"
+        },
+        {
+          "path": "src/game/game_generated_type_b89c480114cef140.cpp",
+          "sha256": "11c56706f95239279596b2309d93d9d3dc9f89f6a1501e6ab13b143d474c9f5c"
+        },
+        {
+          "path": "src/game/game_generated_type_b89c480114cef140.hpp",
+          "sha256": "c55fc89fdf8f98d790bf5706e06245ee7144abed4a6868a988c1c605aaafddf1"
+        },
+        {
+          "path": "src/game/game_generated_type_ba9af87bc2bff5b4.cpp",
+          "sha256": "ec5f1d8ccc3bab7d88deb4c2aa66721d5fb9133c986e0bb0b7b62c19ef82fa7d"
+        },
+        {
+          "path": "src/game/game_generated_type_ba9af87bc2bff5b4.hpp",
+          "sha256": "8dd576770ffb68c000c90e8581221833931e136fef990db778a05b6d255ae147"
+        },
+        {
+          "path": "src/game/game_generated_type_bad15ea7469ee2b9.cpp",
+          "sha256": "f510c148ee70a685b62fcc93835d7ca8106f8797198edf344e752087da5ac1cd"
+        },
+        {
+          "path": "src/game/game_generated_type_bad15ea7469ee2b9.hpp",
+          "sha256": "d657c652ed495bd27e08dcf078a6a53e7c83904268a95d64f4e558514b91e32e"
+        },
+        {
+          "path": "src/game/game_generated_type_bcccbac2bf72843d.cpp",
+          "sha256": "c92b31d1baf76cef2396f1a444b4fdd84af44dbb78bc300199fc45189f8e1614"
+        },
+        {
+          "path": "src/game/game_generated_type_bcccbac2bf72843d.hpp",
+          "sha256": "47b68b976bf4fb2a662f0de6157ecc95a757e7652c025b8eebeef22abf575112"
+        },
+        {
+          "path": "src/game/game_generated_type_bd164c3c94a49e2a.cpp",
+          "sha256": "fb3c4e7acedd184cc09494ff0e9965d3864aad9bb81b3a1ce4e90966bd547dc6"
+        },
+        {
+          "path": "src/game/game_generated_type_bd164c3c94a49e2a.hpp",
+          "sha256": "65899fb1368d79c93a9f67f2ba5d2ba52f9f27011d6beb27609ccadb2ab78287"
+        },
+        {
+          "path": "src/game/game_generated_type_bd3043ac164d021f.cpp",
+          "sha256": "96ef448bbf4eb1ca0aa8c5e021f41fd5089a3cf81019edf37086f369ad94c6e4"
+        },
+        {
+          "path": "src/game/game_generated_type_bd3043ac164d021f.hpp",
+          "sha256": "a23a2964f66b2339301d029f3f0f9f16a1380945304f53fffc9ef39784367925"
+        },
+        {
+          "path": "src/game/game_generated_type_bf56843843fb840d.cpp",
+          "sha256": "ddd33512b9a36a735dda2aa3fe816823ae32c45bf6440fd76995d483ee35bf31"
+        },
+        {
+          "path": "src/game/game_generated_type_bf56843843fb840d.hpp",
+          "sha256": "4785a62fa2f5face73faebb9c6f81202d212e6037e3220d1bba0e78bebb566fc"
+        },
+        {
+          "path": "src/game/game_generated_type_c63e265fb6ff73e9.cpp",
+          "sha256": "b6bf674ef3ac1e5a8a2441c1c7e2dc9746705aa65c0f199459e7c7ca08636ba8"
+        },
+        {
+          "path": "src/game/game_generated_type_c63e265fb6ff73e9.hpp",
+          "sha256": "ae940ce633e70089f5f01610c3b4ff8ae1bef948e6e90e2319fe9c0ce2a7aafa"
+        },
+        {
+          "path": "src/game/game_generated_type_c87dc3d2d0f9440a.cpp",
+          "sha256": "7675590d78c1097a8452bc34f44133790933289d3231a905344a537a9e9b1d03"
+        },
+        {
+          "path": "src/game/game_generated_type_c87dc3d2d0f9440a.hpp",
+          "sha256": "437857128b1187f8ff3700f0558fc8b1e869371c9a8c5b467abfbfdd887c74cb"
+        },
+        {
+          "path": "src/game/game_generated_type_c8e1f3d3f96670c6.cpp",
+          "sha256": "713f0079d3c446be3c7e3f19bf0083d1bfaa33c51be30ff5e8c6554376932dcb"
+        },
+        {
+          "path": "src/game/game_generated_type_c8e1f3d3f96670c6.hpp",
+          "sha256": "89eebc3b3742f639b237ab2205bb346596342c172415698c5f2b25eb5e6fb44c"
+        },
+        {
+          "path": "src/game/game_generated_type_c9cd56cdd30ecf7a.cpp",
+          "sha256": "0c5ccca4e08d93ce9cc4c053dc88a9ef5ef26859af9e2cce67da1467201c4061"
+        },
+        {
+          "path": "src/game/game_generated_type_c9cd56cdd30ecf7a.hpp",
+          "sha256": "c6aebd18996caaab6111113d0f6f8c2cf635aec55fffedafe0db50bc820f03f9"
+        },
+        {
+          "path": "src/game/game_generated_type_ca6f5bbc06a496a9.cpp",
+          "sha256": "6e122e95c2c8f649ad4502bd614a54294f60ba778f1c56d129ecacf51f77946c"
+        },
+        {
+          "path": "src/game/game_generated_type_ca6f5bbc06a496a9.hpp",
+          "sha256": "8d0df7cdf11154aaff3929ba3707cf39035a413f176dd6d786e11f213bef9cc5"
+        },
+        {
+          "path": "src/game/game_generated_type_cd85e7c847ae4598.cpp",
+          "sha256": "140bfb03c31c9f180078c274f59ccb39ace9c207d1413d6400e27847fc50022c"
+        },
+        {
+          "path": "src/game/game_generated_type_cd85e7c847ae4598.hpp",
+          "sha256": "f89e4ce8ba905561fe2fe38ec69be582bd9e439f2cf7d55f029278084f0b3bc8"
+        },
+        {
+          "path": "src/game/game_generated_type_cd97eee87b3216c4.cpp",
+          "sha256": "d2b9510899babc5756cc73e536cfb7d0edf6d72744949acea88570706ae85c65"
+        },
+        {
+          "path": "src/game/game_generated_type_cd97eee87b3216c4.hpp",
+          "sha256": "393452aa14b7979bf688560087fe92170a1e2bab32a6d3e899391341994863c4"
+        },
+        {
+          "path": "src/game/game_generated_type_d01bf6d528df5d3e.cpp",
+          "sha256": "b02e77e0da02108b15191adc1aaad39967d0be08087ae8109daa88f0722a18a2"
+        },
+        {
+          "path": "src/game/game_generated_type_d01bf6d528df5d3e.hpp",
+          "sha256": "dfcd1ba38ba12d6c6179d7a7267a63a950a3ab0b03da13ceb593672ae426de79"
+        },
+        {
+          "path": "src/game/game_generated_type_d0b7ac4933bed3ac.cpp",
+          "sha256": "a0344f1ba7420a94e1ae60b84ec085e1ba44c6a10856e281b6884637c360545d"
+        },
+        {
+          "path": "src/game/game_generated_type_d0b7ac4933bed3ac.hpp",
+          "sha256": "a170df4f97e7568cfadcc6683c73b11d75900e3cb2baeface649814a0fe6dde1"
+        },
+        {
+          "path": "src/game/game_generated_type_d22b1a8b100a0cab.cpp",
+          "sha256": "6b8cac7033b8e1bbfbd45c71bba653b87b886c2805ae0fe522a685c6470a88fb"
+        },
+        {
+          "path": "src/game/game_generated_type_d22b1a8b100a0cab.hpp",
+          "sha256": "cb5e0cebb9454ab573539789787fc6167e3daa2e0fd851207255ac362152bf7a"
+        },
+        {
+          "path": "src/game/game_generated_type_d37bccc1c3814fc6.cpp",
+          "sha256": "70dd5ed52a3e0364aff38947bcdde2449d81434872f826067d61204c36ec6bb5"
+        },
+        {
+          "path": "src/game/game_generated_type_d37bccc1c3814fc6.hpp",
+          "sha256": "f2fe74d46b66d30825ecc0df952f7bcc259fddc699f6788526722ff6596c8dab"
+        },
+        {
+          "path": "src/game/game_generated_type_d86010513034d6a0.cpp",
+          "sha256": "8c0b7064b3ebc203a74ecae3ce565007a6c03a7d31e596276f17cdf85de4e734"
+        },
+        {
+          "path": "src/game/game_generated_type_d86010513034d6a0.hpp",
+          "sha256": "a85f2010dfafef42316211afa172a74f87c48b1373e93088098465618c460886"
+        },
+        {
+          "path": "src/game/game_generated_type_dc09c88a279424b5.cpp",
+          "sha256": "bbaf08b272824cf26e91e473ef1d5ce30115bb26d0d8d99ede3c19d47b03e3c4"
+        },
+        {
+          "path": "src/game/game_generated_type_dc09c88a279424b5.hpp",
+          "sha256": "f2498fe08a9530d19ce8f2ff723ca9b2f1a115f0b79164032d86f51ca4128d12"
+        },
+        {
+          "path": "src/game/game_generated_type_dd50df46561f4be9.cpp",
+          "sha256": "8c15278a98741b779544654e135d3490a373ecd47968457d82ad54bd73772f60"
+        },
+        {
+          "path": "src/game/game_generated_type_dd50df46561f4be9.hpp",
+          "sha256": "0fd9690836c4d2e295ee5295c959a61b46cf483788c4e7bfe03d3eec68a9d94a"
+        },
+        {
+          "path": "src/game/game_generated_type_e00832a42e12ec3b.cpp",
+          "sha256": "6f0df9a7f949abbc73eba4d36fadb72066c33e6b524b5d72c2ba1c7e400ca3a1"
+        },
+        {
+          "path": "src/game/game_generated_type_e00832a42e12ec3b.hpp",
+          "sha256": "52f64f2f7a3ff554613e32101071a4f019487110d34f1c98ccaf1b0192ef6147"
+        },
+        {
+          "path": "src/game/game_generated_type_e1ac8ca60ae0d404.cpp",
+          "sha256": "2795eababe69184aff0e34ab1da211f05e430ef06e8e34eed52b261f2dabd4f3"
+        },
+        {
+          "path": "src/game/game_generated_type_e1ac8ca60ae0d404.hpp",
+          "sha256": "1d739e07c08f9a612ed57c4f9ce34de67314209e026e9d38556419b86dd9fbf9"
+        },
+        {
+          "path": "src/game/game_generated_type_e315dac1df3b175d.cpp",
+          "sha256": "2d58ef3c467508ce9e1d3fd17fcd432e0d95afbf35c2008687fcfb877c8c6ed7"
+        },
+        {
+          "path": "src/game/game_generated_type_e315dac1df3b175d.hpp",
+          "sha256": "5464d71dc249693eb42944fc074b1b9127eb6f0905a2fc3dfdf701fdc83efbe1"
+        },
+        {
+          "path": "src/game/game_generated_type_e31f80000513fe82.cpp",
+          "sha256": "c721afd61e61eb31dc48672b25601b2fbb8be0fd1e2806791c292c717c73472c"
+        },
+        {
+          "path": "src/game/game_generated_type_e31f80000513fe82.hpp",
+          "sha256": "0eda68f9c4407f5199dae35ad96e94f186bc765b068efcf92d2af8e300557027"
+        },
+        {
+          "path": "src/game/game_generated_type_e373231f616cd1ed.cpp",
+          "sha256": "2c0b59e10c7088251cf85603812eee6511c9ba3bd8a6c41e5754cbbeb0b725d8"
+        },
+        {
+          "path": "src/game/game_generated_type_e373231f616cd1ed.hpp",
+          "sha256": "423a35bd96e6345f75ca46721826de567259fc2e174a719dfc22e51e8b60a1fa"
+        },
+        {
+          "path": "src/game/game_generated_type_e57cdf426b59f0ee.cpp",
+          "sha256": "66d027f14bb405f7b777751ee8367895efc85eea767b73a325910fb831975a97"
+        },
+        {
+          "path": "src/game/game_generated_type_e57cdf426b59f0ee.hpp",
+          "sha256": "7daa6597f09d38975070a4867f610daa2785ef7206a88fe4873e349594a132fe"
+        },
+        {
+          "path": "src/game/game_generated_type_e6ed65290db381ba.cpp",
+          "sha256": "7c15633a3405d890c49ba8fc895a3295e64e15e77302144bc4d84bc82e96d939"
+        },
+        {
+          "path": "src/game/game_generated_type_e6ed65290db381ba.hpp",
+          "sha256": "a82b0ea3b17d81f43a54434908ee77da6f3e658f3bbb64c807020bcc32d3ca12"
+        },
+        {
+          "path": "src/game/game_generated_type_e7d772862db62924.cpp",
+          "sha256": "4f2f97ded46a3fb1603273f361110eb8c1a3eb2a34e6b64a1d73ff58b132525b"
+        },
+        {
+          "path": "src/game/game_generated_type_e7d772862db62924.hpp",
+          "sha256": "3906689fe26b9eb6945d0b652947a179f3cb00c87e7c8ac07390375004027e4d"
+        },
+        {
+          "path": "src/game/game_generated_type_e9cc65282df10bc8.cpp",
+          "sha256": "0ea525c792b3dbf0a3c6b424067837c4967a8b0d70d1b61e4474290ef1f8d6f4"
+        },
+        {
+          "path": "src/game/game_generated_type_e9cc65282df10bc8.hpp",
+          "sha256": "5adde18a465a8e95ca9e6af94a0cf5c0ade7c5662344ef088fa78cbbf72b49af"
+        },
+        {
+          "path": "src/game/game_generated_type_ec6b992b38927bb3.cpp",
+          "sha256": "1dac730198905960312d4db4c97c24a5de88878d0e672f17212aafbdb4b60f67"
+        },
+        {
+          "path": "src/game/game_generated_type_ec6b992b38927bb3.hpp",
+          "sha256": "343db6e84b4f334bc7724ae2442882e4a7fe57bf338f99f1256b0112d3aa197d"
+        },
+        {
+          "path": "src/game/game_generated_type_ec7bde62b3c2b35f.cpp",
+          "sha256": "b439cf25320ea887ed2af40c9c2730b6ae2e117ba27bb1bdec4073f7b10ff009"
+        },
+        {
+          "path": "src/game/game_generated_type_ec7bde62b3c2b35f.hpp",
+          "sha256": "9f6110efa5fa45d5f2513bd69df83d96c27eab3ae291200278f78acc99547b52"
+        },
+        {
+          "path": "src/game/game_generated_type_ec7e2b4042d2be7d.cpp",
+          "sha256": "3158faa0a52f16f76628c7db2093d028b5a12d0270854654fc5624f2eaee9646"
+        },
+        {
+          "path": "src/game/game_generated_type_ec7e2b4042d2be7d.hpp",
+          "sha256": "de67cc5f2249c574e6c557bf726a4bf7df855b7164124ce3e7f3b1f18fc95f3d"
+        },
+        {
+          "path": "src/game/game_generated_type_ec8ac507fb495e84.cpp",
+          "sha256": "6cfa50ac33aa5c6e363576d339b804db6ea6bce7529c1b9389d4c3f774dbb6bc"
+        },
+        {
+          "path": "src/game/game_generated_type_ec8ac507fb495e84.hpp",
+          "sha256": "ab01d5ab810cdada7277d6b022d142a988e7fe340de027fa93586b6f5f390701"
+        },
+        {
+          "path": "src/game/game_generated_type_ed8eabc614ddcf9e.cpp",
+          "sha256": "ea6226d5dcd984b9445e7369effd5c12ed24227a11f955bcad0501fc1b6e350b"
+        },
+        {
+          "path": "src/game/game_generated_type_ed8eabc614ddcf9e.hpp",
+          "sha256": "7853af41be068ce14aa200070170138d17ef1a18242fc2871f8c94c33c23a6b9"
+        },
+        {
+          "path": "src/game/game_generated_type_edf182ae9bfd734d.cpp",
+          "sha256": "3994208b0fb6fab161c7255d0a68ed4db381965b5d5179f274aecfa270c2f0a8"
+        },
+        {
+          "path": "src/game/game_generated_type_edf182ae9bfd734d.hpp",
+          "sha256": "cd3f129aae1c16a6e36bcfc4036b19873730c6a42e30d6d9a6c3b6bc19919989"
+        },
+        {
+          "path": "src/game/game_generated_type_efeeb7640894c95e.cpp",
+          "sha256": "13d747145c4440f84c9391911a3a17689279209cf032c7e9a90dd196c942e11c"
+        },
+        {
+          "path": "src/game/game_generated_type_efeeb7640894c95e.hpp",
+          "sha256": "08a383b063f76f328e34b7203cc42e75628f4f5f1c49da61bec6ed09b2c2025c"
+        },
+        {
+          "path": "src/game/game_generated_type_f1dd8f2aa583774c.cpp",
+          "sha256": "010a537874b79e5db5190fbc1fa49aec65f355cd72665a3b60c3b319444119b6"
+        },
+        {
+          "path": "src/game/game_generated_type_f1dd8f2aa583774c.hpp",
+          "sha256": "f7715e7f9f0defb6880440e739050a1693ba064d8753b9e312c40f6ae96f7769"
+        },
+        {
+          "path": "src/game/game_generated_type_f3ea616d36334b95.cpp",
+          "sha256": "f8324f2bac75c8b4ca91a219f6abc89b76e20764d37cc70480d68bc5d315f85a"
+        },
+        {
+          "path": "src/game/game_generated_type_f3ea616d36334b95.hpp",
+          "sha256": "4776ac5563bee86b11db6927eff0099d4f47805a258c001bc2bf257585b0d200"
+        },
+        {
+          "path": "src/game/game_generated_type_f52c904bea265acc.cpp",
+          "sha256": "71c1b2ec260afb54eb753c028f391f0c82b24180cba1e02c4d87f714c5ec7f5a"
+        },
+        {
+          "path": "src/game/game_generated_type_f52c904bea265acc.hpp",
+          "sha256": "a84b40d245e58ae08073712824cf695d03ceedfb666f339d91bb00cf4a1cc6e0"
+        },
+        {
+          "path": "src/game/game_generated_type_f991feb74054b6df.cpp",
+          "sha256": "25cd8b7bb7b6432279334313966a3703f6c948e1004a6ce4ed9603236ed8f160"
+        },
+        {
+          "path": "src/game/game_generated_type_f991feb74054b6df.hpp",
+          "sha256": "c6a6a767c7287fa86b6ff9b59a3fe2f809ee75e906e4608a623529bad637b455"
+        },
+        {
+          "path": "src/game/game_generated_type_f9cfa6da3459412e.cpp",
+          "sha256": "f8ae8085417146b4fec5a595dad7284c536fc9123caba2863def80b6236271e1"
+        },
+        {
+          "path": "src/game/game_generated_type_f9cfa6da3459412e.hpp",
+          "sha256": "64b3397188748e383d3aeb8df588184459a524db742df186b31a926a9128d0c8"
+        },
+        {
+          "path": "src/game/game_generated_type_fa01867c9c048464.cpp",
+          "sha256": "1556e7206ac2c4df44ebd4e7380507d7da3222b0ea81c42b5c4714c54460cb6f"
+        },
+        {
+          "path": "src/game/game_generated_type_fa01867c9c048464.hpp",
+          "sha256": "1148208d0809fe1db41c93c6b461307d9d14a9c5d802f6b48e86e9743bb45ee7"
+        },
+        {
+          "path": "src/game/game_generated_type_fbfef5c19ac20749.cpp",
+          "sha256": "14e007c18d6ca3efe6d4d687af22d3930b6ae39990b1a8befab6477c9fae276c"
+        },
+        {
+          "path": "src/game/game_generated_type_fbfef5c19ac20749.hpp",
+          "sha256": "ab75683d0cdff88950dc08db0ef45f82e8b33667702621ea5463d1e8c0050785"
+        },
+        {
+          "path": "src/game/game_generated_type_fd48512b974504f6.cpp",
+          "sha256": "c7d28701b06c1ee16e3b4a7a287b822a84e71da8b6331dff53b25ac37de6dc5c"
+        },
+        {
+          "path": "src/game/game_generated_type_fd48512b974504f6.hpp",
+          "sha256": "c57744c51a338d197bb48b9c2ab61ab166af0343ba0e55b8aa590e25f64e65aa"
+        },
+        {
+          "path": "src/game/game_generated_type_fd683372658feff4.cpp",
+          "sha256": "f4a3c98a0a3ecd878ab0cec1be5671e6f277244fbf6cddba4535387da30ba81b"
+        },
+        {
+          "path": "src/game/game_generated_type_fd683372658feff4.hpp",
+          "sha256": "85d622f89cb07da5806b1b557b92bdad28df20ef9a1be5b3d243bbcf80c06dc0"
+        },
+        {
+          "path": "src/game/game_generated_type_feb7ae74aa59a27c.cpp",
+          "sha256": "d96b152936b9f33b9f45b4a7a6f7641aed8494505aa653e6deed3e96cd3e2856"
+        },
+        {
+          "path": "src/game/game_generated_type_feb7ae74aa59a27c.hpp",
+          "sha256": "8198319dc7abe9094ef6adec3b9f2f4ba7400e7bbe12b30de95ad3077a2fa528"
+        }
+      ],
+      "game_boot": false,
+      "title_verified": false,
+      "menu_verified": false,
+      "metrics_requested": true,
+      "metrics_recorded": true,
+      "restored_private_preferences": {
+        "source_attempt": 31,
+        "files": [
+          {
+            "path": "player-preferences.port",
+            "sha256": "12a91ccbb078f0133f31f4286ab3aaaef30300aaf52015f987ad9662cea4a31d",
+            "bytes": 827
+          },
+          {
+            "path": "port-services/device-id.txt",
+            "sha256": "6b055a2d321e54512014f41ec490a80d8f9b16f8d3be40d48ed1e9d8663bc564",
+            "bytes": 50
+          },
+          {
+            "path": "rs/0000",
+            "sha256": "0b2b65179760fb57575b17eea95bb3dd0b6f064cb9168a2f2fab906831770885",
+            "bytes": 280
+          },
+          {
+            "path": "rs/0001",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "rs/0002",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          },
+          {
+            "path": "rs/0003",
+            "sha256": "1f0712006c0322165b4ad374aa30e5893cbf45f9a30d64d1cc24c8843ad294dc",
+            "bytes": 21233
+          },
+          {
+            "path": "rs/0004",
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "bytes": 0
+          }
+        ]
+      },
+      "scripted_select_frame": [
+        120,
+        180,
+        600,
+        900,
+        1200,
+        1500,
+        1800,
+        2100,
+        2400,
+        2700,
+        3000,
+        3300,
+        3600,
+        3900,
+        4200,
+        4500,
+        4800,
+        5100,
+        5400,
+        5700
+      ],
+      "diagnostic_dismiss_popups_until_frame": 5900,
+      "diagnostic_unlabeled_popups_only": true,
+      "scripted_key_frame": [
+        "156:UP"
+      ],
+      "diagnostic_only": true,
+      "diagnostic_manifest_sha256": "d5f445e5622bfd9c0f03f12a09e33a0200689f65104abf75a6c9e7dccede3db2",
+      "trap_count": 25,
+      "canonical_report_sha256": "8d1ee6ab752de7ff5778e8b96e5888dfd24e228b7b76d84cc461b2568b1350cb",
+      "game_coverage_promoted": false,
+      "diagnostic_snapshot": "build/game-diagnostic-bootstrap-20261109-t",
+      "diagnostic_compiler_tree": "build/game-diagnostic-current",
+      "precompile_diagnostic": false,
+      "logs": [
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/step-0.log",
+          "sha256": "489f0fd3b95ad2ee52d135381db8164cf52c8d97368b1a6bfaf5ad5e7a0cfb45",
+          "elapsed_ns": 815211800
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/step-1.log",
+          "sha256": "963c13f08b32a0d0e64f5e83af74156c4410dd309bbca73cb7a8c35c73acde0d",
+          "elapsed_ns": 492531542300
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/game-run.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/game-run.stderr",
+          "sha256": "58b5e28871ac70aedca296416cb9fecc28ad2045e3b9ef2903b334e43992218b"
+        }
+      ],
+      "source_inputs": {
+        "path": "build/pc-diagnostic-release/attempts/35/source-inputs.before.json",
+        "sha256": "96ea8f256174de97c2b9340c655b834ec6103423323ae4668b74a6ed3e0db2e2",
+        "files": 1360
+      },
+      "stage": "process-executed",
+      "exit_code": 0,
+      "dependency_audit": {
+        "CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj": {
+          "dependencies": 3,
+          "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\semantic_runtime.hpp",
+          "header_sha256": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+          "ninja_stdout_sha256": "12e68628d03dee2e97b668334876c95a7885ba80a1fcaec6ac9b9c5e5212d4e0"
+        },
+        "CMakeFiles/pls_portable_generated.dir/src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.cpp.obj": {
+          "dependencies": 35,
+          "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\semantic_runtime.hpp",
+          "header_sha256": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+          "ninja_stdout_sha256": "cd02a5d59597e8274ab27ab792e4cf56f603583a1031666b0d3792466cbd0fdb"
+        },
+        "CMakeFiles/pc_game.dir/build/game-diagnostic-current/game_generated_type_0286a0dbe9da0b33.cpp.obj": {
+          "dependencies": 63,
+          "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\semantic_runtime.hpp",
+          "header_sha256": "c70aca16d06ef258e9acb13e759059d6d72ff12d7b4900e37f81000558262b49",
+          "ninja_stdout_sha256": "08852d8984b2131215bfcb788a762cb765391bc4f0c6b611c19653b01b31965e"
+        }
+      },
+      "clean_for_dependency_policy": false,
+      "process_id": 8564,
+      "process_exit_code": 1,
+      "elapsed_seconds": 310.0620000001509,
+      "stopped_reason": "timeout",
+      "translation_gap_detected": false,
+      "diagnostic": true,
+      "stopped_at_timeout": true,
+      "executable_sha256": "3d0dabfbbf706f6aa578b12e8f8d8a8add196f19df574b52d716419d0fe7be03",
+      "execution_receipt": {
+        "path": "build/pc-diagnostic-release/attempts/35/execution.json",
+        "sha256": "6e6ea6a97ee738b1fcd532e5e6320326a4df6757757c923078f644f85cc75aaa"
+      },
+      "metrics_log_summary": {
+        "protocol": "PLS_PC_METRICS=JSONL",
+        "records": 547,
+        "invalid_records": 0,
+        "memory_phases": [
+          "before_main",
+          "first_presented_frame",
+          "after_60_presented_frames",
+          "after_900_presented_frames"
+        ],
+        "frame_summary_records": 3,
+        "max_completed_presented_frames": 1200,
+        "game_screen": "UNKNOWN"
+      },
+      "frame_captures": [
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1.bmp",
+          "sha256": "ae93cf69227da5ed54642b90d45f61828eb6124f1313f1f2c77433191161ba35",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1020.bmp",
+          "sha256": "d5f39bb5a84155334a241bd16abdeccf381e40357938f8539d991e51fe892cfc",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1080.bmp",
+          "sha256": "c4bfaa7d413bff7f365d8efc46c81f41ea8a8009ecdf52c0a0ebd27d3b694460",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1140.bmp",
+          "sha256": "32bc30bdd66f219fe04cbb167fd2d961f9d3ee2e065cf7b4e198f2bc16fa4499",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-120.bmp",
+          "sha256": "7d6a48a9c9306faf62f6fea34e564dad527aedc1769e5c00515bd3a447a517b5",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1200.bmp",
+          "sha256": "c2b05e1d4782b3623c67adddbefbc260cb47eeb1dca0f7d6208701058e105184",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1260.bmp",
+          "sha256": "2216fe8f85bb15941f22a518a4f133457187b9810f2727c11d753bfb7b4fcc4e",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1320.bmp",
+          "sha256": "47a888629847fef29cb7712f1cbef226cd93758fb4ef163c8879c0a3affc5489",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1380.bmp",
+          "sha256": "4ee6156577a7e63f9ed38a92777397b50e58f570efad73fc0da2dc1af8464b25",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1440.bmp",
+          "sha256": "b04e5ed3596f690ecee8dbcf18c9e80539333dfc0f5605ca46d616160671e8b4",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1500.bmp",
+          "sha256": "74d8ef6e9cbabc48733b2c2319650998299142ccda78a2688aded3ab3deeb581",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1560.bmp",
+          "sha256": "d033abd58bcd6561a7e419f3e1c9b33872a441ccba428a9cdba35b852d34088f",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1620.bmp",
+          "sha256": "ccfc3a41048744805d7a6534f0d18bfde37c14cf9aec53227e121637741189c6",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1680.bmp",
+          "sha256": "a3f570fe378e914bc9a186ef3fa9613b10aeaf922ab02288cd9c824b78fa1e80",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1740.bmp",
+          "sha256": "1a4005b83d3e2d4ef2d0f9964027468ef6c0187308b8ccdf4c376f59fa5cc5c2",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-180.bmp",
+          "sha256": "6a343bd49e028d4d5b76dcf01aa951dfe8600d6f7ea41c0f3c88196ef00fa1f1",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1800.bmp",
+          "sha256": "c2a6d81d0adaf5a095fe230404442ea405cc2226bce721f4d835090fc4d9c36f",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1860.bmp",
+          "sha256": "f27d427b7bf350f3b8e5f3ae07e59c67176a4e1d2babb30bbb6db5b0addbadec",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1920.bmp",
+          "sha256": "edf690269fad7eaa526cf56f933016a067b66ccd9521cd7626ed25686ff8f277",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-1980.bmp",
+          "sha256": "a69f19683577d555b01bd018fb02e08ed7c0068ea834a5f50161aaea227cf668",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2040.bmp",
+          "sha256": "0de8c868ab54cfa8c91c4c1550e7afce1e0eecfc3bc87743beab827d01f910d6",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2100.bmp",
+          "sha256": "91cc9addf1f1ab67a0e336a215cd986c0eb3e335ddd82df2d120150d9d154178",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2160.bmp",
+          "sha256": "289314d63fd4be7932b95accab26263e04081d382d7abbd6cf230a103b04382f",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2220.bmp",
+          "sha256": "14a79ad86de0204c048a42265c02e64a7d9bb4e037d8064943b5c52d0956429f",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2280.bmp",
+          "sha256": "79fd1060f26e00b86959ab551809730722de067139a657b5a482dc6ee0f12fcf",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2340.bmp",
+          "sha256": "0fd620646c52d0c723822ac8a7650e18201ea2bdbf2cda37a80bf4398db328a4",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-240.bmp",
+          "sha256": "d3528bb31e64383f250559df290ea571d35bef3aba2eea1c6cf204572fe37bbb",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2400.bmp",
+          "sha256": "eabcaae05e62a5dbe961d4d5d29017da8b2f74a20d16c6da32bd2176fe0c0bc9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2460.bmp",
+          "sha256": "27f0523d662ce0153a3f892dcc6ebe13055855933e91b0921f3b6b04a9bb65af",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2520.bmp",
+          "sha256": "579fd7a036d11886792846a69283954649194495a333f8320d38f4b7474569e6",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2580.bmp",
+          "sha256": "889036505db4cdca6e5e27de2c14dd15be0f58f9cf3700ac5cb9ee768dcd11e0",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2640.bmp",
+          "sha256": "149af7e1779e01cae8a5d82879bf1d32e0c0012c152c92b097898b58d2e524a7",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2700.bmp",
+          "sha256": "4d0881cf90802483b4cbd90a493a3471bb25ba155e327366e23662ac2ba31f8c",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2760.bmp",
+          "sha256": "350ea54629fc316f2df54ecfad840cfb76d061077720da61a650b5491d26c976",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2820.bmp",
+          "sha256": "672a8bc604ddfb359efb3be1be1ef95fe71b5712e10a688306148324189ec1c9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2880.bmp",
+          "sha256": "a98839c8b336f698ac0bee0f8159fc02f0990059919ff768a9ca12840d23accf",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-2940.bmp",
+          "sha256": "fb4b5cd3b2ee40d93a163798e25e961e842f2795c0d30aa021c45131fa49c4bb",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-300.bmp",
+          "sha256": "d3528bb31e64383f250559df290ea571d35bef3aba2eea1c6cf204572fe37bbb",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3000.bmp",
+          "sha256": "373af78b44f2a643f1f125461d22c0b74633444cbe2e56e9a5b4fe91c6e666f0",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3060.bmp",
+          "sha256": "9a575ca9df24c752180fda8da1b695c45a36f03305c1790b80c7962b9137843c",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3120.bmp",
+          "sha256": "43b259bbc49411f802ffceb5c011a9f25cd92919cb6d61067e1fceae012042ea",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3180.bmp",
+          "sha256": "cf2f3f227ea69f153a2204e139168289e51b87a4be1542cd13a7f979e6ad3769",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3240.bmp",
+          "sha256": "277742acdbf62c545a7ce9b91092da9b910ac541a194b6577d58b6e156bd9abe",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3300.bmp",
+          "sha256": "cbc040c12cd33c39ca82688eac83e4f214fad4f4afedcd6ec951837e7a0d54d6",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3360.bmp",
+          "sha256": "c3e5f6110b47226a8a05bc85114dfd11d4fcc4f5a13a39a4cdcb686dd98a7bfa",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3420.bmp",
+          "sha256": "304b757aba6e3a6f8ffb1e311257c79dc5abd869e4048c6f76065cb42c3ab9c3",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3480.bmp",
+          "sha256": "84c4471a8ed382c417d7d99ead7c379cf6aab877b4547848806ac01e7cc541f8",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3540.bmp",
+          "sha256": "682af56fff43b011cae968f8c324bdd6fbdd35b85ddb8282a561dd4256966c37",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-360.bmp",
+          "sha256": "1479e68a0dde99ae8510d3889dfa2d9988aa7bbddfacaec420da31d1c2e24faf",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3600.bmp",
+          "sha256": "f90d9dd56d84eca8b618027c528ee9f472993bbdba27065deddeb0777d6be2d0",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3660.bmp",
+          "sha256": "b9d2fd3ea2c0b5a606da10737b83bb5579522bf698ac34c582323ad91a4abd2b",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3720.bmp",
+          "sha256": "4022cbecce270e80843765306485b3beee30e293336a1551ddb6e68d6b6516d5",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3780.bmp",
+          "sha256": "410107c328717f08571dcff681b63b842b1484fa169549dad0ea9cb2d8c87d96",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3840.bmp",
+          "sha256": "ca79121a33dbcd06155d47a920eeb894853b42bc1a1628194ff80d47bb548c39",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3900.bmp",
+          "sha256": "9be10f7bdb4c666e64c8455ace0d8c91769cacb96030e1812ea63b7c8ebd1352",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-3960.bmp",
+          "sha256": "881147e66f7856ac5a8c34dd348da1de85b560958dd11f664fbdc6c76467f64c",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4020.bmp",
+          "sha256": "44625443aee5e0f82063d08d2a447303c3e3f34ddf67e122548fb855aa84eec5",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4080.bmp",
+          "sha256": "6c9140198c85b6637ca0e6594ea8430d3e3d37ece5bce90270232ed6eab67f00",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4140.bmp",
+          "sha256": "8ffc31cb57d04a7dcc146dc344001f217ce331ea35702cef96ba887388fd040a",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-420.bmp",
+          "sha256": "dae0bed41d1aae931870cc9ba37a3d9922af067ce90dde08a1d4976c9c430aa1",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4200.bmp",
+          "sha256": "02b0b5cb432c1e072f3470b893c7bcc377e85daff3123d22656d3735b26505d9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4260.bmp",
+          "sha256": "2e90e1fd802e6aa661f9da0d08112af01eb1a660ca2d42f98542068d3fbaf4dd",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4320.bmp",
+          "sha256": "4380bffe14245ab80c365158407a612c5036ec8de6de2dacf9b62f10ef8267ac",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4380.bmp",
+          "sha256": "42cb74d8c1df5415f77cbae3c1884cde135176b84510d6eec219802221699ddb",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4440.bmp",
+          "sha256": "8df6f74ea1adfe5535b6aaf18ace0ea4bc488a73cd54c8e59e3397f0a9a96cc5",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4500.bmp",
+          "sha256": "8df6f74ea1adfe5535b6aaf18ace0ea4bc488a73cd54c8e59e3397f0a9a96cc5",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4560.bmp",
+          "sha256": "6bab1ceda529107a0831ac968eb08f09f01eff449f85dba7a411ccabe827efa9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4620.bmp",
+          "sha256": "6bab1ceda529107a0831ac968eb08f09f01eff449f85dba7a411ccabe827efa9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4680.bmp",
+          "sha256": "6bab1ceda529107a0831ac968eb08f09f01eff449f85dba7a411ccabe827efa9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4740.bmp",
+          "sha256": "6bab1ceda529107a0831ac968eb08f09f01eff449f85dba7a411ccabe827efa9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-480.bmp",
+          "sha256": "43865daf1c638ceb774d65f78473dda63333a7fa69c03bfdc8be00821ae8817b",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4800.bmp",
+          "sha256": "6bab1ceda529107a0831ac968eb08f09f01eff449f85dba7a411ccabe827efa9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4860.bmp",
+          "sha256": "db1d17e589f7f5a9606fd6147b2c1be5651460a8aa88e380e87459650118c60d",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4920.bmp",
+          "sha256": "488db060a4558b5dfadb551e7c56450650245037dd9753ee11cd42d978afce89",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-4980.bmp",
+          "sha256": "bf83e65c8d6e51142eba1b8dee4cd2777c67eb8877bbcb92047e544ba72817cc",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5040.bmp",
+          "sha256": "71038563494ed7cd5de1fcf98a45bf376c8c74e6c529403feba82aaaa6825ccb",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5100.bmp",
+          "sha256": "d9edb8c9959a62072795d71334e691d118f431aa6d60f8e4515c8f8b6f43a0fe",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5160.bmp",
+          "sha256": "efe5b51067ecc341396e4ca965cfb970d18068a97b50630cd590a0cbd268f9e2",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5220.bmp",
+          "sha256": "222fca7a2fd72d8c55cfab1d2526c70658059cc09d8b299d7e8d9d7f82227820",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5280.bmp",
+          "sha256": "ffb79983c25ee207d00792a90b952ba1de924c6bb9f1402fb7c48e6db46f933e",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5340.bmp",
+          "sha256": "211f66a7f94b7ca0301aaab38c1f21d5f2cd67e474f75cacf7abf899f7ea72a5",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-540.bmp",
+          "sha256": "8b30a6065db41cd40a13e956788ce62e3a0115a8103f6a21faf4d347d8482d4d",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5400.bmp",
+          "sha256": "a2cff098a1a59ed61641f6fac9040a8b818de051394e77985d9460f20d69d7c4",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5460.bmp",
+          "sha256": "69b0b75470e30c14e96a96b9de086267930b3f6681d0d45ceffac844372a8fd9",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5520.bmp",
+          "sha256": "0f9e71dd75253cf20fe7eb330ab4ddc139901e6f00bac229fe4954ca324e5a2e",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-5580.bmp",
+          "sha256": "6fa6517b473d3aa7e2418c1e9523ae10ef8b3a50377042a7177694184e60ec4a",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-60.bmp",
+          "sha256": "b86ea768d7bae8f823504c395e1854c96aeb2e8f33630ca1dc00de31b4b577aa",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-600.bmp",
+          "sha256": "6cd654a15c02b1b22d4d26f0c42e61cc1354b428be8b8526fc9a57d7a5202417",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-660.bmp",
+          "sha256": "1adf957a9ad3cf7346ec75f4800cc8e0a14325f594e6b02bd6ce82593fc22aa4",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-720.bmp",
+          "sha256": "f85e2c31a38aee3776e99c295f2b261c4d841edaa02ef68b976b065b81e90dd1",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-780.bmp",
+          "sha256": "28d2de68ce49eaf7b512967fed029d8ee76ac38ce5699a8b61d0f038cfff3870",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-840.bmp",
+          "sha256": "647c18710297411507cda68bf1b21f247428d2f81a65bd571506bb6c3432e8ec",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-900.bmp",
+          "sha256": "1adf957a9ad3cf7346ec75f4800cc8e0a14325f594e6b02bd6ce82593fc22aa4",
+          "bytes": 268922
+        },
+        {
+          "path": "build/pc-diagnostic-release/attempts/35/frames/frame-960.bmp",
+          "sha256": "ccb4cc23bbda87083e792ec4e864648df59a20a11b50e864d31114f0bad055c0",
+          "bytes": 268922
+        }
+      ]
     }
   ]
 }

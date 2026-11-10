@@ -1738,7 +1738,7 @@
     "phase2-conversion-fixtures.json": "a95f272b21c1d710bd8d55ce49c3cc82cf4a2193d15def5b31b7f17fedbae4f0",
     "phase2-core-profile-tests.json": "628d72eee1f7567e84cecfafd12e0482858babf354a3c4cf841292627454438a",
     "phase2-debug-input-tests.json": "3a7c7b0ce7cb798d3f7daa41c21d7996c190666354e599b129deae5522b4a511",
-    "phase2-diagnostic-attempts.json": "d176e1256363ce141ebb946677c30946f50d17f3daac1a0ed8db8dabd7142bd3",
+    "phase2-diagnostic-attempts.json": "32b0f50c0a648bc1f0ea9bb2f5057c037ac598b25fb8e824eebed25dfec42df2",
     "phase2-diagnostic-key-tests.json": "cb3e859c6b4cc906aa1560aa3487d706a3fe6ab5f1f5a7f8e47a6c649ed521a7",
     "phase2-diagnostic-leaf-tests.json": "63ddbd1ccd611ba9ba17d8195d1899dbdc109795e28d783358b4e624ccf68bc9",
     "phase2-diagnostic-runtime-tests.json": "e80dcb084c67dcb7c02c05f29d0bfba0256a969b78fea3f1d12758866efeea9e",
@@ -1770,6 +1770,7 @@
     "phase2-legacy-assets.json": "0c886fda78e72fc95d6c97cc402ecd77efe5a55ada11b4efe1113771ccb7eed1",
     "phase2-lowering-fixtures.json": "8df8a6ab75c11b76ebfb97d145d88d798a9b3d2107a7524fa73bf9d6a37fcafc",
     "phase2-managed-services-tests.json": "7c3771db80033c679844a36ec7981d35ee6e1b8fb50d35b06a60d136bb0f442c",
+    "phase2-match-complete.json": "14f5f6f11e54b9e5de59995f6ac60161fb242e79fc5c633f1cfd89e157153b01",
     "phase2-match-start.json": "7163a75f44830c786df3547d820292c887c147179f6c81ddfea5795356761637",
     "phase2-matrix-point-fixtures.json": "eeac100e220c4d746b35889e6ceba491695fbbc4f74860bdeb13d5d726c8d146",
     "phase2-media-tests.json": "6fc68bf00b2fe6f6da94db57266b5a5e6a07f190fca0e6a4d06b78ecfe56af92",
@@ -1786,7 +1787,7 @@
     "phase2-pc-window.json": "ccb601e3b59639f6b83f53a6491237802e03f0749b1c470e6a4b61977bea2726",
     "phase2-portable-differential.json": "22e7ca848e5bce8aaa9147fcf571c6581a5177ca2b23cf73d11464bf3256d134",
     "phase2-profile-overhead.json": "1d8900c7813665f517f597a0fce39b2585975c355aa8fe2a978d275b3a1e5c01",
-    "phase2-progress.json": "99801c7fc6afcd4effad5f2e93c062de790c525a41439428fa8981a3e4e8cddc",
+    "phase2-progress.json": "0545916342dadea422e090fbb24bfd41c61cd015974a5567e5645df5e66be398",
     "phase2-random-fixtures.json": "f8643a8b8c0dbfd85f5ef0e556d1615b3eca074103eb03a1b9d3394e6dcdeb90",
     "phase2-ref-lowering-fixtures.json": "3faaf6ef8ce681d57ef09570e98f1d77df8d32da71dc2f45c8b2b335b00e9e9d",
     "phase2-regex-fixtures.json": "8e39a3f0dcb44195591234cd4cb25e8730f0b874c9be832d52b1c4f513e278c2",
@@ -1822,5 +1823,6 @@
     "phase2-unicode-regeneration.json": "91f242af975ca7b3f44e408bc48ab20e55eee765dc8cc39e6c8d3dfd41f29efa",
     "phase2-vector-iterator-fixtures.json": "685d9bcae43b25480f308f016a66be8f887c8c8204b3029eb1e7dbca77feb834",
     "phase2-vector2-fixtures.json": "47c3c7ba9d267c4a8434b9f56cded427e20c4815e34af0c6898853d1081d12a2"
-  }
+  },
+  "replay_receipts_refreshed_without_source_change": true
 }

@@ -39,6 +39,20 @@ static_assert(sizeof(void*)==4 && sizeof(std::int32_t)==4 && sizeof(float)==4 &&
 #endif
 namespace {
 using Clock=std::chrono::steady_clock;
+void gc_measurement(const char* stage){
+#if PLS_TRACING_GC
+    const auto s=pls::cs::tracing_heap().statistics();
+    std::fprintf(stderr,"PLS_NULL_GC={\"stage\":\"%s\",\"objects\":%llu,\"body_bytes\":%llu,\"external_bytes\":%llu,\"retained_bytes\":%llu,\"peak_retained_bytes\":%llu,\"allocations\":%llu,\"allocated_bytes\":%llu,\"external_growth_bytes\":%llu,\"collections\":%llu,\"pause_ns\":%llu,\"accounting_ns\":%llu}\n",stage,
+        static_cast<unsigned long long>(s.objects),static_cast<unsigned long long>(s.body_bytes),
+        static_cast<unsigned long long>(s.external_bytes),static_cast<unsigned long long>(s.bytes),
+        static_cast<unsigned long long>(s.peak_bytes),static_cast<unsigned long long>(s.allocations),
+        static_cast<unsigned long long>(s.allocated_bytes),static_cast<unsigned long long>(s.external_growth_bytes),
+        static_cast<unsigned long long>(s.collections),static_cast<unsigned long long>(s.pause_ns),
+        static_cast<unsigned long long>(s.accounting_ns));std::fflush(stderr);
+#else
+    (void)stage;
+#endif
+}
 void memory_categories(const char*stage){
 #if defined(PLS_MEMORY_CATEGORIES)
     using Range=std::pair<std::uintptr_t,std::uintptr_t>;
@@ -156,7 +170,7 @@ int main(int argc,char**argv){
         pls::allocation_probe::enabled=true;
 #endif
         for(std::uint64_t completed=0;completed<total&&!app->IsTermination();++completed){
-            if(completed+1==first)memory_categories("before_window");
+            if(completed+1==first){memory_categories("before_window");gc_measurement("before_window");}
             // Startup diagnosis only, outside the measured window and timer.
             if(completed+1<first&&completed%60==0){std::fprintf(stderr,"PLS_NULL_WARMUP_BEGIN=%llu\n",static_cast<unsigned long long>(completed+1));std::fflush(stderr);}
             if(completed+1==first)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC")){
@@ -166,7 +180,7 @@ int main(int argc,char**argv){
             pls::allocation_sites::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);
             pls::source_allocations::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);
 #if PLS_TRACING_GC
-            const auto gc_before=pls::cs::tracing_heap().statistics();
+            const auto gc_before=pls::cs::tracing_heap().statistics_and_reset_pause_peak();
 #endif
             const auto before=pls::allocation_probe::snapshot();const auto start=Clock::now();const auto cpu=cpu_ns();const auto begin=qpc();pls::cs::gc_safepoint();
             for(const auto&key:inputs)if(key.frame==completed){const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;canvas->KeyClick(code);}
@@ -178,7 +192,7 @@ int main(int argc,char**argv){
             const auto gc_after=pls::cs::tracing_heap().statistics();
             after.collections=gc_after.collections-gc_before.collections;
             after.collection_ns=gc_after.pause_ns-gc_before.pause_ns;
-            after.longest_collection_ns=after.collections==1?gc_after.last_pause_ns:0;
+            after.longest_collection_ns=gc_after.interval_max_pause_ns;
 #endif
             pls::allocation_sites::window(-1);
             pls::source_allocations::window(-1);
@@ -192,6 +206,6 @@ int main(int argc,char**argv){
         for(const auto&s:samples)std::cout<<"PLS_NULL_QPC="<<s.frame<<","<<s.begin<<","<<s.end<<"\n";
         pls::allocation_sites::dump(stdout);
         pls::source_allocations::dump(stdout);
-        memory_categories("after_window");memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==last-first+1?0:3;
+        gc_measurement("after_window");memory_categories("after_window");memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==last-first+1?0:3;
     }catch(const pls::cs::Exception&e){memory_report();std::cerr<<e.what()<<'\n';return 1;}catch(const std::exception&e){memory_report();std::cerr<<e.what()<<'\n';return 1;}
 }

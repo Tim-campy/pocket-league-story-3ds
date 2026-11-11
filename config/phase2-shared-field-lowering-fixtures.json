@@ -41,10 +41,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.23698559985496104,
-    "native-compile": 33.97683179983869,
-    "managed-output": 0.5805862001143396,
-    "native-output": 0.8183570997789502
+    "csharp-compile": 0.2402697999496013,
+    "native-compile": 32.26996339997277,
+    "managed-output": 0.5001178998500109,
+    "native-output": 0.25662660016678274
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -98,11 +98,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/shared-field-differential/Harness.exe",
-    "sha256": "e5168a0ea20d6e1dee6fd73f2504093890ae2a18d262c98568e545223911b453"
+    "sha256": "c813011ebf651becf5f0a2a56979a8c5af1651a1c8c42fbb96f5162e9b48390b"
   },
   "source_oracle_executable": {
     "path": "build/translator/shared-field-differential/Harness-managed.exe",
-    "sha256": "1a2d9af831274376d7600b5f4b0144c427fd493a4b0a4c15350d23631c54a223"
+    "sha256": "dea7697454e7b6b3b397317edcbdab581565165ec8814d15b1f19fca5a24f7d9"
   },
   "differential_runner_sha256": "8aa23c8d0075f77ae8352da40d4a1c380d3f38b863afc0df70267b2954fb7db4",
   "runtime_sources": [
@@ -248,7 +248,7 @@
     },
     {
       "path": "src/kairo/api/sound.hpp",
-      "sha256": "4a0b89c415ef983a9475dbb36d1418e4f56a7d8fc35d93f0dd93baa237a71f95"
+      "sha256": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78"
     },
     {
       "path": "src/kairo/api/storage.hpp",
@@ -672,11 +672,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb"
+      "sha256": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2"
+      "sha256": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -695,8 +695,16 @@
       "sha256": "16c4af626da9c714b35485ac86f85e1f24e9438f3c4959226fd7dba531edc018"
     },
     {
+      "path": "src/runtime/ctr_stack_bounds.hpp",
+      "sha256": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f"
+    },
+    {
+      "path": "src/runtime/ctr_thread_lifecycle.cpp",
+      "sha256": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc"
+    },
+    {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0"
+      "sha256": "a816a80e97de899b8f2b0ae959e33e37896f8b4f37856aa71488717792f368bd"
     },
     {
       "path": "src/runtime/managed_reference.hpp",
@@ -704,11 +712,11 @@
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
-      "sha256": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b"
+      "sha256": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820"
     },
     {
       "path": "src/runtime/tracing_gc.hpp",
-      "sha256": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419"
+      "sha256": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae"
     }
   ],
   "snapshot_comparison": "SHA256 of every UTF-16LE byte of the complete deterministic post-state serialization; no field, value or surrogate normalization",

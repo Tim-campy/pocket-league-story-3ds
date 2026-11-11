@@ -1151,8 +1151,8 @@
     "tests/kairo/managed_streams_fixtures.cpp": "a642d38aec680ce3200ae8bb3746fec94a2357ffaf2a11e3725632f596ea1d9f",
     "src/kairo/common/managed_streams.cpp": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6",
     "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
-    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
-    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src/kairo/common/semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
+    "src/kairo/common/semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
     "tests/kairo/run_streams.py": "9b230ad228bdda07c9ccdb08c5129b0c9c6db779dafb82da8244e6fe7b39b427"
   },
   "compiler": {

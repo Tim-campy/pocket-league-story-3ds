@@ -28,12 +28,18 @@ struct Descriptor {
     const char* name = nullptr;
     void (*ranges)(const void*,Ranges) = nullptr;
     void* (*managed_base)(void*) = nullptr;
+    // All retained native buffers, including non-pointer-bearing textures and
+    // audio. Accounting never turns their contents into managed references.
+    void (*retained_ranges)(const void*,Ranges) = nullptr;
 };
 struct Statistics {
     std::size_t objects = 0, bytes = 0, allocations = 0, allocated_bytes = 0;
     std::size_t collections = 0, reclaimed_objects = 0, reclaimed_bytes = 0;
     std::size_t last_roots = 0;
     std::uint64_t pause_ns = 0, last_pause_ns = 0;
+    std::size_t body_bytes = 0, external_bytes = 0, peak_bytes = 0;
+    std::size_t external_growth_bytes = 0;
+    std::uint64_t interval_max_pause_ns = 0, accounting_ns = 0;
 };
 class Heap {
     struct Impl;
@@ -66,6 +72,10 @@ public:
     void threshold(std::size_t bytes);
     void limit(std::size_t bytes);
     Statistics statistics() const;
+    Statistics statistics_and_reset_pause_peak();
+    // Refresh capacities at a cooperative safe point, even when no new object
+    // body was allocated. Growth of an existing vector must trigger the limit.
+    void refresh_memory_accounting();
     bool contains(const void* pointer) const;
     // Runtime-only weak cache tokens. These do not keep the object alive and
     // distinguish a later allocation which reuses the same address.

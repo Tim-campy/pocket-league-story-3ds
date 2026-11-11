@@ -15,7 +15,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def code_snapshot():
     paths={ROOT/'CMakeLists.txt',ROOT/'AGENTS.md',ROOT/'.gitignore'}
     for name in ('src','translator','tools','tests','reference/src'):
-        paths|={p for p in (ROOT/name).rglob('*')if p.is_file()and p.suffix in {'.cpp','.hpp','.inc','.cs','.py','.toml','.asm','.S'}}
+        paths|={p for p in (ROOT/name).rglob('*')if p.is_file()and (p.suffix in {'.cpp','.hpp','.inc','.cs','.py','.toml','.asm','.S','.c','.java','.xml','.ps1','.bat','.sh','.cmake'} or p.name=='CMakeLists.txt')}
     paths|={p for p in (ROOT/'config').glob('*')if p.is_file()and((p.suffix=='.json'and not p.name.startswith('phase2-'))or(p.suffix=='.csv'and p.name!='translation.csv'))}
     return {p.relative_to(ROOT).as_posix():sha(p)for p in sorted(paths)}
 
@@ -54,7 +54,11 @@ def main():
         ('repository-tests',['-m','unittest','discover','-s','tests/repository','-p','test_*.py']),
         ('gc-source-contract',['tools/inventory_gc_contract.py']),
         ('tracing-gc-engine',['tools/test_tracing_gc.py']),
+        ('ctr-gc-layout',['tools/test_ctr_stack_layout.py']),
+        ('tracing-measurements',['tools/report_tracing_measurements.py']),
         ('tracing-native-roots',['tools/test_tracing_runtime.py']),
+        ('float-discriminants-x86',['tools/fp-discriminants/run_x86.py']),
+        ('float-cal-models',['tools/fp-discriminants/cal_models.py']),
         ('tracing-ui-dispatch',['tools/test_ui_dispatch_gc.py','--tracing']),
         ('resource-yield-control-model',['tests/kairo/resource_yield_model.py']),
         ('syntax-inventory-tests',['tools/csharp_subset/test_inventory.py']),

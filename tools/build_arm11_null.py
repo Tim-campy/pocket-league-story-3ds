@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 import shlex
 import subprocess
+import sys
 from build_pc import ROOT, APK_SHA, validate_diagnostic_manifest, digest
 
 def msys(path):
@@ -25,13 +26,16 @@ def main():
     if not output.is_relative_to(ROOT/'build'):raise ValueError('ARM build must remain in ignored build/')
     if digest(a.apk)!=APK_SHA:raise ValueError('Expected owned APK required')
     validate_diagnostic_manifest(source)
+    subprocess.run([sys.executable, str(ROOT/'tools/test_ctr_stack_layout.py')], check=True)
     prefix=ROOT/'build/deps/arm11-media'
     if not (prefix/'lib/libfreetype.a').exists():raise ValueError('Authorized ARM FreeType build is missing')
     output.mkdir(parents=True,exist_ok=True)
     def inputs():
         paths=[q for base in ['src','tools/null-benchmark']for q in (ROOT/base).rglob('*')if q.is_file() and q.suffix in ['.cpp','.hpp','.inc','.txt']]
         paths.extend(q for q in source.iterdir()if q.suffix in ['.cpp','.hpp','.inc','.json'])
-        paths.extend([ROOT/'tests/kairo/platform_wait.cpp',ROOT/'tests/kairo/arm11_runtime_smoke.cpp'])
+        paths.extend([ROOT/'tests/kairo/platform_wait.cpp',ROOT/'tests/kairo/arm11_runtime_smoke.cpp',
+                      ROOT/'tests/kairo/null_backend_fixtures.cpp',
+                      ROOT/'tools/cmake/ctr_thread_lifecycle.cmake',Path(__file__)])
         return {q.relative_to(ROOT).as_posix():digest(q)for q in sorted(set(paths))}
     before=inputs()
     configure=['cmake','-S',msys(ROOT/'tools/null-benchmark'),'-B',msys(output),'-G','Ninja',

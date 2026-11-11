@@ -8,6 +8,8 @@
 #include <chrono>
 #include <string_view>
 #include <atomic>
+#include <cerrno>
+#include <cstdlib>
 
 // All standalone API/emitter fixture recipes already link this runtime unit.
 // Keep the engine in that unit too, so no consumer can accidentally select raw

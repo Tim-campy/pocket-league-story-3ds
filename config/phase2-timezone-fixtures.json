@@ -19,18 +19,20 @@
   "inputs": {
     "tests\\translator\\TimeZoneFixtures.cs": "3397cfdf4bf77ad84dfc2b21869c8c445c80812e19f5cddf01bee7d11201fd64",
     "tests\\translator\\timezone_fixtures.cpp": "0ca22ea251f760fa3452f724701fafe80009b36e0462d7f8eae41df445816d95",
-    "src\\kairo\\common\\semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
-    "src\\kairo\\common\\semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src\\kairo\\common\\semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
+    "src\\kairo\\common\\semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
     "src\\kairo\\common\\managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
     "src\\kairo\\common\\managed_dictionary.hpp": "4b678c96e83cae85ab36352460f017965106347c082654f6dfce3bfc10254d85",
     "src\\kairo\\common\\managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
     "tests\\translator\\run_semantic_fixtures.py": "ee7f16672b9322d113d641944dd25bcc82b1615051a2ca5e8b975ff017c2cd41",
-    "src/runtime/managed_gc_bridge.inc": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0",
+    "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
+    "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
+    "src/runtime/managed_gc_bridge.inc": "a816a80e97de899b8f2b0ae959e33e37896f8b4f37856aa71488717792f368bd",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b",
-    "src/runtime/tracing_gc.hpp": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419"
+    "src/runtime/tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
+    "src/runtime/tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae"
   },
   "historical_oracle": {
     "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",

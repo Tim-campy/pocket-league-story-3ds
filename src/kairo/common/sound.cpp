@@ -24,6 +24,7 @@ public:
     void SetVolume(std::int32_t port,float volume)override{auto& value=at(port);value.volume=std::clamp(volume,0.0f,1.0f);if(value.clip)audio_call([&]{mixer_->set_volume(port,value.volume,false);});}
     void SetLoop(std::int32_t port,bool loop)override{auto& value=at(port);value.loop=loop;if(value.clip)audio_call([&]{mixer_->set_loop(port,loop);});}
     void Pump()override{audio_call([&]{mixer_->pump();});}
+    void memory_ranges(const memory::RangeVisitor& visit)const override{mixer_->memory_ranges(visit);}
     void trace_edges(const cs::EdgeVisitor& v)const override{for(const auto& port:ports_)cs::trace_value(port.clip,v);}
     void release_edges()override{for(auto& port:ports_)pls::cs::clear_ref(port.clip);}
 };

@@ -45,6 +45,7 @@ def main():
     parser.add_argument('--delay',type=float,default=10)
     parser.add_argument('--samples',type=int,default=3)
     parser.add_argument('--all-threads',action='store_true')
+    parser.add_argument('--marker',default='PLS_NULL_WARMUP_BEGIN=1')
     args=parser.parse_args()
     initial_log_time=args.log.stat().st_mtime_ns if args.log.exists() else 0
     remote=Remote(args.port);observations=[]
@@ -53,7 +54,7 @@ def main():
     remote.send('c')
     try:
         deadline=time.monotonic()+240
-        while not args.log.exists() or args.log.stat().st_mtime_ns<=initial_log_time or 'PLS_NULL_WARMUP_BEGIN=1' not in args.log.read_text(errors='replace'):
+        while not args.log.exists() or args.log.stat().st_mtime_ns<=initial_log_time or args.marker not in args.log.read_text(errors='replace'):
             if time.monotonic()>deadline:raise TimeoutError('Warmup marker not reached')
             time.sleep(1)
         for sample in range(args.samples):

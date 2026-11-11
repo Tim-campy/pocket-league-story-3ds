@@ -9,19 +9,21 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "31c78e5551a81de42f25c63dc85523dddd637142e82e434d915064a2bca40f4f"
+    "sha256": "f649617a3a4b9baffb345d307b0628169d2a1fb46dd6fbae44876bc41ef72fd2"
   },
   "inputs": {
     "tools/test_ui_dispatch_gc.py": "eba1f943afce1064cbef1efb9d38fc9cc4264a1833c6548df9ba05d66ee505ca",
     "tests/kairo/ui_dispatch_gc.cpp": "e663b217970f33ac86fe68690060d82b3c987bf1c221fa1edaef2d6b3262703d",
-    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
-    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src/kairo/common/semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
+    "src/kairo/common/semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
     "src/kairo/api/application.hpp": "730ae9dffe396c1ea07e647f55aa57bc3e1084d20286fe46d93a3790a7a86b93",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "src/runtime/managed_gc_bridge.inc": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0",
+    "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
+    "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
+    "src/runtime/managed_gc_bridge.inc": "a816a80e97de899b8f2b0ae959e33e37896f8b4f37856aa71488717792f368bd",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b",
-    "src/runtime/tracing_gc.hpp": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419"
+    "src/runtime/tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
+    "src/runtime/tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae"
   },
   "limitations": [
     "Own native scheduling invariants; not a source-oracle or game boot.",

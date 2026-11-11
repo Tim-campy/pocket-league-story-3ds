@@ -68,6 +68,10 @@ def category(frames):
     # assigned to its first owning runtime/API frame, but not blindly to game.
     for frame in frames:
         s = frame['symbol']; f = frame.get('file', '').replace('\\', '/').lower()
+        if '::memory_ranges' in s or '::retained_ranges' in s or '::account_retained' in s or '::refresh_memory_accounting' in s:
+            return 'runtime/memory-accounting'
+        if '/runtime/tracing_gc.' in f or '/runtime/managed_gc_bridge.' in f or s.startswith('pls::gc::') or '::trace_edges' in s:
+            return 'runtime/tracing-gc'
         if any(x in s for x in ('_Incref', '_Decref', '_Incwref', '_Decwref', '_Interlocked', '_MT_INCR', '_MT_DECR')):
             return 'runtime/refcount'
         if s.startswith(('std::_Ptr_base<', 'std::shared_ptr<', 'std::weak_ptr<')):

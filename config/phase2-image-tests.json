@@ -8,12 +8,12 @@
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
-  "executable_sha256": "8ab57f522827e2d98386a94299b6b52dc6c3de95ce8a6f91f06b89f0906754dc",
+  "executable_sha256": "764c2c5efead77064d6e5b65569dd9a0471d20874a5d14c6c7caba197092be41",
   "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
   "sources": [
     {
       "path": "tools/build_pc.py",
-      "sha256": "57793e07fa9b96bea184545f950507d312ca12a0c1f4b5bc0a8b53859472e941"
+      "sha256": "6048d3b79e4defbb7c7c707e6fad756a01ab81b4f4e0bd617c8547b50fa3610c"
     },
     {
       "path": "tests/kairo/asset_roundtrip.cpp",
@@ -49,11 +49,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb"
+      "sha256": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2"
+      "sha256": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb"
     }
   ]
 }

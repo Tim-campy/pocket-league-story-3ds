@@ -6,7 +6,7 @@ def criteria(phase2, game):
         ('Tradução completa','em andamento' if count else 'pendente',
          f'{count}/1958 métodos compilados; {slots} slots virtuais pendentes; integração das 53 políticas ainda não comprovada.'),
         ('Coletor e desempenho','em andamento',
-         'Conversão para rastreamento autorizada; paridade dos kernels e benchmark <=50 ms no New 3DS real ainda não comprovados.'),
+         'Rastreamento integrado e em validação; paridade dos kernels e benchmark <=50 ms no New 3DS real ainda não comprovados.'),
         ('Percurso completo no PC','em andamento' if phase2.get('game_executed_methods',0) else 'pendente',
          f"{phase2.get('game_executed_methods',0)} métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados."),
         ('Fidelidade resolvida','em andamento',

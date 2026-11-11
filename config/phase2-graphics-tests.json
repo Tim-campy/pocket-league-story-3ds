@@ -20,7 +20,7 @@
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
     "src/kairo/common/image_lifetime.cpp": "fec021f83d2c829a9adf73b79562527b2db0cf8b33f2671b6677c7f283410106",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
-    "src/kairo/common/font.cpp": "1e005f2d13515b5da25ec6811397986681280b9c22938340402f9d41b0a3f525",
+    "src/kairo/common/font.cpp": "da70a84f8bc21958a7079804c2715e631a48666810833592424c4f7e435961ff",
     "src/kairo/platform/sdl/font.hpp": "58b6be7dbe6b8197bba1c16cef390919215c0a9d735222429c9523efd0d1c2c9",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
@@ -29,8 +29,8 @@
     "tests/kairo/graphics_api_test.cpp": "f7e65b44fe8bbd806a51a4bdf095f07e6a80b670bf769ac2dc0ab3117b2c74ce",
     "tests/kairo/asset_catalog_test.cpp": "b8655c27a68999031124fd3fa6232669e05fee5d42f60338a0dde9c97179b866",
     "tests/kairo/asset_path_test.cpp": "9c9f2a46d2a1f6480fe2d9956728d9745698b17620ad9a2c455239dc61ea4987",
-    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
-    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
+    "src/kairo/common/semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
+    "src/kairo/common/semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src/kairo/common/managed_dictionary.hpp": "4b678c96e83cae85ab36352460f017965106347c082654f6dfce3bfc10254d85",
@@ -62,10 +62,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "b4c91988b55b211958fe32af599b535e6588cd4f378474849388d34a7170c542",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "96afe4efdc7b220d9ade8f9c436cf98598d1eb6c9fd70239b9c6af040bca0d0e"
+    "build/graphics-tests/GraphicsOracle.dll": "b1e55aefa29454b6ef2f1a4ba0deea2151ec2f79b8c222d3e772eed57e02996b",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "0c3d2fb8db4acb16a092e8c2783fa6306e1dbe2eac77a0ea8dc1b03bc89df0a2"
   },
-  "executable_sha256": "14c81cd7bead420132896ea9fa1598f7c35a8ae4e741f86f8f829e996672610a",
+  "executable_sha256": "4456e7788035e15505947a5e6d34079c770f6bc513ba18479e08123e3fba8343",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

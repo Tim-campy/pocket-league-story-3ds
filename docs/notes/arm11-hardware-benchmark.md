@@ -90,3 +90,17 @@ execução no hardware. O primeiro frame do benchmark ARM11 ainda está em
 investigação; identificação automática do modelo, atribuição completa de
 memória e tempos dos dois perfis permanecem **UNKNOWN** neste ponto da rodada.
 Não há medição definitiva de velocidade de hardware a partir do Azahar.
+
+
+## Estado da imagem com rastreamento nesta rodada
+
+Imagem local: `build/null-arm11-tracing/null_game.3dsx`, 11864812 bytes,
+SHA-256 `97e9707cef80a2962d90d1a4057b91e8a63908b5d3784f62b6da183c52c378a0`.
+Seção `.text`: 9550776 bytes. O SDK e o coletor passaram as fixtures ARM,
+e o primeiro frame do jogo foi alcançado no Azahar. Entretanto, o replay
+original concluiu sua janela ainda no carregamento. Portanto, este é um
+artefato de diagnóstico disponível para hardware, **não um benchmark de
+menu/partida já qualificado**. Se os logs mostrarem form_id 0 na janela,
+rejeite o tempo como medição do menu. Não altere o limiar de 150 ms do
+ResourceManager nem seus índices para forçar o carregamento a terminar.
+A preparação do SD acima continua válida; mantenha os resultados locais.

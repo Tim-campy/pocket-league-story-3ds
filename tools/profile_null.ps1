@@ -1,4 +1,5 @@
-param([Parameter(Mandatory=$true)][string]$OutputDirectory)
+param([Parameter(Mandatory=$true)][string]$OutputDirectory,
+      [ValidateSet('menu','match')][string[]]$Scenarios = @('menu','match'))
 $ErrorActionPreference = 'Stop'
 $workspace = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..\build'))
 $destination = [IO.Path]::GetFullPath($OutputDirectory)
@@ -6,7 +7,11 @@ if (!$destination.StartsWith($workspace + '\', [StringComparison]::OrdinalIgnore
     throw 'Profile files must stay under the ignored build directory'
 }
 New-Item -ItemType Directory -Path $destination -Force | Out-Null
-foreach ($scenario in @('menu','match')) {
+# Hold an exclusive OS handle for this process lifetime. A second collector
+# must fail before it can start/stop WPR or overwrite the first one's logs.
+$collectorLock = [IO.File]::Open((Join-Path $destination 'collector.lock'), [IO.FileMode]::OpenOrCreate, [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+$PID | Set-Content -LiteralPath (Join-Path $destination 'collector.pid')
+foreach ($scenario in $Scenarios) {
     foreach ($suffix in @('.ready','.done','.etl')) {
         if (Test-Path -LiteralPath (Join-Path $destination ($scenario+$suffix))) {
             throw 'Use a fresh collection directory; existing results are preserved'
@@ -14,7 +19,7 @@ foreach ($scenario in @('menu','match')) {
     }
 }
 'waiting' | Set-Content -LiteralPath (Join-Path $destination 'collector-status.txt')
-foreach ($scenario in @('menu','match')) {
+foreach ($scenario in $Scenarios) {
     $request = Join-Path $destination ($scenario+'.request')
     $deadline = (Get-Date).AddMinutes(30)
     while (!(Test-Path -LiteralPath $request)) {
@@ -22,8 +27,8 @@ foreach ($scenario in @('menu','match')) {
         Start-Sleep -Milliseconds 500
     }
     $log = Join-Path $destination ($scenario+'.collector.log')
-    & wpr.exe -start CPU -filemode 2>&1 | Out-File -LiteralPath $log
-    if ($LASTEXITCODE -ne 0) { throw 'WPR start failed; no session stopped' }
+    $start = Start-Process -FilePath 'wpr.exe' -ArgumentList @('-start','CPU','-filemode') -WindowStyle Hidden -Wait -PassThru -RedirectStandardOutput $log -RedirectStandardError ($log+'.stderr')
+    if ($start.ExitCode -ne 0) { throw ('WPR start failed; no session stopped. Exit='+$start.ExitCode+'; inspect '+$log+'.stderr') }
     try {
         'started' | Set-Content -LiteralPath (Join-Path $destination ($scenario+'.ready'))
         $deadline = (Get-Date).AddMinutes(4)
@@ -32,9 +37,10 @@ foreach ($scenario in @('menu','match')) {
             Start-Sleep -Milliseconds 250
         }
     } finally {
-        & wpr.exe -stop (Join-Path $destination ($scenario+'.etl')) 2>&1 | Out-File -LiteralPath $log -Append
+        $tracePath = Join-Path $destination ($scenario+'.etl')
+        $stop = Start-Process -FilePath 'wpr.exe' -ArgumentList @('-stop',('"'+$tracePath+'"')) -WindowStyle Hidden -Wait -PassThru -RedirectStandardOutput ($log+'.stop') -RedirectStandardError ($log+'.stop.stderr')
     }
-    if ($LASTEXITCODE -ne 0) { throw 'WPR stop failed' }
+    if ($stop.ExitCode -ne 0) { throw 'WPR stop failed' }
     'finished' | Set-Content -LiteralPath (Join-Path $destination ($scenario+'.finished'))
 }
 'complete' | Set-Content -LiteralPath (Join-Path $destination 'collector-status.txt')

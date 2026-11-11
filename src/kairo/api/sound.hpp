@@ -12,6 +12,10 @@ class SoundData : public cs::Object {
 public:
     explicit SoundData(std::filesystem::path path):path_(std::move(path)){}
     const std::filesystem::path& path()const{return path_;}
+    void memory_ranges(const memory::RangeVisitor& visit)const override {
+        const auto& value=path_.native();
+        visit(value.data(),(value.capacity()+1)*sizeof(std::filesystem::path::value_type),memory::Category::managed_heap);
+    }
 };
 // AudioSource platform leaf. The test oracle supplies an independent synthetic
 // implementation; the host uses the bounded SDL Vorbis mixer adapter below.
@@ -62,6 +66,10 @@ public:
     std::size_t host_playing_count()const{return playing_.size();}
     std::int32_t host_port(const SoundBase* sound){return PortOf(sound);}
     void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void memory_ranges(const memory::RangeVisitor& visit)const override {
+        visit(ports_.data(),ports_.capacity()*sizeof(Port),memory::Category::managed_heap);
+        visit(playing_.data(),playing_.capacity()*sizeof(cs::Ref<SoundBase>),memory::Category::managed_heap);
+    }
 };
 class SoundBase : public cs::Object {
     friend class SoundPlayer;

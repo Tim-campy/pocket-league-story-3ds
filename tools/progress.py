@@ -188,8 +188,10 @@ def main():
         '## Fronteira da KairoLibrary','', '| Inventário | Total | Estado medido |','|---|---:|---|',
         f"| Fronteira KairoLibrary | {len(boundary)} símbolos / {b['kairo']['types']} tipos | {dict(Counter(r['estado'] for r in boundary))} |",'',
         '## Desempenho','',
-        'A conversão para rastreamento está em validação. CPU por frame, coletas, pico de texturas e tamanho do binário da nova base: **UNKNOWN**. '
-        'Medições anteriores e kernels isolados não qualificam o jogo convertido; consulte [a nota da conversão](docs/notes/tracing-gc-conversion.md). '
+        'A conversão para rastreamento está integrada e em validação. CPU por frame e pico de texturas da revisão atual: **UNKNOWN**. '
+        'A medição intermediária identificou custo elevado na contabilidade de buffers; não é a medição posterior às correções. '
+        'Kernels isolados não qualificam o jogo convertido. Consulte [a rodada de medições](docs/notes/tracing-gc-measurement-round.md), '
+        '[a matriz de ablação](docs/notes/tracing-gc-ablation.md) e [as fixtures ARM](docs/notes/tracing-gc-arm-stacks.md). '
         'Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.','',
         '## Assets','', '| Inventário | Total | Estado medido |','|---|---:|---|',
         f"| Grupos de assets | {len(assets)} | {dict(Counter(r['estado'] for r in assets))} |",'',

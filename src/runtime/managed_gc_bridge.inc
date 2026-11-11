@@ -1,14 +1,36 @@
 // Included once by semantic_runtime.cpp inside pls::cs. This bridge replaces
 // the legacy ownership-count collector when PLS_TRACING_GC is enabled.
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4996) // Standard getenv, read once during heap initialization.
+#endif
 gc::Heap& tracing_heap(){
     // Like the native root registry, heap metadata outlives static/TLS owners.
     static auto* heap=[](){
-        auto* value=new gc::Heap;
+        auto value=std::make_unique<gc::Heap>();
+        // Configurable independently by each platform launcher/build. Preserve
+        // the previous 1 MiB default unless explicitly configured.
+#ifndef PLS_GC_THRESHOLD_BYTES_DEFAULT
+#define PLS_GC_THRESHOLD_BYTES_DEFAULT (1024u*1024u)
+#endif
+        value->threshold(PLS_GC_THRESHOLD_BYTES_DEFAULT);
+        if(const char* configured=std::getenv("PLS_GC_THRESHOLD_BYTES")){
+            for(const char* p=configured;*p;++p)if(*p<'0'||*p>'9')throw std::logic_error("Invalid PLS_GC_THRESHOLD_BYTES");
+            char* end=nullptr;
+            errno=0;
+            const auto bytes=std::strtoull(configured,&end,10);
+            if(!*configured||!end||*end||!bytes||errno==ERANGE||bytes>std::numeric_limits<std::size_t>::max())
+                throw std::logic_error("Invalid PLS_GC_THRESHOLD_BYTES");
+            value->threshold(static_cast<std::size_t>(bytes));
+        }
         value->add_roots([](gc::Edges edges){visit_gc_roots([edges](const Ref<Object>& object){edges(object);});});
-        return value;
+        return value.release();
     }();
     return *heap;
 }
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 void ensure_gc_thread(){
     struct Registration{Registration(){tracing_heap().enter();}~Registration(){tracing_heap().leave();}};
     thread_local Registration registration;
@@ -56,5 +78,6 @@ void gc_collect(std::int32_t generation){
 void gc_request_collection(){tracing_collection_pending.store(true,std::memory_order_release);}
 void gc_frame_end(){
     ensure_gc_thread();
+    tracing_heap().refresh_memory_accounting();
     if(tracing_collection_pending.exchange(false,std::memory_order_acq_rel)||tracing_heap().collection_due())gc_collect(0);
 }

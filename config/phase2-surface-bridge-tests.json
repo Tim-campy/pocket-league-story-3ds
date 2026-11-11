@@ -187,10 +187,10 @@
     "src/kairo/common/graphics.cpp": "d743fc5e2411e8fbbde1f93ac6e0bf0d82a2aa43312269351bf97a8a0c91a706",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
     "src/kairo/common/image_lifetime.cpp": "fec021f83d2c829a9adf73b79562527b2db0cf8b33f2671b6677c7f283410106",
-    "src/kairo/common/font.cpp": "1e005f2d13515b5da25ec6811397986681280b9c22938340402f9d41b0a3f525",
+    "src/kairo/common/font.cpp": "da70a84f8bc21958a7079804c2715e631a48666810833592424c4f7e435961ff",
     "src/kairo/platform/sdl/font.cpp": "23f85540cc3ee09bb8fbb7739e36fef17d39f38475dde2a8840dcad70c35991d",
     "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
-    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
+    "src/kairo/common/semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
     "tests/kairo/SurfaceBridgeOracle.cs": "647d04d52e86789e2c5807f42317a0dec2fd011d109613781e8d02a756b95ccc",
     "tools/test_surface_bridge.py": "ad25c0f635d580ba00bd9c1b740fb3b87fa5f08d88391a965e7ab431e5049199",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
@@ -204,7 +204,7 @@
     "src/kairo/api/graphics.hpp": "8c0f8c60f35ae8aa34899e114aa3cc4c0852fa7f794379877e5b872b6dda374e",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "730ae9dffe396c1ea07e647f55aa57bc3e1084d20286fe46d93a3790a7a86b93",
-    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src/kairo/common/semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -245,7 +245,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "dfdc61e43868f8148049c6ff736a88af692c3422fc132fbccde8309b8c7970e4"
+    "sha256": "396e8f19cf36f922de0e69f4b1ce800ba8619aa6fcd68f264ee82abbb7d59680"
   },
   "verified_boundary_ids": [],
   "ordering": {

@@ -7,6 +7,9 @@
 #include <stdexcept>
 #include <thread>
 #include <vector>
+#if defined(__3DS__)
+#include "ctr_stack_bounds.hpp"
+#endif
 #if defined(_WIN32)
 #ifndef NOMINMAX
 #define NOMINMAX
@@ -20,6 +23,17 @@
 
 namespace pls::gc {
 namespace {
+template<class Predicate>
+void wait_condition(std::condition_variable& condition,std::unique_lock<std::mutex>& lock,Predicate predicate) {
+#if defined(__3DS__)
+    // Same protected-predicate polling used by the platform runtime. The
+    // r68/libctru 2.7.1 waiter can miss an indefinite notification; spurious
+    // timed wakeups do not permit a worker to resume while GC is requested.
+    while(!predicate())condition.wait_for(lock,std::chrono::milliseconds(1));
+#else
+    condition.wait(lock,predicate);
+#endif
+}
 struct Snapshot {
     std::vector<std::uintptr_t> words;
 #if defined(_WIN32)
@@ -71,6 +85,7 @@ struct Heap::Impl {
     std::map<std::uintptr_t, Range> ranges;
     std::map<std::size_t, std::function<void(Edges)>> roots;
     std::vector<std::uintptr_t> work;
+    std::vector<std::pair<std::uintptr_t,std::uintptr_t>> retained;
     std::size_t next_root = 1, threshold = 1024 * 1024, since_collection = 0;
     std::size_t limit = static_cast<std::size_t>(-1);
     bool requested = false;
@@ -78,6 +93,46 @@ struct Heap::Impl {
     std::chrono::milliseconds timeout{5000};
     Statistics stats;
     std::uint64_t next_identity = 1;
+
+    void account_retained(bool record_growth = true) {
+        // Called only with all managed workers parked. Union avoids counting
+        // inline strings, shared native storage or duplicate views twice.
+        retained.clear();
+        const auto append = [](void* value,const void* pointer,std::size_t bytes) {
+            if (!pointer || !bytes) return;
+            const auto begin = reinterpret_cast<std::uintptr_t>(pointer);
+            if (begin + bytes < begin) throw std::logic_error("Invalid retained GC range");
+            static_cast<Impl*>(value)->retained.emplace_back(begin,begin+bytes);
+        };
+        for (const auto& row : blocks) {
+            const auto& block = row.second;
+            append(this,block.pointer,block.bytes);
+            const auto callback = block.descriptor.retained_ranges ? block.descriptor.retained_ranges : block.descriptor.ranges;
+            if (callback) callback(block.pointer,Ranges{this,append});
+        }
+        if (ranges.size() > blocks.size()) for (const auto& row : ranges) if (row.first != row.second.owner) {
+            const auto& descriptor = blocks.at(row.second.owner).descriptor;
+            if (!descriptor.ranges) append(this,reinterpret_cast<void*>(row.first),row.second.bytes);
+        }
+        std::sort(retained.begin(),retained.end());
+        std::size_t total = 0;
+        std::uintptr_t begin = 0,end = 0;
+        for (const auto& range : retained) {
+            if (range.first > end) { total += end-begin; begin=range.first; end=range.second; }
+            else end=std::max(end,range.second);
+        }
+        total += end-begin;
+        if (total < stats.body_bytes) throw std::logic_error("Retained memory excludes live object bodies");
+        const auto external = total-stats.body_bytes;
+        if (record_growth && external > stats.external_bytes) {
+            const auto growth = external-stats.external_bytes;
+            stats.external_growth_bytes += growth;
+            stats.allocated_bytes += growth;
+            since_collection += growth;
+        }
+        stats.external_bytes=external;stats.bytes=total;
+        stats.peak_bytes=std::max(stats.peak_bytes,total);
+    }
 
     Thread& current() {
         auto it = threads.find(std::this_thread::get_id());
@@ -119,6 +174,16 @@ struct Heap::Impl {
         }
     }
     void resume() {
+        // Descriptor payload ranges are valid only while mutators are stopped.
+        // A vector/string may release or move its storage immediately after
+        // resume, and a new object may reuse that address before the next GC.
+        // Keep object bodies and explicitly maintained ranges; reconstruct
+        // descriptor ranges at the next stopped-world tracing snapshot.
+        if (ranges.size() > blocks.size()) for (auto it = ranges.begin(); it != ranges.end();) {
+            if (it->first != it->second.owner && blocks.at(it->second.owner).descriptor.ranges)
+                it = ranges.erase(it);
+            else ++it;
+        }
         requested = false;
         collector = {};
         changed.notify_all();
@@ -139,12 +204,17 @@ void Heap::enter(std::uintptr_t bottom, std::uintptr_t top) {
         if (found->second.native) throw std::logic_error("Managed entry inside native wait");
         ++found->second.depth; return;
     }
-    s.changed.wait(lock, [&] { return !s.requested; });
+    wait_condition(s.changed,lock, [&] { return !s.requested; });
 #if defined(_WIN32)
     if (!bottom && !top) {
         ULONG_PTR low, high;
         GetCurrentThreadStackLimits(&low, &high);
         bottom = low; top = high;
+    }
+#elif defined(__3DS__)
+    if (!bottom && !top) {
+        const auto bounds = ctr_detail::current_stack();
+        bottom = bounds.bottom; top = bounds.top;
     }
 #endif
     if (!bottom || bottom >= top) throw std::logic_error("GC requires actual thread stack bounds");
@@ -168,7 +238,7 @@ PLS_GC_NOINLINE void Heap::safepoint() {
     capture(thread.snapshot, thread.bottom, thread.top);
     thread.parked = true;
     s.changed.notify_all();
-    s.changed.wait(lock, [&] { return !s.requested; });
+    wait_condition(s.changed,lock, [&] { return !s.requested; });
     thread.parked = false;
 }
 void Heap::begin_native_wait() {
@@ -186,7 +256,7 @@ void Heap::end_native_wait() {
     auto& thread = s.current();
     if (!thread.native) throw std::logic_error("Unbalanced native wait");
     if (thread.native > 1) { --thread.native; return; }
-    s.changed.wait(lock, [&] { return !s.requested; });
+    wait_condition(s.changed,lock, [&] { return !s.requested; });
     --thread.native;
 }
 void Heap::begin_construction() {
@@ -202,7 +272,9 @@ void Heap::adopt(void* object, std::size_t bytes, Descriptor descriptor) {
     auto& s = *impl_;
     std::lock_guard<std::mutex> lock(s.mutex);
     auto& thread = s.current();
-    if (thread.native || s.collector == std::this_thread::get_id())
+    // libctru's main thread has the default pthread identity. Identity alone
+    // cannot distinguish an active collector from the idle sentinel.
+    if (thread.native || (s.requested && s.collector == std::this_thread::get_id()))
         throw std::logic_error("Allocation outside managed execution");
     if (!object || !bytes) throw std::logic_error("Invalid managed object");
     if (s.stats.bytes > s.limit || bytes > s.limit - s.stats.bytes) throw std::bad_alloc();
@@ -217,7 +289,9 @@ void Heap::adopt(void* object, std::size_t bytes, Descriptor descriptor) {
         if (thread.construction) thread.constructing.push_back(object);
     } catch (...) { if (range_added) s.ranges.erase(key); s.blocks.erase(key); throw; }
     ++s.stats.objects; ++s.stats.allocations;
+    s.stats.body_bytes += bytes;
     s.stats.bytes += bytes; s.stats.allocated_bytes += bytes; s.since_collection += bytes;
+    s.stats.peak_bytes=std::max(s.stats.peak_bytes,s.stats.bytes);
 }
 void Heap::add_range(void* owner, const void* begin, std::size_t bytes) {
     std::lock_guard<std::mutex> lock(impl_->mutex);
@@ -242,6 +316,7 @@ void Heap::remove_roots(std::size_t token) {
     impl_->roots.erase(token);
 }
 PLS_GC_NOINLINE void Heap::collect() {
+    const auto started = std::chrono::steady_clock::now();
     auto& s = *impl_;
     std::unique_lock<std::mutex> lock(s.mutex);
     auto& thread = s.current();
@@ -252,11 +327,10 @@ PLS_GC_NOINLINE void Heap::collect() {
         if (s.collector == std::this_thread::get_id()) throw std::logic_error("Recursive collection");
         thread.parked = true;
         s.changed.notify_all();
-        s.changed.wait(lock, [&] { return !s.requested; });
+        wait_condition(s.changed,lock, [&] { return !s.requested; });
         thread.parked = false;
         return;
     }
-    const auto started = std::chrono::steady_clock::now();
     s.requested = true; s.collector = std::this_thread::get_id();
     try {
         const bool stopped = s.changed.wait_for(lock, s.timeout, [&] {
@@ -265,6 +339,8 @@ PLS_GC_NOINLINE void Heap::collect() {
             return true;
         });
         if (!stopped) throw std::runtime_error("GC cooperative rendezvous timed out; no objects swept");
+        s.account_retained();
+        const auto bytes_before = s.stats.bytes;
         // Rebuild dynamic payload ranges after workers stop. Container storage
         // can move on reserve/resize without any write barrier on references.
         for (auto it=s.ranges.begin();it!=s.ranges.end();)
@@ -304,11 +380,14 @@ PLS_GC_NOINLINE void Heap::collect() {
             if (it->second.marked) { ++it; continue; }
             dead.push_back(it->second);
             --s.stats.objects; s.stats.bytes -= it->second.bytes;
-            ++s.stats.reclaimed_objects; s.stats.reclaimed_bytes += it->second.bytes;
+            s.stats.body_bytes -= it->second.bytes;
+            ++s.stats.reclaimed_objects;
             it = s.blocks.erase(it);
         }
         for (auto it = s.ranges.begin(); it != s.ranges.end();)
             if (!s.blocks.count(it->second.owner)) it = s.ranges.erase(it); else ++it;
+        s.account_retained(false);
+        s.stats.reclaimed_bytes += bytes_before-s.stats.bytes;
         // Keep mutators stopped, but allow native cleanup to unregister ranges
         // or root handles without recursively taking the heap lock.
         lock.unlock();
@@ -318,6 +397,7 @@ PLS_GC_NOINLINE void Heap::collect() {
         s.stats.last_pause_ns = static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(
             std::chrono::steady_clock::now() - started).count());
         s.stats.pause_ns += s.stats.last_pause_ns;
+        s.stats.interval_max_pause_ns=std::max(s.stats.interval_max_pause_ns,s.stats.last_pause_ns);
         s.resume();
     } catch (...) { s.resume(); throw; }
 }
@@ -338,7 +418,7 @@ void Heap::inspect(const std::function<void(void*,std::size_t,const Descriptor&)
     if(s.requested){
         if(s.collector==std::this_thread::get_id())throw std::logic_error("Recursive heap inspection");
         thread.parked=true;s.changed.notify_all();
-        s.changed.wait(lock,[&]{return !s.requested;});thread.parked=false;
+        wait_condition(s.changed,lock,[&]{return !s.requested;});thread.parked=false;
     }
     s.requested=true;s.collector=std::this_thread::get_id();
     try{
@@ -349,7 +429,7 @@ void Heap::inspect(const std::function<void(void*,std::size_t,const Descriptor&)
         lock.unlock();
         // No mutator may access the heap until resume. The callback can inspect
         // identity metadata, but cannot allocate or start another collection.
-        try{for(const auto& row:s.blocks)visitor(row.second.pointer,row.second.bytes,row.second.descriptor);if(finish)finish();}
+        try{if(visitor)for(const auto& row:s.blocks)visitor(row.second.pointer,row.second.bytes,row.second.descriptor);if(finish)finish();}
         catch(...){lock.lock();throw;}
         lock.lock();s.resume();
     }catch(...){s.resume();throw;}
@@ -357,6 +437,19 @@ void Heap::inspect(const std::function<void(void*,std::size_t,const Descriptor&)
 void Heap::threshold(std::size_t bytes) { std::lock_guard<std::mutex> lock(impl_->mutex); impl_->threshold = bytes; }
 void Heap::limit(std::size_t bytes) { std::lock_guard<std::mutex> lock(impl_->mutex); impl_->limit = bytes; }
 Statistics Heap::statistics() const { std::lock_guard<std::mutex> lock(impl_->mutex); return impl_->stats; }
+Statistics Heap::statistics_and_reset_pause_peak() {
+    std::lock_guard<std::mutex> lock(impl_->mutex);
+    const auto result=impl_->stats;impl_->stats.interval_max_pause_ns=0;return result;
+}
+void Heap::refresh_memory_accounting() {
+    const auto started=std::chrono::steady_clock::now();
+    inspect({},[&] {
+        std::lock_guard<std::mutex> lock(impl_->mutex);
+        impl_->account_retained();
+    });
+    std::lock_guard<std::mutex> lock(impl_->mutex);
+    impl_->stats.accounting_ns+=static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::steady_clock::now()-started).count());
+}
 bool Heap::contains(const void* p) const {
     std::lock_guard<std::mutex> lock(impl_->mutex); return impl_->owner(reinterpret_cast<std::uintptr_t>(p)) != 0;
 }

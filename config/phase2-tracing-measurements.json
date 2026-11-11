@@ -1,0 +1,793 @@
+{
+  "operation": "tracing-measurement-metadata",
+  "producer_sha256": "95488bbe082df4a46fc923ce884dbe7df0e78343a562b1116bbcf1ed60995f9f",
+  "arm_fixture": {
+    "build": {
+      "path": "build/ctr-gc-fixture/build-proof.json",
+      "sha256": "beec4030b79377b916acad51f4f0ea31d60d3ed0306e20b7bf28c9b606cf37fa"
+    },
+    "inputs": {
+      "src\\runtime\\tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
+      "src\\runtime\\tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae",
+      "src\\runtime\\ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
+      "tests\\translator\\tracing_gc_fixtures.cpp": "60bf3152e7daa0ad85fbc11d1621204762e373c8bf7c3878172fc86d829a14cf",
+      "tests\\translator\\tracing_gc_register_arm.S": "a514f12e6a81dc02c11e6b57ff3ab308300654f0a5e4879c32aabd0a14af1b94",
+      "tools\\ctr-gc-fixture\\CMakeLists.txt": "ba7fc74d5d01f8e63e7f97f5fc2392f47218e73d2a275184cddf0165d7eb8ff6",
+      "tools\\build_ctr_gc_fixture.py": "1c6bca9200c181eb02f28ab7ac9af9ad7bde1e0eb7c7b82508bf30c3407f7da2",
+      "tests\\translator\\ctr_tls_lifecycle.cpp": "479ad5a218337769f25f1ac3441c085b6db191417b0730253b3f87449b753e7c",
+      "src\\runtime\\ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
+      "tools\\cmake\\ctr_thread_lifecycle.cmake": "0f540cf001fd74f664ac062ba6515098ad2d681267b4e1a82be1b56e224e257a"
+    },
+    "image_sha256": "bbb1e4e848a0ce42f8ebae73ed690fb6d27e598bf59d852eb2e77cbd6c44a2d6",
+    "runs": [
+      {
+        "model": "new",
+        "assertions": 60,
+        "status": "PASS",
+        "evidence": {
+          "path": "build/ctr-gc-fixture/run-new-16/result.json",
+          "sha256": "0f636b47bbb4fdea229fd7d2cdda63cc0a22cab9ea8de39b8eadb3aa2301844e"
+        },
+        "emulator_log_sha256": "a420a23fc95b16996176aa98f42602d2d6139324ff776408d4cfebe67f8a1511"
+      },
+      {
+        "model": "old",
+        "assertions": 60,
+        "status": "PASS",
+        "evidence": {
+          "path": "build/ctr-gc-fixture/run-old-4/result.json",
+          "sha256": "caa9db6aeb8ecaa7a4128c9ede1cf661b3291951222bf0bb5c13875c1625ba15"
+        },
+        "emulator_log_sha256": "a22114cf77821ac91e54ab127c55b2f7f9d17c02939d682131eba1c144a8974a"
+      }
+    ],
+    "game_boot": false,
+    "hardware_speed": "UNKNOWN"
+  },
+  "intermediate_menu": {
+    "evidence": [
+      {
+        "path": "build/tracing-measurement-round/pc-profile-accounting-v2/menu-cpu.json",
+        "sha256": "47742ba3bf203c77db5b61f5c77eb5e2a843e9764f4492cc9c3b7e285bf05768"
+      },
+      {
+        "path": "build/tracing-measurement-round/pc-profile-accounting-v2/menu-attribution.json",
+        "sha256": "f35e48bb51f151d3d2ddb1224ad8439b4c9e3eb2085265e97efffceab4275ea6"
+      }
+    ],
+    "image_sha256": "5106b564e11b266c599706e97d67da5404c4bd31b17caf83d3ebff0d527f9921",
+    "samples": 11174,
+    "categories": [
+      {
+        "category": "runtime/tracing-gc",
+        "samples": 4534,
+        "percent": 40.5763379273313
+      },
+      {
+        "category": "runtime/memory-accounting",
+        "samples": 2304,
+        "percent": 20.619294791480222
+      },
+      {
+        "category": "unattributed/native",
+        "samples": 2099,
+        "percent": 18.784678718453552
+      },
+      {
+        "category": "system",
+        "samples": 665,
+        "percent": 5.951315553964561
+      },
+      {
+        "category": "runtime/allocation-destruction",
+        "samples": 323,
+        "percent": 2.890638983354215
+      },
+      {
+        "category": "native-kairo/other",
+        "samples": 312,
+        "percent": 2.7921961696796136
+      },
+      {
+        "category": "runtime/array-access-and-bounds",
+        "samples": 209,
+        "percent": 1.8704134598174333
+      },
+      {
+        "category": "runtime/type-init",
+        "samples": 168,
+        "percent": 1.5034902452120995
+      },
+      {
+        "category": "game-logic",
+        "samples": 125,
+        "percent": 1.1186683372113835
+      },
+      {
+        "category": "runtime/conversions-generics-other",
+        "samples": 125,
+        "percent": 1.1186683372113835
+      },
+      {
+        "category": "system/interrupt",
+        "samples": 94,
+        "percent": 0.8412385895829605
+      },
+      {
+        "category": "runtime/strings",
+        "samples": 83,
+        "percent": 0.7427957759083587
+      },
+      {
+        "category": "portable-kairo",
+        "samples": 43,
+        "percent": 0.384821908000716
+      },
+      {
+        "category": "system/compiler-security",
+        "samples": 40,
+        "percent": 0.35797386790764274
+      },
+      {
+        "category": "native-kairo/drawing-batches",
+        "samples": 25,
+        "percent": 0.2237336674422767
+      },
+      {
+        "category": "native-kairo/text-metrics",
+        "samples": 16,
+        "percent": 0.1431895471630571
+      },
+      {
+        "category": "runtime/reference-copy-other",
+        "samples": 3,
+        "percent": 0.026848040093073205
+      },
+      {
+        "category": "native-kairo/sound",
+        "samples": 2,
+        "percent": 0.017898693395382137
+      },
+      {
+        "category": "runtime/exceptions",
+        "samples": 2,
+        "percent": 0.017898693395382137
+      },
+      {
+        "category": "runtime/refcount",
+        "samples": 1,
+        "percent": 0.008949346697691068
+      },
+      {
+        "category": "native-kairo/input",
+        "samples": 1,
+        "percent": 0.008949346697691068
+      }
+    ],
+    "cpu": {
+      "pid": 512,
+      "frames": 300,
+      "threads": [
+        17372,
+        20956
+      ],
+      "metric": "scheduled_cpu_ms",
+      "interrupt_event_count": 0,
+      "interrupt_exclusion": "UNKNOWN: no DPC/ISR events",
+      "excluded_interrupt_ms": 0.0,
+      "mean_ms": 39.27699633333334,
+      "p95_ms": 44.0075,
+      "max_ms": 204.1325,
+      "frame_cpu_ms": [
+        34.3503,
+        37.6266,
+        39.228100000000005,
+        42.1838,
+        43.391,
+        40.5571,
+        40.3536,
+        40.9592,
+        30.6991,
+        37.9508,
+        44.078399999999995,
+        41.639,
+        41.8334,
+        43.850500000000004,
+        44.5947,
+        35.758199999999995,
+        39.7167,
+        42.5752,
+        45.0458,
+        180.2971,
+        30.569200000000002,
+        36.0235,
+        37.1952,
+        27.794800000000002,
+        33.36709999999999,
+        40.5041,
+        42.6978,
+        34.1082,
+        30.615,
+        30.607499999999998,
+        39.3923,
+        39.2149,
+        38.2646,
+        36.5127,
+        35.8845,
+        37.8596,
+        38.2183,
+        33.8147,
+        37.2478,
+        39.0444,
+        37.1684,
+        29.0732,
+        38.2664,
+        37.8481,
+        35.963,
+        43.8809,
+        37.6133,
+        29.8155,
+        41.1503,
+        38.1286,
+        38.945800000000006,
+        37.163000000000004,
+        38.5416,
+        37.3547,
+        38.0434,
+        34.6362,
+        40.3778,
+        36.1944,
+        28.4557,
+        38.1087,
+        38.7293,
+        38.7866,
+        37.2561,
+        41.912600000000005,
+        42.8579,
+        40.123,
+        36.0026,
+        36.6198,
+        40.624599999999994,
+        43.1934,
+        39.306,
+        43.992000000000004,
+        40.2992,
+        28.6262,
+        27.2775,
+        38.0218,
+        34.6233,
+        34.712399999999995,
+        42.0542,
+        40.9632,
+        42.2696,
+        39.238,
+        44.969500000000004,
+        41.651,
+        41.406,
+        42.6206,
+        43.801899999999996,
+        39.4377,
+        40.179899999999996,
+        36.272600000000004,
+        31.427999999999997,
+        31.5294,
+        29.570800000000002,
+        32.0243,
+        36.557100000000005,
+        29.3765,
+        31.487000000000002,
+        30.5123,
+        167.04579999999999,
+        42.448,
+        37.155899999999995,
+        34.4122,
+        33.1867,
+        36.3063,
+        41.0705,
+        35.566100000000006,
+        40.0513,
+        43.216499999999996,
+        36.3462,
+        37.7541,
+        39.434799999999996,
+        34.6673,
+        25.7838,
+        26.3704,
+        31.4512,
+        33.815400000000004,
+        38.8658,
+        35.4268,
+        34.647400000000005,
+        41.1432,
+        36.4272,
+        36.6464,
+        35.062799999999996,
+        37.8186,
+        36.752399999999994,
+        37.286899999999996,
+        41.6563,
+        38.771,
+        37.1605,
+        40.7157,
+        37.343399999999995,
+        36.244899999999994,
+        39.1481,
+        41.0936,
+        40.921600000000005,
+        39.4944,
+        38.6334,
+        38.7205,
+        36.8647,
+        39.090199999999996,
+        36.5681,
+        42.3527,
+        40.9246,
+        40.739,
+        37.6187,
+        30.5028,
+        32.3162,
+        40.567,
+        38.153600000000004,
+        40.5432,
+        42.861999999999995,
+        38.2107,
+        40.7111,
+        44.4924,
+        41.0137,
+        44.3887,
+        41.761,
+        40.3382,
+        41.7205,
+        40.5921,
+        39.2143,
+        40.9551,
+        42.1575,
+        43.769299999999994,
+        38.0878,
+        45.4408,
+        38.0672,
+        40.3071,
+        41.95249999999999,
+        41.9138,
+        43.2825,
+        42.4125,
+        48.7292,
+        35.7325,
+        36.2183,
+        36.809000000000005,
+        35.638799999999996,
+        204.1325,
+        27.8905,
+        38.4553,
+        38.0526,
+        36.304500000000004,
+        34.5508,
+        36.2438,
+        36.723400000000005,
+        36.8855,
+        33.0024,
+        36.9353,
+        36.1849,
+        33.2921,
+        34.6843,
+        40.5043,
+        38.4584,
+        29.136499999999998,
+        40.3521,
+        32.7033,
+        36.314899999999994,
+        34.895700000000005,
+        33.9386,
+        38.8057,
+        39.722500000000004,
+        34.8413,
+        37.617900000000006,
+        38.7136,
+        37.9108,
+        34.4097,
+        27.8322,
+        37.068799999999996,
+        31.2018,
+        47.992399999999996,
+        32.883700000000005,
+        35.735299999999995,
+        38.1605,
+        38.293800000000005,
+        38.3316,
+        36.174699999999994,
+        30.9135,
+        32.6115,
+        44.0216,
+        33.4688,
+        31.1263,
+        37.9045,
+        34.2317,
+        34.662600000000005,
+        36.672000000000004,
+        36.9693,
+        36.627,
+        35.884699999999995,
+        33.5835,
+        39.7965,
+        31.6404,
+        33.4532,
+        42.3044,
+        32.5582,
+        40.8982,
+        30.9312,
+        33.8611,
+        34.3527,
+        39.1231,
+        36.215900000000005,
+        34.7797,
+        37.0009,
+        37.3695,
+        34.103500000000004,
+        40.8244,
+        37.4615,
+        32.5622,
+        37.3042,
+        38.2241,
+        34.0031,
+        37.462799999999994,
+        41.8951,
+        37.132600000000004,
+        38.5174,
+        43.2543,
+        39.8866,
+        184.2209,
+        28.6299,
+        30.8642,
+        29.457400000000003,
+        29.156399999999998,
+        35.0457,
+        25.848,
+        27.805699999999998,
+        27.389899999999997,
+        38.5831,
+        31.677799999999998,
+        33.675700000000006,
+        35.9058,
+        33.8209,
+        39.1044,
+        35.2297,
+        43.958400000000005,
+        36.1953,
+        32.1151,
+        35.432199999999995,
+        36.7209,
+        38.45910000000001,
+        38.2022,
+        36.7606,
+        35.943999999999996,
+        39.8043,
+        38.004000000000005,
+        37.9168,
+        33.2638,
+        37.014199999999995,
+        40.181599999999996,
+        39.0407,
+        36.4026,
+        39.047900000000006,
+        38.1863,
+        35.8829,
+        33.4184,
+        37.069900000000004,
+        44.0075,
+        34.705,
+        39.304899999999996,
+        38.2356,
+        39.6525,
+        59.0744
+      ],
+      "profile_range_us": [
+        2967210,
+        20775306
+      ]
+    },
+    "scope": "Intermediate accounting implementation, not current runtime"
+  },
+  "current_runtime_cpu": "UNKNOWN",
+  "android_execution": "UNKNOWN",
+  "hardware_execution": "UNKNOWN",
+  "current_gc_windows": [
+    {
+      "scenario": "menu",
+      "evidence": {
+        "path": "build/null-pc-tracing/runs/1794374332020803500/result.json",
+        "sha256": "853b01180c7caae58d63ede49099bffe1e78124e5f2ddfb89b168646b10673ce"
+      },
+      "image_sha256": "411bca5e13a2f23b9e3d028091a307e932828411f0105fed72c6ee3db11c3c94",
+      "frames": 300,
+      "first_frame": 661,
+      "last_frame": 960,
+      "form_ids": [
+        4
+      ],
+      "counters_delta": {
+        "allocations": 28800,
+        "allocated_bytes": 4021200,
+        "external_growth_bytes": 651600,
+        "collections": 4,
+        "pause_ns": 396838300,
+        "accounting_ns": 2931363400
+      },
+      "before": {
+        "stage": "before_window",
+        "objects": 30655,
+        "body_bytes": 3668000,
+        "external_bytes": 10261620,
+        "retained_bytes": 13929620,
+        "peak_retained_bytes": 29941893,
+        "allocations": 413880,
+        "allocated_bytes": 91726842,
+        "external_growth_bytes": 44469762,
+        "collections": 18,
+        "pause_ns": 1393354700,
+        "accounting_ns": 6346789000
+      },
+      "after": {
+        "stage": "after_window",
+        "objects": 29115,
+        "body_bytes": 3487840,
+        "external_bytes": 10226748,
+        "retained_bytes": 13714588,
+        "peak_retained_bytes": 29941893,
+        "allocations": 442680,
+        "allocated_bytes": 95748042,
+        "external_growth_bytes": 45121362,
+        "collections": 22,
+        "pause_ns": 1790193000,
+        "accounting_ns": 9278152400
+      },
+      "longest_collection_ns": 113398300,
+      "all_cpp_allocations": "UNKNOWN",
+      "timing_scope": "Functional run concurrent with compilation; not controlled performance"
+    },
+    {
+      "scenario": "match",
+      "evidence": {
+        "path": "build/null-pc-tracing/runs/1794374201292959900/result.json",
+        "sha256": "806d6cd4e261d392cd03fa8b832ba1fb3925e6a70eb4c2cf37b8b35fa2ac6c1e"
+      },
+      "image_sha256": "411bca5e13a2f23b9e3d028091a307e932828411f0105fed72c6ee3db11c3c94",
+      "frames": 300,
+      "first_frame": 1201,
+      "last_frame": 1500,
+      "form_ids": [
+        2
+      ],
+      "counters_delta": {
+        "allocations": 15681,
+        "allocated_bytes": 2474504,
+        "external_growth_bytes": 651424,
+        "collections": 3,
+        "pause_ns": 513261000,
+        "accounting_ns": 3370595300
+      },
+      "before": {
+        "stage": "before_window",
+        "objects": 29925,
+        "body_bytes": 3556576,
+        "external_bytes": 10439278,
+        "retained_bytes": 13995854,
+        "peak_retained_bytes": 30024872,
+        "allocations": 484038,
+        "allocated_bytes": 105616892,
+        "external_growth_bytes": 50175948,
+        "collections": 31,
+        "pause_ns": 2418842400,
+        "accounting_ns": 11385692500
+      },
+      "after": {
+        "stage": "after_window",
+        "objects": 25591,
+        "body_bytes": 3052592,
+        "external_bytes": 10259414,
+        "retained_bytes": 13312006,
+        "peak_retained_bytes": 30024872,
+        "allocations": 499719,
+        "allocated_bytes": 108091396,
+        "external_growth_bytes": 50827372,
+        "collections": 34,
+        "pause_ns": 2932103400,
+        "accounting_ns": 14756287800
+      },
+      "longest_collection_ns": 330143600,
+      "all_cpp_allocations": "UNKNOWN",
+      "timing_scope": "Functional run concurrent with compilation; not controlled performance"
+    }
+  ],
+  "tls_lifecycle": [
+    {
+      "model": "new",
+      "evidence": {
+        "path": "build/ctr-gc-fixture/tls-new-1/result.json",
+        "sha256": "53e42a67f1c9a58a10f32570180d93d22d3c4165137e9cceeef88b78c99aaab8"
+      },
+      "result": {
+        "status": "PASS",
+        "case": "tls",
+        "emulator_pid": 23452,
+        "host_elapsed_seconds": 2.0629999998491257,
+        "model_requested": "new",
+        "frame_limit": 100,
+        "cpu_clock_percentage": 100,
+        "image_sha256": "d1cf59ed01657f7842ecc57d94524ce52cd1e66f996b3c29a90ade374c0c5091",
+        "emulator_sha256": "e6d76f0bdf35a935e128265100a6db39ff559f1e14c5af6520175be65f89e84e",
+        "guest_log": "{\"status\":\"PASS\",\"checks\":14,\"constructed\":10,\"destroyed\":10,\"lifo_errors\":0}\n",
+        "guest_error": null,
+        "limitation": "Emulator fixture, not hardware performance or game boot."
+      }
+    },
+    {
+      "model": "old",
+      "evidence": {
+        "path": "build/ctr-gc-fixture/tls-old-1/result.json",
+        "sha256": "084182aa2e2364a76d56ea8c5b941247d493415b7957a4728bccd440ae487f33"
+      },
+      "result": {
+        "status": "PASS",
+        "case": "tls",
+        "emulator_pid": 20080,
+        "host_elapsed_seconds": 1.5630000000819564,
+        "model_requested": "old",
+        "frame_limit": 100,
+        "cpu_clock_percentage": 100,
+        "image_sha256": "d1cf59ed01657f7842ecc57d94524ce52cd1e66f996b3c29a90ade374c0c5091",
+        "emulator_sha256": "e6d76f0bdf35a935e128265100a6db39ff559f1e14c5af6520175be65f89e84e",
+        "guest_log": "{\"status\":\"PASS\",\"checks\":14,\"constructed\":10,\"destroyed\":10,\"lifo_errors\":0}\n",
+        "guest_error": null,
+        "limitation": "Emulator fixture, not hardware performance or game boot."
+      }
+    }
+  ],
+  "allocation_windows": [
+    {
+      "scenario": "menu",
+      "evidence": [
+        {
+          "path": "build/null-pc-allocations-tracing/runs/1794377205826480500/result.json",
+          "sha256": "8933e8ded3aa58a8528c995725b0ad977a67fbdec7c64fec123e05ee35f92c9c"
+        },
+        {
+          "path": "build/tracing-measurement-round/menu-allocations.json",
+          "sha256": "fb3ef23ff986b95122d097228e4b84515135cd0b5426d6fa9a8acc9ce5452794"
+        }
+      ],
+      "image_sha256": "b1af72bc4c0ded49f0e49f1c7bdb84349c84acb542e5dea12407ee5a5f7c99cd",
+      "frames": 300,
+      "allocations": 194420,
+      "bytes": 27741692
+    },
+    {
+      "scenario": "match",
+      "evidence": [
+        {
+          "path": "build/null-pc-allocations-tracing/runs/1794377003725390100/result.json",
+          "sha256": "6a0a47d853843b37488a2afd9794939a71d2e68f1c7da97fca4168adddcfe008"
+        },
+        {
+          "path": "build/tracing-measurement-round/match-allocations.json",
+          "sha256": "1d8f146f44cd6316fa307f998573f89b4f9439e3fc7d6b671f7c17446ce3f1a1"
+        }
+      ],
+      "image_sha256": "b1af72bc4c0ded49f0e49f1c7bdb84349c84acb542e5dea12407ee5a5f7c99cd",
+      "frames": 300,
+      "allocations": 132449,
+      "bytes": 19014481
+    }
+  ],
+  "pc_sections": [
+    {
+      "label": "current",
+      "evidence": {
+        "path": "build/tracing-measurement-round/current-pc-sections.json",
+        "sha256": "a7361b9c32c6c9854352c282e2b5a86bc5899fbffaceedec3bd0ef03cec05418"
+      },
+      "image_sha256": "411bca5e13a2f23b9e3d028091a307e932828411f0105fed72c6ee3db11c3c94",
+      "image_bytes": 9793024,
+      "machine": 34404,
+      "sections": [
+        {
+          "name": ".text",
+          "virtual_bytes": 6928097,
+          "raw_bytes": 6928384,
+          "rva": 4096,
+          "file_offset": 1024
+        },
+        {
+          "name": ".rdata",
+          "virtual_bytes": 1607440,
+          "raw_bytes": 1607680,
+          "rva": 6934528,
+          "file_offset": 6929408
+        },
+        {
+          "name": ".data",
+          "virtual_bytes": 991416,
+          "raw_bytes": 918528,
+          "rva": 8544256,
+          "file_offset": 8537088
+        },
+        {
+          "name": ".pdata",
+          "virtual_bytes": 284988,
+          "raw_bytes": 285184,
+          "rva": 9539584,
+          "file_offset": 9455616
+        },
+        {
+          "name": ".rsrc",
+          "virtual_bytes": 480,
+          "raw_bytes": 512,
+          "rva": 9826304,
+          "file_offset": 9740800
+        },
+        {
+          "name": ".reloc",
+          "virtual_bytes": 51600,
+          "raw_bytes": 51712,
+          "rva": 9830400,
+          "file_offset": 9741312
+        }
+      ],
+      "limitation": "PE extents, not resident code pages or JIT code size"
+    },
+    {
+      "label": "legacy",
+      "evidence": {
+        "path": "build/tracing-measurement-round/legacy-pc-sections.json",
+        "sha256": "e350460f3690968380830a834ecc03612fbb3a5b03daa02e1939c2d7d0bc0bfb"
+      },
+      "image_sha256": "4a54214603dde6461315adc51279c3d5cf54f692514bb231d9bf8e23dad2a02c",
+      "image_bytes": 15819264,
+      "machine": 34404,
+      "sections": [
+        {
+          "name": ".text",
+          "virtual_bytes": 13296977,
+          "raw_bytes": 13297152,
+          "rva": 4096,
+          "file_offset": 1024
+        },
+        {
+          "name": ".rdata",
+          "virtual_bytes": 1885638,
+          "raw_bytes": 1885696,
+          "rva": 13303808,
+          "file_offset": 13298176
+        },
+        {
+          "name": ".data",
+          "virtual_bytes": 272344,
+          "raw_bytes": 167424,
+          "rva": 15192064,
+          "file_offset": 15183872
+        },
+        {
+          "name": ".pdata",
+          "virtual_bytes": 441288,
+          "raw_bytes": 441344,
+          "rva": 15466496,
+          "file_offset": 15351296
+        },
+        {
+          "name": ".rsrc",
+          "virtual_bytes": 480,
+          "raw_bytes": 512,
+          "rva": 15908864,
+          "file_offset": 15792640
+        },
+        {
+          "name": ".reloc",
+          "virtual_bytes": 25940,
+          "raw_bytes": 26112,
+          "rva": 15912960,
+          "file_offset": 15793152
+        }
+      ],
+      "limitation": "PE extents, not resident code pages or JIT code size"
+    }
+  ]
+}

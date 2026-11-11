@@ -465,7 +465,7 @@
   "producer_sha256": "013dee03016510ea39479230423949fa8c43b303562d875bea4723cdbb11c2be",
   "inputs_sha256": {
     "tests/translator/thread_fixtures.cpp": "bb82c13080409faf9b67b3aeea0d3067e3ad3bf8eb6625393e056c177b1f33f2",
-    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
+    "src/kairo/common/semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
     "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "tests/translator/ThreadProbe.cs": "85be9a67d96e7cbd4dbc44e8e5d64251d7f013654cf72054f6a065367cac695f",
@@ -475,16 +475,18 @@
     "src/kairo/common/managed_collation.cpp": "a3ee79c835705e7eff562ef2267713fb0c585cccad1f2d7c3f1b5104ad9dcf90",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
-    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src/kairo/common/semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
     "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
     "tests/translator/gc_test_support.hpp": "426e7da806d4fb1d1e77a733b1d780f4d5c39139078b1189f2e74fa23e12d7d6",
-    "src/runtime/managed_gc_bridge.inc": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0",
+    "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
+    "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
+    "src/runtime/managed_gc_bridge.inc": "a816a80e97de899b8f2b0ae959e33e37896f8b4f37856aa71488717792f368bd",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b",
-    "src/runtime/tracing_gc.hpp": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419"
+    "src/runtime/tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
+    "src/runtime/tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae"
   },
   "compiler": {
     "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
@@ -492,7 +494,7 @@
   },
   "native_executable": {
     "path": "build/thread-fixtures/thread-fixtures.exe",
-    "sha256": "152f051bff6605cd00cade483cb221e380c008b112b3d00343c9278ff62d6635"
+    "sha256": "537fa672fc86eed6250d04d41681fde57d84e471ef69306c374f213c2893f554"
   },
   "production_methods_promoted": 0,
   "game_binary_loaded": false,

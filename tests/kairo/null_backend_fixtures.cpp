@@ -22,9 +22,9 @@ int main(int argc,char**argv){
     std::thread installer([&]{cs::GcMutatorScope active;
         kairo::GraphicsRuntimeBindings bindings;bindings.shape_drawn=cs::Delegate<void()>::from_static("own-null-shape",[&]{++shapes;});kairo::install_graphics_runtime(std::move(bindings));
         kairo::ImageRuntimeBindings images;
-        images.check_count=cs::Delegate<int()>::from_static("own-image-clock",[]{return 0;});
+        images.check_count=cs::Delegate<std::int32_t()>::from_static("own-image-clock",[]{return std::int32_t{0};});
         images.count_enabled=cs::Delegate<bool()>::from_static("own-image-count",[]{return true;});
-        images.adjust_create_area=cs::Delegate<void(int)>::from_static("own-image-area",[&](int n){created_area+=n;});
+        images.adjust_create_area=cs::Delegate<void(std::int32_t)>::from_static("own-image-area",[&](std::int32_t n){created_area+=n;});
         kairo::install_image_runtime(std::move(images));
     });
     {cs::GcNativeBlockingScope wait;installer.join();}

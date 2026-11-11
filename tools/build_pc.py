@@ -215,6 +215,7 @@ def main():
     parser.add_argument('--metrics',action='store_true',help='Record opt-in native memory/frame measurements in the private run log; requires --run')
     parser.add_argument('--diagnostic-generated',type=Path,help='Private manifest-verified sources with fatal gap traps; separate build and isolated preferences')
     parser.add_argument('--configuration',choices=['Debug','Release'],default='Debug')
+    parser.add_argument('--jobs',type=int,choices=range(1,9),default=2,help='Parallel compilation jobs, 1..8 (default 2)')
     parser.add_argument('--diagnostic-select-frame',type=int,action='append',help='Private deterministic Canvas KEY_SELECT after this completed frame (1..12000); repeat for a sequence')
     parser.add_argument('--diagnostic-key-frame',action='append',default=[],help='Private FRAME:KEY; KEY is SELECT/UP/DOWN/LEFT/RIGHT/SOFT1/SOFT2')
     parser.add_argument('--diagnostic-dismiss-popups-until-frame',type=int,help='Private tutorial replay: SELECT for unlabeled dialogs, SOFT2 for SubForm windows with a right soft label; starts at frame300')
@@ -262,7 +263,7 @@ def main():
     policy_file=folder/'compiler-prefix-policy.json'
     clean=not policy_file.exists()or json.loads(policy_file.read_text(encoding='utf8'))!=prefix_policy
     commands=[[CMAKE,'-S',ROOT,'-B',folder,'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE='+args.configuration,'-DSDL2_DIR='+str(sdk),'-DPLS_TRACING_GC=ON','-DPLS_DIAGNOSTIC_GAME_DIR='+(str(diagnostic_folder)if diagnostic_folder else ''),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+prefix_probe['prefix']],
-              [CMAKE,'--build',folder,'--parallel','2',*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
+              [CMAKE,'--build',folder,'--parallel',str(args.jobs),*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
     if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
     if not args.fixtures_only:
         attempts=ROOT/('config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')

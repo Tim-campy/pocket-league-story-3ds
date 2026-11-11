@@ -557,3 +557,45 @@ Unity Mono JIT source inspection only (no VM code incorporated): revision
 `docs/notes/tracing-gc-prototype-round.md`. Exact APK JIT source/configuration
 identity remains UNKNOWN; this source is evidence for a proposed Android test,
 not approval of a floating-point emission change.
+
+## Android numerical oracle — local tools (2026-11-11)
+
+SDK/NDK preparation was explicitly authorized by the user. These are local
+development tools under `build/deps/android-sdk/`, never installed globally
+and never included in the port. Reproduce with
+`python tools/fp-discriminants/setup_android.py`.
+
+| Official Google archive | Version | SHA-256 |
+|---|---|---|
+| `build-tools_r35_windows.zip` | Build Tools 35.0.0 | `5753c679a1b90bcf6fbc9945a2ce39dfb9e74f1df0831a1e1866ae5b594326f0` |
+| `platform-35_r02.zip` | Android API 35, revision 2 | `0988cacad01b38a18a47bac14a0695f246bc76c1b06c0eeb8eb0dc825ab0c8e0` |
+| `android-ndk-r27c-windows.zip` | NDK 27.2.12479018 | `27e49f11e0cee5800983d8af8f4acd5bf09987aa6f790d4439dda9f3643d2494` |
+
+All downloads use `https://dl.google.com/android/repository/`; archive size
+and SHA-1 are checked against the official repository manifest, then SHA-256
+is recorded. Interrupted downloads are not extracted until verification passes.
+Exact URLs, sizes, license-file hashes and extraction receipts are in the
+local `provenance.json`. Terms: Android SDK License Agreement, manifest
+`android-sdk-license` text SHA-256
+`1f8729233617b193fd619213792ae16a41b95d2bbbf525dfe66998252ba68b16`.
+Notices remain in each package; see `THIRD_PARTY.md`.
+
+The numerical oracle is built by `tools/fp-discriminants/build_android.py`,
+using the existing Microsoft JDK 21.0.12.101, NDK clang targeting ARMv7 API 21,
+Unity 5.3.4f1 smcs/Mono and **official editor Android support** libmono.
+It does not obtain the runtime from the game APK. The locally signed APK,
+private key, captured inputs, reconstructed oracle DLLs and all build outputs
+stay under ignored `build/fp-android/`. `build-proof.json` records commands,
+tool/input hashes and the produced APK hash. This tool is not a distributable
+port build. Android execution and numerical agreement remain UNKNOWN until
+the device procedure in `docs/notes/float-discriminants.md` is completed.
+
+
+### ABI de destruição TLS no alvo CTR
+
+O SDK fixado não entrega os hooks pthread usados por `__cxa_thread_atexit`.
+O código próprio `src/runtime/ctr_thread_lifecycle.cpp`, aplicado por
+`tools/cmake/ctr_thread_lifecycle.cmake`, envolve esse símbolo e
+`__syscall_thread_create`, `__syscall_thread_exit`, `exit` com GNU ld
+`--wrap`. Não há patch dos binários do SDK. Validado pela fixture própria
+com 14 asserções nos dois perfis Azahar; ver `docs/notes/tracing-gc-arm-stacks.md`.

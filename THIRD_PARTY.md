@@ -160,3 +160,25 @@ Permissive notice and copyright holders are in upstream `README.QUICK`;
 source/license hashes and build options are recorded in `docs/toolchain.md`.
 The CMake build does not use the GNU autotools files mentioned separately
 in that notice. Source was not modified.
+
+## Android SDK and NDK — explicitly authorized local testing tools
+
+Build Tools 35.0.0, platform API 35 revision 2 and NDK r27c are obtained from
+Google's official repository, under the Android SDK License Agreement and
+the component notices supplied with the packages. They are not collectively
+described as MIT or Apache software. The user explicitly authorized their
+local preparation; no system installation or redistribution is performed.
+Archives and license hashes are recorded in `docs/toolchain.md` and local
+`build/deps/android-sdk/provenance.json`.
+
+License/notices retained locally:
+
+- Official `repository2-1.xml`, license `android-sdk-license`.
+- `build-tools-35/android-15/NOTICE.txt` and RenderScript `LICENSE.TXT`.
+- `platform-35/android-35/{data,skins,templates}/NOTICE.txt`.
+- `ndk-r27c/android-ndk-r27c/NOTICE`, `NOTICE.toolchain`, LLVM `NOTICE`,
+  sysroot `NOTICE` and component notices enumerated in the provenance file.
+
+The separately installed Unity 5.3.4f1 Android runtime is used only as a
+local numerical oracle under the user's explicit test authorization. Neither
+that runtime nor its test APK is committed or distributed with this project.

@@ -293,6 +293,9 @@ template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
                 if(category==memory::Category::managed_heap)ranges(begin,bytes);
             });
         };
+        descriptor.retained_ranges=[](const void* pointer,gc::Ranges ranges){
+            static_cast<const T*>(pointer)->memory_ranges([ranges](const void* begin,std::size_t bytes,memory::Category){ranges(begin,bytes);});
+        };
         return gc::make_described<T>(tracing_heap(),descriptor,std::forward<Args>(args)...);
     }catch(const std::bad_alloc&){throw OutOfMemoryException();}
     catch(const std::logic_error&error){throw InvalidOperationException(error.what());}

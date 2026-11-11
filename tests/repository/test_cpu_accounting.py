@@ -29,5 +29,16 @@ class AttributionTests(unittest.TestCase):
         self.assertEqual(category([{'symbol':'pls::game::cs_hot'}]), 'game-logic')
         self.assertEqual(category([{'symbol':'pls::generated::cs_hot'}]), 'portable-kairo')
 
+    def test_generated_trace_maps_are_gc_not_game_logic(self):
+        self.assertEqual(category([{'symbol':'pls::game::Example::trace_edges',
+                                    'file':'src/game/game_generated_type_example.cpp'}]),'runtime/tracing-gc')
+
+    def test_retained_buffer_accounting_is_runtime(self):
+        self.assertEqual(category([{'symbol':'pls::gc::Heap::Impl::account_retained'}]),'runtime/memory-accounting')
+        self.assertEqual(category([{'symbol':'pls::kairo::Image::memory_ranges'}]),'runtime/memory-accounting')
+
+    def test_collector_implementation_is_runtime(self):
+        self.assertEqual(category([{'symbol':'helper','file':'src/runtime/tracing_gc.cpp'}]),'runtime/tracing-gc')
+
 
 if __name__ == '__main__': unittest.main()

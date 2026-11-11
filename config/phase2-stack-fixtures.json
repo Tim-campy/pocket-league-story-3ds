@@ -19,18 +19,20 @@
   "inputs": {
     "tests\\translator\\StackFixtures.cs": "df6cd6bea323490fe22b6134e1cf2bc2c0c9fe8acbb7710d89004e0f9ae5b484",
     "tests\\translator\\stack_fixtures.cpp": "09be6bd0e617fd708776bf9c3dcd214c50e6de1f1c6723199b2c74f8b307f58a",
-    "src\\kairo\\common\\semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
-    "src\\kairo\\common\\semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src\\kairo\\common\\semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
+    "src\\kairo\\common\\semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
     "src\\kairo\\common\\managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
     "src\\kairo\\common\\managed_dictionary.hpp": "4b678c96e83cae85ab36352460f017965106347c082654f6dfce3bfc10254d85",
     "src\\kairo\\common\\managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
     "tests\\translator\\run_semantic_fixtures.py": "ee7f16672b9322d113d641944dd25bcc82b1615051a2ca5e8b975ff017c2cd41",
-    "src/runtime/managed_gc_bridge.inc": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0",
+    "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
+    "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
+    "src/runtime/managed_gc_bridge.inc": "a816a80e97de899b8f2b0ae959e33e37896f8b4f37856aa71488717792f368bd",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b",
-    "src/runtime/tracing_gc.hpp": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419",
+    "src/runtime/tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
+    "src/runtime/tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae",
     "tools/test_stack.py": "1e98855c21b681076386c79e11928d82867de30327ca2f1d0d4868dff1cf1f3f",
     "tests/translator/stack_gc_fixtures.cpp": "59fe3429454ad0d1ef6c10e9602ce1844510eb4ec32c254a8371a02d7f5f7712",
     "tests/translator/gc_test_support.hpp": "426e7da806d4fb1d1e77a733b1d780f4d5c39139078b1189f2e74fa23e12d7d6"
@@ -321,10 +323,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "5df3a753ead6f1a4c8235cfebb676a33552d15ca5d82e5607144d042d685aea9"
+    "sha256": "81554765857eecc3bd9dd182e9dd515a4f0a472aa77ba50845e535256df4f23f"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "17c62853dbcf59e0428bc5c692da2e54018d44e52fd0f69d192eb148b66cb348"
+    "sha256": "47a8acde2a7da3ab1a88dbee823fa7194654ea594dd67c9b0661078cd76f150e"
   }
 }

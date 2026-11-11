@@ -4,8 +4,19 @@
 #include "../platform/sdl/font.hpp"
 #include <map>
 namespace pls::kairo {
-namespace {TextServices services;std::map<std::pair<std::string,int>,std::unique_ptr<sdl::RasterFont>> rasters;}
-void install_text_services(TextServices value){services=std::move(value);rasters.clear();}
+namespace {
+TextServices services;std::map<std::pair<std::string,int>,std::unique_ptr<sdl::RasterFont>> rasters;
+// The platform font cache has process lifetime, independent of Font handles.
+// A rooted accounting owner exposes its growing payload to the GC threshold;
+// it neither owns nor prolongs individual cache entries.
+class FontCacheAccounting final : public cs::Object {
+public:
+    void memory_ranges(const memory::RangeVisitor& visit)const override{visit_font_memory(visit);}
+};
+cs::Ref<FontCacheAccounting> font_cache_accounting{};
+cs::GcRootProvider font_cache_root([](const cs::EdgeVisitor& visitor){cs::trace_value(font_cache_accounting,visitor);});
+}
+void install_text_services(TextServices value){services=std::move(value);rasters.clear();if(!font_cache_accounting)font_cache_accounting=cs::make_ref<FontCacheAccounting>();}
 void visit_font_memory(const memory::RangeVisitor&visit){for(const auto&entry:rasters)entry.second->memory_ranges(visit);}
 cs::String translate_text(cs::String text){if(!services.translate)throw cs::InvalidOperationException("Generated Language.TranslateText bridge is not installed");return services.translate(text);}
 bool japanese_text(){if(!services.japanese)throw cs::InvalidOperationException("Generated Language.Japanese bridge is not installed");return services.japanese();}

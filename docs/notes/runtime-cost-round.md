@@ -719,3 +719,57 @@ posições de 524.288 para 4.096. Cada registro nessa arquitetura mede 112 bytes
 cada posição 16. Isso prova o exercício da redução no teste sintético; não
 atribui a ela a memória do jogo nem demonstra ainda melhora de latência.
 Fonte candidato: `1149cac4833c9b12bbb607c6fb5a53f637eba69f303507e849bcb07b1bc23f93`.
+
+
+### Checkpoint e sondas ARM posteriores
+
+Checkpoint `d6b11a4`: 122 checks completos passaram; os hashes do snapshot
+verificado coincidiram com o fonte antes do commit. O gate de conteudo do
+indice passou com 1.310 entradas. O historico de tentativas foi serializado
+sem espacos (2.034.730 para 1.554.631 bytes), preservando integralmente o
+objeto JSON; nenhum estado ou resultado foi removido. Os recibos foram
+renovados pelo verificador com o snapshot de codigo inalterado.
+
+A variante privada de reducao de capacidade, imagem
+`11aa061a1db3189d2f331cf00c8919d11b3e4846750b5dfc84b4ee8aa3f8486b`,
+falhou antes do titulo com `std::bad_alloc` no perfil New a 100%, zero frames
+qualificados. Na primeira coleta observada, registros/posicoes/vetor de
+mortos cairam de 4.898.048 para 760.240 bytes; perto da falha retinham
+7.468.320 bytes. O alocador informou 94.181.496 bytes usados. Logo, liberar
+essa capacidade nao basta para resolver o boot. A variante permanece nao
+adotada.
+
+Uma segunda sonda contou tambem o upstream PMR: no ultimo evento de GC,
+4.360.480 bytes de pool, 4.588.096 de registros/posicoes e 2.879.104 do vetor
+de mortos, com 13.382.422 bytes de corpos e payloads contabilizados. Esses
+numeros sao daquele evento, nao um snapshot simultaneo ao erro posterior.
+As capacidades de buckets/paginas sao subconjuntos do pool, nao somas extras.
+
+A sonda por etapa (`88e887c27b60ad985c5f3c029d0ed4607853827e7ea7c24dc75cf1d43b092f29`)
+mostrou 28.893.376 bytes no alocador no frame de boot 480, incluindo
+12.400.984 bytes de texturas registradas, 65.536 de fontes, zero de audio e
+2.411.816 de heap gerenciado enumerado. Depois falhou com 93.999.856 bytes
+no alocador e 38.488 objetos registrados. As categorias enumeradas nao sao
+RSS nem incluem todo overhead nativo. O salto posterior ainda requer
+identificacao do sitio de alocacao. Nenhum desses testes chegou ao titulo,
+menu ou partida, e nao qualifica o benchmark de hardware.
+
+
+### Encerramento solicitado pelo usu?rio
+
+Parada solicitada antes de novas execu??es. Nenhum compilador, diagn?stico ou
+emulador desta rodada permanece em execu??o. Ficaram prontas, mas N?O EXECUTADAS:
+
+- `build/arm-allocation-failure-probe/null_game.3dsx`, SHA-256
+  `274372e834e147cf80a54899cd605acc8c81c700298156cc0aed93320d59a912`:
+  sonda privada com pilha da aloca??o que falhar, reutilizando objetos
+  autenticados da base anterior ? corre??o do limite de arrays grandes.
+- `build/gc-sweep-detail-deferred/out/gc_phase_game.exe`, SHA-256
+  `c469b72f93aafd4aab274abc1379f210209f0a96a878eeffe1d6e257d80a295f`:
+  detalhamento privado da remo??o de mortos, com impress?o fora dos trechos
+  cronometrados. A primeira sonda (`gc-sweep-detail`) executou 17 coletas,
+  mas imprimia dentro da fase; seus tempos n?o substituem a medi??o de lat?ncia.
+
+As sondas s?o experimentos locais, n?o c?digo adotado nem benchmark de
+hardware qualificado. A pr?xima rodada deve come?ar pela pilha da falha ARM
+e pelo detalhamento diferido, sem repetir sondas j? conclu?das.

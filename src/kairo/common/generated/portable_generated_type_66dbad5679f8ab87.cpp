@@ -86,7 +86,7 @@ std::int64_t cs_f91743457814379a(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JDate.GetTime",kairo);
 {
-return pls::cs::conv_i64(((([&]() -> pls::cs::TimeSpan { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_672aeddf6395a59c; }()); auto cs_right = cs_fa93015d6ad485b9(); return (cs_left - cs_right); }()))).get_TotalMilliseconds());
+return pls::cs::conv_i64(((([&]() -> pls::cs::TimeSpan { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_672aeddf6395a59c; }()); auto cs_right = cs_fa93015d6ad485b9_value; return (cs_left - cs_right); }()))).get_TotalMilliseconds());
 }
 }
 }
@@ -97,7 +97,7 @@ void cs_d5b7c3d10f4ecec3(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this,std::int64_t 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JDate.SetTime(System.Int64)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_arg0 = (cs_fa93015d6ad485b9()).get_Year(); auto cs_arg1 = (cs_fa93015d6ad485b9()).get_Month(); auto cs_arg2 = (cs_fa93015d6ad485b9()).get_Day(); auto cs_arg3 = (cs_fa93015d6ad485b9()).get_Hour(); auto cs_arg4 = (cs_fa93015d6ad485b9()).get_Minute(); auto cs_arg5 = (cs_fa93015d6ad485b9()).get_Second(); auto cs_arg6 = (cs_fa93015d6ad485b9()).get_Kind(); return pls::cs::DateTime(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6); }()); pls::generated::cs_require(cs_target)->cs_672aeddf6395a59c = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_arg0 = (cs_fa93015d6ad485b9_value).get_Year(); auto cs_arg1 = (cs_fa93015d6ad485b9_value).get_Month(); auto cs_arg2 = (cs_fa93015d6ad485b9_value).get_Day(); auto cs_arg3 = (cs_fa93015d6ad485b9_value).get_Hour(); auto cs_arg4 = (cs_fa93015d6ad485b9_value).get_Minute(); auto cs_arg5 = (cs_fa93015d6ad485b9_value).get_Second(); auto cs_arg6 = (cs_fa93015d6ad485b9_value).get_Kind(); return pls::cs::DateTime(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6); }()); pls::generated::cs_require(cs_target)->cs_672aeddf6395a59c = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::DateTime { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_672aeddf6395a59c; }()); auto cs_arg0 = static_cast<double>(v_time); return cs_receiver.AddMilliseconds(cs_arg0); }());}); pls::generated::cs_require(cs_target)->cs_672aeddf6395a59c = cs_value; return cs_value; }());
 }
 }

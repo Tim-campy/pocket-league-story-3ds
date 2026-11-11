@@ -13,15 +13,15 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 |---|---|---|
 | Tradução completa | em andamento | 1768/1958 métodos compilados; 22 slots virtuais pendentes; integração das 53 políticas ainda não comprovada. |
 | Coletor e desempenho | em andamento | Rastreamento integrado e em validação; paridade dos kernels e benchmark <=50 ms no New 3DS real ainda não comprovados. |
-| Percurso completo no PC | em andamento | 773 métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados. |
-| Fidelidade resolvida | em andamento | Ponto flutuante Android, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
+| Percurso completo no PC | em andamento | 776 métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados. |
+| Fidelidade resolvida | em andamento | Ponto flutuante confirmado em emulador ARM; confirmação em aparelho, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
 | Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |
 
 ## Tradução
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
-| Métodos a traduzir | 1958 | {'todo': 190, 'translated': 995, 'runs': 773} |
+| Métodos a traduzir | 1958 | {'todo': 190, 'translated': 992, 'runs': 776} |
 
 ## Fronteira da KairoLibrary
 
@@ -31,7 +31,16 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 
 ## Desempenho
 
-A conversão para rastreamento está integrada e em validação. CPU por frame e pico de texturas da revisão atual: **UNKNOWN**. A medição intermediária identificou custo elevado na contabilidade de buffers; não é a medição posterior às correções. Kernels isolados não qualificam o jogo convertido. Consulte [a rodada de medições](docs/notes/tracing-gc-measurement-round.md), [a matriz de ablação](docs/notes/tracing-gc-ablation.md) e [as fixtures ARM](docs/notes/tracing-gc-arm-stacks.md). Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.
+Última imagem medida (não implica medição de alterações posteriores): `895dae63092771f746d9400446e6681627cbcf1350a9b06ed3b6e0faa0b4b402`.
+
+| Cenário | Repetições / frames | CPU média da thread, ms | Tempo monotônico médio, ms | Coletas na janela |
+|---|---:|---:|---:|---:|
+| Menu | 3 / 900 | 1.684027778 | 2.663107222 | 0 |
+| Partida | 3 / 900 | 1.631944444 | 2.335065556 | 0 |
+
+GetThreadTimes/QueryThreadCycleTime, sem elevação, três repetições ociosas. A granularidade do relógio de CPU limita p95/máximo por frame; ciclos brutos e tempos monotônicos estão no recibo. A baseline 7,15/9,04 ms usou ETW. Zero coletas na janela não prova a meta de pausa nos carregamentos. [Detalhes e resultados negativos](docs/notes/runtime-cost-round.md).
+
+A conversão para rastreamento está integrada e em validação. Pico comparativo de texturas da revisão atual: **UNKNOWN**. Kernels isolados não qualificam o jogo convertido. Consulte [a rodada de medições](docs/notes/tracing-gc-measurement-round.md), [a matriz de ablação](docs/notes/tracing-gc-ablation.md) e [as fixtures ARM](docs/notes/tracing-gc-arm-stacks.md). Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.
 
 ## Assets
 
@@ -39,7 +48,7 @@ A conversão para rastreamento está integrada e em validação. CPU por frame e
 |---|---:|---|
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1768/1958 identidades originais com C++ compilado; 773 com retorno normal registrado em jogo; 0 verificadas.**
+**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1768/1958 identidades originais com C++ compilado; 776 com retorno normal registrado em jogo; 0 verificadas.**
 
 ## Preparação e medições da Fase 1 preservadas
 

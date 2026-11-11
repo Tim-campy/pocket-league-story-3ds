@@ -30,12 +30,12 @@ void cs_dbab81fd91425aae(pls::cs::Ref<cs_70b7974d356d68ab> cs_this,std::int64_t 
 {
 pls::cs::Array<std::int32_t> v_array_601 = ([&]() -> pls::cs::Array<std::int32_t> { std::int64_t cs_arg0 = v_key; return cs_b37fd969c7a5953c(cs_arg0); }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_key; pls::game::cs_require(cs_target)->cs_69110646eac3c92f = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = v_x; pls::game::cs_require(cs_target)->cs_c5b0b4bdfc0bc3e5 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = v_y; pls::game::cs_require(cs_target)->cs_80159b241b8b0fb0 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_x); pls::game::cs_require(cs_target)->cs_c5b0b4bdfc0bc3e5 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_y); pls::game::cs_require(cs_target)->cs_80159b241b8b0fb0 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_array = v_array_601; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }()); pls::game::cs_require(cs_target)->cs_3b9b9f07493bab63 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_array = v_array_601; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return cs_array.get_Item(cs_index); }()); pls::game::cs_require(cs_target)->cs_0556df4715acbd82 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = v_x; pls::game::cs_require(cs_target)->cs_a14ff763839a39fc = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = v_y; pls::game::cs_require(cs_target)->cs_cdbd50f771e65195 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_x); pls::game::cs_require(cs_target)->cs_a14ff763839a39fc = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_y); pls::game::cs_require(cs_target)->cs_cdbd50f771e65195 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_component; pls::game::cs_require(cs_target)->cs_07a9daa229d89929 = cs_value; return cs_value; }());
 }
 }

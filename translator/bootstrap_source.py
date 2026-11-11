@@ -255,6 +255,32 @@ namespace pls::game {void native_install_bootstrap_bindings();}
 ''')
 
 
+def direct_kairo_adapter(invoke):
+    """Forward through the one resolved source object, without a cache.
+
+    A fresh adapter is still made for each lookup. The previous nine delegates
+    were native routing machinery with the same managed target. No worker
+    confinement or singleton lifetime is assumed.
+    """
+    text=['class SourceKairoAdapter final:public k::FormKairo {\n',
+          'using Target=decltype(value);Target value_;\npublic:\n',
+          'explicit SourceKairoAdapter(Target target):value_(std::move(target)){}\n']
+    specs=[('IsGamePlaying','bool','IsPlaying','',[],''),
+           ('SetGameState','void','SetGameState','bool x',['x'],',System.Boolean'),
+           ('Update','void','UpdateKairo','',[],''),
+           ('ReserveSaveEnabled','bool','GetReserveEnabled','',[],''),
+           ('SetReserveSaveEnabled','void','SetReserveEnabled','bool x',['x'],',System.Boolean'),
+           ('ReserveSave','std::int32_t','GetReserve','',[],''),
+           ('SetReserveSave','void','SetReserve','std::int32_t x',['x'],',System.Int32'),
+           ('Save','void','Save','',[],''),('SaveAll','void','SaveAll','',[],'')]
+    for native,result,name,parameters,args,suffix in specs:
+        expression=invoke(name,['value_']+args,'(kairo.unity.system.KairoBase'+suffix+')',result)
+        text.append(result+' '+native+'('+parameters+')override{'+('return ' if result!='void' else '')+expression+';}\n')
+    text.append('void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::trace_value(value_,visitor);}\n')
+    text.append('void release_edges()override{cs::release_value(value_);}\n};\n')
+    return ''.join(text)
+
+
 def emit(output,report,portable):
     methods={m['id']:m for m in report['emitted_methods']+report.get('emitted_kairo_dependencies',[])}
     gaps=set()
@@ -301,15 +327,9 @@ namespace cs=pls::cs;namespace k=pls::kairo;
     if get_kairo not in methods:
         gaps.add(get_kairo);text.append('forms.kairo=cs::Delegate<cs::Ref<k::FormKairo>()>::from_static("Bootstrap.Kairo",[]()->cs::Ref<k::FormKairo>{PLS_BOOTSTRAP_GAP('+json.dumps(get_kairo)+');});\n')
     else:
-        text.append('forms.kairo=cs::Delegate<cs::Ref<k::FormKairo>()>::from_static("Bootstrap.Kairo",[]()->cs::Ref<k::FormKairo>{auto value='+invoke('GetKairo')+';if(!value)return {};k::KairoCallbacks callbacks;\n')
-        specs=[('is_game_playing','bool()','IsPlaying','',[],''),('set_game_state','void(bool)','SetGameState','bool x',['x'],',System.Boolean'),
-               ('update','void()','UpdateKairo','',[],''),('reserve_enabled','bool()','GetReserveEnabled','',[],''),
-               ('set_reserve_enabled','void(bool)','SetReserveEnabled','bool x',['x'],',System.Boolean'),
-               ('reserve','std::int32_t()','GetReserve','',[],''),('set_reserve','void(std::int32_t)','SetReserve','std::int32_t x',['x'],',System.Int32'),
-               ('save','void()','Save','',[],''),('save_all','void()','SaveAll','',[],'')]
-        for field,signature,name,parameters,args,suffix in specs:
-            text.append('callbacks.'+field+'=cs::Delegate<'+signature+'>::bind(value,'+json.dumps(PREFIX+name)+',[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)]('+parameters+'){'+('return 'if not signature.startswith('void(')else '')+invoke(name,['weak.lock()']+args,'(kairo.unity.system.KairoBase'+suffix+')',signature.split('(',1)[0])+';});\n')
-        text.append('return cs::make_ref<k::CallbackFormKairo>(std::move(callbacks));});\n')
+        text.append('forms.kairo=cs::Delegate<cs::Ref<k::FormKairo>()>::from_static("Bootstrap.Kairo",[]()->cs::Ref<k::FormKairo>{auto value='+invoke('GetKairo')+';if(!value)return {};\n')
+        text.append(direct_kairo_adapter(invoke))
+        text.append('return cs::make_ref<SourceKairoAdapter>(value);});\n')
     plan=json.loads((ROOT/'config/phase2-bootstrap-plan.json').read_text())
     if not plan['save_recorder_null_proof']['proven']:raise ValueError('Recorder null specialization lacks proof')
     text.append('// Complete-corpus proof: no concrete SaveRecorder subclass/constructor call.\nforms.recorder=cs::Delegate<cs::Ref<k::FormRecorder>()>::from_static("Bootstrap.Recorder",[]()->cs::Ref<k::FormRecorder>{return {};});\n')

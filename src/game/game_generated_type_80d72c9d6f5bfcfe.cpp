@@ -81,7 +81,7 @@ pls::cs::Array<pls::cs::String> v_array_2569 = pls::diagnostic::api_call([&]() -
 void cs_d260a0b06ef6b3db(pls::cs::String v_src) { cs_init_80d72c9d6f5bfcfe();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.EventData.LoadStringTable(System.String)",game);
 {
-([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_src; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x000a" u"",1);return cs_literal;}()); return pls::generated::cs_aed90764bf1359a3(cs_arg0,cs_arg1); }());}); cs_a6acb1dbcdc3e821() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_src; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x000a" u"",1);return cs_literal;}()); return pls::generated::cs_aed90764bf1359a3(cs_arg0,cs_arg1); }());}); cs_a6acb1dbcdc3e821_value = cs_value; return cs_value; }());
 }
 }
 }

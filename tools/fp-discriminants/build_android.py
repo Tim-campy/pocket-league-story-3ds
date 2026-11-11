@@ -1,4 +1,5 @@
 """Build a private Android ARMv7 numerical oracle, never a game APK."""
+import argparse
 import hashlib
 import json
 import os
@@ -14,7 +15,6 @@ HERE = Path(__file__).resolve().parent
 SDK = ROOT/'build/deps/android-sdk'
 UNITY = Path('C:/Users/l_abn/AppData/Local/Programs/Unity/5.3.4f1/Editor/Data')
 JAVA = Path('C:/Program Files/Microsoft/jdk-21.0.12.101-hotspot/bin')
-OUTPUT = ROOT/'build/fp-android'
 
 
 def sha(path):
@@ -29,7 +29,17 @@ def one(base, name):
 
 
 def main():
-    OUTPUT.mkdir(parents=True, exist_ok=True)
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--captures',type=Path,required=True)
+    parser.add_argument('--output',type=Path,required=True)
+    args=parser.parse_args();OUTPUT=args.output.resolve();capture_folder=args.captures.resolve()
+    if not OUTPUT.is_relative_to(ROOT/'build') or OUTPUT.exists():raise ValueError('Use a fresh private output directory')
+    capture_receipt=capture_folder.parent/'capture-receipt.json'
+    captured=json.loads(capture_receipt.read_text())
+    if captured['counts'][1]<80 or captured['distinct_cal_inputs']<80:raise ValueError('At least 80 distinct own Cal captures are required')
+    for name,digest in captured['inputs'].items():
+        if sha(capture_folder/name)!=digest:raise ValueError('Captured observation changed: '+name)
+    OUTPUT.mkdir(parents=True)
     buildtools = one(SDK/'build-tools-35', 'aapt.exe').parent
     platform = one(SDK/'platform-35', 'android.jar')
     clang = one(SDK/'ndk-r27c', 'clang.exe')
@@ -58,9 +68,8 @@ def main():
     reconstruction = ROOT.parent/'Pocket League Story'
     copy(reconstruction/'build/Assembly-CSharp-mono-smcs/Assembly-CSharp.dll',managed/'Assembly-CSharp.dll')
     copy(reconstruction/'build/KairoLibrary-roslyn-1.1.0/KairoLibrary.dll',managed/'KairoLibrary.dll')
-    captures = sorted((ROOT/'build/hot-input-capture/inputs').glob('*.bin'))
-    if len(captures) != 80:
-        raise ValueError('Expected historical 80 captures total (16 per kernel)')
+    captures = sorted(capture_folder.glob('*.bin'))
+    if {p.name for p in captures}!=set(captured['inputs']):raise ValueError('Capture inventory changed')
     for source in captures:
         copy(source,inputs/source.name)
     env = dict(os.environ, MONO_PATH=str(core),MONO_CFG_DIR=str(UNITY/'Mono/etc'))
@@ -111,7 +120,7 @@ def main():
     run([*signer,'verify','--verbose',apk])
     proof = dict(status='BUILT_NOT_EXECUTED_ON_ANDROID',apk_sha256=sha(apk),
                  official_libmono=dict(path=str(libmono),sha256=sha(libmono)),private_inputs=provenance,
-                 captures=dict(total=80,per_kernel=16,cal_evaCoatMulti9block=16),
+                 captures=dict(total=len(captures),per_kernel=captured['counts'],cal_evaCoatMulti9block=captured['counts'][1],distinct_cal=captured['distinct_cal_inputs'],receipt_sha256=sha(capture_receipt)),
                  commands=commands,tool_hashes={str(p):sha(p) for p in [clang,platform,compiler,mono,buildtools/'aapt.exe',buildtools/'lib/d8.jar',buildtools/'lib/apksigner.jar']},
                  source_hashes={str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__),HERE/'probe_jni.c',HERE/'ProbeActivity.java',HERE/'AndroidManifest.xml',HERE/'FloatDiscriminants.cs',ROOT/'tools/profiling/HotMethodsMono.cs']})
     (OUTPUT/'build-proof.json').write_text(json.dumps(proof,indent=2)+'\n')

@@ -23,6 +23,10 @@ template<class K,class V>struct KeyValuePair {
 template<class K,class V>class Dictionary {
     struct Entry {std::uint32_t hash=0;std::optional<KeyValuePair<K,V>>item;};
     struct Storage : Object {std::vector<Entry>entries;std::vector<std::size_t>free;std::int32_t count=0;std::uint32_t version=0;
+        void memory_ranges(const memory::RangeVisitor& visit)const override{
+            visit(entries.data(),entries.capacity()*sizeof(Entry),memory::Category::managed_heap);
+            visit(free.data(),free.capacity()*sizeof(std::size_t),memory::Category::managed_heap);
+        }
         void trace_edges(const EdgeVisitor&visitor)const override{for(const auto&entry:entries)if(entry.item)entry.item->trace_edges(visitor);}
         void release_edges()override{entries.clear();free.clear();}
     };

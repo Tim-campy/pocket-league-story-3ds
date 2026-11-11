@@ -24,7 +24,7 @@ void cs_33fd658d45a27eb0(pls::cs::Array<std::uint8_t> v_src,pls::cs::Array<std::
 void cs_b78cf957d6d975eb(pls::cs::Array<std::uint8_t> v_src) { cs_init_4978cb69e37b8564();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Encrypter.Decode(System.Byte[])",kairo);
 {
-([&]() -> void { pls::cs::Array<std::uint8_t> cs_arg0 = v_src; pls::cs::Array<std::uint8_t> cs_arg1 = cs_1c11d615d9916ed8(); cs_33fd658d45a27eb0(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Array<std::uint8_t> cs_arg0 = v_src; pls::cs::Array<std::uint8_t> cs_arg1 = cs_1c11d615d9916ed8_value; cs_33fd658d45a27eb0(cs_arg0,cs_arg1); }());
 }
 }
 }
@@ -44,7 +44,7 @@ for (std::int32_t v_i_530 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0
 void cs_a232dc3a48dd6d41(pls::cs::Array<std::uint8_t> v_key) { cs_init_4978cb69e37b8564();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Encrypter.SetEncryptionKey(System.Byte[])",kairo);
 {
-([&]() { auto cs_value = v_key; cs_1c11d615d9916ed8() = cs_value; return cs_value; }());
+([&]() { auto cs_value = v_key; cs_1c11d615d9916ed8_value = cs_value; return cs_value; }());
 }
 }
 }

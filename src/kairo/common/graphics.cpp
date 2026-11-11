@@ -2,6 +2,8 @@
 #include "render_mode.hpp"
 #include "graphics.hpp"
 #include "sha256.hpp"
+#include "ctr_texture.hpp"
+#include "resource_load_trace.hpp"
 #include "font.hpp"
 #include "../platform/sdl/font.hpp"
 #include "arc_raster.hpp"
@@ -51,28 +53,53 @@ cs::Ref<Image> Image::FromRgba(std::int32_t width,std::int32_t height,std::vecto
     if(width<=0||height<=0||std::uint64_t(width)*height*4!=rgba.size())throw cs::ArgumentException("Invalid RGBA8 extent");
     auto result=cs::make_ref<Image>();result->width_=width;result->height_=height;result->rgba_=std::move(rgba);result->alive_=true;track_created(result,false);return result;
 }
+void Image::assign_pixels(std::vector<std::uint8_t> bytes,bool tiled){
+    if(tiled){
+        try{(void)assets::ctr_texture::validate(bytes,std::uint32_t(width_),std::uint32_t(height_));}
+        catch(const std::invalid_argument& error){throw cs::IOException(error.what());}
+        ctr_rgba_=std::move(bytes);std::vector<std::uint8_t>().swap(rgba_);
+    }else{
+        if(width_<=0||height_<=0||std::uint64_t(width_)*std::uint64_t(height_)*4!=bytes.size())throw cs::IOException("Invalid prepared RGBA extent");
+        rgba_=std::move(bytes);std::vector<std::uint8_t>().swap(ctr_rgba_);
+    }
+}
+void Image::ensure_linear()const{
+    if(ctr_rgba_.empty())return;
+    const auto layout=assets::ctr_texture::validate(ctr_rgba_,std::uint32_t(width_),std::uint32_t(height_));
+    rgba_=assets::ctr_texture::linear(ctr_rgba_,layout);
+    std::vector<std::uint8_t>().swap(ctr_rgba_);
+}
 cs::Ref<Image> Image::Load(cs::Array<std::uint8_t> bytes,Format format,Filter filter){
     if(!catalog)throw cs::InvalidOperationException("Host asset catalog is not installed");
+    diagnostic::ResourceTimer timing("image-load-total",std::size_t(bytes.length()));
     std::vector<std::uint8_t> source;source.reserve(bytes.length());for(int i=0;i<bytes.length();++i)source.push_back(bytes.at(i));
-    auto* image=catalog->find(assets::Kind::image,assets::sha256(source));
+    timing.step("image-source-copy");auto* image=catalog->find(assets::Kind::image,assets::sha256(source));timing.step("image-identity");
     if(!image)throw cs::IOException("PNG is absent from the authenticated native catalog");
-    auto result=FromRgba(std::int32_t(image->width),std::int32_t(image->height),catalog->read(*image));
-    result->format=format==Format::Default?Format::ARGB32:format;result->filter=filter==Filter::Default?DEFAULT_FILTER:filter;return result;
+    auto result=cs::make_ref<Image>();result->width_=std::int32_t(image->width);result->height_=std::int32_t(image->height);
+    auto pixels=catalog->read(*image);timing.step("image-read");
+    result->assign_pixels(std::move(pixels),std::filesystem::path(image->path).extension()==".rgba8ctr");timing.step("image-adopt-layout");
+    result->alive_=true;track_created(result,false);
+    result->format=format==Format::Default?Format::ARGB32:format;result->filter=filter==Filter::Default?DEFAULT_FILTER:filter;timing.step("image-track");timing.finish();return result;
 }
-const std::vector<std::uint8_t>& Image::pixels()const{if(!alive_)throw cs::ObjectDisposedException();return rgba_;}
+const std::vector<std::uint8_t>& Image::pixels()const{if(!alive_)throw cs::ObjectDisposedException();ensure_linear();return rgba_;}
 std::int32_t Image::GetAlphaType(){
     if(alpha_==0)return 1;if(alpha_<255)return 2;if(alpha_type_!=-1)return alpha_type_;
     std::size_t transparent=0,partial=0,opaque=0;
-    for(std::size_t i=3;i<rgba_.size();i+=4){if(rgba_[i]<3)++transparent;else if(rgba_[i]<255)++partial;else ++opaque;}
+    const auto count=[&](std::uint8_t alpha){if(alpha<3)++transparent;else if(alpha<255)++partial;else ++opaque;};
+    if(ctr_rgba_.empty()){for(std::size_t i=3;i<rgba_.size();i+=4)count(rgba_[i]);}
+    else{
+        const auto layout=assets::ctr_texture::validate(ctr_rgba_,std::uint32_t(width_),std::uint32_t(height_));
+        for(std::uint32_t y=0;y<layout.height;++y)for(std::uint32_t x=0;x<layout.width;++x)count(ctr_rgba_[assets::ctr_texture::offset(x,y,layout.texture_width)]);
+    }
     alpha_type_=partial?(opaque?3:2):transparent?1:0;return alpha_type_;
 }
 cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(pls::cs::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
 void Image::SetAlpha(std::int32_t alpha){
     // Preserve the original guard, including its surprising direction (Image.cs:888).
-    if(!alive_||alpha_!=alpha)return;alpha_=alpha;auto a=std::uint8_t(std::clamp<std::int32_t>(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;
+    if(!alive_||alpha_!=alpha)return;ensure_linear();alpha_=alpha;auto a=std::uint8_t(std::clamp<std::int32_t>(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;
 }
 void Image::SetTransparentEnabled(bool enabled){
-    if(!alive_)throw cs::ObjectDisposedException();auto c=channels(transparent_);bool was_rgb=!alpha_format(format);
+    if(!alive_)throw cs::ObjectDisposedException();ensure_linear();auto c=channels(transparent_);bool was_rgb=!alpha_format(format);
     for(std::size_t i=0;i<rgba_.size();i+=4){
         if(!enabled)rgba_[i+3]=255;
         else if(rgba_[i]==c[0]&&rgba_[i+1]==c[1]&&rgba_[i+2]==c[2])rgba_[i+3]=0;
@@ -216,7 +243,7 @@ void Graphics::pixel(int x,int y,std::array<std::uint8_t,4> c,bool textured){
     if(x<0||y<0||x>=target_->width_||y>=target_->height_||float(x)<clip_[0]||float(y)<clip_[1]||float(x)>=clip_[0]+clip_[2]||float(y)>=clip_[1]+clip_[3])return;
     if(mesh_manager_&&mesh_manager_->capturing()){mesh_manager_->Record(x,y,c);return;}
     if(mode_[1]<0||mode_[1]>255||mode_[2]<0||mode_[2]>255)throw cs::NotSupportedException("Out-of-unit render ratios need measured fixed-function clamping");
-    auto i=(std::size_t(y)*target_->width_+x)*4;auto& destination=target_->rgba_;
+    target_->ensure_linear();auto i=(std::size_t(y)*target_->width_+x)*4;auto& destination=target_->rgba_;
     auto quantize=[](float v){return std::uint8_t(std::clamp(std::floor(v*255.0f+0.5f),0.0f,255.0f));};
     float source_alpha=float(c[3])/255.0f;
     std::array<float,3> rgb{float(c[0])/255.0f,float(c[1])/255.0f,float(c[2])/255.0f};

@@ -32,8 +32,8 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::
 std::uint16_t cs_28045a7b4d1d326f(std::uint16_t v_sjis) { cs_init_86e62a3c0e632a0f();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JString.GetUnicode(System.UInt16)",kairo);
 {
-for (std::int32_t v_i_64964 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_64964; auto cs_right = (cs_a5cd9f1fd4c2c1ad()).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_64964; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_64964 = cs_new; return cs_old; }())) {
-pls::cs::Array<std::uint16_t> v_array_65019 = ([&]() { auto cs_array = cs_a5cd9f1fd4c2c1ad(); auto cs_index = v_i_64964; return cs_array.get_Item(cs_index); }());
+for (std::int32_t v_i_64964 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_64964; auto cs_right = (cs_a5cd9f1fd4c2c1ad_value).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_64964; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_64964 = cs_new; return cs_old; }())) {
+pls::cs::Array<std::uint16_t> v_array_65019 = ([&]() { auto cs_array = cs_a5cd9f1fd4c2c1ad_value; auto cs_index = v_i_64964; return cs_array.get_Item(cs_index); }());
 if (([&]() -> bool { auto cs_left = pls::cs::cast_integral<std::int32_t>(v_sjis); auto cs_right = pls::cs::cast_integral<std::int32_t>(([&]() { auto cs_array = v_array_65019; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }())); return (cs_left < cs_right); }())) {
 return pls::cs::cast_integral<std::uint16_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)));
 }

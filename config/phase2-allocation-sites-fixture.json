@@ -12,7 +12,7 @@
     "tools/test_allocation_sites.py": "08b4c4a46095177840d9736a034ecd785042a7a75c75452ab0e43881d8d98c84",
     "tests/kairo/allocation_sites.cpp": "1d48ee38579ca5ce58b06e46098dd4ead14b7e9e2deded801a71a4a4e1692178",
     "src/main/allocation_probe.cpp": "4d18ccc9a0cbe2bb728c362131d82496bf90d8a8c9da3e4c81c31a94da6b7678",
-    "tools/profiling/allocation_sites.py": "96793aadc842e51cf78ac8b149db33832d1d3011ba6f866173b8527cd2c4a794",
+    "tools/profiling/allocation_sites.py": "95ecb67a0e0499904aeb4a0f125bb08df1faf465d3bde6ae1a76e5fec5802dd3",
     "src/main/native_allocation_sites.hpp": "b0236c6107302fea92b4aa1b763c91770f579e0c37e20a5c4efcc4c6a8b90d02",
     "src/kairo/common/allocation_probe.hpp": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19"
   }

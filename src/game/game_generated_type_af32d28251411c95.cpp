@@ -86,10 +86,10 @@ return;
 pls::cs::Ref<cs_af32d28251411c95> cs_cb8c524e1144420f() { cs_init_af32d28251411c95();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.surface.GameBanner.GetInstance",game);
 {
-if (([&]() { auto cs_left = pls::cs::box(cs_49cf94cd1a414d1f()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/surface/GameBanner.cs:M:system.surface.GameBanner.GetInstance:1309",([&]() -> pls::cs::Ref<cs_af32d28251411c95> { return cs_11534d928e8399e4(); }())); cs_49cf94cd1a414d1f() = cs_value; return cs_value; }());
+if (([&]() { auto cs_left = pls::cs::box(cs_49cf94cd1a414d1f_value); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/surface/GameBanner.cs:M:system.surface.GameBanner.GetInstance:1309",([&]() -> pls::cs::Ref<cs_af32d28251411c95> { return cs_11534d928e8399e4(); }())); cs_49cf94cd1a414d1f_value = cs_value; return cs_value; }());
 }
-return cs_49cf94cd1a414d1f();
+return cs_49cf94cd1a414d1f_value;
 }
 }
 }
@@ -158,10 +158,10 @@ void cs_2fc41a4e0b75b7e8(pls::cs::Ref<cs_af32d28251411c95> cs_this) { cs_init_af
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.surface.GameBanner.Unload",game);
 {
-if (([&]() { auto cs_left = pls::cs::box(cs_de24cebe7367b9a6()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Image>>(cs_de24cebe7367b9a6()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->Dispose(); }());});
+if (([&]() { auto cs_left = pls::cs::box(cs_de24cebe7367b9a6_value); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Image>>(cs_de24cebe7367b9a6_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->Dispose(); }());});
 }
-([&]() { auto cs_value = pls::cs::Ref<pls::kairo::Image>{}; cs_de24cebe7367b9a6() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::cs::Ref<pls::kairo::Image>{}; cs_de24cebe7367b9a6_value = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); pls::game::cs_require(cs_target)->cs_a6d9872478ce823a = cs_value; return cs_value; }());
 }
 }

@@ -182,3 +182,35 @@ License/notices retained locally:
 The separately installed Unity 5.3.4f1 Android runtime is used only as a
 local numerical oracle under the user's explicit test authorization. Neither
 that runtime nor its test APK is committed or distributed with this project.
+
+## Local ARM Android emulator (explicitly authorized)
+
+SDK Tools 25.2.5 for Windows and the API 21 default armeabi-v7a system image
+revision 4 are local test tools under the Android SDK terms and their
+component notices. These packages are covered by the user's specific
+emulator/system-image authorization; they are not represented as entirely
+permissively licensed libraries and are not linked into the port.
+
+Official URLs, versions and archive SHA-256 values are in `docs/toolchain.md`.
+SDK license text is retained in
+`build/deps/android-arm-emulator/{repository-12.xml,sys-img2-1.xml}.LICENSE.txt`.
+The tools' `tools/NOTICE.txt` and the system image notices remain in their
+extracted directories; `provenance.json` lists their hashes. No emulator,
+Android system image or numerical test APK is committed or redistributed.
+
+## Capstone, existing local diagnostic tool
+
+The ARM JIT inspection uses the existing Python Capstone package (distribution
+5.0.9; module version constant 5.0.7), under its BSD three-clause license.
+The local DLL and license hashes are recorded in `docs/toolchain.md` and in
+each JIT inspection receipt. No installation was performed for this task;
+Capstone is not linked into the port or redistributed by this repository.
+
+## tex3ds, existing authorized devkitPro tool
+
+tex3ds 2.3.0 (GPL-3.0-or-later) was already installed with the authorized
+devkitPro toolchain. It is used only as an external local format oracle on
+authored synthetic pixels. Its executable hash is in `docs/toolchain.md`.
+No tex3ds implementation is incorporated into the port; the new encoder
+implements the texture format independently and preserves transparent RGB
+bytes that the converter normalizes. No additional installation occurred.

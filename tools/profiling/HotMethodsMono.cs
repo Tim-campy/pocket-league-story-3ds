@@ -56,14 +56,20 @@ class HotMethodsMono {
         }
     }
     static void Main(string[] args){
+        bool observationsOnly=Environment.GetEnvironmentVariable("PLS_NUMERICAL_ALL_CASES")=="1";
         Directory.CreateDirectory(args[1]);Console.WriteLine("frequency="+Stopwatch.Frequency);
         Action empty=delegate{};long overhead=0;
         for(int i=0;i<1250;i++){long t=Stopwatch.GetTimestamp();for(int j=0;j<16;j++)empty();overhead+=Stopwatch.GetTimestamp()-t;}
         Console.WriteLine("empty_ns="+(overhead*1e9/Stopwatch.Frequency/20000).ToString("R",System.Globalization.CultureInfo.InvariantCulture));
         for(int kind=0;kind<5;kind++){
-            Case[] cases=new Case[16];for(int i=0;i<16;i++)cases[i]=Load(Path.Combine(args[0],kind+"-"+i+".bin"),kind);
+            int caseCount=observationsOnly?Directory.GetFiles(args[0],kind+"-*.bin").Length:16;
+            if(caseCount<16)throw new Exception("Insufficient numerical observations");
+            Case[] cases=new Case[caseCount];for(int i=0;i<caseCount;i++)cases[i]=Load(Path.Combine(args[0],kind+"-"+i+".bin"),kind);
             for(int k=0;k<10;k++)foreach(Case c in cases){c.Reset();c.Call();}
-            for(int i=0;i<16;i++){cases[i].Reset();cases[i].Call();using(BinaryWriter w=new BinaryWriter(File.Create(Path.Combine(args[1],kind+"-"+i+".bin"))))cases[i].Dump(w);}
+            for(int i=0;i<caseCount;i++){cases[i].Reset();cases[i].Call();using(BinaryWriter w=new BinaryWriter(File.Create(Path.Combine(args[1],kind+"-"+i+".bin"))))cases[i].Dump(w);}
+            if(observationsOnly){Console.WriteLine("observations kind="+kind+" count="+caseCount);continue;}
+            long warmUntil=Stopwatch.GetTimestamp()+Stopwatch.Frequency/5;
+            do{foreach(Case c in cases){c.Reset();c.Call();}}while(Stopwatch.GetTimestamp()<warmUntil);
             for(int batch=0;batch<5;batch++){
                 long total=0;for(int k=0;k<1000;k++){foreach(Case c in cases)c.Reset();long t=Stopwatch.GetTimestamp();foreach(Case c in cases)c.Call();total+=Stopwatch.GetTimestamp()-t;}
                 Console.WriteLine("method="+kind+" batch="+batch+" calls=16000 gross_ns="+(total*1e9/Stopwatch.Frequency/16000).ToString("R",System.Globalization.CultureInfo.InvariantCulture));

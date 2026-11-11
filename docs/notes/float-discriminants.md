@@ -1,7 +1,10 @@
 # Testes discriminantes de R4
 
-Estado: triagem no Mono x86 executada; Android ARM **UNKNOWN**. Nenhuma
-alteração de ponto flutuante foi adotada no emissor de produção.
+Estado atualizado: **CONFIRMADO EM EMULADOR ARM/VFP, PENDENTE DE APARELHO**.
+A variante do emissor reproduziu 36/36 discriminantes e 144/144 observações
+de kernels e foi adotada conforme a autorização do usuário. Evidência e
+limitações em [android-arm-emulator-float.md](android-arm-emulator-float.md).
+O restante desta nota preserva a triagem x86 e o procedimento experimental.
 
 `python tools/fp-discriminants/run_x86.py` compila
 `FloatDiscriminants.cs` com o smcs da instalação Unity 5.3.4f1,
@@ -78,11 +81,11 @@ autorizado para depuração USB (substitua os dois valores indicados):
 
 ```powershell
 python tools/fp-discriminants/setup_android.py
-python tools/fp-discriminants/build_android.py
+python tools/fp-discriminants/build_android.py --captures build/hot-input-capture-arm80/inputs --output build/fp-android-device-build
 $probeAdb = 'CAMINHO_LOCAL_DO_ADB.exe'
 $probeSerial = 'SERIAL_DO_APARELHO'
 & $probeAdb devices -l
-& $probeAdb -s $probeSerial install -r build/fp-android/numerical-oracle-armv7.apk
+& $probeAdb -s $probeSerial install -r build/fp-android-device-build/numerical-oracle-armv7.apk
 & $probeAdb -s $probeSerial shell am force-stop org.plsresearch.floatprobe
 & $probeAdb -s $probeSerial shell am start -n org.plsresearch.floatprobe/.ProbeActivity
 ```
@@ -93,12 +96,17 @@ O aparelho precisa aceitar ARMv7 de 32 bits. Uma falha de instalação em
 aparelho somente 64 bits não informa nada sobre a aritmética.
 
 ```powershell
-python tools/fp-discriminants/read_android.py --adb $probeAdb --serial $probeSerial --output build/fp-android-device-1
+python tools/fp-discriminants/read_android.py --adb $probeAdb --serial $probeSerial --build build/fp-android-device-build --captures build/hot-input-capture-arm80/inputs --output build/fp-android-device-1
+python tools/fp-discriminants/inspect_arm_jit.py --results build/fp-android-device-1
 ```
 
-O coletor exige os 36 discriminantes e 80 resultados dos cinco kernels,
-compara bits com os modelos e com os resultados x86/C++ anteriores e grava
-propriedades do aparelho e logcat localmente. Repetições usam diretório novo.
+O coletor exige os 36 discriminantes e 144 resultados dos cinco kernels,
+incluindo 80 entradas distintas do Cal. Compara os modelos independentes do
+Cal; a comparação com executáveis C++/x86 exige a mesma coleção de entradas.
+Propriedades do aparelho, código JIT e logcat ficam locais. Repetições usam
+diretório novo. Se uma instalação anterior do próprio probe tiver outra chave
+de teste, remova somente `org.plsresearch.floatprobe` depois de guardar seus
+resultados; não remova nem substitua o jogo.
 Se falhar antes de `Completed`, preserve `adb logcat -d` e leia
 `adb shell run-as org.plsresearch.floatprobe cat files/probe/status.txt`;
 não classifique resultados ausentes como coincidência.
@@ -107,4 +115,6 @@ O executável C# inclui o IL e os tipos locais no relatório para conferir
 os pontos de estreitamento. A inicialização é um embedding independente
 do Mono oficial; equivalência das opções de inicialização do JIT com o jogo
 é UNKNOWN. Essa limitação deve ser confrontada com os resultados antes de
-aprovar qualquer regra. Nenhum script adota a regra automaticamente.
+ampliar a confirmação. A adoção desta rodada foi explicitamente autorizada
+pelo usuário após 100% de correspondência no emulador; a confirmação física
+continua pendente. Nenhum script decide essa política automaticamente.

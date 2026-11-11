@@ -59,6 +59,7 @@
 *.dfont
 *.fnt
 *.rgba8
+*.rgba8ctr
 .venv/
 __pycache__/
 *.py[cod]

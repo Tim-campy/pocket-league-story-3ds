@@ -2,7 +2,7 @@
 import argparse, hashlib, json, os, re, shutil, subprocess, sys, time
 from pathlib import Path
 from pc_compiler import CMAKE, NINJA, environment, showincludes_prefix
-from build_pc import ROOT, APK_SHA, validate_diagnostic_manifest, digest
+from build_pc import ROOT, APK_SHA, validate_diagnostic_manifest, diagnostic_working_tree, digest
 
 def main():
     p=argparse.ArgumentParser(description=__doc__)
@@ -21,17 +21,19 @@ def main():
     if a.memory_categories and (a.sample or a.allocations):raise ValueError('Memory categories require a separate run')
     if not 1<=a.jobs<=8:raise ValueError('Build jobs must be in 1..8')
     if digest(a.apk)!=APK_SHA:raise ValueError('Expected owned APK hash required')
-    source=a.snapshot.resolve();validate_diagnostic_manifest(source)
+    source=a.snapshot.resolve();manifest=validate_diagnostic_manifest(source)
+    working=diagnostic_working_tree(source,manifest,ROOT/'build/game-diagnostic-null-current')
     folder=ROOT/('build/null-pc-memory'if a.memory_categories else'build/null-pc-allocations'if a.allocations else'build/null-pc');folder.mkdir(parents=True,exist_ok=True)
     if a.tracing:folder=folder.with_name(folder.name+'-tracing');folder.mkdir(parents=True,exist_ok=True)
     env=environment();probe=showincludes_prefix(folder,env)
-    commands=[[str(CMAKE),'-S',str(ROOT/'tools/null-benchmark'),'-B',str(folder),'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE=Release','-DPLS_GENERATED='+str(source),'-DCMAKE_PREFIX_PATH='+str(ROOT/'build/deps/native-media'),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+probe['prefix'],'-DPLS_REPORT_ALLOCATION_FAILURE=OFF'], [str(CMAKE),'--build',str(folder),'--parallel',str(a.jobs)]]
+    commands=[[str(CMAKE),'-S',str(ROOT/'tools/null-benchmark'),'-B',str(folder),'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE=Release','-DPLS_GENERATED='+str(working),'-DCMAKE_PREFIX_PATH='+str(ROOT/'build/deps/native-media'),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+probe['prefix'],'-DPLS_REPORT_ALLOCATION_FAILURE=OFF'], [str(CMAKE),'--build',str(folder),'--parallel',str(a.jobs)]]
     commands[0].append('-DPLS_ALLOCATION_PROBE='+('ON'if a.allocations else'OFF'))
     commands[0].append('-DPLS_MEMORY_CATEGORIES='+('ON'if a.memory_categories else'OFF'))
     commands[0].append('-DPLS_TRACING_GC='+('ON'if a.tracing else'OFF'))
     def snapshot():
         paths=[q for base in ['src','tools/null-benchmark','tests/kairo']for q in (ROOT/base).rglob('*')if q.is_file()and q.suffix in ['.cpp','.hpp','.inc','.txt']]
         paths.extend(q for q in source.iterdir()if q.suffix in ['.cpp','.hpp','.inc','.json'])
+        paths.extend(q for q in working.iterdir()if q.suffix in ['.cpp','.hpp','.inc','.json'])
         return {str(q.relative_to(ROOT)):digest(q)for q in sorted(set(paths))}
     stamp=folder/'source-stamp.json';before=snapshot()
     if not a.skip_build:

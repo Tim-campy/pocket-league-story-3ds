@@ -8,10 +8,15 @@ gc::Heap& tracing_heap(){
     // Like the native root registry, heap metadata outlives static/TLS owners.
     static auto* heap=[](){
         auto value=std::make_unique<gc::Heap>();
-        // Configurable independently by each platform launcher/build. Preserve
-        // the previous 1 MiB default unless explicitly configured.
+        // Volume collections are a fallback; explicit source calls and screen
+        // transitions remain immediate safe points. ARM has a smaller reserve.
+        // Hardware validation must still confirm the ARM memory/latency budget.
 #ifndef PLS_GC_THRESHOLD_BYTES_DEFAULT
-#define PLS_GC_THRESHOLD_BYTES_DEFAULT (1024u*1024u)
+#if defined(__3DS__)
+#define PLS_GC_THRESHOLD_BYTES_DEFAULT (2u*1024u*1024u)
+#else
+#define PLS_GC_THRESHOLD_BYTES_DEFAULT (8u*1024u*1024u)
+#endif
 #endif
         value->threshold(PLS_GC_THRESHOLD_BYTES_DEFAULT);
         if(const char* configured=std::getenv("PLS_GC_THRESHOLD_BYTES")){

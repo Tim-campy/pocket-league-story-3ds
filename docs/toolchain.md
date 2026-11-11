@@ -599,3 +599,54 @@ O código próprio `src/runtime/ctr_thread_lifecycle.cpp`, aplicado por
 `__syscall_thread_create`, `__syscall_thread_exit`, `exit` com GNU ld
 `--wrap`. Não há patch dos binários do SDK. Validado pela fixture própria
 com 14 asserções nos dois perfis Azahar; ver `docs/notes/tracing-gc-arm-stacks.md`.
+
+### Emulador Android ARM local — rodada posterior a bbc270a
+
+Preparado sob autorização explícita do usuário por
+`tools/fp-discriminants/setup_emulator.py`, sem instalação global, drivers
+ou alterações de PATH. Diretório: `build/deps/android-arm-emulator/`.
+
+| Pacote oficial | Bytes do ZIP | SHA-256 |
+|---|---:|---|
+| SDK Tools Windows 25.2.5 | 306785944 | `da1a0bd9bb358cb52a8fc0a553a060428efe11151e69b9ea7a5cbacb27cf1c7c` |
+| Android API 21 default armeabi-v7a, revisão 4 | 187163871 | `4f20bb4abff1fcda7fdde510993d2004b0ca330ae6e7a798ffecc3fbf6d48520` |
+
+Origens: `https://dl.google.com/android/repository/tools_r25.2.5-windows.zip`
+e `https://dl.google.com/android/repository/sys-img/android/armeabi-v7a-21_r04.zip`.
+Tamanho e SHA-1 foram conferidos contra os catálogos oficiais
+`repository-12.xml` e `sys-img2-1.xml`; o script também fixa os SHA-256 acima.
+API 21 é o mínimo do manifesto do APK numérico existente. A escolha dos
+Tools históricos preserva o executável `emulator-arm.exe`.
+
+`emulator-arm.exe -version` confirmou **25.2.5.0**. A execução direta precisa
+do diretório `tools/lib/qt/lib` no PATH apenas do processo e de
+`QT_QPA_PLATFORM_PLUGIN_PATH=tools/lib/qt/plugins`; sem isso o carregador
+retorna `0xc0000135`. Nenhuma variável global foi alterada. O próprio
+executável informa GPL v2 para o emulador derivado do QEMU.
+
+Os termos `android-sdk-license` dos catálogos e os NOTICE dos componentes
+permanecem locais; `provenance.json` registra seus hashes. O teste ARM/VFP
+foi concluído com 36 discriminantes e 144 observações; a evidência e as
+limitações estão em `docs/notes/android-arm-emulator-float.md`.
+APK numérico com proteção contra reinicialização na recriação da Activity:
+SHA-256 `641f03738b0c3422eee3d09d25ab632fb12b86450bf7fd642ec5284da3043aac`.
+O `libmono.so` oficial incorporado tem SHA-256
+`3ac02e3aee5c4ad2044732c6aec2f8f22bd02db251a3775f51da1d38e2cfa3c1`.
+Nenhum desses arquivos entra no repositório.
+
+Para inspecionar os dumps ARM foi usado o Capstone já presente no Python local:
+pacote **5.0.9**, constante do módulo `__version__` **5.0.7** (ambas registradas,
+sem inferir que são a mesma numeração). `capstone/lib/capstone.dll`:
+SHA-256 `76958e18380023a68fd1714fa2e01c594cc6db1955a07ad6937b66e66dc5d6c3`.
+`capstone-5.0.9.dist-info/LICENSE.TXT` (BSD de três cláusulas):
+SHA-256 `404bd0cb0137ffb797258f844f53e5273f9b6d5781a1a359a2880411f49a4f30`.
+Nenhuma instalação global foi feita nesta rodada; é ferramenta de diagnóstico,
+não dependência incorporada ao port.
+
+O `tex3ds.exe` já instalado pelo devkitPro autorizado é **2.3.0**,
+SHA-256 `47a0a6674177cab68c48104f8cefdaf41575f10f7173600586fffae1b7b74334`.
+Licença declarada pelo executável: GPL-3.0-or-later. Foi usado somente como
+oráculo de formato para pixels sintéticos; o encoder autoral não incorpora
+código da ferramenta. Não houve instalação adicional nem inclusão do
+executável no port. Receita: `tools/test_ctr_textures.py`; resultados e
+diferenças de RGB transparente em `docs/notes/ctr-texture-pipeline.md`.

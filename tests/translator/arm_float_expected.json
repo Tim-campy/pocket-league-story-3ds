@@ -1,0 +1,333 @@
+{
+  "origin": "Own synthetic FloatDiscriminants.cs, official Unity Mono ARM/VFP under Android ARM emulator; no game inputs",
+  "status": "CONFIRMED_EMULATOR_PENDING_DEVICE",
+  "source_sha256": "43cb53c892aa6c35dc0e31a02c0489800ebfc3b14d9bd522456b52073dcccba4",
+  "oracle_receipt_sha256": "949262140c34b9e9a51297b9265fe230cb344e44c1ab9dfe3ee8c9abbe944484",
+  "jit_receipt_sha256": "07a5ae298205f680c5cff4f90dd1b8c8f7af342f0ec7c050e4d6c61c37738700",
+  "rows": [
+    {
+      "case": "expression",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 1.0,
+        "binary64_bits": "3FF0000000000000"
+      }
+    },
+    {
+      "case": "local",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "field",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "array",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "argument",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "return",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "inlining",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "loop",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "explicit_conversion",
+      "a": 16777216.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "expression",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": -1.0,
+        "binary64_bits": "BFF0000000000000"
+      }
+    },
+    {
+      "case": "local",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "field",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "array",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "argument",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "return",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "inlining",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "loop",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "explicit_conversion",
+      "a": -16777216.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "expression",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "local",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "field",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "array",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "argument",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "return",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "inlining",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "loop",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "explicit_conversion",
+      "a": 9007199254740992.0,
+      "b": 1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "expression",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "local",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "field",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "array",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "argument",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "return",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "inlining",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "loop",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    },
+    {
+      "case": "explicit_conversion",
+      "a": -9007199254740992.0,
+      "b": -1.0,
+      "observed": {
+        "value": 0.0,
+        "binary64_bits": "0000000000000000"
+      }
+    }
+  ]
+}

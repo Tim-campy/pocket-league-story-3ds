@@ -53,7 +53,7 @@ def main():
     if sha(ROOT / 'build/ctr-gc-fixture/tracing_gc_fixture.3dsx') != proof['executable_sha256']:
         raise ValueError('ARM fixture image changed')
     arm = []
-    for model, directory in [('new', 'run-new-16'), ('old', 'run-old-4')]:
+    for model, directory in [('new', 'bulk-null-new'), ('old', 'bulk-null-old')]:
         row, ref = read(f'build/ctr-gc-fixture/{directory}/result.json')
         log = ROOT / f'build/ctr-gc-fixture/{directory}/launcher/user/log/azahar_log.txt'
         settings = log.read_text(errors='replace')
@@ -64,7 +64,7 @@ def main():
         if row['status'] != 'PASS' or row['image_sha256'] != proof['executable_sha256']:
             raise ValueError('ARM fixture did not pass with this image')
         result = next(json.loads(line) for line in row['guest_log'].splitlines() if line.startswith('{'))
-        if result != dict(assertions=60, status='PASS'):
+        if result.get('status')!='PASS' or result.get('assertions',0)<401:
             raise ValueError('Unexpected ARM fixture assertion result')
         arm.append(dict(model=model, assertions=result['assertions'], status=result['status'],
                         evidence=ref, emulator_log_sha256=sha(log)))
@@ -82,8 +82,9 @@ def main():
                                          categories=attribution['categories'],
                                          cpu=cpu,
                                          scope='Intermediate accounting implementation, not current runtime'),
-                  current_runtime_cpu='UNKNOWN', android_execution='UNKNOWN', hardware_execution='UNKNOWN')
-    report['current_gc_windows'] = [gc_window('1794374332020803500', 'menu'),
+                  current_runtime_cpu='See hash-bound config/phase2-runtime-cost.json; later edits are not implicitly measured',
+                  android_execution='ARM emulator numerical oracle confirmed; physical device pending', hardware_execution='UNKNOWN')
+    report['historical_gc_windows'] = [gc_window('1794374332020803500', 'menu'),
                                     gc_window('1794374201292959900', 'match')]
     report['tls_lifecycle'] = []
     for model in ['new', 'old']:
@@ -106,8 +107,8 @@ def main():
         report['pc_sections'].append(dict(label=label, evidence=evidence, **sections))
     target = ROOT / 'config/phase2-tracing-measurements.json'
     target.write_text(json.dumps(report, indent=2)+'\n', encoding='utf8')
-    print(json.dumps(dict(output=str(target.relative_to(ROOT)), arm_assertions=[60, 60],
-                          intermediate_samples=attribution['samples'], current_runtime_cpu='UNKNOWN')))
+    print(json.dumps(dict(output=str(target.relative_to(ROOT)), arm_assertions=[r['assertions'] for r in arm],
+                          intermediate_samples=attribution['samples'], current_runtime_cpu=report['current_runtime_cpu'])))
 
 
 if __name__ == '__main__':

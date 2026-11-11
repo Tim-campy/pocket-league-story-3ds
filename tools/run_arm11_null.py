@@ -27,6 +27,8 @@ def main():
     parser.add_argument('--model', choices=['new', 'old'], required=True)
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--gdb-port', type=int)
+    parser.add_argument('--asset-root', type=Path, default=ROOT/'assets')
+    parser.add_argument('--profile-resources', action='store_true',help='Enable deferred load-stage diagnostics; omit for frame measurements')
     args = parser.parse_args()
     output, image = args.output.resolve(), args.image.resolve(strict=True)
     if not output.is_relative_to(ROOT / 'build') or output.exists():
@@ -47,7 +49,9 @@ def main():
     sd = launcher / 'user/sdmc'
     subprocess.run([sys.executable, ROOT / 'tools/prepare_arm11_sd.py',
                     '--apk', args.apk, '--image', image, '--scenario', args.scenario,
-                    '--output', sd], check=True)
+                    '--output', sd, '--asset-root', args.asset_root], check=True)
+    if args.profile_resources:
+        (sd/'pls-benchmark/assets/converted/profile-resources.flag').write_text('diagnostic load timings\n')
     config = launcher / 'user/config'
     config.mkdir(parents=True)
     (config / 'qt-config.ini').write_text(
@@ -94,9 +98,11 @@ def main():
     frames = [json.loads(line.split('=', 1)[1]) for line in text(stdout).splitlines()
               if line.startswith('PLS_NULL_FRAME=')]
     manifest = json.loads((private / 'private-manifest.json').read_text())
+    anchors=[json.loads(line.split('=',1)[1]) for line in text(stdout).splitlines() if line.startswith('PLS_NULL_REPLAY_ANCHOR=')]
+    anchor_verified=manifest.get('replay_anchor')=='TitleForm.GetId()==1' and len(anchors)==1 and anchors[0].get('form_id')==1 and 0<=anchors[0].get('boot_frames',-1)<=12000
     expected = list(range(manifest['first_frame'], manifest['last_frame'] + 1))
     expected_form = 4 if args.scenario == 'menu' else 2
-    valid_frames = ([row['frame'] for row in frames] == expected and
+    valid_frames = (anchor_verified and [row['frame'] for row in frames] == expected and
                     all(row['form_id'] == expected_form for row in frames))
     emulator_log = text(launcher / 'user/log/azahar_log.txt')
     model_expected = 'true' if args.model == 'new' else 'false'
@@ -113,18 +119,28 @@ def main():
                   expected_form_id=expected_form, frame_window_verified=valid_frames,
                   emulator_sha256=digest(launcher / 'azahar.exe'),
                   image_sha256=launch_image_sha256, image_after_sha256=final_image_sha256,
-                  diagnostic_only=bool(proof.get('diagnostic_only', False)),
+                  diagnostic_only=bool(proof.get('diagnostic_only', False)) or args.profile_resources,
+                  resource_profile_enabled=args.profile_resources,
+                  replay_anchor_verified=anchor_verified,replay_anchors=anchors,
                   host_elapsed_seconds=time.monotonic()-started,
                   stdout_sha256=digest(stdout) if stdout.exists() else None,
                   stderr_sha256=digest(stderr) if stderr.exists() else None,
                   limitation='Emulated elapsed system ticks, not hardware speed or scheduled CPU.')
+    stages=[json.loads(line.split('=',1)[1]) for line in text(stderr).splitlines() if line.startswith('PLS_RESOURCE_STAGE=')]
+    report['resource_stage_events']=stages
+    report['resource_events_dropped']=sum(int(line.split('=',1)[1]) for line in text(stderr).splitlines() if line.startswith('PLS_RESOURCE_DROPPED='))
+    aggregates=[json.loads(line.split('=',1)[1]) for line in text(stderr).splitlines() if line.startswith('PLS_RESOURCE_AGGREGATE=')]
+    report['resource_stage_aggregates']=aggregates
+    report['resource_aggregates_dropped']=sum(int(line.split('=',1)[1]) for line in text(stderr).splitlines() if line.startswith('PLS_RESOURCE_AGGREGATE_DROPPED='))
+    report['resource_aggregate_profile_complete']=bool(aggregates) and report['resource_aggregates_dropped']==0
     if status == 'WINDOW_COMPLETE':
         values = sorted(row['wall_ns'] / 1e6 for row in frames)
         report['elapsed_ms'] = dict(mean=sum(values)/len(values),
                                    p95=values[math.ceil(.95*len(values))-1], maximum=values[-1])
         report['form_ids'] = sorted({row['form_id'] for row in frames})
     (output / 'result.json').write_text(json.dumps(report, indent=2)+'\n')
-    print(json.dumps(report))
+    # Detailed events stay in the private receipt, not megabytes of terminal output.
+    print(json.dumps({**{k:v for k,v in report.items() if k not in {'resource_stage_events','resource_stage_aggregates'}},'resource_stage_event_count':len(stages),'resource_stage_aggregate_count':len(aggregates)}))
     if status != 'WINDOW_COMPLETE':
         raise SystemExit(1)
 

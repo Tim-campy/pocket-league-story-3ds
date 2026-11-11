@@ -1,6 +1,7 @@
 #include "graphics.hpp"
 #include "sha256.hpp"
 #include "application.hpp"
+#include "resource_load_trace.hpp"
 namespace pls::kairo {
 namespace {
 ImageRuntimeBindings runtime;
@@ -51,6 +52,7 @@ cs::Ref<Image> Image::FromRecord(std::int32_t rs,std::int32_t rc,cs::String file
 }
 void Image::Use(){
     if(alive_||disposed_||(source_bytes_.is_null()&&!source_loader_&&file_.is_null()))return;
+    diagnostic::ResourceTimer timing("image-use-total",0);
     if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
         auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());auto raw=cs::raw(self);
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Use",[raw]{raw->Use();}),true);return;
@@ -59,8 +61,9 @@ void Image::Use(){
         if(source_loader_)bytes=source_loader_();
         else{if(!runtime.read_source)throw cs::InvalidOperationException("Generated image source reader is not installed");bytes=runtime.read_source(rs_id_,rc_id_,file_,palette_file_);}
     }if(bytes.is_null())return;
-    const auto& entry=source_entry(bytes);auto decoded=assets::installed_catalog->read(entry);
-    width_=static_cast<std::int32_t>(entry.width);height_=static_cast<std::int32_t>(entry.height);rgba_=std::move(decoded);alive_=true;check_count_=now();
+    timing.step("image-use-source");const auto& entry=source_entry(bytes);timing.step("image-use-identity");auto decoded=assets::installed_catalog->read(entry);timing.step("image-use-read");
+    width_=static_cast<std::int32_t>(entry.width);height_=static_cast<std::int32_t>(entry.height);assign_pixels(std::move(decoded),std::filesystem::path(entry.path).extension()==".rgba8ctr");alive_=true;check_count_=now();
+    timing.step("image-use-adopt-layout");
     auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());source_images.push_back(self);
     const auto pixels=cs::mul_i32(width_,height_);source_pixels=cs::add_i32(source_pixels,pixels);area(pixels);
     while(source_images.size()>1&&((max_count>0&&max_count<static_cast<std::int32_t>(source_images.size()))||(max_pixels>0&&max_pixels<source_pixels))){
@@ -72,6 +75,7 @@ void Image::Use(){
         if(!selected)throw cs::InvalidOperationException("Source image eviction made no selection");
         if(selected->created_image_)selected->Dispose();else selected->Unuse();
     }
+    timing.step("image-use-cache");timing.finish();
 }
 void Image::Unuse(){
     if(!alive_||(!created_image_&&source_bytes_.is_null()&&!source_loader_&&file_.is_null()))return;
@@ -79,14 +83,14 @@ void Image::Unuse(){
         auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());auto raw=cs::raw(self);
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Unuse",[raw]{raw->Unuse();}),true);return;
     }
-    alive_=false;std::vector<std::uint8_t>().swap(rgba_);
+    alive_=false;std::vector<std::uint8_t>().swap(rgba_);std::vector<std::uint8_t>().swap(ctr_rgba_);
     release_count=cs::add_i32(release_count,1);
     auto found=std::find_if(source_images.begin(),source_images.end(),[&](const auto& image){return cs::raw(image)==this;});if(found!=source_images.end())source_images.erase(found);
     const auto pixels=cs::mul_i32(width_,height_);source_pixels=cs::sub_i32(source_pixels,pixels);area(cs::neg_i32(pixels));
 }
 void Image::Dispose(){
     Unuse();if(alive_){area(cs::neg_i32(cs::mul_i32(width_,height_)));release_count=cs::add_i32(release_count,1);}
-    alive_=false;std::vector<std::uint8_t>().swap(rgba_);source_bytes_={};source_loader_={};file_={};palette_file_={};images_={};optimize_={};width_=height_=0;disposed_=true;
+    alive_=false;std::vector<std::uint8_t>().swap(rgba_);std::vector<std::uint8_t>().swap(ctr_rgba_);source_bytes_={};source_loader_={};file_={};palette_file_={};images_={};optimize_={};width_=height_=0;disposed_=true;
 }
 void Image::SetSourceImageMaxCount(std::int32_t value){max_count=value;}
 void Image::SetSourceImageMaxPixels(std::int32_t value){max_pixels=value;}

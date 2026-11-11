@@ -1,12 +1,19 @@
 #include "tracing_gc.hpp"
+#include "gc_memory_resource.hpp"
 #include <algorithm>
 #include <condition_variable>
 #include <cstring>
 #include <map>
+#include <memory_resource>
 #include <mutex>
 #include <stdexcept>
 #include <thread>
+#include <unordered_map>
 #include <vector>
+#if defined(PLS_GC_PHASE_PROFILE)
+#include <array>
+#include <cstdio>
+#endif
 #if defined(__3DS__)
 #include "ctr_stack_bounds.hpp"
 #endif
@@ -23,6 +30,38 @@
 
 namespace pls::gc {
 namespace {
+#if defined(PLS_GC_PHASE_PROFILE)
+enum class Phase { setup,registers,stack_copy,rendezvous,account_before,ranges,clear_marks,roots,stack_scan,mark,sweep,account_after,destroy,resume,count };
+struct CollectionProbe;
+thread_local CollectionProbe* collection_probe=nullptr;
+struct CollectionProbe {
+    using Clock=std::chrono::steady_clock;
+    CollectionProbe* previous=collection_probe;
+    std::array<std::uint64_t,static_cast<std::size_t>(Phase::count)> phases{},lookup{};
+    Phase phase=Phase::setup;
+    Clock::time_point last=Clock::now();
+    std::size_t calls=0,objects=0,retained=0;
+    bool complete=false;
+    CollectionProbe(){collection_probe=this;}
+    void next(Phase p){const auto now=Clock::now();phases[static_cast<std::size_t>(phase)]+=std::chrono::duration_cast<std::chrono::nanoseconds>(now-last).count();last=now;phase=p;}
+    ~CollectionProbe(){
+        next(phase);collection_probe=previous;
+        std::fprintf(stderr,"PLS_GC_PHASE={\"complete\":%s,\"objects_before\":%llu,\"retained_before\":%llu,\"lookup_calls\":%llu,\"phase_ns\":[",complete?"true":"false",static_cast<unsigned long long>(objects),static_cast<unsigned long long>(retained),static_cast<unsigned long long>(calls));
+        for(std::size_t i=0;i<phases.size();++i)std::fprintf(stderr,"%s%llu",i?",":"",static_cast<unsigned long long>(phases[i]));
+        std::fprintf(stderr,"],\"lookup_inclusive_ns\":[");
+        for(std::size_t i=0;i<lookup.size();++i)std::fprintf(stderr,"%s%llu",i?",":"",static_cast<unsigned long long>(lookup[i]));
+        std::fprintf(stderr,"]}\n");
+    }
+};
+struct LookupProbe {
+    CollectionProbe* probe=collection_probe;
+    CollectionProbe::Clock::time_point start=probe?CollectionProbe::Clock::now():CollectionProbe::Clock::time_point{};
+    ~LookupProbe(){if(probe){probe->lookup[static_cast<std::size_t>(probe->phase)]+=std::chrono::duration_cast<std::chrono::nanoseconds>(CollectionProbe::Clock::now()-start).count();++probe->calls;}}
+};
+#define PLS_GC_PHASE(name) do{if(collection_probe)collection_probe->next(Phase::name);}while(false)
+#else
+#define PLS_GC_PHASE(name) ((void)0)
+#endif
 template<class Predicate>
 void wait_condition(std::condition_variable& condition,std::unique_lock<std::mutex>& lock,Predicate predicate) {
 #if defined(__3DS__)
@@ -45,6 +84,7 @@ struct Snapshot {
 // The copy is necessary for NativeWait: native callees may subsequently write
 // their stack while collection runs. The saved roots themselves stay immutable.
 PLS_GC_NOINLINE void capture(Snapshot& snapshot, std::uintptr_t bottom, std::uintptr_t top) {
+    PLS_GC_PHASE(registers);
     std::uintptr_t low;
 #if defined(_WIN32)
     RtlCaptureContext(&snapshot.registers);
@@ -60,6 +100,7 @@ PLS_GC_NOINLINE void capture(Snapshot& snapshot, std::uintptr_t bottom, std::uin
     volatile std::uintptr_t anchor = 0;
     low = reinterpret_cast<std::uintptr_t>(&anchor);
 #endif
+    PLS_GC_PHASE(stack_copy);
     if (low < bottom || low >= top || top - low > 64u * 1024u * 1024u)
         throw std::runtime_error("GC stack bounds are invalid");
     low = (low + sizeof(void*) - 1) & ~(sizeof(void*) - 1);
@@ -69,8 +110,70 @@ PLS_GC_NOINLINE void capture(Snapshot& snapshot, std::uintptr_t bottom, std::uin
 }
 }
 struct Heap::Impl {
-    struct Block { void* pointer; std::size_t bytes; Descriptor descriptor; std::uint64_t identity; bool marked = false; };
-    struct Range { std::size_t bytes; std::uintptr_t owner; };
+    struct Block { void* pointer; std::size_t bytes; Descriptor descriptor; std::uint64_t identity; bool marked = false; std::size_t stable_bytes = 0; std::size_t dynamic_index = static_cast<std::size_t>(-1); };
+    // Dense records make collection scans sequential. Addresses in the page
+    // index are borrowed only between construction of that index and sweep;
+    // mutators cannot insert/reallocate records during this interval.
+    class Blocks {
+        using Records=std::vector<std::pair<std::uintptr_t,Block>>;
+        struct Position{std::uintptr_t key=0;std::size_t index=0;};
+        Records records;
+        std::vector<Position> positions;
+        std::size_t used=0;
+        static std::size_t hash(std::uintptr_t key){
+            std::uint64_t value=key;value^=value>>30;value*=UINT64_C(0xbf58476d1ce4e5b9);
+            value^=value>>27;value*=UINT64_C(0x94d049bb133111eb);return static_cast<std::size_t>(value^(value>>31));
+        }
+        std::size_t slot(std::uintptr_t key)const{
+            auto i=hash(key)&(positions.size()-1);
+            while(positions[i].key&&positions[i].key!=key)i=(i+1)&(positions.size()-1);
+            return i;
+        }
+        void rebuild(std::size_t capacity){
+            std::vector<Position> next(capacity);
+            for(std::size_t n=0;n<records.size();++n){auto i=hash(records[n].first)&(capacity-1);while(next[i].key)i=(i+1)&(capacity-1);next[i]={records[n].first,n};}
+            positions.swap(next);used=records.size();
+        }
+    public:
+        explicit Blocks(std::pmr::memory_resource*){}
+        auto begin(){return records.begin();}auto end(){return records.end();}
+        auto begin()const{return records.begin();}auto end()const{return records.end();}
+        auto size()const{return records.size();}
+        auto count(std::uintptr_t key)const{return !positions.empty()&&key>1&&positions[slot(key)].key==key;}
+        Block* find(std::uintptr_t key){
+            if(key<=1||positions.empty())return nullptr;
+            const auto& entry=positions[slot(key)];return entry.key==key?&records[entry.index].second:nullptr;
+        }
+        Block& at(std::uintptr_t key){return const_cast<Block&>(static_cast<const Blocks&>(*this).at(key));}
+        const Block& at(std::uintptr_t key)const{
+            if(key<=1||positions.empty())throw std::out_of_range("Unknown GC block");
+            const auto& entry=positions[slot(key)];if(entry.key!=key)throw std::out_of_range("Unknown GC block");
+            return records[entry.index].second;
+        }
+        std::pair<Records::iterator,bool> emplace(std::uintptr_t key,Block block){
+            if(key<=1)throw std::logic_error("Invalid managed allocation address");
+            if(positions.empty())rebuild(16);
+            if(count(key))return {records.begin()+positions[slot(key)].index,false};
+            if((used+1)*2>=positions.size())rebuild(records.size()*4<positions.size()?positions.size():positions.size()*2);
+            auto i=hash(key)&(positions.size()-1);while(positions[i].key>1)i=(i+1)&(positions.size()-1);
+            records.emplace_back(key,block); // No table mutation before this may throw.
+            if(!positions[i].key)++used;
+            positions[i]={key,records.size()-1};return {records.end()-1,true};
+        }
+        auto erase(Records::iterator it){
+            const auto index=static_cast<std::size_t>(it-records.begin());
+            positions[slot(it->first)].key=1; // Tombstone; no rehash/allocation during sweep.
+            if(index+1!=records.size()){
+                *it=records.back();positions[slot(it->first)].index=index;
+            }
+            records.pop_back();return records.begin()+index;
+        }
+        void erase(std::uintptr_t key){if(count(key))erase(records.begin()+positions[slot(key)].index);}
+    };
+    struct Range { std::size_t bytes; std::uintptr_t owner; bool explicit_range=false; };
+    struct IndexedRange { std::uintptr_t begin, end; Block* block; };
+    struct PersistentRange {std::uintptr_t begin,end,owner;};
+    struct Page { std::uintptr_t key = 0; std::size_t first = 0, last = 0; };
     struct Thread {
         std::size_t depth = 1, native = 0, construction = 0;
         std::uintptr_t bottom = 0, top = 0;
@@ -81,47 +184,118 @@ struct Heap::Impl {
     mutable std::mutex mutex;
     std::condition_variable changed;
     std::map<std::thread::id, Thread> threads;
-    std::map<std::uintptr_t, Block> blocks;
-    std::map<std::uintptr_t, Range> ranges;
+    // Every access to these pools remains under the existing heap mutex or
+    // during shutdown with joined workers. No threading contract is weakened.
+    detail::NativeMemoryResource metadata_upstream;
+    std::pmr::unsynchronized_pool_resource metadata_pool{&metadata_upstream};
+    Blocks blocks{&metadata_pool};
+    // Only these descriptors can change retained capacity. Keep addresses,
+    // not pointers into Blocks' movable dense vector. Existing heap mutex and
+    // cooperative rendezvous protect registration, removal and enumeration.
+    std::vector<std::uintptr_t> dynamic_buffers;
+    void register_dynamic(std::uintptr_t key,Block& block){
+        if(block.descriptor.stable_ranges||(!block.descriptor.ranges&&!block.descriptor.retained_ranges))return;
+        dynamic_buffers.push_back(key);
+        block.dynamic_index=dynamic_buffers.size()-1;
+    }
+    void unregister_dynamic(Block& block)noexcept{
+        const auto index=block.dynamic_index;
+        if(index==static_cast<std::size_t>(-1))return;
+        if(index+1!=dynamic_buffers.size()){
+            dynamic_buffers[index]=dynamic_buffers.back();
+            blocks.find(dynamic_buffers[index])->dynamic_index=index;
+        }
+        dynamic_buffers.pop_back();block.dynamic_index=static_cast<std::size_t>(-1);
+    }
+    std::pmr::map<std::uintptr_t, Range> ranges{&metadata_pool};
+    // Fixed ranges are indexed once at registration, not rebuilt each GC.
+    // Sorted buckets are bounded by one 4 KiB page; entries retain addresses,
+    // never pointers into the movable dense metadata vector.
+    std::pmr::unordered_map<std::uintptr_t,std::pmr::vector<PersistentRange>> fixed_pages{&metadata_pool};
     std::map<std::size_t, std::function<void(Edges)>> roots;
-    std::vector<std::uintptr_t> work;
+    std::vector<Block*> work;
+    std::vector<Block> dead;
+    std::vector<IndexedRange> snapshot_ranges;
+    std::vector<Page> pages;
+    bool snapshot_active = false;
     std::vector<std::pair<std::uintptr_t,std::uintptr_t>> retained;
     std::size_t next_root = 1, threshold = 1024 * 1024, since_collection = 0;
+    std::size_t stable_external_bytes=0,explicit_ranges=0;
     std::size_t limit = static_cast<std::size_t>(-1);
     bool requested = false;
     std::thread::id collector;
     std::chrono::milliseconds timeout{5000};
     Statistics stats;
     std::uint64_t next_identity = 1;
+    std::size_t marked_count = 0;
 
     void account_retained(bool record_growth = true) {
         // Called only with all managed workers parked. Union avoids counting
         // inline strings, shared native storage or duplicate views twice.
         retained.clear();
+#if defined(PLS_GC_PHASE_PROFILE)
+        const auto account_start=std::chrono::steady_clock::now();
+        std::size_t stable_count=0,callback_count=0;
+#endif
+        struct AccountingContext { Impl* state;std::uintptr_t begin,end; };
         const auto append = [](void* value,const void* pointer,std::size_t bytes) {
             if (!pointer || !bytes) return;
             const auto begin = reinterpret_cast<std::uintptr_t>(pointer);
             if (begin + bytes < begin) throw std::logic_error("Invalid retained GC range");
-            static_cast<Impl*>(value)->retained.emplace_back(begin,begin+bytes);
+            auto& context=*static_cast<AccountingContext*>(value);
+            if(begin>=context.begin&&begin+bytes<=context.end)return;
+            context.state->retained.emplace_back(begin,begin+bytes);
         };
-        for (const auto& row : blocks) {
-            const auto& block = row.second;
-            append(this,block.pointer,block.bytes);
+#if defined(PLS_GC_PHASE_PROFILE)
+        for(const auto& row:blocks)if(row.second.descriptor.stable_ranges)++stable_count;
+#endif
+        for (const auto key : dynamic_buffers) {
+            const auto& block = blocks.at(key);
+            const auto begin=reinterpret_cast<std::uintptr_t>(block.pointer);
+            AccountingContext context{this,begin,begin+block.bytes};
             const auto callback = block.descriptor.retained_ranges ? block.descriptor.retained_ranges : block.descriptor.ranges;
-            if (callback) callback(block.pointer,Ranges{this,append});
+            if (callback) {
+#if defined(PLS_GC_PHASE_PROFILE)
+                ++callback_count;
+#endif
+                callback(block.pointer,Ranges{&context,append});
+            }
         }
-        if (ranges.size() > blocks.size()) for (const auto& row : ranges) if (row.first != row.second.owner) {
+        if (explicit_ranges) for (const auto& row : ranges) if (row.second.explicit_range) {
             const auto& descriptor = blocks.at(row.second.owner).descriptor;
-            if (!descriptor.ranges) append(this,reinterpret_cast<void*>(row.first),row.second.bytes);
+            if (!descriptor.ranges) {AccountingContext context{this,0,0};append(&context,reinterpret_cast<void*>(row.first),row.second.bytes);}
         }
+#if defined(PLS_GC_PHASE_PROFILE)
+        const auto account_callbacks=std::chrono::steady_clock::now();
+#endif
         std::sort(retained.begin(),retained.end());
-        std::size_t total = 0;
+#if defined(PLS_GC_PHASE_PROFILE)
+        const auto account_sorted=std::chrono::steady_clock::now();
+#endif
+        std::size_t total = stats.body_bytes+stable_external_bytes;
         std::uintptr_t begin = 0,end = 0;
-        for (const auto& range : retained) {
-            if (range.first > end) { total += end-begin; begin=range.first; end=range.second; }
+        const auto add_external=[&](std::uintptr_t first,std::uintptr_t last){
+            if(first==last)return;
+            total+=last-first;
+            auto it=ranges.lower_bound(first);
+            if(it!=ranges.begin()){auto previous=std::prev(it);if(previous->first+previous->second.bytes>first)it=previous;}
+            for(;it!=ranges.end()&&it->first<last;++it){
+                if(it->first!=it->second.owner&&!blocks.at(it->second.owner).descriptor.stable_ranges)continue;
+                const auto low=std::max(first,it->first),high=std::min(last,it->first+it->second.bytes);
+                if(high>low)total-=high-low;
+            }
+        };
+        for(const auto& range:retained){
+            if(range.first>end){add_external(begin,end);begin=range.first;end=range.second;}
             else end=std::max(end,range.second);
         }
-        total += end-begin;
+        add_external(begin,end);
+#if defined(PLS_GC_PHASE_PROFILE)
+        if(collection_probe){
+            const auto ns=[](auto a,auto b){return static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(b-a).count());};
+            std::fprintf(stderr,"PLS_GC_ACCOUNT={\"stable\":%llu,\"callbacks\":%llu,\"ranges\":%llu,\"callback_ns\":%llu,\"sort_ns\":%llu,\"union_ns\":%llu}\n",static_cast<unsigned long long>(stable_count),static_cast<unsigned long long>(callback_count),static_cast<unsigned long long>(retained.size()),ns(account_start,account_callbacks),ns(account_callbacks,account_sorted),ns(account_sorted,std::chrono::steady_clock::now()));
+        }
+#endif
         if (total < stats.body_bytes) throw std::logic_error("Retained memory excludes live object bodies");
         const auto external = total-stats.body_bytes;
         if (record_growth && external > stats.external_bytes) {
@@ -139,13 +313,90 @@ struct Heap::Impl {
         if (it == threads.end()) throw std::logic_error("Unregistered managed thread");
         return it->second;
     }
-    std::uintptr_t owner(std::uintptr_t address) const {
-        auto it = ranges.upper_bound(address);
-        if (it == ranges.begin()) return 0;
-        --it;
-        return address - it->first < it->second.bytes ? it->second.owner : 0;
+    static std::size_t page_hash(std::uintptr_t page) {
+        // Fixed integer mixing, no allocation and no managed pointer access.
+        std::uint64_t value=page;
+        value^=value>>30;value*=UINT64_C(0xbf58476d1ce4e5b9);
+        value^=value>>27;value*=UINT64_C(0x94d049bb133111eb);
+        return static_cast<std::size_t>(value^(value>>31));
     }
-    void range(std::uintptr_t begin, std::size_t bytes, std::uintptr_t owner_key) {
+    void index_range(std::uintptr_t begin,std::size_t bytes,Block* block) {
+        if(!bytes||begin+bytes<begin)throw std::logic_error("Invalid GC range");
+        auto next=ranges.lower_bound(begin);
+        if(next!=ranges.end()&&next->first<begin+bytes)throw std::logic_error("Overlapping GC ranges");
+        if(next!=ranges.begin()){auto previous=std::prev(next);if(begin-previous->first<previous->second.bytes)throw std::logic_error("Overlapping GC ranges");}
+        snapshot_ranges.push_back({begin,begin+bytes,block});
+    }
+    std::uintptr_t fixed_owner(std::uintptr_t address)const{
+        auto found=fixed_pages.find(address>>12);if(found==fixed_pages.end())return 0;
+        const auto& bucket=found->second;
+        auto it=std::upper_bound(bucket.begin(),bucket.end(),address,[](std::uintptr_t value,const PersistentRange&r){return value<r.begin;});
+        if(it==bucket.begin())return 0;
+        --it;return address<it->end?it->owner:0;
+    }
+    void remove_fixed(std::uintptr_t begin,std::size_t bytes)noexcept{
+        for(auto page=begin>>12;page<=(begin+bytes-1)>>12;++page){
+            auto found=fixed_pages.find(page);if(found==fixed_pages.end())continue;
+            auto& bucket=found->second;
+            auto it=std::lower_bound(bucket.begin(),bucket.end(),begin,[](const PersistentRange&r,std::uintptr_t value){return r.begin<value;});
+            if(it!=bucket.end()&&it->begin==begin)bucket.erase(it);
+            if(bucket.empty())fixed_pages.erase(found);
+        }
+    }
+    void add_fixed(std::uintptr_t begin,std::size_t bytes,std::uintptr_t owner_key){
+        try{
+            for(auto page=begin>>12;page<=(begin+bytes-1)>>12;++page){
+                auto& bucket=fixed_pages[page];
+                auto it=std::lower_bound(bucket.begin(),bucket.end(),begin,[](const PersistentRange&r,std::uintptr_t value){return r.begin<value;});
+                bucket.insert(it,{begin,begin+bytes,owner_key});
+            }
+        }catch(...){remove_fixed(begin,bytes);throw;}
+    }
+    void build_page_index() {
+        std::sort(snapshot_ranges.begin(),snapshot_ranges.end(),[](const auto& a,const auto& b){return a.begin<b.begin;});
+        std::size_t count=0;std::uintptr_t previous_end=0,previous_page=static_cast<std::uintptr_t>(-1);
+        for(const auto& range:snapshot_ranges){
+            if(range.begin<previous_end)throw std::logic_error("Overlapping GC ranges");
+            previous_end=range.end;
+            const auto first=range.begin>>12,last=(range.end-1)>>12;
+            count+=static_cast<std::size_t>(last-first+1)-(first==previous_page?1:0);previous_page=last;
+        }
+        std::size_t capacity=16;
+        while(capacity<count*2)capacity*=2;
+        if(pages.size()<capacity)pages.resize(capacity);
+        std::fill(pages.begin(),pages.end(),Page{});
+        for(std::size_t i=0;i<snapshot_ranges.size();++i){
+            const auto& range=snapshot_ranges[i];
+            for(auto page=range.begin>>12;page<=(range.end-1)>>12;++page){
+                const auto key=page+1;auto slot=page_hash(page)&(pages.size()-1);
+                while(pages[slot].key&&pages[slot].key!=key)slot=(slot+1)&(pages.size()-1);
+                auto& entry=pages[slot];
+                if(!entry.key){entry.key=key;entry.first=i;}
+                entry.last=i+1;
+            }
+        }
+        snapshot_active=true;
+    }
+    Block* indexed_owner(std::uintptr_t address) const {
+        if(const auto fixed=fixed_owner(address))return const_cast<Blocks&>(blocks).find(fixed);
+        const auto page=address>>12,key=page+1;auto slot=page_hash(page)&(pages.size()-1);
+        while(pages[slot].key&&pages[slot].key!=key)slot=(slot+1)&(pages.size()-1);
+        const auto& entry=pages[slot];if(!entry.key)return nullptr;
+        // At most 4096 disjoint nonempty ranges can intersect one 4 KiB page.
+        // Search is bounded by page size, not the total number of heap objects.
+        auto first=snapshot_ranges.begin()+entry.first,last=snapshot_ranges.begin()+entry.last;
+        auto it=std::upper_bound(first,last,address,[](std::uintptr_t value,const IndexedRange& r){return value<r.begin;});
+        if(it==first)return nullptr;
+        --it;return address<it->end?it->block:nullptr;
+    }
+    std::uintptr_t owner(std::uintptr_t address) const {
+#if defined(PLS_GC_PHASE_PROFILE)
+        LookupProbe lookup_probe;
+#endif
+        if(snapshot_active){auto block=indexed_owner(address);return block?reinterpret_cast<std::uintptr_t>(block->pointer):0;}
+        return fixed_owner(address);
+    }
+    void range(std::uintptr_t begin, std::size_t bytes, std::uintptr_t owner_key,bool explicit_range=false) {
         if (!bytes || begin + bytes < begin) throw std::logic_error("Invalid GC range");
         auto next = ranges.lower_bound(begin);
         if (next != ranges.end() && next->first < begin + bytes)
@@ -154,15 +405,26 @@ struct Heap::Impl {
             auto prev = std::prev(next);
             if (begin - prev->first < prev->second.bytes) throw std::logic_error("Overlapping GC ranges");
         }
-        ranges.emplace(begin, Range{bytes, owner_key});
+        auto inserted=ranges.emplace(begin, Range{bytes, owner_key,explicit_range});
+        try{add_fixed(begin,bytes,owner_key);}catch(...){ranges.erase(inserted.first);throw;}
+        if(explicit_range)++explicit_ranges;
     }
+    auto erase_range(decltype(ranges)::iterator it){remove_fixed(it->first,it->second.bytes);if(it->second.explicit_range)--explicit_ranges;return ranges.erase(it);}
     void mark(const void* pointer) {
-        const auto key = owner(reinterpret_cast<std::uintptr_t>(pointer));
-        if (!key) return;
-        auto& block = blocks.at(key);
-        if (block.marked) return;
-        work.push_back(key); // May throw; only change mark after successful push.
-        block.marked = true;
+        if(!pointer)return; // Null cannot belong to any allocation or interior range.
+        Block* block;
+        {
+#if defined(PLS_GC_PHASE_PROFILE)
+            LookupProbe lookup_probe;
+#endif
+            const auto address=reinterpret_cast<std::uintptr_t>(pointer);
+            block=blocks.find(address);
+            if(!block)block=indexed_owner(address);
+        }
+        if (!block || block->marked) return;
+        work.push_back(block); // May throw; only change mark after successful push.
+        block->marked = true;
+        ++marked_count;
     }
     Edges edges() { return Edges{this, [](void* context, const void* p) { static_cast<Impl*>(context)->mark(p); }}; }
     void scan(const void* bytes, std::size_t size) {
@@ -174,14 +436,19 @@ struct Heap::Impl {
         }
     }
     void resume() {
+        snapshot_active=false;
+        snapshot_ranges.clear();
         // Descriptor payload ranges are valid only while mutators are stopped.
         // A vector/string may release or move its storage immediately after
         // resume, and a new object may reuse that address before the next GC.
         // Keep object bodies and explicitly maintained ranges; reconstruct
         // descriptor ranges at the next stopped-world tracing snapshot.
-        if (ranges.size() > blocks.size()) for (auto it = ranges.begin(); it != ranges.end();) {
-            if (it->first != it->second.owner && blocks.at(it->second.owner).descriptor.ranges)
-                it = ranges.erase(it);
+        // Dynamic descriptors now populate only snapshot_ranges. The persistent
+        // map contains bodies and immutable buffers, except explicit user ranges.
+        // Ordinary inspections create no temporary ranges to retire.
+        if (explicit_ranges && ranges.size() > blocks.size()) for (auto it = ranges.begin(); it != ranges.end();) {
+            if (it->first != it->second.owner && blocks.at(it->second.owner).descriptor.ranges&&!blocks.at(it->second.owner).descriptor.stable_ranges)
+                it = erase_range(it);
             else ++it;
         }
         requested = false;
@@ -286,24 +553,48 @@ void Heap::adopt(void* object, std::size_t bytes, Descriptor descriptor) {
     try {
         s.range(key, bytes, key);
         range_added = true;
+        if(descriptor.stable_ranges){
+            if(descriptor.retained_ranges&&!descriptor.ranges)throw std::logic_error("Stable retained buffers require fixed ranges");
+            struct Context {Impl* state;std::uintptr_t key;Impl::Block* block;} context{&s,key,&inserted.first->second};
+            if(descriptor.ranges)descriptor.ranges(object,Ranges{&context,[](void* value,const void* begin,std::size_t size){
+                auto& c=*static_cast<Context*>(value);const auto address=reinterpret_cast<std::uintptr_t>(begin);
+                if(!begin||!size)return;
+                if(address>=c.key&&address-c.key<c.block->bytes&&size<=c.block->bytes-(address-c.key))return;
+                c.state->range(address,size,c.key);c.block->stable_bytes+=size;
+            }});
+            if(inserted.first->second.stable_bytes>s.limit-s.stats.bytes-bytes)throw std::bad_alloc();
+        }
+        s.register_dynamic(key,inserted.first->second);
         if (thread.construction) thread.constructing.push_back(object);
-    } catch (...) { if (range_added) s.ranges.erase(key); s.blocks.erase(key); throw; }
+    } catch (...) {
+        s.unregister_dynamic(inserted.first->second);
+        if(range_added)for(auto it=s.ranges.begin();it!=s.ranges.end();)
+            if(it->second.owner==key)it=s.erase_range(it);else ++it;
+        s.blocks.erase(key);throw;
+    }
+    const auto stable_bytes=inserted.first->second.stable_bytes;
+    s.stable_external_bytes+=stable_bytes;s.stats.external_bytes+=stable_bytes;
+    s.stats.external_growth_bytes+=stable_bytes;
     ++s.stats.objects; ++s.stats.allocations;
     s.stats.body_bytes += bytes;
-    s.stats.bytes += bytes; s.stats.allocated_bytes += bytes; s.since_collection += bytes;
+    s.stats.bytes += bytes+stable_bytes; s.stats.allocated_bytes += bytes+stable_bytes; s.since_collection += bytes+stable_bytes;
     s.stats.peak_bytes=std::max(s.stats.peak_bytes,s.stats.bytes);
 }
 void Heap::add_range(void* owner, const void* begin, std::size_t bytes) {
     std::lock_guard<std::mutex> lock(impl_->mutex);
     auto key = reinterpret_cast<std::uintptr_t>(owner);
     if (!impl_->blocks.count(key)) throw std::logic_error("Unknown range owner");
-    impl_->range(reinterpret_cast<std::uintptr_t>(begin), bytes, key);
+    impl_->range(reinterpret_cast<std::uintptr_t>(begin), bytes, key,true);
 }
 void Heap::remove_range(const void* begin) {
     std::lock_guard<std::mutex> lock(impl_->mutex);
     auto key = reinterpret_cast<std::uintptr_t>(begin);
     if (impl_->blocks.count(key)) throw std::logic_error("Cannot remove object body range");
-    impl_->ranges.erase(key);
+    auto it=impl_->ranges.find(key);
+    if(it!=impl_->ranges.end()){
+        if(!it->second.explicit_range&&impl_->blocks.at(it->second.owner).descriptor.stable_ranges)throw std::logic_error("Cannot remove immutable owned buffer");
+        impl_->erase_range(it);
+    }
 }
 std::size_t Heap::add_roots(std::function<void(Edges)> provider) {
     std::lock_guard<std::mutex> lock(impl_->mutex);
@@ -316,6 +607,9 @@ void Heap::remove_roots(std::size_t token) {
     impl_->roots.erase(token);
 }
 PLS_GC_NOINLINE void Heap::collect() {
+#if defined(PLS_GC_PHASE_PROFILE)
+    CollectionProbe profile;
+#endif
     const auto started = std::chrono::steady_clock::now();
     auto& s = *impl_;
     std::unique_lock<std::mutex> lock(s.mutex);
@@ -323,6 +617,7 @@ PLS_GC_NOINLINE void Heap::collect() {
     if (thread.native) throw std::logic_error("Collection inside native wait");
     capture(thread.snapshot, thread.bottom, thread.top);
     // A second collector participates in the first collector's rendezvous.
+    PLS_GC_PHASE(rendezvous);
     if (s.requested) {
         if (s.collector == std::this_thread::get_id()) throw std::logic_error("Recursive collection");
         thread.parked = true;
@@ -339,27 +634,41 @@ PLS_GC_NOINLINE void Heap::collect() {
             return true;
         });
         if (!stopped) throw std::runtime_error("GC cooperative rendezvous timed out; no objects swept");
+        PLS_GC_PHASE(account_before);
         s.account_retained();
         const auto bytes_before = s.stats.bytes;
+#if defined(PLS_GC_PHASE_PROFILE)
+        profile.objects=s.blocks.size();profile.retained=bytes_before;
+#endif
+        PLS_GC_PHASE(ranges);
         // Rebuild dynamic payload ranges after workers stop. Container storage
         // can move on reserve/resize without any write barrier on references.
-        for (auto it=s.ranges.begin();it!=s.ranges.end();)
-            if(it->first!=it->second.owner&&s.blocks.at(it->second.owner).descriptor.ranges)it=s.ranges.erase(it);else ++it;
-        struct RangeContext{Impl* state;std::uintptr_t owner;};
-        for(const auto& row:s.blocks)if(row.second.descriptor.ranges){
-            RangeContext context{&s,row.first};
-            row.second.descriptor.ranges(row.second.pointer,Ranges{&context,[](void* value,const void* begin,std::size_t bytes){
+        if(s.explicit_ranges)for (auto it=s.ranges.begin();it!=s.ranges.end();)
+            if(it->first!=it->second.owner&&s.blocks.at(it->second.owner).descriptor.ranges&&!s.blocks.at(it->second.owner).descriptor.stable_ranges)it=s.erase_range(it);else ++it;
+        s.snapshot_ranges.clear();
+        struct RangeContext{Impl* state;std::uintptr_t owner;Impl::Block* block;};
+        for(auto key:s.dynamic_buffers){
+            auto& block=s.blocks.at(key);
+            if(!block.descriptor.ranges)continue;
+            RangeContext context{&s,key,&block};
+            block.descriptor.ranges(block.pointer,Ranges{&context,[](void* value,const void* begin,std::size_t bytes){
                 auto& context=*static_cast<RangeContext*>(value);
                 auto address=reinterpret_cast<std::uintptr_t>(begin);
                 if(!begin||!bytes)return;
-                const auto& block=context.state->blocks.at(context.owner);
+                const auto& block=*context.block;
                 if(address>=context.owner&&address-context.owner<block.bytes)return; // inline/SSO payload
-                context.state->range(address,bytes,context.owner);
+                context.state->index_range(address,bytes,context.block);
             }});
         }
+        s.build_page_index();
+        PLS_GC_PHASE(clear_marks);
         for (auto& row : s.blocks) row.second.marked = false;
+        s.marked_count=0;
         s.work.clear();
+        PLS_GC_PHASE(roots);
         for (const auto& row : s.roots) row.second(s.edges());
+        s.stats.last_explicit_roots=s.work.size();
+        PLS_GC_PHASE(stack_scan);
         for (const auto& row : s.threads) {
             const auto& saved = row.second.snapshot;
             s.scan(&saved.registers, sizeof(saved.registers));
@@ -367,38 +676,78 @@ PLS_GC_NOINLINE void Heap::collect() {
             for (auto p : row.second.constructing) s.mark(p);
         }
         s.stats.last_roots = s.work.size();
+        PLS_GC_PHASE(mark);
         while (!s.work.empty()) {
-            const auto key = s.work.back(); s.work.pop_back();
-            const auto& block = s.blocks.at(key);
+            const auto& block = *s.work.back(); s.work.pop_back();
             if (block.descriptor.trace) block.descriptor.trace(block.pointer, s.edges());
         }
         // Unlink all dead objects before destruction. Destructors release native
         // payloads only; no managed callbacks, allocations or resurrection.
-        std::vector<Impl::Block> dead;
+        PLS_GC_PHASE(sweep);
+        s.snapshot_active=false;
+        s.snapshot_ranges.clear();
+        auto& dead=s.dead;
+        dead.clear();
         dead.reserve(s.blocks.size());
+        // Compact each page once for dense reclamation, instead of moving its
+        // range vector for every dead object. Sparse collections keep the
+        // individual path. All block records remain valid during compaction.
+        const bool bulk_ranges=s.blocks.size()-s.marked_count>s.blocks.size()/4;
+        if(bulk_ranges){
+            for(auto page=s.fixed_pages.begin();page!=s.fixed_pages.end();){
+                auto& bucket=page->second;
+                bucket.erase(std::remove_if(bucket.begin(),bucket.end(),[&](const Impl::PersistentRange& range){return !s.blocks.at(range.owner).marked;}),bucket.end());
+                if(bucket.empty())page=s.fixed_pages.erase(page);else ++page;
+            }
+            for(auto it=s.ranges.begin();it!=s.ranges.end();){
+                if(!s.blocks.at(it->second.owner).marked){
+                    if(it->second.explicit_range)--s.explicit_ranges;
+                    it=s.ranges.erase(it);
+                }else ++it;
+            }
+        }
         for (auto it = s.blocks.begin(); it != s.blocks.end();) {
             if (it->second.marked) { ++it; continue; }
             dead.push_back(it->second);
             --s.stats.objects; s.stats.bytes -= it->second.bytes;
             s.stats.body_bytes -= it->second.bytes;
+            s.stable_external_bytes-=it->second.stable_bytes;
             ++s.stats.reclaimed_objects;
+            if(!bulk_ranges&&it->second.descriptor.stable_ranges&&it->second.descriptor.ranges){
+                struct DeadContext{Impl* state;std::uintptr_t owner;} context{&s,it->first};
+                it->second.descriptor.ranges(it->second.pointer,Ranges{&context,[](void* value,const void* begin,std::size_t){
+                    auto& context=*static_cast<DeadContext*>(value);
+                    auto found=context.state->ranges.find(reinterpret_cast<std::uintptr_t>(begin));
+                    if(found!=context.state->ranges.end()&&found->first!=context.owner&&found->second.owner==context.owner)
+                        context.state->erase_range(found);
+                }});
+            }
+            if(!bulk_ranges)s.erase_range(s.ranges.find(it->first));
+            s.unregister_dynamic(it->second);
             it = s.blocks.erase(it);
         }
-        for (auto it = s.ranges.begin(); it != s.ranges.end();)
-            if (!s.blocks.count(it->second.owner)) it = s.ranges.erase(it); else ++it;
+        if(!bulk_ranges&&s.explicit_ranges)for (auto it = s.ranges.begin(); it != s.ranges.end();)
+            if (it->first!=it->second.owner&&!s.blocks.count(it->second.owner)) it = s.erase_range(it); else ++it;
+        PLS_GC_PHASE(account_after);
         s.account_retained(false);
         s.stats.reclaimed_bytes += bytes_before-s.stats.bytes;
         // Keep mutators stopped, but allow native cleanup to unregister ranges
         // or root handles without recursively taking the heap lock.
         lock.unlock();
+        PLS_GC_PHASE(destroy);
         for (const auto& block : dead) if (block.descriptor.destroy) block.descriptor.destroy(block.pointer);
+        dead.clear();
         lock.lock();
         ++s.stats.collections; s.since_collection = 0;
+        PLS_GC_PHASE(resume);
+        s.resume();
         s.stats.last_pause_ns = static_cast<std::uint64_t>(std::chrono::duration_cast<std::chrono::nanoseconds>(
             std::chrono::steady_clock::now() - started).count());
         s.stats.pause_ns += s.stats.last_pause_ns;
         s.stats.interval_max_pause_ns=std::max(s.stats.interval_max_pause_ns,s.stats.last_pause_ns);
-        s.resume();
+#if defined(PLS_GC_PHASE_PROFILE)
+        profile.complete=true;
+#endif
     } catch (...) { s.resume(); throw; }
 }
 bool Heap::collect_if_needed() {

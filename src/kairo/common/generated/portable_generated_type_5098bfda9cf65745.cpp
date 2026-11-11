@@ -98,7 +98,7 @@ return pls::cs::cast_integral<std::int8_t>(([&]() { auto cs_array = ([&]() -> pl
 float cs_92c2775ee2dbf38f(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) { cs_init_5098bfda9cf65745();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StreamUtil.ReadFloat(java.io.InputStream)",kairo);
 {
-return ([&]() -> float { pls::cs::Array<std::uint8_t> cs_arg0 = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); return cs_d2d344ef3c486f90(cs_arg0,cs_arg1); }()); bool cs_arg1 = true; return cs_a5c8c88f3deaf88b(cs_arg0,cs_arg1); }());
+return static_cast<float>(([&]() -> float { pls::cs::Array<std::uint8_t> cs_arg0 = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); return cs_d2d344ef3c486f90(cs_arg0,cs_arg1); }()); bool cs_arg1 = true; return cs_a5c8c88f3deaf88b(cs_arg0,cs_arg1); }()));
 }
 }
 }
@@ -148,9 +148,9 @@ pls::cs::Ref<cs_3c64e1d398f2e00f> cs_44850fa25c576879(pls::cs::Ref<cs_e7a5499b36
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StreamUtil.ReadVector3D(java.io.InputStream)",kairo);
 {
 pls::cs::Ref<cs_3c64e1d398f2e00f> v_vector3D_3609 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/util/StreamUtil.cs:M:kairo.unity.util.StreamUtil.ReadVector3D(java.io.InputStream):3620",([&]() -> pls::cs::Ref<cs_3c64e1d398f2e00f> { return cs_f0250768de698879(); }()));
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_vector3D_3609); float cs_arg0 = ([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_456e4aca00a0b62a(cs_receiver,cs_arg0); }());
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_vector3D_3609); float cs_arg0 = ([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_229657731d66863f(cs_receiver,cs_arg0); }());
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_vector3D_3609); float cs_arg0 = ([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_ed44f0a0e2f6832a(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_vector3D_3609); float cs_arg0 = static_cast<float>(([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_456e4aca00a0b62a(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_vector3D_3609); float cs_arg0 = static_cast<float>(([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_229657731d66863f(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_vector3D_3609); float cs_arg0 = static_cast<float>(([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_ed44f0a0e2f6832a(cs_receiver,cs_arg0); }());
 return v_vector3D_3609;
 }
 }
@@ -213,7 +213,7 @@ void cs_e6e935ad4dd232ab(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,std::int8_t v_da
 void cs_07583f591da8d9cb(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,float v_data) { cs_init_5098bfda9cf65745();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StreamUtil.WriteFloat(java.io.OutputStream,System.Single)",kairo);
 {
-pls::cs::Array<std::uint8_t> v_array_6774 = ([&]() -> pls::cs::Array<std::uint8_t> { float cs_arg0 = v_data; bool cs_arg1 = true; return cs_bafe3629b7fca7f3(cs_arg0,cs_arg1); }());
+pls::cs::Array<std::uint8_t> v_array_6774 = ([&]() -> pls::cs::Array<std::uint8_t> { float cs_arg0 = static_cast<float>(v_data); bool cs_arg1 = true; return cs_bafe3629b7fca7f3(cs_arg0,cs_arg1); }());
 for (std::int32_t v_i_6833 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_6833; auto cs_right = (v_array_6774).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_6833; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_6833 = cs_new; return cs_old; }())) {
 std::int8_t v_b_6878 = pls::cs::cast_integral<std::int8_t>(([&]() { auto cs_array = v_array_6774; auto cs_index = v_i_6833; return cs_array.get_Item(cs_index); }()));
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_ea324a0bbfe717fe>>(v_os); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(v_b_6878); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_a2a7e1a6575cae4c(cs_arg0); }());
@@ -283,9 +283,9 @@ void cs_c3baaa92859d30c1(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,pls::cs::String 
 void cs_e29edfec53fd6e1a(pls::cs::Ref<cs_ea324a0bbfe717fe> v_os,pls::cs::Ref<cs_3c64e1d398f2e00f> v_value) { cs_init_5098bfda9cf65745();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StreamUtil.WriteVector3D(java.io.OutputStream,kairo.unity.m3d4.util3d.Vector3D)",kairo);
 {
-([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_os; float cs_arg1 = ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_057460bc67f561ff(cs_receiver); }()); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
-([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_os; float cs_arg1 = ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_b09e372c7963bada(cs_receiver); }()); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
-([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_os; float cs_arg1 = ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_8c6fe63f0a32cc25(cs_receiver); }()); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_os; float cs_arg1 = static_cast<float>(([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_057460bc67f561ff(cs_receiver); }())); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_os; float cs_arg1 = static_cast<float>(([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_b09e372c7963bada(cs_receiver); }())); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_os; float cs_arg1 = static_cast<float>(([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(v_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_8c6fe63f0a32cc25(cs_receiver); }())); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
 }
 }
 }

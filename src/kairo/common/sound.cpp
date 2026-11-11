@@ -73,7 +73,7 @@ void SoundBase::trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(name_
 cs::Ref<SoundOGG> SoundOGG::Load(cs::String file){
     if(file.is_null())throw cs::NullReferenceException();auto name=file.code_units();const auto dot=name.rfind(u'.');if(dot!=std::u16string::npos)name.resize(dot);
     cs::Ref<SoundOGG> result{};ui([&]{if(!sound_catalog)throw cs::InvalidOperationException("Sound asset catalog is not installed");auto id=cs::String(name).utf8();for(char& c:id)if(c>='A'&&c<='Z')c=static_cast<char>(c-'A'+'a');const assets::Entry* entry=nullptr;for(const auto* candidate:sound_catalog->entries(assets::Kind::audio))if(candidate->key==id){entry=candidate;break;}
-        cs::Ref<SoundData> data{};if(entry){sound_catalog->verify(*entry);data=cs::make_ref<SoundData>(sound_catalog->path(*entry));}result=cs::make_ref<SoundOGG>(std::move(data));register_sound(result);});return result;
+        cs::Ref<SoundData> data{};if(entry){data=cs::make_ref<SoundData>(sound_catalog->prepare_stream(*entry));}result=cs::make_ref<SoundOGG>(std::move(data));register_sound(result);});return result;
 }
 cs::Ref<SoundOGG> SoundOGG::Load(cs::Array<std::uint8_t>){throw cs::Exception("load:バイナリからのロードは対応していません。");}
 void SoundOGG::Play(std::int32_t volume,bool mute){ui([&]{auto player=SoundPlayer::GetInstance();try{auto port=player->PortOf(this);if(port!=-1&&state()==2&&player->output_->IsPlaying(port)){SetVolume(volume,mute);player->output_->Rewind(port);return;}

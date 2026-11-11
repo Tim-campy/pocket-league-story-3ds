@@ -55,7 +55,7 @@ if ((([&]() { auto cs_left = pls::cs::box(v_instance_2705); auto cs_right = pls:
 pls::cs::Ref<cs_4368d694d01424b0> cs_fc7db26d427c32ff() { cs_init_4368d694d01424b0();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.GetInstance",kairo);
 {
-return cs_af3cecaddfff33af();
+return cs_af3cecaddfff33af_value;
 }
 }
 }

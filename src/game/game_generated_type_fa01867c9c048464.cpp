@@ -238,8 +238,8 @@ void cs_d3abbeacfed9ec8c(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Arra
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.Init(System.String[][],System.String,System.String[])",game);
 {
-([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_925b3cf054e42b78> { return cs_fd047093624d8d65(); }()); cs_d59ecb529d3c681c() = cs_value; return cs_value; }());
-([&]() { auto cs_value = v_paymentProduct; cs_e9c57a349e970656() = cs_value; return cs_value; }());
+([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_925b3cf054e42b78> { return cs_fd047093624d8d65(); }()); cs_d59ecb529d3c681c_value = cs_value; return cs_value; }());
+([&]() { auto cs_value = v_paymentProduct; cs_e9c57a349e970656_value = cs_value; return cs_value; }());
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_e92a9e2b4e70e8aa; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_fa01867c9c048464>>(cs_this); pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_arg0 = v_data; pls::cs::String cs_arg1 = v_paymentProduct; pls::cs::Array<pls::cs::String> cs_arg2 = v_subscription; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d5d483312d700179(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
 }

@@ -63,6 +63,7 @@ def main():
     p.add_argument('--image', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True, help='New local SD staging directory')
     p.add_argument('--scenario', choices=['menu', 'match'], required=True)
+    p.add_argument('--asset-root', type=Path, default=ROOT/'assets', help='Authenticated native CTR pipeline output, or the original PC catalog')
     args = p.parse_args()
     if sha(args.apk) != EXPECTED:
         raise ValueError('Expected owned APK hash required')
@@ -74,11 +75,29 @@ def main():
         raise ValueError('SD staging inside the repository must stay under build/')
     if output.exists():
         raise ValueError('Use a new staging directory; existing saves are never overwritten')
-    assets = (ROOT / 'assets').resolve(strict=True)
+    assets = args.asset_root.resolve(strict=True)
     count, files = catalog(assets)
     proof = json.loads((ROOT / 'config/phase2-resource-catalog.json').read_text())
-    if proof['apk_sha256'] != EXPECTED or sha(assets / 'converted/catalog.idx') != proof['catalog_sha256']:
+    if proof['apk_sha256'] != EXPECTED:
         raise ValueError('Catalog provenance receipt differs')
+    if assets == (ROOT/'assets').resolve():
+        if sha(assets/'converted/catalog.idx') != proof['catalog_sha256']:
+            raise ValueError('PC catalog provenance differs')
+    else:
+        if not (assets.is_relative_to(ROOT/'build') or assets.is_relative_to(ROOT/'assets')):
+            raise ValueError('CTR assets must come from the ignored local pipeline')
+        native=json.loads((assets/'pipeline-receipt.json').read_text())
+        if (native['operation']!='local-ctr-texture-pipeline' or native['apk_sha256']!=EXPECTED or
+            native['source_catalog_sha256']!=proof['catalog_sha256'] or
+            native['catalog_sha256']!=sha(assets/'converted/catalog.idx') or
+            native['producer_sha256']!=sha(ROOT/'tools/prepare_ctr_assets.py') or
+            native['layout_sha256']!=sha(ROOT/'tools/ctr_textures.py')):
+            raise ValueError('CTR pipeline proof differs')
+        marker=assets/'converted/prevalidated.sha256'
+        expected_marker='PLS-PREVALIDATED-1\n'+EXPECTED+'\n'+native['catalog_sha256']+'\n'
+        if marker.read_text(encoding='ascii')!=expected_marker:
+            raise ValueError('Prevalidated catalog binding differs')
+        files['converted/prevalidated.sha256']=dict(bytes=marker.stat().st_size,sha256=sha(marker))
     history = json.loads((ROOT / 'config/phase2-diagnostic-attempts.json').read_text())['attempts']
     attempt, save, first, last = (34, 25, 661, 960) if args.scenario == 'menu' else (35, 31, 1201, 1500)
     row = next(x for x in history if x['number'] == attempt)
@@ -108,6 +127,7 @@ def main():
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(assets / name, target)
     shutil.copytree(source_save, destination / 'preferences')
+    (destination/'assets/converted/replay-after-title.flag').write_text('Wait for original TitleForm before replay frame zero.\n',newline='\n')
     (destination / 'replay.txt').write_text(''.join(f'{n}:{k}\n' for n, k in sorted(keys.items()) if n < last), newline='\n')
     (destination / 'config.txt').write_text(f'/pls-benchmark/assets\n/pls-benchmark/preferences\n/pls-benchmark/replay.txt\n{last}\n{first}\n{last}\n', newline='\n')
     executable = output / '3ds/pls-benchmark/pls-benchmark.3dsx'
@@ -117,6 +137,7 @@ def main():
                     asset_files=len(files), asset_bytes=sum(f['bytes'] for f in files.values()),
                     first_frame=first, last_frame=last, frames=last-first+1,
                     replay_sha256=sha(destination / 'replay.txt'), asset_hashes=files,
+                    replay_anchor='TitleForm.GetId()==1',
                     timing_validated=False)
     (destination / 'private-manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
     print(json.dumps({k: v for k, v in manifest.items() if k != 'asset_hashes'}))

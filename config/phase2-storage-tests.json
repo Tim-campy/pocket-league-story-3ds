@@ -646,21 +646,21 @@
   },
   "native_executable": {
     "path": "build/storage-tests/storage-fixtures.exe",
-    "sha256": "1602b0864790401218810f0aa5d739cd3375f4126ef7968d645553fec48a71af"
+    "sha256": "1835bf38f61397b3c0eca7f408ab4f284e27ced01c6c1f84b86165371f968e57"
   },
   "inputs": {
     "tests/kairo/storage_fixtures.cpp": "4eaf89f3f426286e3aaf3d9d6d9e48e10cdf00f84a61be0a94e700ed3c6ca4a2",
     "src/kairo/common/storage.cpp": "2d5504c48d59ad05d05d56df5545f737e4040181b17d84e0cf7bff0b55161ef4",
-    "src/kairo/common/asset_catalog.cpp": "6c5d53903ce8900f02f428b952be454993e95c73e7cd4921a272a196f8d3b7af",
-    "src/kairo/common/semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
+    "src/kairo/common/asset_catalog.cpp": "705d4f424c8b2fc161339c9b86fcb481f7a278130790f67621887906f0711b55",
+    "src/kairo/common/semantic_runtime.cpp": "6ae5bbbe505cf4247862934c2660c18ab1c28503e50f83fea8981e73a19fe336",
     "src/kairo/common/managed_collation.cpp": "a3ee79c835705e7eff562ef2267713fb0c585cccad1f2d7c3f1b5104ad9dcf90",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "tests/kairo/StorageOracle.cs": "da85e24ecd68a7e19b1ba21f98ecc69c71077fcdacef2d94d3cc86aedbe4a5cd",
     "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
     "tools/test_storage.py": "534a7258153f6afd94d28f3e266c293f63a45304fe49dfbb56ab3bf7fc489d1e",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/common/semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
-    "src/kairo/common/asset_catalog.hpp": "bc0ec3a53fcde4e383272d44b16349fd45c15ac03e890460ca47270ccd7e1f60",
+    "src/kairo/common/semantic_runtime.hpp": "5796570ac4d34c2b97f611dbcbca7a96e35eee26c813ad4ae6b96950c87638fa",
+    "src/kairo/common/asset_catalog.hpp": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",

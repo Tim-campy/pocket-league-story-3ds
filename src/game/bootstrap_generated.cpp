@@ -25,17 +25,24 @@ k::TextServices fonts;fonts.translate=[](cs::String value)->cs::String{return cs
 void configure_application(cs::Ref<k::IApplication> app){
 app->host_termination([](){cs_d77afa4a6ff2b7fb();});
 k::FormCallbacks forms;
-forms.kairo=cs::Delegate<cs::Ref<k::FormKairo>()>::from_static("Bootstrap.Kairo",[]()->cs::Ref<k::FormKairo>{auto value=cs_c4936eb85a4204af();if(!value)return {};k::KairoCallbacks callbacks;
-callbacks.is_game_playing=cs::Delegate<bool()>::bind(value,"M:PlsPortGeneratedBootstrap.Source.IsPlaying",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](){return cs_14404b0409612e0e(weak.lock());});
-callbacks.set_game_state=cs::Delegate<void(bool)>::bind(value,"M:PlsPortGeneratedBootstrap.Source.SetGameState",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](bool x){cs_f9382522394ab3e5(weak.lock(),x);});
-callbacks.update=cs::Delegate<void()>::bind(value,"M:PlsPortGeneratedBootstrap.Source.UpdateKairo",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](){cs_762af1e562b96b8a(weak.lock());});
-callbacks.reserve_enabled=cs::Delegate<bool()>::bind(value,"M:PlsPortGeneratedBootstrap.Source.GetReserveEnabled",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](){return cs_819b3ebc516bd932(weak.lock());});
-callbacks.set_reserve_enabled=cs::Delegate<void(bool)>::bind(value,"M:PlsPortGeneratedBootstrap.Source.SetReserveEnabled",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](bool x){cs_28b9303ca50ae96a(weak.lock(),x);});
-callbacks.reserve=cs::Delegate<std::int32_t()>::bind(value,"M:PlsPortGeneratedBootstrap.Source.GetReserve",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](){return cs_24c32f1e4193a152(weak.lock());});
-callbacks.set_reserve=cs::Delegate<void(std::int32_t)>::bind(value,"M:PlsPortGeneratedBootstrap.Source.SetReserve",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](std::int32_t x){cs_51448637417220ba(weak.lock(),x);});
-callbacks.save=cs::Delegate<void()>::bind(value,"M:PlsPortGeneratedBootstrap.Source.Save",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](){cs_ecb38147f2318edc(weak.lock());});
-callbacks.save_all=cs::Delegate<void()>::bind(value,"M:PlsPortGeneratedBootstrap.Source.SaveAll",[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)](){cs_f0ab887a70f5eb9a(weak.lock());});
-return cs::make_ref<k::CallbackFormKairo>(std::move(callbacks));});
+forms.kairo=cs::Delegate<cs::Ref<k::FormKairo>()>::from_static("Bootstrap.Kairo",[]()->cs::Ref<k::FormKairo>{auto value=cs_c4936eb85a4204af();if(!value)return {};
+class SourceKairoAdapter final:public k::FormKairo {
+using Target=decltype(value);Target value_;
+public:
+explicit SourceKairoAdapter(Target target):value_(std::move(target)){}
+bool IsGamePlaying()override{return cs_14404b0409612e0e(value_);}
+void SetGameState(bool x)override{cs_f9382522394ab3e5(value_,x);}
+void Update()override{cs_762af1e562b96b8a(value_);}
+bool ReserveSaveEnabled()override{return cs_819b3ebc516bd932(value_);}
+void SetReserveSaveEnabled(bool x)override{cs_28b9303ca50ae96a(value_,x);}
+std::int32_t ReserveSave()override{return cs_24c32f1e4193a152(value_);}
+void SetReserveSave(std::int32_t x)override{cs_51448637417220ba(value_,x);}
+void Save()override{cs_ecb38147f2318edc(value_);}
+void SaveAll()override{cs_f0ab887a70f5eb9a(value_);}
+void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::trace_value(value_,visitor);}
+void release_edges()override{cs::release_value(value_);}
+};
+return cs::make_ref<SourceKairoAdapter>(value);});
 // Complete-corpus proof: no concrete SaveRecorder subclass/constructor call.
 forms.recorder=cs::Delegate<cs::Ref<k::FormRecorder>()>::from_static("Bootstrap.Recorder",[]()->cs::Ref<k::FormRecorder>{return {};});
 forms.fep=cs::Delegate<cs::Ref<k::FormFep>()>::from_static("Bootstrap.Fep",[]()->cs::Ref<k::FormFep>{auto value=cs_35c6d0bf39ebc561();if(!value)return {};auto update=cs::Delegate<bool()>::from_static("M:PlsPortGeneratedBootstrap.Source.UpdateFep",[](){return cs_2eb79b51879e59c7();});return cs::make_ref<k::CallbackFormFep>(std::move(update));});

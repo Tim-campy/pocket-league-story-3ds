@@ -76,10 +76,10 @@ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullR
 pls::cs::Ref<cs_6485f92c2f04639f> cs_2daa26d559c2fca8() { cs_init_6485f92c2f04639f();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.FormManager.GetInstance",game);
 {
-if (([&]() { auto cs_left = pls::cs::box(cs_84bcc52ce28bc88e()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/form/FormManager.cs:M:form.FormManager.GetInstance:841",([&]() -> pls::cs::Ref<cs_6485f92c2f04639f> { return cs_ec84f3d30b68a2f9(); }())); cs_84bcc52ce28bc88e() = cs_value; return cs_value; }());
+if (([&]() { auto cs_left = pls::cs::box(cs_84bcc52ce28bc88e_value); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/form/FormManager.cs:M:form.FormManager.GetInstance:841",([&]() -> pls::cs::Ref<cs_6485f92c2f04639f> { return cs_ec84f3d30b68a2f9(); }())); cs_84bcc52ce28bc88e_value = cs_value; return cs_value; }());
 }
-return cs_84bcc52ce28bc88e();
+return cs_84bcc52ce28bc88e_value;
 }
 }
 }

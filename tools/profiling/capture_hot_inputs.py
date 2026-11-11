@@ -3,6 +3,7 @@
 Only entry probes and host window selection are added. Canonical generated game
 files are never modified. Captured values stay under build/, never in the repo.
 """
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -21,9 +22,18 @@ def field(id):return 'cs_'+hashlib.sha256(('F:'+id).encode()).hexdigest()[:16]
 
 
 def main():
-    source=ROOT/'build/game-diagnostic-runtime-consolidated-20261110'
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--snapshot',type=Path,required=True)
+    parser.add_argument('--baseline-build',type=Path,default=ROOT/'build/null-pc-tracing')
+    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--cal-cases',type=int,default=80)
+    args=parser.parse_args();source=args.snapshot.resolve();baseline=args.baseline_build.resolve();folder=args.output.resolve()
+    if args.cal_cases<80 or not folder.is_relative_to(ROOT/'build') or folder.exists():raise ValueError('Use a fresh private capture directory and at least 80 Cal cases')
     validate_diagnostic_manifest(source)
-    folder=ROOT/'build/hot-input-capture';generated=folder/'generated';generated.mkdir(parents=True,exist_ok=True)
+    stamp=json.loads((baseline/'source-stamp.json').read_text())
+    for name,digest in stamp.items():
+        if hashlib.sha256((ROOT/name).read_bytes()).hexdigest()!=digest:raise ValueError('Baseline input changed: '+name)
+    generated=folder/'generated';generated.mkdir(parents=True)
     output=folder/'inputs';output.mkdir(exist_ok=True)
     report=json.loads((ROOT/'config/phase2-game-translation.json').read_text())
     methods={m['cpp_name']:m for m in report['emitted_methods']}
@@ -59,25 +69,30 @@ def main():
 #include <fstream>
 #include <atomic>
 #include <mutex>
+#include <sstream>
+#include <unordered_set>
 namespace pls_capture {
 inline std::atomic<bool> enabled{false};inline std::mutex gate;inline unsigned counts[5]{};
+inline constexpr unsigned limits[5]={16,CAL_CASES,16,16,16};inline std::unordered_set<std::string> distinct_cal;
 inline void put(std::ostream&o,std::int32_t v){o.write(reinterpret_cast<const char*>(&v),4);}
 inline void put(std::ostream&o,float v){static_assert(sizeof(v)==4);o.write(reinterpret_cast<const char*>(&v),4);}
 inline void put(std::ostream&o,bool v){put(o,std::int32_t(v));}
 template<class T>void put(std::ostream&o,const pls::cs::Array<T>&v){if(v.is_null()){put(o,std::int32_t(-1));return;}put(o,v.length());for(int i=0;i<v.length();++i)put(o,v.at(i));}
-template<class F>void record(unsigned kind,F&&write){if(!enabled.load())return;std::lock_guard<std::mutex>lock(gate);if(counts[kind]>=16)return;
-std::ofstream o("OUTPUT/"+std::to_string(kind)+"-"+std::to_string(counts[kind]++)+".bin",std::ios::binary);write(o);if(!o)throw std::runtime_error("Input capture failed");}
+template<class F>void record(unsigned kind,F&&write){if(!enabled.load())return;std::lock_guard<std::mutex>lock(gate);if(counts[kind]>=limits[kind])return;
+std::ostringstream buffer(std::ios::out|std::ios::binary);write(buffer);auto bytes=buffer.str();
+if(kind==1&&!distinct_cal.emplace(bytes).second)return;
+std::ofstream o("OUTPUT/"+std::to_string(kind)+"-"+std::to_string(counts[kind]++)+".bin",std::ios::binary);o.write(bytes.data(),bytes.size());if(!o)throw std::runtime_error("Input capture failed");}
 }
-'''.replace('OUTPUT',output.as_posix())
+'''.replace('OUTPUT',output.as_posix()).replace('CAL_CASES',str(args.cal_cases))
     (folder/'hot_capture.hpp').write_text(header)
     host=(ROOT/'src/main/null_main.cpp').read_text()
     needle='const auto before=pls::allocation_probe::snapshot();'
     if host.count(needle)!=1:raise ValueError('Host window marker differs')
     host=host.replace(needle,'pls_capture::enabled.store(completed+1>=1201&&completed+1<=1500);'+needle)
     (folder/'host.cpp').write_text('#include "hot_capture.hpp"\n'+host)
-    link_lines=[line for line in (ROOT/'build/null-pc/build.ninja').read_text().splitlines() if line.startswith('build null_game.exe:')]
+    link_lines=[line for line in (baseline/'build.ninja').read_text().splitlines() if line.startswith('build null_game.exe:')]
     if len(link_lines)!=1:raise ValueError('Baseline link edge is not unique')
-    objects=[ROOT/'build/null-pc'/token for token in link_lines[0].split() if token.endswith('.obj')]
+    objects=[baseline/token for token in link_lines[0].split() if token.endswith('.obj')]
     if any(not p.is_file() for p in objects):raise ValueError('Baseline link object absent')
     excluded={p.name+'.obj' for p in affected}|{'null_main.cpp.obj'}
     objects=[p for p in objects if p.name not in excluded]
@@ -87,16 +102,18 @@ std::ofstream o("OUTPUT/"+std::to_string(kind)+"-"+std::to_string(counts[kind]++
     cmake='cmake_minimum_required(VERSION 3.20)\nproject(CaptureHotInputs LANGUAGES CXX)\nset(CMAKE_CXX_STANDARD 17)\nset(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)\nfind_package(freetype CONFIG REQUIRED)\n'
     cmake+='add_executable(capture_game '+quote(folder/'host.cpp')+' '+' '.join(map(quote,affected+objects))+')\n'
     cmake+='target_include_directories(capture_game PRIVATE '+' '.join(map(quote,includes))+')\n'
-    cmake+='target_compile_definitions(capture_game PRIVATE PLS_NULL_BACKEND=1)\ntarget_compile_options(capture_game PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(capture_game PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
-    cmake+='target_link_libraries(capture_game PRIVATE '+quote(ROOT/'build/null-pc/null_runtime.lib')+' Freetype::Freetype Psapi Advapi32)\n'
+    cmake+='target_compile_definitions(capture_game PRIVATE PLS_NULL_BACKEND=1 PLS_TRACING_GC=1)\ntarget_compile_options(capture_game PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(capture_game PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
+    cmake+='target_link_libraries(capture_game PRIVATE '+quote(baseline/'null_runtime.lib')+' Freetype::Freetype Psapi Advapi32)\n'
     (folder/'CMakeLists.txt').write_text(cmake)
-    proof=dict(operation='private-entry-input-capture',methods=[methods[n]['id']for n in selected],window=[1201,1500],max_per_method=16,changed_units=[p.name for p in affected],
+    proof=dict(operation='private-entry-input-capture',methods=[methods[n]['id']for n in selected],window=[1201,1500],max_per_method=[16,args.cal_cases,16,16,16],cal_inputs_byte_distinct=True,changed_units=[p.name for p in affected],
         inputs={str(p.relative_to(ROOT)):hashlib.sha256(p.read_bytes()).hexdigest()for p in source.iterdir()if p.suffix in ['.cpp','.inc','.hpp']},timing_valid=False)
     (folder/'proof.json').write_text(json.dumps(proof,indent=2)+'\n')
     env=environment()
     with (folder/'build.log').open('wb')as log:
         subprocess.run([str(CMAKE),'-S',str(folder),'-B',str(folder/'out'),'-G','Ninja','-DCMAKE_BUILD_TYPE=Release','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_PREFIX_PATH='+str(ROOT/'build/deps/native-media')],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
         subprocess.run([str(CMAKE),'--build',str(folder/'out'),'--parallel','1'],env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
+    proof.update(executable_sha256=hashlib.sha256((folder/'out/capture_game.exe').read_bytes()).hexdigest(),producer_sha256=hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),baseline_source_stamp_sha256=hashlib.sha256((baseline/'source-stamp.json').read_bytes()).hexdigest())
+    (folder/'proof.json').write_text(json.dumps(proof,indent=2)+'\n')
     print(json.dumps(dict(changed_units=proof['changed_units'],output=str(folder/'out/capture_game.exe'))))
 
 

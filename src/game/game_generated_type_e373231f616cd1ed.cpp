@@ -27,10 +27,10 @@ float cs_bb7739e815078f77(pls::cs::Ref<cs_e373231f616cd1ed> cs_this,std::int32_t
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetDeltaTime(System.Int32)",kairo);
 {
 try {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetDeltaTime(cs_arg0); }());});
+return static_cast<float>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetDeltaTime(cs_arg0); }());}));
 } catch(const pls::cs::Exception& cs_caught_193) {auto cs_exception_193=pls::cs::capture_exception(cs_caught_193);
 if(pls::cs::exception_is(cs_exception_193,"System.Exception")) {{
-return pls::game::cs_f32(0x00000000u);
+return static_cast<float>(pls::game::cs_f32(0x00000000u));
 }}
 else {throw;} }
 }
@@ -44,10 +44,10 @@ float cs_4bab6edd4be5b5fc(pls::cs::Ref<cs_e373231f616cd1ed> cs_this,std::int32_t
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetDeltaX(System.Int32)",kairo);
 {
 try {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetDeltaX(cs_arg0); }());});
+return static_cast<float>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetDeltaX(cs_arg0); }());}));
 } catch(const pls::cs::Exception& cs_caught_191) {auto cs_exception_191=pls::cs::capture_exception(cs_caught_191);
 if(pls::cs::exception_is(cs_exception_191,"System.Exception")) {{
-return pls::game::cs_f32(0x00000000u);
+return static_cast<float>(pls::game::cs_f32(0x00000000u));
 }}
 else {throw;} }
 }
@@ -61,10 +61,10 @@ float cs_e15d44f506415222(pls::cs::Ref<cs_e373231f616cd1ed> cs_this,std::int32_t
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetDeltaY(System.Int32)",kairo);
 {
 try {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetDeltaY(cs_arg0); }());});
+return static_cast<float>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetDeltaY(cs_arg0); }());}));
 } catch(const pls::cs::Exception& cs_caught_192) {auto cs_exception_192=pls::cs::capture_exception(cs_caught_192);
 if(pls::cs::exception_is(cs_exception_192,"System.Exception")) {{
-return pls::game::cs_f32(0x00000000u);
+return static_cast<float>(pls::game::cs_f32(0x00000000u));
 }}
 else {throw;} }
 }
@@ -100,10 +100,10 @@ float cs_599cda2fd1d6b522(pls::cs::Ref<cs_e373231f616cd1ed> cs_this,std::int32_t
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetX(System.Int32)",kairo);
 {
 try {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetX(cs_arg0); }());});
+return static_cast<float>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetX(cs_arg0); }());}));
 } catch(const pls::cs::Exception& cs_caught_189) {auto cs_exception_189=pls::cs::capture_exception(cs_caught_189);
 if(pls::cs::exception_is(cs_exception_189,"System.Exception")) {{
-return pls::game::cs_f32(0x00000000u);
+return static_cast<float>(pls::game::cs_f32(0x00000000u));
 }}
 else {throw;} }
 }
@@ -117,10 +117,10 @@ float cs_d831862e2b588867(pls::cs::Ref<cs_e373231f616cd1ed> cs_this,std::int32_t
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.GetY(System.Int32)",kairo);
 {
 try {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetY(cs_arg0); }());});
+return static_cast<float>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::MotionEvent>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a3564cf80f64631; }())); std::int32_t cs_arg0 = v_index; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetY(cs_arg0); }());}));
 } catch(const pls::cs::Exception& cs_caught_190) {auto cs_exception_190=pls::cs::capture_exception(cs_caught_190);
 if(pls::cs::exception_is(cs_exception_190,"System.Exception")) {{
-return pls::game::cs_f32(0x00000000u);
+return static_cast<float>(pls::game::cs_f32(0x00000000u));
 }}
 else {throw;} }
 }

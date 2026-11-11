@@ -8,6 +8,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
 from inventory import compiler_paths
+from pc_compiler import CMAKE,environment
 
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -15,6 +16,8 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 def main():
     folder=ROOT/'build/graphics-tests';folder.mkdir(parents=True,exist_ok=True)
+    with (folder/'native-build.log').open('wb') as log:
+        subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','graphics_api_test','asset_catalog_test','asset_path_test','--parallel','2'],cwd=ROOT,env=environment(),stdout=log,stderr=subprocess.STDOUT,check=True)
     original=ROOT/'reference/src/KairoLibrary/kairo/unity/ui/Graphics.cs'
     text=original.read_text(encoding='utf-8-sig')
     signatures=['public static int GetColorOfRGB(int r, int g, int b)',
@@ -134,7 +137,7 @@ g.SetBlendMode(2,37);Console.WriteLine("blend0="+g.GetBlendMode()+","+g.GetBlend
         original_renderrect_exception_preserved=True,android_raster_comparison='UNKNOWN',
         sources={p:sha(ROOT/p) for p in ['tools/test_graphics.py','src/kairo/api/graphics.hpp','src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp',
             'src/kairo/api/font.hpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.hpp','src/kairo/platform/sdl/font.cpp',
-            'src/kairo/common/asset_catalog.hpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/sha256.hpp',
+            'src/kairo/common/asset_catalog.hpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/sha256.hpp','src/kairo/common/ctr_texture.hpp',
             'tests/kairo/graphics_api_test.cpp','tests/kairo/asset_catalog_test.cpp','tests/kairo/asset_path_test.cpp']},
         original_source_sha256=sha(original),font_original_source_sha256=sha(font_original),catalog_sha256=proof['catalog_sha256'],
         original_sources={str(p.relative_to(ROOT)).replace('\\','/'):sha(p) for p in [original,font_original,matrix_original]},

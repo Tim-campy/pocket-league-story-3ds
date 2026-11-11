@@ -31,11 +31,17 @@ struct Descriptor {
     // All retained native buffers, including non-pointer-bearing textures and
     // audio. Accounting never turns their contents into managed references.
     void (*retained_ranges)(const void*,Ranges) = nullptr;
+    // Opt-in only: ranges are exclusively owned, fixed after construction,
+    // and enumerate all retained buffers. Their contents may still contain
+    // references and are traced normally. Defaults preserve dynamic behavior.
+    bool stable_ranges = false;
 };
 struct Statistics {
     std::size_t objects = 0, bytes = 0, allocations = 0, allocated_bytes = 0;
     std::size_t collections = 0, reclaimed_objects = 0, reclaimed_bytes = 0;
     std::size_t last_roots = 0;
+    // Unique roots submitted by precise providers, before stack/register scan.
+    std::size_t last_explicit_roots = 0;
     std::uint64_t pause_ns = 0, last_pause_ns = 0;
     std::size_t body_bytes = 0, external_bytes = 0, peak_bytes = 0;
     std::size_t external_growth_bytes = 0;
@@ -111,6 +117,17 @@ public:
     Roots(const Roots&) = delete;
     Roots& operator=(const Roots&) = delete;
 };
+template<class T,class=void>struct Allocation {
+    static constexpr bool custom=false;
+    template<class...A>static std::unique_ptr<T> create(A&&...args){return std::make_unique<T>(std::forward<A>(args)...);}
+    static std::size_t bytes(const T&){return sizeof(T);}
+};
+template<class T>struct Allocation<T,std::void_t<decltype(std::declval<const T&>().pls_allocation_bytes())>> {
+    static constexpr bool custom=true;
+    template<class...A>static std::unique_ptr<T> create(A&&...args){return T::pls_allocate(std::forward<A>(args)...);}
+    static std::size_t bytes(const T&object){return object.pls_allocation_bytes();}
+};
+
 template<class T, class... A>
 T* make_described(Heap& heap, Descriptor descriptor, A&&... arguments) {
     // Root allocations made by nested constructors until the outermost object
@@ -118,9 +135,9 @@ T* make_described(Heap& heap, Descriptor descriptor, A&&... arguments) {
     heap.safepoint();
     heap.begin_construction();
     struct End { Heap& heap; ~End() { heap.end_construction(); } } end{heap};
-    auto object = std::make_unique<T>(std::forward<A>(arguments)...);
+    auto object = Allocation<T>::create(std::forward<A>(arguments)...);
     descriptor.destroy=[](void* p) noexcept { delete static_cast<T*>(p); };
-    heap.adopt(object.get(), sizeof(T), descriptor);
+    heap.adopt(object.get(), Allocation<T>::bytes(*object), descriptor);
     return object.release();
 }
 template<class T, class... A>

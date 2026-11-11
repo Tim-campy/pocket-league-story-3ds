@@ -25,18 +25,23 @@ METHODS=['public Image(Texture image)','public Image(byte[] src, Format format =
 'public int GetWidth()','public int GetHeight()']
 
 
-def synthetic_catalog(folder):
+def synthetic_catalog(folder,tiled=False):
  (folder/'converted').mkdir(parents=True,exist_ok=True)
  data=b'PLSASV1\0'+b'd557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'+struct.pack('<I',3)
  def field(s):b=s.encode();return struct.pack('<I',len(b))+b
  for i,(w,h) in enumerate([(3,2),(4,1),(1,1)]):
-  raw=bytes([w,h,41]);rgba=bytes([41,0,0,255])*(w*h);name='own-'+str(i)+'.rgba8';(folder/name).write_bytes(rgba)
+  raw=bytes([w,h,41]);rgba=bytes([41,0,0,255])*(w*h);name='own-'+str(i)+'.rgba8'
+  if tiled:
+   from ctr_textures import encode
+   rgba=encode(rgba,w,h);name+='ctr'
+  (folder/name).write_bytes(rgba)
   data+=bytes([3])+field(hashlib.sha256(raw).hexdigest())+field(name)+struct.pack('<QII',len(rgba),w,h)+hashlib.sha256(rgba).digest()
  (folder/'converted/catalog.idx').write_bytes(data)
 
 
 def main():
  folder=ROOT/'build/image-lifetime-tests';folder.mkdir(parents=True,exist_ok=True);synthetic=folder/'synthetic';synthetic_catalog(synthetic)
+ tiled=folder/'synthetic-ctr';synthetic_catalog(tiled,True)
  source=ROOT/'tests/kairo/ImageLifetimeOracle.cs';original=ROOT/'reference/src/KairoLibrary/kairo/unity/ui/Image.cs';text=original.read_text(encoding='utf-8-sig')
  prefix='''using System;using System.Collections.Generic;using kairo.common.cfg;using kairo.unity.graphics;using kairo.unity.io;using kairo.unity.util;using UnityEngine;
 namespace kairo.unity.ui {public class Image {
@@ -69,16 +74,20 @@ namespace kairo.unity.ui {public class Image {
    '/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src/kairo/common'),'/I'+str(sdk/'include'),'/I'+str(sdk/'include/freetype2'),'/Fo:'+str(obj),unit],folder,'cpp-compile-'+str(i),environment())
  run([cl,'/nologo','/Fe:'+str(native),*objects,sdk/'lib/freetype.lib'],folder,'cpp-link',environment())
  actual=run([native,synthetic],folder,'native-run',environment()).splitlines();cases=[]
+ tiled_actual=run([native,tiled],folder,'native-tiled-run',environment()).splitlines()
+ if tiled_actual!=actual:raise ValueError('Tiled texture lifetime differs from linear texture lifetime')
+ pixel_proofs=[json.loads(run([native,root,'pixels'],folder,'pixels-'+name,environment())) for name,root in [('linear',synthetic),('tiled',tiled)]]
+ if pixel_proofs[0]!=pixel_proofs[1] or pixel_proofs[0]['status']!='PASS':raise ValueError('Prepared texture pixel fixtures differ')
  for profile,command,env_ in [('dotnet',[dotnet,oracle],None),('mono',[mono,old],env)]:
   expected=run(command,folder,profile+'-run',env_).splitlines()
   if len(expected)!=len(actual):raise ValueError('Image lifetime trace lengths differ')
   cases += [dict(profile=profile,case=x.split('=',1)[0],expected=x,actual=y,passed=x==y) for x,y in zip(expected,actual)]
  passed=all(c['passed'] for c in cases)
  policy=json.loads(run([native,synthetic,'policy'],folder,'native-policy',environment()))
- inputs=units+[source,ROOT/'tools/test_image_lifetime.py',ROOT/'tools/test_input.py']
+ inputs=units+[source,ROOT/'tools/test_image_lifetime.py',ROOT/'tools/test_input.py',ROOT/'tools/ctr_textures.py',ROOT/'src/kairo/common/ctr_texture.hpp']
  inputs += [ROOT/'tests/translator/gc_test_support.hpp']
  inputs += [ROOT/'src/kairo/api'/p for p in ['graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common'/p for p in ['semantic_runtime.hpp','asset_catalog.hpp','sha256.hpp']]+[ROOT/'src/kairo/platform/sdl/font.hpp']
- report=dict(operation='original-source-Image-use-expiry-eviction-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,
+ report=dict(operation='original-source-Image-use-expiry-eviction-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,tiled_lifetime_trace_equal=True,tiled_trace_rows=len(tiled_actual),pixel_proofs=pixel_proofs,
  verified_boundary_ids=[],native_policy=policy,inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},source_manifest=[dict(path=original.relative_to(ROOT/'reference').as_posix(),sha256=sha(original))],
  original_methods=METHODS,native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),game_assets_used=False,original_binaries_executed=False,game_boot=False,
  limits=['Own texture decoder/catalog exercise original lifetime bodies, not Unity PNG decoding, atlas behavior, texture format conversion or OOM recovery.',

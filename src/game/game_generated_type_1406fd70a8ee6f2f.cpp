@@ -28,7 +28,7 @@ pls::cs::Array<char16_t> v_array_685 = pls::diagnostic::api_call([&]() -> declty
 for (std::int32_t v_i_722 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_722; auto cs_right = (v_array_685).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_722; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_722 = cs_new; return cs_old; }())) {
 char16_t v_c_766 = ([&]() { auto cs_array = v_array_685; auto cs_index = v_i_722; return cs_array.get_Item(cs_index); }());
 pls::cs::String v_value_791 = pls::cs::String{};
-if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_dictionary=cs_e521319fd884a9af();auto cs_key=v_c_766;return cs_dictionary.TryGetValue(cs_key,v_value_791);}());})) {
+if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_dictionary=cs_e521319fd884a9af_value;auto cs_key=v_c_766;return cs_dictionary.TryGetValue(cs_key,v_value_791);}());})) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::cs::StringBuilder> { auto cs_receiver = v_stringBuilder_638; auto cs_arg0 = v_c_766; return pls::game::cs_require(cs_receiver)->Append(cs_arg0); }());});
 continue;
 }

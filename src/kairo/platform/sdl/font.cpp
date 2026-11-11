@@ -94,10 +94,11 @@ float RasterFont::kerning(std::uint32_t left,std::uint32_t right) const {
     if(left&&right&&FT_HAS_KERNING(impl_->face))ft_check(FT_Get_Kerning(impl_->face,left,right,FT_KERNING_DEFAULT,&value));
     return static_cast<float>(value.x)/64.0f;
 }
-float RasterFont::measure_utf16(std::u16string_view text,FontStyle style,bool use_kerning) {
+float RasterFont::measure_utf16(std::u16string_view text,FontStyle style,bool use_kerning,bool spaces_as_dots) {
     float width=0.0f,maximum=0.0f;std::uint32_t previous=0;
     for(std::size_t i=0;i<text.size();++i) {
         char32_t value=text[i];
+        if(spaces_as_dots&&value==u' ')value=u'.';
         if(value>=0xd800&&value<=0xdbff&&i+1<text.size()&&text[i+1]>=0xdc00&&text[i+1]<=0xdfff) {
             value=0x10000+((value-0xd800)<<10)+(text[++i]-0xdc00);
         }

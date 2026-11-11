@@ -208,8 +208,8 @@ for (std::int32_t v_i_2381 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(
 void cs_e9345014443797ef() { cs_init_4489b86073532f79();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TrainingData.Load2",game);
 {
-for (std::int32_t v_i_2734 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_2734; auto cs_right = (cs_b9530d25c36c1b9e()).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_2734; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_2734 = cs_new; return cs_old; }())) {
-([&]() { auto cs_target = cs_b9530d25c36c1b9e(); auto cs_index = v_i_2734; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+for (std::int32_t v_i_2734 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_2734; auto cs_right = (cs_b9530d25c36c1b9e_value).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_2734; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_2734 = cs_new; return cs_old; }())) {
+([&]() { auto cs_target = cs_b9530d25c36c1b9e_value; auto cs_index = v_i_2734; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
 }
 }

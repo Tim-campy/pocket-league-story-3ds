@@ -8,6 +8,16 @@ executável não contém assets. As entradas, os assets e o autosave são locais
 
 1. Execute o pipeline de assets com seu próprio APK, cujo SHA-256 está em
    `docs/apk.md`. O catálogo necessário é `assets/converted/catalog.idx`.
+   Para a variante com texturas nativas, execute também:
+
+   ```powershell
+   python tools/prepare_ctr_assets.py --apk "CAMINHO_DO_APK_LOCAL" --output build/ctr-assets-native
+   ```
+
+   As 654 imagens passam para ABGR8 com tiling e padding do alvo, sem
+   perda. Esse diretório continua privado. Não copie os assets para o Git.
+   Consulte `python tools/prepare_ctr_assets.py --help` para os parâmetros
+   do pipeline; a preparação recusa saída existente.
 2. Gere um snapshot autenticado do diagnóstico e compile o alvo `null_game`
    da configuração ARM11 em Release:
 
@@ -37,6 +47,14 @@ executável não contém assets. As entradas, os assets e o autosave são locais
    python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_APK_LOCAL" --image build/null-arm11/null_game.3dsx --scenario match --output build/sd-match
    ```
 
+   Para o catálogo nativo, acrescente `--asset-root build/ctr-assets-native`
+   aos dois comandos. O empacotador verifica todos os hashes na preparação
+   e grava a identidade do catálogo. Assim, o caminho normal de carga no
+   aparelho faz leitura e validação estrutural, sem repetir SHA-256 de cada
+   payload. `converted/verify-on-read.flag` reativa essa verificação para
+   diagnóstico. Não use `profile-resources.flag` nas janelas finais de
+   desempenho; ele serve ao diagnóstico separado das etapas de carga.
+
    O script exige os saves locais dos diagnósticos 25/31 e os recibos das
    execuções 34/35. Eles não vêm no Git. Não substitua esses saves por arquivos
    obtidos de terceiros. Sem eles, é necessário reproduzir o fluxo local que
@@ -54,7 +72,16 @@ nem áudio. O programa lê as seis linhas de `pls-benchmark/config.txt`, carrega
 o autosave e executa as entradas de `replay.txt`.
 
 O menu mede frames **661–960**; a partida mede **1201–1500**. São 300 frames
-por cenário, após aquecimento. O fim esperado contém 300 registros
+por cenário, após aquecimento. Na preparação atual, o marcador
+`converted/replay-after-title.flag` faz o host aguardar o `TitleForm`
+original (`GetId()==1`) antes de iniciar o contador do replay. O jogo
+continua recebendo update/draw durante essa espera; nenhum índice de
+carregamento ou estado do formulário é alterado. A ordem e os intervalos
+entre teclas permanecem os do replay. `PLS_NULL_REPLAY_ANCHOR` registra o
+número de frames de boot adicionais. Isso evita perder SELECT enquanto
+o ARM ainda carrega; a janela não usa o mesmo número global de frame da
+baseline PC. Essa diferença de aquecimento deve acompanhar a comparação.
+O fim esperado contém 300 registros
 `PLS_NULL_FRAME` em `stdout.log` e os dois marcadores `PLS_NULL_WINDOW` em
 `stderr.log`. Uma exceção, saída incompleta ou ausência desses marcadores
 invalida a execução. Não use o tempo de carregamento como tempo de frame.

@@ -1,0 +1,194 @@
+{
+  "status": "PASS",
+  "operation": "three-idle-repetitions-no-etw",
+  "producer_sha256": "031276f2aad2cad48f4bf62e5c7c157b752e4c8bd5f78e8cdeda301c063a8b77",
+  "evidence": {
+    "path": "build/thread-cpu-cold-null/measurement.json",
+    "sha256": "2f949162ae58d63f01e23616d41efab31ef84d090f85d7a656e5462b7681bb7c"
+  },
+  "image_sha256": "895dae63092771f746d9400446e6681627cbcf1350a9b06ed3b6e0faa0b4b402",
+  "scenarios": {
+    "menu": {
+      "repetitions": 3,
+      "frames": 900,
+      "mean_thread_cpu_ms": 1.6840277777777777,
+      "mean_wall_ms": 2.6631072222222225,
+      "collections": 0,
+      "repetitions_detail": [
+        {
+          "path": "build\\null-pc-tracing\\runs\\1794425362116588500",
+          "thread_cpu_ms": {
+            "count": 300,
+            "mean": 1.6666666666666667,
+            "p95": 15.625,
+            "maximum": 15.625,
+            "zero_samples": 268
+          },
+          "thread_cycles": {
+            "count": 300,
+            "mean": 6899780.57,
+            "p95": 8476877,
+            "maximum": 9984844,
+            "zero_samples": 0
+          },
+          "wall_ms": {
+            "count": 300,
+            "mean": 2.680906333333333,
+            "p95": 3.5344,
+            "maximum": 4.5274,
+            "zero_samples": 0
+          },
+          "collections": 0,
+          "maximum_collection_ms": 0.0
+        },
+        {
+          "path": "build\\null-pc-tracing\\runs\\1794425530387573400",
+          "thread_cpu_ms": {
+            "count": 300,
+            "mean": 1.6145833333333333,
+            "p95": 15.625,
+            "maximum": 15.625,
+            "zero_samples": 269
+          },
+          "thread_cycles": {
+            "count": 300,
+            "mean": 6900920.316666666,
+            "p95": 8279307,
+            "maximum": 9207742,
+            "zero_samples": 0
+          },
+          "wall_ms": {
+            "count": 300,
+            "mean": 2.6708456666666667,
+            "p95": 3.3764,
+            "maximum": 4.1132,
+            "zero_samples": 0
+          },
+          "collections": 0,
+          "maximum_collection_ms": 0.0
+        },
+        {
+          "path": "build\\null-pc-tracing\\runs\\1794425873341089000",
+          "thread_cpu_ms": {
+            "count": 300,
+            "mean": 1.7708333333333333,
+            "p95": 15.625,
+            "maximum": 15.625,
+            "zero_samples": 266
+          },
+          "thread_cycles": {
+            "count": 300,
+            "mean": 6791738.26,
+            "p95": 8229849,
+            "maximum": 11014619,
+            "zero_samples": 0
+          },
+          "wall_ms": {
+            "count": 300,
+            "mean": 2.637569666666667,
+            "p95": 3.4174,
+            "maximum": 4.6951,
+            "zero_samples": 0
+          },
+          "collections": 0,
+          "maximum_collection_ms": 0.0
+        }
+      ]
+    },
+    "match": {
+      "repetitions": 3,
+      "frames": 900,
+      "mean_thread_cpu_ms": 1.6319444444444444,
+      "mean_wall_ms": 2.3350655555555555,
+      "collections": 0,
+      "repetitions_detail": [
+        {
+          "path": "build\\null-pc-tracing\\runs\\1794425429090864500",
+          "thread_cpu_ms": {
+            "count": 300,
+            "mean": 1.5625,
+            "p95": 15.625,
+            "maximum": 15.625,
+            "zero_samples": 270
+          },
+          "thread_cycles": {
+            "count": 300,
+            "mean": 6155701.823333333,
+            "p95": 7619943,
+            "maximum": 9911730,
+            "zero_samples": 0
+          },
+          "wall_ms": {
+            "count": 300,
+            "mean": 2.365615,
+            "p95": 3.0259,
+            "maximum": 4.1199,
+            "zero_samples": 0
+          },
+          "collections": 0,
+          "maximum_collection_ms": 0.0
+        },
+        {
+          "path": "build\\null-pc-tracing\\runs\\1794425771119259700",
+          "thread_cpu_ms": {
+            "count": 300,
+            "mean": 1.5625,
+            "p95": 15.625,
+            "maximum": 15.625,
+            "zero_samples": 270
+          },
+          "thread_cycles": {
+            "count": 300,
+            "mean": 6065074.16,
+            "p95": 7681767,
+            "maximum": 10877261,
+            "zero_samples": 0
+          },
+          "wall_ms": {
+            "count": 300,
+            "mean": 2.3565296666666664,
+            "p95": 3.0632,
+            "maximum": 4.1528,
+            "zero_samples": 0
+          },
+          "collections": 0,
+          "maximum_collection_ms": 0.0
+        },
+        {
+          "path": "build\\null-pc-tracing\\runs\\1794425939762422800",
+          "thread_cpu_ms": {
+            "count": 300,
+            "mean": 1.7708333333333333,
+            "p95": 15.625,
+            "maximum": 15.625,
+            "zero_samples": 266
+          },
+          "thread_cycles": {
+            "count": 300,
+            "mean": 5890116.706666667,
+            "p95": 7436352,
+            "maximum": 8884376,
+            "zero_samples": 0
+          },
+          "wall_ms": {
+            "count": 300,
+            "mean": 2.283052,
+            "p95": 3.0414,
+            "maximum": 3.6712,
+            "zero_samples": 0
+          },
+          "collections": 0,
+          "maximum_collection_ms": 0.0
+        }
+      ]
+    }
+  },
+  "scope": "Latest selected measured image, not a claim that later source edits were measured",
+  "method": "GetThreadTimes and QueryThreadCycleTime around update and draw; monotonic elapsed clock",
+  "limitations": [
+    "GetThreadTimes is quantized: per-frame CPU p95/max may be 15.625 ms despite much shorter elapsed frames",
+    "Raw cycles are not converted using nominal GHz",
+    "Historical 7.15/9.04 ms used ETW and are not the same measurement method",
+    "Zero collections in a window does not bound loading/transition pauses"
+  ]
+}

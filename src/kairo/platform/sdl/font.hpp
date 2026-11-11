@@ -28,7 +28,7 @@ public:
     // Reference remains valid until a subsequent cache miss evicts its entry.
     const RasterGlyph& glyph(char32_t codepoint,FontStyle style=FontStyle::plain);
     float kerning(std::uint32_t left,std::uint32_t right) const;
-    float measure_utf16(std::u16string_view text,FontStyle style=FontStyle::plain,bool use_kerning=true);
+    float measure_utf16(std::u16string_view text,FontStyle style=FontStyle::plain,bool use_kerning=true,bool spaces_as_dots=false);
     FontMetrics metrics() const;
     FontMemory memory() const;
     void memory_ranges(const memory::RangeVisitor&)const;

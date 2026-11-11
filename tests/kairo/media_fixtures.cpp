@@ -57,6 +57,10 @@ int main(int argc,char**argv) {
                 require(font.measure_utf16(u"A0",style,false)==sum);
                 require(font.measure_utf16(u"A\n0",style,false)==std::max(font.glyph(U'A',style).advance_x,font.glyph(U'0',style).advance_x));
                 require(font.measure_utf16(u"\xd83d\xde00",style,false)==font.glyph(0x1f600,style).advance_x);
+                for(const std::u16string text:{u"",u" ",u"A B",u"A\n B",u"\xd83d\xde00 A",u"\xd800 B"}){
+                    auto replaced=text;std::replace(replaced.begin(),replaced.end(),u' ',u'.');
+                    for(bool kerning:{false,true})require(font.measure_utf16(text,style,kerning,true)==font.measure_utf16(replaced,style,kerning));
+                }
             }
             max_font_cache=std::max(max_font_cache,font.memory().cached_rgba8_bytes);
             require(font.memory().cached_rgba8_bytes<=font.memory().cache_limit_bytes);

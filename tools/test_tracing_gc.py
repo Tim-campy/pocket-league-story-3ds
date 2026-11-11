@@ -34,7 +34,7 @@ def main():
     report = json.loads(result.stdout)
     report['integration'] = 'standalone engine proof; production integration is validated separately'
     report['inputs'] = {p.relative_to(ROOT).as_posix(): hashlib.sha256(p.read_bytes()).hexdigest()
-                        for p in [Path(__file__), source, assembly, runtime, runtime.with_suffix('.hpp')]}
+                        for p in [Path(__file__), source, assembly, runtime, runtime.with_suffix('.hpp'), runtime.with_name('gc_memory_resource.hpp')]}
     (folder / 'receipt.json').write_text(json.dumps(report, indent=2) + '\n', encoding='utf8')
     print(json.dumps(report))
 

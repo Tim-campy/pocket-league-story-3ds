@@ -1,11 +1,9 @@
 """Read completed private device results without installing or launching an APK."""
 import argparse
 import hashlib
-import io
 import json
 from pathlib import Path
 import subprocess
-import tarfile
 from run_x86 import predictions, single
 from cal_models import evaluate
 
@@ -18,6 +16,8 @@ def main():
     parser.add_argument('--adb', required=True, type=Path)
     parser.add_argument('--serial', required=True)
     parser.add_argument('--output', required=True, type=Path)
+    parser.add_argument('--build', required=True, type=Path)
+    parser.add_argument('--captures', required=True, type=Path)
     args = parser.parse_args()
     output = args.output.resolve()
     if not output.is_relative_to((ROOT/'build').resolve()) or output.exists():
@@ -27,26 +27,28 @@ def main():
     if len(installed)!=1 or not installed[0].startswith('package:/'):
         raise ValueError('Expected the standalone numerical oracle APK')
     installed_path=installed[0].removeprefix('package:')
-    installed_hash=subprocess.run([*adb, 'shell', 'sha256sum', installed_path], capture_output=True, text=True, check=True).stdout.split()[0]
-    proof=json.loads((ROOT/'build/fp-android/build-proof.json').read_text())
+    installed_bytes=subprocess.run([*adb, 'exec-out', 'cat', installed_path], capture_output=True, check=True).stdout
+    installed_hash=hashlib.sha256(installed_bytes).hexdigest()
+    proof=json.loads((args.build/'build-proof.json').read_text())
     if installed_hash!=proof['apk_sha256']:
         raise ValueError('Installed APK differs from the authenticated local build')
-    # Restrict extraction to outputs; never pull the private oracle DLLs/inputs.
-    result = subprocess.run([*adb, 'exec-out', 'run-as', PACKAGE, 'tar', '-cf', '-',
-                             'files/probe/status.txt', 'files/probe/discriminants.tsv',
-                             'files/probe/cil.tsv', 'files/probe/kernel-results'],
-                            capture_output=True, check=True)
-    payloads = {}
-    allowed={'files/probe/'+name for name in ['status.txt','discriminants.tsv','cil.tsv']}
-    allowed.update(f'files/probe/kernel-results/{kind}-{index}.bin' for kind in range(5) for index in range(16))
-    with tarfile.open(fileobj=io.BytesIO(result.stdout)) as archive:
-        for member in archive:
-            if member.isdir():
-                continue
-            path = Path(member.name)
-            if not member.isfile() or path.is_absolute() or '..' in path.parts or member.name not in allowed:
-                raise ValueError('Unexpected result archive entry')
-            payloads[member.name] = archive.extractfile(member).read()
+    captured=json.loads((args.captures.parent/'capture-receipt.json').read_text())
+    if hashlib.sha256((args.captures.parent/'capture-receipt.json').read_bytes()).hexdigest()!=proof['captures']['receipt_sha256']:
+        raise ValueError('Capture receipt differs from the installed APK')
+    counts=proof['captures']['per_kernel']
+    # API 21 need not include tar or sha256sum. Read only explicit output files;
+    # exec-out preserves binary bytes, unlike a shell PTY.
+    names=['status.txt','discriminants.tsv','cil.tsv']
+    names += [f'kernel-results/{kind}-{index}.bin' for kind in range(5) for index in range(counts[kind])]
+    probes=['Expression','Local','Field','Array','PassArgument','Return','Inlining','Loop','ExplicitConversion']
+    names += ['jit-FloatDiscriminants-'+name+'.bin' for name in probes]
+    names += ['jit-Team-Cal_evaCoatMulti9block.bin']
+    payloads={}
+    for name in names:
+        remote='files/probe/'+name
+        result=subprocess.run([*adb, 'exec-out', 'run-as', PACKAGE, 'cat', remote], capture_output=True, check=True)
+        if not result.stdout:raise ValueError('Empty probe output: '+name)
+        payloads[remote]=result.stdout
     prefix = 'files/probe/'
     status = payloads[prefix+'status.txt'].decode()
     if 'Completed: FloatDiscriminants' not in status or 'Completed: HotMethodsMono' not in status:
@@ -67,16 +69,19 @@ def main():
                                  if expected['binary64_bits'] == row['observed']['binary64_bits']]
     kernels = []
     for kind in range(5):
-        for index in range(16):
+        for index in range(counts[kind]):
             name = f'{kind}-{index}.bin'
             actual = payloads[prefix+'kernel-results/'+name]
             item = dict(case=name, sha256=hashlib.sha256(actual).hexdigest())
-            for oracle in ['mono', 'native']:
-                item['matches_'+oracle] = actual == (ROOT/f'build/hot-methods/{oracle}-results'/name).read_bytes()
+            item['matches_mono_x86']='UNKNOWN: requires the oracle on this exact capture set'
+            item['matches_native']='UNKNOWN: requires the emission variant on this exact capture set'
             if kind == 1:
-                captured = (ROOT/'build/hot-input-capture/inputs'/name).read_bytes()
-                item['matches_binary32'] = actual == evaluate(captured, True)
-                item['matches_binary64'] = actual == evaluate(captured, False)
+                path=args.captures/name
+                captured_bytes=path.read_bytes()
+                if hashlib.sha256(captured_bytes).hexdigest()!=captured['inputs'][name]:
+                    raise ValueError('Captured input changed: '+name)
+                item['matches_binary32'] = actual == evaluate(captured_bytes, True)
+                item['matches_binary64'] = actual == evaluate(captured_bytes, False)
             kernels.append(item)
     output.mkdir(parents=True)
     for name, data in payloads.items():
@@ -89,7 +94,7 @@ def main():
     (output/'logcat.txt').write_bytes(log)
     report = dict(status='MEASURED_ANDROID_REQUIRES_REVIEW', serial=args.serial,
                   apk_sha256=installed_hash,
-                  rows=rows, kernels=kernels, captures=80, cal_captures=16,
+                  rows=rows, kernels=kernels, captures=sum(counts), cal_captures=counts[1],
                   limitation='Standalone official Mono embedding; game JIT startup options not proven identical. No emission rule adopted.',
                   result_hashes={name:hashlib.sha256(data).hexdigest() for name,data in payloads.items()})
     (output/'report.json').write_text(json.dumps(report, indent=2)+'\n')

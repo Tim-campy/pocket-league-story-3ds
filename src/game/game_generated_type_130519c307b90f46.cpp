@@ -24,7 +24,7 @@ void cs_252b02044b3d6557() { cs_init_130519c307b90f46();
 std::int64_t cs_e285ad46e15aa69f() { cs_init_130519c307b90f46();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.ClockTime.GetTime",kairo);
 {
-if ((!(cs_0aabbac1b4cc00d9()))) {
+if ((!(cs_0aabbac1b4cc00d9_value))) {
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());});
 }
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());});

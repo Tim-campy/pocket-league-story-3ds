@@ -34,10 +34,10 @@ return v_a;
 float cs_918aee83eb36fe79(float v_a) { cs_init_ead0ac0906403160();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JMath.Abs(System.Single)",kairo);
 {
-if ((!((([&]() -> bool { auto cs_left = v_a; auto cs_right = pls::generated::cs_f32(0x00000000u); return (cs_left >= cs_right); }()))))) {
-return (-((v_a)));
+if ((!((([&]() -> bool { auto cs_left = static_cast<double>(v_a); auto cs_right = static_cast<double>(pls::generated::cs_f32(0x00000000u)); return (cs_left >= cs_right); }()))))) {
+return static_cast<float>((-((v_a))));
 }
-return v_a;
+return static_cast<float>(v_a);
 }
 }
 }

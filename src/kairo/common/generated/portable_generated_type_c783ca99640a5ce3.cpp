@@ -13,7 +13,7 @@ float cs_a5c8c88f3deaf88b(pls::cs::Array<std::uint8_t> v_data,bool v_endian) { c
 if (v_endian) {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Array<std::uint8_t> cs_arg0 = v_data; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); return cs_95c81bd3d12349d3(cs_arg0,cs_arg1); }()); v_data = cs_value; return cs_value; }());
 }
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_arg0 = v_data; auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return pls::generated::cs_bits_from<float>(cs_arg0,cs_arg1); }());});
+return static_cast<float>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> float { auto cs_arg0 = v_data; auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return pls::generated::cs_bits_from<float>(cs_arg0,cs_arg1); }());}));
 }
 }
 }
@@ -80,7 +80,7 @@ return v_data;
 pls::cs::Array<std::uint8_t> cs_bafe3629b7fca7f3(float v_data,bool v_endian) { cs_init_c783ca99640a5ce3();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.EncodeUtil.FloatToByteAry(System.Single,System.Boolean)",kairo);
 {
-pls::cs::Array<std::uint8_t> v_array_674 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_arg0 = v_data; return pls::generated::cs_bit_bytes(cs_arg0); }());});
+pls::cs::Array<std::uint8_t> v_array_674 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_arg0 = static_cast<float>(v_data); return pls::generated::cs_bit_bytes(cs_arg0); }());});
 if (v_endian) {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Array<std::uint8_t> cs_arg0 = v_array_674; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); return cs_95c81bd3d12349d3(cs_arg0,cs_arg1); }()); v_array_674 = cs_value; return cs_value; }());
 }

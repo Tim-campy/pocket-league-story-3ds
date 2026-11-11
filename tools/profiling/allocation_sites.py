@@ -143,7 +143,7 @@ def group_sites(sites):
         elif 'Delegate<' in symbol and 'operator()' in symbol:
             classification='INTRODUCED: invocation-time copy of delegate bindings'
         elif 'make_ref<' in symbol:
-            classification='MIXED_OR_UNKNOWN: managed object and shared ownership control block; inspect original operation'
+            classification='MIXED_OR_UNKNOWN: managed object or runtime storage; inspect original operation and folded-symbol callers'
         row=groups.setdefault(key,dict(symbol=symbol,file=relative,line=frame.get('line'),count=0,bytes=0,call_paths=0,classification=classification))
         row['count']+=site['count'];row['bytes']+=site['bytes'];row['call_paths']+=1
     return list(groups.values())

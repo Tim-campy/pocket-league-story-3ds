@@ -14,6 +14,24 @@ void P(const char* name,std::initializer_list<pls::cs::Ref<Image>> images){const
 int main(int argc,char**argv){
  if(argc!=2&&argc!=3)return 2;pls::assets::Catalog catalog(std::filesystem::u8path(argv[1]));install_asset_catalog(&catalog);
  unsigned int assertions=0;auto check=[&](bool b){if(!b)throw std::runtime_error("Image lifetime policy failed");++assertions;};
+ if(argc==3&&std::string(argv[2])=="pixels"){
+  const auto retained=[](const pls::cs::Ref<Image>& image){std::size_t bytes=0;image->memory_ranges([&](const void*,std::size_t n,auto){bytes+=n;});return bytes;};
+  for(const auto shape:{std::array<std::uint8_t,2>{3,2},{4,1},{1,1}}){
+   const auto source=pls::cs::Array<std::uint8_t>::from({shape[0],shape[1],41});
+   auto image=Image::Load(source);const auto native_bytes=retained(image);
+   check(native_bytes>=std::size_t(shape[0])*shape[1]*4);check(image->GetAlphaType()==0);check(retained(image)==native_bytes);
+   const auto pixels=image->pixels();check(pixels.size()==std::size_t(shape[0])*shape[1]*4);
+   for(std::size_t i=0;i<pixels.size();i+=4)check(pixels[i]==41&&pixels[i+1]==0&&pixels[i+2]==0&&pixels[i+3]==255);
+   image->SetAlpha(17);check(image->GetAlpha()==255);
+   image->SetTransparentColor(Graphics::GetColorOfRGB(41,0,0));image->SetTransparentEnabled(true);check(image->pixels()[3]==0);
+   image->SetTransparentEnabled(false);check(image->pixels()[3]==255);image->Dispose();check(retained(image)==0);
+   auto direct=Image::Load(source);auto g=direct->GetGraphics();g->SetColor(22,33,44);g->FillRect(0,0,1,1);
+   check(direct->pixels()[0]==22&&direct->pixels()[1]==33&&direct->pixels()[2]==44&&direct->pixels()[3]==255);direct->Dispose();
+   auto reload=Image::FromSource(source);reload->Use();check(reload->native_resident());reload->Unuse();check(!reload->native_resident()&&retained(reload)==0);
+   reload->Use();check(reload->pixels()==pixels);reload->Dispose();check(retained(reload)==0);
+  }
+  std::cout<<"{\"assertions\":"<<assertions<<",\"status\":\"PASS\"}\n";return 0;
+ }
  if(argc==3){bool failed=false;try{Image::UnuseExpirationImages();}catch(const pls::cs::InvalidOperationException&){failed=true;}check(failed);failed=false;try{install_image_runtime({});}catch(const pls::cs::ArgumentException&){failed=true;}check(failed);}
  ImageRuntimeBindings runtime;runtime.check_count=pls::cs::Delegate<std::int32_t()>::from_static("own-frame",[]{return frame;});runtime.count_enabled=pls::cs::Delegate<bool()>::from_static("own-count",[]{return count_enabled;});runtime.adjust_create_area=pls::cs::Delegate<void(std::int32_t)>::from_static("own-area",[](std::int32_t delta){create_area=pls::cs::add_i32(create_area,delta);});
  runtime.measure_source=pls::cs::Delegate<pls::cs::Array<std::int32_t>(pls::cs::Array<std::uint8_t>)>::from_static("own-header",[](pls::cs::Array<std::uint8_t> data){return pls::cs::Array<std::int32_t>::from({data.at(0),data.at(1)});});

@@ -154,10 +154,10 @@ def source_snapshot(root=ROOT,diagnostic_folder=None,diagnostic_source=None):
     return {p.relative_to(root).as_posix():digest(p) for p in sorted(paths)}
 
 
-def diagnostic_working_tree(source,manifest):
+def diagnostic_working_tree(source,manifest,target=None):
     """Stable compiler paths; the named snapshot remains the immutable evidence."""
-    target=(ROOT/'build/game-diagnostic-current').resolve()
-    if not target.is_relative_to((ROOT/'build').resolve()):raise ValueError('Diagnostic working tree escapes build/')
+    target=(target or ROOT/'build/game-diagnostic-current').resolve()
+    if target==(ROOT/'build').resolve() or not target.is_relative_to((ROOT/'build').resolve()):raise ValueError('Diagnostic working tree escapes a dedicated child of build/')
     target.mkdir(parents=True,exist_ok=True)
     names={row['path']for row in manifest['generated_files']}|{'manifest.json'}
     if manifest.get('candidate_generation'):names|={'candidate_report.json','candidate_request.json'}

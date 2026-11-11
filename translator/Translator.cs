@@ -48,6 +48,7 @@ sealed class Request {
     public int chunk_bytes {get;set;}=900000;
     public string output {get;set;}="";
     public bool split_types {get;set;}=true;
+    public string numeric_model {get;set;}="binary32";
     public string external_unit_manifest {get;set;}="";
 }
 sealed class BakedSpec {public string source {get;set;}="";public int span_start {get;set;}public string element_type {get;set;}="";public int count {get;set;}}
@@ -154,6 +155,7 @@ sealed partial class Lowerer {
     public Lowerer(CSharpCompilation c,Request? request=null) {
         compilation=c;
         this.request=request??new();
+        if(this.request.numeric_model is not ("binary32" or "mono-arm-vfp"))throw new ArgumentException("Unknown floating-point emission model");
         oracleExternalMethods=request?.oracle_external_methods??new();
         externalTypes=request?.external_types??new();externalValueTypes=request?.external_value_types??new();externalMethods=request?.external_methods??new();externalFields=request?.external_fields??new();
         externalSlots=request?.external_slots??new();externalCompleteBases=new(request?.external_complete_bases??Array.Empty<string>());
@@ -311,7 +313,17 @@ sealed partial class Lowerer {
     static string NumericSuffix(ITypeSymbol? t)=>t?.SpecialType switch {
         SpecialType.System_Int32=>"i32",SpecialType.System_UInt32=>"u32",SpecialType.System_Int64=>"i64",SpecialType.System_UInt64=>"u64",_=>""};
     void Used(SyntaxNode n){var kind=n.Kind().ToString();var counts=methodKinds[current];counts[kind]=counts.GetValueOrDefault(kind)+1;}
+    bool ArmFloat => request.numeric_model=="mono-arm-vfp";
+    string EvaluationOperand(ExpressionSyntax node,ITypeSymbol? to) {
+        if(ArmFloat&&to?.SpecialType==SpecialType.System_Single) {
+            var from=model.GetTypeInfo(node).Type;
+            var value=from?.SpecialType==SpecialType.System_Single?Expr(node):Converted(node,to);
+            return "static_cast<double>("+value+")";
+        }
+        return Converted(node,to);
+    }
     string Cast(string value,ITypeSymbol? from,ITypeSymbol? to,SyntaxNode node) {
+        if(ArmFloat&&to?.SpecialType==SpecialType.System_Single&&(Integral(from)||from?.SpecialType is SpecialType.System_Single or SpecialType.System_Double))return "static_cast<float>("+value+")";
         if(to==null||SymbolEqualityComparer.Default.Equals(from,to))return value;
         if(to.ToDisplayString()=="System.Threading.ThreadPriority"||to.ToDisplayString()=="System.Threading.ThreadState")return "static_cast<"+Type(to,node)+">("+value+")";
         if(to.ToDisplayString()=="System.DateTimeKind")return "static_cast<pls::cs::DateTimeKind>("+value+")";
@@ -327,7 +339,7 @@ sealed partial class Lowerer {
         }
         if(to.SpecialType==SpecialType.System_Object) {
             if(from is INamedTypeSymbol nativeValue&&externalValueTypes.ContainsKey(Id(nativeValue)))throw new Unsupported(node,"native value boxing requires an exact Equals/hash/ToString contract");
-            Type(from,node);var boxed="pls::cs::box("+value+")";
+            Type(from,node);if(ArmFloat&&from?.SpecialType==SpecialType.System_Single)value="static_cast<float>("+value+")";var boxed="pls::cs::box("+value+")";
             return from?.IsValueType==true?SourceAllocation(node,"boxing",boxed):from is ITypeParameterSymbol?SourceAllocation(node,"generic_boxing_conversion",boxed):boxed;
         }
         if(to.ToDisplayString()=="System.Array"&&from?.SpecialType==SpecialType.System_Object)return "pls::cs::array_cast("+value+")";
@@ -391,6 +403,15 @@ sealed partial class Lowerer {
         if(field.DeclaringSyntaxReferences.Length==0&&!(field.AssociatedSymbol is IPropertySymbol property&&property.DeclaringSyntaxReferences.Length!=0))throw new Unsupported(site,"external nonconstant static field not lowered");
         EnsureTypeInitializer(field.ContainingType,site);
         if(!fieldSymbols.ContainsKey(id)){fieldSymbols[id]=field;fields[id]=Type(field.Type,site)+" "+Name(field)+"_value{};";}
+        // Non-template source methods already enter through the owner type's
+        // initialization guard. Reading that same owner's backing storage does
+        // not need another guard per field. Do not apply while emitting a type
+        // initializer, a constructor _init body (also called by derived types),
+        // or a native adapter whose entry contract is different.
+        var caller=methods[current];
+        if(initializingTypes.Count==0&&caller.MethodKind!=MethodKind.Constructor&&TypeParameters(caller).Length==0&&
+           !externalTypes.ContainsKey(Id(caller.ContainingType))&&!sharedFields.Contains(id)&&
+           SymbolEqualityComparer.Default.Equals(caller.ContainingType,field.ContainingType))return Name(field)+"_value";
         return Name(field)+"()";
     }
     (string setup,string target) ValueStorage(ExpressionSyntax expression,bool assignment=false){
@@ -610,7 +631,7 @@ sealed partial class Lowerer {
                 return Increment(post.Operand,post.IsKind(SyntaxKind.PostIncrementExpression),false);
             case ConditionalExpressionSyntax c:
                 var ct=model.GetTypeInfo(c).Type;
-                return "("+Expr(c.Condition)+" ? "+Converted(c.WhenTrue,ct)+" : "+Converted(c.WhenFalse,ct)+")";
+                return "("+Expr(c.Condition)+" ? "+EvaluationOperand(c.WhenTrue,ct)+" : "+EvaluationOperand(c.WhenFalse,ct)+")";
             case AssignmentExpressionSyntax assignment:return Assignment(assignment);
             case InvocationExpressionSyntax invocation:return Invoke(invocation);
             case ConditionalAccessExpressionSyntax conditional:
@@ -689,7 +710,7 @@ sealed partial class Lowerer {
         if(type?.SpecialType==SpecialType.System_String)return value;
         if(type?.SpecialType==SpecialType.System_Char)return "cs_char_string("+value+")";
         if(Integral(type)&&type?.TypeKind!=TypeKind.Enum)return "cs_integer_string("+value+")";
-        if(type?.SpecialType is SpecialType.System_Single or SpecialType.System_Double)return "pls::cs::floating_to_string("+value+")";
+        if(type?.SpecialType is SpecialType.System_Single or SpecialType.System_Double)return "pls::cs::floating_to_string("+(ArmFloat&&type.SpecialType==SpecialType.System_Single?"static_cast<float>("+value+")":value)+")";
         if(type?.SpecialType==SpecialType.System_Boolean)return "pls::cs::String("+value+"?u\"True\":u\"False\")";
         if(type?.IsReferenceType==true||type?.SpecialType==SpecialType.System_Object)return "cs_object_string(pls::cs::box("+value+"))";
         throw new Unsupported(site,"string formatting requires exact ToString contract for this value type");
@@ -746,8 +767,8 @@ sealed partial class Lowerer {
             }
         }
         var op=model.GetOperation(b) as IBinaryOperation;
-        var left=Converted(b.Left,op?.LeftOperand.Type??model.GetTypeInfo(b.Left).ConvertedType);
-        var right=Converted(b.Right,op?.RightOperand.Type??model.GetTypeInfo(b.Right).ConvertedType);
+        var left=EvaluationOperand(b.Left,op?.LeftOperand.Type??model.GetTypeInfo(b.Left).ConvertedType);
+        var right=EvaluationOperand(b.Right,op?.RightOperand.Type??model.GetTypeInfo(b.Right).ConvertedType);
         var type=model.GetTypeInfo(b).Type;string result;
         var numeric=NumericSuffix(type);
         var helper=b.Kind() switch{SyntaxKind.AddExpression=>"add",SyntaxKind.SubtractExpression=>"sub",SyntaxKind.MultiplyExpression=>"mul",SyntaxKind.DivideExpression=>"div",SyntaxKind.ModuloExpression=>"mod",SyntaxKind.LeftShiftExpression=>"shl",SyntaxKind.RightShiftExpression=>"shr",_=>""};
@@ -758,7 +779,7 @@ sealed partial class Lowerer {
             if(helper=="mod"&& (type?.SpecialType==SpecialType.System_Single||type?.SpecialType==SpecialType.System_Double))result="std::fmod(cs_left,cs_right)";
             else result="(cs_left "+token+" cs_right)";
         }
-        return "([&]() -> "+Type(type,b)+" { auto cs_left = "+left+"; auto cs_right = "+right+"; return "+result+"; }())";
+        return "([&]() -> "+(ArmFloat&&type?.SpecialType==SpecialType.System_Single?"double":Type(type,b))+" { auto cs_left = "+left+"; auto cs_right = "+right+"; return "+result+"; }())";
     }
     string Increment(ExpressionSyntax n,bool add,bool prefix) {
         var symbol=model.GetSymbolInfo(n).Symbol;var type=model.GetTypeInfo(n).Type;
@@ -801,7 +822,7 @@ sealed partial class Lowerer {
                 if(type?.SpecialType is SpecialType.System_Single or SpecialType.System_Double){
                     if(!SymbolEqualityComparer.Default.Equals(model.GetTypeInfo(a.Right).ConvertedType,type))throw new Unsupported(a,"mixed-width floating property compound assignment not lowered");
                     var op=helper switch{"add"=>"+","sub"=>"-","mul"=>"*",_=>"/"};
-                    propertyValue="static_cast<"+Type(type,a)+">(cs_old "+op+" cs_rhs)";
+                    propertyValue="static_cast<"+Type(type,a)+">("+(ArmFloat&&type?.SpecialType==SpecialType.System_Single?"static_cast<double>(cs_old) "+op+" static_cast<double>(cs_rhs)":"cs_old "+op+" cs_rhs")+")";
                 }else{
                     if(NumericSuffix(type)=="")throw new Unsupported(a,"compound property numeric promotion not lowered");
                     propertyValue="pls::cs::"+helper+"_"+NumericSuffix(type)+"(cs_old,cs_rhs)";
@@ -844,6 +865,7 @@ sealed partial class Lowerer {
             string helper=a.Kind() switch{SyntaxKind.AddAssignmentExpression=>"add",SyntaxKind.SubtractAssignmentExpression=>"sub",SyntaxKind.MultiplyAssignmentExpression=>"mul",SyntaxKind.DivideAssignmentExpression=>"div",SyntaxKind.ModuloAssignmentExpression=>"mod",_=>""};
             var suffix=NumericSuffix(type);
             var operation=helper!=""&&suffix!=""?"pls::cs::"+helper+"_"+suffix+"(cs_old,cs_rhs)":"(cs_old "+a.OperatorToken.Text.TrimEnd('=')+" cs_rhs)";
+            if(ArmFloat&&type?.SpecialType==SpecialType.System_Single)operation="(static_cast<double>(cs_old) "+a.OperatorToken.Text.TrimEnd('=')+" static_cast<double>(cs_rhs))";
             if(type?.SpecialType==SpecialType.System_String&&helper=="add") {
                 var rightType=model.GetTypeInfo(a.Right).Type;
                 if(rightType?.SpecialType==SpecialType.System_String)operation="pls::cs::String::concat(cs_old,cs_rhs)";
@@ -1707,6 +1729,7 @@ sealed partial class Lowerer {
         }
         return new { operation="roslyn-source-to-cpp17-translation", assembly=input.assembly,
             requested_symbols=input.selected.Length,requested_methods=selectedMethods.Length,
+            numeric_model=input.numeric_model,
             emitted_methods=reportedMethods,
             emitted_kairo_dependencies=emittedMetadata.Except(reportedMethods).ToArray(),
             cpp_body_count=emitted.Count,

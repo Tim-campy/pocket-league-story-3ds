@@ -13,7 +13,7 @@ SCRIPT = Path(__file__).resolve().parents[2] / 'tools/run_arm11_null.py'
 
 
 class ArmRunnerIdentity(unittest.TestCase):
-    def run_case(self, mutate):
+    def run_case(self, mutate, anchor=True):
         spec = importlib.util.spec_from_file_location('arm_runner_fixture', SCRIPT)
         runner = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(runner)
@@ -36,7 +36,8 @@ class ArmRunnerIdentity(unittest.TestCase):
             def prepare(*args, **kwargs):
                 private.mkdir(parents=True)
                 (private / 'private-manifest.json').write_text(json.dumps({
-                    'first_frame': 1, 'last_frame': 300}))
+                    'first_frame': 1, 'last_frame': 300,
+                    'replay_anchor': 'TitleForm.GetId()==1'}))
 
             class Process:
                 pid = 12345
@@ -46,7 +47,8 @@ class ArmRunnerIdentity(unittest.TestCase):
                     frames = ''.join('PLS_NULL_FRAME=' + json.dumps({
                         'frame': i, 'form_id': 4, 'wall_ns': 1000}) + '\n'
                         for i in range(1, 301))
-                    (private / 'stdout.log').write_text(frames + 'PLS_NULL_MEMORY=1\n')
+                    prefix='PLS_NULL_REPLAY_ANCHOR={"form_id":1,"boot_frames":60}\n' if anchor else ''
+                    (private / 'stdout.log').write_text(prefix + frames + 'PLS_NULL_MEMORY=1\n')
                     (private / 'stderr.log').write_text('')
                     log = output / 'launcher/user/log/azahar_log.txt'
                     log.parent.mkdir(parents=True)
@@ -72,7 +74,7 @@ class ArmRunnerIdentity(unittest.TestCase):
                     patch.object(runner.subprocess, 'STARTUPINFO', Startup, create=True), \
                     patch.object(runner.subprocess, 'STARTF_USESHOWWINDOW', 1, create=True), \
                     patch.object(runner.subprocess, 'Popen', Process), contextlib.redirect_stdout(io.StringIO()):
-                if mutate:
+                if mutate or not anchor:
                     with self.assertRaises(SystemExit) as caught:
                         runner.main()
                     self.assertEqual(caught.exception.code, 1)
@@ -94,6 +96,12 @@ class ArmRunnerIdentity(unittest.TestCase):
         report = self.run_case(False)
         self.assertEqual(report['status'], 'WINDOW_COMPLETE')
         self.assertEqual(report['image_sha256'], report['image_after_sha256'])
+
+    def test_missing_title_anchor_rejects_otherwise_complete_window(self):
+        report = self.run_case(False, anchor=False)
+        self.assertEqual(report['status'], 'UNQUALIFIED_OUTPUT')
+        self.assertFalse(report['replay_anchor_verified'])
+        self.assertNotIn('elapsed_ms', report)
 
 
 if __name__ == '__main__':

@@ -15,6 +15,8 @@
 #include "diagnostic_keys.hpp"
 #include "allocation_probe.hpp"
 #include "native_allocation_sites.hpp"
+#include "thread_cpu_clock.hpp"
+#include "resource_load_trace.hpp"
 #include <fstream>
 #include <iostream>
 #include <chrono>
@@ -148,7 +150,13 @@ int main(int argc,char**argv){
         pls::cs::GcMutatorScope mutator;pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture({1033,{9},"en",false});
         pls::sdl::install_globalization_backend();
         std::cerr<<"PLS_NULL_STAGE=catalog\n";std::cerr.flush();
-        pls::assets::Catalog assets(std::filesystem::u8path(argv[1]));pls::kairo::install_asset_catalog(&assets);
+        auto validation=pls::assets::ReadValidation::EveryPayload;
+#if defined(__3DS__)
+        const auto converted=std::filesystem::u8path(argv[1])/"converted";
+        pls::diagnostic::enable_resource_events(std::filesystem::exists(converted/"profile-resources.flag"));
+        if(std::filesystem::exists(converted/"prevalidated.sha256")&&!std::filesystem::exists(converted/"verify-on-read.flag"))validation=pls::assets::ReadValidation::PreparedCatalog;
+#endif
+        pls::assets::Catalog assets(std::filesystem::u8path(argv[1]),validation);pls::kairo::install_asset_catalog(&assets);
         const auto preferences=std::filesystem::u8path(argv[2]);
         pls::services::OfflineServices services(preferences);pls::services::install(&services);services.device_id();
         pls::kairo::configure_storage(preferences,&assets);pls::kairo::configure_capture(preferences/"captures");
@@ -161,8 +169,28 @@ int main(int argc,char**argv){
         std::cerr<<"PLS_NULL_STAGE=bootstrap\n";std::cerr.flush();
         pls::game::configure_application(app);app->host_start();
         memory_categories("after_bootstrap");
+        const auto execute_frame=[&]{
+            app->host_update();pls::kairo::Offscreen::RenderAll();if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error("Null offscreen error: "+pls::kairo::Offscreen::LastRenderError());
+            sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();pls::cs::gc_frame_end();
+        };
+#if defined(__3DS__)
+        if(std::filesystem::exists(converted/"replay-after-title.flag")){
+            std::uint64_t boot_frames=0;
+            for(;;){
+                auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
+                // TitleForm's original constructor calls base(1). Wait by
+                // observing the game, never by forcing its state or skipping LoadStart.
+                if(form&&form->GetId()==1)break;
+                if(app->IsTermination()||boot_frames>=12000)throw std::runtime_error("Benchmark did not reach TitleForm");
+                const auto start=Clock::now();pls::cs::gc_safepoint();execute_frame();++boot_frames;
+                if(boot_frames%60==0){std::fprintf(stderr,"PLS_NULL_BOOT_FRAMES=%llu\n",static_cast<unsigned long long>(boot_frames));std::fflush(stderr);}
+                pls::diagnostic::flush_resource_events();pls::kairo::UnityApplication::pace(start);
+            }
+            std::fprintf(stdout,"PLS_NULL_REPLAY_ANCHOR={\"form_id\":1,\"boot_frames\":%llu}\n",static_cast<unsigned long long>(boot_frames));std::fflush(stdout);
+        }
+#endif
         std::cerr<<"PLS_NULL_STAGE=frames\n";std::cerr.flush();
-        struct Sample{std::uint64_t frame,cpu,wall,begin,end;int form;pls::allocation_probe::Snapshot memory;};std::vector<Sample>samples;samples.reserve(last-first+1);
+        struct Sample{std::uint64_t frame,cpu,wall,begin,end;int form;pls::allocation_probe::Snapshot memory;std::uint64_t thread_ns,thread_cycles;};std::vector<Sample>samples;samples.reserve(last-first+1);
 #if defined(_WIN32)
         LARGE_INTEGER frequency;QueryPerformanceFrequency(&frequency);std::cout<<"PLS_NULL_QPC_FREQUENCY="<<frequency.QuadPart<<"\nPLS_NULL_PID="<<GetCurrentProcessId()<<"\n";
 #endif
@@ -182,11 +210,10 @@ int main(int argc,char**argv){
 #if PLS_TRACING_GC
             const auto gc_before=pls::cs::tracing_heap().statistics_and_reset_pause_peak();
 #endif
-            const auto before=pls::allocation_probe::snapshot();const auto start=Clock::now();const auto cpu=cpu_ns();const auto begin=qpc();pls::cs::gc_safepoint();
+            const auto before=pls::allocation_probe::snapshot();const auto start=Clock::now();const auto cpu=cpu_ns();const auto thread_start=pls::measurement::ThreadCpu::now();const auto begin=qpc();pls::cs::gc_safepoint();
             for(const auto&key:inputs)if(key.frame==completed){const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;canvas->KeyClick(code);}
-            app->host_update();pls::kairo::Offscreen::RenderAll();if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error("Null offscreen error: "+pls::kairo::Offscreen::LastRenderError());
-            sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();pls::cs::gc_frame_end();
-            const auto end=qpc();const auto elapsed_cpu=cpu_ns()-cpu;const auto elapsed_wall=std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();
+            execute_frame();
+            const auto end=qpc();const auto thread_end=pls::measurement::ThreadCpu::now();const auto elapsed_cpu=cpu_ns()-cpu;const auto elapsed_wall=std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();
             auto after=pls::allocation_probe::snapshot();after.allocations-=before.allocations;after.bytes-=before.bytes;after.collections-=before.collections;after.collection_ns-=before.collection_ns;
 #if PLS_TRACING_GC
             const auto gc_after=pls::cs::tracing_heap().statistics();
@@ -196,14 +223,15 @@ int main(int argc,char**argv){
 #endif
             pls::allocation_sites::window(-1);
             pls::source_allocations::window(-1);
-            if(completed+1>=first&&completed+1<=last){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;samples.push_back({completed+1,elapsed_cpu,std::uint64_t(elapsed_wall),begin,end,form?form->GetId():-1,after});}
+            if(completed+1>=first&&completed+1<=last){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;samples.push_back({completed+1,elapsed_cpu,std::uint64_t(elapsed_wall),begin,end,form?form->GetId():-1,after,thread_end.ns-thread_start.ns,thread_end.cycles-thread_start.cycles});}
             if(completed+1==first||completed+1==last){std::cerr<<"PLS_NULL_WINDOW="<<(completed+1)<<"\n";std::cerr.flush();}
             if(completed+1<first&&completed%60==0){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;std::fprintf(stderr,"PLS_NULL_WARMUP_END=%llu form=%d\n",static_cast<unsigned long long>(completed+1),form?form->GetId():-1);std::fflush(stderr);}
             if(completed+1==last)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC"))std::ofstream(std::string(sync)+".done")<<"done\n";
-            pls::kairo::UnityApplication::pace(start);
+            pls::diagnostic::flush_resource_events();pls::kairo::UnityApplication::pace(start);
         }
         for(const auto&s:samples)std::cout<<"PLS_NULL_FRAME={\"frame\":"<<s.frame<<",\"cpu_ns\":"<<s.cpu<<",\"wall_ns\":"<<s.wall<<",\"form_id\":"<<s.form<<",\"cpp_allocations\":"<<s.memory.allocations<<",\"cpp_allocation_bytes\":"<<s.memory.bytes<<",\"collections\":"<<s.memory.collections<<",\"collection_ns\":"<<s.memory.collection_ns<<",\"longest_collection_ns\":"<<s.memory.longest_collection_ns<<"}\n";
         for(const auto&s:samples)std::cout<<"PLS_NULL_QPC="<<s.frame<<","<<s.begin<<","<<s.end<<"\n";
+        for(const auto&s:samples)std::cout<<"PLS_NULL_THREAD={\"frame\":"<<s.frame<<",\"cpu_ns\":"<<s.thread_ns<<",\"cycles\":"<<s.thread_cycles<<",\"wall_ns\":"<<s.wall<<"}\n";
         pls::allocation_sites::dump(stdout);
         pls::source_allocations::dump(stdout);
         gc_measurement("after_window");memory_categories("after_window");memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==last-first+1?0:3;

@@ -48,13 +48,14 @@ void collect_without_caller_roots(Heap& heap) {
     heap.leave();
     std::exception_ptr failure;
     std::thread collector([&]{try{
+        // Reused worker stacks can retain addresses from previous fixtures.
+        // Exact-reclamation tests must not count those conservative roots.
 #if defined(__3DS__)
-        // libctru reuses malloc-backed worker stacks without zeroing them.
-        // Overwrite the retired test worker's unused frame slots, so this
-        // exact-reclamation assertion is not testing conservative false roots.
         volatile std::uintptr_t clean_frame[1024]{};
-        (void)clean_frame;
+#else
+        volatile std::uintptr_t clean_frame[8192]{};
 #endif
+        (void)clean_frame;
         Mutator scope(heap);heap.collect();
     }catch(...){failure=std::current_exception();}});
     collector.join();heap.enter();
@@ -183,7 +184,9 @@ void workers() {
 #if defined(__3DS__)
     std::printf("workers_after_drop objects=%u roots=%u\n",unsigned(heap.statistics().objects),unsigned(heap.statistics().last_roots));std::fflush(stdout);
 #endif
-    check(heap.statistics().objects == 0);
+    // Leaf nodes may be conservatively retained by recycled stack words.
+    // Every surviving node must still be accounted for as a captured root.
+    check(heap.statistics().last_explicit_roots==0);check(heap.statistics().objects==heap.statistics().last_roots);
 }
 void native_waits() {
     Heap heap; Mutator mutator(heap);
@@ -342,6 +345,107 @@ void retained_memory_and_growth() {
     check(heap.statistics().peak_bytes>=sizeof(Buffers)+16384);
     root=nullptr;heap.collect();check(heap.statistics().bytes==0);
 }
+void page_index_boundaries() {
+    Heap heap;Mutator mutator(heap);
+    struct Buffer { std::vector<unsigned char> bytes; unsigned id=0; };
+    std::vector<const void*> roots;
+    Roots provider(heap,[&](Edges edges){for(auto pointer:roots)edges(pointer);});
+    Descriptor descriptor;
+    descriptor.ranges=[](const void* p,Ranges ranges){
+        const auto& bytes=static_cast<const Buffer*>(p)->bytes;
+        ranges(bytes.data(),bytes.size()-1); // Final allocated byte is outside the registered range.
+    };
+    isolated(heap,[&]{
+        for(unsigned i=0;i<192;++i){
+            auto buffer=make_described<Buffer>(heap,descriptor);
+            buffer->id=i;buffer->bytes.resize(8194+i);
+            // Live last-byte pointers cross multiple page boundaries. Other
+            // roots address exactly the excluded end, still inside malloc.
+            roots.push_back(buffer->bytes.data()+buffer->bytes.size()-(i%3==0?2:1));
+        }
+        roots.push_back(nullptr);
+        roots.push_back(reinterpret_cast<const void*>(static_cast<std::uintptr_t>(-1)));
+    });
+    // Main-thread NativeWait snapshots can contain addresses recycled from
+    // earlier fixtures. Exclude that caller, keeping the explicit provider.
+    collect_without_caller_roots(heap);
+    check(heap.statistics().last_explicit_roots==64);check(heap.statistics().objects==heap.statistics().last_roots);
+    check(heap.statistics().reclaimed_objects==192-heap.statistics().objects);
+    bool seen[192]{};
+    heap.inspect([&](void* p,std::size_t,const Descriptor&){
+        auto id=static_cast<Buffer*>(p)->id;check(id<192);check(!seen[id]);seen[id]=true;
+    });
+    for(unsigned i=0;i<192;i+=3)check(seen[i]);
+    collect_without_caller_roots(heap); // Reuse the page table and interval storage.
+    check(heap.statistics().last_explicit_roots==64);check(heap.statistics().objects==heap.statistics().last_roots);
+    roots.clear();collect_without_caller_roots(heap);
+    check(heap.statistics().last_explicit_roots==0);check(heap.statistics().objects==heap.statistics().last_roots);
+}
+void accounting_cross_body_and_overlap() {
+    Heap heap;Mutator mutator(heap);
+    struct Holder {Node* other=nullptr;std::vector<unsigned char> bytes;};
+    Descriptor descriptor;
+    descriptor.trace=[](const void* p,Edges edges){edges(static_cast<const Holder*>(p)->other);};
+    descriptor.retained_ranges=[](const void* p,Ranges ranges){
+        const auto holder=static_cast<const Holder*>(p);
+        ranges(holder,sizeof(Holder));
+        ranges(holder->other,sizeof(Node)); // Already counted as another object's body.
+        ranges(reinterpret_cast<const unsigned char*>(holder->other)+1,sizeof(Node)-2);
+        ranges(holder->bytes.data(),holder->bytes.capacity());
+        if(holder->bytes.capacity()>8)ranges(holder->bytes.data()+8,holder->bytes.capacity()-8);
+    };
+    auto holder=make_described<Holder>(heap,descriptor);
+    holder->other=make<Node>(heap,&Node::trace);holder->bytes.reserve(64);
+    Roots root(heap,[&](Edges edges){edges(holder);});
+    heap.refresh_memory_accounting();
+    check(heap.statistics().body_bytes==sizeof(Holder)+sizeof(Node));
+    check(heap.statistics().external_bytes==holder->bytes.capacity());
+    holder->bytes.reserve(256);heap.refresh_memory_accounting();
+    check(heap.statistics().bytes==sizeof(Holder)+sizeof(Node)+holder->bytes.capacity());
+    heap.collect();
+    check(heap.statistics().external_bytes==holder->bytes.capacity());
+}
+void record_index_churn() {
+    Heap heap;Mutator mutator(heap);std::vector<const void*> live;
+    Roots provider(heap,[&](Edges edges){for(auto p:live)edges(p);});
+    for(unsigned round=0;round<32;++round){
+        isolated(heap,[&]{for(unsigned i=0;i<257;++i){auto p=make<Node>(heap,&Node::trace);if(i%17==0)live.push_back(p);}});
+        collect_without_caller_roots(heap);check(heap.statistics().last_explicit_roots==live.size());check(heap.statistics().objects==heap.statistics().last_roots);
+        live.clear();collect_without_caller_roots(heap);check(heap.statistics().last_explicit_roots==0);check(heap.statistics().objects==heap.statistics().last_roots);
+    }
+}
+void immutable_buffer_accounting() {
+    struct Buffer {std::vector<std::uintptr_t> values;explicit Buffer(std::size_t n):values(n){}};
+    static std::atomic<int> calls{0};calls=0;
+    Descriptor descriptor;descriptor.stable_ranges=true;
+    descriptor.ranges=[](const void* p,Ranges ranges){
+        ++calls;const auto b=static_cast<const Buffer*>(p);
+        ranges(b->values.data(),b->values.capacity()*sizeof(std::uintptr_t));
+    };
+    Heap heap;Mutator mutator(heap);const void* root=nullptr;
+    Roots provider(heap,[&](Edges edges){edges(root);});
+    isolated(heap,[&]{
+        auto buffer=make_described<Buffer>(heap,descriptor,2048);
+        auto scalar_only=make<Node>(heap,&Node::trace);
+        buffer->values[0]=reinterpret_cast<std::uintptr_t>(scalar_only);
+        root=buffer->values.data()+2047;
+        check(heap.statistics().external_bytes==buffer->values.capacity()*sizeof(std::uintptr_t));
+    });
+    check(calls==1);
+    heap.refresh_memory_accounting();check(calls==1); // Per-frame accounting reuses immutable metadata.
+    isolated(heap,[&]{heap.collect();});
+    check(calls==1); // Fixed addresses remain indexed; collection does not enumerate them again.
+    check(heap.statistics().objects==1); // Primitive buffer bytes are never traced as pointers.
+    check(heap.contains(root));
+    root=nullptr;collect_without_caller_roots(heap);
+    check(heap.statistics().bytes==0);
+    heap.limit(sizeof(Buffer)+1);
+    bool exhausted=false;try{(void)make_described<Buffer>(heap,descriptor,32);}catch(const std::bad_alloc&){exhausted=true;}
+    check(exhausted);check(heap.statistics().objects==0);check(heap.statistics().bytes==0);
+    heap.limit(static_cast<std::size_t>(-1));
+    isolated(heap,[&]{auto b=make_described<Buffer>(heap,descriptor,32);root=b->values.data();});
+    heap.collect();check(heap.statistics().objects==1);
+}
 }
 int main() {
 #if defined(__3DS__)
@@ -371,6 +475,10 @@ int main() {
         RUN_FIXTURE(nested_construction); RUN_FIXTURE(workers); RUN_FIXTURE(native_waits); RUN_FIXTURE(timeout_and_limit);
         RUN_FIXTURE(concurrent_collectors); RUN_FIXTURE(descriptor_failure); RUN_FIXTURE(runtime_weak_cache);
         RUN_FIXTURE(retired_dynamic_payload_address);
+        RUN_FIXTURE(page_index_boundaries);
+        RUN_FIXTURE(accounting_cross_body_and_overlap);
+        RUN_FIXTURE(immutable_buffer_accounting);
+        RUN_FIXTURE(record_index_churn);
         RUN_FIXTURE(retained_memory_and_growth);
 #undef RUN_FIXTURE
 #if defined(__3DS__)

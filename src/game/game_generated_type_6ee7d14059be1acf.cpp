@@ -298,7 +298,7 @@ return v_vector_27697;
 pls::cs::Ref<cs_6ee7d14059be1acf> cs_f8eb247e2413618b() { cs_init_6ee7d14059be1acf();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingManager.GetInstance",game);
 {
-return cs_33c160ec018e286a();
+return cs_33c160ec018e286a_value;
 }
 }
 }

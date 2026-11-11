@@ -1,16 +1,16 @@
 {
   "operation": "tracing-measurement-metadata",
-  "producer_sha256": "95488bbe082df4a46fc923ce884dbe7df0e78343a562b1116bbcf1ed60995f9f",
+  "producer_sha256": "0b07661b8a022ba4f634ec8f08bc27c41cd4965547e62bfc7569955085388987",
   "arm_fixture": {
     "build": {
       "path": "build/ctr-gc-fixture/build-proof.json",
-      "sha256": "beec4030b79377b916acad51f4f0ea31d60d3ed0306e20b7bf28c9b606cf37fa"
+      "sha256": "bbb980a9d5434c998a8ae080714b882f44be07703d72bf1b69eeae410a5500ac"
     },
     "inputs": {
-      "src\\runtime\\tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
-      "src\\runtime\\tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae",
+      "src\\runtime\\tracing_gc.cpp": "2ad9973ff217575c4f2083974660066264f0d58d5b92e855ab4fd11358243cba",
+      "src\\runtime\\tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596",
       "src\\runtime\\ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
-      "tests\\translator\\tracing_gc_fixtures.cpp": "60bf3152e7daa0ad85fbc11d1621204762e373c8bf7c3878172fc86d829a14cf",
+      "tests\\translator\\tracing_gc_fixtures.cpp": "fd23ae53966ac7c252e98d7f270750611326db7894d66b5ff2da92528213b56c",
       "tests\\translator\\tracing_gc_register_arm.S": "a514f12e6a81dc02c11e6b57ff3ab308300654f0a5e4879c32aabd0a14af1b94",
       "tools\\ctr-gc-fixture\\CMakeLists.txt": "ba7fc74d5d01f8e63e7f97f5fc2392f47218e73d2a275184cddf0165d7eb8ff6",
       "tools\\build_ctr_gc_fixture.py": "1c6bca9200c181eb02f28ab7ac9af9ad7bde1e0eb7c7b82508bf30c3407f7da2",
@@ -18,27 +18,27 @@
       "src\\runtime\\ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
       "tools\\cmake\\ctr_thread_lifecycle.cmake": "0f540cf001fd74f664ac062ba6515098ad2d681267b4e1a82be1b56e224e257a"
     },
-    "image_sha256": "bbb1e4e848a0ce42f8ebae73ed690fb6d27e598bf59d852eb2e77cbd6c44a2d6",
+    "image_sha256": "e2ec4fe55521dabc9b64e72f0b7f3a3d4e33eaf67a0c655b3a4a547855440662",
     "runs": [
       {
         "model": "new",
-        "assertions": 60,
+        "assertions": 403,
         "status": "PASS",
         "evidence": {
-          "path": "build/ctr-gc-fixture/run-new-16/result.json",
-          "sha256": "0f636b47bbb4fdea229fd7d2cdda63cc0a22cab9ea8de39b8eadb3aa2301844e"
+          "path": "build/ctr-gc-fixture/bulk-null-new/result.json",
+          "sha256": "14ab950b75334d856685639b80565987480f167f5e8d430ab4c703ca1cad8bb3"
         },
-        "emulator_log_sha256": "a420a23fc95b16996176aa98f42602d2d6139324ff776408d4cfebe67f8a1511"
+        "emulator_log_sha256": "e97921bcc10aa2f3a099c0f46816ed8b634a23d3f63d1f329c1547502c7ca7c8"
       },
       {
         "model": "old",
-        "assertions": 60,
+        "assertions": 403,
         "status": "PASS",
         "evidence": {
-          "path": "build/ctr-gc-fixture/run-old-4/result.json",
-          "sha256": "caa9db6aeb8ecaa7a4128c9ede1cf661b3291951222bf0bb5c13875c1625ba15"
+          "path": "build/ctr-gc-fixture/bulk-null-old/result.json",
+          "sha256": "ea570ff34b3b33d18053716e85989848a22a46e33859389f5d234fb94d6ef5af"
         },
-        "emulator_log_sha256": "a22114cf77821ac91e54ab127c55b2f7f9d17c02939d682131eba1c144a8974a"
+        "emulator_log_sha256": "49ba1e29e2e09d6cfdc60ba6239b53f644403dcab31932cdd8df24e1251a2e18"
       }
     ],
     "game_boot": false,
@@ -487,10 +487,10 @@
     },
     "scope": "Intermediate accounting implementation, not current runtime"
   },
-  "current_runtime_cpu": "UNKNOWN",
-  "android_execution": "UNKNOWN",
+  "current_runtime_cpu": "See hash-bound config/phase2-runtime-cost.json; later edits are not implicitly measured",
+  "android_execution": "ARM emulator numerical oracle confirmed; physical device pending",
   "hardware_execution": "UNKNOWN",
-  "current_gc_windows": [
+  "historical_gc_windows": [
     {
       "scenario": "menu",
       "evidence": {

@@ -49,7 +49,9 @@ class Image : public cs::Object {
     cs::Delegate<cs::Array<std::uint8_t>()> source_loader_;
     cs::String file_,palette_file_;
     std::int32_t rs_id_{-1},rc_id_{-1};
-    std::vector<std::uint8_t> rgba_;
+    mutable std::vector<std::uint8_t> rgba_,ctr_rgba_;
+    void assign_pixels(std::vector<std::uint8_t>,bool tiled);
+    void ensure_linear()const;
     std::int32_t alpha_type_{-1};
     static void track_created(const cs::Ref<Image>&,bool generated);
     friend class Graphics;
@@ -100,7 +102,7 @@ public:
     void Use();void Unuse();
     bool get_IsDisposed()const{return disposed_;}
     bool native_resident()const{return alive_;}
-    void memory_ranges(const memory::RangeVisitor&visit)const override{visit(rgba_.data(),rgba_.capacity(),memory::Category::textures);}
+    void memory_ranges(const memory::RangeVisitor&visit)const override{visit(rgba_.data(),rgba_.capacity(),memory::Category::textures);visit(ctr_rgba_.data(),ctr_rgba_.capacity(),memory::Category::textures);}
     void SetExpiration(bool yes,std::int32_t frames=-1){lock_expiration_=!yes;validate_frames_=frames;}
     bool IsExpiration()const{return !lock_expiration_;}
     static void SetSourceImageMaxCount(std::int32_t);

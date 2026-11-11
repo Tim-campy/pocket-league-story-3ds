@@ -2,9 +2,7 @@
 #include "source_allocation_probe.hpp"
 #include "memory_ranges.hpp"
 #include "../../runtime/managed_reference.hpp"
-#if PLS_TRACING_GC
 #include "../../runtime/tracing_gc.hpp"
-#endif
 // New implementation of the measured C# language contract; no original assets.
 #include <algorithm>
 #include <cmath>
@@ -72,6 +70,10 @@ PLS_CS_EXCEPTION(ArgumentOutOfRangeException,ArgumentException,"System.ArgumentO
 PLS_CS_EXCEPTION(IOException,SystemException,"System.IO.IOException")
 PLS_CS_EXCEPTION(EndOfStreamException,IOException,"System.IO.EndOfStreamException")
 #undef PLS_CS_EXCEPTION
+
+[[noreturn]] void throw_null_reference();
+[[noreturn]] void throw_array_bounds();
+[[noreturn]] void throw_array_type_mismatch();
 
 enum class RuntimeProfile { DotNet, UnityMono265 };
 // Set once by the host before starting workers. It is not a per-method option.
@@ -167,7 +169,9 @@ template<class To,class From>To conv_signed(From value)noexcept{
     static_assert(std::is_floating_point_v<From>&&std::is_integral_v<To>&&std::is_signed_v<To>);
     if(std::isnan(value))return runtime_profile==RuntimeProfile::UnityMono265?std::numeric_limits<To>::min():To(0);
     const long double number=static_cast<long double>(value);
-    const long double lower=-std::ldexp(static_cast<long double>(1),sizeof(To)*8-1),upper=-lower;
+    // Signed minima are exact powers of two in every supported FP format.
+    // Keep the exclusive upper bound without a runtime libm call per cast.
+    constexpr long double lower=static_cast<long double>(std::numeric_limits<To>::min()),upper=-lower;
     if(number>=upper)return runtime_profile==RuntimeProfile::UnityMono265?std::numeric_limits<To>::min():std::numeric_limits<To>::max();
     if(number<lower)return std::numeric_limits<To>::min();
     return static_cast<To>(value); // Only finite, representable values reach the native cast.
@@ -278,6 +282,8 @@ public:
 gc::Heap& tracing_heap();
 void ensure_gc_thread();
 #endif
+template<class T,class=void>struct stable_gc_buffers:std::false_type{};
+template<class T>struct stable_gc_buffers<T,std::void_t<decltype(T::pls_stable_gc_buffers)>>:std::bool_constant<T::pls_stable_gc_buffers>{};
 template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
 #if PLS_TRACING_GC
     static_assert(std::is_base_of_v<Object,T>,"Managed allocation requires an exact Object descriptor");
@@ -285,9 +291,10 @@ template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
         ensure_gc_thread();
         gc::Descriptor descriptor;
         descriptor.managed_base=[](void* pointer)->void*{return static_cast<Object*>(static_cast<T*>(pointer));};
-        descriptor.trace=[](const void* pointer,gc::Edges edges){
+        if constexpr(!std::is_same_v<decltype(&T::trace_edges),decltype(&Object::trace_edges)>)descriptor.trace=[](const void* pointer,gc::Edges edges){
             static_cast<const T*>(pointer)->trace_edges([edges](const Ref<Object>& child){edges(child);});
         };
+        if constexpr(!std::is_same_v<decltype(&T::memory_ranges),decltype(&Object::memory_ranges)>){
         descriptor.ranges=[](const void* pointer,gc::Ranges ranges){
             static_cast<const T*>(pointer)->memory_ranges([ranges](const void* begin,std::size_t bytes,memory::Category category){
                 if(category==memory::Category::managed_heap)ranges(begin,bytes);
@@ -296,17 +303,23 @@ template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
         descriptor.retained_ranges=[](const void* pointer,gc::Ranges ranges){
             static_cast<const T*>(pointer)->memory_ranges([ranges](const void* begin,std::size_t bytes,memory::Category){ranges(begin,bytes);});
         };
+        }
+        descriptor.stable_ranges=stable_gc_buffers<T>::value;
         return gc::make_described<T>(tracing_heap(),descriptor,std::forward<Args>(args)...);
     }catch(const std::bad_alloc&){throw OutOfMemoryException();}
     catch(const std::logic_error&error){throw InvalidOperationException(error.what());}
 #else
-    try{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,sizeof(T),result.get());return result;}
+    try{
+        if constexpr(gc::Allocation<T>::custom){auto allocation=gc::Allocation<T>::create(std::forward<Args>(args)...);auto bytes=gc::Allocation<T>::bytes(*allocation);auto result=std::shared_ptr<T>(std::move(allocation));if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,bytes,result.get());return result;}
+        else{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,sizeof(T),result.get());return result;}
+    }
     catch(const std::bad_alloc&){throw OutOfMemoryException();}
 #endif
 }
 
 class String {
     struct Storage : Object {
+        static constexpr bool pls_stable_gc_buffers=true;
         const std::u16string value;
         void memory_ranges(const memory::RangeVisitor&visit)const override{visit(value.data(),(value.capacity()+1)*sizeof(char16_t),memory::Category::managed_heap);}
         explicit Storage(std::u16string v):value(std::move(v)){}
@@ -383,6 +396,13 @@ inline Ref<ArrayBase>array_cast(const Ref<Object>&value){auto result=pls::cs::dy
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count);
 
 template<class T>class Array;
+template<class Signature>class Delegate;
+// These wrappers are value-sized in C++, but each element is a managed
+// reference in the 32-bit source ABI (including jagged arrays).
+template<class T>struct is_managed_reference_element:is_shared_ref<T>{};
+template<>struct is_managed_reference_element<String>:std::true_type{};
+template<class T>struct is_managed_reference_element<Array<T>>:std::true_type{};
+template<class Signature>struct is_managed_reference_element<Delegate<Signature>>:std::true_type{};
 template<class T>struct managed_type_name_traits {
     static std::string name(){throw NotSupportedException(std::string("Managed type name requires generated metadata for this value type: ")+typeid(T).name());}
 };
@@ -421,53 +441,73 @@ template<class T>struct reference_assignability<T,std::void_t<decltype(T::source
     static bool is_a(const std::type_info& target){return target==typeid(T)||T::source_reference_assignable(target);}
 };
 
-template<class T> class Array {
+template<bool Enabled>struct ArrayViewStorage {
+    Ref<ArrayBase> array_view_{};
+    const Ref<ArrayBase>& covariance_view()const noexcept{return array_view_;}
+    void set_covariance_view(Ref<ArrayBase> value){array_view_=std::move(value);}
+};
+template<>struct ArrayViewStorage<false> {
+    Ref<ArrayBase> covariance_view()const noexcept{return {};}
+};
+template<class T> class Array : private ArrayViewStorage<is_shared_ref<T>::value> {
+    using ArrayViewStorage<is_shared_ref<T>::value>::covariance_view;
     struct Storage : ArrayBase {
+        static constexpr bool pls_stable_gc_buffers=true;
         std::int32_t size;
-        std::unique_ptr<T[]> values;
-        void memory_ranges(const memory::RangeVisitor&visit)const override{visit(values.get(),static_cast<std::size_t>(size)*sizeof(T),memory::Category::managed_heap);}
-        static std::unique_ptr<T[]> allocate(std::int32_t n){
+        // A real placement-constructed T[n] follows the header. No flexible
+        // member or pointer arithmetic outside an array object is used.
+        static constexpr std::size_t alignment(){return alignof(T)>64?alignof(T):64;}
+        static constexpr std::size_t payload_offset(){return (sizeof(Storage)+alignof(T)-1)/alignof(T)*alignof(T);}
+        static std::size_t allocation_bytes(std::int32_t n){
             // The source target is 32-bit Mono. A reference-array payload plus
             // its 16-byte MonoArray header must fit its 32-bit byte count.
             // Do not let a 64-bit development host attempt a 17 GB allocation
             // which the source runtime rejects before calling its allocator.
-            if constexpr(is_shared_ref<T>::value){
+            if constexpr(is_managed_reference_element<T>::value){
                 constexpr std::uint64_t max_reference_count=(UINT64_C(0xffffffff)-16)/4;
                 if(static_cast<std::uint64_t>(n)>max_reference_count)throw OutOfMemoryException();
             }
-            return n?std::make_unique<T[]>(static_cast<std::size_t>(n)):nullptr;
+            if(n<0)throw OverflowException();
+            if(static_cast<std::size_t>(n)>(std::numeric_limits<std::size_t>::max()-payload_offset())/sizeof(T))throw OutOfMemoryException();
+            return payload_offset()+static_cast<std::size_t>(n)*sizeof(T);
         }
-        explicit Storage(std::int32_t n):size(n),values(allocate(n)){}
+        static void* operator new(std::size_t,std::int32_t n){return ::operator new(allocation_bytes(n),std::align_val_t(alignment()));}
+        static void operator delete(void* p)noexcept{::operator delete(p,std::align_val_t(alignment()));}
+        static void operator delete(void* p,std::int32_t)noexcept{Storage::operator delete(p);}
+        T* values()const noexcept{return size?std::launder(reinterpret_cast<T*>(reinterpret_cast<std::uintptr_t>(this)+payload_offset())):nullptr;}
+        explicit Storage(std::int32_t n):size(n){if(n)::new(reinterpret_cast<void*>(reinterpret_cast<std::uintptr_t>(this)+payload_offset())) T[static_cast<std::size_t>(n)]{};}
+        ~Storage()override{if(size)std::destroy_n(values(),size);}
+        static std::unique_ptr<Storage> pls_allocate(std::int32_t n){return std::unique_ptr<Storage>(new(n) Storage(n));}
+        std::size_t pls_allocation_bytes()const{return allocation_bytes(size);}
         std::int32_t get_Length()const override{return size;}
         std::string managed_type_name()const override{return managed_type_name_traits<T>::name()+"[]";}
         const std::type_info&element_type()const noexcept override{return typeid(T);}
-        void trace_edges(const EdgeVisitor&visitor)const override{for(std::int32_t i=0;i<size;++i)trace_value(values[static_cast<std::size_t>(i)],visitor);}
-        void release_edges()override{for(std::int32_t i=0;i<size;++i)release_value(values[static_cast<std::size_t>(i)]);}
+        void trace_edges(const EdgeVisitor&visitor)const override{for(std::int32_t i=0;i<size;++i)trace_value(values()[static_cast<std::size_t>(i)],visitor);}
+        void release_edges()override{for(std::int32_t i=0;i<size;++i)release_value(values()[static_cast<std::size_t>(i)]);}
         bool reference_element_is_a(const std::type_info& target)const override{
             if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;return reference_assignability<E>::is_a(target);}
             else return false;
         }
         Ref<Object> reference_item(std::int32_t index)const override{
-            if(index<0||index>=size)throw IndexOutOfRangeException();
-            if constexpr(is_shared_ref<T>::value)return pls::cs::dynamic_pointer_cast<Object>(values[static_cast<std::size_t>(index)]);
-            else throw ArrayTypeMismatchException();
+            if(index<0||index>=size)throw_array_bounds();
+            if constexpr(is_shared_ref<T>::value)return pls::cs::dynamic_pointer_cast<Object>(values()[static_cast<std::size_t>(index)]);
+            else throw_array_type_mismatch();
         }
         void reference_item(std::int32_t index,const Ref<Object>& value)override{
-            if(index<0||index>=size)throw IndexOutOfRangeException();
-            if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;auto typed=pls::cs::dynamic_pointer_cast<E>(value);if(value&&!typed)throw ArrayTypeMismatchException();values[static_cast<std::size_t>(index)]=std::move(typed);}
-            else throw ArrayTypeMismatchException();
+            if(index<0||index>=size)throw_array_bounds();
+            if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;auto typed=pls::cs::dynamic_pointer_cast<E>(value);if(value&&!typed)throw_array_type_mismatch();values()[static_cast<std::size_t>(index)]=std::move(typed);}
+            else throw_array_type_mismatch();
         }
-        Ref<ArrayBase> clone_storage()const override{auto result=make_ref<Storage>(size);for(std::int32_t i=0;i<size;++i)result->values[static_cast<std::size_t>(i)]=values[static_cast<std::size_t>(i)];return result;}
+        Ref<ArrayBase> clone_storage()const override{auto result=make_ref<Storage>(size);for(std::int32_t i=0;i<size;++i)result->values()[static_cast<std::size_t>(i)]=values()[static_cast<std::size_t>(i)];return result;}
         bool copy_same_to(ArrayBase&dest,std::int32_t source_index,std::int32_t dest_index,std::int32_t count)const override{
             auto target=dynamic_cast<Storage*>(&dest);if(!target)return false;
-            if(target==this&&dest_index>source_index){for(std::int32_t i=count;i>0;--i)target->values[static_cast<std::size_t>(dest_index+i-1)]=values[static_cast<std::size_t>(source_index+i-1)];}
-            else for(std::int32_t i=0;i<count;++i)target->values[static_cast<std::size_t>(dest_index+i)]=values[static_cast<std::size_t>(source_index+i)];
+            if(target==this&&dest_index>source_index){for(std::int32_t i=count;i>0;--i)target->values()[static_cast<std::size_t>(dest_index+i-1)]=values()[static_cast<std::size_t>(source_index+i-1)];}
+            else for(std::int32_t i=0;i<count;++i)target->values()[static_cast<std::size_t>(dest_index+i)]=values()[static_cast<std::size_t>(source_index+i)];
             return true;
         }
     };
     Ref<Storage> data_{};
-    Ref<ArrayBase> view_{};
-    const Storage& require()const{if(view_)throw ArrayTypeMismatchException();if(!data_)throw NullReferenceException();return *data_;}
+    const Storage& require()const{if(covariance_view())throw_array_type_mismatch();if(!data_)throw_null_reference();return *data_;}
 public:
     Array()noexcept=default;
     Array(std::nullptr_t)noexcept{}
@@ -481,39 +521,39 @@ public:
     static Array from(std::initializer_list<T> values) {
         if(values.size()>static_cast<std::size_t>(std::numeric_limits<std::int32_t>::max()))throw OutOfMemoryException();
         Array result=make(static_cast<std::int32_t>(values.size()));
-        std::copy(values.begin(),values.end(),result.data_->values.get());return result;
+        std::copy(values.begin(),values.end(),result.data_->values());return result;
     }
-    bool is_null()const noexcept{return !data_&&!view_;}
-    Ref<Object> as_object()const{return view_?view_:data_;}
+    bool is_null()const noexcept{return !data_&&!covariance_view();}
+    Ref<Object> as_object()const{return covariance_view()?covariance_view():data_;}
     static Array from_object(const Ref<Object>&object){
         Array result;if(!object)return result;result.data_=pls::cs::dynamic_pointer_cast<Storage>(object);if(result.data_)return result;
-        if constexpr(is_shared_ref<T>::value){auto array=pls::cs::dynamic_pointer_cast<ArrayBase>(object);if(array&&array->reference_element_is_a(typeid(typename is_shared_ref<T>::element_type))){result.view_=std::move(array);return result;}}
+        if constexpr(is_shared_ref<T>::value){auto array=pls::cs::dynamic_pointer_cast<ArrayBase>(object);if(array&&array->reference_element_is_a(typeid(typename is_shared_ref<T>::element_type))){result.set_covariance_view(std::move(array));return result;}}
         throw InvalidCastException();
     }
     template<class U>static Array covariant_from(const Array<U>& source){static_assert(is_shared_ref<T>::value&&is_shared_ref<U>::value);return from_object(source.as_object());}
-    std::int32_t length()const{if(view_)return view_->get_Length();return require().size;}
+    std::int32_t length()const{if(covariance_view())return covariance_view()->get_Length();return require().size;}
     T& at(std::int32_t index)const {
-        if(view_){if(index<0||index>=view_->get_Length())throw IndexOutOfRangeException();throw ArrayTypeMismatchException();}
-        const auto& s=require();if(index<0 || index>=s.size)throw IndexOutOfRangeException();
-        return s.values[static_cast<std::size_t>(index)];
+        if(covariance_view()){if(index<0||index>=covariance_view()->get_Length())throw_array_bounds();throw_array_type_mismatch();}
+        const auto& s=require();if(static_cast<std::uint32_t>(index)>=static_cast<std::uint32_t>(s.size))throw_array_bounds();
+        return s.values()[static_cast<std::size_t>(index)];
     }
     T& operator[](std::int32_t index)const{return at(index);}
     T get_Item(std::int32_t index)const{
-        if(!view_)return at(index);
-        if constexpr(is_shared_ref<T>::value){auto value=view_->reference_item(index);auto result=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
-        else throw ArrayTypeMismatchException();
+        if(!covariance_view())return at(index);
+        if constexpr(is_shared_ref<T>::value){auto value=covariance_view()->reference_item(index);auto result=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
+        else throw_array_type_mismatch();
     }
     void set_Item(std::int32_t index,T value)const{
-        if(!view_){at(index)=std::move(value);return;}
-        if constexpr(is_shared_ref<T>::value)view_->reference_item(index,pls::cs::dynamic_pointer_cast<Object>(value));
-        else throw ArrayTypeMismatchException();
+        if(!covariance_view()){at(index)=std::move(value);return;}
+        if constexpr(is_shared_ref<T>::value)covariance_view()->reference_item(index,pls::cs::dynamic_pointer_cast<Object>(value));
+        else throw_array_type_mismatch();
     }
     Array clone()const {
-        if(view_)return from_object(view_->clone_storage());
+        if(covariance_view())return from_object(covariance_view()->clone_storage());
         Array result=make(length());for(std::int32_t i=0;i<length();++i)result.at(i)=at(i);return result;
     }
     static void copy(const Array& source,std::int32_t source_index,const Array& dest,std::int32_t dest_index,std::int32_t count) {
-        if(source.view_||dest.view_){array_copy(array_cast(source.as_object()),source_index,array_cast(dest.as_object()),dest_index,count);return;}
+        if(source.covariance_view()||dest.covariance_view()){array_copy(array_cast(source.as_object()),source_index,array_cast(dest.as_object()),dest_index,count);return;}
         if(source.is_null())throw ArgumentNullException();if(dest.is_null())throw ArgumentNullException();
         if(source_index<0 || dest_index<0 || count<0)throw ArgumentOutOfRangeException();
         if(static_cast<std::int64_t>(source_index)+count>source.length() || static_cast<std::int64_t>(dest_index)+count>dest.length())throw ArgumentException();
@@ -525,7 +565,7 @@ public:
     friend bool operator!=(const Array&a,const Array&b)noexcept{return !(a==b);}
 };
 
-template<class T>Ref<T> nonnull(Ref<T> value){if(!value)throw NullReferenceException();return value;}
+template<class T>Ref<T> nonnull(Ref<T> value){if(!value)throw_null_reference();return value;}
 Array<std::uint8_t>encoding_utf8_get_bytes(const String&value);
 String encoding_utf8_get_string(const Array<std::uint8_t>&value);
 String encoding_utf8_get_string(const Array<std::uint8_t>&value,std::int32_t offset,std::int32_t count);
@@ -586,15 +626,39 @@ template<class R,class...Args>class Delegate<R(Args...)> {
     // cycle collector sees shared ownership once, not duplicate target edges
     // from each value-wrapper copy.
     struct InvocationList final:Object {
+        static constexpr bool pls_stable_gc_buffers=true;
         std::vector<Binding> bindings;
+        explicit InvocationList(Binding value){bindings.push_back(std::move(value));}
+        InvocationList(const InvocationList* first,const InvocationList* second){
+            bindings.reserve(first->bindings.size()+second->bindings.size());
+            bindings.insert(bindings.end(),first->bindings.begin(),first->bindings.end());
+            bindings.insert(bindings.end(),second->bindings.begin(),second->bindings.end());
+        }
+        InvocationList(const InvocationList* original,std::size_t first,std::size_t last){
+            bindings.reserve(original->bindings.size()-(last-first));
+            bindings.insert(bindings.end(),original->bindings.begin(),original->bindings.begin()+static_cast<std::ptrdiff_t>(first));
+            bindings.insert(bindings.end(),original->bindings.begin()+static_cast<std::ptrdiff_t>(last),original->bindings.end());
+        }
         void trace_edges(const EdgeVisitor&visitor)const override{
             Object::trace_edges(visitor);
             for(const auto&binding:bindings)if(auto target=binding.managed_target.lock())visitor(target);
         }
-        void release_edges()override{Object::release_edges();bindings.clear();}
+        void release_edges()override{
+            Object::release_edges();
+#if !PLS_TRACING_GC
+            bindings.clear(); // Legacy cycle breaking; traced lists are immutable.
+#endif
+        }
         void memory_ranges(const memory::RangeVisitor&visitor)const override{
             Object::memory_ranges(visitor);
             if(bindings.capacity())visitor(bindings.data(),bindings.capacity()*sizeof(Binding),memory::Category::managed_heap);
+            for(const auto& binding:bindings){
+                const auto address=reinterpret_cast<std::uintptr_t>(binding.method.data());
+                const auto begin=reinterpret_cast<std::uintptr_t>(&binding);
+                // SSO bytes are already inside the registered binding array.
+                if(address<begin||address-begin>=sizeof(Binding))
+                    visitor(binding.method.data(),binding.method.capacity()+1,memory::Category::managed_heap);
+            }
         }
     };
     Ref<InvocationList> list_{};
@@ -607,7 +671,8 @@ public:
         if constexpr(std::is_base_of_v<Object,T>)managed=target;
         else if constexpr(std::is_polymorphic_v<T>)managed=pls::cs::dynamic_pointer_cast<Object>(target);
         Ref<void>identity=target;if(auto object=managed.lock())identity=object;
-        Delegate result;const void*key=raw(identity);result.list_=make_ref<InvocationList>();result.list_->bindings.push_back({identity,managed,std::move(method),std::forward<F>(function),key});return result;
+        Delegate result;const void*key=raw(identity);
+        result.list_=make_ref<InvocationList>(Binding{identity,managed,std::move(method),std::forward<F>(function),key});return result;
     }
     template<class T,class F>static Delegate bind_identity(Ref<T>target,const void*identity,std::string method,F&&function){auto result=bind(std::move(target),std::move(method),std::forward<F>(function));result.list_->bindings[0].identity=identity;return result;}
     template<class F>static Delegate from_static(std::string method,F&&function) {
@@ -634,10 +699,9 @@ public:
     Delegate& operator+=(const Delegate&other){
         if(other.is_null())return *this;
         if(is_null()){list_=other.list_;return *this;}
-        auto next=make_ref<InvocationList>();next->bindings.reserve(count()+other.count());
-        next->bindings.insert(next->bindings.end(),list_->bindings.begin(),list_->bindings.end());
-        next->bindings.insert(next->bindings.end(),other.list_->bindings.begin(),other.list_->bindings.end());
-        list_=std::move(next);return *this;
+        // The old managed lists, rather than an opaque native temporary vector,
+        // stay live across make_ref's cooperative allocation safepoint.
+        list_=make_ref<InvocationList>(raw(list_),raw(other.list_));return *this;
     }
     Delegate& operator-=(const Delegate&other) {
         if(other.is_null() || other.count()>count())return *this;
@@ -646,10 +710,7 @@ public:
             for(std::size_t i=0;i<other.count();++i)if(!equal_binding(list_->bindings[start+i],other.list_->bindings[i])){equal=false;break;}
             if(equal){
                 if(other.count()==count()){clear_ref(list_);break;}
-                auto next=make_ref<InvocationList>();next->bindings.reserve(count()-other.count());
-                next->bindings.insert(next->bindings.end(),list_->bindings.begin(),list_->bindings.begin()+static_cast<std::ptrdiff_t>(start));
-                next->bindings.insert(next->bindings.end(),list_->bindings.begin()+static_cast<std::ptrdiff_t>(end),list_->bindings.end());
-                list_=std::move(next);break;
+                list_=make_ref<InvocationList>(raw(list_),start,end);break;
             }
         }
         return *this;

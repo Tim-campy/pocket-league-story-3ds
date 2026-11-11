@@ -6,6 +6,7 @@ from pathlib import Path
 from update_phase2_progress import refresh,EvidencePending
 from diagnostic_evidence import frame_evidence
 from freeze_progress import markdown as freeze_markdown
+from report_runtime_cost import markdown as runtime_cost_markdown
 
 ROOT=Path(__file__).resolve().parents[1]
 csv.field_size_limit(2_000_000)
@@ -182,14 +183,14 @@ def main():
         'Gerado por python tools/progress a partir dos inventários. Não editar estados à mão.', '',
         'Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f5915c4, somente leitura. '
         'Os 5.245 métodos reconstruídos na fase anterior não são progresso de tradução para C++.','',
-        *freeze_markdown(phase2 or {},load('config/phase2-game-translation.json')),
+        *freeze_markdown(phase2 or {},load('config/phase2-game-translation.json'),load('config/phase2-arm-float-model.json') if (ROOT/'config/phase2-arm-float-model.json').exists() else None),
         '## Tradução','', '| Inventário | Total | Estado medido |','|---|---:|---|',
         f"| Métodos a traduzir | {len(translation)} | {dict(Counter(r['estado'] for r in translation))} |",'',
         '## Fronteira da KairoLibrary','', '| Inventário | Total | Estado medido |','|---|---:|---|',
         f"| Fronteira KairoLibrary | {len(boundary)} símbolos / {b['kairo']['types']} tipos | {dict(Counter(r['estado'] for r in boundary))} |",'',
         '## Desempenho','',
-        'A conversão para rastreamento está integrada e em validação. CPU por frame e pico de texturas da revisão atual: **UNKNOWN**. '
-        'A medição intermediária identificou custo elevado na contabilidade de buffers; não é a medição posterior às correções. '
+        *runtime_cost_markdown(),
+        'A conversão para rastreamento está integrada e em validação. Pico comparativo de texturas da revisão atual: **UNKNOWN**. '
         'Kernels isolados não qualificam o jogo convertido. Consulte [a rodada de medições](docs/notes/tracing-gc-measurement-round.md), '
         '[a matriz de ablação](docs/notes/tracing-gc-ablation.md) e [as fixtures ARM](docs/notes/tracing-gc-arm-stacks.md). '
         'Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.','',

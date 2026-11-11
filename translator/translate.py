@@ -82,6 +82,9 @@ def main():
         selected=[];output=args.output or ROOT/'src/game'
     policies=json.loads((ROOT/'config/service-overrides.json').read_text(encoding='utf-8'))
     request=dict(assembly=args.assembly,sources=[str(reference/p) for p in source_names],references=[str(p.resolve()) for p in refs],selected=selected,output=str(output.resolve()),diagnostics_only=args.diagnostics_only,check_symbols=[p['symbol'] for p in policies['overrides']])
+    # Confirmed on the official Unity Mono ARM/VFP JIT in an ARM emulator:
+    # 36 discriminants and all 144 captured kernel observations. Device pending.
+    request['numeric_model']='mono-arm-vfp'
     request['source_root']=str(reference)
     request['external_methods']={'M:UnityEngine.Debug.Log(System.Object)':'pls::kairo::debug_log'}
     request['native_includes']=['system.hpp']

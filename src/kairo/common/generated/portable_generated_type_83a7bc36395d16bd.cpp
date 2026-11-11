@@ -16,11 +16,11 @@ pls::cs::String& cs_5dc81e2eacc2181a(){cs_init_83a7bc36395d16bd();return cs_5dc8
 void cs_4fdae576ed75d546(pls::cs::String v_text) { cs_init_83a7bc36395d16bd();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Log.DebugLog(System.String)",kairo);
 {
-if (([&]() -> bool { auto cs_left = v_text; auto cs_right = cs_5dc81e2eacc2181a(); return (cs_left == cs_right); }())) {
+if (([&]() -> bool { auto cs_left = v_text; auto cs_right = cs_5dc81e2eacc2181a_value; return (cs_left == cs_right); }())) {
 pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/Log.cs:M:kairo.unity.util.Log.DebugLog(System.String):1516",([&]() { auto cs_old = v_text; auto cs_rhs = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0020" u"",1);return cs_literal;}()); auto cs_value = pls::cs::String::concat(cs_old,cs_rhs); v_text = cs_value; return cs_value; }()));
 }
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_text); pls::kairo::debug_log(cs_arg0); }());});
-([&]() { auto cs_value = v_text; cs_5dc81e2eacc2181a() = cs_value; return cs_value; }());
+([&]() { auto cs_value = v_text; cs_5dc81e2eacc2181a_value = cs_value; return cs_value; }());
 }
 }
 }

@@ -19,20 +19,21 @@
   "inputs": {
     "tests\\translator\\SemanticFixtures.cs": "709c4514098eb6cf805fa7739eece4bfcf63a54e355032e46ed2981de9d82de4",
     "tests\\translator\\semantic_fixtures.cpp": "84e93fcdf37e46bc4bdef761903b64a30ca35d30df0e8720547b3dd9824f1818",
-    "src\\kairo\\common\\semantic_runtime.cpp": "b117d3a28605170fe31a9617ff915b9b00c63a5b44970ddbd5d5078bbbaaa27e",
-    "src\\kairo\\common\\semantic_runtime.hpp": "52bc6c3a94189332619e4513d1d4a746e6f5aa09ded4a479d36687f6ecc58deb",
+    "src\\kairo\\common\\semantic_runtime.cpp": "6ae5bbbe505cf4247862934c2660c18ab1c28503e50f83fea8981e73a19fe336",
+    "src\\kairo\\common\\semantic_runtime.hpp": "5796570ac4d34c2b97f611dbcbca7a96e35eee26c813ad4ae6b96950c87638fa",
     "src\\kairo\\common\\managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
-    "src\\kairo\\common\\managed_dictionary.hpp": "4b678c96e83cae85ab36352460f017965106347c082654f6dfce3bfc10254d85",
+    "src\\kairo\\common\\managed_dictionary.hpp": "d8e3201a2d0a97a09a1d207d1c7733a0c1d05067e39668e3a357adf067bf4b68",
     "src\\kairo\\common\\managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
     "tests\\translator\\run_semantic_fixtures.py": "ee7f16672b9322d113d641944dd25bcc82b1615051a2ca5e8b975ff017c2cd41",
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
-    "src/runtime/managed_gc_bridge.inc": "a816a80e97de899b8f2b0ae959e33e37896f8b4f37856aa71488717792f368bd",
+    "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
+    "src/runtime/managed_gc_bridge.inc": "e3e88f4afd9e17e64f58fa6d322f51b40801bb00c914dc225d449d1ee91556f6",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "3bcafc5dfc03877bf4f14f5ef31c46221c3d09b3de6e23185f052f1d02b06820",
-    "src/runtime/tracing_gc.hpp": "d8c6d10656dc403e77d0183545ada8206c674c52edd419ec0e84d14a7790dcae"
+    "src/runtime/tracing_gc.cpp": "2ad9973ff217575c4f2083974660066264f0d58d5b92e855ab4fd11358243cba",
+    "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"
   },
   "historical_oracle": {
     "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",

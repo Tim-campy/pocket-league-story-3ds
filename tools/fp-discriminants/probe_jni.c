@@ -5,6 +5,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <stdint.h>
+#include <sys/auxv.h>
+#include <sys/utsname.h>
+#include <asm/hwcap.h>
+#if !defined(__arm__) || defined(__aarch64__)
+#error This oracle bridge must execute as ARM32, not Android x86 or AArch64.
+#endif
 
 typedef void MonoDomain;
 typedef void MonoAssembly;
@@ -31,6 +38,28 @@ static MonoObject* (*invoke)(MonoMethod*,void*,void**,MonoObject**);
 static MonoClass* (*object_class)(MonoObject*);
 static const char* (*class_name)(MonoClass*);
 static void (*print_exception)(MonoObject*);
+static void* (*compile_method)(MonoMethod*);
+static void* (*jit_info_find)(MonoDomain*,void*);
+static void* (*jit_code_start)(void*);
+static int (*jit_code_size)(void*);
+
+static int dump_method(MonoDomain* domain,const char* assembly,const char* space,
+                       const char* type,const char* name,int arguments,
+                       const char* directory,FILE* status) {
+    MonoAssembly* loaded=assembly_open(domain,assembly);
+    MonoClass* klass=loaded?class_from_name(assembly_image(loaded),space,type):NULL;
+    MonoMethod* method=klass?class_method(klass,name,arguments):NULL;
+    if(!method){fprintf(status,"JIT method absent: %s.%s\n",type,name);return 0;}
+    void* entry=compile_method(method);
+    void* info=entry?jit_info_find(domain,(void*)((uintptr_t)entry&~(uintptr_t)1)):NULL;
+    void* code=info?jit_code_start(info):NULL;int size=info?jit_code_size(info):0;
+    if(!code||size<=0||size>1024*1024){fprintf(status,"JIT range UNKNOWN: %s.%s\n",type,name);return 0;}
+    char path[4096];snprintf(path,sizeof(path),"%s/jit-%s-%s.bin",directory,type,name);
+    FILE* out=fopen(path,"wb");if(!out)return 0;
+    size_t written=fwrite((void*)((uintptr_t)code&~(uintptr_t)1),1,(size_t)size,out);fclose(out);
+    fprintf(status,"JIT %s.%s code_bytes=%d thumb=%u captured=%u\n",type,name,size,(unsigned)((uintptr_t)entry&1),(unsigned)written);fflush(status);
+    return written==(size_t)size;
+}
 
 static int execute(MonoDomain* domain,const char* assembly,const char* type,
                    const char* first,const char* second,FILE* status) {
@@ -74,12 +103,21 @@ JNIEXPORT jstring JNICALL Java_org_plsresearch_floatprobe_ProbeActivity_runProbe
     LOAD(string_new,"mono_string_new");LOAD(array_store,"mono_gc_wbarrier_set_arrayref");
     LOAD(invoke,"mono_runtime_invoke");LOAD(object_class,"mono_object_get_class");
     LOAD(class_name,"mono_class_get_name");LOAD(print_exception,"mono_print_unhandled_exception");
+    LOAD(compile_method,"mono_compile_method");LOAD(jit_info_find,"mono_jit_info_table_find");
+    LOAD(jit_code_start,"mono_jit_info_get_code_start");LOAD(jit_code_size,"mono_jit_info_get_code_size");
 #undef LOAD
     snprintf(path,sizeof(path),"%s/managed",data);
     setenv("MONO_PATH",path,1);set_dirs(path,data);config_parse(NULL);
     // ART already owns signal handlers in this Android process.
     signal_chaining(1);
     fprintf(status,"Initializing official Unity Mono ARMv7; pointer bytes=%u\n",(unsigned)sizeof(void*));fflush(status);
+    struct utsname machine;
+    if(uname(&machine)==0)fprintf(status,"guest uname machine=%s release=%s\n",machine.machine,machine.release);
+    const unsigned long capabilities=getauxval(AT_HWCAP);
+    fprintf(status,"guest HWCAP=0x%lx VFP=%u; Mono JIT options: embedding defaults, no explicit optimize override\n",capabilities,(unsigned)((capabilities&HWCAP_VFP)!=0));
+    fprintf(status,"MONO_ENV_OPTIONS=%s MONO_ARM=%s\n",getenv("MONO_ENV_OPTIONS")?getenv("MONO_ENV_OPTIONS"):"<unset>",getenv("MONO_ARM")?getenv("MONO_ARM"):"<unset>");
+    FILE* cpu=fopen("/proc/cpuinfo","r");if(cpu){char line[512];while(fgets(line,sizeof(line),cpu))fputs(line,status);fclose(cpu);}
+    fflush(status);
     MonoDomain* domain=jit_init("numerical-oracle","v2.0.50727");
     if(!domain){snprintf(message,sizeof(message),"Mono domain initialization failed");goto close;}
     snprintf(assembly,sizeof(assembly),"%s/managed/FloatDiscriminants.exe",data);
@@ -88,11 +126,21 @@ JNIEXPORT jstring JNICALL Java_org_plsresearch_floatprobe_ProbeActivity_runProbe
     if(!execute(domain,assembly,"FloatDiscriminants",first,second,status)){
         snprintf(message,sizeof(message),"Discriminants failed; inspect status.txt and logcat");goto close;
     }
+    const char* probes[]={"Expression","Local","Field","Array","PassArgument","Return","Inlining","Loop","ExplicitConversion"};
+    for(unsigned i=0;i<sizeof(probes)/sizeof(probes[0]);++i)
+        if(!dump_method(domain,assembly,"","FloatDiscriminants",probes[i],2,data,status)){
+            snprintf(message,sizeof(message),"JIT evidence incomplete; inspect status.txt");goto close;
+        }
+    setenv("PLS_NUMERICAL_ALL_CASES","1",1);
     snprintf(assembly,sizeof(assembly),"%s/managed/HotMethodsMono.exe",data);
     snprintf(first,sizeof(first),"%s/inputs",data);
     snprintf(second,sizeof(second),"%s/kernel-results",data);mkdir(second,0700);
     if(!execute(domain,assembly,"HotMethodsMono",first,second,status)){
         snprintf(message,sizeof(message),"Kernel cases failed; inspect status.txt and logcat");goto close;
+    }
+    snprintf(assembly,sizeof(assembly),"%s/managed/Assembly-CSharp.dll",data);
+    if(!dump_method(domain,assembly,"game","Team","Cal_evaCoatMulti9block",4,data,status)){
+        snprintf(message,sizeof(message),"Cal JIT evidence incomplete; inspect status.txt");goto close;
     }
     snprintf(message,sizeof(message),"Completed. Results: files/probe. Android results still require host comparison.");
 close:

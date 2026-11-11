@@ -26,7 +26,7 @@ pls::cs::Ref<cs_3c64e1d398f2e00f> cs_f0250768de698879() { cs_init_3c64e1d398f2e0
 void cs_f0250768de698879_init(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this) {
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.#ctor",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_target = cs_this; auto cs_value = (([&]() { auto cs_target = cs_this; auto cs_value = pls::generated::cs_f32(0x00000000u); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }())); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }())); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>((([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>((([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(pls::generated::cs_f32(0x00000000u)); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }()))); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }()))); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
 }
 }
 }
@@ -39,7 +39,7 @@ pls::cs::Ref<cs_3c64e1d398f2e00f> cs_4df100a3a5400345(float v_x,float v_y,float 
 void cs_4df100a3a5400345_init(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,float v_y,float v_z) {
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.#ctor(System.Single,System.Single,System.Single)",kairo);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = v_x; float cs_arg1 = v_y; float cs_arg2 = v_z; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_eab8c2f1c1ba14e9(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = static_cast<float>(v_x); float cs_arg1 = static_cast<float>(v_y); float cs_arg2 = static_cast<float>(v_z); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_eab8c2f1c1ba14e9(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
 }
 }
 }
@@ -49,7 +49,7 @@ void cs_b222f1bce980230f(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.Add(kairo.unity.m3d4.util3d.Vector3D)",kairo);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = ([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }()); float cs_arg1 = ([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }()); float cs_arg2 = ([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_c44a23edacd04c43(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = static_cast<float>(([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }())); float cs_arg1 = static_cast<float>(([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }())); float cs_arg2 = static_cast<float>(([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_c44a23edacd04c43(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
 }
 }
 }
@@ -60,9 +60,9 @@ void cs_c44a23edacd04c43(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,flo
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.Add(System.Single,System.Single,System.Single)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3; auto cs_rhs = v_x; auto cs_value = (cs_old + cs_rhs); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07; auto cs_rhs = v_y; auto cs_value = (cs_old + cs_rhs); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_992193a3ad58af68; auto cs_rhs = v_z; auto cs_value = (cs_old + cs_rhs); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3; auto cs_rhs = v_x; auto cs_value = static_cast<float>((static_cast<double>(cs_old) + static_cast<double>(cs_rhs))); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07; auto cs_rhs = v_y; auto cs_value = static_cast<float>((static_cast<double>(cs_old) + static_cast<double>(cs_rhs))); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_old = pls::generated::cs_require(cs_target)->cs_992193a3ad58af68; auto cs_rhs = v_z; auto cs_value = static_cast<float>((static_cast<double>(cs_old) + static_cast<double>(cs_rhs))); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
 }
 }
 }
@@ -73,9 +73,9 @@ void cs_d64267dcdc138fe0(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.Deserialize(java.io.InputStream)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }()); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }()); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }()); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }())); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }())); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(([&]() -> float { pls::cs::Ref<cs_e7a5499b363ef51b> cs_arg0 = v_stream; return cs_92c2775ee2dbf38f(cs_arg0); }())); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
 }
 }
 }
@@ -86,7 +86,7 @@ float cs_057460bc67f561ff(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this) { cs_init_3
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.GetX",kairo);
 {
-return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }());
+return static_cast<float>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }()));
 }
 }
 }
@@ -97,7 +97,7 @@ float cs_b09e372c7963bada(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this) { cs_init_3
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.GetY",kairo);
 {
-return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }());
+return static_cast<float>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }()));
 }
 }
 }
@@ -108,7 +108,7 @@ float cs_8c6fe63f0a32cc25(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this) { cs_init_3
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.GetZ",kairo);
 {
-return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }());
+return static_cast<float>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }()));
 }
 }
 }
@@ -119,9 +119,9 @@ void cs_086b1f406f360542(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.Serialize(java.io.OutputStream)",kairo);
 {
-([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_stream; float cs_arg1 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }()); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
-([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_stream; float cs_arg1 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }()); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
-([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_stream; float cs_arg1 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }()); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_stream; float cs_arg1 = static_cast<float>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }())); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_stream; float cs_arg1 = static_cast<float>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }())); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
+([&]() -> void { pls::cs::Ref<cs_ea324a0bbfe717fe> cs_arg0 = v_stream; float cs_arg1 = static_cast<float>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }())); cs_07583f591da8d9cb(cs_arg0,cs_arg1); }());
 }
 }
 }
@@ -132,7 +132,7 @@ void cs_cdf43d81dba1e3fb(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.Set(kairo.unity.m3d4.util3d.Vector3D)",kairo);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = ([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }()); float cs_arg1 = ([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }()); float cs_arg2 = ([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_eab8c2f1c1ba14e9(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = static_cast<float>(([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5940b7db44d7fcc3; }())); float cs_arg1 = static_cast<float>(([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f971496b3e90e07; }())); float cs_arg2 = static_cast<float>(([&]() { auto cs_receiver = v_v; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_992193a3ad58af68; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_eab8c2f1c1ba14e9(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
 }
 }
 }
@@ -143,9 +143,9 @@ void cs_eab8c2f1c1ba14e9(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,flo
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.Set(System.Single,System.Single,System.Single)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = v_x; pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = v_y; pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
-([&]() { auto cs_target = cs_this; auto cs_value = v_z; pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_x); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_y); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_z); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
 }
 }
 }
@@ -156,7 +156,7 @@ void cs_456e4aca00a0b62a(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x) { 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.SetX(System.Single)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = v_x; pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_x); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
 }
 }
 }
@@ -167,7 +167,7 @@ void cs_229657731d66863f(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_y) { 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.SetY(System.Single)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = v_y; pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_y); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }());
 }
 }
 }
@@ -178,7 +178,7 @@ void cs_ed44f0a0e2f6832a(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_z) { 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.SetZ(System.Single)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = v_z; pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(v_z); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }());
 }
 }
 }

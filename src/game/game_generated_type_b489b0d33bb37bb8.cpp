@@ -199,14 +199,14 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::
 pls::cs::Ref<cs_b489b0d33bb37bb8> cs_3eff1227bb0de063() { cs_init_b489b0d33bb37bb8();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.GetInstance",kairo);
 {
-if (([&]() { auto cs_left = pls::cs::box(cs_11e5ce60ddaa567b()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-if (([&]() { auto cs_left = pls::cs::box(cs_0d794b0205468f6a()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.GetInstance:4671",([&]() -> pls::cs::Ref<cs_50c5a567a6876ee3> { return cs_145bafe9acaf77f9(); }())); cs_0d794b0205468f6a() = cs_value; return cs_value; }());
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_0d794b0205468f6a()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b2a7adc10d3ecb29(cs_receiver); }());
+if (([&]() { auto cs_left = pls::cs::box(cs_11e5ce60ddaa567b_value); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
+if (([&]() { auto cs_left = pls::cs::box(cs_0d794b0205468f6a_value); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.GetInstance:4671",([&]() -> pls::cs::Ref<cs_50c5a567a6876ee3> { return cs_145bafe9acaf77f9(); }())); cs_0d794b0205468f6a_value = cs_value; return cs_value; }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_0d794b0205468f6a_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b2a7adc10d3ecb29(cs_receiver); }());
 }
-return cs_0d794b0205468f6a();
+return cs_0d794b0205468f6a_value;
 }
-return cs_11e5ce60ddaa567b();
+return cs_11e5ce60ddaa567b_value;
 }
 }
 }

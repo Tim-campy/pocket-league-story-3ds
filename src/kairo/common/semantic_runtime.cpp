@@ -1,6 +1,7 @@
 #include "semantic_runtime.hpp"
 #include "allocation_probe.hpp"
 #include "platform_condition.hpp"
+#include "../../runtime/gc_memory_resource.hpp"
 #include <condition_variable>
 #include <thread>
 #include <unordered_map>
@@ -20,11 +21,22 @@
 #endif
 
 namespace pls::cs {
+#if defined(_MSC_VER)
+#define PLS_COLD_THROW __declspec(noinline)
+#else
+#define PLS_COLD_THROW __attribute__((noinline,cold))
+#endif
+PLS_COLD_THROW void throw_null_reference(){throw NullReferenceException();}
+PLS_COLD_THROW void throw_array_bounds(){throw IndexOutOfRangeException();}
+PLS_COLD_THROW void throw_array_type_mismatch(){throw ArrayTypeMismatchException();}
+#undef PLS_COLD_THROW
 namespace {
 struct RootRegistry {
     std::mutex mutex;
     std::size_t next=1;
-    std::unordered_map<std::size_t,std::function<void(const EdgeVisitor&)>> providers;
+    gc::detail::NativeMemoryResource upstream;
+    std::pmr::unsynchronized_pool_resource pool{&upstream};
+    std::pmr::unordered_map<std::size_t,std::function<void(const EdgeVisitor&)>> providers{&pool};
 };
 RootRegistry& root_registry(){
     // Native bookkeeping outlives global root-provider destructors.

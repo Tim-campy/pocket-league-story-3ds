@@ -57,9 +57,13 @@ int main(int argc,char**argv){try{
     if(argc!=4)return 2;GcMutatorScope mutator;pls::assets::Catalog assets(std::filesystem::u8path(argv[3]));pls::kairo::install_asset_catalog(&assets);std::filesystem::create_directories(argv[2]);LARGE_INTEGER freq;QueryPerformanceFrequency(&freq);std::cout<<std::setprecision(17)<<"frequency="<<freq.QuadPart<<'\n';
     std::function<void()>empty=[]{};long long overhead=0;for(int i=0;i<1250;++i){auto t=tick();for(int j=0;j<16;++j)empty();overhead+=tick()-t;}std::cout<<"empty_ns="<<overhead*1e9/freq.QuadPart/20000<<'\n';
     for(int kind=0;kind<5;++kind){
-        std::vector<Case>cases;for(int i=0;i<16;++i)cases.push_back(load(std::filesystem::path(argv[1])/(std::to_string(kind)+"-"+std::to_string(i)+".bin"),kind));
+        const bool observationsOnly=std::getenv("PLS_NUMERICAL_ALL_CASES")!=nullptr;
+        int count=16;if(observationsOnly){count=0;while(std::filesystem::exists(std::filesystem::path(argv[1])/(std::to_string(kind)+"-"+std::to_string(count)+".bin")))++count;if(!count)throw std::runtime_error("Missing captured cases");}
+        std::vector<Case>cases;for(int i=0;i<count;++i)cases.push_back(load(std::filesystem::path(argv[1])/(std::to_string(kind)+"-"+std::to_string(i)+".bin"),kind));
         for(int k=0;k<10;++k)for(auto&c:cases){c.reset();c.call();}
-        for(int i=0;i<16;++i){cases[i].reset();cases[i].call();std::ofstream w(std::filesystem::path(argv[2])/(std::to_string(kind)+"-"+std::to_string(i)+".bin"),std::ios::binary);cases[i].dump(w);}
+        for(int i=0;i<count;++i){cases[i].reset();cases[i].call();std::ofstream w(std::filesystem::path(argv[2])/(std::to_string(kind)+"-"+std::to_string(i)+".bin"),std::ios::binary);cases[i].dump(w);}
+        if(observationsOnly){std::cout<<"observations kind="<<kind<<" count="<<count<<'\n';continue;}
+        const auto warm_until=tick()+freq.QuadPart/5;do{for(auto&c:cases){c.reset();c.call();}}while(tick()<warm_until);
         for(int batch=0;batch<5;++batch){long long total=0;for(int k=0;k<1000;++k){for(auto&c:cases)c.reset();auto t=tick();for(auto&c:cases)c.call();total+=tick()-t;}std::cout<<"method="<<kind<<" batch="<<batch<<" calls=16000 gross_ns="<<total*1e9/freq.QuadPart/16000<<'\n';}
     }
 }catch(const std::exception&e){std::cerr<<e.what()<<'\n';return 1;}}

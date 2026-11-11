@@ -61,9 +61,9 @@ return ([&]() -> std::int32_t { auto cs_left = v_v; auto cs_right = v_bit; retur
 pls::cs::Array<std::int16_t> cs_ba020c0b5c680349(std::int32_t v_value) { cs_init_f3ea616d36334b95();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.BitUtil.Split(System.Int32)",kairo);
 {
-([&]() { auto cs_target = cs_4854f02f058c4f7b(); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_value = pls::cs::cast_integral<std::int16_t>((([&]() -> std::int64_t { auto cs_left = (([&]() -> std::int64_t { auto cs_left = pls::cs::cast_integral<std::int64_t>(v_value); auto cs_right = pls::cs::cast_integral<std::int64_t>(pls::cs::cast_integral<std::uint32_t>(std::uint64_t(0xffff0000ull))); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x10ull)); return pls::cs::shr_i64(cs_left,cs_right); }())));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
-([&]() { auto cs_target = cs_4854f02f058c4f7b(); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_value = pls::cs::cast_integral<std::int16_t>((([&]() -> std::int32_t { auto cs_left = v_value; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffull)); return (cs_left & cs_right); }())));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
-return cs_4854f02f058c4f7b();
+([&]() { auto cs_target = cs_4854f02f058c4f7b_value; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_value = pls::cs::cast_integral<std::int16_t>((([&]() -> std::int64_t { auto cs_left = (([&]() -> std::int64_t { auto cs_left = pls::cs::cast_integral<std::int64_t>(v_value); auto cs_right = pls::cs::cast_integral<std::int64_t>(pls::cs::cast_integral<std::uint32_t>(std::uint64_t(0xffff0000ull))); return (cs_left & cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x10ull)); return pls::cs::shr_i64(cs_left,cs_right); }())));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+([&]() { auto cs_target = cs_4854f02f058c4f7b_value; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_value = pls::cs::cast_integral<std::int16_t>((([&]() -> std::int32_t { auto cs_left = v_value; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffull)); return (cs_left & cs_right); }())));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+return cs_4854f02f058c4f7b_value;
 }
 }
 }

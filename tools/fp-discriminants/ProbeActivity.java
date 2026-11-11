@@ -9,6 +9,10 @@ import java.io.InputStream;
 
 /** Local numerical oracle. Does not launch or replace the installed game. */
 public final class ProbeActivity extends Activity {
+    // Android may recreate the Activity after a configuration change while
+    // the worker is running. Mono may be initialized only once per process.
+    private static boolean started;
+    private static volatile String lastResult = "Numerical oracle is running.";
     static { System.loadLibrary("fp_probe"); }
     private static native String runProbe(String data, String nativeLibraries);
     private void copyAssets(String asset, File target) throws Exception {
@@ -28,6 +32,10 @@ public final class ProbeActivity extends Activity {
         final TextView text = new TextView(this);
         text.setText("Numerical oracle: running locally. No network access.");
         setContentView(text);
+        synchronized (ProbeActivity.class) {
+            if (started) { text.setText(lastResult); return; }
+            started = true;
+        }
         new Thread(new Runnable() {
             public void run() {
                 String result;
@@ -37,6 +45,7 @@ public final class ProbeActivity extends Activity {
                     result = runProbe(directory.getAbsolutePath(), getApplicationInfo().nativeLibraryDir);
                 } catch (Throwable failure) { result = failure.toString(); }
                 final String message = result;
+                lastResult = message;
                 android.util.Log.i("PLSFloatProbe", message);
                 runOnUiThread(new Runnable() { public void run() { text.setText(message); } });
             }

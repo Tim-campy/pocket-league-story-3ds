@@ -3,6 +3,7 @@
 All captures, oracle binaries and results remain in ignored build/. This is
 an isolated kernel measurement, not a game-frame benchmark or Android proof.
 """
+import argparse
 import hashlib
 import io
 import json
@@ -42,8 +43,22 @@ def static_signature(path, kind):
 
 def main():
     os.chdir(ROOT)
-    folder=ROOT/'build/hot-methods'; folder.mkdir(exist_ok=True)
-    captures=ROOT/'build/hot-input-capture/inputs'
+    parser=argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--output',type=Path,required=True)
+    parser.add_argument('--snapshot',type=Path,required=True)
+    parser.add_argument('--baseline-build',type=Path,default=ROOT/'build/null-pc-tracing')
+    parser.add_argument('--captures',type=Path,default=ROOT/'build/hot-input-capture/inputs')
+    args=parser.parse_args();folder=args.output.resolve();captures=args.captures.resolve()
+    baseline=args.baseline_build.resolve();source=args.snapshot.resolve()
+    if not folder.is_relative_to(ROOT/'build') or folder.exists():raise ValueError('Use a fresh private output')
+    from build_pc import validate_diagnostic_manifest
+    validate_diagnostic_manifest(source)
+    stamp=json.loads((baseline/'source-stamp.json').read_text())
+    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+    for path,digest in stamp.items():
+        if sha(ROOT/path)!=digest:raise ValueError('Baseline source changed: '+path)
+    if 'PLS_TRACING_GC:BOOL=ON' not in (baseline/'CMakeCache.txt').read_text():raise ValueError('This measurement requires the integrated tracing runtime')
+    folder.mkdir()
     for kind in range(5):
         paths=[captures/f'{kind}-{i}.bin' for i in range(16)]
         if len({static_signature(p,kind) for p in paths}) != 1:
@@ -63,23 +78,23 @@ def main():
     command+=[str(ROOT/'tools/profiling/HotMethodsMono.cs')]
     with (folder/'mono-compile.log').open('wb') as log:
         subprocess.run(command,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)
-    baseline=ROOT/'build/null-pc'
     link=next(l for l in (baseline/'build.ninja').read_text().splitlines() if l.startswith('build null_game.exe:'))
     objects=[baseline/t for t in link.split() if t.endswith('.obj') and not t.endswith('null_main.cpp.obj')]
     if not objects or any(not p.is_file() for p in objects): raise ValueError('Baseline objects absent')
-    source=ROOT/'build/game-diagnostic-runtime-consolidated-20261110'
     q=lambda p:'"'+Path(p).as_posix()+'"'
     includes=[source,ROOT/'src',ROOT/'src/main',ROOT/'src/kairo/common',ROOT/'src/kairo/api',ROOT/'src/kairo/common/generated',ROOT/'src/kairo/platform/sdl']
     cmake='cmake_minimum_required(VERSION 3.20)\nproject(HotMethods LANGUAGES CXX)\nset(CMAKE_CXX_STANDARD 17)\nset(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)\nfind_package(freetype CONFIG REQUIRED)\n'
     cmake+='add_executable(hot_methods '+q(ROOT/'tools/profiling/hot_methods_native.cpp')+' '+' '.join(map(q,objects))+')\n'
     cmake+='target_include_directories(hot_methods PRIVATE '+' '.join(map(q,includes))+')\n'
-    cmake+='target_compile_definitions(hot_methods PRIVATE PLS_NULL_BACKEND=1)\ntarget_compile_options(hot_methods PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(hot_methods PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
+    cmake+='target_compile_definitions(hot_methods PRIVATE PLS_NULL_BACKEND=1 PLS_TRACING_GC=1)\ntarget_compile_options(hot_methods PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(hot_methods PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
     cmake+='target_link_libraries(hot_methods PRIVATE '+q(baseline/'null_runtime.lib')+' Freetype::Freetype Psapi Advapi32)\n'
     (folder/'CMakeLists.txt').write_text(cmake)
     with (folder/'native-build.log').open('wb') as log:
         subprocess.run([str(CMAKE),'-S',str(folder),'-B',str(folder/'out'),'-G','Ninja','-DCMAKE_BUILD_TYPE=Release','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_PREFIX_PATH='+str(ROOT/'build/deps/native-media')],env=environment(),stdout=log,stderr=subprocess.STDOUT,check=True)
         subprocess.run([str(CMAKE),'--build',str(folder/'out'),'--parallel','1'],env=environment(),stdout=log,stderr=subprocess.STDOUT,check=True)
     for name,command in [('mono',[str(mono/'bin/mono.exe'),str(folder/'HotMethodsMono.exe')]),('native',[str(folder/'out/hot_methods.exe')])]:
+        from measure_null_thread_cpu import idle_check
+        idle_check()
         command += [str(captures),str(folder/(name+'-results'))]
         if name=='native': command += [str(ROOT/'assets')]
         with (folder/(name+'-output.log')).open('wb') as out, (folder/(name+'-error.log')).open('wb') as err:
@@ -100,8 +115,10 @@ def main():
         row['gross_ratio']=row['native_gross_ns']/row['mono_gross_ns']
         row['net_ratio']=row['native_net_ns']/row['mono_net_ns'] if row['mono_net_ns']>0 else None
         rows.append(row)
-    inputs=objects+managed+[baseline/'null_runtime.lib',folder/'out/hot_methods.exe',folder/'HotMethodsMono.exe',mono/'bin/mono.exe',ROOT/'tools/profiling/HotMethodsMono.cs',ROOT/'tools/profiling/hot_methods_native.cpp']+list(captures.glob('*.bin'))
-    result=dict(output_cases=80,differences=differences,measurement='Median of five 16000-call batches; 16 independent captured states restored outside each timed group; static globals identical within a group.',rows=rows,inputs={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs})
+    for path,digest in stamp.items():
+        if sha(ROOT/path)!=digest:raise ValueError('Source changed during kernel measurement: '+path)
+    inputs=objects+managed+[baseline/'null_runtime.lib',baseline/'source-stamp.json',Path(__file__),folder/'out/hot_methods.exe',folder/'HotMethodsMono.exe',mono/'bin/mono.exe',ROOT/'tools/profiling/HotMethodsMono.cs',ROOT/'tools/profiling/hot_methods_native.cpp']+list(captures.glob('*.bin'))
+    result=dict(output_cases=80,differences=differences,measurement='At least 200 ms of untimed warmup per kernel, then median of five 16000-call batches; 16 independent captured states restored outside each timed group; static globals identical within a group.',rows=rows,inputs={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in inputs})
     (folder/'comparison.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps({k:v for k,v in result.items() if k!='inputs'},indent=2))
 

@@ -47,7 +47,7 @@ void Offscreen::render_frame(){
         try{
             if(s.clear){
                 // Clear is replacement, never source-alpha blending.
-                auto&bytes=s.image->rgba_;std::fill(bytes.begin(),bytes.end(),0);if(s.image->format==Image::Format::RGB24||s.image->format==Image::Format::RGB565)for(std::size_t i=3;i<bytes.size();i+=4)bytes[i]=255;s.clear=false;
+                s.image->ensure_linear();auto&bytes=s.image->rgba_;std::fill(bytes.begin(),bytes.end(),0);if(s.image->format==Image::Format::RGB24||s.image->format==Image::Format::RGB565)for(std::size_t i=3;i<bytes.size();i+=4)bytes[i]=255;s.clear=false;
             }
             auto canvas=Canvas::GetInstance();auto self=pls::cs::dynamic_pointer_cast<Offscreen>(shared_from_this());
             if(!s.static_rendered){

@@ -55,7 +55,7 @@ if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if
 // M:kairo.unity.panel.FepPanel.get_Current
 pls::cs::Ref<cs_d37bccc1c3814fc6> cs_17329e66670990a9() { cs_init_d37bccc1c3814fc6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.FepPanel.get_Current",kairo);
-{ return cs_fff40af3d4f61c60(); }
+{ return cs_fff40af3d4f61c60_value; }
 }
 }
 
@@ -155,7 +155,7 @@ void cs_eb726d3fffc72be0(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this) { cs_init_d3
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.FepPanel.Start",kairo);
 {
-([&]() { auto cs_value = cs_this; cs_fff40af3d4f61c60() = cs_value; return cs_value; }());
+([&]() { auto cs_value = cs_this; cs_fff40af3d4f61c60_value = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); pls::game::cs_require(cs_target)->cs_b8eaf4c46c566a9c = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::String cs_arg0 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0e31a9f06d96ef28; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c02206d24c9889b2; }()); pls::cs::String cs_arg1 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c7c45a9f1963614b; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_e7444216b8176cd4; }()); std::int32_t cs_arg2 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c7c45a9f1963614b; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_84f6d6bdc01421d0; }()); pls::cs::String cs_arg3 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_271d18d953230ddd; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_ba2d5e888232cb91; }()); pls::cs::String cs_arg4 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_d79c777337d31004; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_ba2d5e888232cb91; }()); std::int32_t cs_arg5 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c7c45a9f1963614b; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_03f115a488ad951b; }()); pls::kairo::start_text_panel(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5); }());});
 }
@@ -174,7 +174,7 @@ return false;
 if ((!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { return pls::kairo::text_panel_finished(); }());})))) {
 return false;
 }
-([&]() { auto cs_value = pls::cs::Ref<cs_d37bccc1c3814fc6>{}; cs_fff40af3d4f61c60() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::cs::Ref<cs_d37bccc1c3814fc6>{}; cs_fff40af3d4f61c60_value = cs_value; return cs_value; }());
 pls::cs::Array<pls::cs::String> v_fepPanelResult_2449 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { return pls::kairo::text_panel_result(); }());});
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c7c45a9f1963614b; }()); auto cs_value = ([&]() { auto cs_array = v_fepPanelResult_2449; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return cs_array.get_Item(cs_index); }()); pls::game::cs_require(cs_target)->cs_e7444216b8176cd4 = cs_value; return cs_value; }());
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_array = v_fepPanelResult_2449; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {

@@ -176,11 +176,11 @@ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullR
 pls::cs::Ref<cs_c0fae45144034cf9> cs_7faa6468ee6a5cd1() { cs_init_c0fae45144034cf9();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JLocale.GetDefault",kairo);
 {
-if (([&]() { pls::cs::Ref<cs_c0fae45144034cf9> cs_left = cs_3afe6640285fae71(); pls::cs::Ref<cs_c0fae45144034cf9> cs_right = pls::cs::Ref<cs_c0fae45144034cf9>{}; return cs_5bd23c8492e95ec7(cs_left,cs_right); }())) {
+if (([&]() { pls::cs::Ref<cs_c0fae45144034cf9> cs_left = cs_3afe6640285fae71_value; pls::cs::Ref<cs_c0fae45144034cf9> cs_right = pls::cs::Ref<cs_c0fae45144034cf9>{}; return cs_5bd23c8492e95ec7(cs_left,cs_right); }())) {
 pls::cs::Array<pls::cs::String> v_array_2235 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { return pls::kairo::native_locale(); }());});
-([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JLocale.cs:M:java.util.JLocale.GetDefault:2294",([&]() -> pls::cs::Ref<cs_c0fae45144034cf9> { pls::cs::String cs_arg0 = ([&]() { auto cs_array = v_array_2235; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }()); pls::cs::String cs_arg1 = ([&]() { auto cs_array = v_array_2235; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return cs_array.get_Item(cs_index); }()); return cs_a6b35afeab568a11(cs_arg0,cs_arg1); }())); cs_3afe6640285fae71() = cs_value; return cs_value; }());
+([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JLocale.cs:M:java.util.JLocale.GetDefault:2294",([&]() -> pls::cs::Ref<cs_c0fae45144034cf9> { pls::cs::String cs_arg0 = ([&]() { auto cs_array = v_array_2235; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }()); pls::cs::String cs_arg1 = ([&]() { auto cs_array = v_array_2235; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return cs_array.get_Item(cs_index); }()); return cs_a6b35afeab568a11(cs_arg0,cs_arg1); }())); cs_3afe6640285fae71_value = cs_value; return cs_value; }());
 }
-return cs_3afe6640285fae71();
+return cs_3afe6640285fae71_value;
 }
 }
 }

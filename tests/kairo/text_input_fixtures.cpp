@@ -52,6 +52,6 @@ int main(){
     check(field->Text().is_null()&&field->DisplayMode()==7&&field->InputMode()==9);
     check(field->Handle({platform::Input::Kind::key_down,0,0,SDLK_ESCAPE}));
     check(!field->Blocking()&&!field->Active());
-    kairo::install_text_input({});app->source_Init({});field.reset();app.reset();
+    kairo::install_text_input({});app->source_Init({});pls::cs::clear_ref(field);pls::cs::clear_ref(app);
     std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<assertions<<",\"SDL_TextInput\":true,\"game_boot\":false}\n";
 }

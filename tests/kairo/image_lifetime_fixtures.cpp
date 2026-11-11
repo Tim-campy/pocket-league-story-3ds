@@ -1,10 +1,11 @@
 #include "graphics.hpp"
+#include "../translator/gc_test_support.hpp"
 #include <iostream>
 using namespace pls::kairo;
 namespace {
 std::int32_t frame,create_area,baseline;bool count_enabled=true;
 std::vector<pls::cs::Ref<Image>> all;
-struct Owner:pls::cs::Object {pls::cs::Ref<Image> image;void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(image,v);}void release_edges()override{image.reset();}};
+struct Owner:pls::cs::Object {pls::cs::Ref<Image> image{};void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(image,v);}void release_edges()override{pls::cs::clear_ref(image);}};
 const char* B(bool b){return b?"True":"False";}
 pls::cs::Ref<Image> S(std::uint8_t a,std::uint8_t b){auto value=Image::FromBytes(pls::cs::Array<std::uint8_t>::from({a,b,41}));all.push_back(value);return value;}
 void reset(){for(const auto& image:all)image->Dispose();all.clear();Image::SetSourceImageMaxCount(0);Image::SetSourceImageMaxPixels(0);Image::SetSourceImageValidateFrames(0);frame=0;create_area=0;count_enabled=true;baseline=Image::native_releases();}
@@ -18,8 +19,8 @@ int main(int argc,char**argv){
  runtime.measure_source=pls::cs::Delegate<pls::cs::Array<std::int32_t>(pls::cs::Array<std::uint8_t>)>::from_static("own-header",[](pls::cs::Array<std::uint8_t> data){return pls::cs::Array<std::int32_t>::from({data.at(0),data.at(1)});});
  runtime.read_source=pls::cs::Delegate<pls::cs::Array<std::uint8_t>(std::int32_t,std::int32_t,pls::cs::String,pls::cs::String)>::from_static("own-file",[](std::int32_t rs,std::int32_t rc,pls::cs::String file,pls::cs::String palette){if(rs!=-1||rc!=-1||!palette.is_null())throw pls::cs::NotSupportedException();return file==pls::cs::String(u"synthetic")?pls::cs::Array<std::uint8_t>::from({3,2,41}):pls::cs::Array<std::uint8_t>{};});install_image_runtime(std::move(runtime));
  if(argc==3){
-  std::weak_ptr<Owner> weak;{auto owner=pls::cs::make_ref<Owner>();auto raw=owner.get();owner->image=Image::FromLoader(pls::cs::Delegate<pls::cs::Array<std::uint8_t>()>::bind(owner,"own-image-cycle",[raw]{(void)raw;return pls::cs::Array<std::uint8_t>::from({3,2,41});}));weak=owner;}pls::cs::gc_collect();check(weak.expired());
-  std::weak_ptr<Image> image;{auto value=Image::FromSource(pls::cs::Array<std::uint8_t>::from({3,2,41}));value->Use();value->SetExpiration(true,1);image=value;}pls::cs::gc_collect();check(!image.expired());frame=2;Image::UnuseExpirationImages();pls::cs::gc_collect();check(image.expired());check(create_area==0);
+  pls::cs::Weak<Owner> weak;isolated_gc_mutator([&]{auto owner=pls::cs::make_ref<Owner>();auto raw=pls::cs::raw(owner);owner->image=Image::FromLoader(pls::cs::Delegate<pls::cs::Array<std::uint8_t>()>::bind(owner,"own-image-cycle",[raw]{(void)raw;return pls::cs::Array<std::uint8_t>::from({3,2,41});}));weak=owner;});pls::cs::gc_collect();check(weak.expired());
+  pls::cs::Weak<Image> image;isolated_gc_mutator([&]{auto value=Image::FromSource(pls::cs::Array<std::uint8_t>::from({3,2,41}));value->Use();value->SetExpiration(true,1);image=value;});pls::cs::gc_collect();isolated_gc_mutator([&]{check(!image.expired());frame=2;Image::UnuseExpirationImages();});pls::cs::gc_collect();check(image.expired());check(create_area==0);
   std::cout<<"{\"assertions\":"<<assertions<<",\"missing_bindings_rejected\":true,\"loader_cycle_collected\":true,\"source_cache_owns_resident_images\":true,\"game_boot\":false}\n";return 0;
  }
  reset();auto a=S(3,2);a->SetExpiration(true,40);P("lazy",{a});frame=10;a->Use();P("used",{a});frame=11;a->Use();frame=50;Image::UnuseExpirationImages();P("threshold-equal",{a});frame=51;Image::UnuseExpirationImages();P("threshold-past",{a});frame=52;a->Use();P("reloaded",{a});a->Dispose();P("disposed",{a});

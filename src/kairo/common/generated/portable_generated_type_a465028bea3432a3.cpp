@@ -8,9 +8,9 @@ void cs_a465028bea3432a3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_a465028bea3432a3::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_03197f755fcefa4b);pls::cs::release_value(cs_99f3f6ad5516299e);}
 
-std::int32_t cs_a465028bea3432a3::GetHashCode() {return cs_26468f4a2c9b3470(std::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()));}
+std::int32_t cs_a465028bea3432a3::GetHashCode() {return cs_26468f4a2c9b3470(pls::cs::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()));}
 
-bool cs_a465028bea3432a3::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_9f8cfce81641ea7a(std::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()),v_obj);}
+bool cs_a465028bea3432a3::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_9f8cfce81641ea7a(pls::cs::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()),v_obj);}
 
 void cs_init_a465028bea3432a3(){static pls::cs::TypeInitState state;state.run("java.util.JCalendar",[](){
 
@@ -114,7 +114,7 @@ std::int32_t cs_26468f4a2c9b3470(pls::cs::Ref<cs_a465028bea3432a3> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JCalendar.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

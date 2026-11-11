@@ -14,7 +14,7 @@ public:
     void release_edges()override{release_value(value_);}
 };
 class RegexGroupCollection:public Object {
-    std::vector<Ref<RegexGroup>> groups_;
+    std::vector<Ref<RegexGroup>> groups_{};
 public:
     explicit RegexGroupCollection(std::vector<Ref<RegexGroup>> groups):groups_(std::move(groups)){}
     std::int32_t get_Count()const{return std::int32_t(groups_.size());}
@@ -23,15 +23,15 @@ public:
     void release_edges()override{groups_.clear();}
 };
 class RegexMatch:public RegexGroup {
-    Ref<RegexGroupCollection> groups_;
+    Ref<RegexGroupCollection> groups_{};
 public:
     RegexMatch(String value,std::int32_t index,std::int32_t length,bool success,Ref<RegexGroupCollection> groups):RegexGroup(std::move(value),index,length,success),groups_(std::move(groups)){}
     Ref<RegexGroupCollection>get_Groups()const{return groups_;}
     void trace_edges(const EdgeVisitor&v)const override{RegexGroup::trace_edges(v);trace_value(groups_,v);}
-    void release_edges()override{RegexGroup::release_edges();groups_.reset();}
+    void release_edges()override{RegexGroup::release_edges();clear_ref(groups_);}
 };
 class RegexMatchCollection:public Object {
-    std::vector<Ref<RegexMatch>> matches_;
+    std::vector<Ref<RegexMatch>> matches_{};
 public:
     explicit RegexMatchCollection(std::vector<Ref<RegexMatch>> matches):matches_(std::move(matches)){}
     std::int32_t get_Count()const{return std::int32_t(matches_.size());}

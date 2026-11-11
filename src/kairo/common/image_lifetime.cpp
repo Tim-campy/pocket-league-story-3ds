@@ -4,7 +4,15 @@
 namespace pls::kairo {
 namespace {
 ImageRuntimeBindings runtime;
-std::vector<cs::Ref<Image>> source_images;
+std::vector<cs::Ref<Image>> source_images{};
+cs::GcRootProvider image_roots([](const cs::EdgeVisitor&visitor){
+    for(const auto&image:source_images)cs::trace_value(image,visitor);
+    runtime.check_count.trace_edges(visitor);runtime.count_enabled.trace_edges(visitor);
+    runtime.adjust_create_area.trace_edges(visitor);runtime.read_source.trace_edges(visitor);
+    runtime.measure_source.trace_edges(visitor);
+    cs::trace_value(Image::getOptimize_result,visitor);cs::trace_value(Image::getOptimizeSeb_result,visitor);
+    cs::trace_value(Image::getPaletteInfo_result,visitor);cs::trace_value(Image::getAreaSize_result,visitor);
+});
 std::int32_t source_pixels{},max_count{},max_pixels{},default_frames{},release_count{};
 std::int32_t now(){return runtime.check_count?runtime.check_count():0;}
 void area(std::int32_t delta){if(runtime.count_enabled&&runtime.count_enabled())runtime.adjust_create_area(delta);}
@@ -44,7 +52,7 @@ cs::Ref<Image> Image::FromRecord(std::int32_t rs,std::int32_t rc,cs::String file
 void Image::Use(){
     if(alive_||disposed_||(source_bytes_.is_null()&&!source_loader_&&file_.is_null()))return;
     if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
-        auto self=std::dynamic_pointer_cast<Image>(shared_from_this());auto raw=self.get();
+        auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());auto raw=cs::raw(self);
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Use",[raw]{raw->Use();}),true);return;
     }
     auto bytes=source_bytes_;if(bytes.is_null()){
@@ -53,10 +61,10 @@ void Image::Use(){
     }if(bytes.is_null())return;
     const auto& entry=source_entry(bytes);auto decoded=assets::installed_catalog->read(entry);
     width_=static_cast<std::int32_t>(entry.width);height_=static_cast<std::int32_t>(entry.height);rgba_=std::move(decoded);alive_=true;check_count_=now();
-    auto self=std::dynamic_pointer_cast<Image>(shared_from_this());source_images.push_back(self);
+    auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());source_images.push_back(self);
     const auto pixels=cs::mul_i32(width_,height_);source_pixels=cs::add_i32(source_pixels,pixels);area(pixels);
     while(source_images.size()>1&&((max_count>0&&max_count<static_cast<std::int32_t>(source_images.size()))||(max_pixels>0&&max_pixels<source_pixels))){
-        cs::Ref<Image> selected;auto oldest=std::numeric_limits<std::int64_t>::min();
+        cs::Ref<Image> selected{};auto oldest=std::numeric_limits<std::int64_t>::min();
         for(std::size_t i=0;i+1<source_images.size();++i){const auto& candidate=source_images[i];
             const auto score=cs::sub_i64(cs::mul_i64(cs::sub_i32(now(),candidate->check_count_),1000),cs::mul_i32(candidate->width_,candidate->height_)/100);
             if(oldest<score){oldest=score;selected=candidate;}
@@ -68,12 +76,12 @@ void Image::Use(){
 void Image::Unuse(){
     if(!alive_||(!created_image_&&source_bytes_.is_null()&&!source_loader_&&file_.is_null()))return;
     if(const auto app=IApplication::GetCurrentApp();app&&!app->CheckUiThread()){
-        auto self=std::dynamic_pointer_cast<Image>(shared_from_this());auto raw=self.get();
+        auto self=pls::cs::dynamic_pointer_cast<Image>(shared_from_this());auto raw=cs::raw(self);
         app->RunOnUiThread(cs::Delegate<void()>::bind(std::move(self),"Image.Unuse",[raw]{raw->Unuse();}),true);return;
     }
     alive_=false;std::vector<std::uint8_t>().swap(rgba_);
     release_count=cs::add_i32(release_count,1);
-    auto found=std::find_if(source_images.begin(),source_images.end(),[&](const auto& image){return image.get()==this;});if(found!=source_images.end())source_images.erase(found);
+    auto found=std::find_if(source_images.begin(),source_images.end(),[&](const auto& image){return cs::raw(image)==this;});if(found!=source_images.end())source_images.erase(found);
     const auto pixels=cs::mul_i32(width_,height_);source_pixels=cs::sub_i32(source_pixels,pixels);area(cs::neg_i32(pixels));
 }
 void Image::Dispose(){

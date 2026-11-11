@@ -23,11 +23,11 @@ public:
 };
 struct RuntimeTypeRegistry {
     std::recursive_mutex mutex;
-    std::map<std::string,Ref<RuntimeType>> names;
-    std::map<std::type_index,Ref<RuntimeType>> elements;
+    std::map<std::string,Ref<RuntimeType>> names{};
+    std::map<std::type_index,Ref<RuntimeType>> elements{};
     std::set<std::string> proven_absent_names;
 };
-inline RuntimeTypeRegistry&runtime_types(){static RuntimeTypeRegistry value;return value;}
+inline RuntimeTypeRegistry&runtime_types(){static RuntimeTypeRegistry value;static GcRootProvider roots([](const EdgeVisitor&visitor){for(const auto&entry:value.names)trace_value(entry.second,visitor);for(const auto&entry:value.elements)trace_value(entry.second,visitor);});return value;}
 inline Ref<RuntimeType>RuntimeType::for_name(const std::string&name){auto&registry=runtime_types();std::lock_guard<std::recursive_mutex>lock(registry.mutex);auto&value=registry.names[name];if(!value)value=make_ref<RuntimeType>(String::from_utf8(name));return value;}
 class RuntimeAssembly : public Object {
 public:
@@ -39,14 +39,14 @@ public:
         throw NotSupportedException("Assembly.GetType name has no generated metadata descriptor");
     }
 };
-inline Ref<RuntimeAssembly>RuntimeType::get_Assembly(){static auto value=make_ref<RuntimeAssembly>();return value;}
+inline Ref<RuntimeAssembly>RuntimeType::get_Assembly(){static auto value=make_ref<RuntimeAssembly>();static GcRootProvider roots([](const EdgeVisitor&visitor){trace_value(value,visitor);});return value;}
 template<class T>struct reflection_array_element {static constexpr bool is_array=false;};
 template<class T>struct reflection_array_element<Array<T>> {static constexpr bool is_array=true;using type=T;};
 template<class T>Ref<RuntimeType>runtime_type_of(){
     auto&registry=runtime_types();std::lock_guard<std::recursive_mutex>lock(registry.mutex);
     auto name=managed_type_name_traits<T>::name();auto found=registry.names.find(name);if(found!=registry.names.end())return found->second;
     auto value=make_ref<RuntimeType>(String::from_utf8(name));registry.names.emplace(name,value);registry.elements.emplace(std::type_index(typeid(T)),value);
-    value->create_array=[](std::int32_t length){return std::static_pointer_cast<ArrayBase>(Array<T>::make(length).as_object());};
+    value->create_array=[](std::int32_t length){return pls::cs::static_pointer_cast<ArrayBase>(Array<T>::make(length).as_object());};
     value->assign_array_element=[](const Ref<ArrayBase>&array,const Ref<Object>&item,std::int32_t index){auto typed=Array<T>::from_object(array);typed.at(index)=item?unbox<T>(item):T{};};
     if constexpr(reflection_array_element<T>::is_array)runtime_type_of<typename reflection_array_element<T>::type>();
     else if(name.size()>2)registry.proven_absent_names.insert(name.substr(0,name.size()-2));

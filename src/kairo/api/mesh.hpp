@@ -15,7 +15,7 @@ public:
     struct Batch {
         std::uint32_t shader_flags{};
         std::int32_t queue{},alpha_type{},filter{};
-        cs::Ref<Image> image;
+        cs::Ref<Image> image{};
         std::int32_t blend_color{};
         std::vector<Fragment> fragments;
     };
@@ -27,7 +27,7 @@ public:
     };
     using Commands=std::vector<Batch>;
 private:
-    cs::Ref<Graphics> graphics_;
+    cs::Ref<Graphics> graphics_{};
     Commands batches_;
     std::vector<ActivePass> active_;
     float current_depth_{},front_depth_{};

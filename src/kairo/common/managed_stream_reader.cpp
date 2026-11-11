@@ -106,7 +106,7 @@ String RuntimeStreamReader::ReadToEnd(){
     }
     return String(std::move(result));
 }
-void RuntimeStreamReader::Close(){if(stream_)stream_->Close();stream_.reset();encoding_.reset();input_=Array<std::uint8_t>();pending_.clear();preamble_bytes_.clear();decoded_.clear();position_=0;}
+void RuntimeStreamReader::Close(){if(stream_)stream_->Close();clear_ref(stream_);clear_ref(encoding_);input_=Array<std::uint8_t>();pending_.clear();preamble_bytes_.clear();decoded_.clear();position_=0;}
 void RuntimeStreamReader::trace_edges(const EdgeVisitor&visitor)const{trace_value(stream_,visitor);trace_value(encoding_,visitor);trace_value(input_,visitor);}
-void RuntimeStreamReader::release_edges(){stream_.reset();encoding_.reset();input_=Array<std::uint8_t>();pending_.clear();preamble_bytes_.clear();decoded_.clear();}
+void RuntimeStreamReader::release_edges(){clear_ref(stream_);clear_ref(encoding_);input_=Array<std::uint8_t>();pending_.clear();preamble_bytes_.clear();decoded_.clear();}
 } // namespace pls::cs

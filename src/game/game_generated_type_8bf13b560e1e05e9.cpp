@@ -17,9 +17,9 @@ void cs_8bf13b560e1e05e9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_8bf13b560e1e05e9::release_edges(){cs_d37bccc1c3814fc6::release_edges();pls::cs::release_value(cs_46fa0df374412b7f);pls::cs::release_value(cs_09f89a2340f25102);pls::cs::release_value(cs_39b4b25c748676d2);pls::cs::release_value(cs_0cf6503d4b8e4210);pls::cs::release_value(cs_5a49f60753ca2ee9);pls::cs::release_value(cs_4be24738d1d8ef7a);pls::cs::release_value(cs_dfad8621ad4f39fe);pls::cs::release_value(cs_ce90b55fbd071e4f);pls::cs::release_value(cs_cbcfd5b19b2bb127);pls::cs::release_value(cs_210652685e2645f7);pls::cs::release_value(cs_d89e7d5965fa0e1a);pls::cs::release_value(cs_4c3b911964e18cd8);pls::cs::release_value(cs_e45ed7f15498e8a3);pls::cs::release_value(cs_d8dd36c416f7b528);pls::cs::release_value(cs_6a51aa58c7ee0c73);pls::cs::release_value(cs_3ec5e2b430b94a5f);pls::cs::release_value(cs_be69170f8edbb93d);pls::cs::release_value(cs_eeee6923a0bfab80);}
 
-void cs_8bf13b560e1e05e9::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_a3ffc1615f910b95(std::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_canvas,v_onFinishMethod);}
+void cs_8bf13b560e1e05e9::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_a3ffc1615f910b95(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_canvas,v_onFinishMethod);}
 
-void cs_8bf13b560e1e05e9::cs_virtual_24e6f1c38df06a63(pls::cs::Ref<cs_5ad2213598dfcd5d> v_c,std::int32_t v_type,std::int32_t v_param) {cs_3e2739124195383e(std::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_c,v_type,v_param);}
+void cs_8bf13b560e1e05e9::cs_virtual_24e6f1c38df06a63(pls::cs::Ref<cs_5ad2213598dfcd5d> v_c,std::int32_t v_type,std::int32_t v_param) {cs_3e2739124195383e(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_c,v_type,v_param);}
 
 void cs_init_8bf13b560e1e05e9(){static pls::cs::TypeInitState state;state.run("kfw.panel.MainPanel",[](){
 
@@ -36,7 +36,7 @@ cs_this->cs_cbcfd5b19b2bb127 = ([]() -> pls::cs::String {static const auto cs_li
 cs_this->cs_210652685e2645f7 = true;
 cs_this->cs_4c3b911964e18cd8 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));
 cs_this->cs_be69170f8edbb93d = pls::source_allocations::completed("new_array","src/KairoLibrary/kfw/panel/MainPanel.cs:M:kfw.panel.MainPanel.#ctor:735",pls::cs::Array<pls::cs::String>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
-([&]() { cs_429433773226956d_init(std::static_pointer_cast<cs_d37bccc1c3814fc6>(cs_this)); }());
+([&]() { cs_429433773226956d_init(pls::cs::static_pointer_cast<cs_d37bccc1c3814fc6>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kfw.panel.MainPanel.#ctor",kairo);
 {
 
@@ -55,7 +55,7 @@ cs_this->cs_cbcfd5b19b2bb127 = ([]() -> pls::cs::String {static const auto cs_li
 cs_this->cs_210652685e2645f7 = true;
 cs_this->cs_4c3b911964e18cd8 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));
 cs_this->cs_be69170f8edbb93d = pls::source_allocations::completed("new_array","src/KairoLibrary/kfw/panel/MainPanel.cs:M:kfw.panel.MainPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String):735",pls::cs::Array<pls::cs::String>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
-([&]() { cs_429433773226956d_init(std::static_pointer_cast<cs_d37bccc1c3814fc6>(cs_this)); }());
+([&]() { cs_429433773226956d_init(pls::cs::static_pointer_cast<cs_d37bccc1c3814fc6>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kfw.panel.MainPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_8bf13b560e1e05e9>>(cs_this); pls::cs::String cs_arg0 = v_label; pls::cs::String cs_arg1 = v_defaultText; std::int32_t cs_arg2 = v_maxLength; std::int32_t cs_arg3 = v_inputMode; pls::cs::String cs_arg4 = v_itemName; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_9ab4bec37ce639be(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());

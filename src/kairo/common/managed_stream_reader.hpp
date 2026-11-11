@@ -5,8 +5,8 @@
 namespace pls::cs {
 class RuntimeStreamReader : public Object {
     enum class EncodingKind {Utf8,Utf16LE,Utf16BE,Ascii,Utf32LE,Utf32BE};
-    Ref<Stream> stream_;
-    Ref<RuntimeEncoding> encoding_;
+    Ref<Stream> stream_{};
+    Ref<RuntimeEncoding> encoding_{};
     Array<std::uint8_t> input_;
     EncodingKind kind_;
     std::vector<std::uint8_t> pending_,preamble_bytes_;

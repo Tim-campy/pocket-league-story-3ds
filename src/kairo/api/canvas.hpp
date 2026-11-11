@@ -17,15 +17,15 @@ public:
     virtual void ClearGameTouch()=0; // Init/Finish clear game surfaces only.
 };
 class Canvas : public cs::Object {
-    inline static cs::Ref<Canvas> instance_;
-    inline static cs::Ref<Graphics> graphics_buffer_;
+    inline static cs::Ref<Canvas> instance_{};
+    inline static cs::Ref<Graphics> graphics_buffer_{};
     inline static std::int32_t last_browser_frame_{-1}; // Canvas.lastOpenBrowserFrame_ initializer.
-    cs::Ref<Image> display_;
-    cs::Ref<Graphics> graphics_;
+    cs::Ref<Image> display_{};
+    cs::Ref<Graphics> graphics_{};
     bool is_alter_static_rendering_{};
-    cs::Ref<Font> default_font_;
-    cs::Ref<CanvasSurface> surface_;
-    cs::Ref<cs::Object> source_surface_;
+    cs::Ref<Font> default_font_{};
+    cs::Ref<CanvasSurface> surface_{};
+    cs::Ref<cs::Object> source_surface_{};
     std::array<cs::SharedField<cs::String>,4> labels_;
     cs::Array<cs::String> shown_=cs::Array<cs::String>::from({cs::String(u""),cs::String(u""),{}, {}});
     std::int32_t background_{};
@@ -34,6 +34,7 @@ class Canvas : public cs::Object {
     PcInputAdapter input_{keys_};
 public:
     static constexpr std::int32_t KEY_LEFT=65536,KEY_RIGHT=262144,KEY_UP=131072,KEY_DOWN=524288,KEY_SELECT=1048576,KEY_SOFT1=2097152,KEY_SOFT2=4194304;
+    static void trace_static_roots(const cs::EdgeVisitor&visitor){cs::trace_value(instance_,visitor);cs::trace_value(graphics_buffer_,visitor);}
     Canvas();
     std::int32_t source_status_bar_position{-1}; // Original field; no source assignments after its initializer.
     static std::int32_t& source_last_browser_frame(){return last_browser_frame_;}
@@ -93,4 +94,5 @@ public:
     void trace_edges(const cs::EdgeVisitor&)const override;
     void release_edges()override;
 };
+inline cs::GcRootProvider canvas_roots([](const cs::EdgeVisitor&visitor){Canvas::trace_static_roots(visitor);});
 }

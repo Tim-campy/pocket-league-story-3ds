@@ -4,10 +4,11 @@
 #include <atomic>
 #include <thread>
 #include <map>
+#include "../translator/gc_test_support.hpp"
 using namespace pls;
 namespace {
 std::map<kairo::Graphics*,int> ids;
-int identify(cs::Ref<kairo::Graphics> g){if(!g)return 0;const auto found=ids.find(g.get());if(found!=ids.end())return found->second;const auto id=int(ids.size())+1;ids.emplace(g.get(),id);return id;}
+int identify(cs::Ref<kairo::Graphics> g){if(!g)return 0;const auto found=ids.find(pls::cs::raw(g));if(found!=ids.end())return found->second;const auto id=int(ids.size())+1;ids.emplace(pls::cs::raw(g),id);return id;}
 const char* B(bool value){return value?"True":"False";}
 void P(const char* name,cs::Ref<kairo::Canvas> canvas){auto current=kairo::Graphics::GetCurrent();std::cout<<name<<'='<<identify(current)<<':'<<identify(canvas->GetGraphicsInstance())<<':'<<B(canvas->source_IsAlterStaticRendering())<<':'<<B(current&&current->IsGUI())<<'\n';}
 cs::Ref<kairo::Image> image(){return kairo::Image::FromRgba(2,2,std::vector<std::uint8_t>(16));}
@@ -15,9 +16,11 @@ void G(const std::string& name,cs::Ref<kairo::Graphics> g){std::cout<<name<<'='<
 void Batch(cs::Ref<kairo::Graphics> g,cs::Ref<kairo::Canvas> c,const std::string& prefix){g->ResetRender();G(prefix+"-reset",g);g->BeginGLRender(false);G(prefix+"-begin",g);g->BeginGLRender(true);G(prefix+"-nested",g);g->EndGLRender();G(prefix+"-end-inner",g);g->EndGLRender();G(prefix+"-end-outer",g);g->EndGLRender();G(prefix+"-extra-end",g);g->BeginGLRender(false);g->BeginGLRender(true);g->EndGLRender(true);G(prefix+"-force",g);g->PopClipEnable();G(prefix+"-pop-after-force",g);g->BeginGLRender(false);g->ResetRender();G(prefix+"-reset-active",g);g->EndGLRender();G(prefix+"-end-after-reset",g);g->BeginGLRender(false);c->EndPaint(g);G(prefix+"-end-paint",g);g->BeginGLRender(false);c->EndAlterStaticRender(g);G(prefix+"-end-alter",g);}
 int policy(){
  cs::GcMutatorScope mutator;int checks=0;auto require=[&](bool v){if(!v)throw cs::InvalidOperationException("Graphics current lifetime/GC policy failed");++checks;};require(!kairo::Graphics::GetCurrent());
- auto canvas=cs::make_ref<kairo::Canvas>();auto first_image=image(),second_image=image();auto a=first_image->GetGraphics(),b=second_image->GetGraphics();require(!kairo::Graphics::GetCurrent());
- std::weak_ptr<kairo::Graphics> weak=a;std::weak_ptr<kairo::Image> weak_image=first_image;canvas->BeginPaint(a);canvas->EndPaint(a);a.reset();first_image.reset();cs::gc_collect();require(!weak.expired()&&!weak_image.expired());
- auto snapshot=kairo::Graphics::GetCurrent();canvas->BeginPaint(b);canvas->EndPaint(b);cs::gc_collect();require(!weak.expired()&&snapshot==weak.lock());snapshot.reset();cs::gc_collect();require(weak.expired()&&weak_image.expired());
+ auto canvas=cs::make_ref<kairo::Canvas>();auto second_image=image();auto b=second_image->GetGraphics();require(!kairo::Graphics::GetCurrent());
+ cs::Weak<kairo::Graphics> weak;cs::Weak<kairo::Image> weak_image;cs::Ref<kairo::Graphics>snapshot{};
+ isolated_gc_mutator([&]{auto first_image=image();auto a=first_image->GetGraphics();weak=a;weak_image=first_image;canvas->BeginPaint(a);canvas->EndPaint(a);});
+ cs::gc_collect();isolated_gc_mutator([&]{require(!weak.expired()&&!weak_image.expired());snapshot=kairo::Graphics::GetCurrent();canvas->BeginPaint(b);canvas->EndPaint(b);});
+ cs::gc_collect();isolated_gc_mutator([&]{require(!weak.expired()&&snapshot==weak.lock());cs::clear_ref(snapshot);});cs::gc_collect();require(weak.expired()&&weak_image.expired());
  std::atomic<bool> ready{false},warm{false},resume{false},done{false};std::atomic<int> reads{0};std::exception_ptr error;
  std::thread worker([&]{try{cs::GcMutatorScope registered;ready=true;for(int i=0;i<2000;++i){auto value=kairo::Graphics::GetCurrent();if(!value||value->IsGUI())throw cs::InvalidOperationException("Shared current snapshot invalid");++reads;cs::gc_safepoint();if(i==99){warm=true;while(!resume.load()){cs::gc_safepoint();std::this_thread::yield();}}}done=true;}catch(...){error=std::current_exception();ready=true;warm=true;done=true;}});
  while(!ready.load()||!warm.load()){cs::gc_safepoint();std::this_thread::yield();}cs::gc_collect();int collections=1;resume=true;while(!done.load()){canvas->BeginPaint(b);canvas->EndPaint(b);cs::gc_collect();++collections;}

@@ -43,7 +43,7 @@ static pls::cs::Array<std::int32_t> cs_d0ddcba40c3d19b0_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_5a851677ed60afe4_value{};
 
-void cs_init_76884ad002dceb7a(){static pls::cs::TypeInitState state;state.run("data.TenantData",[](){
+void cs_init_76884ad002dceb7a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d2fadb769ffdfa75_value,visitor);pls::cs::trace_value(cs_6b4a8733c88d118d_value,visitor);pls::cs::trace_value(cs_d46c1daf9370f4fc_value,visitor);pls::cs::trace_value(cs_c697979a4370cd42_value,visitor);pls::cs::trace_value(cs_fb6df40d6c8d54a1_value,visitor);pls::cs::trace_value(cs_e536a9aad2f2307d_value,visitor);pls::cs::trace_value(cs_f2f6d6b59543d16e_value,visitor);pls::cs::trace_value(cs_594d69ebd53c9f1f_value,visitor);pls::cs::trace_value(cs_d0ddcba40c3d19b0_value,visitor);pls::cs::trace_value(cs_5a851677ed60afe4_value,visitor);});static pls::cs::TypeInitState state;state.run("data.TenantData",[](){
 cs_d46c1daf9370f4fc_value = pls::cs::evaluate_type_initializer_field("F:data.TenantData.INIT_TENANTID",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:main.AppData.ExecuteScript(System.Int32[],System.Boolean,System.String,System.Int32[],System.Int32[][]):1837",pls::assets::baked_array<std::int32_t>("44b68cfc583b160ee70a4d7200112866267e696ff8203f3fca76a1f29b473b52"));});
 cs_594d69ebd53c9f1f_value = pls::cs::evaluate_type_initializer_field("F:data.TenantData.TENANT_ROOT",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:main.AppData.ExecuteScript(System.Int32[],System.Boolean,System.String,System.Int32[],System.Int32[][]):1968",pls::assets::baked_array<std::int32_t>("7a563511df8ebfb70f3e85331b98c19fd44fc8088102f7009ad597d5946f1689"));});
 cs_6b4a8733c88d118d_value = pls::cs::evaluate_type_initializer_field("F:data.TenantData.EFTOFAN_STR",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:main.AppData.ExecuteScript(System.Int32[],System.Boolean,System.String,System.Int32[],System.Int32[][]):2088",([&](){auto cs_initial_array_277=pls::cs::Array<pls::cs::String>::make(3);cs_initial_array_277.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x4f4e" u"\x3044" u"",2);return cs_literal;}());cs_initial_array_277.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x666e" u"\x901a" u"",2);return cs_literal;}());cs_initial_array_277.at(2)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x9ad8" u"\x3044" u"",2);return cs_literal;}());return cs_initial_array_277;}()));});
@@ -80,7 +80,7 @@ void cs_1d908e097aacd7a3_init(pls::cs::Ref<cs_76884ad002dceb7a> cs_this) {
 cs_this->cs_f10ce629003f16df = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor:1460",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_83b5e84b3a9b557b = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor:1619",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 cs_this->cs_ab9750e834b7453a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor:2327",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TenantData.#ctor",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_d2fadb769ffdfa75() = cs_value; return cs_value; }());
@@ -98,7 +98,7 @@ void cs_e955e975f6db7535_init(pls::cs::Ref<cs_76884ad002dceb7a> cs_this,pls::cs:
 cs_this->cs_f10ce629003f16df = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor(System.String):1460",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_83b5e84b3a9b557b = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor(System.String):1619",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 cs_this->cs_ab9750e834b7453a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor(System.String):2327",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TenantData.#ctor(System.String)",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_d2fadb769ffdfa75() = cs_value; return cs_value; }());

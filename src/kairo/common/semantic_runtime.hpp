@@ -1,6 +1,10 @@
 #pragma once
 #include "source_allocation_probe.hpp"
 #include "memory_ranges.hpp"
+#include "../../runtime/managed_reference.hpp"
+#if PLS_TRACING_GC
+#include "../../runtime/tracing_gc.hpp"
+#endif
 // New implementation of the measured C# language contract; no original assets.
 #include <algorithm>
 #include <cmath>
@@ -19,6 +23,7 @@
 #include <typeinfo>
 #include <utility>
 #include <vector>
+#include <tuple>
 
 namespace pls::cs {
 static_assert(sizeof(std::int32_t)==4 && sizeof(std::int64_t)==8);
@@ -26,7 +31,7 @@ static_assert(sizeof(float)==4 && sizeof(double)==8);
 static_assert(std::numeric_limits<float>::is_iec559 && std::numeric_limits<double>::is_iec559);
 
 struct Object;
-struct ExceptionIdentity {mutable std::mutex mutex;mutable std::weak_ptr<Object> managed_view;};
+struct ExceptionIdentity {mutable std::mutex mutex;mutable Weak<Object> managed_view;};
 class Exception : public std::exception {
     std::string message_;
     bool default_message_{true};
@@ -178,25 +183,43 @@ template<class T>T math_abs(T value){
 
 class String;
 struct Object;
-template<class T>using Ref=std::shared_ptr<T>;
-inline bool reference_equals(const Ref<Object>& left,const Ref<Object>& right){return left.get()==right.get();}
+inline bool reference_equals(const Ref<Object>& left,const Ref<Object>& right){return raw(left)==raw(right);}
 using EdgeVisitor=std::function<void(const Ref<Object>&)>;
+// Exact roots owned by generated static fields or native callback queues.
+// Registration is per owner/lifetime, never per managed reference copy.
+class GcRootProvider {
+    std::size_t token_;
+public:
+    explicit GcRootProvider(std::function<void(const EdgeVisitor&)> provider);
+    ~GcRootProvider();
+    GcRootProvider(const GcRootProvider&)=delete;
+    GcRootProvider&operator=(const GcRootProvider&)=delete;
+};
+void visit_gc_roots(const EdgeVisitor& visitor);
 template<class T>struct is_shared_ref : std::false_type {};
 template<class T>struct is_shared_ref<std::shared_ptr<T>> : std::true_type {using element_type=T;};
+template<class T>struct is_shared_ref<T*> : std::true_type {using element_type=T;};
 template<class T,class=void>struct has_managed_object : std::false_type {};
 template<class T>struct has_managed_object<T,std::void_t<decltype(std::declval<T>().as_object())>> : std::true_type {};
 template<class T>void trace_value(const T&value,const EdgeVisitor&visitor);
 template<class T>void release_value(T&value);
-struct Object : std::enable_shared_from_this<Object> {
+struct Object
+#if !PLS_TRACING_GC
+ : std::enable_shared_from_this<Object>
+#endif
+ {
+#if PLS_TRACING_GC
+    Object* shared_from_this()noexcept{return this;}
+#endif
     static bool source_reference_assignable(const std::type_info& target){return target==typeid(Object);}
     virtual ~Object()=default;
     std::recursive_mutex monitor;
-    virtual bool equals(const std::shared_ptr<Object>&other)const{return other.get()==this;}
+    virtual bool equals(const Ref<Object>&other)const{return raw(other)==this;}
     virtual std::int32_t get_hash_code()const {
         auto bits=reinterpret_cast<std::uintptr_t>(this);
         return cast_integral<std::int32_t>(static_cast<std::uint32_t>(bits^(bits>>16)));
     }
-    virtual bool Equals(const std::shared_ptr<Object>&other){return equals(other);}
+    virtual bool Equals(const Ref<Object>&other){return equals(other);}
     virtual std::int32_t GetHashCode(){return get_hash_code();}
     virtual std::string managed_type_name()const{return "System.Object";}
     virtual std::string managed_delegate_method_id(const std::string& slot)const{return slot;}
@@ -211,6 +234,13 @@ void register_managed_object(const Ref<Object>&object,std::size_t body_bytes=0,c
 void visit_managed_memory(const memory::RangeVisitor&,const std::function<void()>&finish={});
 void gc_safepoint();
 void gc_collect(std::int32_t generation=2);
+#if PLS_TRACING_GC
+void gc_request_collection();
+void gc_frame_end();
+#else
+inline void gc_request_collection(){}
+inline void gc_frame_end(){}
+#endif
 std::int32_t gc_max_generation()noexcept;
 std::int32_t gc_generation(const Ref<Object>&object);
 struct GcCollectionStats {std::size_t tracked=0,roots=0,unreachable=0,collected=0;};
@@ -237,16 +267,39 @@ public:
 // Source lock(object): evaluate once, retain the identity, allow recursion,
 // release on every C++ scope exit. Waiting cooperates with the managed GC.
 class MonitorScope {
-    Ref<Object> target_;
+    Ref<Object> target_{};
 public:
     explicit MonitorScope(Ref<Object> target);
     ~MonitorScope();
     MonitorScope(const MonitorScope&)=delete;
     MonitorScope&operator=(const MonitorScope&)=delete;
 };
+#if PLS_TRACING_GC
+gc::Heap& tracing_heap();
+void ensure_gc_thread();
+#endif
 template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
+#if PLS_TRACING_GC
+    static_assert(std::is_base_of_v<Object,T>,"Managed allocation requires an exact Object descriptor");
+    try{
+        ensure_gc_thread();
+        gc::Descriptor descriptor;
+        descriptor.managed_base=[](void* pointer)->void*{return static_cast<Object*>(static_cast<T*>(pointer));};
+        descriptor.trace=[](const void* pointer,gc::Edges edges){
+            static_cast<const T*>(pointer)->trace_edges([edges](const Ref<Object>& child){edges(child);});
+        };
+        descriptor.ranges=[](const void* pointer,gc::Ranges ranges){
+            static_cast<const T*>(pointer)->memory_ranges([ranges](const void* begin,std::size_t bytes,memory::Category category){
+                if(category==memory::Category::managed_heap)ranges(begin,bytes);
+            });
+        };
+        return gc::make_described<T>(tracing_heap(),descriptor,std::forward<Args>(args)...);
+    }catch(const std::bad_alloc&){throw OutOfMemoryException();}
+    catch(const std::logic_error&error){throw InvalidOperationException(error.what());}
+#else
     try{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,sizeof(T),result.get());return result;}
     catch(const std::bad_alloc&){throw OutOfMemoryException();}
+#endif
 }
 
 class String {
@@ -257,13 +310,13 @@ class String {
         String ToString()override;
         std::string managed_type_name()const override{return "System.String";}
         bool equals(const Ref<Object>&other)const override {
-            auto typed=std::dynamic_pointer_cast<Storage>(other);return typed&&value==typed->value;
+            auto typed=pls::cs::dynamic_pointer_cast<Storage>(other);return typed&&value==typed->value;
         }
         std::int32_t get_hash_code()const noexcept override {
             std::int32_t hash=0;for(char16_t unit:value)hash=add_i32(mul_i32(hash,31),static_cast<std::int32_t>(unit));return hash;
         }
     };
-    std::shared_ptr<Storage> data_;
+    Ref<Storage> data_{};
     const std::u16string& require()const {
         if (!data_)throw NullReferenceException();return data_->value;
     }
@@ -281,7 +334,7 @@ public:
     std::string utf8()const;
     bool is_null()const noexcept{return !data_;}
     Ref<Object> as_object()const{return data_;}
-    static String from_object(const Ref<Object>&object){String result;if(object){result.data_=std::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
+    static String from_object(const Ref<Object>&object){String result;if(object){result.data_=pls::cs::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
     std::int32_t get_hash_code()const{require();return data_->get_hash_code();}
     std::int32_t length()const{return static_cast<std::int32_t>(require().size());}
     char16_t at(std::int32_t index)const {
@@ -323,7 +376,7 @@ struct ArrayBase : Object {
     virtual void reference_item(std::int32_t,const Ref<Object>&){throw ArrayTypeMismatchException();}
     virtual Ref<ArrayBase> clone_storage()const=0;
 };
-inline Ref<ArrayBase>array_cast(const Ref<Object>&value){auto result=std::dynamic_pointer_cast<ArrayBase>(value);if(value&&!result)throw InvalidCastException();return result;}
+inline Ref<ArrayBase>array_cast(const Ref<Object>&value){auto result=pls::cs::dynamic_pointer_cast<ArrayBase>(value);if(value&&!result)throw InvalidCastException();return result;}
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count);
 
 template<class T>class Array;
@@ -370,7 +423,18 @@ template<class T> class Array {
         std::int32_t size;
         std::unique_ptr<T[]> values;
         void memory_ranges(const memory::RangeVisitor&visit)const override{visit(values.get(),static_cast<std::size_t>(size)*sizeof(T),memory::Category::managed_heap);}
-        explicit Storage(std::int32_t n):size(n),values(n?std::make_unique<T[]>(static_cast<std::size_t>(n)):nullptr){}
+        static std::unique_ptr<T[]> allocate(std::int32_t n){
+            // The source target is 32-bit Mono. A reference-array payload plus
+            // its 16-byte MonoArray header must fit its 32-bit byte count.
+            // Do not let a 64-bit development host attempt a 17 GB allocation
+            // which the source runtime rejects before calling its allocator.
+            if constexpr(is_shared_ref<T>::value){
+                constexpr std::uint64_t max_reference_count=(UINT64_C(0xffffffff)-16)/4;
+                if(static_cast<std::uint64_t>(n)>max_reference_count)throw OutOfMemoryException();
+            }
+            return n?std::make_unique<T[]>(static_cast<std::size_t>(n)):nullptr;
+        }
+        explicit Storage(std::int32_t n):size(n),values(allocate(n)){}
         std::int32_t get_Length()const override{return size;}
         std::string managed_type_name()const override{return managed_type_name_traits<T>::name()+"[]";}
         const std::type_info&element_type()const noexcept override{return typeid(T);}
@@ -382,12 +446,12 @@ template<class T> class Array {
         }
         Ref<Object> reference_item(std::int32_t index)const override{
             if(index<0||index>=size)throw IndexOutOfRangeException();
-            if constexpr(is_shared_ref<T>::value)return std::dynamic_pointer_cast<Object>(values[static_cast<std::size_t>(index)]);
+            if constexpr(is_shared_ref<T>::value)return pls::cs::dynamic_pointer_cast<Object>(values[static_cast<std::size_t>(index)]);
             else throw ArrayTypeMismatchException();
         }
         void reference_item(std::int32_t index,const Ref<Object>& value)override{
             if(index<0||index>=size)throw IndexOutOfRangeException();
-            if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;auto typed=std::dynamic_pointer_cast<E>(value);if(value&&!typed)throw ArrayTypeMismatchException();values[static_cast<std::size_t>(index)]=std::move(typed);}
+            if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;auto typed=pls::cs::dynamic_pointer_cast<E>(value);if(value&&!typed)throw ArrayTypeMismatchException();values[static_cast<std::size_t>(index)]=std::move(typed);}
             else throw ArrayTypeMismatchException();
         }
         Ref<ArrayBase> clone_storage()const override{auto result=make_ref<Storage>(size);for(std::int32_t i=0;i<size;++i)result->values[static_cast<std::size_t>(i)]=values[static_cast<std::size_t>(i)];return result;}
@@ -398,8 +462,8 @@ template<class T> class Array {
             return true;
         }
     };
-    std::shared_ptr<Storage> data_;
-    Ref<ArrayBase> view_;
+    Ref<Storage> data_{};
+    Ref<ArrayBase> view_{};
     const Storage& require()const{if(view_)throw ArrayTypeMismatchException();if(!data_)throw NullReferenceException();return *data_;}
 public:
     Array()noexcept=default;
@@ -419,8 +483,8 @@ public:
     bool is_null()const noexcept{return !data_&&!view_;}
     Ref<Object> as_object()const{return view_?view_:data_;}
     static Array from_object(const Ref<Object>&object){
-        Array result;if(!object)return result;result.data_=std::dynamic_pointer_cast<Storage>(object);if(result.data_)return result;
-        if constexpr(is_shared_ref<T>::value){auto array=std::dynamic_pointer_cast<ArrayBase>(object);if(array&&array->reference_element_is_a(typeid(typename is_shared_ref<T>::element_type))){result.view_=std::move(array);return result;}}
+        Array result;if(!object)return result;result.data_=pls::cs::dynamic_pointer_cast<Storage>(object);if(result.data_)return result;
+        if constexpr(is_shared_ref<T>::value){auto array=pls::cs::dynamic_pointer_cast<ArrayBase>(object);if(array&&array->reference_element_is_a(typeid(typename is_shared_ref<T>::element_type))){result.view_=std::move(array);return result;}}
         throw InvalidCastException();
     }
     template<class U>static Array covariant_from(const Array<U>& source){static_assert(is_shared_ref<T>::value&&is_shared_ref<U>::value);return from_object(source.as_object());}
@@ -433,12 +497,12 @@ public:
     T& operator[](std::int32_t index)const{return at(index);}
     T get_Item(std::int32_t index)const{
         if(!view_)return at(index);
-        if constexpr(is_shared_ref<T>::value){auto value=view_->reference_item(index);auto result=std::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
+        if constexpr(is_shared_ref<T>::value){auto value=view_->reference_item(index);auto result=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
         else throw ArrayTypeMismatchException();
     }
     void set_Item(std::int32_t index,T value)const{
         if(!view_){at(index)=std::move(value);return;}
-        if constexpr(is_shared_ref<T>::value)view_->reference_item(index,std::dynamic_pointer_cast<Object>(value));
+        if constexpr(is_shared_ref<T>::value)view_->reference_item(index,pls::cs::dynamic_pointer_cast<Object>(value));
         else throw ArrayTypeMismatchException();
     }
     Array clone()const {
@@ -462,7 +526,7 @@ template<class T>Ref<T> nonnull(Ref<T> value){if(!value)throw NullReferenceExcep
 Array<std::uint8_t>encoding_utf8_get_bytes(const String&value);
 String encoding_utf8_get_string(const Array<std::uint8_t>&value);
 String encoding_utf8_get_string(const Array<std::uint8_t>&value,std::int32_t offset,std::int32_t count);
-template<class T,class U>Ref<T> as(const Ref<U>&value){return std::dynamic_pointer_cast<T>(value);}
+template<class T,class U>Ref<T> as(const Ref<U>&value){return pls::cs::dynamic_pointer_cast<T>(value);}
 template<class T,class U>Ref<T> cast(const Ref<U>&value){auto result=as<T>(value);if(value&&!result)throw InvalidCastException();return result;}
 template<class T>struct Cell : Object {T value{};Cell()=default;explicit Cell(T v):value(std::move(v)){};
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(value,visitor);}
@@ -474,7 +538,17 @@ template<class F>bool exception_filter(F&&body)noexcept{try{return body();}catch
 // an outstanding exception, matching C#finally. Throwing RAII destructors do not.
 // Private translator control token, deliberately outside the managed exception
 // hierarchy. C# catch handlers cannot intercept a pending return.
-template<class T>struct ReturnFlow {T value;explicit ReturnFlow(T result):value(std::move(result)){}};
+template<class T>struct ReturnFlow {
+    T value;
+#if PLS_TRACING_GC
+    GcRootProvider roots;
+    explicit ReturnFlow(T result):value(std::move(result)),roots([this](const EdgeVisitor&visitor){trace_value(value,visitor);}){}
+    ReturnFlow(const ReturnFlow&other):ReturnFlow(other.value){}
+    ReturnFlow(ReturnFlow&&other):ReturnFlow(std::move(other.value)){}
+#else
+    explicit ReturnFlow(T result):value(std::move(result)){}
+#endif
+};
 template<>struct ReturnFlow<void> {};
 struct BranchFlow {enum class Kind{break_,continue_};std::int32_t target;Kind kind;};
 template<class T>[[noreturn]] T invalid_return_flow(){throw std::logic_error("Generated protected return reached an invalid fallthrough");}
@@ -491,9 +565,19 @@ template<class F,class G>auto run_finally(F&&body,G&&cleanup)->std::invoke_resul
     }
 }
 
+// Explicit capture maps for platform callbacks. Arbitrary std::function storage
+// is never guessed/scanned by the precise heap tracer.
+template<class F,class...Captured>struct NativeDelegateClosure:Object {
+    F function;
+    std::tuple<Captured...> captures;
+    NativeDelegateClosure(F callable,Captured...values):function(std::move(callable)),captures(std::move(values)...){ }
+    void trace_edges(const EdgeVisitor&visitor)const override{
+        std::apply([&](const auto&...value){(trace_value(value,visitor),...);},captures);
+    }
+};
 template<class Signature>class Delegate;
 template<class R,class...Args>class Delegate<R(Args...)> {
-    struct Binding{std::shared_ptr<void>target;std::weak_ptr<Object>managed_target;std::string method;std::function<R(Args...)>function;const void* identity=nullptr;};
+    struct Binding{Ref<void>target{};DelegateCapture<Object>managed_target;std::string method;std::function<R(Args...)>function;const void* identity=nullptr;};
     // A C# delegate is immutable. Invocation retains its list rather than
     // allocating a copy of every binding. The list is a managed node so the
     // cycle collector sees shared ownership once, not duplicate target edges
@@ -510,26 +594,34 @@ template<class R,class...Args>class Delegate<R(Args...)> {
             if(bindings.capacity())visitor(bindings.data(),bindings.capacity()*sizeof(Binding),memory::Category::managed_heap);
         }
     };
-    Ref<InvocationList> list_;
+    Ref<InvocationList> list_{};
     std::size_t count()const noexcept{return list_?list_->bindings.size():0;}
     static bool equal_binding(const Binding&a,const Binding&b){return a.identity==b.identity&&a.method==b.method;}
 public:
     Delegate()=default;
-    template<class T,class F>static Delegate bind(std::shared_ptr<T>target,std::string method,F&&function) {
-        std::weak_ptr<Object>managed;
+    template<class T,class F>static Delegate bind(Ref<T>target,std::string method,F&&function) {
+        DelegateCapture<Object>managed;
         if constexpr(std::is_base_of_v<Object,T>)managed=target;
-        else if constexpr(std::is_polymorphic_v<T>)managed=std::dynamic_pointer_cast<Object>(target);
-        std::shared_ptr<void>identity=target;if(auto object=managed.lock())identity=object;
-        Delegate result;const void*key=identity.get();result.list_=make_ref<InvocationList>();result.list_->bindings.push_back({identity,managed,std::move(method),std::forward<F>(function),key});return result;
+        else if constexpr(std::is_polymorphic_v<T>)managed=pls::cs::dynamic_pointer_cast<Object>(target);
+        Ref<void>identity=target;if(auto object=managed.lock())identity=object;
+        Delegate result;const void*key=raw(identity);result.list_=make_ref<InvocationList>();result.list_->bindings.push_back({identity,managed,std::move(method),std::forward<F>(function),key});return result;
     }
-    template<class T,class F>static Delegate bind_identity(std::shared_ptr<T>target,const void*identity,std::string method,F&&function){auto result=bind(std::move(target),std::move(method),std::forward<F>(function));result.list_->bindings[0].identity=identity;return result;}
+    template<class T,class F>static Delegate bind_identity(Ref<T>target,const void*identity,std::string method,F&&function){auto result=bind(std::move(target),std::move(method),std::forward<F>(function));result.list_->bindings[0].identity=identity;return result;}
     template<class F>static Delegate from_static(std::string method,F&&function) {
-        return bind(std::shared_ptr<void>(),std::move(method),std::forward<F>(function));
+        return bind(Ref<void>{},std::move(method),std::forward<F>(function));
+    }
+    template<class F,class...Captured>static Delegate from_native(std::string method,F&&function,Captured...values){
+        using Closure=NativeDelegateClosure<std::decay_t<F>,Captured...>;
+        auto target=make_ref<Closure>(std::forward<F>(function),std::move(values)...);
+        return bind(target,std::move(method),[capture=DelegateCapture<Closure>(target)](Args...args)->R{
+            auto closure=capture.lock();if(!closure)throw NullReferenceException();
+            return closure->function(std::forward<Args>(args)...);
+        });
     }
     bool is_null()const noexcept{return count()==0;}
     explicit operator bool()const noexcept{return !is_null();}
     void trace_edges(const EdgeVisitor&visitor)const{if(list_)visitor(list_);}
-    void release_edges(){list_.reset();}
+    void release_edges(){clear_ref(list_);}
     R operator()(Args...args)const {
         if(is_null())throw NullReferenceException();
         const auto snapshot=list_; // Removing handlers during invocation affects the next call.
@@ -550,7 +642,7 @@ public:
             const std::size_t start=end-other.count();bool equal=true;
             for(std::size_t i=0;i<other.count();++i)if(!equal_binding(list_->bindings[start+i],other.list_->bindings[i])){equal=false;break;}
             if(equal){
-                if(other.count()==count()){list_.reset();break;}
+                if(other.count()==count()){clear_ref(list_);break;}
                 auto next=make_ref<InvocationList>();next->bindings.reserve(count()-other.count());
                 next->bindings.insert(next->bindings.end(),list_->bindings.begin(),list_->bindings.begin()+static_cast<std::ptrdiff_t>(start));
                 next->bindings.insert(next->bindings.end(),list_->bindings.begin()+static_cast<std::ptrdiff_t>(end),list_->bindings.end());
@@ -572,6 +664,9 @@ struct IntegerNumberFormat {
 };
 // Configure from the selected managed culture before workers start.
 inline IntegerNumberFormat integer_number_format;
+inline GcRootProvider integer_number_format_roots([](const EdgeVisitor&visitor){
+    trace_value(integer_number_format.positive_sign,visitor);trace_value(integer_number_format.negative_sign,visitor);
+});
 std::int32_t int32_parse(const String&value,bool hexadecimal=false);
 bool int32_try_parse(const String&value,std::int32_t& result);
 std::int64_t int64_parse(const String&value,bool hexadecimal=false);
@@ -588,13 +683,13 @@ template<class T>struct has_release_edges<T,std::void_t<decltype(std::declval<T&
 template<class T>void trace_value(const T&value,const EdgeVisitor&visitor){
     if constexpr(is_shared_ref<T>::value){
         using Element=typename is_shared_ref<T>::element_type;
-        if constexpr(std::is_base_of_v<Object,Element>){if(value)visitor(std::static_pointer_cast<Object>(value));}
-        else if constexpr(std::is_polymorphic_v<Element>){if(auto object=std::dynamic_pointer_cast<Object>(value))visitor(object);}
+        if constexpr(std::is_base_of_v<Object,Element>){if(value)visitor(pls::cs::static_pointer_cast<Object>(value));}
+        else if constexpr(std::is_polymorphic_v<Element>){if(auto object=pls::cs::dynamic_pointer_cast<Object>(value))visitor(object);}
     }else if constexpr(has_managed_object<T>::value){if(auto object=value.as_object())visitor(object);}
     else if constexpr(has_trace_edges<T>::value)value.trace_edges(visitor);
 }
 template<class T>void release_value(T&value){
-    if constexpr(is_shared_ref<T>::value)value.reset();
+    if constexpr(is_shared_ref<T>::value)clear_ref(value);
     else if constexpr(has_managed_object<T>::value)value=T{};
     else if constexpr(has_release_edges<T>::value)value.release_edges();
 }

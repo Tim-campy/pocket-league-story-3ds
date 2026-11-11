@@ -6,9 +6,9 @@ void cs_c0fae45144034cf9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_c0fae45144034cf9::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_c8e01a4bd3e5d216);pls::cs::release_value(cs_c7b2df62ecfb4014);}
 
-std::int32_t cs_c0fae45144034cf9::GetHashCode() {return cs_6deeff3691e8822a(std::static_pointer_cast<cs_c0fae45144034cf9>(shared_from_this()));}
+std::int32_t cs_c0fae45144034cf9::GetHashCode() {return cs_6deeff3691e8822a(pls::cs::static_pointer_cast<cs_c0fae45144034cf9>(shared_from_this()));}
 
-bool cs_c0fae45144034cf9::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_fea61c607b5a4210(std::static_pointer_cast<cs_c0fae45144034cf9>(shared_from_this()),v_obj);}
+bool cs_c0fae45144034cf9::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_fea61c607b5a4210(pls::cs::static_pointer_cast<cs_c0fae45144034cf9>(shared_from_this()),v_obj);}
 
 static pls::cs::Ref<cs_c0fae45144034cf9> cs_7a7ace56bed83b03_value{};
 
@@ -56,7 +56,7 @@ static pls::cs::Ref<cs_c0fae45144034cf9> cs_6d164375cda18d7c_value{};
 
 static pls::cs::Ref<cs_c0fae45144034cf9> cs_cece9e1e5fc285c3_value{};
 
-void cs_init_c0fae45144034cf9(){static pls::cs::TypeInitState state;state.run("java.util.JLocale",[](){
+void cs_init_c0fae45144034cf9(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_7a7ace56bed83b03_value,visitor);pls::cs::trace_value(cs_b78c3f5d9d47c84b_value,visitor);pls::cs::trace_value(cs_11311bb802a8e0e8_value,visitor);pls::cs::trace_value(cs_cc21044dfc4de694_value,visitor);pls::cs::trace_value(cs_3afe6640285fae71_value,visitor);pls::cs::trace_value(cs_cd1d5e1402c76f9e_value,visitor);pls::cs::trace_value(cs_a87e4df5f380d8da_value,visitor);pls::cs::trace_value(cs_7714c661504f45a9_value,visitor);pls::cs::trace_value(cs_5d6b42858efe1435_value,visitor);pls::cs::trace_value(cs_18de959dcf2925cc_value,visitor);pls::cs::trace_value(cs_1f99b443f119b498_value,visitor);pls::cs::trace_value(cs_a19001fed598d965_value,visitor);pls::cs::trace_value(cs_a4b9e66ad097f435_value,visitor);pls::cs::trace_value(cs_bc255e4e0273dc64_value,visitor);pls::cs::trace_value(cs_ea6949987f40441a_value,visitor);pls::cs::trace_value(cs_ac2d8087ffaf8ccf_value,visitor);pls::cs::trace_value(cs_658cc4bdef009c44_value,visitor);pls::cs::trace_value(cs_f0b4a3f6b1351854_value,visitor);pls::cs::trace_value(cs_04218468071e6e83_value,visitor);pls::cs::trace_value(cs_df02c6d7688b6224_value,visitor);pls::cs::trace_value(cs_34c197abe832387a_value,visitor);pls::cs::trace_value(cs_6d164375cda18d7c_value,visitor);pls::cs::trace_value(cs_cece9e1e5fc285c3_value,visitor);});static pls::cs::TypeInitState state;state.run("java.util.JLocale",[](){
 cs_7a7ace56bed83b03_value = pls::cs::evaluate_type_initializer_field("F:java.util.JLocale.CANADA",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JLocale.cs:M:kairo.unity.util.Language.Get(java.util.JLocale):109",([&]() -> pls::cs::Ref<cs_c0fae45144034cf9> { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0065" u"\x006e" u"",2);return cs_literal;}()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0043" u"\x0041" u"",2);return cs_literal;}()); return cs_a6b35afeab568a11(cs_arg0,cs_arg1); }()));});
 cs_b78c3f5d9d47c84b_value = pls::cs::evaluate_type_initializer_field("F:java.util.JLocale.CANADA_FRENCH",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JLocale.cs:M:kairo.unity.util.Language.Get(java.util.JLocale):184",([&]() -> pls::cs::Ref<cs_c0fae45144034cf9> { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0066" u"\x0072" u"",2);return cs_literal;}()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0043" u"\x0041" u"",2);return cs_literal;}()); return cs_a6b35afeab568a11(cs_arg0,cs_arg1); }()));});
 cs_11311bb802a8e0e8_value = pls::cs::evaluate_type_initializer_field("F:java.util.JLocale.CHINA",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JLocale.cs:M:kairo.unity.util.Language.Get(java.util.JLocale):251",([&]() -> pls::cs::Ref<cs_c0fae45144034cf9> { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x007a" u"\x0068" u"",2);return cs_literal;}()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0043" u"\x004e" u"",2);return cs_literal;}()); return cs_a6b35afeab568a11(cs_arg0,cs_arg1); }()));});
@@ -190,7 +190,7 @@ std::int32_t cs_6deeff3691e8822a(pls::cs::Ref<cs_c0fae45144034cf9> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JLocale.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

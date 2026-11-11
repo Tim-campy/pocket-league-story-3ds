@@ -15,7 +15,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def code_snapshot():
     paths={ROOT/'CMakeLists.txt',ROOT/'AGENTS.md',ROOT/'.gitignore'}
     for name in ('src','translator','tools','tests','reference/src'):
-        paths|={p for p in (ROOT/name).rglob('*')if p.is_file()and p.suffix in {'.cpp','.hpp','.inc','.cs','.py','.toml'}}
+        paths|={p for p in (ROOT/name).rglob('*')if p.is_file()and p.suffix in {'.cpp','.hpp','.inc','.cs','.py','.toml','.asm','.S'}}
     paths|={p for p in (ROOT/'config').glob('*')if p.is_file()and((p.suffix=='.json'and not p.name.startswith('phase2-'))or(p.suffix=='.csv'and p.name!='translation.csv'))}
     return {p.relative_to(ROOT).as_posix():sha(p)for p in sorted(paths)}
 
@@ -52,6 +52,10 @@ def main():
     if managed.is_relative_to(ROOT):p.error('Original API binaries must remain outside the port repository')
     commands=[
         ('repository-tests',['-m','unittest','discover','-s','tests/repository','-p','test_*.py']),
+        ('gc-source-contract',['tools/inventory_gc_contract.py']),
+        ('tracing-gc-engine',['tools/test_tracing_gc.py']),
+        ('tracing-native-roots',['tools/test_tracing_runtime.py']),
+        ('tracing-ui-dispatch',['tools/test_ui_dispatch_gc.py','--tracing']),
         ('resource-yield-control-model',['tests/kairo/resource_yield_model.py']),
         ('syntax-inventory-tests',['tools/csharp_subset/test_inventory.py']),
         ('reference',['tools/check_reference.py']),
@@ -108,13 +112,15 @@ def main():
         ('native-allocator-heap',['tools/test_runtime_memory.py']),
         ('pc-metrics-aggregation',['tools/test_pc_metrics.py']),
         ('diagnostic-key-parser',['tools/test_diagnostic_keys.py']),
-        ('diagnostic-leaf-guards',['translator/test_diagnostic_leaves.py']),
         ('ui-dispatch-GC',['tools/test_ui_dispatch_gc.py']),
         ('service-policy',['tools/write_service_policy.py']),
         ('services',['tools/test_services.py']),
         ('legacy-assets',['tools/inventory_legacy_assets.py','--apk',str(args.apk.resolve())]),
         ('private-resource-catalog',['tools/build_asset_catalog.py','--apk',str(args.apk.resolve())]),
         ('sdl-and-assets',['tools/build-pc','--fixtures-only','--asset-readback','--apk',str(args.apk.resolve())]),
+        # The leaf guard links pls_semantics.lib; build that library from the
+        # current runtime before testing, including when the GC ABI changes.
+        ('diagnostic-leaf-guards',['translator/test_diagnostic_leaves.py']),
         ('incremental-emission',['translator/test_incremental.py']),
         ('scalar-min',['tools/test_scalar_min.py']),
         ('nonblocking-text-input',['tools/test_text_input.py']),

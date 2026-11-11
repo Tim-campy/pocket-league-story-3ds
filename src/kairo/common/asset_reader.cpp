@@ -32,6 +32,6 @@ cs::Ref<NativeTextAsset> load_text_asset(const cs::String& name){
 }
 void unload_text_asset(const cs::Ref<cs::Object>& asset){
     if(!asset)throw cs::ArgumentNullException();
-    if(!std::dynamic_pointer_cast<NativeTextAsset>(asset))throw cs::NotSupportedException("Only the AssetReader TextAsset resource leaf is supported");
+    if(!pls::cs::dynamic_pointer_cast<NativeTextAsset>(asset))throw cs::NotSupportedException("Only the AssetReader TextAsset resource leaf is supported");
 }
 }

@@ -8,7 +8,7 @@ static pls::cs::Array<std::int32_t> cs_0ee869b1ec0c9fc3_value{};
 
 static pls::cs::Array<std::int16_t> cs_4854f02f058c4f7b_value{};
 
-void cs_init_f3ea616d36334b95(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.BitUtil",[](){
+void cs_init_f3ea616d36334b95(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_229d1569f1fc0620_value,visitor);pls::cs::trace_value(cs_0ee869b1ec0c9fc3_value,visitor);pls::cs::trace_value(cs_4854f02f058c4f7b_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.BitUtil",[](){
 cs_229d1569f1fc0620_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.BitUtil.split_tmpB",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/BitUtil.cs:M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32):92",pls::cs::Array<std::int8_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 cs_4854f02f058c4f7b_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.BitUtil.split_tmpS",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/BitUtil.cs:M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32):145",pls::cs::Array<std::int16_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 cs_0ee869b1ec0c9fc3_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.BitUtil.split_tmpI",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/BitUtil.cs:M:kairo.unity.util.BitUtil.Check(System.Int32,System.Int32):196",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});

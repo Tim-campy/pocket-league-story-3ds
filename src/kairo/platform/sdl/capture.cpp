@@ -8,11 +8,12 @@ namespace {
 std::filesystem::path root;
 std::uint64_t serial=0;
 struct Job:cs::Object {
- cs::Ref<FormManagerBase> manager;int x,y,w,h;bool pause,tmp;cs::Array<cs::String> tables;CaptureCompleted completed;
+ cs::Ref<FormManagerBase> manager{};int x,y,w,h;bool pause,tmp;cs::Array<cs::String> tables;CaptureCompleted completed;
  void trace_edges(const cs::EdgeVisitor&v)const override{cs::trace_value(manager,v);cs::trace_value(tables,v);completed.trace_edges(v);}
- void release_edges()override{manager.reset();cs::release_value(tables);completed.release_edges();}
+ void release_edges()override{pls::cs::clear_ref(manager);cs::release_value(tables);completed.release_edges();}
 };
-std::vector<cs::Ref<Job>> jobs;
+std::vector<cs::Ref<Job>> jobs{};
+cs::GcRootProvider job_roots([](const cs::EdgeVisitor&v){for(const auto&job:jobs)cs::trace_value(job,v);});
 void be(std::vector<std::uint8_t>&v,std::uint32_t n){for(int i=24;i>=0;i-=8)v.push_back(std::uint8_t(n>>i));}
 void chunk(std::vector<std::uint8_t>&out,const char*name,const std::vector<std::uint8_t>&data){be(out,std::uint32_t(data.size()));auto start=out.size();out.insert(out.end(),name,name+4);out.insert(out.end(),data.begin(),data.end());std::uint32_t crc=~0u;for(auto i=start;i<out.size();++i){crc^=out[i];for(int b=0;b<8;++b)crc=(crc>>1)^((crc&1)?0xedb88320u:0);}be(out,~crc);}
 }
@@ -31,7 +32,9 @@ void queue_capture(cs::Ref<FormManagerBase> manager,std::int32_t x,std::int32_t 
  jobs.push_back(job);manager->capturing_=true;manager->SetPause(true);
 }
 void finish_captures(cs::Ref<Image>display){
- auto pending=std::move(jobs);jobs.clear();for(auto&job:pending){
+ auto pending=std::move(jobs);jobs.clear();
+ cs::GcRootProvider pending_roots([&](const cs::EdgeVisitor&v){for(const auto&job:pending)cs::trace_value(job,v);});
+ for(auto&job:pending){
  try{cs::run_finally([&]{auto files=cs::List<cs::String>::make();auto tables=job->tables;
    for(int i=0;i<tables.length();++i){auto text=tables.at(i).utf8();const auto comma=text.find(',');auto dims=text.substr(0,comma);int w=job->w,h=job->h-1;
     if(!dims.empty()){const auto colon=dims.find(':');if(colon==std::string::npos)throw cs::FormatException();try{std::size_t n=0;w=std::stoi(dims.substr(0,colon),&n);if(n!=colon)throw cs::FormatException();auto rest=dims.substr(colon+1);h=std::stoi(rest,&n);if(n!=rest.size())throw cs::FormatException();}catch(const std::invalid_argument&){throw cs::FormatException();}catch(const std::out_of_range&){throw cs::OverflowException();}}

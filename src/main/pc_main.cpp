@@ -165,6 +165,7 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::audio);
             app->host_draw();
             pls::kairo::Offscreen::EndFrame();
+            pls::cs::gc_frame_end();
             text_input->Draw(display);
             pls::kairo::finish_captures(display);
             timing.mark(pls::pc::FrameStage::game_draw);

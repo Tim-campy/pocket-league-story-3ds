@@ -7,7 +7,7 @@ void cs_8d93189702e4084b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_8d93189702e4084b::release_edges(){cs_e7a5499b363ef51b::release_edges();pls::cs::release_value(cs_783a5dc8c7385bc4);}
 
-void cs_8d93189702e4084b::cs_virtual_4546aef6e4846446() {cs_5b229bc3548b08c7(std::static_pointer_cast<cs_8d93189702e4084b>(shared_from_this()));}
+void cs_8d93189702e4084b::cs_virtual_4546aef6e4846446() {cs_5b229bc3548b08c7(pls::cs::static_pointer_cast<cs_8d93189702e4084b>(shared_from_this()));}
 
 void cs_init_8d93189702e4084b(){static pls::cs::TypeInitState state;state.run("java.io.DataInputStream",[](){
 
@@ -19,7 +19,7 @@ pls::cs::Ref<cs_8d93189702e4084b> cs_606370a03155bf34(pls::cs::Ref<cs_e7a5499b36
 }
 
 void cs_606370a03155bf34_init(pls::cs::Ref<cs_8d93189702e4084b> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) {
-([&]() { cs_7c187221d1d7c346_init(std::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
+([&]() { cs_7c187221d1d7c346_init(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.DataInputStream.#ctor(java.io.InputStream)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() { auto cs_value = v_stream; return cs_010114ded9156773(cs_value); }()); pls::generated::cs_require(cs_target)->cs_e65a8825426ed7a3 = cs_value; return cs_value; }());
@@ -37,7 +37,7 @@ if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_783a5dc8c7385bc4; }()); pls::generated::cs_require(cs_receiver)->Close(); }());});
 }
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Ref<pls::cs::BinaryReader>{}; pls::generated::cs_require(cs_target)->cs_783a5dc8c7385bc4 = cs_value; return cs_value; }());
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_e7a5499b363ef51b>>(std::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_4546aef6e4846446(cs_receiver); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_e7a5499b363ef51b>>(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_4546aef6e4846446(cs_receiver); }());
 }
 }
 }

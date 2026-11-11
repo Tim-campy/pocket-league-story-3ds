@@ -23,13 +23,13 @@ void cs_9cade6927d6e0bf3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_9cade6927d6e0bf3::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_019432077efbdc74);pls::cs::release_value(cs_cc71c7763ea3aa22);pls::cs::release_value(cs_9d08782ceb3285f3);pls::cs::release_value(cs_53963218095f989a);pls::cs::release_value(cs_3d82d8b64a51d13d);pls::cs::release_value(cs_0864d2eb25ed95b7);pls::cs::release_value(cs_4270f05b25bc352d);pls::cs::release_value(cs_5b87c65d3746a352);pls::cs::release_value(cs_da710114f6c50365);pls::cs::release_value(cs_69c7294e79fb5155);pls::cs::release_value(cs_c38ed7767bcbc4c5);pls::cs::release_value(cs_1ee331dc730bd3cd);pls::cs::release_value(cs_6c943a1b533da794);pls::cs::release_value(cs_e03838c55885eb62);pls::cs::release_value(cs_9cace278fd260831);pls::cs::release_value(cs_0b80b02d4903483a);}
 
-pls::cs::String cs_9cade6927d6e0bf3::ToString() {return cs_db050df5f0170175(std::static_pointer_cast<cs_9cade6927d6e0bf3>(shared_from_this()));}
+pls::cs::String cs_9cade6927d6e0bf3::ToString() {return cs_db050df5f0170175(pls::cs::static_pointer_cast<cs_9cade6927d6e0bf3>(shared_from_this()));}
 
-std::int32_t cs_9cade6927d6e0bf3::GetHashCode() {return cs_184041a08c276493(std::static_pointer_cast<cs_9cade6927d6e0bf3>(shared_from_this()));}
+std::int32_t cs_9cade6927d6e0bf3::GetHashCode() {return cs_184041a08c276493(pls::cs::static_pointer_cast<cs_9cade6927d6e0bf3>(shared_from_this()));}
 
 static pls::cs::Ref<cs_672083a5397f2913> cs_a42589e7c76d79ef_value{};
 
-void cs_init_9cade6927d6e0bf3(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Seb",[](){
+void cs_init_9cade6927d6e0bf3(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a42589e7c76d79ef_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Seb",[](){
 cs_a42589e7c76d79ef_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.ui.Seb.threadLocalStatic_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.GetBoundingRect:2453",([&]() -> pls::cs::Ref<cs_672083a5397f2913> { return cs_0fb4b76eec65aa76(); }()));});
 
 });}
@@ -619,7 +619,7 @@ std::int32_t cs_184041a08c276493(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Seb.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }
@@ -1003,7 +1003,7 @@ pls::cs::String cs_db050df5f0170175(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this) {
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Seb.ToString",kairo);
 {
-return pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.ToString:28071",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.ToString:28071",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.ToString:28071",([&]() { auto cs_left = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x005b" u"",1);return cs_literal;}()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_019432077efbdc74; }()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x005d" u"\x0020" u"",2);return cs_literal;}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver = std::static_pointer_cast<pls::cs::Object>(cs_this);return pls::game::cs_require(cs_receiver)->pls::cs::Object::ToString();}());}); return pls::cs::String::concat(cs_left,cs_right); }()));
+return pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.ToString:28071",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.ToString:28071",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.ToString:28071",([&]() { auto cs_left = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x005b" u"",1);return cs_literal;}()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_019432077efbdc74; }()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x005d" u"\x0020" u"",2);return cs_literal;}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver = pls::cs::static_pointer_cast<pls::cs::Object>(cs_this);return pls::game::cs_require(cs_receiver)->pls::cs::Object::ToString();}());}); return pls::cs::String::concat(cs_left,cs_right); }()));
 }
 }
 }

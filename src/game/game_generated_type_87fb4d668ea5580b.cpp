@@ -38,7 +38,7 @@ static bool cs_b9bcb985f936ef96_value{};
 
 static pls::cs::Array<pls::cs::String> cs_44e247f7ea696755_value{};
 
-void cs_init_87fb4d668ea5580b(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout",[](){
+void cs_init_87fb4d668ea5580b(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e474d7417b077725_value,visitor);pls::cs::trace_value(cs_0d5492cd1d90fb7a_value,visitor);pls::cs::trace_value(cs_8dc0ab0c0050133a_value,visitor);pls::cs::trace_value(cs_43a8f39c2b6c4c75_value,visitor);pls::cs::trace_value(cs_fa530d5bd7357035_value,visitor);pls::cs::trace_value(cs_b9bcb985f936ef96_value,visitor);pls::cs::trace_value(cs_44e247f7ea696755_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout",[](){
 {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/TextLayout.cs:M:kairo.unity.ui.TextLayout.SetAnchor(System.Int32):5950",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_ec6b992b38927bb3>>::make()); cs_43a8f39c2b6c4c75() = cs_value; return cs_value; }());
 ([&]() { auto cs_value = false; cs_b9bcb985f936ef96() = cs_value; return cs_value; }());
@@ -492,7 +492,7 @@ pls::cs::Ref<cs_87fb4d668ea5580b> cs_049b13b83157cd05() { cs_init_87fb4d668ea558
 }
 
 void cs_049b13b83157cd05_init(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this) {
-([&]() { bool cs_arg0 = (!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { return pls::generated::cs_ce0912b8167f3504(); }());}))); bool cs_arg1 = true; cs_6a4fbab3f7192191_init(std::static_pointer_cast<cs_87fb4d668ea5580b>(cs_this),cs_arg0,cs_arg1); }());
+([&]() { bool cs_arg0 = (!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { return pls::generated::cs_ce0912b8167f3504(); }());}))); bool cs_arg1 = true; cs_6a4fbab3f7192191_init(pls::cs::static_pointer_cast<cs_87fb4d668ea5580b>(cs_this),cs_arg0,cs_arg1); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.TextLayout.#ctor",kairo);
 {
 

@@ -37,14 +37,14 @@ void Canvas::EndPaint(){EndPaint(graphics_);}
 void Canvas::EndPaint(cs::Ref<Graphics> graphics,std::int32_t mesh_id){
     cs::nonnull(graphics);if(!graphics->IsRenderGUIMode()&&(mesh_id<-1||mesh_id>0))throw cs::NotSupportedException("Multiple mesh managers are not implemented by the CPU backend");
     graphics->EndGLRender(true);
-    if(graphics==graphics_&&graphics_){graphics_->Dispose(true);graphics_.reset();}
+    if(graphics==graphics_&&graphics_){graphics_->Dispose(true);pls::cs::clear_ref(graphics_);}
     is_alter_static_rendering_=false;
     // Original EndPaint does NOT clear current_ or restore an outer context.
 }
 void Canvas::EndAlterStaticRender(cs::Ref<Graphics> graphics,std::int32_t mesh_id){
     cs::nonnull(graphics);if(!graphics->IsRenderGUIMode()&&(mesh_id<-1||mesh_id>0))throw cs::NotSupportedException("Multiple mesh managers are not implemented by the CPU backend");
     graphics->EndGLRender(true);
-    if(graphics==graphics_&&graphics_){graphics_->Dispose(true);graphics_.reset();}
+    if(graphics==graphics_&&graphics_){graphics_->Dispose(true);pls::cs::clear_ref(graphics_);}
     // Source EndAlterStaticRender leaves isAlterStaticRendering_ unchanged.
 }
 std::int32_t Canvas::GetWidth(){if(display_)return display_->GetWidth();const auto app=IApplication::GetCurrentApp();if(!app)throw cs::InvalidOperationException("Canvas display has not been configured");return app->GetWidth();}
@@ -64,6 +64,6 @@ bool Canvas::OnKeyDown(std::int32_t code,cs::Ref<KeyEvent> event){
 }
 bool Canvas::OnKeyUp(std::int32_t code,cs::Ref<KeyEvent> event){if(!event)throw cs::NullReferenceException();if(event->GetRepeatCount()==0)keys_.PhysicalUp(code);return true;}
 bool Canvas::OnTouchEvent(cs::Ref<MotionEvent> event){if(!event)throw cs::NullReferenceException();if(surface_)surface_->Touch(std::move(event));return true;}
-void Canvas::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(display_,visitor);cs::trace_value(graphics_,visitor);cs::trace_value(default_font_,visitor);cs::trace_value(surface_,visitor);cs::trace_value(source_surface_,visitor);for(const auto& label:labels_)cs::trace_value(label,visitor);cs::trace_value(shown_,visitor);}
-void Canvas::release_edges(){display_.reset();graphics_.reset();default_font_.reset();surface_.reset();source_surface_.reset();for(auto& label:labels_)cs::release_value(label);cs::release_value(shown_);on_back={};}
+void Canvas::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(display_,visitor);cs::trace_value(graphics_,visitor);cs::trace_value(default_font_,visitor);cs::trace_value(surface_,visitor);cs::trace_value(source_surface_,visitor);for(const auto& label:labels_)cs::trace_value(label,visitor);cs::trace_value(shown_,visitor);keys_.trace_edges(visitor);}
+void Canvas::release_edges(){pls::cs::clear_ref(display_);pls::cs::clear_ref(graphics_);pls::cs::clear_ref(default_font_);pls::cs::clear_ref(surface_);pls::cs::clear_ref(source_surface_);for(auto& label:labels_)cs::release_value(label);cs::release_value(shown_);on_back={};}
 }

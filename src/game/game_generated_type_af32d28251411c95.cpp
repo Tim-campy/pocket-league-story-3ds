@@ -26,13 +26,13 @@ void cs_af32d28251411c95::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_af32d28251411c95::release_edges(){cs_9326c27a92cfea3a::release_edges();pls::cs::release_value(cs_449a72c816bc8b81);pls::cs::release_value(cs_7098c1837eb30f29);pls::cs::release_value(cs_f7b1fd704bdd2c8a);pls::cs::release_value(cs_a6d9872478ce823a);pls::cs::release_value(cs_d08ec7df0a5c34ee);pls::cs::release_value(cs_522c8c247df0b8bb);pls::cs::release_value(cs_790b10da4e9ff66f);pls::cs::release_value(cs_9104d50d4078e9c9);pls::cs::release_value(cs_6c5020fb7ea0a4fb);}
 
-void cs_af32d28251411c95::cs_virtual_07a0bb2e4afc307c(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_9d38c5ec25140485(std::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()),v_g);}
+void cs_af32d28251411c95::cs_virtual_07a0bb2e4afc307c(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_9d38c5ec25140485(pls::cs::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()),v_g);}
 
-bool cs_af32d28251411c95::cs_virtual_9b7c686ee42b269b() {return cs_ad96de4fc5954f60(std::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()));}
+bool cs_af32d28251411c95::cs_virtual_9b7c686ee42b269b() {return cs_ad96de4fc5954f60(pls::cs::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()));}
 
-void cs_af32d28251411c95::cs_virtual_9f5fde625f99aa16(pls::cs::Ref<cs_757516ce190cf813> v_evt) {cs_826469405b7c0a34(std::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()),v_evt);}
+void cs_af32d28251411c95::cs_virtual_9f5fde625f99aa16(pls::cs::Ref<cs_757516ce190cf813> v_evt) {cs_826469405b7c0a34(pls::cs::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()),v_evt);}
 
-void cs_af32d28251411c95::cs_virtual_acea3de130dbb7cd() {cs_98117d8ad36b8cc1(std::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()));}
+void cs_af32d28251411c95::cs_virtual_acea3de130dbb7cd() {cs_98117d8ad36b8cc1(pls::cs::static_pointer_cast<cs_af32d28251411c95>(shared_from_this()));}
 
 static pls::cs::Array<pls::cs::String> cs_3f7ae294e0213a46_value{};
 
@@ -40,7 +40,7 @@ static pls::cs::Ref<pls::kairo::Image> cs_de24cebe7367b9a6_value{};
 
 static pls::cs::Ref<cs_af32d28251411c95> cs_49cf94cd1a414d1f_value{};
 
-void cs_init_af32d28251411c95(){static pls::cs::TypeInitState state;state.run("system.surface.GameBanner",[](){
+void cs_init_af32d28251411c95(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_3f7ae294e0213a46_value,visitor);pls::cs::trace_value(cs_de24cebe7367b9a6_value,visitor);pls::cs::trace_value(cs_49cf94cd1a414d1f_value,visitor);});static pls::cs::TypeInitState state;state.run("system.surface.GameBanner",[](){
 cs_3f7ae294e0213a46_value = pls::cs::evaluate_type_initializer_field("F:system.surface.GameBanner.FILENAMES",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/surface/GameBanner.cs:M:system.surface.GameBanner.GetInstance:584",([&](){auto cs_initial_array_208=pls::cs::Array<pls::cs::String>::make(7);cs_initial_array_208.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0066" u"\x0072" u"\x0069" u"\x0065" u"\x006e" u"\x0064" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0030" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",20);return cs_literal;}());cs_initial_array_208.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0061" u"\x0064" u"\x005f" u"\x006f" u"\x0066" u"\x0066" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0030" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",20);return cs_literal;}());cs_initial_array_208.at(2)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0061" u"\x0072" u"\x006b" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0030" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",18);return cs_literal;}());cs_initial_array_208.at(3)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0061" u"\x0072" u"\x006b" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0031" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",18);return cs_literal;}());cs_initial_array_208.at(4)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0061" u"\x0072" u"\x006b" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0032" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",18);return cs_literal;}());cs_initial_array_208.at(5)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0061" u"\x0072" u"\x006b" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0033" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",18);return cs_literal;}());cs_initial_array_208.at(6)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0061" u"\x0072" u"\x006b" u"\x005f" u"\x0062" u"\x0061" u"\x006e" u"\x006e" u"\x0065" u"\x0072" u"\x005f" u"\x0030" u"\x0034" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",18);return cs_literal;}());return cs_initial_array_208;}()));});
 
 });}
@@ -57,7 +57,7 @@ pls::cs::Ref<cs_af32d28251411c95> cs_11534d928e8399e4() { cs_init_af32d28251411c
 }
 
 void cs_11534d928e8399e4_init(pls::cs::Ref<cs_af32d28251411c95> cs_this) {
-([&]() { cs_a1b466bc14363691_init(std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());
+([&]() { cs_a1b466bc14363691_init(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.surface.GameBanner.#ctor",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());}); pls::game::cs_require(cs_target)->cs_449a72c816bc8b81 = cs_value; return cs_value; }());

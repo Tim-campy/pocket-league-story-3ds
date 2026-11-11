@@ -66,7 +66,7 @@ bool cs_5456805d05dd254d(pls::cs::Ref<cs_51222df74ac70bab<T_T>> cs_this,pls::cs:
 if (pls::generated::cs_is<pls::cs::Ref<cs_a0dc211eb3feb56d>>(pls::cs::box(v_obj))) {
 return ([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_056e387f40164bd6; }())); auto cs_right = pls::cs::box(([&]() -> pls::cs::List<pls::cs::Ref<pls::cs::Object>> { auto cs_receiver = (pls::cs::unbox<pls::cs::Ref<cs_a0dc211eb3feb56d>>(v_obj)); return pls::generated::cs_require(cs_receiver)->cs_virtual_60122bb6c899278e(); }())); return cs_left == cs_right; }());
 }
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_receiver = pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this)); auto cs_argument = v_obj; return pls::generated::cs_require(cs_receiver)->pls::cs::Object::Equals(cs_argument); }());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() { auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this)); auto cs_argument = v_obj; return pls::generated::cs_require(cs_receiver)->pls::cs::Object::Equals(cs_argument); }());});
 }
 }
 }
@@ -200,11 +200,11 @@ template<typename T_T>
 inline void cs_51222df74ac70bab<T_T>::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_056e387f40164bd6);}
 
 template<typename T_T>
-inline pls::cs::String cs_51222df74ac70bab<T_T>::ToString() {return cs_43bff43663390cb7(std::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
+inline pls::cs::String cs_51222df74ac70bab<T_T>::ToString() {return cs_43bff43663390cb7(pls::cs::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
 
 template<typename T_T>
-inline pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_51222df74ac70bab<T_T>::cs_virtual_60122bb6c899278e() {return cs_aacded9f4fa90723(std::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
+inline pls::cs::List<pls::cs::Ref<pls::cs::Object>> cs_51222df74ac70bab<T_T>::cs_virtual_60122bb6c899278e() {return cs_aacded9f4fa90723(pls::cs::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
 
 template<typename T_T>
-inline bool cs_51222df74ac70bab<T_T>::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_5456805d05dd254d(std::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()),v_obj);}
+inline bool cs_51222df74ac70bab<T_T>::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_5456805d05dd254d(pls::cs::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()),v_obj);}
 }

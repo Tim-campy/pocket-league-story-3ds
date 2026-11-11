@@ -14,9 +14,9 @@ void cs_cd85e7c847ae4598::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_cd85e7c847ae4598::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_08330cbc7084da66);pls::cs::release_value(cs_84fc06b76c121945);pls::cs::release_value(cs_6decd46ca925e986);pls::cs::release_value(cs_a614ab58777a40a1);pls::cs::release_value(cs_06683c451efa1973);}
 
-std::int32_t cs_cd85e7c847ae4598::GetHashCode() {return cs_a2ebcb9a739953bd(std::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
+std::int32_t cs_cd85e7c847ae4598::GetHashCode() {return cs_a2ebcb9a739953bd(pls::cs::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
 
-pls::cs::String cs_cd85e7c847ae4598::ToString() {return cs_ad7fb776daed3dde(std::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
+pls::cs::String cs_cd85e7c847ae4598::ToString() {return cs_ad7fb776daed3dde(pls::cs::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
 
 void cs_init_cd85e7c847ae4598(){static pls::cs::TypeInitState state;state.run("system.billing.ui.PurchaseRecord",[](){
 
@@ -28,7 +28,7 @@ pls::cs::Ref<cs_cd85e7c847ae4598> cs_77c1e405abfca250() { cs_init_cd85e7c847ae45
 }
 
 void cs_77c1e405abfca250_init(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this) {
-([&]() { pls::cs::String cs_arg0 = pls::cs::String(u""); pls::cs::String cs_arg1 = pls::cs::String(u""); cs_f82de0fa574740fa_init(std::static_pointer_cast<cs_cd85e7c847ae4598>(cs_this),cs_arg0,cs_arg1); }());
+([&]() { pls::cs::String cs_arg0 = pls::cs::String(u""); pls::cs::String cs_arg1 = pls::cs::String(u""); cs_f82de0fa574740fa_init(pls::cs::static_pointer_cast<cs_cd85e7c847ae4598>(cs_this),cs_arg0,cs_arg1); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.PurchaseRecord.#ctor",game);
 {
 
@@ -101,7 +101,7 @@ std::int32_t cs_a2ebcb9a739953bd(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.PurchaseRecord.GetHashCode",game);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

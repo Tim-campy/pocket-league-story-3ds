@@ -13,7 +13,7 @@ using ExceptionRef=Ref<ExceptionObject>;
 class ExceptionObject : public Object {
     std::string full_name_="System.Exception",builtin_base_="System.Exception";
     String message_;
-    ExceptionRef inner_;
+    ExceptionRef inner_{};
     std::exception_ptr native_;
     std::shared_ptr<ExceptionIdentity> identity_;
     friend ExceptionRef capture_exception(const Exception&,std::exception_ptr);

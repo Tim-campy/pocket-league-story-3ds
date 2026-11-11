@@ -23,9 +23,13 @@ struct State {
     Bag typed,bytes;
     cs::Array<cs::String> resources;
     Bytes key=Bytes::make(1);
-    cs::Ref<Storage> record_storage;
+    cs::Ref<Storage> record_storage{};
 };
 State state;
+cs::GcRootProvider storage_roots([](const cs::EdgeVisitor&visitor){
+    for(const auto&entry:state.heap)cs::trace_value(entry.second,visitor);
+    cs::trace_value(state.resources,visitor);cs::trace_value(state.key,visitor);cs::trace_value(state.record_storage,visitor);
+});
 std::recursive_mutex gate;
 std::atomic<std::uint64_t> serial{0};
 void configured(){if(state.root.empty())throw cs::InvalidOperationException("Storage host was not configured");}
@@ -236,6 +240,7 @@ std::int32_t Storage::GetSize(cs::String filename){
 }
 cs::Array<cs::String> Storage::GetFiles() {
     std::lock_guard<std::recursive_mutex> lock(gate);std::vector<cs::String> names;
+    cs::GcRootProvider roots([&](const cs::EdgeVisitor&v){for(const auto&name:names)cs::trace_value(name,v);});
     if(media_==2&&state.heap_enabled){for(const auto& item:state.heap)names.emplace_back(item.first);}
     else if(media_==1||media_==4)filesystem_call([&]{const auto folder=std::filesystem::path(folder_.is_null()?u"":folder_.code_units());if(std::filesystem::exists(folder))for(const auto& entry:std::filesystem::recursive_directory_iterator(folder))if(entry.is_regular_file()&&entry.path().filename().u16string().find(u".port-tmp-")!=0)names.emplace_back(entry.path().lexically_relative(folder).u16string());});
     else return {};

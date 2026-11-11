@@ -35,7 +35,7 @@ public:
     virtual void BeginDrawCounters()=0;virtual void CloseJarCache()=0;virtual void ReleaseExpiredImages()=0;
 };
 class SourceFormExecution : public FormExecutionBridge {
-    cs::Ref<FormRuntime> runtime_;
+    cs::Ref<FormRuntime> runtime_{};
     cs::Ref<FormSurface> surface(cs::Ref<Canvas>);
     void save_finally(cs::Ref<FormKairo>);
 public:
@@ -43,7 +43,7 @@ public:
     bool ExecuteStep(cs::Ref<FormManagerBase>)override;
     void OnDraw(cs::Ref<FormManagerBase>)override;
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}
-    void release_edges()override{runtime_.reset();}
+    void release_edges()override{pls::cs::clear_ref(runtime_);}
 };
 // Install before generated FormManager construction. Existing managers are not
 // retroactively replaced. Passing null removes the factory for isolated tests.

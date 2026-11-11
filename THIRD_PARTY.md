@@ -149,3 +149,14 @@ declaration and retains the package metadata under ignored
 https://github.com/microsoft/perfview; its license is
 https://github.com/microsoft/perfview/blob/main/LICENSE.TXT.
 Package hash and runtime requirements are recorded in `docs/toolchain.md`.
+
+
+## BDWGC - isolated PC measurement only
+
+Version 8.2.12, revision `4fab5386df64466b2b61fc7209bef033cad1e6cc` from
+https://github.com/bdwgc/bdwgc. Stored only under ignored `build/deps/`.
+Not linked into the game, the ARM target, or any product distribution.
+Permissive notice and copyright holders are in upstream `README.QUICK`;
+source/license hashes and build options are recorded in `docs/toolchain.md`.
+The CMake build does not use the GNU autotools files mentioned separately
+in that notice. Source was not modified.

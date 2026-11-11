@@ -7,15 +7,15 @@ void cs_ea324a0bbfe717fe::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_ea324a0bbfe717fe::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_f48613bc1c6327b8);}
 
-void cs_ea324a0bbfe717fe::cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_offset,std::int32_t v_len) {cs_eeffa75bcd0cd73d(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b,v_offset,v_len);}
+void cs_ea324a0bbfe717fe::cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_offset,std::int32_t v_len) {cs_eeffa75bcd0cd73d(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b,v_offset,v_len);}
 
-void cs_ea324a0bbfe717fe::cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b) {cs_109456b2dd9e2d77(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
+void cs_ea324a0bbfe717fe::cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b) {cs_109456b2dd9e2d77(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
 
-void cs_ea324a0bbfe717fe::cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b) {cs_a2a7e1a6575cae4c(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
+void cs_ea324a0bbfe717fe::cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b) {cs_a2a7e1a6575cae4c(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}
 
-void cs_ea324a0bbfe717fe::cs_virtual_2adf924bd0d7d65a() {cs_2adf924bd0d7d65a(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
+void cs_ea324a0bbfe717fe::cs_virtual_2adf924bd0d7d65a() {cs_2adf924bd0d7d65a(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
 
-void cs_ea324a0bbfe717fe::cs_virtual_0d912191800a0b86() {cs_0d912191800a0b86(std::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
+void cs_ea324a0bbfe717fe::cs_virtual_0d912191800a0b86() {cs_0d912191800a0b86(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()));}
 
 void cs_init_ea324a0bbfe717fe(){static pls::cs::TypeInitState state;state.run("java.io.OutputStream",[](){
 

@@ -11,7 +11,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "1dfa16a9f8aa25639b584fb26215bd976dcbe72516c7e1292e61c20315df501d",
+    "translator_source_sha256": "9d7cf7c6f94fe706bfaac882511c62849fa77df03819bb0571d850f2a119f5d6",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
     "driver_sha256": "85fa47a5c277d68f9492d132f8699c81f71a5370936b1f8475062bd408c9677b"
   },
@@ -21,5 +21,5 @@
     "translator/diagnostic_leaves.py": "d90c740de66f13176e7c9c141ed3ee15c2ddb9c74598cee58d5e2421c991c99a",
     "tools/run_native_process.py": "8aed14384b8c889cf2345228442371093faaf35294bbb0100d40cd55a3436e78"
   },
-  "native_executable_sha256": "f5c119c7cd6c0071f904298978699bac49cca79aad54d1e192ea1198dd0eedc0"
+  "native_executable_sha256": "a7a4b7135e7db79e5dd4f7ad6b15c758afe81ef16afcbf7cae3ba5ee79058dc1"
 }

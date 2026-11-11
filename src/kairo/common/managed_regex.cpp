@@ -35,22 +35,22 @@ std::shared_ptr<const std::wregex>compile(const String&pattern){
     catch(const std::regex_error&){throw ArgumentException("Invalid regular expression");}
     {std::lock_guard<std::mutex>lock(mutex);if(cache.size()==32)cache.pop_front();cache.push_back({pattern.code_units(),runtime_profile,result});}return result;
 }
-Ref<RegexMatch>empty_match(){std::vector<Ref<RegexGroup>>g{make_ref<RegexGroup>()};return make_ref<RegexMatch>(String(u""),0,0,false,make_ref<RegexGroupCollection>(std::move(g)));}
-std::vector<Ref<RegexMatch>>find(const String&input,const String&pattern,bool first){
+Ref<RegexMatch>empty_match(){std::vector<Ref<RegexGroup>>g{make_ref<RegexGroup>()};GcRootProvider roots([&](const EdgeVisitor&v){for(const auto&item:g)trace_value(item,v);});return make_ref<RegexMatch>(String(u""),0,0,false,make_ref<RegexGroupCollection>(std::move(g)));}
+void find(const String&input,const String&pattern,bool first,std::vector<Ref<RegexMatch>>&result){
     if(input.is_null())throw ArgumentNullException();auto expression=compile(pattern);auto source=widen(input);
-    std::vector<Ref<RegexMatch>>result;std::size_t start=0;
+    std::size_t start=0;
     while(start<=source.size()){
         std::match_results<std::wstring::const_iterator> found;auto flags=std::regex_constants::match_default;
         if(start)flags|=std::regex_constants::match_prev_avail;
         if(!std::regex_search(source.cbegin()+std::ptrdiff_t(start),source.cend(),found,*expression,flags))break;
-        std::vector<Ref<RegexGroup>>groups;
+        std::vector<Ref<RegexGroup>>groups{};
+        GcRootProvider group_roots([&](const EdgeVisitor&v){for(const auto&item:groups)trace_value(item,v);});
         for(std::size_t i=0;i<found.size();++i){auto index=found[i].matched?std::int32_t(start+std::size_t(found.position(i))):0;auto length=std::int32_t(found.length(i));groups.push_back(make_ref<RegexGroup>(input.substring(index,length),index,length,found[i].matched));}
         auto index=groups[0]->get_Index(),length=groups[0]->get_Length();
         auto value=groups[0]->get_Value();auto group_collection=make_ref<RegexGroupCollection>(std::move(groups));
         result.push_back(make_ref<RegexMatch>(std::move(value),index,length,true,std::move(group_collection)));
         if(first)break;start=std::size_t(index)+std::size_t(length);if(!length)++start;
     }
-    return result;
 }
 String expand(const String&replacement,const String&input,const Ref<RegexMatch>&match){
     std::u16string out;const auto&t=replacement.code_units();
@@ -68,8 +68,8 @@ String expand(const String&replacement,const String&input,const Ref<RegexMatch>&
 }
 Ref<RegexGroup> RegexGroupCollection::get_Item(std::int32_t index)const{if(index<0||std::size_t(index)>=groups_.size())return make_ref<RegexGroup>();return groups_[std::size_t(index)];}
 Ref<RegexMatch> RegexMatchCollection::get_Item(std::int32_t index)const{if(index<0||std::size_t(index)>=matches_.size())throw ArgumentOutOfRangeException();return matches_[std::size_t(index)];}
-Ref<RegexMatchCollection> RuntimeRegex::Matches(const String&i,const String&p){return make_ref<RegexMatchCollection>(find(i,p,false));}
-Ref<RegexMatch> RuntimeRegex::Match(const String&i,const String&p){auto values=find(i,p,true);return values.empty()?empty_match():values[0];}
+Ref<RegexMatchCollection> RuntimeRegex::Matches(const String&i,const String&p){std::vector<Ref<RegexMatch>> values;GcRootProvider roots([&](const EdgeVisitor&v){for(const auto&item:values)trace_value(item,v);});find(i,p,false,values);return make_ref<RegexMatchCollection>(std::move(values));}
+Ref<RegexMatch> RuntimeRegex::Match(const String&i,const String&p){std::vector<Ref<RegexMatch>> values;GcRootProvider roots([&](const EdgeVisitor&v){for(const auto&item:values)trace_value(item,v);});find(i,p,true,values);return values.empty()?empty_match():values[0];}
 bool RuntimeRegex::IsMatch(const String&i,const String&p){return Match(i,p)->get_Success();}
 String RuntimeRegex::Replace(const String&input,const String&pattern,const String&replacement){
     if(replacement.is_null())throw ArgumentNullException();auto matches=Matches(input,pattern);std::u16string out;std::int32_t start=0;

@@ -9,7 +9,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "1dfa16a9f8aa25639b584fb26215bd976dcbe72516c7e1292e61c20315df501d",
+    "translator_source_sha256": "9d7cf7c6f94fe706bfaac882511c62849fa77df03819bb0571d850f2a119f5d6",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
     "driver_sha256": "85fa47a5c277d68f9492d132f8699c81f71a5370936b1f8475062bd408c9677b"
   },
@@ -28,27 +28,27 @@
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
-      "sha256": "559d8be5c696e0d95fff1a28353ff34230ec84ec1b5d8e40ed1b7cd4d4811a0a"
+      "sha256": "58ea2886853646872e4f7d5241d53a23989c7499de66a186a2c4eb763cf03702"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d"
+      "sha256": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb"
     },
     {
       "path": "src/kairo/common/managed_streams.cpp",
-      "sha256": "6940e37d7782ffbaea0f975fd231195e0ed6171201c823dea42c20cfe27d5278"
+      "sha256": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6"
     },
     {
       "path": "src/kairo/common/managed_exceptions.cpp",
-      "sha256": "11a6246026a684a187b3df7e5d7210a415ccec54b381a0dedcd6b4723e340488"
+      "sha256": "1167c5ee17d04f8534bd52cd9db5e750d14511f2ae6d4abfe93b0e242df4232f"
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
-      "sha256": "c634296db40f099b6929dc8a3eed8dac052d8fa87326ba07547dc25d96a9f4f6"
+      "sha256": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661"
     },
     {
       "path": "src/kairo/common/managed_collation.cpp",
-      "sha256": "59b6c07ae3acc9005e751372998b2a77f85b5ca526b2211ea9db15ab256f7d76"
+      "sha256": "a3ee79c835705e7eff562ef2267713fb0c585cccad1f2d7c3f1b5104ad9dcf90"
     },
     {
       "path": "src/kairo/common/managed_mono_character_data.cpp",
@@ -56,15 +56,15 @@
     },
     {
       "path": "src/kairo/common/managed_encoding.cpp",
-      "sha256": "578dabc13f17eb57f0d1ff07b715f66c799ca39b68858f10700d13f640a81a20"
+      "sha256": "2f326befca3d6116395d531f705b772b2626200cdf979f307c20c4f224660fd1"
     },
     {
       "path": "src/kairo/common/managed_regex.cpp",
-      "sha256": "fd2abe8620339c867db57620862c8ea2a82a2f721ee54a9ae31a1dcad87f00ac"
+      "sha256": "094129791c2e641aa43658677b200dadc22cce3e2d1b86d0430ab1a23b5c1877"
     },
     {
       "path": "src/kairo/common/managed_stream_reader.cpp",
-      "sha256": "ae83f5638ede4fbbb157181d0ae305771d5194747f7e948cc35d77a9b694c721"
+      "sha256": "e8f7e507b8ac58aa5a99484cbd07ee0ad35d56b22c201830c9d62cef6af9c699"
     },
     {
       "path": "src/kairo/common/allocation_probe.hpp",
@@ -96,11 +96,11 @@
     },
     {
       "path": "src/kairo/common/managed_collections.hpp",
-      "sha256": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b"
+      "sha256": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a"
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab"
+      "sha256": "4b678c96e83cae85ab36352460f017965106347c082654f6dfce3bfc10254d85"
     },
     {
       "path": "src/kairo/common/managed_encoding.hpp",
@@ -108,7 +108,7 @@
     },
     {
       "path": "src/kairo/common/managed_exceptions.hpp",
-      "sha256": "9a9a234099707f71fc274424408102c4c3395a7fe947d0f36f9c76f2154fb74b"
+      "sha256": "02d9bfd7def6843ee9034473bbc7f5e3ccf1cf2b1df81b3a645005e7ec1585be"
     },
     {
       "path": "src/kairo/common/managed_float_format.hpp",
@@ -132,11 +132,11 @@
     },
     {
       "path": "src/kairo/common/managed_reflection.hpp",
-      "sha256": "3b6fbecdf446ed74c45521e004b88724a22989df12d335469c943d4b50e756ad"
+      "sha256": "53503f48d5b0ecf5141a71f8f92aa414727b24be3710ff843796bc89451c8103"
     },
     {
       "path": "src/kairo/common/managed_regex.hpp",
-      "sha256": "a320c06a2c7183b976f8dcfafdd6ecc6a1e64ea94a178f06aa1eb2cd53eab7e0"
+      "sha256": "ade7caa430fdce13ec81cc3a8f14b5e88d93b5c9bca18e92e57f029f7d9ab5ba"
     },
     {
       "path": "src/kairo/common/managed_shared_field.hpp",
@@ -144,11 +144,11 @@
     },
     {
       "path": "src/kairo/common/managed_stream_reader.hpp",
-      "sha256": "96e53adda06be397ec8372a91ab7045358e88866ea5a017acb4eaf215c8ae538"
+      "sha256": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd"
     },
     {
       "path": "src/kairo/common/managed_streams.hpp",
-      "sha256": "ef93cc1d080d67a78c4718efd2ea260e31ecf4bdf41b4db1191cd398077d6c7d"
+      "sha256": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f"
     },
     {
       "path": "src/kairo/common/managed_string_ops.hpp",
@@ -156,19 +156,19 @@
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
-      "sha256": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0"
+      "sha256": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731"
     },
     {
       "path": "src/kairo/common/managed_thread.hpp",
-      "sha256": "902cf0e2470a4a5297d7d9025b83195dda4689a611c8d79adef83be35beedd6b"
+      "sha256": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96"
     },
     {
       "path": "src/kairo/common/managed_time.hpp",
-      "sha256": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1"
+      "sha256": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057"
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "feef05b9c438edba38437e06beb149baf4305b35c33a2a30d18f886083f14701"
+      "sha256": "245ed7506b4b00f6a9fd0257ba7a4494baecc61c313b0c3d07a371e353e3e247"
     },
     {
       "path": "src/kairo/common/memory_ranges.hpp",
@@ -184,7 +184,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4"
+      "sha256": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -214,11 +214,11 @@
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_runtime.hpp",
-      "sha256": "3df48879474858c4df9bdfe3b52602a1bfe758bc9cefb8ccfeaabb08a1123d56"
+      "sha256": "0b5bb122d0820a81901e5c48e9f67b9b212af19f3ee87fb48c1158bb38c2c979"
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
-      "sha256": "559d8be5c696e0d95fff1a28353ff34230ec84ec1b5d8e40ed1b7cd4d4811a0a"
+      "sha256": "58ea2886853646872e4f7d5241d53a23989c7499de66a186a2c4eb763cf03702"
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.hpp",
@@ -227,10 +227,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "16996e1dd5bd334b1c0ad7e9dfa72247df40e7810fb4fa20e912a20e033052b4"
+    "sha256": "da8465544fb74c3c78ccb56739dd4e9993ce12b5edc0f0452a48e3c4702aa60a"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "03972d30c2fcf2bc3ec98da7322613746669cf1c37a2d5e1ad4e89d560b9945e"
+    "sha256": "3565ac6c0aa0f321325d2d01ec50f7214bffd8911589117f899492ab0890f881"
   }
 }

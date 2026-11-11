@@ -9,18 +9,23 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "b636591a2b5cc9edc0fc1b2df49277c3f1caa0e5b45d8578c391255824d7dbf1"
+    "sha256": "31c78e5551a81de42f25c63dc85523dddd637142e82e434d915064a2bca40f4f"
   },
   "inputs": {
-    "tools/test_ui_dispatch_gc.py": "3306f01025f79e7c290a6ecc880468668e8216d125a0da2a12cb8fe7a924fbd0",
-    "tests/kairo/ui_dispatch_gc.cpp": "9b875d0174c1eb9e39b3e3b9671bf66e21a0aa09b2ba968df2d7bc35d03f1014",
-    "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
-    "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
-    "src/kairo/api/application.hpp": "441d6543843272b0d42911a243d975bd1dad2add43282cb417d353d18bd5708d",
-    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
+    "tools/test_ui_dispatch_gc.py": "eba1f943afce1064cbef1efb9d38fc9cc4264a1833c6548df9ba05d66ee505ca",
+    "tests/kairo/ui_dispatch_gc.cpp": "e663b217970f33ac86fe68690060d82b3c987bf1c221fa1edaef2d6b3262703d",
+    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
+    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src/kairo/api/application.hpp": "730ae9dffe396c1ea07e647f55aa57bc3e1084d20286fe46d93a3790a7a86b93",
+    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
+    "src/runtime/managed_gc_bridge.inc": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0",
+    "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
+    "src/runtime/tracing_gc.cpp": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b",
+    "src/runtime/tracing_gc.hpp": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419"
   },
   "limitations": [
     "Own native scheduling invariants; not a source-oracle or game boot.",
     "Does not fix unsynchronized fields in generated Game classes."
-  ]
+  ],
+  "managed_reference_model": "tracing-raw-pointers"
 }

@@ -1,4 +1,5 @@
 #include "forms_execution.hpp"
+#include "../translator/gc_test_support.hpp"
 #include "forms_callbacks.hpp"
 #include "application.hpp"
 #include "sound.hpp"
@@ -8,7 +9,7 @@ namespace {
 std::string trace;
 void log(const std::string& value){trace+=value+";";}
 struct App:IApplication {
-    pls::cs::Ref<FormManagerBase> manager;
+    pls::cs::Ref<FormManagerBase> manager{};
     void OnUpdate()override{}void OnDraw()override{}pls::cs::Ref<FormManagerBase> GetFormManager()override{return manager;}
     void visible(bool value){visible_=value;}void terminated(bool value){termination_=value;}
 };
@@ -31,11 +32,11 @@ struct Fep:FormFep {bool Update()override{log("fep");return true;}};
 struct Runtime:FormRuntime {
     pls::cs::Ref<struct Kairo> kairo=pls::cs::make_ref<struct Kairo>();
     pls::cs::Ref<FormRecorder> recorder=pls::cs::make_ref<struct Recorder>();
-    pls::cs::Ref<FormFep> fep;
-    pls::cs::Ref<FormKairo> kairo_adapter;
+    pls::cs::Ref<FormFep> fep{};
+    pls::cs::Ref<FormKairo> kairo_adapter{};
     bool dialog{};std::int32_t count{};
     Runtime(){
-        KairoCallbacks b;auto target=kairo.get();
+        KairoCallbacks b;auto target=pls::cs::raw(kairo);
         b.is_game_playing=pls::cs::Delegate<bool()>::bind(kairo,"IsGamePlaying",[target]{return target->IsGamePlaying();});
         b.set_game_state=pls::cs::Delegate<void(bool)>::bind(kairo,"SetGameState",[target](bool n){target->SetGameState(n);});
         b.reserve_enabled=pls::cs::Delegate<bool()>::bind(kairo,"ReserveEnabled",[target]{return target->ReserveSaveEnabled();});
@@ -55,7 +56,7 @@ struct Runtime:FormRuntime {
     void CloseJarCache()override{log("cache");}void ReleaseExpiredImages()override{log("expired");}
 };
 struct Surface:FormSurface {
-    std::weak_ptr<FormManagerBase> manager;
+    pls::cs::Weak<FormManagerBase> manager;
     void RawKeyDown(std::int32_t,pls::cs::Ref<KeyEvent>)override{}void KeyDown(std::int32_t)override{}void KeyUp(std::int32_t)override{}void Touch(pls::cs::Ref<MotionEvent>)override{}
     void ClearTouch()override{log("clear");}void ClearGameTouch()override{log("clearGame");}
     void DoEvents()override{log("events");}void AdjustSurfaceLayout()override{log("layout");}
@@ -77,7 +78,7 @@ struct Form:FormBase {
     bool ProcessEvent(pls::cs::Ref<AppEvent> e)override{log("event"+std::to_string(static_cast<int>(e->Type))+":"+std::to_string(GetId()));return false;}
 };
 template<class F>void run(const char* name,F&& scenario){
-    trace.clear();auto runtime=pls::cs::make_ref<Runtime>();FormCallbacks bindings;auto r=runtime.get();
+    trace.clear();auto runtime=pls::cs::make_ref<Runtime>();FormCallbacks bindings;auto r=pls::cs::raw(runtime);
     bindings.kairo=pls::cs::Delegate<pls::cs::Ref<FormKairo>()>::bind(runtime,"Kairo",[r]{return r->Kairo();});
     bindings.recorder=pls::cs::Delegate<pls::cs::Ref<FormRecorder>()>::bind(runtime,"Recorder",[r]{return r->Recorder();});
     bindings.fep=pls::cs::Delegate<pls::cs::Ref<FormFep>()>::bind(runtime,"Fep",[r]{return r->Fep();});
@@ -95,7 +96,7 @@ template<class F>void run(const char* name,F&& scenario){
     auto app=pls::cs::make_ref<App>();app->source_Init(app);app->visible(true);configure_sound(nullptr,pls::cs::make_ref<Output>());
     auto canvas=Canvas::GetInstance();canvas->host_display(Image::CreateImage(4,3),{});
     auto manager=pls::cs::make_ref<Manager>();app->manager=manager;auto surface=pls::cs::make_ref<Surface>();surface->manager=manager;
-    SurfaceCallbacks surface_bindings;auto s=surface.get();
+    SurfaceCallbacks surface_bindings;auto s=pls::cs::raw(surface);
     surface_bindings.raw_key_down=pls::cs::Delegate<void(std::int32_t,pls::cs::Ref<KeyEvent>)>::bind(surface,"RawKeyDown",[s](auto k,auto e){s->RawKeyDown(k,e);});
     surface_bindings.key_down=pls::cs::Delegate<void(std::int32_t)>::bind(surface,"KeyDown",[s](auto k){s->KeyDown(k);});
     surface_bindings.key_up=pls::cs::Delegate<void(std::int32_t)>::bind(surface,"KeyUp",[s](auto k){s->KeyUp(k);});
@@ -121,9 +122,9 @@ int policy(){
     auto no_kairo=pls::cs::make_ref<CallbackFormKairo>(KairoCallbacks{});rejected=false;try{no_kairo->Update();}catch(const pls::cs::InvalidOperationException&){rejected=true;}require(rejected);
     auto no_surface=pls::cs::make_ref<CallbackFormSurface>(SurfaceCallbacks{});rejected=false;try{no_surface->Draw({});}catch(const pls::cs::InvalidOperationException&){rejected=true;}require(rejected);
     auto no_fep=pls::cs::make_ref<CallbackFormFep>(pls::cs::Delegate<bool()>{});rejected=false;try{no_fep->Update();}catch(const pls::cs::InvalidOperationException&){rejected=true;}require(rejected);
-    struct Target:pls::cs::Object {pls::cs::Ref<FormKairo> adapter;void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(adapter,v);}void release_edges()override{adapter.reset();}};
-    std::weak_ptr<Target> weak;
-    {auto target=pls::cs::make_ref<Target>();weak=target;KairoCallbacks bindings;bindings.update=pls::cs::Delegate<void()>::bind(target,"synthetic-update",[]{});target->adapter=pls::cs::make_ref<CallbackFormKairo>(std::move(bindings));}
+    struct Target:pls::cs::Object {pls::cs::Ref<FormKairo> adapter{};void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(adapter,v);}void release_edges()override{pls::cs::clear_ref(adapter);}};
+    pls::cs::Weak<Target> weak;
+    isolated_gc_mutator([&]{auto target=pls::cs::make_ref<Target>();weak=target;KairoCallbacks bindings;bindings.update=pls::cs::Delegate<void()>::bind(target,"synthetic-update",[]{});target->adapter=pls::cs::make_ref<CallbackFormKairo>(std::move(bindings));});
     pls::cs::gc_collect();require(weak.expired());
     std::cout<<"{\"assertions\":"<<count<<",\"missing_bindings_rejected\":true,\"managed_callback_cycle_collected\":true,\"game_boot\":false}\n";return 0;
 }
@@ -135,7 +136,7 @@ int main(int argc,char**){
     run("hidden",[](auto m,auto,auto,auto a){a->visible(false);m->Execute();});
     run("terminated",[](auto m,auto,auto,auto a){a->terminated(true);m->Execute();});
     run("paused",[](auto m,auto,auto,auto){m->SetPause(true);m->Execute();});
-    run("fep-present",[](auto m,auto,auto r,auto){auto target=pls::cs::make_ref<Fep>();auto ptr=target.get();r->fep=pls::cs::make_ref<CallbackFormFep>(pls::cs::Delegate<bool()>::bind(target,"Update",[ptr]{return ptr->Update();}));m->Execute();});
+    run("fep-present",[](auto m,auto,auto r,auto){auto target=pls::cs::make_ref<Fep>();auto ptr=pls::cs::raw(target);r->fep=pls::cs::make_ref<CallbackFormFep>(pls::cs::Delegate<bool()>::bind(target,"Update",[ptr]{return ptr->Update();}));m->Execute();});
     run("resume",[](auto m,auto,auto,auto){m->Resume();m->Execute();});
     run("reserve-retry",[](auto m,auto,auto r,auto){r->kairo->reserve=1;r->kairo->failures=2;m->Execute();});
     run("reserve-three-failures",[](auto m,auto,auto r,auto){r->kairo->reserve=2;r->kairo->failures=4;m->Execute();});
@@ -145,7 +146,7 @@ int main(int argc,char**){
     run("kairo-changes-top",[](auto m,auto,auto r,auto){r->kairo->on_update=[m]{m->Push(pls::cs::make_ref<Form>(2));};m->Execute();});
     run("termination-dialog-no",[](auto m,auto,auto,auto){m->ShowTerminationDialog();m->Execute();});
     run("termination-dialog-yes",[](auto m,auto,auto r,auto){r->dialog=true;m->ShowTerminationDialog();m->Execute();});
-    run("recorder-null",[](auto m,auto,auto r,auto){r->recorder.reset();m->Execute();});
+    run("recorder-null",[](auto m,auto,auto r,auto){pls::cs::clear_ref(r->recorder);m->Execute();});
     run("init-false",[](auto m,auto f,auto,auto){f->init_ok=false;m->Execute();});
     run("finish-false",[](auto m,auto f,auto,auto){f->finish_ok=false;m->Pop();m->Execute();});
     run("resume-false",[](auto m,auto f,auto,auto){f->resume_ok=false;m->Resume();m->Execute();});

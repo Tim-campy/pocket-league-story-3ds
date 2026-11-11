@@ -63,6 +63,7 @@ namespace kairo.unity.ui {public class IApplication {
  policy=json.loads(run([native,'policy'],folder,'native-policy',environment()))
  passed=all(c['passed'] for c in cases)
  inputs=native_sources+[source,ROOT/'tools/test_bootstrap.py',ROOT/'tools/test_input.py']
+ inputs += [ROOT/'tests/translator/gc_test_support.hpp']
  inputs += [ROOT/'src/kairo/api'/p for p in ['bootstrap.hpp','forms_execution.hpp','forms_callbacks.hpp','forms.hpp','touch_value_accessor.hpp','canvas.hpp','application.hpp','graphics.hpp','font.hpp','sound.hpp','input.hpp']]
  inputs += [ROOT/'src/kairo/common'/p for p in ['semantic_runtime.hpp','managed_shared_field.hpp','asset_catalog.hpp','sha256.hpp']]+[ROOT/'src/kairo/platform/sdl'/p for p in ['font.hpp','audio.hpp']]
  report=dict(operation='original-source-awake-bootstrap-order-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,

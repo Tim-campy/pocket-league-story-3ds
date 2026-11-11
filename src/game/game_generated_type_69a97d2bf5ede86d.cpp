@@ -52,7 +52,7 @@ static pls::cs::Array<std::int32_t> cs_b28be0815644f161_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_0caf9bc6567e886c_value{};
 
-void cs_init_69a97d2bf5ede86d(){static pls::cs::TypeInitState state;state.run("data.FanBonusData",[](){
+void cs_init_69a97d2bf5ede86d(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_570673b908a93a55_value,visitor);pls::cs::trace_value(cs_79b4fab3961bbf73_value,visitor);pls::cs::trace_value(cs_c6d086597dc95f54_value,visitor);pls::cs::trace_value(cs_8334425c84360fb5_value,visitor);pls::cs::trace_value(cs_43d5f87799c2c1ec_value,visitor);pls::cs::trace_value(cs_1ec674e56ad0f26c_value,visitor);pls::cs::trace_value(cs_9dbd36c49f9f1813_value,visitor);pls::cs::trace_value(cs_09387d9312f963ea_value,visitor);pls::cs::trace_value(cs_159556b0dd59f750_value,visitor);pls::cs::trace_value(cs_231a8198c70c1882_value,visitor);pls::cs::trace_value(cs_b28be0815644f161_value,visitor);pls::cs::trace_value(cs_0caf9bc6567e886c_value,visitor);});static pls::cs::TypeInitState state;state.run("data.FanBonusData",[](){
 cs_b28be0815644f161_value = pls::cs::evaluate_type_initializer_field("F:data.FanBonusData.TERA_MODE_LIST",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor:2783",pls::assets::baked_array<std::int32_t>("717170ee8b49123d1b79a4a809668728c0fdaf7572e571f29df6e917b6c2d19e"));});
 cs_79b4fab3961bbf73_value = pls::cs::evaluate_type_initializer_field("F:data.FanBonusData.bonus_f_data1",[&](){return pls::source_allocations::completed("new_object","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor:2907",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));});
 cs_231a8198c70c1882_value = pls::cs::evaluate_type_initializer_field("F:data.FanBonusData.fb_list",[&](){return pls::source_allocations::completed("new_object","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor:3208",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));});
@@ -91,7 +91,7 @@ pls::cs::Ref<cs_69a97d2bf5ede86d> cs_139b84599510ac2f() { cs_init_69a97d2bf5ede8
 void cs_139b84599510ac2f_init(pls::cs::Ref<cs_69a97d2bf5ede86d> cs_this) {
 cs_this->cs_4f22285edb5ebc22 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor:2659",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull))));
 cs_this->cs_c59de20765068aec = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor:2722",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FanBonusData.#ctor",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_570673b908a93a55() = cs_value; return cs_value; }());
@@ -108,7 +108,7 @@ pls::cs::Ref<cs_69a97d2bf5ede86d> cs_1773357bc9f98196(pls::cs::String v_src) { c
 void cs_1773357bc9f98196_init(pls::cs::Ref<cs_69a97d2bf5ede86d> cs_this,pls::cs::String v_src) {
 cs_this->cs_4f22285edb5ebc22 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor(System.String):2659",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull))));
 cs_this->cs_c59de20765068aec = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanBonusData.cs:M:data.FanBonusData.#ctor(System.String):2722",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FanBonusData.#ctor(System.String)",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_570673b908a93a55() = cs_value; return cs_value; }());

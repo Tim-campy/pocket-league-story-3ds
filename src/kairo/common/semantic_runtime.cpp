@@ -7,13 +7,48 @@
 #include <unordered_set>
 #include <chrono>
 #include <string_view>
+#include <atomic>
+
+// All standalone API/emitter fixture recipes already link this runtime unit.
+// Keep the engine in that unit too, so no consumer can accidentally select raw
+// references without linking their collector. The standalone engine test uses
+// tracing_gc.cpp directly and does not link semantic_runtime.cpp.
+#if PLS_TRACING_GC
+#include "../../runtime/tracing_gc.cpp"
+#endif
 
 namespace pls::cs {
+namespace {
+struct RootRegistry {
+    std::mutex mutex;
+    std::size_t next=1;
+    std::unordered_map<std::size_t,std::function<void(const EdgeVisitor&)>> providers;
+};
+RootRegistry& root_registry(){
+    // Native bookkeeping outlives global root-provider destructors.
+    static auto* registry=new RootRegistry;
+    return *registry;
+}
+}
+GcRootProvider::GcRootProvider(std::function<void(const EdgeVisitor&)> provider){
+    auto&registry=root_registry();std::lock_guard<std::mutex>lock(registry.mutex);
+    token_=registry.next++;registry.providers.emplace(token_,std::move(provider));
+}
+GcRootProvider::~GcRootProvider(){
+    auto&registry=root_registry();std::lock_guard<std::mutex>lock(registry.mutex);registry.providers.erase(token_);
+}
+void visit_gc_roots(const EdgeVisitor&visitor){
+    auto&registry=root_registry();std::lock_guard<std::mutex>lock(registry.mutex);
+    for(const auto&entry:registry.providers)entry.second(visitor);
+}
 MonitorScope::MonitorScope(Ref<Object> target):target_(std::move(target)){
     if(!target_)throw ArgumentNullException();
     GcNativeBlockingScope parked;target_->monitor.lock();
 }
 MonitorScope::~MonitorScope(){target_->monitor.unlock();}
+#if PLS_TRACING_GC
+#include "../../runtime/managed_gc_bridge.inc"
+#else
 namespace {
 struct CollectorState {
     std::mutex mutex;std::condition_variable condition;
@@ -59,7 +94,7 @@ void visit_managed_memory(const memory::RangeVisitor&visitor,const std::function
         wait_for_collection(state,lock);state.requested=true;state.collector=std::this_thread::get_id();
     }
     CollectionPause pause{state};
-    struct SnapshotObject{Ref<Object>object;std::size_t bytes;const void*begin;};std::vector<SnapshotObject>objects;
+    struct SnapshotObject{Ref<Object>object{};std::size_t bytes;const void*begin;};std::vector<SnapshotObject>objects;
     {std::unique_lock<std::mutex>lock(state.mutex);
         if(!state.condition.wait_for(lock,std::chrono::seconds(1),[&]{for(const auto&entry:state.mutators)if(entry.first!=state.collector&&!state.parked.count(entry.first)&&!state.native_blocked.count(entry.first))return false;return true;}))throw NotSupportedException("Managed worker did not reach a memory snapshot safepoint");
         for(const auto&entry:state.objects)if(auto object=entry.second.object.lock())objects.push_back({std::move(object),entry.second.body_bytes,entry.second.body_begin});
@@ -118,7 +153,7 @@ void gc_collect(std::int32_t generation){
     [[maybe_unused]] allocation_probe::Collection allocation_measurement;
     CollectionPause pause{state};
     try{
-        std::vector<Ref<Object>>objects;std::vector<std::int32_t>ages;
+        std::vector<Ref<Object>>objects{};std::vector<std::int32_t>ages;
         {
             std::unique_lock<std::mutex>lock(state.mutex);
             const bool quiet=state.condition.wait_for(lock,std::chrono::seconds(1),[&]{for(const auto&entry:state.mutators)if(entry.first!=state.collector&&!state.parked.count(entry.first)&&!state.native_blocked.count(entry.first))return false;return true;});
@@ -150,6 +185,7 @@ void gc_collect(std::int32_t generation){
         }
     }catch(const std::bad_alloc&){throw OutOfMemoryException();}
 }
+#endif
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count){
     if(!source||!dest)throw ArgumentNullException();
     if(source_index<0||dest_index<0||count<0)throw ArgumentOutOfRangeException();
@@ -171,7 +207,8 @@ String String::literal(const char16_t*text,std::size_t length){
     // strings keep their normal ownership. Views refer to immutable storage
     // retained by the pool, so the key does not duplicate the UTF-16 payload.
     static std::mutex mutex;
-    static std::unordered_map<std::u16string_view,Ref<Storage>> literals;
+    static std::unordered_map<std::u16string_view,Ref<Storage>> literals{};
+    static GcRootProvider roots([](const EdgeVisitor&visitor){for(const auto&entry:literals)trace_value(entry.second,visitor);});
     std::lock_guard<std::mutex> lock(mutex);
     const std::u16string_view key(text,length);auto found=literals.find(key);
     String result;

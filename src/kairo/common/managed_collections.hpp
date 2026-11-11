@@ -8,8 +8,8 @@ template<class T>struct has_equal_operator<T,std::void_t<decltype(std::declval<T
 template<class T>bool default_equal(const T&a,const T&b) {
     if constexpr(is_shared_ref<T>::value) {
         if(!a)return !b;
-        auto left=std::dynamic_pointer_cast<Object>(a);
-        auto right=std::dynamic_pointer_cast<Object>(b);
+        auto left=pls::cs::dynamic_pointer_cast<Object>(a);
+        auto right=pls::cs::dynamic_pointer_cast<Object>(b);
         if(!left||(b&&!right))throw InvalidCastException();
         return left->Equals(right);
     }
@@ -34,7 +34,7 @@ template<class T>struct Box : Object {
         else throw NotSupportedException("Boxed value formatting requires measured type-specific implementation");
     }
     bool equals(const Ref<Object>&other)const override {
-        auto typed=std::dynamic_pointer_cast<Box<T>>(other);return typed&&default_equal(value,typed->value);
+        auto typed=pls::cs::dynamic_pointer_cast<Box<T>>(other);return typed&&default_equal(value,typed->value);
     }
     std::int32_t get_hash_code()const override {
         if constexpr(std::is_integral_v<T>) {
@@ -48,7 +48,7 @@ template<class T>struct Box : Object {
 
 template<class T>Ref<Object> box(T value) {
     if constexpr(is_shared_ref<T>::value) {
-        auto object=std::dynamic_pointer_cast<Object>(value);
+        auto object=pls::cs::dynamic_pointer_cast<Object>(value);
         if(value&&!object)throw InvalidCastException();return object;
     }
     else if constexpr(has_managed_object<T>::value)return value.as_object();
@@ -57,12 +57,12 @@ template<class T>Ref<Object> box(T value) {
 inline Ref<Object>box(std::nullptr_t){return nullptr;}
 template<class T>T unbox(const Ref<Object>&value) {
     if constexpr(is_shared_ref<T>::value) {
-        auto typed=std::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);
+        auto typed=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);
         if(value&&!typed)throw InvalidCastException();return typed;
     } else if constexpr(has_managed_object<T>::value)return T::from_object(value);
     else {
         if(!value)throw NullReferenceException();
-        auto typed=std::dynamic_pointer_cast<Box<T>>(value);if(!typed)throw InvalidCastException();return typed->value;
+        auto typed=pls::cs::dynamic_pointer_cast<Box<T>>(value);if(!typed)throw InvalidCastException();return typed->value;
     }
 }
 
@@ -82,7 +82,7 @@ template<class T>class List {
         void trace_edges(const EdgeVisitor&visitor)const override{trace_value(items,visitor);}
         void release_edges()override{release_value(items);}
     };
-    Ref<Storage>data_;
+    Ref<Storage>data_{};
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
     void check_index(std::int32_t index)const{if(index<0||index>=require().size)throw ArgumentOutOfRangeException();}
     void ensure_capacity(std::int32_t wanted) {
@@ -100,7 +100,7 @@ public:
     }
     bool is_null()const noexcept{return !data_;}
     Ref<Object>as_object()const{return data_;}
-    static List from_object(const Ref<Object>&value){List result;if(value){result.data_=std::dynamic_pointer_cast<Storage>(value);if(!result.data_)throw InvalidCastException();}return result;}
+    static List from_object(const Ref<Object>&value){List result;if(value){result.data_=pls::cs::dynamic_pointer_cast<Storage>(value);if(!result.data_)throw InvalidCastException();}return result;}
     std::int32_t count()const{return require().size;}
     std::int32_t capacity()const{return require().items.length();}
     void set_capacity(std::int32_t capacity) {
@@ -146,13 +146,13 @@ public:
     Array<T>to_array()const{const auto&data=require();auto output=Array<T>::make(data.size);Array<T>::copy(data.items,0,output,0,data.size);return output;}
     void trim_excess(){if(count()<static_cast<std::int32_t>(static_cast<double>(capacity())*0.9))set_capacity(count());}
     struct Enumerator {
-        Ref<Storage>data;std::uint32_t version=0;std::int32_t next=0;T value{};
+        Ref<Storage>data{};std::uint32_t version=0;std::int32_t next=0;T value{};
         void verify()const{if(!data)throw ObjectDisposedException();if(version!=data->version)throw InvalidOperationException();}
         bool move_next(){verify();if(next<0)return false;if(next<data->size){value=data->items.at(next++);return true;}next=-1;if(runtime_profile==RuntimeProfile::DotNet)value=T{};return false;}
         T current()const{return value;}
         Ref<Object>current_object()const{verify();if(next<=0)throw InvalidOperationException();return box(value);}
         void reset(){verify();next=0;if(runtime_profile==RuntimeProfile::DotNet)value=T{};}
-        void dispose(){if(runtime_profile==RuntimeProfile::UnityMono265)data.reset();}
+        void dispose(){if(runtime_profile==RuntimeProfile::UnityMono265)clear_ref(data);}
         bool MoveNext(){return move_next();}T get_Current()const{return current();}void Reset(){reset();}void Dispose(){dispose();}
         void trace_edges(const EdgeVisitor&visitor)const{trace_value(data,visitor);trace_value(value,visitor);}
         void release_edges(){release_value(data);release_value(value);}
@@ -166,7 +166,7 @@ public:
         void release_edges()override{state_.release_edges();}
         bool MoveNext()override{return state_.move_next();}
         Ref<Object>get_Current()const override{return state_.current_object();}
-        void Reset()override{state_.reset();}void Dispose()override{state_.dispose();}
+        void Reset()override{pls::cs::clear_ref(state_);}void Dispose()override{state_.dispose();}
     };
     Ref<IEnumerator>as_enumerator()const{return make_ref<EnumeratorObject>(get_enumerator());}
     // Names used by Roslyn's framework symbol/accessor mapping.
@@ -195,14 +195,14 @@ template<class T>class Stack {
         void trace_edges(const EdgeVisitor&visitor)const override{trace_value(items,visitor);}
         void release_edges()override{release_value(items);}
     };
-    Ref<Storage>data_;
+    Ref<Storage>data_{};
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
 public:
     Stack()=default; // Null managed reference, consistent with List/Array wrappers.
     static Stack make(){Stack result;result.data_=make_ref<Storage>();return result;}
     bool is_null()const noexcept{return !data_;}
     Ref<Object>as_object()const{return data_;}
-    static Stack from_object(const Ref<Object>&value){Stack result;if(value){result.data_=std::dynamic_pointer_cast<Storage>(value);if(!result.data_)throw InvalidCastException();}return result;}
+    static Stack from_object(const Ref<Object>&value){Stack result;if(value){result.data_=pls::cs::dynamic_pointer_cast<Storage>(value);if(!result.data_)throw InvalidCastException();}return result;}
     std::int32_t count()const{return require().size;}
     std::int32_t get_Count()const{return count();}
     void Push(T value){

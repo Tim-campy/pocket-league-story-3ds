@@ -18,7 +18,7 @@ pls::cs::Ref<cs_4c00a0e0c6e6e2e5> cs_80617835aa0d7a16(pls::cs::String v_text) { 
 }
 
 void cs_80617835aa0d7a16_init(pls::cs::Ref<cs_4c00a0e0c6e6e2e5> cs_this,pls::cs::String v_text) {
-([&]() { cs_123805c6bd81d455_init(std::static_pointer_cast<cs_5ad2213598dfcd5d>(cs_this)); }());
+([&]() { cs_123805c6bd81d455_init(pls::cs::static_pointer_cast<cs_5ad2213598dfcd5d>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.Label.#ctor(System.String)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; auto cs_arg1 = true; return pls::generated::cs_519a2204b16d0770(cs_arg0,cs_arg1); }());}); pls::game::cs_require(cs_target)->cs_c02206d24c9889b2 = cs_value; return cs_value; }());

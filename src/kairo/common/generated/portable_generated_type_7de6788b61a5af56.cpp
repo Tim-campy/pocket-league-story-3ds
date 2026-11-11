@@ -6,11 +6,11 @@ void cs_7de6788b61a5af56::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_7de6788b61a5af56::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_159529d7b41663da);}
 
-std::int32_t cs_7de6788b61a5af56::GetHashCode() {return cs_16762e09ddce2966(std::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
+std::int32_t cs_7de6788b61a5af56::GetHashCode() {return cs_16762e09ddce2966(pls::cs::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
 
-bool cs_7de6788b61a5af56::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_ebd756e2a16440e5(std::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()),v_obj);}
+bool cs_7de6788b61a5af56::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_ebd756e2a16440e5(pls::cs::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()),v_obj);}
 
-pls::cs::String cs_7de6788b61a5af56::ToString() {return cs_044a765a6989d563(std::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
+pls::cs::String cs_7de6788b61a5af56::ToString() {return cs_044a765a6989d563(pls::cs::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
 
 void cs_init_7de6788b61a5af56(){static pls::cs::TypeInitState state;state.run("java.lang.JInteger",[](){
 

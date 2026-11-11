@@ -56,6 +56,7 @@ public static class OriginalFragments {public static void ClearGames(SurfaceMana
    'src/kairo/common/graphics.cpp','src/kairo/common/mesh.cpp','src/kairo/common/image_lifetime.cpp','src/kairo/common/font.cpp','src/kairo/platform/sdl/font.cpp','src/kairo/common/asset_catalog.cpp','src/kairo/common/semantic_runtime.cpp']]
  sdk=ROOT/'build/deps/native-media';sdl=ROOT/'build/deps/SDL2-2.32.10';cl=VS/'VC/Tools/MSVC/14.51.36231/bin/Hostx64/x64/cl.exe';native=folder/'surface-bridge-fixtures.exe';objects=[]
  inputs=native_sources+[source,ROOT/'tools/test_surface_bridge.py',ROOT/'tools/test_input.py']
+ inputs += [ROOT/'tests/translator/gc_test_support.hpp']
  inputs += [ROOT/'src/kairo/api'/p for p in ['forms_callbacks.hpp','forms_execution.hpp','forms.hpp','touch_value_accessor.hpp','canvas.hpp','input.hpp','graphics.hpp','font.hpp','application.hpp']]
  inputs += [ROOT/'src/kairo/common'/p for p in ['semantic_runtime.hpp','managed_shared_field.hpp','asset_catalog.hpp','sha256.hpp']]+[ROOT/'src/kairo/platform/sdl/font.hpp']
  before={p.relative_to(ROOT).as_posix():sha(p) for p in inputs}

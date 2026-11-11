@@ -6,9 +6,9 @@ void cs_b169f360ee9f1108::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_b169f360ee9f1108::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_e0a5bfe7faf6c07e);pls::cs::release_value(cs_47aad339f248ff81);pls::cs::release_value(cs_6cbd485f86bf5859);pls::cs::release_value(cs_33c621bd4fd10d07);pls::cs::release_value(cs_5035eb310e4a8d61);pls::cs::release_value(cs_c8cc33ddf6dcb591);pls::cs::release_value(cs_43141e651b3c1995);}
 
-std::int32_t cs_b169f360ee9f1108::GetHashCode() {return cs_bd48f39de19516d5(std::static_pointer_cast<cs_b169f360ee9f1108>(shared_from_this()));}
+std::int32_t cs_b169f360ee9f1108::GetHashCode() {return cs_bd48f39de19516d5(pls::cs::static_pointer_cast<cs_b169f360ee9f1108>(shared_from_this()));}
 
-pls::cs::String cs_b169f360ee9f1108::ToString() {return cs_3fc374a8a3e0f24e(std::static_pointer_cast<cs_b169f360ee9f1108>(shared_from_this()));}
+pls::cs::String cs_b169f360ee9f1108::ToString() {return cs_3fc374a8a3e0f24e(pls::cs::static_pointer_cast<cs_b169f360ee9f1108>(shared_from_this()));}
 
 void cs_init_b169f360ee9f1108(){static pls::cs::TypeInitState state;state.run("system.billing.util.SkuDetails",[](){
 
@@ -52,7 +52,7 @@ pls::cs::Ref<cs_b169f360ee9f1108> cs_26ea8b67da16b42f(pls::cs::String v_jsonSkuD
 }
 
 void cs_26ea8b67da16b42f_init(pls::cs::Ref<cs_b169f360ee9f1108> cs_this,pls::cs::String v_jsonSkuDetails) {
-([&]() { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5);return cs_literal;}()); pls::cs::String cs_arg1 = v_jsonSkuDetails; cs_943696d8c8e0a6d0_init(std::static_pointer_cast<cs_b169f360ee9f1108>(cs_this),cs_arg0,cs_arg1); }());
+([&]() { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5);return cs_literal;}()); pls::cs::String cs_arg1 = v_jsonSkuDetails; cs_943696d8c8e0a6d0_init(pls::cs::static_pointer_cast<cs_b169f360ee9f1108>(cs_this),cs_arg0,cs_arg1); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.SkuDetails.#ctor(System.String)",game);
 {
 
@@ -76,7 +76,7 @@ std::int32_t cs_bd48f39de19516d5(pls::cs::Ref<cs_b169f360ee9f1108> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.SkuDetails.GetHashCode",game);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

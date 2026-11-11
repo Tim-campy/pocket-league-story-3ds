@@ -1,4 +1,5 @@
 #include "forms.hpp"
+#include "../translator/gc_test_support.hpp"
 #include <iostream>
 #include <atomic>
 #include <thread>
@@ -44,7 +45,7 @@ int concurrent_policy(){
  }
  {pls::cs::GcNativeBlockingScope blocked;writer.join();}if(error)std::rethrow_exception(error);
  require(collections>0);auto snapshot=form->GetLeftSoftLabel();form->SetSoftLabel(Str(u"replacement"),{}, {}, {});require(valid(snapshot));
- std::weak_ptr<pls::cs::Object> weak=snapshot.as_object();pls::cs::gc_collect();require(!weak.expired());snapshot={};pls::cs::gc_collect();
+ pls::cs::Weak<pls::cs::Object> weak=snapshot.as_object();pls::cs::gc_collect();require(!weak.expired());snapshot={};pls::cs::gc_collect();
  bool bounds=false;try{canvas->SetSoftLabel(-1,{});}catch(const pls::cs::IndexOutOfRangeException&){bounds=true;}require(bounds);
  std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<checks<<",\"writer_iterations\":2000,\"collections_while_writer_registered\":"<<collections<<",\"whole_method_lock\":false,\"game_boot\":false}\n";return 0;
 }
@@ -65,8 +66,8 @@ int policy(){
  canvas->SetBackground(0x123456);require(canvas->GetBackColor()==0x123456);
  // Native FormBase<->FormManager references participate in the cooperative
  // collector; this cycle must not become an invisible permanent native root.
- std::weak_ptr<FormBase> weak;
- {auto cycle=pls::cs::make_ref<FormManagerBase>();cycle->source_construct();auto child=pls::cs::make_ref<FormBase>(1);cycle->Push(child);weak=child;}
+ pls::cs::Weak<FormBase> weak;
+ isolated_gc_mutator([&]{auto cycle=pls::cs::make_ref<FormManagerBase>();cycle->source_construct();auto child=pls::cs::make_ref<FormBase>(1);cycle->Push(child);weak=child;});
  pls::cs::gc_collect();require(weak.expired());
  unsigned int constructions=0;int derived_field=0;
  form_construction_hook=[&](FormManagerBase&){require(derived_field==41);++constructions;};
@@ -114,9 +115,9 @@ int main(int argc,char**argv){
  P("index",[&]{return std::to_string(m->GetFormIndex(a))+":"+std::to_string(m->GetFormIndex(b));});
  P("app-event-default",[]{auto e=pls::cs::make_ref<AppEvent>(AppEventType::Exit);return std::to_string(static_cast<int>(e->Type))+":"+std::to_string(e->Args.length());});
  P("constructor-order",[]{ConstructorProbe::trace.clear();auto p=pls::cs::make_ref<ConstructorProbe>();p->source_ctor();return ConstructorProbe::trace+"/"+std::to_string(p->GetId())+":"+std::to_string(p->value)+":"+p->GetLeftSoftLabel().utf8();});
- P("touch-base-default",[]{pls::cs::Ref<TouchValueAccessor> touch=pls::cs::make_ref<FormBase>(9);touch->SetTouchValue(1,2);return std::to_string(touch->GetTouchValue(3,4))+":"+T(bool(std::dynamic_pointer_cast<FormBase>(touch)));});
+ P("touch-base-default",[]{pls::cs::Ref<TouchValueAccessor> touch=pls::cs::make_ref<FormBase>(9);touch->SetTouchValue(1,2);return std::to_string(touch->GetTouchValue(3,4))+":"+T(bool(pls::cs::dynamic_pointer_cast<FormBase>(touch)));});
  P("touch-derived-dispatch",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;touch->SetTouchValue(5,7);p->source_SetTouchValue(5,6);return std::to_string(touch->GetTouchValue(3,4))+":"+std::to_string(p->source_GetTouchValue(3,4))+":"+std::to_string(p->received_type)+":"+std::to_string(p->received_value);});
- P("touch-object-identity",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;auto boxed=std::dynamic_pointer_cast<pls::cs::Object>(touch);return std::string(T(boxed==std::static_pointer_cast<pls::cs::Object>(p)))+":"+T(std::dynamic_pointer_cast<TouchValueAccessor>(std::dynamic_pointer_cast<TouchProbe>(boxed))==touch);});
+ P("touch-object-identity",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;auto boxed=pls::cs::dynamic_pointer_cast<pls::cs::Object>(touch);return std::string(T(boxed==pls::cs::static_pointer_cast<pls::cs::Object>(p)))+":"+T(pls::cs::dynamic_pointer_cast<TouchValueAccessor>(pls::cs::dynamic_pointer_cast<TouchProbe>(boxed))==touch);});
  P("init-mode-reread",[]{auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<ModeProbe>();manager->Push(form);manager->source_ExecuteInitAndFinish();return std::to_string(manager->GetFormsNum())+":"+std::to_string(form->GetProcessMode());});
  P("finish-mode-reread",[]{auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<ModeProbe>();manager->Push(form);manager->source_ExecuteInitAndFinish();manager->source_ExecuteInitAndFinish();return std::to_string(manager->GetFormsNum())+":"+std::to_string(form->GetProcessMode());});
 }

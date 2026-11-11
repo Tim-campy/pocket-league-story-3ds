@@ -27,13 +27,13 @@ void cs_15f31d4f046b09a8::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_15f31d4f046b09a8::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_faf2053d989419ff);pls::cs::release_value(cs_519713e3b629623c);pls::cs::release_value(cs_b713199635bb1058);pls::cs::release_value(cs_59d0e1ae203981e5);pls::cs::release_value(cs_d6ae59bf543478aa);pls::cs::release_value(cs_6541be3d4c391c46);pls::cs::release_value(cs_10794726de973b56);}
 
-bool cs_15f31d4f046b09a8::Equals(pls::cs::Ref<pls::cs::Object> const& v_o) {return cs_f86548878598ca1e(std::static_pointer_cast<cs_15f31d4f046b09a8>(shared_from_this()),v_o);}
+bool cs_15f31d4f046b09a8::Equals(pls::cs::Ref<pls::cs::Object> const& v_o) {return cs_f86548878598ca1e(pls::cs::static_pointer_cast<cs_15f31d4f046b09a8>(shared_from_this()),v_o);}
 
-std::int32_t cs_15f31d4f046b09a8::GetHashCode() {return cs_d860de92f53afc6c(std::static_pointer_cast<cs_15f31d4f046b09a8>(shared_from_this()));}
+std::int32_t cs_15f31d4f046b09a8::GetHashCode() {return cs_d860de92f53afc6c(pls::cs::static_pointer_cast<cs_15f31d4f046b09a8>(shared_from_this()));}
 
 static pls::cs::Array<std::uint8_t> cs_0ab9b09ba01c1501_value{};
 
-void cs_init_15f31d4f046b09a8(){static pls::cs::TypeInitState state;state.run("system.billing.ui.Receipt",[](){
+void cs_init_15f31d4f046b09a8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_0ab9b09ba01c1501_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.Receipt",[](){
 cs_0ab9b09ba01c1501_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.Receipt.PASSKEY",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.Save(java.io.OutputStream):505",pls::assets::baked_array<std::uint8_t>("61736f320d2d2e922d39112d814fc89624178f8ca851f942effda611d7d9bb89"));});
 
 });}
@@ -143,7 +143,7 @@ std::int32_t cs_d860de92f53afc6c(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetHashCode",game);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

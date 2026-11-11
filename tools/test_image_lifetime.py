@@ -76,6 +76,7 @@ namespace kairo.unity.ui {public class Image {
  passed=all(c['passed'] for c in cases)
  policy=json.loads(run([native,synthetic,'policy'],folder,'native-policy',environment()))
  inputs=units+[source,ROOT/'tools/test_image_lifetime.py',ROOT/'tools/test_input.py']
+ inputs += [ROOT/'tests/translator/gc_test_support.hpp']
  inputs += [ROOT/'src/kairo/api'/p for p in ['graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common'/p for p in ['semantic_runtime.hpp','asset_catalog.hpp','sha256.hpp']]+[ROOT/'src/kairo/platform/sdl/font.hpp']
  report=dict(operation='original-source-Image-use-expiry-eviction-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(c['passed'] for c in cases),cases=cases,
  verified_boundary_ids=[],native_policy=policy,inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},source_manifest=[dict(path=original.relative_to(ROOT/'reference').as_posix(),sha256=sha(original))],

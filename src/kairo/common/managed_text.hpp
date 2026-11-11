@@ -39,18 +39,18 @@ public:
     Ref<StringBuilder> Append(const String&value){if(!value.is_null()){
         if(historical_&&get_Length()==0&&value.length()>capacity_){text_=value.code_units();capacity_=value.length();cached_=cached_same_=true;}
         else{grow(static_cast<std::int64_t>(get_Length())+value.length());allocate([&]{text_+=value.code_units();});}
-    }return std::static_pointer_cast<StringBuilder>(shared_from_this());}
-    Ref<StringBuilder> Append(char16_t value){grow(static_cast<std::int64_t>(get_Length())+1);allocate([&]{text_.push_back(value);});return std::static_pointer_cast<StringBuilder>(shared_from_this());}
+    }return pls::cs::static_pointer_cast<StringBuilder>(shared_from_this());}
+    Ref<StringBuilder> Append(char16_t value){grow(static_cast<std::int64_t>(get_Length())+1);allocate([&]{text_.push_back(value);});return pls::cs::static_pointer_cast<StringBuilder>(shared_from_this());}
     Ref<StringBuilder> Insert(std::int32_t index,const String&value){
         if(index<0||index>get_Length())throw ArgumentOutOfRangeException();
         if(!value.is_null()&&value.length()!=0){grow(static_cast<std::int64_t>(get_Length())+value.length());allocate([&]{text_.insert(static_cast<std::size_t>(index),value.code_units());});}
-        return std::static_pointer_cast<StringBuilder>(shared_from_this());
+        return pls::cs::static_pointer_cast<StringBuilder>(shared_from_this());
     }
-    Ref<StringBuilder> Append(char16_t value,std::int32_t repeat){if(repeat<0)throw ArgumentOutOfRangeException();grow(static_cast<std::int64_t>(get_Length())+repeat);allocate([&]{text_.append(static_cast<std::size_t>(repeat),value);});return std::static_pointer_cast<StringBuilder>(shared_from_this());}
+    Ref<StringBuilder> Append(char16_t value,std::int32_t repeat){if(repeat<0)throw ArgumentOutOfRangeException();grow(static_cast<std::int64_t>(get_Length())+repeat);allocate([&]{text_.append(static_cast<std::size_t>(repeat),value);});return pls::cs::static_pointer_cast<StringBuilder>(shared_from_this());}
     Ref<StringBuilder> Append(const String&value,std::int32_t start,std::int32_t count){
-        if(historical_&&value.is_null()){if(start&&count)throw ArgumentNullException();return std::static_pointer_cast<StringBuilder>(shared_from_this());}
+        if(historical_&&value.is_null()){if(start&&count)throw ArgumentNullException();return pls::cs::static_pointer_cast<StringBuilder>(shared_from_this());}
         if(start<0||count<0)throw ArgumentOutOfRangeException();
-        if(value.is_null()){if(start||count)throw ArgumentNullException();return std::static_pointer_cast<StringBuilder>(shared_from_this());}
+        if(value.is_null()){if(start||count)throw ArgumentNullException();return pls::cs::static_pointer_cast<StringBuilder>(shared_from_this());}
         if(static_cast<std::int64_t>(start)+count>value.length())throw ArgumentOutOfRangeException();return Append(value.substring(start,count));
     }
     String ToString()const{if(historical_&&!cached_&&!text_.empty()){cached_=true;if(get_Length()>=(capacity_>>1)){capacity_=get_Length();cached_same_=true;}}return String(text_);}

@@ -35,10 +35,10 @@ class Image : public cs::Object {
         void trace_edges(const cs::EdgeVisitor&visit)const override{cs::trace_value(values,visit);}
         void release_edges()override{cs::release_value(values);}
     };
-    cs::Ref<cs::Object> balloon_tasks_,text_tasks_,touch_tasks_;
+    cs::Ref<cs::Object> balloon_tasks_{},text_tasks_{},touch_tasks_{};
     template<class T>cs::List<T>& task_slot(cs::Ref<cs::Object>&slot){
         if(!slot)slot=cs::make_ref<BalloonTasks<T>>();
-        auto storage=std::dynamic_pointer_cast<BalloonTasks<T>>(slot);
+        auto storage=pls::cs::dynamic_pointer_cast<BalloonTasks<T>>(slot);
         if(!storage)throw cs::InvalidCastException("Image task slot has a different managed element type");
         return storage->values;
     }
@@ -67,7 +67,7 @@ public:
     std::int32_t standardWidth_{},standardHeight_{},renderQueue_{},imageAtlasId_{-1};
     cs::Array<std::int8_t> optimize_,optimizeAccess_,optimizeSeb_;
     cs::Array<std::int16_t> optimizeEx_,optimizeAccessL_,optimizeSebEx_;
-    cs::Array<cs::Ref<Image>> images_;
+    cs::Array<cs::Ref<Image>> images_{};
     std::int32_t optimizeWidthNum_{},optimizeHeightNum_{},optimizePass_{};
     std::int16_t optimizeBlockWidth_{},optimizeBlockHeight_{};
     inline static cs::Array<std::int32_t> getOptimize_result=cs::Array<std::int32_t>::make(7),getOptimizeSeb_result=cs::Array<std::int32_t>::make(4),getPaletteInfo_result=cs::Array<std::int32_t>::make(2),getAreaSize_result=cs::Array<std::int32_t>::make(2);
@@ -142,9 +142,9 @@ public:
 class Graphics : public cs::Object {
     friend class Canvas;
     friend class MeshManager;
-    cs::Ref<MeshManager> mesh_manager_;
-    inline static cs::SharedField<cs::Ref<Graphics>> current_;
-    cs::Ref<Image> target_;
+    cs::Ref<MeshManager> mesh_manager_{};
+    inline static cs::SharedField<cs::Ref<Graphics>> current_{};
+    cs::Ref<Image> target_{};
     bool is_gui_{},gl_render_{},clip_enabled_{};
     std::int32_t gl_render_count_{};
     std::vector<bool> clip_enabled_stack_;
@@ -165,8 +165,8 @@ class Graphics : public cs::Object {
     std::vector<std::array<float,4>> clips_;
     std::vector<std::array<std::int32_t,2>> origins_;
     std::vector<std::array<std::int32_t,3>> modes_;
-    cs::Ref<Font> font_;
-    std::vector<cs::Ref<Font>> fonts_;
+    cs::Ref<Font> font_{};
+    std::vector<cs::Ref<Font>> fonts_{};
     inline static bool auto_text_layout_{};
     inline static std::vector<bool> auto_text_layout_stack_;
     cs::Array<std::int32_t> render_result_=cs::Array<std::int32_t>::make(4);
@@ -181,9 +181,10 @@ class Graphics : public cs::Object {
     void begin_primitive(cs::Ref<Image> image={});
 public:
     explicit Graphics(cs::Ref<Image>,bool display_context=false);
+    static void trace_static_roots(const cs::EdgeVisitor&visitor){current_.trace_edges(visitor);cs::trace_value(anchor_result_,visitor);}
     cs::Ref<MeshManager> GetMeshManager();
-    cs::Ref<Image> source_render_;
-    cs::Ref<Offscreen> offscreen_;
+    cs::Ref<Image> source_render_{};
+    cs::Ref<Offscreen> offscreen_{};
     static cs::Ref<Graphics> GetCurrent(){return current_.load();}
     bool IsGUI()const{return is_gui_;}
     bool IsRenderGUIMode()const{return is_gui_&&!gl_render_;}
@@ -270,6 +271,7 @@ public:
     void release_edges()override;
 };
 inline void native_graphics_push_matrix(cs::Ref<Graphics> g,cs::Array<float> values){cs::nonnull(g)->PushMatrixValues(values);}
+inline cs::GcRootProvider graphics_roots([](const cs::EdgeVisitor&visitor){Graphics::trace_static_roots(visitor);});
 inline void native_graphics_set_matrix(cs::Ref<Graphics> g,cs::Array<float> values){cs::nonnull(g)->SetMatrixValues(values);}
 inline cs::Array<float> native_graphics_read_matrix(cs::Ref<Graphics> g,std::int32_t mode){return cs::nonnull(g)->GetMatrixValues(mode);}
 inline cs::Array<float> native_graphics_read_clip(cs::Ref<Graphics> g){return cs::nonnull(g)->GetClipValues();}

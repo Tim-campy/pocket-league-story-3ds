@@ -12,7 +12,7 @@ void cs_80d72c9d6f5bfcfe::release_edges(){cs_b08d770c239489bf::release_edges();p
 
 static pls::cs::Array<pls::cs::String> cs_a6acb1dbcdc3e821_value{};
 
-void cs_init_80d72c9d6f5bfcfe(){static pls::cs::TypeInitState state;state.run("data.EventData",[](){
+void cs_init_80d72c9d6f5bfcfe(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a6acb1dbcdc3e821_value,visitor);});static pls::cs::TypeInitState state;state.run("data.EventData",[](){
 
 });}
 
@@ -24,7 +24,7 @@ pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_e4bc487b2460253c() { cs_init_80d72c9d6f5bfc
 }
 
 void cs_e4bc487b2460253c_init(pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_this) {
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.EventData.#ctor",game);
 {
 
@@ -38,7 +38,7 @@ pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_142d416c03b7e0fe(pls::cs::String v_src) { c
 }
 
 void cs_142d416c03b7e0fe_init(pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_this,pls::cs::String v_src) {
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.EventData.#ctor(System.String)",game);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_80d72c9d6f5bfcfe>>(cs_this); pls::cs::String cs_arg0 = v_src; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_8995abc98652335f(cs_receiver,cs_arg0); }());

@@ -1,4 +1,5 @@
 #include "managed_thread.hpp"
+#include "gc_test_support.hpp"
 #include <atomic>
 #include <chrono>
 #include <iostream>
@@ -12,9 +13,9 @@ void check(bool value,const char* message){++assertions;if(!value)throw Exceptio
 template<class F>void wait(F&& test){int loops=0;while(!test()){if(++loops>3000)throw Exception("Thread GC fixture timeout");Thread::Sleep(1);}}
 template<class F>Ref<Thread> make_thread(F&& body){return make_ref<Thread>(ThreadStart::from_static("own-thread-gc",std::forward<F>(body)));}
 struct Node:Object {
-    Ref<Node> peer;Ref<Thread> thread;
+    Ref<Node> peer{};Ref<Thread> thread{};
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(peer,visitor);trace_value(thread,visitor);}
-    void release_edges()override{peer.reset();thread.reset();}
+    void release_edges()override{pls::cs::clear_ref(peer);pls::cs::clear_ref(thread);}
 };
 struct TraceBarrier:Object {
     std::atomic<bool>* entered;std::atomic<bool>* allow;std::atomic<bool>* complete;
@@ -25,13 +26,13 @@ struct TraceBarrier:Object {
 int main(){
     try{
         GcMutatorScope host;
-        auto node=make_ref<Node>();node->peer=node;std::weak_ptr<Node> weak_node=node;
-        auto thread=make_ref<Thread>(ThreadStart::bind(node,"wait",[weak_node]{auto target=weak_node.lock();try{Thread::Sleep(-1);}catch(const ThreadInterruptedException&){}if(!target)throw Exception("Bound target was lost");}));
-        node->thread=thread;std::weak_ptr<Thread> weak_thread=thread;node.reset();thread->Start();
-        wait([&]{return thread->get_ThreadState()==ThreadState::WaitSleepJoin;});
-        gc_collect(0);check(!weak_node.expired(),"Running thread lost target");check(thread->get_IsAlive(),"Sleep worker died during collection");
-        thread->Interrupt();thread->Join();check(thread->get_ThreadState()==ThreadState::Stopped,"Worker did not stop after caught interrupt");thread.reset();
-        gc_collect(0);check(weak_node.expired(),"Unrooted target/thread cycle survived");check(weak_thread.expired(),"Unrooted Thread delegate cycle survived");
+        Ref<Thread>thread{};Weak<Node>weak_node;Weak<Thread>weak_thread;
+        isolated_gc_mutator([&]{auto node=make_ref<Node>();node->peer=node;weak_node=node;
+            thread=make_ref<Thread>(ThreadStart::bind(node,"wait",[weak_node]{auto target=weak_node.lock();try{Thread::Sleep(-1);}catch(const ThreadInterruptedException&){}if(!target)throw Exception("Bound target was lost");}));
+            node->thread=thread;weak_thread=thread;thread->Start();wait([&]{return thread->get_ThreadState()==ThreadState::WaitSleepJoin;});});
+        gc_collect(0);isolated_gc_mutator([&]{check(!weak_node.expired(),"Running thread lost target");check(thread->get_IsAlive(),"Sleep worker died during collection");
+            thread->Interrupt();thread->Join();check(thread->get_ThreadState()==ThreadState::Stopped,"Worker did not stop after caught interrupt");clear_ref(thread);});
+        gc_collect(0);isolated_gc_mutator([&]{check(weak_node.expired(),"Unrooted target/thread cycle survived");check(weak_thread.expired(),"Unrooted Thread delegate cycle survived");});
         auto target=make_thread([]{try{Thread::Sleep(-1);}catch(const ThreadInterruptedException&){} });target->Start();
         auto joiner=make_thread([&]{try{target->Join();}catch(const ThreadInterruptedException&){} });joiner->Start();
         wait([&]{return target->get_ThreadState()==ThreadState::WaitSleepJoin && joiner->get_ThreadState()==ThreadState::WaitSleepJoin;});
@@ -42,7 +43,7 @@ int main(){
         wait([&]{return iterations>100;});busy->Interrupt();const int before=iterations;wait([&]{return iterations>before+100;});
         check(busy->get_IsAlive(),"Interrupt aborted a running worker");gc_collect(0);check(busy->get_IsAlive(),"Busy cooperative worker failed to park");
         stop=1;busy->Join();check(delivered,"Pending interrupt was not delivered at managed wait");
-        std::atomic<bool> collected{false};auto collector=make_thread([&]{auto cycle=make_ref<Node>();cycle->peer=cycle;std::weak_ptr<Node> weak=cycle;cycle.reset();gc_collect(0);collected=weak.expired();});collector->Start();collector->Join();
+        std::atomic<bool> collected{false};auto collector=make_thread([&]{Weak<Node>weak;isolated_gc_mutator([&]{auto cycle=make_ref<Node>();cycle->peer=cycle;weak=cycle;});gc_collect(0);collected=weak.expired();});collector->Start();collector->Join();
         check(collected,"Worker collector failed while host was in Join");
         std::atomic<bool> native_entered{false},inner_exited{false},release_native{false},native_reentered{false};
         auto native_worker=make_thread([&]{
@@ -50,10 +51,11 @@ int main(){
             native_reentered=true;
         });native_worker->Start();wait([&]{return inner_exited.load();});
         check(native_entered && !native_reentered,"Native scope did not block correctly");
-        auto native_cycle=make_ref<Node>();native_cycle->peer=native_cycle;std::weak_ptr<Node> weak_native_cycle=native_cycle;native_cycle.reset();
+        Weak<Node>weak_native_cycle;isolated_gc_mutator([&]{auto native_cycle=make_ref<Node>();native_cycle->peer=native_cycle;weak_native_cycle=native_cycle;});
         gc_collect(0);check(weak_native_cycle.expired(),"Nested native scope exit removed outer GC exemption");
         std::atomic<bool> tracing{false},allow_trace{false},trace_complete{false},gc_done{false};
         auto barrier=make_ref<TraceBarrier>(&tracing,&allow_trace,&trace_complete);
+        GcRootProvider barrier_root([&](const EdgeVisitor&visitor){trace_value(barrier,visitor);});
         auto concurrent_collector=make_thread([&]{gc_collect(0);gc_done=true;});concurrent_collector->Start();
         bool reentry_waited=false;
         {

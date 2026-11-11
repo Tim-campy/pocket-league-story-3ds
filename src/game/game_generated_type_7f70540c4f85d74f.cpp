@@ -6,9 +6,9 @@ void cs_7f70540c4f85d74f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_7f70540c4f85d74f::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_59ca359e3d3d712d);pls::cs::release_value(cs_0d03485f6b953700);}
 
-pls::cs::String cs_7f70540c4f85d74f::ToString() {return cs_9eab9ded735366ec(std::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
+pls::cs::String cs_7f70540c4f85d74f::ToString() {return cs_9eab9ded735366ec(pls::cs::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
 
-std::int32_t cs_7f70540c4f85d74f::GetHashCode() {return cs_6853b87e6d3191df(std::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
+std::int32_t cs_7f70540c4f85d74f::GetHashCode() {return cs_6853b87e6d3191df(pls::cs::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
 
 void cs_init_7f70540c4f85d74f(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.AccessCount",[](){
 
@@ -33,7 +33,7 @@ std::int32_t cs_6853b87e6d3191df(pls::cs::Ref<cs_7f70540c4f85d74f> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.AccessCount.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

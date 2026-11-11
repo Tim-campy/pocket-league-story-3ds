@@ -30,7 +30,7 @@ static pls::cs::Array<std::int32_t> cs_e17d446828c8347f_value{};
 
 static pls::cs::Array<std::int32_t> cs_46614273bfe385be_value{};
 
-void cs_init_a9f43a9b869eaae8(){static pls::cs::TypeInitState state;state.run("game.Tenant",[](){
+void cs_init_a9f43a9b869eaae8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e17d446828c8347f_value,visitor);pls::cs::trace_value(cs_46614273bfe385be_value,visitor);});static pls::cs::TypeInitState state;state.run("game.Tenant",[](){
 cs_46614273bfe385be_value = pls::cs::evaluate_type_initializer_field("F:game.Tenant.USETENANT_TIME",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Tenant.cs:M:game.Tenant.#ctor(System.Int32):824",pls::assets::baked_array<std::int32_t>("2874ae2feed226284a9877eec1b1cad4cca32c4ccdef69154ea2e14340312511"));});
 cs_e17d446828c8347f_value = pls::cs::evaluate_type_initializer_field("F:game.Tenant.camera_pos",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Tenant.cs:M:game.Tenant.#ctor(System.Int32):918",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 

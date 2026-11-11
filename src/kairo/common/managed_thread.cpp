@@ -7,7 +7,7 @@
 
 namespace pls::cs {
 namespace {
-thread_local Ref<Thread> current_thread;
+thread_local Ref<Thread> current_thread{};
 ThreadPriorityBackend priority_backend;
 using Clock = std::chrono::steady_clock;
 const auto poll_interval = std::chrono::milliseconds(1);
@@ -33,7 +33,10 @@ Thread::Thread(ThreadStart start):state_(std::make_shared<State>(std::move(start
 Thread::Thread(ExternalTag):state_(std::make_shared<State>(ThreadStart{})){state_->external=true;state_->state=ThreadState::Running;}
 Thread::~Thread()=default;
 Ref<Thread> Thread::get_CurrentThread(){
-    if(!current_thread){current_thread=Ref<Thread>(new Thread(ExternalTag{}));register_managed_object(current_thread);}
+    // A collector invokes this callback on its own thread. Capture this TLS
+    // slot's address, not an expression which resolves the collector's TLS.
+    thread_local GcRootProvider roots([slot=&current_thread](const EdgeVisitor&visitor){trace_value(*slot,visitor);});
+    if(!current_thread)current_thread=make_ref<Thread>(ExternalTag{});
     return current_thread;
 }
 ThreadState Thread::get_ThreadState()const{std::lock_guard<std::mutex> lock(state_->mutex);return state_->state;}
@@ -43,7 +46,7 @@ ThreadPriority Thread::get_Priority(){
     std::lock_guard<std::mutex> lock(state_->mutex);
     if(state_->state==ThreadState::Stopped)throw ThreadStateException();
     if(state_->state==ThreadState::Unstarted)return state_->priority;
-    if(state_->external){if(!priority_backend.get_current)throw NotSupportedException("Thread priority backend missing");if(current_thread.get()!=this)throw NotSupportedException("External thread priority access from another worker");return priority_backend.get_current();}
+    if(state_->external){if(!priority_backend.get_current)throw NotSupportedException("Thread priority backend missing");if(raw(current_thread)!=this)throw NotSupportedException("External thread priority access from another worker");return priority_backend.get_current();}
     if(!priority_backend.get)throw NotSupportedException("Thread priority backend missing");
     return priority_backend.get(state_->worker.native_handle());
 }
@@ -53,32 +56,33 @@ void Thread::set_Priority(ThreadPriority priority){
     std::lock_guard<std::mutex> lock(state_->mutex);
     if(state_->state==ThreadState::Stopped)throw ThreadStateException();
     if(state_->state!=ThreadState::Unstarted){
-        if(state_->external){if(!priority_backend.set_current)throw NotSupportedException("Thread priority backend missing");if(current_thread.get()!=this)throw NotSupportedException("External thread priority access from another worker");priority_backend.set_current(priority);}
+        if(state_->external){if(!priority_backend.set_current)throw NotSupportedException("Thread priority backend missing");if(raw(current_thread)!=this)throw NotSupportedException("External thread priority access from another worker");priority_backend.set_current(priority);}
         else{if(!priority_backend.set)throw NotSupportedException("Thread priority backend missing");priority_backend.set(state_->worker.native_handle(),priority);}
     }
     state_->priority=priority;
 }
 void Thread::Start(){
-    Ref<Thread> self;
-    try{self=std::static_pointer_cast<Thread>(shared_from_this());}catch(const std::bad_weak_ptr&){throw InvalidOperationException("Managed Thread requires make_ref ownership");}
+    Ref<Thread> self{};
+    try{self=pls::cs::static_pointer_cast<Thread>(shared_from_this());}catch(const std::bad_weak_ptr&){throw InvalidOperationException("Managed Thread requires make_ref ownership");}
     std::lock_guard<std::mutex> lock(state_->mutex);
     if(state_->state!=ThreadState::Unstarted)throw ThreadStateException();
     if(runtime_profile==RuntimeProfile::DotNet && !priority_backend.set)throw NotSupportedException("Thread priority backend missing");
     state_->state=ThreadState::Running;
     try{
-        state_->worker=std::thread([self]{self->entry();});
+        auto launch_roots=std::make_shared<GcRootProvider>([self](const EdgeVisitor&visitor){trace_value(self,visitor);});
+        state_->worker=std::thread([self,launch_roots]{self->entry();});
         if(runtime_profile==RuntimeProfile::DotNet)priority_backend.set(state_->worker.native_handle(),state_->priority);
     }catch(const std::system_error&){state_->state=ThreadState::Unstarted;throw OutOfMemoryException("Native thread creation failed");}
 }
 void Thread::entry(){
-    current_thread=std::static_pointer_cast<Thread>(shared_from_this());
+    current_thread=pls::cs::static_pointer_cast<Thread>(shared_from_this());
     {
         GcMutatorScope mutator;
         // Start publishes the native handle/priority while holding this mutex.
         {std::lock_guard<std::mutex> lock(state_->mutex);}
         gc_safepoint();
         try{state_->start();}catch(...){std::terminate();}
-        current_thread.reset();
+        clear_ref(current_thread);
     }
     {std::lock_guard<std::mutex> lock(state_->mutex);state_->state=ThreadState::Stopped;}
     state_->changed.notify_all();

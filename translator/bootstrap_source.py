@@ -308,7 +308,7 @@ namespace cs=pls::cs;namespace k=pls::kairo;
                ('reserve','std::int32_t()','GetReserve','',[],''),('set_reserve','void(std::int32_t)','SetReserve','std::int32_t x',['x'],',System.Int32'),
                ('save','void()','Save','',[],''),('save_all','void()','SaveAll','',[],'')]
         for field,signature,name,parameters,args,suffix in specs:
-            text.append('callbacks.'+field+'=cs::Delegate<'+signature+'>::bind(value,'+json.dumps(PREFIX+name)+',[weak=std::weak_ptr(value)]('+parameters+'){'+('return 'if not signature.startswith('void(')else '')+invoke(name,['weak.lock()']+args,'(kairo.unity.system.KairoBase'+suffix+')',signature.split('(',1)[0])+';});\n')
+            text.append('callbacks.'+field+'=cs::Delegate<'+signature+'>::bind(value,'+json.dumps(PREFIX+name)+',[weak=cs::DelegateCapture<std::remove_reference_t<decltype(*value)>>(value)]('+parameters+'){'+('return 'if not signature.startswith('void(')else '')+invoke(name,['weak.lock()']+args,'(kairo.unity.system.KairoBase'+suffix+')',signature.split('(',1)[0])+';});\n')
         text.append('return cs::make_ref<k::CallbackFormKairo>(std::move(callbacks));});\n')
     plan=json.loads((ROOT/'config/phase2-bootstrap-plan.json').read_text())
     if not plan['save_recorder_null_proof']['proven']:raise ValueError('Recorder null specialization lacks proof')

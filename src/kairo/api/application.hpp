@@ -20,10 +20,28 @@ struct ApplicationInitializationBridge {
     std::function<void()> after_create;  // Original Language.Init, after Main.OnCreate.
     std::function<cs::Ref<cs::Object>()> library_resources;
 };
+// Native futures/queues are outside the precise managed heap. Keep their
+// delegate target and completed result visible until the last native owner
+// (queue entry or waiting caller) releases this invocation.
+template<class R> struct UiInvocation {
+    cs::Delegate<R()> method;
+    R result{};
+    cs::GcRootProvider roots;
+    explicit UiInvocation(cs::Delegate<R()> value):method(std::move(value)),roots([this](const cs::EdgeVisitor& visitor){
+        method.trace_edges(visitor);cs::trace_value(result,visitor);
+    }){}
+    R run(){result=method();return result;}
+};
+template<> struct UiInvocation<void> {
+    cs::Delegate<void()> method;
+    cs::GcRootProvider roots;
+    explicit UiInvocation(cs::Delegate<void()> value):method(std::move(value)),roots([this](const cs::EdgeVisitor& visitor){method.trace_edges(visitor);}){}
+    void run(){method();}
+};
 // Lifecycle adapter for generated subclasses. Empty defaults correspond to the
 // original empty virtual hooks; required game Update/Draw remain abstract.
 class IApplication : public cs::Object {
-    inline static cs::SharedField<cs::Ref<IApplication>> current_;
+    inline static cs::SharedField<cs::Ref<IApplication>> current_{};
     inline static cs::SharedField<cs::String> platform_model_;
     inline static cs::Array<std::int32_t> viewport_result_=cs::Array<std::int32_t>::make(2);
     std::thread::id ui_thread_=std::this_thread::get_id();
@@ -41,7 +59,7 @@ class IApplication : public cs::Object {
     std::function<void(WindowOrientation)> orientation_writer_;
     std::function<void(bool)> fullscreen_writer_;
     ApplicationInitializationBridge initialization_;
-    cs::Ref<cs::Object> initialization_owner_;
+    cs::Ref<cs::Object> initialization_owner_{};
     cs::String data_path_;
     WindowOrientation read_orientation()const{if(!orientation_reader_)throw cs::InvalidOperationException("Host window orientation reader is not installed");return orientation_reader_();}
     void drain(std::deque<std::function<void()>>& tasks){
@@ -55,6 +73,9 @@ protected:
     void Init(cs::Ref<IApplication> app){current_.store(std::move(app));}
 public:
     using UIMethod=cs::Delegate<cs::Ref<cs::Object>()>;
+    static void trace_static_roots(const cs::EdgeVisitor& visitor){
+        current_.trace_edges(visitor);platform_model_.trace_edges(visitor);cs::trace_value(viewport_result_,visitor);
+    }
     // Roslyn enforces C# accessibility; emitted free-function bodies use these
     // explicit bridges for protected, qualified base calls (never redispatch).
     void source_Init(cs::Ref<IApplication> app){Init(std::move(app));}
@@ -125,18 +146,20 @@ public:
     static void Sleep(std::int32_t ms){if(ms<-1)throw cs::ArgumentOutOfRangeException();if(ms==-1)throw cs::NotSupportedException("Infinite app sleep needs a cancellation host");std::this_thread::sleep_for(std::chrono::milliseconds(ms));}
     void RunOnUiThread(cs::Delegate<void()> method,bool wait=false){
         if(CheckUiThread()){try{method();}catch(const cs::Exception&){if(wait)throw;}return;}
-        auto task=std::make_shared<std::packaged_task<void()>>([method]{method();});auto done=task->get_future();
+        auto invocation=std::make_shared<UiInvocation<void>>(std::move(method));
+        auto task=std::make_shared<std::packaged_task<void()>>([invocation]{invocation->run();});auto done=task->get_future();
         {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
         if(wait){{cs::GcNativeBlockingScope parked;cs::platform_future_wait(done);}done.get();}
     }
     cs::Ref<cs::Object> RunOnUiThread(UIMethod method,bool wait=false){
         if(CheckUiThread()){try{return method();}catch(const cs::Exception&){if(wait)throw;return {};}}
-        auto task=std::make_shared<std::packaged_task<cs::Ref<cs::Object>()>>([method]{return method();});auto done=task->get_future();
+        auto invocation=std::make_shared<UiInvocation<cs::Ref<cs::Object>>>(std::move(method));
+        auto task=std::make_shared<std::packaged_task<cs::Ref<cs::Object>()>>([invocation]{return invocation->run();});auto done=task->get_future();
         {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
         if(!wait)return nullptr;
         {cs::GcNativeBlockingScope parked;cs::platform_future_wait(done);}return done.get();
     }
-    bool RunOnUpdate(cs::Delegate<void()> method){if(updating_){method();return true;}std::lock_guard<std::mutex> lock(tasks_mutex_);update_tasks_.push_back([method]{method();});return false;}
+    bool RunOnUpdate(cs::Delegate<void()> method){if(updating_){method();return true;}auto invocation=std::make_shared<UiInvocation<void>>(std::move(method));std::lock_guard<std::mutex> lock(tasks_mutex_);update_tasks_.push_back([invocation]{invocation->run();});return false;}
     void host_configure(std::int32_t w,std::int32_t h,cs::String data_path,std::function<void()> terminate){screen_width_=w;screen_height_=h;data_path_=std::move(data_path);termination_handler_=std::move(terminate);if(!orientation_reader_)orientation_reader_=[this]{return screen_width_>screen_height_?WindowOrientation::landscape_left:WindowOrientation::portrait;};}
     void host_termination(std::function<void()> terminate){termination_handler_=std::move(terminate);}
     void host_initialization(ApplicationInitializationBridge bridge,cs::Ref<cs::Object> owner={}){initialization_=std::move(bridge);initialization_owner_=std::move(owner);}
@@ -154,6 +177,7 @@ public:
     void host_focus(bool focus){if(focused_==focus)return;focused_=focus;if(focus)OnResume();else OnSuspend();}
     void host_stop(){if(!created_)return;OnStop();OnDestroy();visible_=false;created_=false;current_.store(nullptr);}
 };
+inline cs::GcRootProvider application_roots([](const cs::EdgeVisitor& visitor){IApplication::trace_static_roots(visitor);});
 inline void native_window_fullscreen(bool enabled){cs::nonnull(IApplication::GetCurrentApp())->source_set_fullscreen(enabled);}
 inline cs::Ref<cs::Object> native_application_resource(cs::Ref<IApplication> app){return cs::nonnull(app)->source_resource_object();}
 }

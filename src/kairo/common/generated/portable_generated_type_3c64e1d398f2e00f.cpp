@@ -10,9 +10,9 @@ void cs_3c64e1d398f2e00f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_3c64e1d398f2e00f::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_5940b7db44d7fcc3);pls::cs::release_value(cs_3f971496b3e90e07);pls::cs::release_value(cs_992193a3ad58af68);}
 
-void cs_3c64e1d398f2e00f::cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) {cs_d64267dcdc138fe0(std::static_pointer_cast<cs_3c64e1d398f2e00f>(shared_from_this()),v_stream);}
+void cs_3c64e1d398f2e00f::cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) {cs_d64267dcdc138fe0(pls::cs::static_pointer_cast<cs_3c64e1d398f2e00f>(shared_from_this()),v_stream);}
 
-void cs_3c64e1d398f2e00f::cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream) {cs_086b1f406f360542(std::static_pointer_cast<cs_3c64e1d398f2e00f>(shared_from_this()),v_stream);}
+void cs_3c64e1d398f2e00f::cs_virtual_8d925e3b30750eb6(pls::cs::Ref<cs_ea324a0bbfe717fe> v_stream) {cs_086b1f406f360542(pls::cs::static_pointer_cast<cs_3c64e1d398f2e00f>(shared_from_this()),v_stream);}
 
 void cs_init_3c64e1d398f2e00f(){static pls::cs::TypeInitState state;state.run("kairo.unity.m3d4.util3d.Vector3D",[](){
 

@@ -118,6 +118,7 @@ Array<String> string_split(const String& value,const Array<char16_t>& separators
     const auto& text=value.code_units();const bool use_white=separators.is_null()||separators.length()==0;
     auto matches=[&](char16_t c){if(use_white)return trim_space(c);for(std::int32_t i=0;i<separators.length();++i)if(separators[i]==c)return true;return false;};
     std::vector<String>parts;std::size_t start=0;
+    GcRootProvider roots([&](const EdgeVisitor&v){for(const auto&part:parts)trace_value(part,v);});
     for(std::size_t i=0;i<text.size();++i)if(matches(text[i])){parts.emplace_back(text.substr(start,i-start));start=i+1;}
     if(parts.empty())return Array<String>::from({value});
     parts.emplace_back(text.substr(start));if(parts.size()>static_cast<std::size_t>(INT32_MAX))throw OutOfMemoryException();

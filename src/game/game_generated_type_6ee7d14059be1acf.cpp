@@ -29,31 +29,31 @@ void cs_6ee7d14059be1acf::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_6ee7d14059be1acf::release_edges(){cs_fa01867c9c048464::release_edges();pls::cs::release_value(cs_94d79db9e67a6f5b);pls::cs::release_value(cs_d02d5ba1d437b82b);pls::cs::release_value(cs_65e865503b8550da);pls::cs::release_value(cs_83cb2d63bd6e7794);pls::cs::release_value(cs_b5206026f8dde3f8);pls::cs::release_value(cs_336cd83725fe8f95);pls::cs::release_value(cs_ed52bb2c3b30e495);pls::cs::release_value(cs_e5da0dc1a74717a1);pls::cs::release_value(cs_a15dd0109485d6ae);pls::cs::release_value(cs_9e06fd4216962cc2);pls::cs::release_value(cs_0ad5c065f86902f7);pls::cs::release_value(cs_712a37a136a3e228);pls::cs::release_value(cs_7fef88b0a5547c46);}
 
-bool cs_6ee7d14059be1acf::cs_virtual_6e47643190d08935() {return cs_6e47643190d08935(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
+bool cs_6ee7d14059be1acf::cs_virtual_6e47643190d08935() {return cs_6e47643190d08935(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
 
-pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> cs_6ee7d14059be1acf::cs_virtual_0f79ffed5440eb44() {return cs_a54604197e27ba6e(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
+pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> cs_6ee7d14059be1acf::cs_virtual_0f79ffed5440eb44() {return cs_a54604197e27ba6e(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
 
-void cs_6ee7d14059be1acf::cs_virtual_5255d4c2789eac48(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_5255d4c2789eac48(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
+void cs_6ee7d14059be1acf::cs_virtual_5255d4c2789eac48(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_5255d4c2789eac48(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 
-bool cs_6ee7d14059be1acf::cs_virtual_39912b67b6e00cf6(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {return cs_39912b67b6e00cf6(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
+bool cs_6ee7d14059be1acf::cs_virtual_39912b67b6e00cf6(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {return cs_39912b67b6e00cf6(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 
-void cs_6ee7d14059be1acf::cs_virtual_52c48544109f9d2d(pls::cs::Array<std::uint8_t> v_data) {cs_52c48544109f9d2d(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_data);}
+void cs_6ee7d14059be1acf::cs_virtual_52c48544109f9d2d(pls::cs::Array<std::uint8_t> v_data) {cs_52c48544109f9d2d(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_data);}
 
-void cs_6ee7d14059be1acf::cs_virtual_83421b64347901dd(bool v_take) {cs_83421b64347901dd(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_take);}
+void cs_6ee7d14059be1acf::cs_virtual_83421b64347901dd(bool v_take) {cs_83421b64347901dd(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_take);}
 
-void cs_6ee7d14059be1acf::cs_virtual_219ebd8a0b10d8e7(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_219ebd8a0b10d8e7(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
+void cs_6ee7d14059be1acf::cs_virtual_219ebd8a0b10d8e7(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_219ebd8a0b10d8e7(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 
-void cs_6ee7d14059be1acf::cs_virtual_4ebd3696a44e4f6b(bool v_detail) {cs_4ebd3696a44e4f6b(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_detail);}
+void cs_6ee7d14059be1acf::cs_virtual_4ebd3696a44e4f6b(bool v_detail) {cs_4ebd3696a44e4f6b(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_detail);}
 
-pls::cs::Array<std::uint8_t> cs_6ee7d14059be1acf::cs_virtual_0c7e726b5f1c3198() {return cs_0c7e726b5f1c3198(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
+pls::cs::Array<std::uint8_t> cs_6ee7d14059be1acf::cs_virtual_0c7e726b5f1c3198() {return cs_0c7e726b5f1c3198(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
 
-pls::cs::Array<std::uint8_t> cs_6ee7d14059be1acf::cs_virtual_9d8c67a5fdbb3c7d() {return cs_9d8c67a5fdbb3c7d(std::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
+pls::cs::Array<std::uint8_t> cs_6ee7d14059be1acf::cs_virtual_9d8c67a5fdbb3c7d() {return cs_9d8c67a5fdbb3c7d(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()));}
 
 static pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_4ba6b876c86cbecd_value{};
 
 static pls::cs::Ref<cs_6ee7d14059be1acf> cs_33c160ec018e286a_value{};
 
-void cs_init_6ee7d14059be1acf(){static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingManager",[](){
+void cs_init_6ee7d14059be1acf(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ba6b876c86cbecd_value,visitor);pls::cs::trace_value(cs_33c160ec018e286a_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingManager",[](){
 cs_4ba6b876c86cbecd_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.BillingManager.BASE64_PUBLIC_KEY",[&](){return pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.MyBilling.#ctor:439",([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = pls::cs::String(u""); return pls::generated::cs_ede7ead54c734d4c(cs_arg0); }()));});
 
 });}
@@ -66,7 +66,7 @@ pls::cs::Ref<cs_6ee7d14059be1acf>& cs_33c160ec018e286a(){cs_init_6ee7d14059be1ac
 void cs_fb6a0b22d395f57f_init(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this) {
 cs_this->cs_712a37a136a3e228 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.ui.BillingManager.#ctor:871",pls::cs::make_ref<pls::cs::Object>());
 cs_this->cs_7fef88b0a5547c46 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.ui.BillingManager.#ctor:926",pls::cs::make_ref<pls::cs::Object>());
-([&]() { cs_e3269488b9d47182_init(std::static_pointer_cast<cs_fa01867c9c048464>(cs_this)); }());
+([&]() { cs_e3269488b9d47182_init(pls::cs::static_pointer_cast<cs_fa01867c9c048464>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingManager.#ctor",game);
 {
 

@@ -10,8 +10,8 @@ static std::string trace;
 static I mark(const char*label,I value){trace+=label;return value;}
 static I join(I a,I b,I c){return add_i32(add_i32(mul_i32(a,100),mul_i32(b,10)),c);}
 template<class F>std::string type_of(F body){try{body();return "none";}catch(const Exception&ex){return ex.type_name();}}
-struct CounterClosure {Ref<Cell<I>>value=std::make_shared<Cell<I>>(4);I invoke(){value->value=add_i32(value->value,3);return value->value;}};
-static Delegate<I()>make_counter(){auto closure=std::make_shared<CounterClosure>();return Delegate<I()>::bind(closure,"counter",[closure]{return closure->invoke();});}
+struct CounterClosure:Object {Ref<Cell<I>>value=make_ref<Cell<I>>(4);I invoke(){value->value=add_i32(value->value,3);return value->value;}void trace_edges(const EdgeVisitor&visitor)const override{trace_value(value,visitor);}};
+static Delegate<I()>make_counter(){auto closure=make_ref<CounterClosure>();return Delegate<I()>::bind(closure,"counter",[capture=DelegateCapture<CounterClosure>(closure)]{return capture.lock()->invoke();});}
 static I property;
 static I property_get(){trace+='G';return property;}
 static void property_set(I value){trace+='S';property=value;}

@@ -19,11 +19,11 @@ int main(int argc,char**argv){
     std::cout<<"plainString="<<encode(make_exception("System.Exception",String(u"own"))->ToString())<<"\n";
     auto inner=make_exception("System.InvalidOperationException",String(u"inner"));auto outer=make_exception("System.Exception",String(u"outer"),inner);
     std::cout<<"innerIdentity="<<boolean(outer->get_InnerException()==inner)<<"\nbaseIdentity="<<boolean(outer->GetBaseException()==inner)<<"\ninnerString="<<encode(outer->ToString())<<"\n";
-    auto custom=make_ref<SourceWithCode>(String(u"custom"),inner,37);ExceptionRef saved;
-    try{throw_exception(custom);}catch(const IOException& raw){saved=capture_exception(raw);auto derived=std::dynamic_pointer_cast<SourceWithCode>(saved);std::cout<<"custom="<<boolean(saved==custom)<<","<<derived->Code<<","<<saved->managed_type_name()<<"\n";}
+    auto custom=make_ref<SourceWithCode>(String(u"custom"),inner,37);ExceptionRef saved{};
+    try{throw_exception(custom);}catch(const IOException& raw){saved=capture_exception(raw);auto derived=pls::cs::dynamic_pointer_cast<SourceWithCode>(saved);std::cout<<"custom="<<boolean(saved==custom)<<","<<derived->Code<<","<<saved->managed_type_name()<<"\n";}
     try{throw_exception(saved);}catch(const Exception& raw){auto e=capture_exception(raw);std::cout<<"rethrowRef="<<boolean(e==saved)<<","<<boolean(exception_is(e,"System.IO.IOException"))<<","<<boolean(exception_is(e,"System.SystemException"))<<","<<boolean(exception_is(e,"System.ArgumentException"))<<"\n";}
     try{throw_exception({});}catch(const Exception& raw){std::cout<<"throwNull="<<capture_exception(raw)->managed_type_name()<<"\n";}
-    ExceptionRef native1,native2;
+    ExceptionRef native1{},native2{};
     try{Array<int>::make(0).at(1);}catch(const Exception& raw){native1=capture_exception(raw);try{throw;}catch(const Exception& next){native2=capture_exception(next);}}
     std::cout<<"nativeRethrow="<<boolean(native1==native2)<<","<<native1->managed_type_name()<<"\n";
     auto unicode=make_exception("System.Exception",String(std::u16string{char16_t(0xd800),0,u'x'}));try{throw_exception(unicode);}catch(const Exception& raw){auto e=capture_exception(raw);std::cout<<"unicode="<<encode(e->get_Message())<<","<<boolean(e==unicode)<<"\n";}

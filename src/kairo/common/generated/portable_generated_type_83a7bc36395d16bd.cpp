@@ -6,7 +6,7 @@ namespace pls::generated {
 
 static pls::cs::String cs_5dc81e2eacc2181a_value{};
 
-void cs_init_83a7bc36395d16bd(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Log",[](){
+void cs_init_83a7bc36395d16bd(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_5dc81e2eacc2181a_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.Log",[](){
 
 });}
 

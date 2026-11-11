@@ -13,7 +13,7 @@ struct BootstrapBindings {
     // image SetExpiration(true,40), then return that original resource object.
     cs::Delegate<cs::Ref<cs::Object>()> load_library_resources;
     cs::Delegate<void()> initialize_language;
-    cs::Ref<FormRuntime> forms;
+    cs::Ref<FormRuntime> forms{};
     void trace_edges(const cs::EdgeVisitor&)const;void release_edges();
 };
 struct BootstrapStatus {
@@ -22,7 +22,7 @@ struct BootstrapStatus {
 };
 class BootstrapContext : public cs::Object {
     BootstrapBindings bindings_;
-    cs::Ref<cs::Object> library_resources_;
+    cs::Ref<cs::Object> library_resources_{};
     BootstrapStatus status_;
     bool before_entered_{},after_entered_{};
 public:

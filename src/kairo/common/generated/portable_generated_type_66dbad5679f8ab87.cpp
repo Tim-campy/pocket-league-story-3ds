@@ -6,13 +6,13 @@ void cs_66dbad5679f8ab87::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_66dbad5679f8ab87::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_672aeddf6395a59c);}
 
-std::int32_t cs_66dbad5679f8ab87::GetHashCode() {return cs_bc050b58fd51f9b2(std::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()));}
+std::int32_t cs_66dbad5679f8ab87::GetHashCode() {return cs_bc050b58fd51f9b2(pls::cs::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()));}
 
-bool cs_66dbad5679f8ab87::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_8682e14f5d0030c8(std::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()),v_obj);}
+bool cs_66dbad5679f8ab87::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_8682e14f5d0030c8(pls::cs::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()),v_obj);}
 
 static pls::cs::DateTime cs_fa93015d6ad485b9_value{};
 
-void cs_init_66dbad5679f8ab87(){static pls::cs::TypeInitState state;state.run("java.util.JDate",[](){
+void cs_init_66dbad5679f8ab87(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fa93015d6ad485b9_value,visitor);});static pls::cs::TypeInitState state;state.run("java.util.JDate",[](){
 cs_fa93015d6ad485b9_value = pls::cs::evaluate_type_initializer_field("F:java.util.JDate.UNIX_TIME",[&](){return ([&]() { auto cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7b2ull)); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg4 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg5 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg6 = static_cast<pls::cs::DateTimeKind>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))); return pls::cs::DateTime(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6); }());});
 
 });}
@@ -75,7 +75,7 @@ std::int32_t cs_bc050b58fd51f9b2(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JDate.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

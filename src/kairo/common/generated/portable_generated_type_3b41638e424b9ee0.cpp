@@ -7,7 +7,7 @@ void cs_3b41638e424b9ee0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_3b41638e424b9ee0::release_edges(){cs_e7a5499b363ef51b::release_edges();}
 
-std::int32_t cs_3b41638e424b9ee0::cs_virtual_bb7347310506b971() {return cs_67338973d6c3b7c6(std::static_pointer_cast<cs_3b41638e424b9ee0>(shared_from_this()));}
+std::int32_t cs_3b41638e424b9ee0::cs_virtual_bb7347310506b971() {return cs_67338973d6c3b7c6(pls::cs::static_pointer_cast<cs_3b41638e424b9ee0>(shared_from_this()));}
 
 void cs_init_3b41638e424b9ee0(){static pls::cs::TypeInitState state;state.run("java.io.ByteArrayInputStream",[](){
 
@@ -19,7 +19,7 @@ pls::cs::Ref<cs_3b41638e424b9ee0> cs_c3a84083a67ee263(pls::cs::Array<std::uint8_
 }
 
 void cs_c3a84083a67ee263_init(pls::cs::Ref<cs_3b41638e424b9ee0> cs_this,pls::cs::Array<std::uint8_t> v_data) {
-([&]() { cs_7c187221d1d7c346_init(std::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
+([&]() { cs_7c187221d1d7c346_init(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/io/ByteArrayInputStream.cs:M:java.io.ByteArrayInputStream.#ctor(System.Byte[]):150",([&]() { auto cs_arg0 = v_data; return pls::cs::make_ref<pls::cs::MemoryStream>(cs_arg0); }())); pls::generated::cs_require(cs_target)->cs_e65a8825426ed7a3 = cs_value; return cs_value; }());

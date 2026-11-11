@@ -17,7 +17,7 @@ pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_783c2dc4bd688739() { cs_init_a0cf9aef6a251b
 }
 
 void cs_783c2dc4bd688739_init(pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_this) {
-([&]() { std::int64_t cs_arg0 = ([&]() -> std::int64_t { return cs_55fcf3528750ae31(); }()); cs_8d402734b0c5f510_init(std::static_pointer_cast<cs_a0cf9aef6a251bfd>(cs_this),cs_arg0); }());
+([&]() { std::int64_t cs_arg0 = ([&]() -> std::int64_t { return cs_55fcf3528750ae31(); }()); cs_8d402734b0c5f510_init(pls::cs::static_pointer_cast<cs_a0cf9aef6a251bfd>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JRandom.#ctor",kairo);
 {
 

@@ -26,7 +26,7 @@ template<class K,class V>class Dictionary {
         void trace_edges(const EdgeVisitor&visitor)const override{for(const auto&entry:entries)if(entry.item)entry.item->trace_edges(visitor);}
         void release_edges()override{entries.clear();free.clear();}
     };
-    Ref<Storage>data_;
+    Ref<Storage>data_{};
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
     std::size_t find(const K&key,std::uint32_t hash)const{auto&d=require();for(std::size_t i=0;i<d.entries.size();++i)if(d.entries[i].item&&d.entries[i].hash==hash&&default_equal(d.entries[i].item->key,key))return i;return d.entries.size();}
     void put(K key,V value,bool overwrite){
@@ -43,7 +43,7 @@ public:
     static Dictionary make(std::int32_t capacity=0){if(capacity<0)throw ArgumentOutOfRangeException();Dictionary result;result.data_=make_ref<Storage>();try{result.data_->entries.reserve(static_cast<std::size_t>(capacity));}catch(const std::bad_alloc&){throw OutOfMemoryException();}return result;}
     bool is_null()const noexcept{return !data_;}
     Ref<Object>as_object()const{return data_;}
-    static Dictionary from_object(const Ref<Object>&object){Dictionary result;if(object){result.data_=std::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
+    static Dictionary from_object(const Ref<Object>&object){Dictionary result;if(object){result.data_=pls::cs::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
     std::int32_t get_Count()const{return require().count;}
     Array<K> KeysToArray()const{auto&data=require();auto result=Array<K>::make(data.count);std::int32_t index=0;for(const auto&entry:data.entries)if(entry.item)result.at(index++)=entry.item->key;return result;}
     V get_Item(const K&key)const{require();auto hash=dictionary_hash(key);auto i=find(key,hash);if(i==require().entries.size())throw KeyNotFoundException();return require().entries[i].item->value;}
@@ -55,14 +55,14 @@ public:
     bool Remove(const K&key){auto&d=require();auto hash=dictionary_hash(key);auto i=find(key,hash);if(i==d.entries.size())return false;try{d.free.push_back(i);}catch(const std::bad_alloc&){throw OutOfMemoryException();}d.entries[i].item.reset();--d.count;if(runtime_profile==RuntimeProfile::UnityMono265)++d.version;return true;}
     void Clear(){auto&d=require();d.entries.clear();d.free.clear();d.count=0;if(runtime_profile==RuntimeProfile::UnityMono265)++d.version;}
     class Enumerator {
-        Ref<Storage>data_;std::uint32_t version_=0;std::size_t next_=0;KeyValuePair<K,V>current_{};bool disposed_=false;
+        Ref<Storage>data_{};std::uint32_t version_=0;std::size_t next_=0;KeyValuePair<K,V>current_{};bool disposed_=false;
         void verify()const{if(disposed_)throw ObjectDisposedException();if(!data_)throw NullReferenceException();if(version_!=data_->version)throw InvalidOperationException();}
     public:
         Enumerator()=default;explicit Enumerator(Ref<Storage>data):data_(std::move(data)),version_(data_->version){}
         bool MoveNext(){verify();while(next_<data_->entries.size()){auto&entry=data_->entries[next_++];if(entry.item){current_=*entry.item;return true;}}if(runtime_profile==RuntimeProfile::DotNet)current_={};return false;}
         KeyValuePair<K,V>get_Current()const{return current_;}
         void Reset(){verify();next_=0;current_={};}
-        void Dispose(){if(runtime_profile==RuntimeProfile::UnityMono265){data_.reset();disposed_=true;}}
+        void Dispose(){if(runtime_profile==RuntimeProfile::UnityMono265){clear_ref(data_);disposed_=true;}}
         void trace_edges(const EdgeVisitor&visitor)const{trace_value(data_,visitor);trace_value(current_,visitor);}
         void release_edges(){release_value(data_);release_value(current_);}
     };

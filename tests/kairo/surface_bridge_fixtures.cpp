@@ -1,9 +1,10 @@
 #include "forms_callbacks.hpp"
+#include "../translator/gc_test_support.hpp"
 #include "graphics.hpp"
 #include <iostream>
 using namespace pls;
 namespace {
-std::string trace;cs::Ref<kairo::MotionEvent> expected_touch;cs::Ref<kairo::KeyEvent> expected_key;cs::Ref<kairo::Graphics> expected_graphics;
+std::string trace;cs::Ref<kairo::MotionEvent> expected_touch{};cs::Ref<kairo::KeyEvent> expected_key{};cs::Ref<kairo::Graphics> expected_graphics{};
 const char* B(bool value){return value?"True":"False";}
 void log(std::string value){trace+=value+";";}void print(const char* name){std::cout<<name<<'='<<trace<<'\n';trace.clear();}
 struct Item:cs::Object {
@@ -18,10 +19,10 @@ struct Item:cs::Object {
  void EndTouchRegist(cs::Ref<kairo::Graphics> value){log("E"+std::to_string(id)+":"+B(value==expected_graphics));}
 };
 struct Source:cs::Object {
- std::vector<cs::Ref<Item>> list;cs::Ref<kairo::Canvas> cycle;
+ std::vector<cs::Ref<Item>> list;cs::Ref<kairo::Canvas> cycle{};
  virtual void AdjustSurfaceLayout()=0;virtual void Draw(cs::Ref<kairo::Graphics>)=0;virtual void DrawComponents(cs::Ref<kairo::Graphics>)=0;virtual void DoEvents()=0;
  void trace_edges(const cs::EdgeVisitor& visitor)const override{for(const auto& item:list)cs::trace_value(item,visitor);cs::trace_value(cycle,visitor);}
- void release_edges()override{list.clear();cycle.reset();}
+ void release_edges()override{list.clear();pls::cs::clear_ref(cycle);}
 };
 struct TaggedSource:Source {
  int tag;explicit TaggedSource(int tag):tag(tag){}
@@ -32,7 +33,7 @@ struct TaggedSource:Source {
 };
 cs::Ref<kairo::FormSurface> install(cs::Ref<kairo::Canvas> canvas,cs::Ref<Source> source){
  if(!source){canvas->host_source_surface({},{});return {};}
- kairo::SurfaceCallbacks b;auto target=source.get();
+ kairo::SurfaceCallbacks b;auto target=pls::cs::raw(source);
  b.raw_key_down=cs::Delegate<void(std::int32_t,cs::Ref<kairo::KeyEvent>)>::bind(source,"raw",[target](int key,auto event){for(auto i=target->list.rbegin();i!=target->list.rend();++i)(*i)->OnKeyDown(key,event);});
  b.key_down=cs::Delegate<void(std::int32_t)>::bind(source,"down",[target](int key){for(auto i=target->list.rbegin();i!=target->list.rend();++i)(*i)->OnKeyDown(key);});
  b.key_up=cs::Delegate<void(std::int32_t)>::bind(source,"up",[target](int key){for(auto i=target->list.rbegin();i!=target->list.rend();++i)(*i)->OnKeyUp(key);});
@@ -49,16 +50,18 @@ cs::Ref<kairo::FormSurface> install(cs::Ref<kairo::Canvas> canvas,cs::Ref<Source
 }
 int policy(){
  cs::GcMutatorScope mutator;int checks=0;auto require=[&](bool v){if(!v)throw cs::InvalidOperationException("Surface bridge GC/identity contract failed");++checks;};
- auto canvas=cs::make_ref<kairo::Canvas>();auto source=cs::make_ref<TaggedSource>(7);auto adapter=install(canvas,source);
- require(canvas->GetSourceSurfaceManager()==source);require(canvas->GetSurfaceManager()==adapter);require(std::dynamic_pointer_cast<kairo::FormSurface>(canvas->GetSurfaceManager())==adapter);
- require(!std::dynamic_pointer_cast<Source>(canvas->GetSurfaceManager()));require(std::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager())->tag==7);
- source->cycle=canvas;std::weak_ptr<Source> weak_source=source;std::weak_ptr<kairo::FormSurface> weak_adapter=adapter;
- source.reset();adapter.reset();cs::gc_collect();require(!weak_source.expired()&&!weak_adapter.expired());
- auto retained=std::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager());require(retained&&retained->tag==7);
- install(canvas,{});cs::gc_collect();require(!weak_source.expired());require(weak_adapter.expired());retained.reset();cs::gc_collect();require(weak_source.expired());
+ cs::Ref<kairo::Canvas> canvas{};cs::Ref<TaggedSource> retained{};
+ cs::Weak<Source> weak_source;cs::Weak<kairo::FormSurface> weak_adapter;
+ isolated_gc_mutator([&]{canvas=cs::make_ref<kairo::Canvas>();auto source=cs::make_ref<TaggedSource>(7);auto adapter=install(canvas,source);
+ require(canvas->GetSourceSurfaceManager()==source);require(canvas->GetSurfaceManager()==adapter);require(pls::cs::dynamic_pointer_cast<kairo::FormSurface>(canvas->GetSurfaceManager())==adapter);
+ require(!pls::cs::dynamic_pointer_cast<Source>(canvas->GetSurfaceManager()));require(pls::cs::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager())->tag==7);
+ source->cycle=canvas;weak_source=source;weak_adapter=adapter;});
+ cs::gc_collect();isolated_gc_mutator([&]{require(!weak_source.expired()&&!weak_adapter.expired());
+ retained=pls::cs::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager());require(retained&&retained->tag==7);
+ install(canvas,{});});cs::gc_collect();isolated_gc_mutator([&]{require(!weak_source.expired());require(weak_adapter.expired());pls::cs::clear_ref(retained);});cs::gc_collect();require(weak_source.expired());
  require(!canvas->GetSourceSurfaceManager()&&!canvas->GetSurfaceManager());
- std::weak_ptr<kairo::Canvas> weak_canvas;
- {auto cycle_canvas=cs::make_ref<kairo::Canvas>();auto cycle_source=cs::make_ref<TaggedSource>(11);cycle_source->cycle=cycle_canvas;auto cycle_adapter=install(cycle_canvas,cycle_source);weak_canvas=cycle_canvas;weak_source=cycle_source;weak_adapter=cycle_adapter;}
+ pls::cs::Weak<kairo::Canvas> weak_canvas;
+ isolated_gc_mutator([&]{auto cycle_canvas=cs::make_ref<kairo::Canvas>();auto cycle_source=cs::make_ref<TaggedSource>(11);cycle_source->cycle=cycle_canvas;auto cycle_adapter=install(cycle_canvas,cycle_source);weak_canvas=cycle_canvas;weak_source=cycle_source;weak_adapter=cycle_adapter;});
  cs::gc_collect();require(weak_canvas.expired()&&weak_source.expired()&&weak_adapter.expired());
  std::cout<<"{\"assertions\":"<<checks<<",\"source_and_adapter_identity_separate\":true,\"retained_snapshot_survives_clear\":true,\"unrooted_cycle_collected\":true,\"game_boot\":false}\n";return 0;
 }
@@ -66,7 +69,7 @@ int policy(){
 int main(int argc,char**){
  if(argc==2)return policy();
  auto canvas=cs::make_ref<kairo::Canvas>();auto source=cs::make_ref<TaggedSource>(7);auto adapter=install(canvas,source);
- std::cout<<"source-identity="<<B(source==canvas->GetSourceSurfaceManager())<<":"<<B(std::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager())->tag==7)<<'\n';
+ std::cout<<"source-identity="<<B(source==canvas->GetSourceSurfaceManager())<<":"<<B(pls::cs::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager())->tag==7)<<'\n';
  expected_touch=cs::make_ref<kairo::MotionEvent>(0,cs::Array<std::int32_t>::from({0}),cs::Array<float>::from({0,0}),cs::Array<float>{});canvas->OnTouchEvent(expected_touch);print("empty-at-install");
  source->list.push_back(cs::make_ref<Item>(1,true));source->list.push_back(cs::make_ref<Item>(2,false));source->list.push_back(cs::make_ref<Item>(3,true));
  canvas->OnTouchEvent(expected_touch);print("touch-late-list");adapter->ClearTouch();print("clear-all-reverse");adapter->ClearGameTouch();print("clear-games-forward-filter");

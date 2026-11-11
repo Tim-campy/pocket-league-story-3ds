@@ -4,7 +4,7 @@ namespace pls::generated {
 
 static pls::cs::Array<std::int64_t> cs_f9196b08a328bd32_value{};
 
-void cs_init_8b851671e0d8b17f(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.CRC64",[](){
+void cs_init_8b851671e0d8b17f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_f9196b08a328bd32_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.CRC64",[](){
 cs_f9196b08a328bd32_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.CRC64.crcTable_",[&](){return pls::cs::Array<std::int64_t>{};});
 
 });}

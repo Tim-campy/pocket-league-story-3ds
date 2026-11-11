@@ -9,7 +9,7 @@
 using namespace pls::kairo;using Str=pls::cs::String;
 struct TestApp:IApplication {void OnUpdate()override{}void OnDraw()override{}pls::cs::Ref<FormManagerBase> GetFormManager()override{return {};}};
 struct FakeOutput:SoundOutput {
- struct Port {pls::cs::Ref<SoundData> data;float volume=1;bool playing{},loop{};int rewinds{};};
+ struct Port {pls::cs::Ref<SoundData> data{};float volume=1;bool playing{},loop{};int rewinds{};};
  std::array<Port,4> ports;
  Port& at(std::int32_t p){if(p<0||p>=4)throw pls::cs::IndexOutOfRangeException();return ports[static_cast<std::size_t>(p)];}
  void SetClip(std::int32_t p,pls::cs::Ref<SoundData> c)override{auto& port=at(p);port.data=std::move(c);if(!port.data)port.playing=false;}
@@ -21,7 +21,7 @@ struct FakeOutput:SoundOutput {
  void SetLoop(std::int32_t p,bool v)override{at(p).loop=v;}
  void Pump()override{}
  void trace_edges(const pls::cs::EdgeVisitor& v)const override{for(const auto& p:ports)pls::cs::trace_value(p.data,v);}
- void release_edges()override{for(auto& p:ports)p.data.reset();}
+ void release_edges()override{for(auto& p:ports)pls::cs::clear_ref(p.data);}
 };
 template<class F>void P(const char* name,F&& f){std::cout<<name<<'=';try{std::cout<<f();}catch(const pls::cs::Exception& e){std::cout<<'!'<<e.type_name();}std::cout<<'\n';}
 const char* T(bool v){return v?"1":"0";}
@@ -37,12 +37,12 @@ int streaming(const std::filesystem::path& root){
  require(shortest&&seconds>0&&seconds<20.0);
  const auto load=[&]{return SoundOGG::Load(Str::from_utf8(shortest->key+".ogg"));};
  const auto run_until=[&](auto&& done,double budget){const auto deadline=std::chrono::steady_clock::now()+std::chrono::milliseconds(static_cast<std::int64_t>(budget*1000));while(!done()&&std::chrono::steady_clock::now()<deadline){player->host_pump();SDL_Delay(1);}require(done());};
- auto sound=load();sound->SetLoop(1);player->Play(sound);require(sound->GetState()==2);const auto port=player->host_port(sound.get());require(port>=0);
+ auto sound=load();sound->SetLoop(1);player->Play(sound);require(sound->GetState()==2);const auto port=player->host_port(pls::cs::raw(sound));require(port>=0);
  const auto before=mixer.stats(port);sound->SetLoop(1);const auto after=mixer.stats(port);require(after.decoded_frames==before.decoded_frames&&after.completed_loops==before.completed_loops);
  // SetLoop(1) disables source.loop even though Play treats any nonzero value
  // as looping. A retrigger of an already-playing sound preserves that flag.
  player->Play(sound);run_until([&]{return sound->GetState()==3;},seconds+3.0);sound->Stop();
- sound->SetLoop(-1);player->Play(sound);const auto loop_port=player->host_port(sound.get());run_until([&]{return mixer.stats(loop_port).completed_loops>1;},seconds*3.0+3.0);
+ sound->SetLoop(-1);player->Play(sound);const auto loop_port=player->host_port(pls::cs::raw(sound));run_until([&]{return mixer.stats(loop_port).completed_loops>1;},seconds*3.0+3.0);
  mixer.pause(loop_port,true);const auto position=mixer.stats(loop_port).played_frames;
  pls::sdl::VorbisStream duration(catalog.path(*shortest));
  const auto period=static_cast<std::uint64_t>(duration.total_frames())*static_cast<std::uint64_t>(mixer.output_rate());
@@ -71,7 +71,7 @@ int main(int argc,char** argv){
  auto load=[&](const char* id){auto s=SoundOGG::Load(Str::from_utf8(std::string("fixture/")+id+".ogg"));s->SetName(Str::from_utf8(id));sounds.push_back(s);return s;};
  auto S=[&]{std::string result;for(auto& s:sounds)result+=s->GetName().utf8()+":"+std::to_string(s->GetState())+":"+std::to_string(s->GetLoop())+":"+std::to_string(s->GetSoundType())+",";
   result+="/"+std::to_string(p->host_playing_count())+"/";
-  for(int i=0;i<p->GetPortMax();++i){std::string name="-";for(const auto& s:sounds)if(p->host_port(s.get())==i){name=s->GetName().utf8();break;}const auto& t=output->ports[static_cast<std::size_t>(i)];result+=name+":"+T(t.playing)+":"+T(t.loop)+":"+Bits(t.volume)+":"+std::to_string(t.rewinds)+",";}return result;};
+  for(int i=0;i<p->GetPortMax();++i){std::string name="-";for(const auto& s:sounds)if(p->host_port(pls::cs::raw(s))==i){name=s->GetName().utf8();break;}const auto& t=output->ports[static_cast<std::size_t>(i)];result+=name+":"+T(t.playing)+":"+T(t.loop)+":"+Bits(t.volume)+":"+std::to_string(t.rewinds)+",";}return result;};
  auto a=load("a"),b=load("b"),c=load("c"),d=load("d"),e=load("e");
  P("defaults",[&]{return S();});
  P("play-one",[&]{p->Play(a);return S();});

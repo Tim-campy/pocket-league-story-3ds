@@ -31,29 +31,29 @@ void cs_b489b0d33bb37bb8::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_b489b0d33bb37bb8::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_a3decda7a4670291);pls::cs::release_value(cs_bb15809d7dd758fd);pls::cs::release_value(cs_fe5c5a440152445e);pls::cs::release_value(cs_675e01745bf2ff64);pls::cs::release_value(cs_23f814b97b0cdf1c);pls::cs::release_value(cs_3803cd72992c3762);pls::cs::release_value(cs_ac9d14d8fd218a0c);pls::cs::release_value(cs_efb4aeef5c6f7590);pls::cs::release_value(cs_a051b3620098d255);pls::cs::release_value(cs_b0faf2c47f9ac8ae);pls::cs::release_value(cs_a1c9fd0398fc101a);pls::cs::release_value(cs_ca174d10ffdcf6e9);pls::cs::release_value(cs_b28b626edc40d63d);pls::cs::release_value(cs_284cc3cac7606c94);pls::cs::release_value(cs_a93f8b0e2caf329a);pls::cs::release_value(cs_98f6c84566bf4254);pls::cs::release_value(cs_a491890168e60b87);pls::cs::release_value(cs_cc1025ec243f7ac6);pls::cs::release_value(cs_60f22a64c143004f);pls::cs::release_value(cs_36d9dd4afd7f06af);pls::cs::release_value(cs_3daead10b8062e0b);pls::cs::release_value(cs_213a6e42cc559d34);pls::cs::release_value(cs_6fe9af9a0c00d125);pls::cs::release_value(cs_bbeeaad9491d7958);pls::cs::release_value(cs_25a8ca82b2553566);pls::cs::release_value(cs_77c315e5b65bf792);pls::cs::release_value(cs_f534ca76cfc62abb);pls::cs::release_value(cs_d8c919de6b5bfad1);pls::cs::release_value(cs_3f3b83b6a44bdc33);pls::cs::release_value(cs_241b6f9cd68962e5);pls::cs::release_value(cs_4cd5b2fa578372a4);pls::cs::release_value(cs_bc8b4cc170dd0946);pls::cs::release_value(cs_1f2ecebcf07a4a8b);pls::cs::release_value(cs_4170a278138fe06e);pls::cs::release_value(cs_c9f1f5e90f89763b);}
 
-void cs_b489b0d33bb37bb8::cs_virtual_706bcbd9776cf6ef() {cs_706bcbd9776cf6ef(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+void cs_b489b0d33bb37bb8::cs_virtual_706bcbd9776cf6ef() {cs_706bcbd9776cf6ef(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 
-void cs_b489b0d33bb37bb8::cs_virtual_9ca5e184bd541bee() {cs_9ca5e184bd541bee(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+void cs_b489b0d33bb37bb8::cs_virtual_9ca5e184bd541bee() {cs_9ca5e184bd541bee(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 
-void cs_b489b0d33bb37bb8::cs_virtual_7a0d5be4ca3b1254() {cs_7a0d5be4ca3b1254(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+void cs_b489b0d33bb37bb8::cs_virtual_7a0d5be4ca3b1254() {cs_7a0d5be4ca3b1254(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 
-void cs_b489b0d33bb37bb8::cs_virtual_51f84c16de790570() {cs_51f84c16de790570(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+void cs_b489b0d33bb37bb8::cs_virtual_51f84c16de790570() {cs_51f84c16de790570(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 
-void cs_b489b0d33bb37bb8::cs_virtual_4e3c4bf49c24e27d(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_4e3c4bf49c24e27d(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_stream);}
+void cs_b489b0d33bb37bb8::cs_virtual_4e3c4bf49c24e27d(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_4e3c4bf49c24e27d(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_stream);}
 
-void cs_b489b0d33bb37bb8::cs_virtual_e634eb1896b92689(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_e634eb1896b92689(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_os);}
+void cs_b489b0d33bb37bb8::cs_virtual_e634eb1896b92689(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_e634eb1896b92689(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_os);}
 
-void cs_b489b0d33bb37bb8::cs_virtual_7ebfee2a92c0d37e(bool v_take) {cs_7ebfee2a92c0d37e(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_take);}
+void cs_b489b0d33bb37bb8::cs_virtual_7ebfee2a92c0d37e(bool v_take) {cs_7ebfee2a92c0d37e(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_take);}
 
-void cs_b489b0d33bb37bb8::cs_virtual_10a01b9d900fa6c0(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_10a01b9d900fa6c0(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_stream);}
+void cs_b489b0d33bb37bb8::cs_virtual_10a01b9d900fa6c0(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_10a01b9d900fa6c0(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_stream);}
 
-void cs_b489b0d33bb37bb8::cs_virtual_9a7c0378d22d6bd5(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_9a7c0378d22d6bd5(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_os);}
+void cs_b489b0d33bb37bb8::cs_virtual_9a7c0378d22d6bd5(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_9a7c0378d22d6bd5(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_os);}
 
-bool cs_b489b0d33bb37bb8::cs_virtual_89868493b44dd8bd(std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data) {return cs_89868493b44dd8bd(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_requestCode,v_resultCode,v_data);}
+bool cs_b489b0d33bb37bb8::cs_virtual_89868493b44dd8bd(std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data) {return cs_89868493b44dd8bd(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()),v_requestCode,v_resultCode,v_data);}
 
-void cs_b489b0d33bb37bb8::cs_virtual_7226942a83482c7a() {cs_7226942a83482c7a(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+void cs_b489b0d33bb37bb8::cs_virtual_7226942a83482c7a() {cs_7226942a83482c7a(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 
-void cs_b489b0d33bb37bb8::cs_virtual_486e7c39f05ac1d6() {cs_486e7c39f05ac1d6(std::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
+void cs_b489b0d33bb37bb8::cs_virtual_486e7c39f05ac1d6() {cs_486e7c39f05ac1d6(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(shared_from_this()));}
 
 static pls::cs::Array<std::int32_t> cs_eb4b193093fe2ed1_value{};
 
@@ -61,7 +61,7 @@ static pls::cs::Ref<cs_50c5a567a6876ee3> cs_0d794b0205468f6a_value{};
 
 static pls::cs::Ref<cs_b489b0d33bb37bb8> cs_11e5ce60ddaa567b_value{};
 
-void cs_init_b489b0d33bb37bb8(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase",[](){
+void cs_init_b489b0d33bb37bb8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_eb4b193093fe2ed1_value,visitor);pls::cs::trace_value(cs_0d794b0205468f6a_value,visitor);pls::cs::trace_value(cs_11e5ce60ddaa567b_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase",[](){
 cs_eb4b193093fe2ed1_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.system.KairoBase.CONNECT_TRY",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.GetInstance:9662",([&](){auto cs_initial_array_279=pls::cs::Array<std::int32_t>::make(4);cs_initial_array_279.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));cs_initial_array_279.at(1)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));cs_initial_array_279.at(2)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull));cs_initial_array_279.at(3)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));return cs_initial_array_279;}()));});
 
 });}

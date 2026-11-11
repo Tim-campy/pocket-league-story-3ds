@@ -105,3 +105,20 @@ a host_draw, preservando LoadStart. Portanto a repeticao do indice 0 nao e
 um bloqueio invariavel do port: o relogio emulado/limite de velocidade
 interfere no diagnostico. Detalhes em resource-loading-yield-decision.md.
 Os processos dessas observacoes foram encerrados apos arquivar evidencias.
+
+## Callback de áudio SDL e o coletor por rastreamento
+
+O callback adicional criado por `SDL_OpenAudioDevice` não é um dos 24 sítios
+do C# e não é um worker gerenciado. Em
+`src/kairo/platform/sdl/audio.cpp`, `AudioMixer::Impl::callback` acessa somente
+`Impl`, `Voice`, os buffers nativos de amostras e contadores do mixer; não
+recebe `Ref<>`, chama delegates gerenciados ou aloca objetos gerenciados.
+As operações do host sobre as vozes continuam usando o bloqueio do dispositivo
+SDL. Nenhum desses bloqueios foi removido.
+
+As referências a `SoundData` ficam em `StreamingOutput::ports_`, na camada
+gerenciada de `src/kairo/common/sound.cpp`; seu `trace_edges` visita os clips.
+`sound_output` tem provedor de raízes explícito. Assim, o mixer nativo não é
+tratado como um heap conservador nem como uma pilha gerenciada. Esta é uma
+auditoria do código desse callback, não prova de execução dos 24 caminhos
+de criação de workers do jogo.

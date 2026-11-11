@@ -7,9 +7,9 @@ void cs_924db3d974bae2af::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_924db3d974bae2af::release_edges(){cs_bd164c3c94a49e2a::release_edges();}
 
-std::int32_t cs_924db3d974bae2af::GetHashCode() {return cs_f8a6bf38dd75ef58(std::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()));}
+std::int32_t cs_924db3d974bae2af::GetHashCode() {return cs_f8a6bf38dd75ef58(pls::cs::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()));}
 
-bool cs_924db3d974bae2af::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_682c2d787a0c6c7f(std::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()),v_obj);}
+bool cs_924db3d974bae2af::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_682c2d787a0c6c7f(pls::cs::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()),v_obj);}
 
 void cs_init_924db3d974bae2af(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureLong",[](){
 
@@ -21,7 +21,7 @@ pls::cs::Ref<cs_924db3d974bae2af> cs_74758feb8d7ec688() { cs_init_924db3d974bae2
 }
 
 void cs_74758feb8d7ec688_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this) {
-([&]() { cs_a55d2b3f0d930c1e_init(std::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
+([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureLong.#ctor",kairo);
 {
 
@@ -35,7 +35,7 @@ pls::cs::Ref<cs_924db3d974bae2af> cs_8b6e6e5ae1d900bd(std::int64_t v_value) { cs
 }
 
 void cs_8b6e6e5ae1d900bd_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this,std::int64_t v_value) {
-([&]() { std::int64_t cs_arg0 = v_value; cs_6a8c2e7be2327b6f_init(std::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this),cs_arg0); }());
+([&]() { std::int64_t cs_arg0 = v_value; cs_6a8c2e7be2327b6f_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureLong.#ctor(System.Int64)",kairo);
 {
 

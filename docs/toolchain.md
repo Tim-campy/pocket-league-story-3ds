@@ -534,3 +534,26 @@ A contabilidade de CPU usa TraceEvent 3.2.8 ja registrado e as APIs DbgHelp
 SymAddrIncludeInlineTrace, SymQueryInlineTrace, SymFromInlineContext e
 SymGetLineFromInlineContext para preservar a origem do codigo embutido.
 Amostras nao resolvidas nao sao transferidas para a categoria de logica do jogo.
+
+
+## Isolated tracing-GC performance reference (2026-11-10)
+
+BDWGC 8.2.12 is **PC benchmark only**, not a product or ARM dependency.
+Official source: https://github.com/bdwgc/bdwgc/tree/4fab5386df64466b2b61fc7209bef033cad1e6cc
+Archive: https://codeload.github.com/bdwgc/bdwgc/tar.gz/4fab5386df64466b2b61fc7209bef033cad1e6cc
+SHA-256: `548017708c09bb21bd7a29b26b161957b998d617aa3d9107bd732f3193736e7f`.
+Local sources: `build/deps/bdwgc-8.2.12`; no system installation.
+License: permissive Boehm/Xerox/SGI/HP notice in `README.QUICK`, SHA-256
+`46cf78d79f08ec7295e1c767213582c60eccba2c5bcb07b1b29fd7ddb138fbdc`.
+CMake files carry the same permissive grant. GNU autotools files are not used.
+CMake static Release build: threads OFF, parallel mark OFF, cord OFF, docs OFF.
+The single-thread setting applies to these five kernels, not to the game.
+MSVC /O2 /fp:strict; no LTO, no method counters. The custom collector and BDWGC
+variants use the same mechanically extracted generated kernel bodies.
+Reproduction and limitations: `tools/gc-prototype/README.md`.
+
+Unity Mono JIT source inspection only (no VM code incorporated): revision
+`b6587926c0f146c8b12985744f33a13b39a22d57`; files and SHA-256 values in
+`docs/notes/tracing-gc-prototype-round.md`. Exact APK JIT source/configuration
+identity remains UNKNOWN; this source is evidence for a proposed Android test,
+not approval of a floating-point emission change.

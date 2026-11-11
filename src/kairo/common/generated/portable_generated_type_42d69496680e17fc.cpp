@@ -7,7 +7,7 @@ void cs_42d69496680e17fc::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 void cs_42d69496680e17fc::release_edges(){pls::cs::Object::release_edges();}
 static pls::cs::Ref<cs_42d69496680e17fc> cs_c1bf1420af51dac4_value{};
 
-void cs_init_42d69496680e17fc(){static pls::cs::TypeInitState state;state.run("java.lang.JRuntime",[](){
+void cs_init_42d69496680e17fc(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_c1bf1420af51dac4_value,visitor);});static pls::cs::TypeInitState state;state.run("java.lang.JRuntime",[](){
 
 });}
 

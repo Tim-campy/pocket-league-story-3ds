@@ -22,13 +22,13 @@ void cs_08829eb6a4df2a40::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_08829eb6a4df2a40::release_edges(){cs_6ee7d14059be1acf::release_edges();}
 
-void cs_08829eb6a4df2a40::cs_virtual_5255d4c2789eac48(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_4b3a4c3c146ac496(std::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()),v_task);}
+void cs_08829eb6a4df2a40::cs_virtual_5255d4c2789eac48(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_4b3a4c3c146ac496(pls::cs::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()),v_task);}
 
-bool cs_08829eb6a4df2a40::cs_virtual_6e47643190d08935() {return cs_ce7e41599b3302a7(std::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()));}
+bool cs_08829eb6a4df2a40::cs_virtual_6e47643190d08935() {return cs_ce7e41599b3302a7(pls::cs::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()));}
 
-bool cs_08829eb6a4df2a40::cs_virtual_39912b67b6e00cf6(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {return cs_988a3445769c5f7e(std::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()),v_task);}
+bool cs_08829eb6a4df2a40::cs_virtual_39912b67b6e00cf6(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {return cs_988a3445769c5f7e(pls::cs::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()),v_task);}
 
-void cs_08829eb6a4df2a40::cs_virtual_219ebd8a0b10d8e7(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_9194ae34030bef1a(std::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()),v_task);}
+void cs_08829eb6a4df2a40::cs_virtual_219ebd8a0b10d8e7(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_9194ae34030bef1a(pls::cs::static_pointer_cast<cs_08829eb6a4df2a40>(shared_from_this()),v_task);}
 
 static pls::cs::Ref<cs_2ffa6f51468590ea> cs_435cb1470132c214_value{};
 
@@ -36,7 +36,7 @@ static pls::cs::Ref<pls::kairo::IApplication> cs_2b99e3af7643ea42_value{};
 
 static pls::cs::Ref<cs_6485f92c2f04639f> cs_853c51ab649a13bb_value{};
 
-void cs_init_08829eb6a4df2a40(){static pls::cs::TypeInitState state;state.run("system.billing.MyBilling",[](){
+void cs_init_08829eb6a4df2a40(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_435cb1470132c214_value,visitor);pls::cs::trace_value(cs_2b99e3af7643ea42_value,visitor);pls::cs::trace_value(cs_853c51ab649a13bb_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.MyBilling",[](){
 
 });}
 
@@ -52,7 +52,7 @@ pls::cs::Ref<cs_08829eb6a4df2a40> cs_b6efdcfa6839537c() { cs_init_08829eb6a4df2a
 }
 
 void cs_b6efdcfa6839537c_init(pls::cs::Ref<cs_08829eb6a4df2a40> cs_this) {
-([&]() { cs_fb6a0b22d395f57f_init(std::static_pointer_cast<cs_6ee7d14059be1acf>(cs_this)); }());
+([&]() { cs_fb6a0b22d395f57f_init(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.MyBilling.#ctor",game);
 {
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());}); cs_2b99e3af7643ea42() = cs_value; return cs_value; }());
@@ -79,7 +79,7 @@ bool cs_ce7e41599b3302a7(pls::cs::Ref<cs_08829eb6a4df2a40> cs_this) { cs_init_08
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.MyBilling.CheckPlayingGame",game);
 {
-if (([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(std::static_pointer_cast<cs_6ee7d14059be1acf>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6e47643190d08935(cs_receiver); }())) {
+if (([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6e47643190d08935(cs_receiver); }())) {
 return true;
 }
 pls::cs::Ref<pls::kairo::FormBase> v_form_3842 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::FormBase> { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(cs_853c51ab649a13bb()); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetForm(cs_arg0); }());});

@@ -76,7 +76,12 @@ public:
             // not claim to detect arbitrary user mutex/Join deadlocks.
             if(type_init_detail::would_cycle(engine,thread,owner_))return;
             engine.waits[thread]=owner_;
+#if PLS_TRACING_GC
+            {GcNativeBlockingScope parked;
+            platform_condition_wait(engine.changed,guard,[&]{return status_!=Status::running;});}
+#else
             platform_condition_wait(engine.changed,guard,[&]{return status_!=Status::running;});
+#endif
             engine.waits.erase(thread);
         }
         guard.unlock();std::exception_ptr failed;

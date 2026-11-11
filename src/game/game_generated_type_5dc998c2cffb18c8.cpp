@@ -19,19 +19,19 @@ void cs_5dc998c2cffb18c8::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_5dc998c2cffb18c8::release_edges(){cs_5451b2154f09f4c5::release_edges();pls::cs::release_value(cs_29c88f84473383fb);pls::cs::release_value(cs_10571fb04b30cc3f);pls::cs::release_value(cs_4ec59762286c4307);pls::cs::release_value(cs_88389be19ba33eb1);pls::cs::release_value(cs_3ae23c92a69c00cc);pls::cs::release_value(cs_c1863875b9b75cb4);pls::cs::release_value(cs_bf94607445778940);pls::cs::release_value(cs_e855bbf60b28c0af);}
 
-bool cs_5dc998c2cffb18c8::CheckMainWindow() {return cs_caae27da0b1b6167(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+bool cs_5dc998c2cffb18c8::CheckMainWindow() {return cs_caae27da0b1b6167(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 
-void cs_5dc998c2cffb18c8::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_cf0a08b4237473bc(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()),v_g);}
+void cs_5dc998c2cffb18c8::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_cf0a08b4237473bc(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()),v_g);}
 
-bool cs_5dc998c2cffb18c8::Finish() {return cs_03296355172125d8(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+bool cs_5dc998c2cffb18c8::Finish() {return cs_03296355172125d8(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 
-bool cs_5dc998c2cffb18c8::Init() {return cs_879e1552c1bc0b54(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+bool cs_5dc998c2cffb18c8::Init() {return cs_879e1552c1bc0b54(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 
-void cs_5dc998c2cffb18c8::cs_virtual_6cb47d5f5df8e7cc() {cs_c5e84308fbc916b7(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+void cs_5dc998c2cffb18c8::cs_virtual_6cb47d5f5df8e7cc() {cs_c5e84308fbc916b7(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 
-pls::cs::String cs_5dc998c2cffb18c8::ToString() {return cs_9c863e1edb2b5045(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+pls::cs::String cs_5dc998c2cffb18c8::ToString() {return cs_9c863e1edb2b5045(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 
-bool cs_5dc998c2cffb18c8::Update() {return cs_f76006a37a507361(std::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
+bool cs_5dc998c2cffb18c8::Update() {return cs_f76006a37a507361(pls::cs::static_pointer_cast<cs_5dc998c2cffb18c8>(shared_from_this()));}
 
 static std::int32_t cs_6165a1c4f7bf45ea_value{};
 
@@ -41,7 +41,7 @@ static std::int32_t cs_21099aafdcadb3e3_value{};
 
 static std::int32_t cs_34052c1785c8754e_value{};
 
-void cs_init_5dc998c2cffb18c8(){static pls::cs::TypeInitState state;state.run("system.form.HttpForm",[](){
+void cs_init_5dc998c2cffb18c8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_6165a1c4f7bf45ea_value,visitor);pls::cs::trace_value(cs_4eda79c4b15c03ea_value,visitor);pls::cs::trace_value(cs_21099aafdcadb3e3_value,visitor);pls::cs::trace_value(cs_34052c1785c8754e_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.HttpForm",[](){
 cs_21099aafdcadb3e3_value = pls::cs::evaluate_type_initializer_field("F:system.form.HttpForm.THSTATE_RUN",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));});
 cs_34052c1785c8754e_value = pls::cs::evaluate_type_initializer_field("F:system.form.HttpForm.THSTATE_SUCCESS",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));});
 cs_6165a1c4f7bf45ea_value = pls::cs::evaluate_type_initializer_field("F:system.form.HttpForm.THSTATE_FAILURE",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull));});
@@ -63,7 +63,7 @@ pls::cs::Ref<cs_5dc998c2cffb18c8> cs_148ae4520ebf5819(pls::cs::Delegate<void(pls
 
 void cs_148ae4520ebf5819_init(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_connectMethod,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_resultMethod) {
 cs_this->cs_c1863875b9b75cb4 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/form/HttpForm.cs:M:system.form.HttpForm.#ctor(system.form.HttpForm.HttpMethod,system.form.HttpForm.HttpMethod):1427",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<pls::cs::Object>>::make());
-([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x38dull)); cs_1980f3b6859ab3da_init(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
+([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x38dull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.#ctor(system.form.HttpForm.HttpMethod,system.form.HttpForm.HttpMethod)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_connectMethod; pls::game::cs_require(cs_target)->cs_29c88f84473383fb = cs_value; return cs_value; }());
@@ -89,7 +89,7 @@ void cs_cf0a08b4237473bc(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.Draw(kairo.unity.ui.Graphics)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d85e674b28736422(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d85e674b28736422(cs_receiver,cs_arg0); }());
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4ec59762286c4307; }()); auto cs_right = cs_4eda79c4b15c03ea(); return (cs_left != cs_right); }())) {
 ([&]() -> void { pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; cs_611b444a90ba63e4(cs_arg0); }());
 }
@@ -139,7 +139,7 @@ bool cs_03296355172125d8(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this) { cs_init_5d
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.Finish",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_2951e25803cf3104(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_2951e25803cf3104(cs_receiver); }());
 return true;
 }
 }
@@ -169,7 +169,7 @@ bool cs_879e1552c1bc0b54(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this) { cs_init_5d
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.Init",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f2be821373eb0add(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f2be821373eb0add(cs_receiver); }());
 ([&]() { auto cs_target = cs_this; auto cs_value = cs_21099aafdcadb3e3(); pls::game::cs_require(cs_target)->cs_4ec59762286c4307 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/form/HttpForm.cs:M:system.form.HttpForm.Init:2082",([&]() -> pls::cs::Ref<cs_408ac5c74e5f3515> { return cs_8aaa473de163f748(); }())); pls::game::cs_require(cs_target)->cs_3ae23c92a69c00cc = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/form/HttpForm.cs:M:system.form.HttpForm.Init:2113",([&]() -> pls::cs::Ref<cs_89c0d586cfe20341> { pls::cs::Ref<cs_4c145fe8f008af05> cs_arg0 = cs_this; return cs_bab91f84bee2e3d9(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_88389be19ba33eb1 = cs_value; return cs_value; }());
@@ -264,7 +264,7 @@ bool cs_f76006a37a507361(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this) { cs_init_5d
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.Update",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_25913418bfe51bb8(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_25913418bfe51bb8(cs_receiver); }());
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4ec59762286c4307; }()); auto cs_right = cs_4eda79c4b15c03ea(); return (cs_left != cs_right); }())) {
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4ec59762286c4307; }()); auto cs_right = cs_21099aafdcadb3e3(); return (cs_left == cs_right); }())) {
 return true;

@@ -11,7 +11,7 @@ void cs_ec8ac507fb495e84::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_ec8ac507fb495e84::release_edges(){cs_2d2e25a6914f7709::release_edges();}
 
-void cs_ec8ac507fb495e84::cs_virtual_9401fb4f0ec784c5(std::int32_t v_value) {cs_c9feed9f197e9812(std::static_pointer_cast<cs_ec8ac507fb495e84>(shared_from_this()),v_value);}
+void cs_ec8ac507fb495e84::cs_virtual_9401fb4f0ec784c5(std::int32_t v_value) {cs_c9feed9f197e9812(pls::cs::static_pointer_cast<cs_ec8ac507fb495e84>(shared_from_this()),v_value);}
 
 void cs_init_ec8ac507fb495e84(){static pls::cs::TypeInitState state;state.run("system.friend.MyFriend",[](){
 
@@ -23,7 +23,7 @@ pls::cs::Ref<cs_ec8ac507fb495e84> cs_f0504e3d15ead28a() { cs_init_ec8ac507fb495e
 }
 
 void cs_f0504e3d15ead28a_init(pls::cs::Ref<cs_ec8ac507fb495e84> cs_this) {
-([&]() { cs_7a28af13c1c2f5ac_init(std::static_pointer_cast<cs_2d2e25a6914f7709>(cs_this)); }());
+([&]() { cs_7a28af13c1c2f5ac_init(pls::cs::static_pointer_cast<cs_2d2e25a6914f7709>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.MyFriend.#ctor",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull)); pls::game::cs_require(cs_target)->cs_96e8baf9470c6eef = cs_value; return cs_value; }());

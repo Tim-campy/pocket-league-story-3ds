@@ -3,7 +3,7 @@
 using namespace pls::cs;
 struct MutableDispatch:Object {
     std::int32_t Calls=0;
-    bool Equals(const Ref<Object>&value)override{++Calls;return bool(std::dynamic_pointer_cast<MutableDispatch>(value));}
+    bool Equals(const Ref<Object>&value)override{++Calls;return bool(pls::cs::dynamic_pointer_cast<MutableDispatch>(value));}
     std::int32_t GetHashCode()override{++Calls;return 17;}
     String ToString()override{++Calls;return String::from_utf8("calls:"+std::to_string(Calls));}
 };

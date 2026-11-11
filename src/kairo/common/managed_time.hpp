@@ -114,7 +114,7 @@ public:
         const auto fallback=runtime_profile==RuntimeProfile::UnityMono265?id:String(u"");
         return make_ref<TimeZoneInfo>(id,offset,display.is_null()?fallback:display,standard.is_null()?fallback:standard);
     }
-    static Ref<TimeZoneInfo>get_Utc(){static auto value=CreateCustomTimeZone(String(u"UTC"),TimeSpan(),String(u"UTC"),String(u"UTC"));return value;}
+    static Ref<TimeZoneInfo>get_Utc(){static auto value=CreateCustomTimeZone(String(u"UTC"),TimeSpan(),String(u"UTC"),String(u"UTC"));static GcRootProvider roots([](const EdgeVisitor&visitor){trace_value(value,visitor);});return value;}
     static Ref<TimeZoneInfo>get_Local(){if(!local_timezone_provider)throw NotSupportedException("Platform local timezone provider is not installed");auto result=local_timezone_provider();if(!result)throw InvalidTimeZoneException();return result;}
     static Ref<TimeZoneInfo>FindSystemTimeZoneById(const String&id){if(id.is_null())throw ArgumentNullException();if(id==String(u"UTC"))return get_Utc();if(!timezone_lookup_provider)throw NotSupportedException("Platform timezone database provider is not installed");auto value=timezone_lookup_provider(id);if(!value)throw TimeZoneNotFoundException();return value;}
     static DateTime ConvertTimeToUtc(DateTime time){return time.ToUniversalTime();}

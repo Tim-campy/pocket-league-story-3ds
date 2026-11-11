@@ -30,20 +30,21 @@ void configure_sound(const assets::Catalog*,cs::Ref<SoundOutput>);
 void configure_sound(const assets::Catalog*,sdl::AudioMixer*);
 class SoundPlayer : public cs::Object {
     friend class SoundBase;friend class SoundOGG;
-    struct Port {cs::Ref<SoundBase> sound;};
-    inline static cs::Ref<SoundPlayer> instance_;
+    struct Port {cs::Ref<SoundBase> sound{};};
+    inline static cs::Ref<SoundPlayer> instance_{};
     cs::Array<std::int32_t> volumes_=cs::Array<std::int32_t>::from({127,127});
     cs::Array<std::int32_t> master_=cs::Array<std::int32_t>::from({1,1});
     cs::Array<bool> muted_=cs::Array<bool>::make(2);
     std::vector<Port> ports_=std::vector<Port>(4);
-    std::vector<cs::Ref<SoundBase>> playing_;
-    cs::Ref<SoundOutput> output_;
+    std::vector<cs::Ref<SoundBase>> playing_{};
+    cs::Ref<SoundOutput> output_{};
     bool suspended_{};
     std::int32_t PortOf(const SoundBase*);
 public:
     static constexpr std::int32_t MAX_VOLUME=255,MAX_PRIO=255,TYPE_BGM=0,TYPE_SE=1,TYPE_MAX=2,LOOP_NONE=0,LOOP_INFINITY=-1,LOOP_MAX=255;
     explicit SoundPlayer(cs::Ref<SoundOutput>);
     static cs::Ref<SoundPlayer> GetInstance();
+    static void trace_static_roots(const cs::EdgeVisitor&visitor){cs::trace_value(instance_,visitor);}
     static void Init(bool);
     void Dispose();
     void SetVolume(std::int32_t type,std::int32_t volume);void SetMute(std::int32_t type,bool mute);bool IsMute(std::int32_t type){return muted_.at(type);}
@@ -64,16 +65,17 @@ public:
 };
 class SoundBase : public cs::Object {
     friend class SoundPlayer;
-    inline static std::vector<cs::Ref<SoundBase>> sound_list_;
+    inline static std::vector<cs::Ref<SoundBase>> sound_list_{};
 protected:
     cs::String name_{u""};
-    cs::Ref<SoundData> data_;
+    cs::Ref<SoundData> data_{};
     std::int32_t type_,loop_,priority_{1};
     SoundBase(cs::Ref<SoundData>,std::int32_t,std::int32_t);
     static void register_sound(cs::Ref<SoundBase>);
     std::int32_t state();
 public:
     static constexpr std::int32_t NO_DATA=0,READY=1,PLAYING=2,PAUSED=3,MIN_PRIORITY=0,NORM_PRIORITY=1,MAX_PRIORITY=2;
+    static void trace_static_roots(const cs::EdgeVisitor&visitor){for(const auto&sound:sound_list_)cs::trace_value(sound,visitor);}
     void SetName(cs::String name){name_=name;}cs::String GetName(){return name_;}
     virtual void Play(std::int32_t,bool)=0;virtual void SetVolume(std::int32_t,bool)=0;virtual void Stop()=0;virtual std::int32_t GetState()=0;
     virtual void Dispose();
@@ -93,4 +95,5 @@ public:
     void Play(std::int32_t,bool)override;void SetVolume(std::int32_t,bool)override;void Stop()override;void Dispose()override;
     std::int32_t GetState()override{return state();}
 };
+inline cs::GcRootProvider sound_roots([](const cs::EdgeVisitor&visitor){SoundPlayer::trace_static_roots(visitor);SoundBase::trace_static_roots(visitor);});
 }

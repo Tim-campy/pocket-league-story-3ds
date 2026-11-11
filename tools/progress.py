@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 from update_phase2_progress import refresh,EvidencePending
 from diagnostic_evidence import frame_evidence
+from freeze_progress import markdown as freeze_markdown
 
 ROOT=Path(__file__).resolve().parents[1]
 csv.field_size_limit(2_000_000)
@@ -181,9 +182,16 @@ def main():
         'Gerado por python tools/progress a partir dos inventários. Não editar estados à mão.', '',
         'Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f5915c4, somente leitura. '
         'Os 5.245 métodos reconstruídos na fase anterior não são progresso de tradução para C++.','',
-        '## Inventários','', '| Inventário | Total | Estado medido |','|---|---:|---|',
-        f"| Fronteira KairoLibrary | {len(boundary)} símbolos / {b['kairo']['types']} tipos | {dict(Counter(r['estado'] for r in boundary))} |",
-        f"| Métodos a traduzir | {len(translation)} | {dict(Counter(r['estado'] for r in translation))} |",
+        *freeze_markdown(phase2 or {},load('config/phase2-game-translation.json')),
+        '## Tradução','', '| Inventário | Total | Estado medido |','|---|---:|---|',
+        f"| Métodos a traduzir | {len(translation)} | {dict(Counter(r['estado'] for r in translation))} |",'',
+        '## Fronteira da KairoLibrary','', '| Inventário | Total | Estado medido |','|---|---:|---|',
+        f"| Fronteira KairoLibrary | {len(boundary)} símbolos / {b['kairo']['types']} tipos | {dict(Counter(r['estado'] for r in boundary))} |",'',
+        '## Desempenho','',
+        'A conversão para rastreamento está em validação. CPU por frame, coletas, pico de texturas e tamanho do binário da nova base: **UNKNOWN**. '
+        'Medições anteriores e kernels isolados não qualificam o jogo convertido; consulte [a nota da conversão](docs/notes/tracing-gc-conversion.md). '
+        'Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.','',
+        '## Assets','', '| Inventário | Total | Estado medido |','|---|---:|---|',
         f"| Grupos de assets | {len(assets)} | {dict(Counter(r['estado'] for r in assets))} |",'',
         ('**Fase 2 parcial:** '+str(len(phase2['verified_boundary_ids']))+' membros reais da fronteira verificados por diferencial de fonte; '
          +str(phase2['compiled_methods'])+' métodos portáveis gerados/compilados, '+str(phase2['emitted_root_methods'])+' raízes entre '

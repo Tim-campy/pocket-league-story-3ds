@@ -14,7 +14,7 @@ void cs_d37bccc1c3814fc6::release_edges(){pls::cs::Object::release_edges();pls::
 
 static pls::cs::Ref<cs_d37bccc1c3814fc6> cs_fff40af3d4f61c60_value{};
 
-void cs_init_d37bccc1c3814fc6(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel",[](){
+void cs_init_d37bccc1c3814fc6(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fff40af3d4f61c60_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel",[](){
 
 });}
 

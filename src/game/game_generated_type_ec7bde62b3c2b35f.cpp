@@ -98,7 +98,7 @@ static pls::cs::Array<std::int32_t> cs_9fc85423a93c5a08_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_3b763fab2d4d5e6f_value{};
 
-void cs_init_ec7bde62b3c2b35f(){static pls::cs::TypeInitState state;state.run("data.FanActData",[](){
+void cs_init_ec7bde62b3c2b35f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_151b016b53166f8a_value,visitor);pls::cs::trace_value(cs_4590e52e42dfe15e_value,visitor);pls::cs::trace_value(cs_cb3cfbf5a1838573_value,visitor);pls::cs::trace_value(cs_bb47ed57a08c3305_value,visitor);pls::cs::trace_value(cs_91032469bcf435fa_value,visitor);pls::cs::trace_value(cs_ffcec0c55fc8380e_value,visitor);pls::cs::trace_value(cs_50f643f044adfe39_value,visitor);pls::cs::trace_value(cs_e9f5868577126b3c_value,visitor);pls::cs::trace_value(cs_139d11fa1a6a8d70_value,visitor);pls::cs::trace_value(cs_19c58cc90b398f3d_value,visitor);pls::cs::trace_value(cs_d531b15772650d8e_value,visitor);pls::cs::trace_value(cs_9fc85423a93c5a08_value,visitor);pls::cs::trace_value(cs_3b763fab2d4d5e6f_value,visitor);});static pls::cs::TypeInitState state;state.run("data.FanActData",[](){
 cs_d531b15772650d8e_value = pls::cs::evaluate_type_initializer_field("F:data.FanActData.fa_value",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1742",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));});
 cs_bb47ed57a08c3305_value = pls::cs::evaluate_type_initializer_field("F:data.FanActData.fa_add",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1786",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));});
 cs_91032469bcf435fa_value = pls::cs::evaluate_type_initializer_field("F:data.FanActData.fa_addRUp",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1833",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));});
@@ -150,7 +150,7 @@ cs_this->cs_e48554a4b57f9fee = pls::diagnostic::api_call([&]() -> decltype(auto)
 cs_this->cs_53f4fa45f700d80d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1438",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_a2233b47951d13be = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1477",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_03b65bdf62d78f1c = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1550",pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x6ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FanActData.#ctor",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_151b016b53166f8a() = cs_value; return cs_value; }());
@@ -170,7 +170,7 @@ cs_this->cs_e48554a4b57f9fee = pls::diagnostic::api_call([&]() -> decltype(auto)
 cs_this->cs_53f4fa45f700d80d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor(System.String):1438",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_a2233b47951d13be = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor(System.String):1477",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_03b65bdf62d78f1c = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor(System.String):1550",pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x6ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FanActData.#ctor(System.String)",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_151b016b53166f8a() = cs_value; return cs_value; }());

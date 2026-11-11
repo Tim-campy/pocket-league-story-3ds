@@ -1,4 +1,5 @@
 #include "semantic_runtime.hpp"
+#include "../translator/gc_test_support.hpp"
 #include "allocation_probe.hpp"
 #include <cstdio>
 #include <stdexcept>
@@ -6,7 +7,7 @@
 using namespace pls::cs;
 namespace {
 int checks{};
-void check(bool result){++checks;if(!result)throw std::runtime_error("delegate invariant failed");}
+void check(bool result){++checks;if(!result){std::fprintf(stderr,"delegate invariant %d failed\n",checks);throw std::runtime_error("delegate invariant failed");}}
 struct Owner:Object {
     Delegate<void()> callback;
     void trace_edges(const EdgeVisitor&v)const override{Object::trace_edges(v);callback.trace_edges(v);}
@@ -33,26 +34,26 @@ int main(){
     duplicate-=duplicate;check(duplicate.is_null());
     bool rejected=false;try{duplicate();}catch(const NullReferenceException&){rejected=true;}check(rejected);
 
-    std::weak_ptr<Owner> weak;
-    {
+    pls::cs::Weak<Owner> weak;
+    isolated_gc_mutator([&]{
         auto owner=make_ref<Owner>();weak=owner;
-        owner->callback=Delegate<void()>::bind(owner,"cycle",[target=std::weak_ptr<Owner>(owner)]{if(!target.lock())throw std::runtime_error("lost cycle target");});
-    }
+        owner->callback=Delegate<void()>::bind(owner,"cycle",[target=pls::cs::Weak<Owner>(owner)]{if(!target.lock())throw std::runtime_error("lost cycle target");});
+    });
     gc_collect();check(weak.expired());
     Delegate<void()> external;
-    {
+    isolated_gc_mutator([&]{
         auto owner=make_ref<Owner>();weak=owner;
-        owner->callback=Delegate<void()>::bind(owner,"retained-cycle",[target=std::weak_ptr<Owner>(owner)]{if(!target.lock())throw std::runtime_error("lost retained target");});
+        owner->callback=Delegate<void()>::bind(owner,"retained-cycle",[target=pls::cs::Weak<Owner>(owner)]{if(!target.lock())throw std::runtime_error("lost retained target");});
         external=owner->callback;
-    }
-    gc_collect();check(!weak.expired());external();external={};gc_collect();check(weak.expired());
+    });
+    gc_collect();isolated_gc_mutator([&]{check(!weak.expired());external();external={};});gc_collect();check(weak.expired());
 
     Delegate<void()> self_reset;bool survived=false;
-    {
+    isolated_gc_mutator([&]{
         auto owner=make_ref<Owner>();weak=owner;
         self_reset=Delegate<void()>::bind(owner,"collect-during-invoke",[&]{self_reset={};gc_collect();survived=!weak.expired();});
-    }
-    self_reset();check(survived);gc_collect();check(weak.expired());
+    });
+    isolated_gc_mutator([&]{self_reset();});check(survived);gc_collect();check(weak.expired());
     std::printf("{\"assertions\":%d,\"invocations\":10000,\"allocations\":%llu,\"bytes\":%llu}\n",checks,
         static_cast<unsigned long long>(allocations),static_cast<unsigned long long>(bytes));
 }

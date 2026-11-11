@@ -40,7 +40,7 @@ std::int32_t BinaryReader::Read(Array<std::uint8_t>buffer,std::int32_t offset,st
     if(historical())require_open();if(buffer.is_null())throw ArgumentNullException();if(offset<0||count<0)throw ArgumentOutOfRangeException();if(static_cast<std::int64_t>(offset)+count>buffer.length())throw ArgumentException();
     require_open();return stream_->Read(buffer,offset,count);
 }
-void BinaryReader::Close(){if(closed_)return;stream_->Close();closed_=true;if(historical()){stream_.reset();buffer_={};}}
+void BinaryReader::Close(){if(closed_)return;stream_->Close();closed_=true;if(historical()){clear_ref(stream_);buffer_={};}}
 
 MemoryStream::MemoryStream() : MemoryStream(0) {}
 MemoryStream::MemoryStream(std::int32_t capacity) {

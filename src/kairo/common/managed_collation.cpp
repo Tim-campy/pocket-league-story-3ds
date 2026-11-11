@@ -24,14 +24,16 @@ const CollationCharacterData& require_character_data() {
 
 // Small value adapters keep the reviewed source algorithm close to the MIT C#.
 struct Str {
-    std::shared_ptr<const std::u16string> value;
+    std::shared_ptr<const std::u16string> owned;
+    Ref<Object> managed{};
+    const std::u16string* value{};
     int Length = 0;
     Str() = default;
     Str(std::nullptr_t) {}
-    explicit Str(std::u16string text):value(std::make_shared<const std::u16string>(std::move(text))),Length(static_cast<int>(value->size())){}
+    explicit Str(std::u16string text):owned(std::make_shared<const std::u16string>(std::move(text))),value(owned.get()),Length(static_cast<int>(value->size())){}
     // The C# collator receives the existing immutable String. Alias its
     // storage instead of allocating/copying a native string adapter per call.
-    explicit Str(const String& text):value(text.as_object(),&text.code_units()),Length(text.length()){}
+    explicit Str(const String& text):managed(text.as_object()),value(&text.code_units()),Length(text.length()){}
     char16_t operator[](int index) const {if(index<0 || index>=Length)throw IndexOutOfRangeException();return (*value)[static_cast<std::size_t>(index)];}
     bool same_storage(const Str& other)const noexcept{return value==other.value;}
     bool operator==(std::nullptr_t)const noexcept{return !value;}
@@ -157,8 +159,8 @@ void check_target(const String& s,const String& t){if(s.is_null())throw NullRefe
 
 void install_collation_character_data(CollationCharacterData provider){if(!provider.lower || !provider.upper || !provider.other_not_assigned)throw ArgumentException();character_data=std::move(provider);}
 void set_default_collation_culture(CollationCulture culture){if(culture.lcid<0)throw ArgumentOutOfRangeException();default_culture=std::move(culture);}
-void set_current_collation_culture(CollationCulture culture){if(culture.lcid<0)throw ArgumentOutOfRangeException();current_culture=std::move(culture);collator_cache.reset();}
-void clear_current_collation_culture(){current_culture.reset();collator_cache.reset();}
+void set_current_collation_culture(CollationCulture culture){if(culture.lcid<0)throw ArgumentOutOfRangeException();current_culture=std::move(culture);pls::cs::clear_ref(collator_cache);}
+void clear_current_collation_culture(){pls::cs::clear_ref(current_culture);pls::cs::clear_ref(collator_cache);}
 const CollationCulture& current_collation_culture(){if(!current_culture){if(!default_culture)throw NotSupportedException("CurrentCulture has not been supplied by the host");current_culture=*default_culture;}return *current_culture;}
 std::size_t collation_resource_bytes()noexcept{return sizeof(collation_core)+sizeof(collation_tailoring)+sizeof(collation_cjkJA)+sizeof(collation_cjkCHS)+sizeof(collation_cjkCHT)+sizeof(collation_cjkKO)+sizeof(collation_cjkKOlv2);}
 std::int32_t culture_compare(const String&a,const String&b,bool ignore){if(a.is_null())return b.is_null()?0:-1;if(b.is_null())return 1;return make_collator().Compare(Str(a),Str(b),ignore?COpt::IgnoreCase:COpt::None);}

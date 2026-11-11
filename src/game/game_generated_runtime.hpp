@@ -57,7 +57,7 @@ namespace pls::game {
 [[maybe_unused]] static double cs_f64(std::uint64_t bits) { double value; std::memcpy(&value,&bits,sizeof(value)); return value; }
 
 
-template<class T>bool cs_is(const pls::cs::Ref<pls::cs::Object>&value){if(!value)return false;if constexpr(pls::cs::is_shared_ref<T>::value)return bool(std::dynamic_pointer_cast<typename pls::cs::is_shared_ref<T>::element_type>(value));else{try{(void)pls::cs::unbox<T>(value);return true;}catch(const pls::cs::InvalidCastException&){return false;}}}
+template<class T>bool cs_is(const pls::cs::Ref<pls::cs::Object>&value){if(!value)return false;if constexpr(pls::cs::is_shared_ref<T>::value)return bool(pls::cs::dynamic_pointer_cast<typename pls::cs::is_shared_ref<T>::element_type>(value));else{try{(void)pls::cs::unbox<T>(value);return true;}catch(const pls::cs::InvalidCastException&){return false;}}}
 
 template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(value);if(!object)throw pls::cs::NullReferenceException();return object->GetHashCode();}
 
@@ -80,9 +80,7 @@ template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(va
 
 [[maybe_unused]] static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 
-template<class T> pls::cs::Ref<T> cs_require(pls::cs::Ref<T> value){if(!value)throw pls::cs::NullReferenceException();return value;}
-
-template<class T> T* cs_require(T* value){if(!value)throw pls::cs::NullReferenceException();return value;}
+template<class T> T cs_require(T value){if(!value)throw pls::cs::NullReferenceException();return value;}
 
 [[maybe_unused]] static pls::cs::String cs_string_from_chars(pls::cs::Array<char16_t> chars){if(chars.is_null())throw pls::cs::ArgumentNullException();std::u16string out;for(std::int32_t i=0;i<chars.length();++i)out.push_back(chars.at(i));return pls::cs::String(std::move(out));}
 

@@ -11,7 +11,7 @@ void cs_e1ac8ca60ae0d404::release_edges(){pls::cs::Object::release_edges();pls::
 
 static pls::cs::Ref<cs_e373231f616cd1ed> cs_994906ff6b942bc3_value{};
 
-void cs_init_e1ac8ca60ae0d404(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.MotionEventRecord",[](){
+void cs_init_e1ac8ca60ae0d404(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_994906ff6b942bc3_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.MotionEventRecord",[](){
 
 });}
 

@@ -28,23 +28,23 @@ void cs_e315dac1df3b175d::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_e315dac1df3b175d::release_edges(){cs_9326c27a92cfea3a::release_edges();pls::cs::release_value(cs_dce74b5b9a4c3556);pls::cs::release_value(cs_57645038112781fd);pls::cs::release_value(cs_4ee8a5d8ed6fb33b);pls::cs::release_value(cs_af72b94facaef62c);pls::cs::release_value(cs_5fae25463177071f);pls::cs::release_value(cs_c30875eb1ac4859c);pls::cs::release_value(cs_5399805dce0daa84);pls::cs::release_value(cs_e303336fe5f1c8b9);pls::cs::release_value(cs_d50a8b4d28d66eeb);pls::cs::release_value(cs_62a36c68783f12ab);pls::cs::release_value(cs_2b779b017115f350);pls::cs::release_value(cs_8c7139230b63d34c);pls::cs::release_value(cs_d2aa7f489654e1a8);pls::cs::release_value(cs_b8ce53667520b9b8);pls::cs::release_value(cs_efcdbdc401b76399);pls::cs::release_value(cs_1a1cdb143c36e61c);pls::cs::release_value(cs_ac0dd82664682ea8);pls::cs::release_value(cs_c8b0f3ef39ceeed6);pls::cs::release_value(cs_fb778efa514fe1a4);}
 
-void cs_e315dac1df3b175d::cs_virtual_14c25464911dc345(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_344a1e1fb645eab7(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
+void cs_e315dac1df3b175d::cs_virtual_14c25464911dc345(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_344a1e1fb645eab7(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
 
-void cs_e315dac1df3b175d::cs_virtual_f7a60b8dd9e85732() {cs_c3eb1a825af8d5f9(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
+void cs_e315dac1df3b175d::cs_virtual_f7a60b8dd9e85732() {cs_c3eb1a825af8d5f9(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
 
-void cs_e315dac1df3b175d::cs_virtual_07a0bb2e4afc307c(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_7507297efd553097(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
+void cs_e315dac1df3b175d::cs_virtual_07a0bb2e4afc307c(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_7507297efd553097(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
 
-void cs_e315dac1df3b175d::cs_virtual_77304e19eb4e3af6(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_c536f61eec0faa4d(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
+void cs_e315dac1df3b175d::cs_virtual_77304e19eb4e3af6(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_c536f61eec0faa4d(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_g);}
 
-bool cs_e315dac1df3b175d::cs_virtual_9b7c686ee42b269b() {return cs_6da64ef97e763094(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
+bool cs_e315dac1df3b175d::cs_virtual_9b7c686ee42b269b() {return cs_6da64ef97e763094(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
 
-void cs_e315dac1df3b175d::cs_virtual_e94b5958615f0bf0(std::int32_t v_key) {cs_c6107d3d2273b65c(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_key);}
+void cs_e315dac1df3b175d::cs_virtual_e94b5958615f0bf0(std::int32_t v_key) {cs_c6107d3d2273b65c(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_key);}
 
-void cs_e315dac1df3b175d::cs_virtual_f10884576b82823a(pls::cs::Ref<pls::kairo::MotionEvent> v_evt) {cs_c5c9b2d6ef53a83f(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_evt);}
+void cs_e315dac1df3b175d::cs_virtual_f10884576b82823a(pls::cs::Ref<pls::kairo::MotionEvent> v_evt) {cs_c5c9b2d6ef53a83f(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_evt);}
 
-void cs_e315dac1df3b175d::cs_virtual_9f5fde625f99aa16(pls::cs::Ref<cs_757516ce190cf813> v_e) {cs_6a8c2fe4a5f21440(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_e);}
+void cs_e315dac1df3b175d::cs_virtual_9f5fde625f99aa16(pls::cs::Ref<cs_757516ce190cf813> v_e) {cs_6a8c2fe4a5f21440(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()),v_e);}
 
-void cs_e315dac1df3b175d::cs_virtual_acea3de130dbb7cd() {cs_aef9ac5f9063f0c9(std::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
+void cs_e315dac1df3b175d::cs_virtual_acea3de130dbb7cd() {cs_aef9ac5f9063f0c9(pls::cs::static_pointer_cast<cs_e315dac1df3b175d>(shared_from_this()));}
 
 static pls::cs::Array<pls::cs::String> cs_23fdb96e8da503d4_value{};
 
@@ -60,7 +60,7 @@ static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_16bdb21bbc3ccb66_value{};
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_8c8385709855299d_value{};
 
-void cs_init_e315dac1df3b175d(){static pls::cs::TypeInitState state;state.run("surface.GameView",[](){
+void cs_init_e315dac1df3b175d(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_23fdb96e8da503d4_value,visitor);pls::cs::trace_value(cs_6fbe9e1ef5a2334d_value,visitor);pls::cs::trace_value(cs_f1088522c1cb7c9e_value,visitor);pls::cs::trace_value(cs_458e967c446c2f02_value,visitor);pls::cs::trace_value(cs_e41b3ae7bfae5fb1_value,visitor);pls::cs::trace_value(cs_16bdb21bbc3ccb66_value,visitor);pls::cs::trace_value(cs_8c8385709855299d_value,visitor);});static pls::cs::TypeInitState state;state.run("surface.GameView",[](){
 cs_23fdb96e8da503d4_value = pls::cs::evaluate_type_initializer_field("F:surface.GameView.FILENAMES",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):4727",([&](){auto cs_initial_array_194=pls::cs::Array<pls::cs::String>::make(2);cs_initial_array_194.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0062" u"\x0075" u"\x0074" u"\x0074" u"\x006f" u"\x006e" u"\x0065" u"\x0066" u"\x0066" u"\x0065" u"\x0063" u"\x0074" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",16);return cs_literal;}());cs_initial_array_194.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x006e" u"\x006f" u"\x0074" u"\x0065" u"\x0073" u"\x002e" u"\x0070" u"\x006e" u"\x0067" u"",9);return cs_literal;}());return cs_initial_array_194;}()));});
 cs_f1088522c1cb7c9e_value = pls::cs::evaluate_type_initializer_field("F:surface.GameView.IMAGE_WIDTH",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):4826",pls::assets::baked_array<std::int32_t>("978149fa2e04faac2c6a215bace59a067829f639029eec3326727fd599056f80"));});
 cs_16bdb21bbc3ccb66_value = pls::cs::evaluate_type_initializer_field("F:surface.GameView.TEXTURES",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):4895",([&](){auto cs_initial_array_195=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(16);cs_initial_array_195.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):4916",pls::assets::baked_array<std::int32_t>("8589d474a0f983a30dbbaed7d88f30205fb3aa58190cb1795d417c86c3287c74"));cs_initial_array_195.at(1)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):4960",pls::assets::baked_array<std::int32_t>("1f374940e3507fbedade2b089c57ececae3bdddd9d88e47c3c377877b09a5035"));cs_initial_array_195.at(2)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5005",pls::assets::baked_array<std::int32_t>("a3f07efcb352571716e20d68ca14e4bdd414df8ea219f273376ea43880d3244b"));cs_initial_array_195.at(3)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5051",pls::assets::baked_array<std::int32_t>("65c9ff0d0fc1482ff303c4dd44c80b43b08be1437871426613387e246d5c7aa9"));cs_initial_array_195.at(4)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5097",pls::assets::baked_array<std::int32_t>("983e7e501d76fcbe921f7e62f9fe65f8bc4482626f7d7953a2e6c9d13ed1c985"));cs_initial_array_195.at(5)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5143",pls::assets::baked_array<std::int32_t>("f857b687c5c4c65166ab562fb2564e8fb157bd1377503afcde800cc25f1d50f4"));cs_initial_array_195.at(6)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5190",pls::assets::baked_array<std::int32_t>("f2767fa31342e954ca3d95b39081ada64e9511a27e9218a5b9d2e3b9701f1633"));cs_initial_array_195.at(7)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5237",pls::assets::baked_array<std::int32_t>("4e2df9ba2171c90c63cb4956a11b4aca60458c7fb1e699f6ed2e7fe54916d53a"));cs_initial_array_195.at(8)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5284",pls::assets::baked_array<std::int32_t>("4f31594e96fadc8c0394f2346d9d985a249f0e413d66044dc0d1453bd6cf50f1"));cs_initial_array_195.at(9)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5325",pls::assets::baked_array<std::int32_t>("ab51e52edf903f347be46f414a119f2f81f601b85a324e620444e0579d500cc6"));cs_initial_array_195.at(10)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5366",pls::assets::baked_array<std::int32_t>("8cad7f05f49f152c9aa10fa50171c5b187d8632381dbbe54504cdfc72ef234fc"));cs_initial_array_195.at(11)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5407",pls::assets::baked_array<std::int32_t>("e3cf08eea68ba52d008ff3587a0ca0d2bde7447c8e637b090d54fcbd27b46443"));cs_initial_array_195.at(12)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5452",pls::assets::baked_array<std::int32_t>("6ba2adad544dc772a850532aba319a1003413698ef740820b58a280f313aad5c"));cs_initial_array_195.at(13)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5495",pls::assets::baked_array<std::int32_t>("0f0ff1cb2e7e710d6b4888c686bbcee598c6c8ddd4b7926fb2b5f5bf6997631e"));cs_initial_array_195.at(14)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5539",pls::assets::baked_array<std::int32_t>("492213aa7910b1756936a18c701661ceb65515cfc069c393d46082ac5ddfffef"));cs_initial_array_195.at(15)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.Load(kairo.unity.util.JarInflater):5585",pls::assets::baked_array<std::int32_t>("aeed08063ce850ad88452f2e2eb90dfcc5e437130e629beb84d9b0d8e2880f5f"));return cs_initial_array_195;}()));});
@@ -256,7 +256,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); std::int32_t cs_arg0 = v_color_22753; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetColor(cs_arg0); }());});
 }
-if ((!(([&]() -> bool { auto cs_receiver = std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this); return cs_9e885a578815ee7e(static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(cs_receiver)); }())))) {
+if ((!(([&]() -> bool { auto cs_receiver = pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this); return cs_9e885a578815ee7e(static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(cs_receiver)); }())))) {
 throw pls::cs::ReturnFlow<pls::cs::Ref<cs_3a3d09f9e75a32d2>>{pls::cs::Ref<cs_3a3d09f9e75a32d2>{}};
 }
 pls::cs::Array<std::int32_t> v_array2_24058 = ([&]() { auto cs_array = cs_8c8385709855299d(); auto cs_index = v_id; return cs_array.get_Item(cs_index); }());
@@ -454,7 +454,7 @@ pls::cs::Ref<cs_e315dac1df3b175d> cs_99d89125e258aca0() { cs_init_e315dac1df3b17
 void cs_99d89125e258aca0_init(pls::cs::Ref<cs_e315dac1df3b175d> cs_this) {
 cs_this->cs_ac0dd82664682ea8 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.#ctor:7122",([&]() -> pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Array<std::int32_t>>> { return pls::generated::cs_946b70ecd88b233a<pls::cs::Array<std::int32_t>>(); }()));
 cs_this->cs_fb778efa514fe1a4 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.#ctor:7274",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
-([&]() { cs_a1b466bc14363691_init(std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());
+([&]() { cs_a1b466bc14363691_init(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.GameView.#ctor",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());}); pls::game::cs_require(cs_target)->cs_dce74b5b9a4c3556 = cs_value; return cs_value; }());
@@ -699,7 +699,7 @@ void cs_344a1e1fb645eab7(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.GameView.BeginTouchRegist(kairo.unity.ui.Graphics)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_14c25464911dc345(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_14c25464911dc345(cs_receiver,cs_arg0); }());
 }
 }
 }
@@ -760,7 +760,7 @@ void cs_c3eb1a825af8d5f9(pls::cs::Ref<cs_e315dac1df3b175d> cs_this) { cs_init_e3
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.GameView.DoEnd",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_f7a60b8dd9e85732(cs_receiver); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_f7a60b8dd9e85732(cs_receiver); }());
 }
 }
 }
@@ -1078,7 +1078,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> std::int32_t { auto cs_left = (([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c8b0f3ef39ceeed6; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7fffffffull)); return pls::cs::mod_i32(cs_left,cs_right); }()); pls::game::cs_require(cs_target)->cs_c8b0f3ef39ceeed6 = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); float cs_arg0 = v_scale_12239; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->Scale(cs_arg0); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); std::int32_t cs_arg0 = v_originX_12171; std::int32_t cs_arg1 = v_originY_12204; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetOrigin(cs_arg0,cs_arg1); }());});
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_77304e19eb4e3af6(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_77304e19eb4e3af6(cs_receiver,cs_arg0); }());
 }
 }
 }
@@ -1238,7 +1238,7 @@ void cs_c5c9b2d6ef53a83f(pls::cs::Ref<cs_e315dac1df3b175d> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.GameView.OnReceiveTouchEvent(kairo.unity.surface.MotionEvent)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(std::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); pls::cs::Ref<pls::kairo::MotionEvent> cs_arg0 = v_evt; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_f10884576b82823a(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); pls::cs::Ref<pls::kairo::MotionEvent> cs_arg0 = v_evt; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_f10884576b82823a(cs_receiver,cs_arg0); }());
 }
 }
 }

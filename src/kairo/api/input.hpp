@@ -55,6 +55,7 @@ class CanvasKeyState {
     std::int32_t history(std::int32_t offset);
 public:
     static constexpr std::int32_t KEY_LEFT=65536,KEY_UP=131072,KEY_RIGHT=262144,KEY_DOWN=524288,KEY_SELECT=1048576,KEY_SOFT1=2097152,KEY_SOFT2=4194304;
+    void trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(history_,visitor);}
     std::function<void(std::int32_t)> on_key_down,on_key_up;
     std::int32_t GetKeyState(){return state_;}std::int32_t GetKeypadState(){return work_;}
     bool CheckKeyState(std::int32_t key){return (state_&key)!=0;}

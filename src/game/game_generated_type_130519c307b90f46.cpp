@@ -5,7 +5,7 @@ namespace pls::game {
 
 static bool cs_0aabbac1b4cc00d9_value{};
 
-void cs_init_130519c307b90f46(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.ClockTime",[](){
+void cs_init_130519c307b90f46(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_0aabbac1b4cc00d9_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.ClockTime",[](){
 
 });}
 

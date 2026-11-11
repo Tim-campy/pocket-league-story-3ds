@@ -584,11 +584,11 @@
   ],
   "inputs": {
     "tests/kairo/BinaryReaderFixtures.cs": "c513bf6c12e196d1e1aa97332a05de863eb188d9ff1959f7180893b8c752e5c3",
-    "tests/kairo/binary_reader_fixtures.cpp": "c1fece00f650f67b8ca8e9bba7faebb7916acc475419aee6a080335ce9abda6a",
-    "src/kairo/common/managed_streams.cpp": "6940e37d7782ffbaea0f975fd231195e0ed6171201c823dea42c20cfe27d5278",
-    "src/kairo/common/managed_streams.hpp": "ef93cc1d080d67a78c4718efd2ea260e31ecf4bdf41b4db1191cd398077d6c7d",
-    "src/kairo/common/semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
-    "src/kairo/common/semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
+    "tests/kairo/binary_reader_fixtures.cpp": "9423841e21b1af823f61e1d8f6e3026329c8633d3ce75ba82479c93af7921f3e",
+    "src/kairo/common/managed_streams.cpp": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6",
+    "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
+    "src/kairo/common/semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
+    "src/kairo/common/semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
     "tests/kairo/run_streams.py": "9b230ad228bdda07c9ccdb08c5129b0c9c6db779dafb82da8244e6fe7b39b427"
   },
   "compiler": {

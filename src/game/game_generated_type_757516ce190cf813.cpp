@@ -7,7 +7,7 @@ void cs_757516ce190cf813::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_757516ce190cf813::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_4c4f6c2ffd41c9ca);pls::cs::release_value(cs_514f5ce520685c7d);pls::cs::release_value(cs_5d55f15261994422);pls::cs::release_value(cs_c6683c02c87c987a);pls::cs::release_value(cs_62b3f795cc04ca10);pls::cs::release_value(cs_4760729595bf56db);pls::cs::release_value(cs_34b944f664f45179);pls::cs::release_value(cs_c0fba19991e5dbf1);pls::cs::release_value(cs_8d755a9f926cf434);pls::cs::release_value(cs_1e8c6984f2271d7b);pls::cs::release_value(cs_613db60c2c58fddc);}
 
-std::int32_t cs_757516ce190cf813::GetHashCode() {return cs_cffdde71a559d83c(std::static_pointer_cast<cs_757516ce190cf813>(shared_from_this()));}
+std::int32_t cs_757516ce190cf813::GetHashCode() {return cs_cffdde71a559d83c(pls::cs::static_pointer_cast<cs_757516ce190cf813>(shared_from_this()));}
 
 void cs_init_757516ce190cf813(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchEvent",[](){
 
@@ -31,7 +31,7 @@ std::int32_t cs_cffdde71a559d83c(pls::cs::Ref<cs_757516ce190cf813> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchEvent.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

@@ -87,7 +87,7 @@ template<typename T_T>
 std::int32_t cs_eb30533b1cca1f84(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.FastVector\u00601.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }
@@ -210,7 +210,7 @@ template<typename T_T>
 pls::cs::String cs_31d9db7cf8a97aa7(pls::cs::Ref<cs_67cd241ab51652f1<T_T>> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.FastVector\u00601.ToString",kairo);
 {
-return pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/FastVector`1.cs:M:kairo.unity.util.FastVector`1.ToString:6398",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/FastVector`1.cs:M:kairo.unity.util.FastVector`1.ToString:6398",([&]() { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver = std::static_pointer_cast<pls::cs::Object>(cs_this);return pls::generated::cs_require(cs_receiver)->pls::cs::Object::ToString();}());}); auto cs_right = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003a" u"\x0073" u"\x0069" u"\x007a" u"\x0065" u"\x003d" u"",6);return cs_literal;}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = pls::generated::cs_integer_string(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }())); return pls::cs::String::concat(cs_left,cs_right); }()));
+return pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/FastVector`1.cs:M:kairo.unity.util.FastVector`1.ToString:6398",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/FastVector`1.cs:M:kairo.unity.util.FastVector`1.ToString:6398",([&]() { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver = pls::cs::static_pointer_cast<pls::cs::Object>(cs_this);return pls::generated::cs_require(cs_receiver)->pls::cs::Object::ToString();}());}); auto cs_right = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003a" u"\x0073" u"\x0069" u"\x007a" u"\x0065" u"\x003d" u"",6);return cs_literal;}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = pls::generated::cs_integer_string(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c59f41a6c3bb514a; }())); return pls::cs::String::concat(cs_left,cs_right); }()));
 }
 }
 }
@@ -222,8 +222,8 @@ template<typename T_T>
 inline void cs_67cd241ab51652f1<T_T>::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_f025835c3cf7842a);pls::cs::release_value(cs_965b7a32b9c12921);pls::cs::release_value(cs_6d298c7f8339f4aa);pls::cs::release_value(cs_c59f41a6c3bb514a);}
 
 template<typename T_T>
-inline pls::cs::String cs_67cd241ab51652f1<T_T>::ToString() {return cs_31d9db7cf8a97aa7(std::static_pointer_cast<cs_67cd241ab51652f1<T_T>>(shared_from_this()));}
+inline pls::cs::String cs_67cd241ab51652f1<T_T>::ToString() {return cs_31d9db7cf8a97aa7(pls::cs::static_pointer_cast<cs_67cd241ab51652f1<T_T>>(shared_from_this()));}
 
 template<typename T_T>
-inline std::int32_t cs_67cd241ab51652f1<T_T>::GetHashCode() {return cs_eb30533b1cca1f84(std::static_pointer_cast<cs_67cd241ab51652f1<T_T>>(shared_from_this()));}
+inline std::int32_t cs_67cd241ab51652f1<T_T>::GetHashCode() {return cs_eb30533b1cca1f84(pls::cs::static_pointer_cast<cs_67cd241ab51652f1<T_T>>(shared_from_this()));}
 }

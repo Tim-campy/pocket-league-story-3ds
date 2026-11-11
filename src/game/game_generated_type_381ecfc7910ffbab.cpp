@@ -19,7 +19,7 @@ static std::int32_t cs_14be5baf84375bb9_value{};
 
 static std::int32_t cs_92a1a5572c032916_value{};
 
-void cs_init_381ecfc7910ffbab(){static pls::cs::TypeInitState state;state.run("kairo.unity.native.KairoPlugin",[](){
+void cs_init_381ecfc7910ffbab(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_ee68d7af15d52996_value,visitor);pls::cs::trace_value(cs_d55e531dc45044c8_value,visitor);pls::cs::trace_value(cs_488c822c37320213_value,visitor);pls::cs::trace_value(cs_949f450fbe8c712e_value,visitor);pls::cs::trace_value(cs_a5a25a2e3d29a692_value,visitor);pls::cs::trace_value(cs_8fd991c5a14be628_value,visitor);pls::cs::trace_value(cs_14be5baf84375bb9_value,visitor);pls::cs::trace_value(cs_92a1a5572c032916_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.native.KairoPlugin",[](){
 cs_949f450fbe8c712e_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.native.KairoPlugin.sdk_",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));});
 cs_488c822c37320213_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.native.KairoPlugin.isTablet_",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));});
 cs_14be5baf84375bb9_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.native.KairoPlugin.systemBarHeight_",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7fffffffull));});

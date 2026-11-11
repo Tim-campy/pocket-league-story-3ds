@@ -22,9 +22,9 @@ int main(){
         bool called=false;
         worker([&]{app->RunOnUiThread(cs::Delegate<void()>::from_static("own-ui-void",[&]{called=app->CheckUiThread();cs::gc_collect();}),true);});
         check(called);
-        cs::Ref<cs::Object> result;
+        cs::Ref<cs::Object> result{};
         worker([&]{result=app->RunOnUiThread(kairo::IApplication::UIMethod::from_static("own-ui-object",[&]()->cs::Ref<cs::Object>{auto value=cs::make_ref<Value>(37);cs::gc_collect();return value;}),true);});
-        check(std::dynamic_pointer_cast<Value>(result)->value==37);
+        check(cs::dynamic_pointer_cast<Value>(result)->value==37);
         bool caught=false,reentered=false;
         worker([&]{try{app->RunOnUiThread(cs::Delegate<void()>::from_static("own-ui-error",[]{throw cs::IOException("own-ui-error");}),true);}catch(const cs::IOException&e){caught=std::string(e.what())=="own-ui-error";}reentered=bool(cs::make_ref<Value>(1));});
         check(caught&&reentered);

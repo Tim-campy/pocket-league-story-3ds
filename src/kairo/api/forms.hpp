@@ -10,7 +10,7 @@ enum class AppEventType:std::int32_t {Hidden=0,Sleep=1,Browser=2,Exit=3,Resume=4
 class AppEvent : public cs::Object {
 public:
     AppEventType Type;
-    cs::Array<cs::Ref<cs::Object>> Args;
+    cs::Array<cs::Ref<cs::Object>> Args{};
     AppEvent(AppEventType type,cs::Array<cs::Ref<cs::Object>> args={}):Type(type),Args(args.is_null()?cs::Array<cs::Ref<cs::Object>>::make(0):args){}
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(Args,v);}void release_edges()override{cs::release_value(Args);}
 };
@@ -23,7 +23,7 @@ class FormBase : public cs::Object, public TouchValueAccessor {
     std::int32_t id_{},continuous_{};
     cs::SharedField<std::int32_t> mode_;
     cs::SharedField<cs::String> left_,right_,third_,fourth_;
-    cs::Ref<FormManagerBase> manager_;
+    cs::Ref<FormManagerBase> manager_{};
 public:
     FormBase()=default;
     // Emitted allocation is separate from the C# base-constructor invocation.
@@ -68,11 +68,11 @@ public:
 class FormManagerBase : public cs::Object {
     friend class FormBase;
     friend class SourceFormExecution;
-    std::vector<cs::Ref<FormBase>> stack_;
-    std::vector<std::pair<cs::Ref<FormBase>,bool>> game_states_;
-    cs::Ref<FormBase> current_,loading_,print_;
-    cs::Ref<FormGameState> game_state_;
-    cs::Ref<FormExecutionBridge> execution_;
+    std::vector<cs::Ref<FormBase>> stack_{};
+    std::vector<std::pair<cs::Ref<FormBase>,bool>> game_states_{};
+    cs::Ref<FormBase> current_{},loading_{},print_{};
+    cs::Ref<FormGameState> game_state_{};
+    cs::Ref<FormExecutionBridge> execution_{};
     bool game_state_configured_{},termination_{},notified_exit_{},draw_all_{},draw_skip_{},soft_label_{},show_termination_{},pause_{},resume_{},surface_changed_{},warning_{};
     bool service_update_{},last_keyguard_{},last_visible_{};
     std::atomic<bool> request_sync_{false},synchronizing_{false},wait_late_update_{false},lock_update_{false};

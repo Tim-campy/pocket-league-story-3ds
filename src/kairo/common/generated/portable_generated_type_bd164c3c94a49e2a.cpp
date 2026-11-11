@@ -8,15 +8,15 @@ void cs_bd164c3c94a49e2a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_bd164c3c94a49e2a::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_7e5e9d5195f577e0);pls::cs::release_value(cs_83418f44729261df);pls::cs::release_value(cs_79a097054602f289);}
 
-std::int32_t cs_bd164c3c94a49e2a::GetHashCode() {return cs_bf31ab7151677a25(std::static_pointer_cast<cs_bd164c3c94a49e2a>(shared_from_this()));}
+std::int32_t cs_bd164c3c94a49e2a::GetHashCode() {return cs_bf31ab7151677a25(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(shared_from_this()));}
 
-pls::cs::String cs_bd164c3c94a49e2a::ToString() {return cs_67d34e7fd071e188(std::static_pointer_cast<cs_bd164c3c94a49e2a>(shared_from_this()));}
+pls::cs::String cs_bd164c3c94a49e2a::ToString() {return cs_67d34e7fd071e188(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(shared_from_this()));}
 
 static std::int64_t cs_a55a986dcce0645f_value{};
 
 static pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_1e58df81cbed8f35_value{};
 
-void cs_init_bd164c3c94a49e2a(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureNumber",[](){
+void cs_init_bd164c3c94a49e2a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a55a986dcce0645f_value,visitor);pls::cs::trace_value(cs_1e58df81cbed8f35_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureNumber",[](){
 
 });}
 
@@ -58,7 +58,7 @@ std::int32_t cs_bf31ab7151677a25(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureNumber.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::generated::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

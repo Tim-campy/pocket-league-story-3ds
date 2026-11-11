@@ -69,21 +69,32 @@ std::string parent(const std::string& name){
 }
 template<class Native>class ManagedUnwind final:public Native {
     ExceptionRef object_;std::string name_;
+#if PLS_TRACING_GC
+    GcRootProvider roots_;
+#endif
 public:
-    explicit ManagedUnwind(ExceptionRef object):Native(object->get_Message().utf8()),object_(std::move(object)),name_(object_->managed_type_name()){
+    explicit ManagedUnwind(ExceptionRef object):Native(object->get_Message().utf8()),object_(std::move(object)),name_(object_->managed_type_name())
+#if PLS_TRACING_GC
+        ,roots_([this](const EdgeVisitor&visitor){trace_value(object_,visitor);})
+#endif
+    {
         this->identity_token()->managed_view=object_;
     }
+#if PLS_TRACING_GC
+    ManagedUnwind(const ManagedUnwind&other):Native(other),object_(other.object_),name_(other.name_),
+        roots_([this](const EdgeVisitor&visitor){trace_value(object_,visitor);}){}
+#endif
     const char* type_name()const noexcept override{return name_.c_str();}
 };
 template<class Native>[[noreturn]]void unwind(const ExceptionRef& object){throw ManagedUnwind<Native>(object);}
 }
-void ExceptionObject::source_ctor(const std::string& base){builtin_base_=base;message_=default_message(base);inner_.reset();native_={};}
+void ExceptionObject::source_ctor(const std::string& base){builtin_base_=base;message_=default_message(base);clear_ref(inner_);native_={};}
 void ExceptionObject::source_ctor(const std::string& base,String message,ExceptionRef inner){builtin_base_=base;message_=std::move(message);inner_=std::move(inner);native_={};}
 String ExceptionObject::get_Message()const{
     if(!message_.is_null())return message_;
     return String::from_utf8("Exception of type '"+managed_type_name()+"' was thrown.");
 }
-ExceptionRef ExceptionObject::GetBaseException(){auto current=std::dynamic_pointer_cast<ExceptionObject>(shared_from_this());while(current->inner_)current=current->inner_;return current;}
+ExceptionRef ExceptionObject::GetBaseException(){auto current=pls::cs::dynamic_pointer_cast<ExceptionObject>(shared_from_this());while(current->inner_)current=current->inner_;return current;}
 String ExceptionObject::source_ToString(){
     auto value=String::from_utf8(managed_type_name());auto message=get_Message();
     if(!message.is_null()&&message.length()!=0)value=String::concat(String::concat(value,String(u": ")),message);
@@ -94,12 +105,12 @@ String ExceptionObject::source_ToString(){
     return value;
 }
 void ExceptionObject::trace_edges(const EdgeVisitor& visitor)const{trace_value(message_,visitor);trace_value(inner_,visitor);}
-void ExceptionObject::release_edges(){release_value(message_);inner_.reset();native_={};identity_.reset();}
+void ExceptionObject::release_edges(){release_value(message_);clear_ref(inner_);native_={};pls::cs::clear_ref(identity_);}
 ExceptionRef make_exception(const std::string& name){auto object=make_ref<ExceptionObject>(name);object->source_ctor(name);return object;}
 ExceptionRef make_exception(const std::string& name,String message,ExceptionRef inner){auto object=make_ref<ExceptionObject>(name);object->source_ctor(name,std::move(message),std::move(inner));return object;}
 ExceptionRef capture_exception(const Exception& exception,std::exception_ptr native){
     std::lock_guard<std::mutex> guard(exception.identity_token()->mutex);
-    if(auto cached=std::dynamic_pointer_cast<ExceptionObject>(exception.identity_token()->managed_view.lock()))return cached;
+    if(auto cached=pls::cs::dynamic_pointer_cast<ExceptionObject>(exception.identity_token()->managed_view.lock()))return cached;
     auto object=exception.uses_default_message()?make_exception(exception.type_name()):make_exception(exception.type_name(),String::from_utf8(exception.what()));
     object->identity_=exception.identity_token();object->native_=std::move(native);exception.identity_token()->managed_view=object;
     if(const auto* initialization=dynamic_cast<const TypeInitializationException*>(&exception)){

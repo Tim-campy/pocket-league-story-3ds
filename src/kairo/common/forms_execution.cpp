@@ -3,16 +3,19 @@
 #include "sound.hpp"
 namespace pls::kairo {
 namespace {
+cs::Ref<FormRuntime> installed_form_runtime{};
+cs::GcRootProvider form_runtime_roots([](const cs::EdgeVisitor&visitor){cs::trace_value(installed_form_runtime,visitor);});
 class RuntimeGameState : public FormGameState {
-    cs::Ref<FormRuntime> runtime_;
+    cs::Ref<FormRuntime> runtime_{};
 public:
     explicit RuntimeGameState(cs::Ref<FormRuntime> runtime):runtime_(std::move(runtime)){}
     bool IsGamePlaying()override{auto source=runtime_->Kairo();return source&&source->IsGamePlaying();}
     void SetGameState(bool value)override{if(auto source=runtime_->Kairo())source->SetGameState(value);}
-    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}void release_edges()override{runtime_.reset();}
+    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}void release_edges()override{pls::cs::clear_ref(runtime_);}
 };
 }
 void install_form_runtime(cs::Ref<FormRuntime> runtime){
+    installed_form_runtime=runtime;
     if(!runtime){form_construction_hook={};return;}
     form_construction_hook=[runtime](FormManagerBase& manager){
         manager.host_execution(cs::make_ref<SourceFormExecution>(runtime));
@@ -22,7 +25,7 @@ void install_form_runtime(cs::Ref<FormRuntime> runtime){
 }
 cs::Ref<FormSurface> SourceFormExecution::surface(cs::Ref<Canvas> canvas){
     auto value=canvas->GetSurfaceManager();if(!value)return {};
-    auto result=std::dynamic_pointer_cast<FormSurface>(value);if(!result)throw cs::NotSupportedException("Canvas surface has no FormManager execution bridge");return result;
+    auto result=pls::cs::dynamic_pointer_cast<FormSurface>(value);if(!result)throw cs::NotSupportedException("Canvas surface has no FormManager execution bridge");return result;
 }
 void SourceFormExecution::save_finally(cs::Ref<FormKairo> kairo){
     if(!kairo||!kairo->ReserveSaveEnabled()||kairo->ReserveSave()==0)return;
@@ -47,7 +50,7 @@ bool SourceFormExecution::ExecuteStep(cs::Ref<FormManagerBase> manager){
         if(manager->update_start_time_==runtime_->Millis())manager->update_start_time_=cs::add_i64(manager->update_start_time_,1);else manager->update_start_time_=runtime_->Millis();
         if(recorder)recorder->Lock();
         if(manager->resume_){auto form=manager->GetTopForm();if(!form)throw cs::NullReferenceException();
-            cs::run_finally([&]{manager->current_=form;if(form->Resume())manager->resume_=false;else if(!manager->warning_){manager->warning_=true;runtime_->ResumeWarning(form);}},[&]{manager->current_.reset();});}
+            cs::run_finally([&]{manager->current_=form;if(form->Resume())manager->resume_=false;else if(!manager->warning_){manager->warning_=true;runtime_->ResumeWarning(form);}},[&]{pls::cs::clear_ref(manager->current_);});}
         manager->source_ExecuteInitAndFinish();if(manager->loading_)manager->SetLoadingForm({});
         if(app->IsTermination()){manager->stack_.clear();return true;}
         if(manager->show_termination_){manager->show_termination_=false;if(runtime_->TerminationDialog()){FormManagerBase::ProcessEvent(AppEventType::Exit);manager->termination_=true;manager->RemoveAllForms();return true;}}
@@ -60,7 +63,7 @@ bool SourceFormExecution::ExecuteStep(cs::Ref<FormManagerBase> manager){
             const auto fep=runtime_->Fep();if(fep&&fep->Update())manager->source_ExecuteInitAndFinish();
             if(!manager->stack_.empty()){
                 auto form=manager->GetTopForm();if(form->mode_.load()==1){manager->PreUpdate();form->mode_.store(2);}
-                if(form->mode_.load()==2){cs::run_finally([&]{manager->current_=form;if((runtime_->Fep()!=nullptr||form->Update())&&form->mode_.load()==2)form->mode_.store(3);},[&]{manager->current_.reset();});form->continuous_=cs::add_i32(form->continuous_,1);return false;}
+                if(form->mode_.load()==2){cs::run_finally([&]{manager->current_=form;if((runtime_->Fep()!=nullptr||form->Update())&&form->mode_.load()==2)form->mode_.store(3);},[&]{pls::cs::clear_ref(manager->current_);});form->continuous_=cs::add_i32(form->continuous_,1);return false;}
             }
         }
         if(recorder)recorder->Unlock(true);manager->wait_late_update_=false;manager->Updated();manager->service_update_=false;

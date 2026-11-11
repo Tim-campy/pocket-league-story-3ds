@@ -9,11 +9,11 @@ void cs_bb652fbb61000386::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_bb652fbb61000386::release_edges(){cs_bd164c3c94a49e2a::release_edges();pls::cs::release_value(cs_3a4ab2d19bbedee8);pls::cs::release_value(cs_23af4da78e1ad81f);pls::cs::release_value(cs_3af0cc4416bce0e0);pls::cs::release_value(cs_fe44ec569b4e9ab5);}
 
-std::int32_t cs_bb652fbb61000386::GetHashCode() {return cs_0a77e2bc4ebc201e(std::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
+std::int32_t cs_bb652fbb61000386::GetHashCode() {return cs_0a77e2bc4ebc201e(pls::cs::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
 
-bool cs_bb652fbb61000386::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_145a142f07908920(std::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()),v_obj);}
+bool cs_bb652fbb61000386::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_145a142f07908920(pls::cs::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()),v_obj);}
 
-pls::cs::String cs_bb652fbb61000386::ToString() {return cs_f93784de5b5888a8(std::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
+pls::cs::String cs_bb652fbb61000386::ToString() {return cs_f93784de5b5888a8(pls::cs::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
 
 void cs_init_bb652fbb61000386(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureString",[](){
 
@@ -25,7 +25,7 @@ pls::cs::Ref<cs_bb652fbb61000386> cs_54c6ff780bd91d97(pls::cs::Ref<cs_bb652fbb61
 }
 
 void cs_54c6ff780bd91d97_init(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::Ref<cs_bb652fbb61000386> v_src) {
-([&]() { cs_a55d2b3f0d930c1e_init(std::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
+([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureString.#ctor(kairo.unity.util.SecureString)",kairo);
 {
 ([&]() -> pls::cs::Ref<cs_bb652fbb61000386> { auto cs_receiver = static_cast<pls::cs::Ref<cs_bb652fbb61000386>>(cs_this); pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_bb652fbb61000386>>(v_src); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6dd0b8d6220bd2b3(cs_receiver); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_fc11351e7d5d875d(cs_receiver,cs_arg0); }());
@@ -39,7 +39,7 @@ pls::cs::Ref<cs_bb652fbb61000386> cs_ede7ead54c734d4c(pls::cs::String v_value) {
 }
 
 void cs_ede7ead54c734d4c_init(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_value) {
-([&]() { cs_a55d2b3f0d930c1e_init(std::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
+([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureString.#ctor(System.String)",kairo);
 {
 ([&]() -> pls::cs::Ref<cs_bb652fbb61000386> { auto cs_receiver = static_cast<pls::cs::Ref<cs_bb652fbb61000386>>(cs_this); pls::cs::String cs_arg0 = v_value; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_fc11351e7d5d875d(cs_receiver,cs_arg0); }());

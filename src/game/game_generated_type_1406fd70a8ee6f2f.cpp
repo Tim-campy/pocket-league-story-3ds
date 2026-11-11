@@ -4,7 +4,7 @@ namespace pls::game {
 
 static pls::cs::Dictionary<char16_t,pls::cs::String> cs_e521319fd884a9af_value{};
 
-void cs_init_1406fd70a8ee6f2f(){static pls::cs::TypeInitState state;state.run("java.net.URLEncoder",[](){
+void cs_init_1406fd70a8ee6f2f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e521319fd884a9af_value,visitor);});static pls::cs::TypeInitState state;state.run("java.net.URLEncoder",[](){
 {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/net/URLEncoder.cs:M:java.net.URLEncoder.Encode(System.String):213",pls::cs::Dictionary<char16_t,pls::cs::String>::make()); cs_e521319fd884a9af() = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = cs_e521319fd884a9af(); cs_receiver.Clear(); }());});

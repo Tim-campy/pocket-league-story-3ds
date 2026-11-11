@@ -7,13 +7,13 @@ void cs_89c0d586cfe20341::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_89c0d586cfe20341::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_a54a7772b0af70eb);pls::cs::release_value(cs_6480f04c9d401dc1);}
 
-bool cs_89c0d586cfe20341::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_4b78e5289d2c84c2(std::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()),v_obj);}
+bool cs_89c0d586cfe20341::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_4b78e5289d2c84c2(pls::cs::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()),v_obj);}
 
-std::int32_t cs_89c0d586cfe20341::GetHashCode() {return cs_d33c547c634b2bdf(std::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()));}
+std::int32_t cs_89c0d586cfe20341::GetHashCode() {return cs_d33c547c634b2bdf(pls::cs::static_pointer_cast<cs_89c0d586cfe20341>(shared_from_this()));}
 
 static pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>> cs_110a219403a49c59_value{};
 
-void cs_init_89c0d586cfe20341(){static pls::cs::TypeInitState state;state.run("java.lang.JThread",[](){
+void cs_init_89c0d586cfe20341(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_110a219403a49c59_value,visitor);});static pls::cs::TypeInitState state;state.run("java.lang.JThread",[](){
 cs_110a219403a49c59_value = pls::cs::evaluate_type_initializer_field("F:java.lang.JThread.threadBuffer_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.CurrentThread:321",pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>>::make());});
 
 });}
@@ -41,7 +41,7 @@ pls::cs::Ref<cs_89c0d586cfe20341> cs_bab91f84bee2e3d9(pls::cs::Ref<cs_4c145fe8f0
 void cs_bab91f84bee2e3d9_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Ref<cs_4c145fe8f008af05> v_target) {
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.#ctor(java.lang.JRunnable)",kairo);
 {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):715",([&]() { auto cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):726",([&](){auto cs_target=static_cast<pls::cs::Ref<cs_4c145fe8f008af05>>(v_target);if(!cs_target)throw pls::cs::NullReferenceException();return pls::cs::Delegate<void()>::bind(cs_target,pls::cs::box(cs_target)->managed_delegate_method_id("cs_virtual_6cb47d5f5df8e7cc"),[cs_weak=std::weak_ptr<cs_4c145fe8f008af05>(cs_target)]()->void{auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();cs_receiver->cs_virtual_6cb47d5f5df8e7cc();});}())); return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):715",([&]() { auto cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):726",([&](){auto cs_target=static_cast<pls::cs::Ref<cs_4c145fe8f008af05>>(v_target);if(!cs_target)throw pls::cs::NullReferenceException();return pls::cs::Delegate<void()>::bind(cs_target,pls::cs::box(cs_target)->managed_delegate_method_id("cs_virtual_6cb47d5f5df8e7cc"),[cs_weak=pls::cs::DelegateCapture<cs_4c145fe8f008af05>(cs_target)]()->void{auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();cs_receiver->cs_virtual_6cb47d5f5df8e7cc();});}())); return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
 }
 }
 }
@@ -105,7 +105,7 @@ std::int32_t cs_d33c547c634b2bdf(pls::cs::Ref<cs_89c0d586cfe20341> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.GetHashCode",kairo);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<pls::cs::Object>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }

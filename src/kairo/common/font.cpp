@@ -40,7 +40,7 @@ sdl::RasterFont& Font::raster(int pixel_height){
 }
 float Font::StringWidthF(cs::String text){
     if(text.is_null()||disposed_)return 0.0f;if(!LT_DISABLE_TEXTLAYOUT)text=translate_text(text);
-    auto content=text.code_units();if(Graphics::PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos){if(!services.markup_width)throw cs::NotSupportedException("Translated TextLayout width bridge is not installed");return services.markup_width(std::static_pointer_cast<Font>(shared_from_this()),text);}
+    auto content=text.code_units();if(Graphics::PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos){if(!services.markup_width)throw cs::NotSupportedException("Translated TextLayout width bridge is not installed");return services.markup_width(pls::cs::static_pointer_cast<Font>(shared_from_this()),text);}
     int previous=-1;if(IsNeedLocalizeScale()){previous=GetSize();SetSize(GetLocalizeScale());}
     float ratio=services.application_scale?services.application_scale():100.0f;int pixels=cs::conv_i32(float(used_)*ratio/100.0f+0.001f);
     for(auto& c:content)if(c==u' ')c=u'.';

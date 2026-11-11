@@ -81,6 +81,8 @@ def main():
         'Modern priority backend implemented for Windows; other hosts explicitly unsupported for that contrast API.',
         'Historical CurrentCulture initializes per worker from explicit process default; modern ExecutionContext/culture inheritance is not implemented.',
         'Full CLR ExecutionContext, ThreadPool, monitors, Suspend and Abort are not implemented.'])
+    report['inputs_sha256']['tests/translator/gc_test_support.hpp']=sha(ROOT/'tests/translator/gc_test_support.hpp')
+    report['inputs_sha256'].update({p.relative_to(ROOT).as_posix():sha(p)for p in (ROOT/'src/runtime').glob('*')if p.suffix in {'.cpp','.hpp','.inc'}})
     (ROOT/'config/phase2-thread-tests.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(dict(status=report['status'],cases=report['cases'],passed=report['passed'],profile_differences=differences,culture_passed=culture_passed,native_gc_assertions=20)))
     if report['status']!='PASS':

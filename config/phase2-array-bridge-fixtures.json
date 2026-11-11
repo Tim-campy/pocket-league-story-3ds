@@ -19,14 +19,18 @@
   "inputs": {
     "tests\\translator\\ArrayBridgeFixtures.cs": "21f0a74a621b0ed1dac3c669c4f7d8f8db3ff6cef42620486487287947e26ef0",
     "tests\\translator\\array_bridge_fixtures.cpp": "b619e10f8614dd46b68ef5361dae8a621890a965172bc1b34d5c3f140ec1a5fe",
-    "src\\kairo\\common\\semantic_runtime.cpp": "58c2a1aed7e1b51c9f32bc0d6e922a8c700a3a1b425b5eb8a61853c71129803d",
-    "src\\kairo\\common\\semantic_runtime.hpp": "c241b928b351b872f847b8065b6c9a8a92a4b3084d5654d6f947ec5f6dedfcd4",
-    "src\\kairo\\common\\managed_collections.hpp": "b782e7b20c3e36af81a4b6c84cb5e3872903b13cecf091042520002a1112c71b",
+    "src\\kairo\\common\\semantic_runtime.cpp": "431cdb3fe6ab285a02271e734aaaaa819cbb515b0edae57cc1101e057500c2cb",
+    "src\\kairo\\common\\semantic_runtime.hpp": "3fd8a5e42922e3409aa945f68153cf89ca8cdbc8854d6df19d421adcce57e7a2",
+    "src\\kairo\\common\\managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
-    "src\\kairo\\common\\managed_text.hpp": "8635f728dd0c564b115830d1b2345d9cfae61fd961e0edf1300869209cf2cce0",
-    "src\\kairo\\common\\managed_dictionary.hpp": "6aa5deec1f3b14a8fc6daabd24fbf4adef22c7a1ed7d5587a81f2c50d4a132ab",
-    "src\\kairo\\common\\managed_time.hpp": "db6dbc9658a94166b770c80c9eeea9bf725b7010314dfa9488a2288320d6c0d1",
-    "tests\\translator\\run_semantic_fixtures.py": "11cec6011cb28d9533f27c7b8a6c3664952a659c9aeb29f02414638f141e4a97"
+    "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
+    "src\\kairo\\common\\managed_dictionary.hpp": "4b678c96e83cae85ab36352460f017965106347c082654f6dfce3bfc10254d85",
+    "src\\kairo\\common\\managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
+    "tests\\translator\\run_semantic_fixtures.py": "ee7f16672b9322d113d641944dd25bcc82b1615051a2ca5e8b975ff017c2cd41",
+    "src/runtime/managed_gc_bridge.inc": "501f06ed66bccba966b47a5910ea3013047911e43173df24a4a62c94070316a0",
+    "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
+    "src/runtime/tracing_gc.cpp": "ec2b96463b8bc5dea7e756e753411fb03ff0f06b834ac4a493275db1d6005e9b",
+    "src/runtime/tracing_gc.hpp": "f53e0dd573c8e4dc7e4604442238a82f0775389c0ed8ffea455a95b85e3ce419"
   },
   "historical_oracle": {
     "runtime": "C:\\Users\\l_abn\\AppData\\Local\\Programs\\Unity\\5.3.4f1\\Editor\\Data\\Mono\\bin\\mono.exe",
@@ -315,5 +319,6 @@
     "Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.",
     "Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.",
     "CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations."
-  ]
+  ],
+  "managed_reference_model": "tracing-raw-pointers"
 }

@@ -12,7 +12,7 @@ void cs_1ab688350081022a::release_edges(){pls::cs::Object::release_edges();pls::
 
 static pls::cs::Ref<cs_1ab688350081022a> cs_eb626cd1b0f88bfd_value{};
 
-void cs_init_1ab688350081022a(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.lineup.ui.LineupManager",[](){
+void cs_init_1ab688350081022a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_eb626cd1b0f88bfd_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.system.lineup.ui.LineupManager",[](){
 
 });}
 

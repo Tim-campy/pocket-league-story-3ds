@@ -8,33 +8,33 @@ void cs_a09270023ec48eca::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_a09270023ec48eca::release_edges(){pls::cs::Stream::release_edges();pls::cs::release_value(cs_39cd957faf78264b);pls::cs::release_value(cs_929af7514695a90d);pls::cs::release_value(cs_5e4e8e9b761e8c94);pls::cs::release_value(cs_668a4a3de037eca3);}
 
-void cs_a09270023ec48eca::set_Position(std::int64_t v_value) {cs_0cc5bcdc262d1e1f(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
+void cs_a09270023ec48eca::set_Position(std::int64_t v_value) {cs_0cc5bcdc262d1e1f(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 
-std::int64_t cs_a09270023ec48eca::get_Position() {return cs_8acc9ec5371d8299(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+std::int64_t cs_a09270023ec48eca::get_Position() {return cs_8acc9ec5371d8299(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-std::int64_t cs_a09270023ec48eca::get_Length() {return cs_c8a570aac49067da(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+std::int64_t cs_a09270023ec48eca::get_Length() {return cs_c8a570aac49067da(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-bool cs_a09270023ec48eca::get_CanWrite() {return cs_6f3b40a37d8f526a(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+bool cs_a09270023ec48eca::get_CanWrite() {return cs_6f3b40a37d8f526a(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-bool cs_a09270023ec48eca::get_CanSeek() {return cs_4aca7975001a4e6b(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+bool cs_a09270023ec48eca::get_CanSeek() {return cs_4aca7975001a4e6b(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-bool cs_a09270023ec48eca::get_CanRead() {return cs_0ad1ba7c0fd9d02e(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+bool cs_a09270023ec48eca::get_CanRead() {return cs_0ad1ba7c0fd9d02e(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-void cs_a09270023ec48eca::WriteByte(std::uint8_t v_value) {cs_b58a5f8e785cf771(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
+void cs_a09270023ec48eca::WriteByte(std::uint8_t v_value) {cs_b58a5f8e785cf771(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 
-void cs_a09270023ec48eca::Write(pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count) {cs_399352675683031c(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_buffer,v_offset,v_count);}
+void cs_a09270023ec48eca::Write(pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count) {cs_399352675683031c(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_buffer,v_offset,v_count);}
 
-void cs_a09270023ec48eca::SetLength(std::int64_t v_value) {cs_a78c59b4469863e5(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
+void cs_a09270023ec48eca::SetLength(std::int64_t v_value) {cs_a78c59b4469863e5(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_value);}
 
-std::int64_t cs_a09270023ec48eca::Seek(std::int64_t v_offset,pls::cs::SeekOrigin v_origin) {return cs_e1435e7e4b074f26(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_offset,v_origin);}
+std::int64_t cs_a09270023ec48eca::Seek(std::int64_t v_offset,pls::cs::SeekOrigin v_origin) {return cs_e1435e7e4b074f26(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_offset,v_origin);}
 
-std::int32_t cs_a09270023ec48eca::ReadByte() {return cs_ad4fa1e286b44f3a(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+std::int32_t cs_a09270023ec48eca::ReadByte() {return cs_ad4fa1e286b44f3a(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-std::int32_t cs_a09270023ec48eca::Read(pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count) {return cs_7a3b85e65662d47c(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_buffer,v_offset,v_count);}
+std::int32_t cs_a09270023ec48eca::Read(pls::cs::Array<std::uint8_t> v_buffer,std::int32_t v_offset,std::int32_t v_count) {return cs_7a3b85e65662d47c(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()),v_buffer,v_offset,v_count);}
 
-void cs_a09270023ec48eca::Flush() {cs_6c7bbca4c29839c1(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+void cs_a09270023ec48eca::Flush() {cs_6c7bbca4c29839c1(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-void cs_a09270023ec48eca::Close() {cs_3f2440e57ef29f1e(std::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
+void cs_a09270023ec48eca::Close() {cs_3f2440e57ef29f1e(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
 void cs_init_a09270023ec48eca(){static pls::cs::TypeInitState state;state.run("java.io.WrappedSystemStream",[](){
 

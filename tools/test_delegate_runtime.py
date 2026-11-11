@@ -25,6 +25,7 @@ def main():
     measured=json.loads(result.stdout)
     assert measured['allocations']==measured['bytes']==0 and measured['invocations']==10000
     inputs=[Path(__file__),*sources,ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/platform_condition.hpp',ROOT/'src/kairo/common/allocation_probe.hpp',ROOT/'src/main/native_allocation_sites.hpp']
+    inputs += [ROOT/'tests/translator/gc_test_support.hpp',*sorted((ROOT/'src/runtime').glob('*.*'))]
     report=dict(operation='immutable-delegate-runtime',status='PASS',**measured,
                 inputs={p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()for p in inputs})
     (ROOT/'config/phase2-delegate-runtime-fixture.json').write_text(json.dumps(report,indent=2)+'\n')

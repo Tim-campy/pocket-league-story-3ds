@@ -78,29 +78,29 @@ void cs_3ee77977aa791047::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_3ee77977aa791047::release_edges(){cs_5451b2154f09f4c5::release_edges();pls::cs::release_value(cs_332c722114186192);pls::cs::release_value(cs_5a407fb922f37c37);pls::cs::release_value(cs_50967e326a7bbbbd);pls::cs::release_value(cs_ce3369fbd327b7a0);pls::cs::release_value(cs_44d5fb44b1f41bf5);pls::cs::release_value(cs_a10997b469475b56);pls::cs::release_value(cs_45ffafddf1be62e6);pls::cs::release_value(cs_d4fdac27acfefcb2);pls::cs::release_value(cs_5a131165c96174ac);pls::cs::release_value(cs_1febb41a157e3b5d);pls::cs::release_value(cs_af791439497eda14);pls::cs::release_value(cs_e9a3c0b0cc865ebd);pls::cs::release_value(cs_94b492b69e0b22d6);pls::cs::release_value(cs_987ad2754f9e0c7f);pls::cs::release_value(cs_4c334702040e1941);pls::cs::release_value(cs_f1f90f164c0f64c6);pls::cs::release_value(cs_746d02625e76402b);}
 
-void cs_3ee77977aa791047::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_12eb36fc63ec269b(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_g);}
+void cs_3ee77977aa791047::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_12eb36fc63ec269b(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_g);}
 
-bool cs_3ee77977aa791047::Finish() {return cs_2f6ed49f4ea77db8(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+bool cs_3ee77977aa791047::Finish() {return cs_2f6ed49f4ea77db8(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
-std::int32_t cs_3ee77977aa791047::GetHashCode() {return cs_c332efb9d5fe5210(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+std::int32_t cs_3ee77977aa791047::GetHashCode() {return cs_c332efb9d5fe5210(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
-std::int32_t cs_3ee77977aa791047::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_64179362a8f1bef2(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_type,v_index);}
+std::int32_t cs_3ee77977aa791047::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_64179362a8f1bef2(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_type,v_index);}
 
-bool cs_3ee77977aa791047::Init() {return cs_7f13afd8dd5b1d78(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+bool cs_3ee77977aa791047::Init() {return cs_7f13afd8dd5b1d78(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
-bool cs_3ee77977aa791047::Resume() {return cs_d5208a4d1b935383(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+bool cs_3ee77977aa791047::Resume() {return cs_d5208a4d1b935383(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
-void cs_3ee77977aa791047::cs_virtual_6cb47d5f5df8e7cc() {cs_b0a9e2c65789b999(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+void cs_3ee77977aa791047::cs_virtual_6cb47d5f5df8e7cc() {cs_b0a9e2c65789b999(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
-void cs_3ee77977aa791047::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_de5bb8c9612fd43a(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_type,v_value);}
+void cs_3ee77977aa791047::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_de5bb8c9612fd43a(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()),v_type,v_value);}
 
-pls::cs::String cs_3ee77977aa791047::ToString() {return cs_ee9032c5644d1f00(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+pls::cs::String cs_3ee77977aa791047::ToString() {return cs_ee9032c5644d1f00(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
-bool cs_3ee77977aa791047::Update() {return cs_b95026f36cfa9750(std::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
+bool cs_3ee77977aa791047::Update() {return cs_b95026f36cfa9750(pls::cs::static_pointer_cast<cs_3ee77977aa791047>(shared_from_this()));}
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_4ec51a95e4fbbaef_value{};
 
-void cs_init_3ee77977aa791047(){static pls::cs::TypeInitState state;state.run("form.BootForm",[](){
+void cs_init_3ee77977aa791047(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ec51a95e4fbbaef_value,visitor);});static pls::cs::TypeInitState state;state.run("form.BootForm",[](){
 cs_4ec51a95e4fbbaef_value = pls::cs::evaluate_type_initializer_field("F:form.BootForm.softLabels_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1174",([&](){auto cs_initial_array_209=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(6);cs_initial_array_209.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1194",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(1)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1209",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(2)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1224",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(3)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1239",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(4)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1254",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(5)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1269",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));return cs_initial_array_209;}()));});
 
 });}
@@ -113,7 +113,7 @@ pls::cs::Ref<cs_3ee77977aa791047> cs_03172f7ba0b3ea2e() { cs_init_3ee77977aa7910
 }
 
 void cs_03172f7ba0b3ea2e_init(pls::cs::Ref<cs_3ee77977aa791047> cs_this) {
-([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_1980f3b6859ab3da_init(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
+([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.#ctor",game);
 {
 
@@ -285,7 +285,7 @@ void cs_12eb36fc63ec269b(pls::cs::Ref<cs_3ee77977aa791047> cs_this,pls::cs::Ref<
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.Draw(kairo.unity.ui.Graphics)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d85e674b28736422(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d85e674b28736422(cs_receiver,cs_arg0); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3ee77977aa791047>>(cs_this); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_a914afd569fe85bf(cs_receiver,cs_arg0); }());
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_987ad2754f9e0c7f.load(); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
 
@@ -320,7 +320,7 @@ bool cs_2f6ed49f4ea77db8(pls::cs::Ref<cs_3ee77977aa791047> cs_this) { cs_init_3e
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.Finish",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_2951e25803cf3104(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_2951e25803cf3104(cs_receiver); }());
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_94b492b69e0b22d6; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b728593e3dcffe31>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_94b492b69e0b22d6; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_c9cd9f49f64199fc(cs_receiver); }());
 }
@@ -336,7 +336,7 @@ std::int32_t cs_c332efb9d5fe5210(pls::cs::Ref<cs_3ee77977aa791047> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.GetHashCode",game);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }
@@ -358,7 +358,7 @@ bool cs_7f13afd8dd5b1d78(pls::cs::Ref<cs_3ee77977aa791047> cs_this) { cs_init_3e
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.Init",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f2be821373eb0add(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f2be821373eb0add(cs_receiver); }());
 if ((!(([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ffa6f51468590ea>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_2bb3a4488f925b87; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_934436cd92ceb4da(cs_receiver); }())))) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3ee77977aa791047>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_630f6e34926b8eba(cs_receiver); }());
 }
@@ -747,7 +747,7 @@ bool cs_d5208a4d1b935383(pls::cs::Ref<cs_3ee77977aa791047> cs_this) { cs_init_3e
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.Resume",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f6039316248c9637(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f6039316248c9637(cs_receiver); }());
 return true;
 }
 }
@@ -903,7 +903,7 @@ bool cs_b95026f36cfa9750(pls::cs::Ref<cs_3ee77977aa791047> cs_this) { cs_init_3e
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.Update",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_25913418bfe51bb8(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_25913418bfe51bb8(cs_receiver); }());
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_94b492b69e0b22d6; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9cade6927d6e0bf3>>(([&]() { auto cs_array = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_94b492b69e0b22d6; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b957309a0939d3d1; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_6dfa20c6668983e8(cs_receiver); }());
 }

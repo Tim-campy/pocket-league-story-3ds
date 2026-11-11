@@ -4,12 +4,39 @@ Gerado por python tools/progress a partir dos inventários. Não editar estados 
 
 Referência: v1.0.0-csharp-reconstruction, c7d097a847ca1f1a8e5fb7141ff11d338f5915c4, somente leitura. Os 5.245 métodos reconstruídos na fase anterior não são progresso de tradução para C++.
 
-## Inventários
+## Critérios do congelamento
+
+**Antes do congelamento: fidelidade.** C++ do jogo gerado; nenhuma melhoria de jogo autorizada nesta metade.
+Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithful` exige aprovação explícita do usuário.
+
+| Critério | Estado | Evidência / pendência |
+|---|---|---|
+| Tradução completa | em andamento | 1768/1958 métodos compilados; 22 slots virtuais pendentes; integração das 53 políticas ainda não comprovada. |
+| Coletor e desempenho | em andamento | Conversão para rastreamento autorizada; paridade dos kernels e benchmark <=50 ms no New 3DS real ainda não comprovados. |
+| Percurso completo no PC | em andamento | 751 métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados. |
+| Fidelidade resolvida | em andamento | Ponto flutuante Android, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
+| Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |
+
+## Tradução
+
+| Inventário | Total | Estado medido |
+|---|---:|---|
+| Métodos a traduzir | 1958 | {'todo': 190, 'translated': 1017, 'runs': 751} |
+
+## Fronteira da KairoLibrary
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
 | Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 522, 'verified': 252, 'implemented': 1} |
-| Métodos a traduzir | 1958 | {'todo': 190, 'translated': 1017, 'runs': 751} |
+
+## Desempenho
+
+A conversão para rastreamento está em validação. CPU por frame, coletas, pico de texturas e tamanho do binário da nova base: **UNKNOWN**. Medições anteriores e kernels isolados não qualificam o jogo convertido; consulte [a nota da conversão](docs/notes/tracing-gc-conversion.md). Orçamento: 50 ms por frame no New 3DS real; resultado em hardware: **UNKNOWN**.
+
+## Assets
+
+| Inventário | Total | Estado medido |
+|---|---:|---|
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
 **Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1768/1958 identidades originais com C++ compilado; 751 com retorno normal registrado em jogo; 0 verificadas.**

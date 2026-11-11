@@ -34,7 +34,7 @@ def abstract_fixture(type):
 def run(command,folder,name,env=None):
     started=time.perf_counter()
     try:
-        p=subprocess.run([str(v) for v in command],cwd=ROOT,capture_output=True,env=env,timeout=600 if name=='native-compile' else 60)
+        p=subprocess.run([str(v) for v in command],cwd=ROOT,capture_output=True,env=env,timeout=600 if name=='native-compile' else 180)
     except subprocess.TimeoutExpired as failure:
         stdout=failure.stdout or b'';stderr=failure.stderr or b''
         (folder/(name+'.stdout')).write_bytes(stdout);(folder/(name+'.stderr')).write_bytes(stderr)
@@ -48,7 +48,7 @@ def run(command,folder,name,env=None):
         (folder/(name+'.timing.json')).write_text(json.dumps(diagnostic,indent=2)+'\n',encoding='utf8',newline='\n')
         raise
     RUN_TIMINGS[name]=time.perf_counter()-started
-    (folder/(name+'.timing.json')).write_text(json.dumps(dict(status='PASS'if p.returncode==0 else 'FAIL',seconds=RUN_TIMINGS[name]),indent=2)+'\n',encoding='utf8',newline='\n')
+    (folder/(name+'.timing.json')).write_text(json.dumps(dict(status='PASS'if p.returncode==0 else 'FAIL',seconds=RUN_TIMINGS[name],returncode=p.returncode,returncode_hex=hex(p.returncode & 0xffffffff)),indent=2)+'\n',encoding='utf8',newline='\n')
     (folder/(name+'.log')).write_bytes(p.stdout+p.stderr)
     if p.returncode:raise RuntimeError('Differential step failed; '+str(folder/(name+'.log')))
     return p.stdout.decode('utf-8-sig')
@@ -111,7 +111,7 @@ def values(type,index):
         if abstract_fixture(type):
             ctor=next(m for m in METHODS if m['is_constructor'] and m['containing_type']==type and not m['parameters'])
             base='pls::generated::'+cls['cpp_name']
-            cpp_value='([](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=std::static_pointer_cast<'+base+'>(x);'+ctor['cpp_name']+'_init(base);return base;}())'
+            cpp_value='([](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=pls::cs::static_pointer_cast<'+base+'>(x);'+ctor['cpp_name']+'_init(base);return base;}())'
             return (native,type,(cpp_value,'('+type+')new HarnessAbstractSecureNumber()'))
         BUILDING.add(type)
         ctors=[m for m in METHODS if m['is_constructor'] and m['containing_type']==type and all(p['type'] not in CLASSES for p in m['parameters'])]
@@ -227,13 +227,13 @@ std::string F(const pls::cs::DateTime&value){return "t:"+std::to_string(value.ge
 std::string F(const pls::cs::Ref<pls::cs::TimeZoneInfo>&value){return value?"tz:"+F(value->get_Id())+":"+std::to_string(value->get_BaseUtcOffset().get_Ticks()):"null";}
 std::string F(const pls::cs::Ref<pls::cs::Stream>&value);
 std::string F(const pls::cs::Ref<pls::cs::BinaryReader>&value){return value?"reader:"+F(value->get_BaseStream()):"null";}
-std::string F(const pls::cs::Ref<pls::cs::MemoryStream>&value){return F(std::static_pointer_cast<pls::cs::Stream>(value));}
+std::string F(const pls::cs::Ref<pls::cs::MemoryStream>&value){return F(pls::cs::static_pointer_cast<pls::cs::Stream>(value));}
 std::string F(float value){std::ostringstream out;out<<"f:"<<std::hex<<std::setw(8)<<std::setfill('0')<<pls::cs::bit_copy<std::uint32_t>(value);return out.str();}
 std::string F(double value){std::ostringstream out;out<<"d:"<<std::hex<<std::setw(16)<<std::setfill('0')<<pls::cs::bit_copy<std::uint64_t>(value);return out.str();}
 template<class R,class...A>std::string F(const pls::cs::Delegate<R(A...)>&value){return value.is_null()?"null":"delegate";}
 template<class T>std::string F(T value){return std::to_string(value);}
 template<class T>std::string F(const pls::cs::Array<T>& value){if(value.is_null())return "null";std::string out="[";for(std::int32_t i=0;i<value.length();++i)out+=F(value.at(i))+",";return out+"]";}
-std::string F(const pls::cs::Ref<pls::cs::Object>&value){if(!value)return "null";if(auto b=std::dynamic_pointer_cast<pls::cs::Box<std::int32_t>>(value))return F(b->value);if(std::dynamic_pointer_cast<pls::cs::ArrayBase>(value))return F(pls::cs::Array<std::int32_t>::from_object(value));throw std::runtime_error("Missing synthetic boxed formatter");}
+std::string F(const pls::cs::Ref<pls::cs::Object>&value){if(!value)return "null";if(auto b=pls::cs::dynamic_pointer_cast<pls::cs::Box<std::int32_t>>(value))return F(b->value);if(pls::cs::dynamic_pointer_cast<pls::cs::ArrayBase>(value))return F(pls::cs::Array<std::int32_t>::from_object(value));throw std::runtime_error("Missing synthetic boxed formatter");}
 std::string F(const pls::cs::Ref<pls::cs::ArrayBase>&value){if(!value)return "null";if(value->element_type()==typeid(std::uint8_t))return F(pls::cs::Array<std::uint8_t>::from_object(value));if(value->element_type()==typeid(pls::cs::Array<std::uint8_t>))return F(pls::cs::Array<pls::cs::Array<std::uint8_t>>::from_object(value));throw std::runtime_error("Missing reflective array synthetic formatter");}
 template<class K,class V>std::string F(const pls::cs::Dictionary<K,V>&value){if(value.is_null())return "null";std::string out="dict[";auto e=value.GetEnumerator();while(e.MoveNext()){auto p=e.get_Current();out+=F(p.get_Key())+":"+F(p.get_Value())+",";}return out+"]";}
 template<class T>std::string F(const pls::cs::List<T>& value){if(value.is_null())return "null";std::string out="[";for(std::int32_t i=0;i<value.count();++i)out+=F(value.get_Item(i))+",";return out+"]";}
@@ -248,6 +248,7 @@ def main():
     parser.add_argument('--oracle',type=Path,default=ROOT/'build/translator/KairoLibrary-source-oracle.cs')
     parser.add_argument('--result',type=Path,default=ROOT/'config/phase2-portable-differential.json')
     parser.add_argument('--folder',type=Path,default=ROOT/'build/translator/differential')
+    parser.add_argument('--tracing',action='store_true',help='Compile the raw-pointer collector variant')
     options=parser.parse_args()
     for path_option in ('report','generated','oracle','folder','result'):setattr(options,path_option,getattr(options,path_option).resolve())
     report=json.loads(options.report.read_text(encoding='utf-8-sig'))
@@ -275,25 +276,25 @@ def main():
         prototypes.append(signature+';')
         body=signature+'{'
         if not cls.get('is_value_type'):
-            object_value='std::dynamic_pointer_cast<pls::cs::Object>(value)' if cls.get('is_interface') else 'value'
-            body+='if(!value)return "null";auto object='+object_value+';if(std::find(format_path.begin(),format_path.end(),object.get())!=format_path.end())return "cycle";FormatGuard guard(object.get());'
+            object_value='pls::cs::dynamic_pointer_cast<pls::cs::Object>(value)' if cls.get('is_interface') else 'value'
+            body+='if(!value)return "null";auto object='+object_value+';if(std::find(format_path.begin(),format_path.end(),pls::cs::raw(object))!=format_path.end())return "cycle";FormatGuard guard(pls::cs::raw(object));'
         if abstract_fixture(cls['type']):
-            body+='std::string out=std::dynamic_pointer_cast<HarnessAbstractSecureNumber>(value)?"obj:HarnessAbstractSecureNumber{":"obj:'+cls['type']+'{";'
+            body+='std::string out=pls::cs::dynamic_pointer_cast<HarnessAbstractSecureNumber>(value)?"obj:HarnessAbstractSecureNumber{":"obj:'+cls['type']+'{";'
         else:body+='std::string out="obj:'+cls['type']+'{";'
         for field in sorted(cls['fields'],key=lambda f:f['declaring_type']+'::'+f['name']):body+='out+="'+field['declaring_type']+'::'+field['name']+':"+F(value'+('.' if cls.get('is_value_type') else '->')+field['cpp_name']+('.load()' if field.get('shared') else '')+')+",";'
         definitions.append(body+'return out+"}";}')
     object_dispatch=''
     for cls in sorted(CLASSES.values(),key=lambda c:len(c['fields']),reverse=True):
         if not cls.get('is_interface') and not cls.get('is_value_type'):
-            object_dispatch+='if(auto typed=std::dynamic_pointer_cast<pls::generated::'+cls['cpp_name']+'>(value))return F(typed);'
-    cpp[0]=cpp[0].replace('if(std::dynamic_pointer_cast<pls::cs::ArrayBase>(value))',object_dispatch+'if(std::dynamic_pointer_cast<pls::cs::ArrayBase>(value))')
+            object_dispatch+='if(auto typed=pls::cs::dynamic_pointer_cast<pls::generated::'+cls['cpp_name']+'>(value))return F(typed);'
+    cpp[0]=cpp[0].replace('if(pls::cs::dynamic_pointer_cast<pls::cs::ArrayBase>(value))',object_dispatch+'if(pls::cs::dynamic_pointer_cast<pls::cs::ArrayBase>(value))')
     # Insert declarations before the generic array formatter for dependent lookup.
     for native,managed in [('MotionEvent','kairo.unity.surface.MotionEvent'),('KeyEvent','kairo.unity.ui.KeyEvent'),('Graphics','kairo.unity.ui.Graphics')]:
         if any(managed==p['type'] for method in report['emitted_methods'] for p in method['parameters']):
             prototypes.append('std::string F(const pls::cs::Ref<pls::kairo::'+native+'> &value){if(!value)return "null";throw std::runtime_error("Only null native '+native+' differential inputs are configured");}')
     cpp[0]=cpp[0].replace('template<class T>std::string F(T value)', '\n'.join(prototypes)+'\ntemplate<class T>std::string F(T value)')
-    stream_f='std::string F(const pls::cs::Ref<pls::cs::Stream>&value){if(!value)return "null";if(auto m=std::dynamic_pointer_cast<pls::cs::MemoryStream>(value))return "mem:"+std::string(m->get_CanRead()?"True":"False")+":"+(m->get_CanSeek()?"True":"False")+":"+(m->get_CanWrite()?"True":"False")+":"+F(m->ToArray())+":"+(m->get_CanSeek()?std::to_string(m->get_Position()):"closed");'
-    if 'java.io.WrappedSystemStream' in CLASSES:stream_f+='if(auto typed=std::dynamic_pointer_cast<pls::generated::'+CLASSES['java.io.WrappedSystemStream']['cpp_name']+'>(value))return F(typed);'
+    stream_f='std::string F(const pls::cs::Ref<pls::cs::Stream>&value){if(!value)return "null";if(auto m=pls::cs::dynamic_pointer_cast<pls::cs::MemoryStream>(value))return "mem:"+std::string(m->get_CanRead()?"True":"False")+":"+(m->get_CanSeek()?"True":"False")+":"+(m->get_CanWrite()?"True":"False")+":"+F(m->ToArray())+":"+(m->get_CanSeek()?std::to_string(m->get_Position()):"closed");'
+    if 'java.io.WrappedSystemStream' in CLASSES:stream_f+='if(auto typed=pls::cs::dynamic_pointer_cast<pls::generated::'+CLASSES['java.io.WrappedSystemStream']['cpp_name']+'>(value))return F(typed);'
     definitions.append(stream_f+'throw std::runtime_error("Missing synthetic stream formatter");}')
     cpp+=definitions
     fields=report['static_fields']
@@ -356,7 +357,7 @@ def main():
             else:managed_invocation='SourceOracle.'+method['cpp_name']+('<'+','.join(method.get('concrete_cs_type_arguments',['int']*len(templates)))+'>' if templates else '')+'('+','.join(managed_args)+')'
             if method['is_constructor'] and abstract_fixture(method['containing_type']):
                 base='pls::generated::'+CLASSES[method['containing_type']]['cpp_name']
-                invocation='([&](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=std::static_pointer_cast<'+base+'>(x);'+native_callee+'_init('+','.join(['base']+args)+');return base;}())'
+                invocation='([&](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=pls::cs::static_pointer_cast<'+base+'>(x);'+native_callee+'_init('+','.join(['base']+args)+');return base;}())'
                 managed_invocation='new HarnessAbstractSecureNumber('+','.join(managed_args)+')'
             prefix=case_id+'|'
             if method.get('identity_hash_result'):
@@ -381,7 +382,10 @@ def main():
         from test_asset_reader import synthetic_catalog
         catalog_folder=folder/'synthetic-catalog';synthetic_catalog(catalog_folder)
         cpp.append('static pls::assets::Catalog fixture_catalog('+json.dumps(catalog_folder.as_posix())+');pls::assets::install(&fixture_catalog);pls::kairo::configure_storage('+json.dumps((folder/'synthetic-preferences').as_posix())+',&fixture_catalog);')
-    cpp+=['cs_case_'+case['case'].replace(':','_')+'();' for case in cases]
+    # Each completed case is a host safe boundary, analogous to a frame. The
+    # tracing runtime deliberately does not collect in arbitrary allocations.
+    # Keep every case/output; let its normal allocation threshold request GC.
+    cpp+=['cs_case_'+case['case'].replace(':','_')+'();pls::cs::gc_frame_end();' for case in cases]
     cpp.append('std::cerr<<"harness-profile|serialization_seconds="<<std::chrono::duration<double>(serialization_time).count()<<"|hash_seconds="<<std::chrono::duration<double>(hash_time).count()<<"\\n";return 0;}')
     cs_file=folder/'Harness.cs';cpp_file=folder/'Harness.cpp'
     cs_file.write_text('\n'.join(cs),encoding='utf-8',newline='\n');cpp_file.write_text('\n'.join(cpp),encoding='utf-8',newline='\n')
@@ -396,7 +400,9 @@ def main():
         '/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),'/I'+str(options.generated),'/I'+str(ROOT/'build/generated/mono-collation'),'/I'+str(ROOT/'build/generated/mono-numberformat'),'/Fe:'+str(exe),'/Fo'+str(folder)+'/',cpp_file,*sorted(options.generated.glob('*.cpp')),ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_streams.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp',ROOT/'src/kairo/common/managed_thread.cpp',ROOT/'src/kairo/common/managed_encoding.cpp',ROOT/'src/kairo/common/managed_regex.cpp',ROOT/'src/kairo/common/managed_stream_reader.cpp',ROOT/'src/kairo/common/managed_string_ops.cpp',ROOT/'src/kairo/common/managed_float_format.cpp',ROOT/'src/kairo/common/managed_collation.cpp',ROOT/'src/kairo/common/managed_mono_character_data.cpp',ROOT/'src/kairo/platform/sdl/globalization.cpp','Advapi32.lib']
     if report.get('oracle_native_setup') and 'FixtureApp' in report['oracle_native_setup']:
         cpp_command += [ROOT/'src/kairo/common/storage.cpp',ROOT/'src/kairo/common/asset_catalog.cpp',ROOT/'src/kairo/common/asset_reader.cpp']
+    if options.tracing:cpp_command+=['/DPLS_TRACING_GC=1']
     proof_inputs=set(options.generated.glob('*.?pp'))|set(options.generated.glob('*.inc'))|set((ROOT/'src/kairo/common').rglob('*.hpp'))|set((ROOT/'src/kairo/api').rglob('*.hpp'))|set((ROOT/'build/generated/mono-collation').glob('*.*'))|{Path(p) for p in cpp_command if Path(str(p)).suffix=='.cpp'}
+    proof_inputs|={p for p in (ROOT/'src/runtime').rglob('*')if p.suffix in {'.cpp','.hpp','.inc'}}
     if abstract_fixture_source:proof_inputs.add(abstract_fixture_source)
     proof_before={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in proof_inputs}
     response=folder/'native-compile.rsp';response.write_text(subprocess.list2cmdline([str(p)for p in cpp_command[1:]])+'\n',encoding='utf8',newline='\n')

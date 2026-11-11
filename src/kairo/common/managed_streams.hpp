@@ -71,7 +71,7 @@ private:
 // Primitive binary reads are little-endian, independent of host endianness.
 // Array Read delegates once to Stream.Read, deliberately allowing short reads.
 class BinaryReader : public Object {
-    Ref<Stream>stream_;Array<std::uint8_t>buffer_;bool closed_=false;
+    Ref<Stream>stream_{};Array<std::uint8_t>buffer_;bool closed_=false;
     void require_open()const;
     Array<std::uint8_t>fill(std::int32_t count);
     std::uint64_t read_bits(std::int32_t bytes);

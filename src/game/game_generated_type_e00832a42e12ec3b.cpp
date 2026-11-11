@@ -17,7 +17,7 @@ pls::cs::Ref<cs_e00832a42e12ec3b> cs_1da4a6941cbe6a25() { cs_init_e00832a42e12ec
 }
 
 void cs_1da4a6941cbe6a25_init(pls::cs::Ref<cs_e00832a42e12ec3b> cs_this) {
-([&]() { cs_c91e4943a0e046f2_init(std::static_pointer_cast<cs_1ab688350081022a>(cs_this)); }());
+([&]() { cs_c91e4943a0e046f2_init(pls::cs::static_pointer_cast<cs_1ab688350081022a>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.lineup.MyLineup.#ctor",game);
 {
 

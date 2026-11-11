@@ -31,7 +31,7 @@ static pls::cs::Array<pls::cs::String> cs_10f1559f411c769a_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_79751f98a22fb1e2_value{};
 
-void cs_init_6803fd77f880b974(){static pls::cs::TypeInitState state;state.run("data.SupervisorData",[](){
+void cs_init_6803fd77f880b974(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_ed1dc2e91da9d38f_value,visitor);pls::cs::trace_value(cs_10f1559f411c769a_value,visitor);pls::cs::trace_value(cs_79751f98a22fb1e2_value,visitor);});static pls::cs::TypeInitState state;state.run("data.SupervisorData",[](){
 cs_10f1559f411c769a_value = pls::cs::evaluate_type_initializer_field("F:data.SupervisorData.TRAINING_POLICY_STR",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.ChangeState(System.Int32):1383",([&](){auto cs_initial_array_297=pls::cs::Array<pls::cs::String>::make(3);cs_initial_array_297.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x9078" u"\x624b" u"\x306b" u"\x4efb" u"\x305b" u"\x308b" u"",6);return cs_literal;}());cs_initial_array_297.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x5168" u"\x54e1" u"\x3067" u"\x7df4" u"\x7fd2" u"",5);return cs_literal;}());cs_initial_array_297.at(2)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x65bd" u"\x8a2d" u"\x5229" u"\x7528" u"\x3092" u"\x30e1" u"\x30a4" u"\x30f3" u"",8);return cs_literal;}());return cs_initial_array_297;}()));});
 
 });}
@@ -50,7 +50,7 @@ pls::cs::Ref<cs_6803fd77f880b974> cs_f2509d262d9e1e5a() { cs_init_6803fd77f880b9
 void cs_f2509d262d9e1e5a_init(pls::cs::Ref<cs_6803fd77f880b974> cs_this) {
 cs_this->cs_5d29f5a9131d52b7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor:1240",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull))));
 cs_this->cs_ff65a733703f405d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor:1285",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.SupervisorData.#ctor",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_ed1dc2e91da9d38f() = cs_value; return cs_value; }());
@@ -67,7 +67,7 @@ pls::cs::Ref<cs_6803fd77f880b974> cs_2d324a9760e19f9c(pls::cs::String v_src) { c
 void cs_2d324a9760e19f9c_init(pls::cs::Ref<cs_6803fd77f880b974> cs_this,pls::cs::String v_src) {
 cs_this->cs_5d29f5a9131d52b7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor(System.String):1240",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull))));
 cs_this->cs_ff65a733703f405d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor(System.String):1285",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.SupervisorData.#ctor(System.String)",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_ed1dc2e91da9d38f() = cs_value; return cs_value; }());

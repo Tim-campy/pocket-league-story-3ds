@@ -9,6 +9,11 @@
 #include <cmath>
 namespace pls::kairo {
 namespace {const assets::Catalog* catalog{};GraphicsRuntimeBindings graphics_runtime;
+cs::GcRootProvider graphics_roots([](const cs::EdgeVisitor&visitor){
+    graphics_runtime.shape_drawn.trace_edges(visitor);graphics_runtime.image_balloons.trace_edges(visitor);
+    graphics_runtime.image_touches.trace_edges(visitor);graphics_runtime.queue_text.trace_edges(visitor);
+    graphics_runtime.begin_image_tasks.trace_edges(visitor);graphics_runtime.finish_image_tasks.trace_edges(visitor);
+});
 bool alpha_format(Image::Format f){return f!=Image::Format::RGB24&&f!=Image::Format::RGB565;}
 std::array<std::uint8_t,4> channels(std::int32_t color){auto n=std::uint32_t(color);return {std::uint8_t(n>>16),std::uint8_t(n>>8),std::uint8_t(n),std::uint8_t(n>>24)};}
 std::int32_t coord(float v){return cs::conv_i32(v);}
@@ -61,7 +66,7 @@ std::int32_t Image::GetAlphaType(){
     for(std::size_t i=3;i<rgba_.size();i+=4){if(rgba_[i]<3)++transparent;else if(rgba_[i]<255)++partial;else ++opaque;}
     alpha_type_=partial?(opaque?3:2):transparent?1:0;return alpha_type_;
 }
-cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(std::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
+cs::Ref<Graphics> Image::GetGraphics(){return alive_?cs::make_ref<Graphics>(pls::cs::dynamic_pointer_cast<Image>(shared_from_this())):nullptr;}
 void Image::SetAlpha(std::int32_t alpha){
     // Preserve the original guard, including its surprising direction (Image.cs:888).
     if(!alive_||alpha_!=alpha)return;alpha_=alpha;auto a=std::uint8_t(std::clamp<std::int32_t>(alpha,0,255));for(std::size_t i=3;i<rgba_.size();i+=4)rgba_[i]=a;
@@ -76,7 +81,7 @@ void Image::SetTransparentEnabled(bool enabled){
     if(!enabled)format=Format::RGB24;else if(was_rgb)format=Format::ARGB32;
 }
 Graphics::Graphics(cs::Ref<Image> target,bool display_context):target_(cs::nonnull(target)),is_gui_(display_context),font_(cs::make_ref<Font>()),source_render_(display_context?nullptr:target_){ClearRenderRect();}
-cs::Ref<MeshManager> Graphics::GetMeshManager(){if(!mesh_manager_)mesh_manager_=cs::make_ref<MeshManager>(std::dynamic_pointer_cast<Graphics>(shared_from_this()));return mesh_manager_;}
+cs::Ref<MeshManager> Graphics::GetMeshManager(){if(!mesh_manager_)mesh_manager_=cs::make_ref<MeshManager>(pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this()));return mesh_manager_;}
 void Graphics::begin_primitive(cs::Ref<Image> image){if(mesh_manager_&&mesh_manager_->capturing())mesh_manager_->BeginPrimitive(std::move(image),channels(color_),mode_,blend_,clip_enabled_);}
 void Graphics::ResetRender(){
     // Graphics.ResetRender: reset the states represented by the CPU backend;
@@ -114,7 +119,7 @@ std::int32_t Graphics::StringWidth(cs::String text){return font_->StringWidth(te
 void Graphics::DrawString(cs::String text,float x,float y){DrawString(text,x,y,17);}
 void Graphics::DrawString(cs::String text,float x,float y,std::int32_t anchor){
     text=translate_text(text);const auto& content=text.code_units();
-    if((PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos)||(lineSpacing_!=0&&content.find(u'\n')!=std::u16string::npos)){draw_markup(std::static_pointer_cast<Graphics>(shared_from_this()),text,x,y,anchor);return;}
+    if((PeekAutoTextLayout()&&content.find(u'<')!=std::u16string::npos)||(lineSpacing_!=0&&content.find(u'\n')!=std::u16string::npos)){draw_markup(pls::cs::static_pointer_cast<Graphics>(shared_from_this()),text,x,y,anchor);return;}
     int previous=-1;if(font_->IsNeedLocalizeScale()){previous=font_->GetSize();auto height=font_->GetHeight();font_->SetSize(font_->GetLocalizeScale());if((anchor&0x60)==0)y+=float(height-font_->GetHeight())/2.0f;Font::LockLocalizeSetting();}
     cs::run_finally([&]{DrawPreparedString(text,x,y,anchor);},[&]{if(previous!=-1){Font::UnlockLocalizeSetting();font_->SetSize(previous);}});
 }
@@ -123,7 +128,7 @@ void Graphics::DrawPreparedString(cs::String text,float x,float y,std::int32_t a
     cs::run_finally([&]{
         if(!is_gui_){
             if(!graphics_runtime.queue_text)throw cs::NotSupportedException("Generated deferred text callback missing");
-            graphics_runtime.queue_text(std::dynamic_pointer_cast<Graphics>(shared_from_this()),text,x,y,anchor);return;
+            graphics_runtime.queue_text(pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this()),text,x,y,anchor);return;
         }
         if(anchor&2)x-=font_->StringWidthF(text)/2.0f;else if(anchor&4)x-=font_->StringWidthF(text);
         if(anchor&32)y-=float(font_->GetHeight())/2.0f;else if(anchor&64)y-=float(font_->GetHeight());
@@ -287,7 +292,7 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
     const bool transformed=begin_render_matrix(x,y);cs::run_finally([&]{
     if(is_gui_&&image->source_has_touch_tasks()){
         if(!graphics_runtime.image_touches)throw cs::NotSupportedException("Generated image touch presentation callback missing");
-        graphics_runtime.image_touches(std::dynamic_pointer_cast<Graphics>(shared_from_this()),image,x-float(sx),y-float(sy));
+        graphics_runtime.image_touches(pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this()),image,x-float(sx),y-float(sy));
     }
     quad(screen_,x,y,w,h,target_->width_,target_->height_,[&](int xx,int yy,float tx,float ty){
         if(flip_mode_&1)tx=1.0f-tx;if(flip_mode_&2)ty=1.0f-ty;
@@ -297,7 +302,7 @@ void Graphics::DrawScaledImage(cs::Ref<Image> image,float x,float y,float w,floa
     });
     if(is_gui_&&image->source_has_balloon_tasks()){
         if(!graphics_runtime.image_balloons)throw cs::NotSupportedException("Generated image balloon presentation callback is missing");
-        auto self=std::dynamic_pointer_cast<Graphics>(shared_from_this());
+        auto self=pls::cs::dynamic_pointer_cast<Graphics>(shared_from_this());
         graphics_runtime.image_balloons(self,image,x,y,w,h,float(sx),float(sy),float(sw),float(sh));
     }
     },[&]{if(transformed)end_render_matrix();});

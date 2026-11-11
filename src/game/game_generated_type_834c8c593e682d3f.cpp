@@ -23,27 +23,27 @@ void cs_834c8c593e682d3f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 void cs_834c8c593e682d3f::release_edges(){cs_5451b2154f09f4c5::release_edges();pls::cs::release_value(cs_c055bfbe1ac2f554);pls::cs::release_value(cs_2581a7e6009bd9b6);pls::cs::release_value(cs_ece80ff931788b9c);pls::cs::release_value(cs_d9bec971965399ca);pls::cs::release_value(cs_5b89dc10215c3470);pls::cs::release_value(cs_ca0d47b3cd292341);pls::cs::release_value(cs_7122a25d76f90581);}
 
-void cs_834c8c593e682d3f::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_660d7ba4c4c68b54(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_g);}
+void cs_834c8c593e682d3f::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_660d7ba4c4c68b54(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_g);}
 
-bool cs_834c8c593e682d3f::Finish() {return cs_93c486009381ff04(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
+bool cs_834c8c593e682d3f::Finish() {return cs_93c486009381ff04(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 
-std::int32_t cs_834c8c593e682d3f::GetHashCode() {return cs_dfc26b43dd564060(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
+std::int32_t cs_834c8c593e682d3f::GetHashCode() {return cs_dfc26b43dd564060(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 
-std::int32_t cs_834c8c593e682d3f::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_7e79fe9d6b3a0ee0(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_type,v_index);}
+std::int32_t cs_834c8c593e682d3f::GetTouchValue(std::int32_t v_type,std::int32_t v_index) {return cs_7e79fe9d6b3a0ee0(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_type,v_index);}
 
-bool cs_834c8c593e682d3f::Init() {return cs_9ee887a59d97f3f5(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
+bool cs_834c8c593e682d3f::Init() {return cs_9ee887a59d97f3f5(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 
-bool cs_834c8c593e682d3f::Resume() {return cs_707d993c797a341d(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
+bool cs_834c8c593e682d3f::Resume() {return cs_707d993c797a341d(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 
-void cs_834c8c593e682d3f::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_baa0bbbca4f4ad6b(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_type,v_value);}
+void cs_834c8c593e682d3f::SetTouchValue(std::int32_t v_type,std::int32_t v_value) {cs_baa0bbbca4f4ad6b(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()),v_type,v_value);}
 
-pls::cs::String cs_834c8c593e682d3f::ToString() {return cs_3eb04e00e91bbe03(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
+pls::cs::String cs_834c8c593e682d3f::ToString() {return cs_3eb04e00e91bbe03(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 
-bool cs_834c8c593e682d3f::Update() {return cs_124cf63141f56075(std::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
+bool cs_834c8c593e682d3f::Update() {return cs_124cf63141f56075(pls::cs::static_pointer_cast<cs_834c8c593e682d3f>(shared_from_this()));}
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_96890a1370dfa5a5_value{};
 
-void cs_init_834c8c593e682d3f(){static pls::cs::TypeInitState state;state.run("form.RankForm",[](){
+void cs_init_834c8c593e682d3f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_96890a1370dfa5a5_value,visitor);});static pls::cs::TypeInitState state;state.run("form.RankForm",[](){
 cs_96890a1370dfa5a5_value = pls::cs::evaluate_type_initializer_field("F:form.RankForm.softLabels_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/RankForm.cs:M:form.RankForm.#ctor:594",([&](){auto cs_initial_array_308=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(1);cs_initial_array_308.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/RankForm.cs:M:form.RankForm.#ctor:609",pls::assets::baked_array<std::int32_t>("7cdcf10cc8c0b93688e904357a4dde852cf5ef34f56ad44138f7fc04a1112e54"));return cs_initial_array_308;}()));});
 
 });}
@@ -119,7 +119,7 @@ pls::cs::Ref<cs_834c8c593e682d3f> cs_6b785705076d0599() { cs_init_834c8c593e682d
 
 void cs_6b785705076d0599_init(pls::cs::Ref<cs_834c8c593e682d3f> cs_this) {
 cs_this->cs_5b89dc10215c3470 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/form/RankForm.cs:M:form.RankForm.#ctor:508",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));
-([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); cs_1980f3b6859ab3da_init(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
+([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.RankForm.#ctor",game);
 {
 
@@ -179,7 +179,7 @@ std::int32_t cs_dfc26b43dd564060(pls::cs::Ref<cs_834c8c593e682d3f> cs_this) { cs
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.RankForm.GetHashCode",game);
 {
-return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=pls::cs::box(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this));return pls::game::cs_require(cs_receiver)->pls::cs::Object::GetHashCode();}());});
 }
 }
 }
@@ -201,7 +201,7 @@ bool cs_9ee887a59d97f3f5(pls::cs::Ref<cs_834c8c593e682d3f> cs_this) { cs_init_83
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.RankForm.Init",game);
 {
-([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(std::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f2be821373eb0add(cs_receiver); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f2be821373eb0add(cs_receiver); }());
 if (([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5b89dc10215c3470; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_c55367423dbb79a1(cs_receiver); }());}); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_5b89dc10215c3470; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_54587d7da8ff8dbc(cs_receiver); }());});
 }

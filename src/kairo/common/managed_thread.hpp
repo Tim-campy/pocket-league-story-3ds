@@ -29,10 +29,10 @@ class Thread final : public Object {
     struct State;
     std::shared_ptr<State> state_;
     struct ExternalTag {};
-    explicit Thread(ExternalTag);
     static void check_interrupt(const Ref<Thread>& thread);
     void entry();
 public:
+    explicit Thread(ExternalTag); // Private tag; allocation goes through the typed factory.
     explicit Thread(ThreadStart start);
     ~Thread() override;
     std::string managed_type_name()const override{return "System.Threading.Thread";}

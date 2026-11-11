@@ -13,7 +13,7 @@ void cs_dc09c88a279424b5::release_edges(){pls::cs::Object::release_edges();pls::
 
 static pls::cs::Ref<cs_dc09c88a279424b5> cs_a0e59a75dec69092_value{};
 
-void cs_init_dc09c88a279424b5(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextFormat",[](){
+void cs_init_dc09c88a279424b5(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a0e59a75dec69092_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextFormat",[](){
 
 });}
 

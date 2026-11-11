@@ -22,7 +22,7 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_7144ce158e1834c7_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_e478109e0b94893f_value{};
 
-void cs_init_b68aa9c3dd5cf14c(){static pls::cs::TypeInitState state;state.run("data.LeagueData",[](){
+void cs_init_b68aa9c3dd5cf14c(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_7144ce158e1834c7_value,visitor);pls::cs::trace_value(cs_e478109e0b94893f_value,visitor);});static pls::cs::TypeInitState state;state.run("data.LeagueData",[](){
 
 });}
 
@@ -36,7 +36,7 @@ pls::cs::Ref<cs_b68aa9c3dd5cf14c> cs_06d6211b1886aef7() { cs_init_b68aa9c3dd5cf1
 }
 
 void cs_06d6211b1886aef7_init(pls::cs::Ref<cs_b68aa9c3dd5cf14c> cs_this) {
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.LeagueData.#ctor",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_7144ce158e1834c7() = cs_value; return cs_value; }());
@@ -51,7 +51,7 @@ pls::cs::Ref<cs_b68aa9c3dd5cf14c> cs_170a95790dba62b8(pls::cs::String v_src) { c
 }
 
 void cs_170a95790dba62b8_init(pls::cs::Ref<cs_b68aa9c3dd5cf14c> cs_this,pls::cs::String v_src) {
-([&]() { cs_0c4b303cde7d7a27_init(std::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
+([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.LeagueData.#ctor(System.String)",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_7144ce158e1834c7() = cs_value; return cs_value; }());

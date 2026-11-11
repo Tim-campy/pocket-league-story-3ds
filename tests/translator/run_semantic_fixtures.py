@@ -68,6 +68,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--fixture',choices=FIXTURES,default='SemanticFixtures')
     parser.add_argument('--output',type=Path)
+    parser.add_argument('--tracing',action='store_true',help='Exercise the pointer-based runtime branch; receipt stays in build/')
     args=parser.parse_args();folder=(args.output or ROOT/'build'/FIXTURES[args.fixture][0]).resolve()
     if not folder.is_relative_to((ROOT/'build').resolve()):raise ValueError('Fixture output must stay in ignored build/')
     folder.mkdir(parents=True,exist_ok=True)
@@ -88,6 +89,7 @@ def main():
     binary=folder/'semantic-fixtures.exe'
     command=[compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/utf-8',
              '/I'+str(runtime.parent),'/Fe:'+str(binary),source,runtime,*EXTRA_NATIVE_SOURCES.get(args.fixture,[])]
+    if args.tracing:command+=['/DPLS_TRACING_GC=1']
     execute(command,folder,'cpp-compile',env)
     actual=execute([binary,'dotnet'],folder,'cpp-run',env)
     unity=Path(os.environ.get('UNITY_ROOT',str(Path.home()/'AppData/Local/Programs/Unity/5.3.4f1')))
@@ -108,6 +110,18 @@ def main():
     mono_rows=[dict(case=left.split('=',1)[0],expected=left,actual=right,passed=left==right)
                for left,right in zip(mono_expected.splitlines(),mono_actual.splitlines())]
     matched=expected==actual and mono_expected==mono_actual
+    all_modern_rows=rows[:]
+    modern_generation_contrast=[]
+    if args.fixture=='GcFixtures':
+        # The authorized production collector is nongenerational, as is the
+        # historical Unity oracle. Preserve modern observations explicitly,
+        # but do not require a generational .NET collector from this runtime.
+        generation_cases={'max-generation','generation-zero','generation-one'}
+        modern_generation_contrast=[r for r in rows if r['case'] in generation_cases]
+        rows=[r for r in rows if r['case'] not in generation_cases]
+        matched=(all(r['passed'] for r in rows+mono_rows)
+                 and len(expected.splitlines())==len(actual.splitlines())
+                 and mono_expected==mono_actual)
     report=dict(operation='own-source-CSharp-versus-Cpp-runtime-semantic-fixtures',status='PASS' if matched else 'FAIL',
         fixture_cases=len(rows)+len(mono_rows),passed=sum(r['passed'] for r in rows+mono_rows),expected_lines=len(expected.splitlines()),actual_lines=len(actual.splitlines()),
         native_collector_tests=native_collector_tests,production_methods_translated=0,production_translator_exercised=False,game_assets_used=False,game_binary_executed=False,
@@ -116,12 +130,18 @@ def main():
         historical_oracle=dict(runtime=str(mono),runtime_sha256=sha(mono),compiler=str(smcs),compiler_sha256=sha(smcs),framework_reference=str(mono_core),framework_reference_sha256=sha(mono_core),original_binaries_copied=False),
         default_runtime_profile='UnityMono265',cpp_flags=command[2:10],cases=rows,historical_cases=mono_rows,
         historical_profile_differences=[dict(case=a['case'],dotnet=a['expected'],unity_mono=b['expected'])
-            for a,b in zip(rows,mono_rows) if a['expected']!=b['expected']],
+            for a,b in zip(all_modern_rows,mono_rows) if a['expected']!=b['expected']],
         limitations=['Native C++ fixtures are independently written synthetic language cases; they do not prove production emitter coverage.',
                     'Historical oracle is Unity Mono on Windows, not proof of Android-specific arithmetic/JIT corner cases.',
                     'CompareOrdinal tests compare sign/zero, its specified contract; exact magnitude differs across implementations.'])
+    report['managed_reference_model']='tracing-raw-pointers'
+    if args.fixture=='GcFixtures':
+        report['modern_generation_contrast']=modern_generation_contrast
+        report['limitations'].append('Modern .NET generation count/promotion are contrast-only, not implemented: the approved collector is nongenerational. All historical Unity GC observations remain mandatory.')
+        report['inputs']['tests/translator/gc_test_support.hpp']=sha(ROOT/'tests/translator/gc_test_support.hpp')
+    report['inputs'].update({p.relative_to(ROOT).as_posix():sha(p) for p in (ROOT/'src/runtime').rglob('*') if p.suffix in {'.cpp','.hpp','.inc'}})
     (folder/'receipt.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
-    target=ROOT/('config/phase2-'+FIXTURES[args.fixture][2]+'-fixtures.json');target.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
+    target=folder/'tracing-receipt.json' if args.tracing else ROOT/('config/phase2-'+FIXTURES[args.fixture][2]+'-fixtures.json');target.write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
     print(json.dumps(dict(status=report['status'],cases=report['fixture_cases'],passed=report['passed'],receipt=str(target.relative_to(ROOT)))))
     if not matched:
         for row in rows+mono_rows:

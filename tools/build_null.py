@@ -11,6 +11,9 @@ def main():
     p.add_argument('--sample',action='store_true');p.add_argument('--allocations',action='store_true')
     p.add_argument('--profile-dir',type=Path)
     p.add_argument('--memory-categories',action='store_true')
+    model=p.add_mutually_exclusive_group()
+    model.add_argument('--tracing',action='store_true',dest='tracing',default=True)
+    model.add_argument('--legacy-reference-counts',action='store_false',dest='tracing',help='Historical comparison only')
     p.add_argument('--jobs',type=int,default=2)
     a=p.parse_args()
     if a.profile_dir and not a.sample:raise ValueError('--profile-dir requires --sample')
@@ -20,10 +23,12 @@ def main():
     if digest(a.apk)!=APK_SHA:raise ValueError('Expected owned APK hash required')
     source=a.snapshot.resolve();validate_diagnostic_manifest(source)
     folder=ROOT/('build/null-pc-memory'if a.memory_categories else'build/null-pc-allocations'if a.allocations else'build/null-pc');folder.mkdir(parents=True,exist_ok=True)
+    if a.tracing:folder=folder.with_name(folder.name+'-tracing');folder.mkdir(parents=True,exist_ok=True)
     env=environment();probe=showincludes_prefix(folder,env)
     commands=[[str(CMAKE),'-S',str(ROOT/'tools/null-benchmark'),'-B',str(folder),'-G','Ninja','-DCMAKE_MAKE_PROGRAM='+str(NINJA),'-DCMAKE_BUILD_TYPE=Release','-DPLS_GENERATED='+str(source),'-DCMAKE_PREFIX_PATH='+str(ROOT/'build/deps/native-media'),'-DPLS_MSVC_SHOWINCLUDES_PREFIX='+probe['prefix'],'-DPLS_REPORT_ALLOCATION_FAILURE=OFF'], [str(CMAKE),'--build',str(folder),'--parallel',str(a.jobs)]]
     commands[0].append('-DPLS_ALLOCATION_PROBE='+('ON'if a.allocations else'OFF'))
     commands[0].append('-DPLS_MEMORY_CATEGORIES='+('ON'if a.memory_categories else'OFF'))
+    commands[0].append('-DPLS_TRACING_GC='+('ON'if a.tracing else'OFF'))
     def snapshot():
         paths=[q for base in ['src','tools/null-benchmark','tests/kairo']for q in (ROOT/base).rglob('*')if q.is_file()and q.suffix in ['.cpp','.hpp','.inc','.txt']]
         paths.extend(q for q in source.iterdir()if q.suffix in ['.cpp','.hpp','.inc','.json'])

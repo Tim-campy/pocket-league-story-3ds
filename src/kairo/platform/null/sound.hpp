@@ -24,7 +24,7 @@ inline double ogg_seconds(const std::filesystem::path& path){
     if(!rate||first)throw cs::IOException("Missing Vorbis duration");return double(last)/double(rate);
 }
 class Sound final:public kairo::SoundOutput {
-    struct Port{cs::Ref<kairo::SoundData>clip;double duration{};std::chrono::steady_clock::time_point start;bool playing{},loop{};};
+    struct Port{cs::Ref<kairo::SoundData>clip{};double duration{};std::chrono::steady_clock::time_point start;bool playing{},loop{};};
     std::array<Port,4> ports_;
     std::map<std::filesystem::path,double> durations_;
     Port& port(std::int32_t n){if(n<0||n>=4)throw cs::IndexOutOfRangeException();return ports_[std::size_t(n)];}
@@ -38,6 +38,6 @@ public:
     void SetLoop(std::int32_t n,bool loop)override{port(n).loop=loop;}
     void Pump()override{for(int n=0;n<4;++n)(void)IsPlaying(n);}
     void trace_edges(const cs::EdgeVisitor&v)const override{for(const auto&p:ports_)cs::trace_value(p.clip,v);}
-    void release_edges()override{for(auto&p:ports_)p.clip.reset();}
+    void release_edges()override{for(auto&p:ports_)pls::cs::clear_ref(p.clip);}
 };
 }

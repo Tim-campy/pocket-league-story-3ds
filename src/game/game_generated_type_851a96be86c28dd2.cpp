@@ -9,7 +9,7 @@ static bool cs_66520490d812bf5b_value{};
 
 static pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_99f86cd66d5ccef0_value{};
 
-void cs_init_851a96be86c28dd2(){static pls::cs::TypeInitState state;state.run("system.KairoText",[](){
+void cs_init_851a96be86c28dd2(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_66520490d812bf5b_value,visitor);pls::cs::trace_value(cs_99f86cd66d5ccef0_value,visitor);});static pls::cs::TypeInitState state;state.run("system.KairoText",[](){
 cs_99f86cd66d5ccef0_value = pls::cs::evaluate_type_initializer_field("F:system.KairoText.TRANSLATE_TABLE",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/KairoText.cs:M:system.KairoText.LT(System.String):143",pls::cs::Array<pls::cs::Array<pls::cs::String>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));});
 
 });}

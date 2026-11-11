@@ -31,7 +31,7 @@ void cs_4feff672b530e53a::release_edges(){pls::cs::Object::release_edges();pls::
 
 static pls::cs::Array<std::int32_t> cs_70976c35cb89b8f9_value{};
 
-void cs_init_4feff672b530e53a(){static pls::cs::TypeInitState state;state.run("game.TGroupArea",[](){
+void cs_init_4feff672b530e53a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_70976c35cb89b8f9_value,visitor);});static pls::cs::TypeInitState state;state.run("game.TGroupArea",[](){
 cs_70976c35cb89b8f9_value = pls::cs::evaluate_type_initializer_field("F:game.TGroupArea.camera_pos",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TGroupArea.cs:M:game.TGroupArea.#ctor(System.Int32,game.TArea):1279",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 
 });}

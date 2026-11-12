@@ -210,7 +210,7 @@
     "src/kairo/common/offscreen.cpp": "11bf0b57bbc4ae47bdd21c703f4b54b48ec4e11d7e76005de4a8acab6eb21b08",
     "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
     "src/kairo/common/render_mode.hpp": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0",
-    "src/kairo/common/resource_load_trace.hpp": "8496536999de669e08e01c518d78a3b45d6ccb97292dc467287e4324db3c8967",
+    "src/kairo/common/resource_load_trace.hpp": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f",
     "src/kairo/common/semantic_runtime.cpp": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf",
     "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430",
     "src/kairo/common/services.cpp": "62ab4911f93cc8af666196088b869b441d709fd28e50d632d6e8171cb48ee16f",
@@ -249,7 +249,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "5f579d550a6238be89d27c426e6e5868a6dcbacd72bcca78b14da260649d9cc0"
+    "sha256": "203ee1c4906b9577ec0d207604f3ff0f089b842a4b708a9939faf6b3faadbd21"
   },
   "verified_boundary_ids": [],
   "limitations": [

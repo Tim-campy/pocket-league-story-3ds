@@ -17,6 +17,8 @@ inline std::size_t resource_aggregate_count{},resource_aggregate_dropped{};
 inline std::mutex resource_event_mutex;
 inline std::atomic<unsigned> resource_id{};
 inline std::atomic<bool> resource_enabled{false};
+// Benchmark load phase: keep only whole-phase aggregates (no event list).
+inline std::atomic<bool> resource_event_list{true};
 inline void enable_resource_events(bool enabled){resource_enabled.store(enabled,std::memory_order_relaxed);}
 inline void resource_event(const char* stage,unsigned id,unsigned long long ns,std::size_t bytes){
     std::lock_guard<std::mutex> lock(resource_event_mutex);
@@ -26,6 +28,7 @@ inline void resource_event(const char* stage,unsigned id,unsigned long long ns,s
         auto& aggregate=resource_aggregates[slot];++aggregate.count;aggregate.ns+=ns;aggregate.bytes+=bytes;
         if(ns>aggregate.maximum_ns){aggregate.maximum_ns=ns;aggregate.maximum_id=id;}
     }else ++resource_aggregate_dropped;
+    if(!resource_event_list.load(std::memory_order_relaxed))return;
     if(resource_event_count<resource_events.size())resource_events[resource_event_count++]={stage,id,ns,static_cast<unsigned long long>(bytes)};
     else ++resource_event_dropped;
 }
@@ -67,6 +70,7 @@ inline void flush_resource_events(){
 namespace pls::diagnostic {
 struct ResourceTimer {ResourceTimer(const char*,std::size_t){}void step(const char*){}void finish(){}};
 inline void flush_resource_events(){}
+inline std::atomic<bool> resource_event_list{true};
 inline void enable_resource_events(bool){}
 }
 #endif

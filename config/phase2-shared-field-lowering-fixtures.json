@@ -41,10 +41,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.20001950000005309,
-    "native-compile": 30.80191310000373,
-    "managed-output": 0.6033895000000484,
-    "native-output": 0.4694624000112526
+    "csharp-compile": 0.20974229999410454,
+    "native-compile": 32.412022200005595,
+    "managed-output": 0.6103656999912346,
+    "native-output": 0.33541659999173135
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -98,11 +98,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/shared-field-differential/Harness.exe",
-    "sha256": "4cfae5f33e320e97e91aba00193e313b31aa013572c10c7bd7432627c6d01422"
+    "sha256": "67ac2c9de354dced75a0ea55ba091c30f0c5984d067e66dc4b310eeeb57ef52c"
   },
   "source_oracle_executable": {
     "path": "build/translator/shared-field-differential/Harness-managed.exe",
-    "sha256": "6059ea6346bc6e9104775d7370cd806fa9aa28755eda18d5bfb21009a2dd7e15"
+    "sha256": "80af037f11eb9e8974d9de09241a8a483d9bfeba7dfb1e6401f6ede4eac0a449"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -676,7 +676,7 @@
     },
     {
       "path": "src/kairo/common/resource_load_trace.hpp",
-      "sha256": "8496536999de669e08e01c518d78a3b45d6ccb97292dc467287e4324db3c8967"
+      "sha256": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -728,7 +728,7 @@
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
-      "sha256": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77"
+      "sha256": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6"
     },
     {
       "path": "src/runtime/tracing_gc.hpp",

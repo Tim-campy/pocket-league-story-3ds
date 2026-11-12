@@ -84,7 +84,7 @@ def main():
     p.add_argument('--apk', type=Path, required=True)
     p.add_argument('--image', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True, help='New local SD staging directory')
-    p.add_argument('--scenario', choices=['menu', 'match'], required=True)
+    p.add_argument('--scenario', choices=['menu', 'match', 'suite'], required=True, help='suite: load phase with the real clock, then menu and match windows with the virtual clock, one result.txt')
     p.add_argument('--virtual-clock', help='Benchmark determinism: start_ms,read_us,frame_ms written to virtual-clock.txt')
     p.add_argument('--read-delay-ms', type=int, help='Diagnosis only: artificial delay per real storage access')
     p.add_argument('--no-pack', action='store_true', help='Copy one SD file per asset instead of the single pack')
@@ -125,6 +125,13 @@ def main():
         files['converted/prevalidated.sha256']=dict(bytes=marker.stat().st_size,sha256=sha(marker))
     history = json.loads((ROOT / 'config/phase2-diagnostic-attempts.json').read_text())['attempts']
     attempt, save, first, last = (34, 25, 661, 960) if args.scenario == 'menu' else (35, 31, 1201, 1500)
+    windows = None
+    if args.scenario == 'suite':
+        # One replay (match save 31) covers the management menu and the match.
+        windows = [('menu', 191, 420), ('match', 1201, 1500)]  # 181-190: menu screen load
+        first, last = windows[0][1], windows[-1][2]
+        if args.virtual_clock is None:
+            args.virtual_clock = '1767225600000,1000,50'
     row = next(x for x in history if x['number'] == attempt)
     receipt = ROOT / row['execution_receipt']['path']
     if sha(receipt) != row['execution_receipt']['sha256']:
@@ -165,6 +172,8 @@ def main():
         value.pop('kinds', None)
     shutil.copytree(source_save, destination / 'preferences')
     (destination/'assets/converted/replay-after-title.flag').write_text('Wait for original TitleForm before replay frame zero.\n',newline='\n')
+    if windows:
+        (destination / 'windows.txt').write_text(''.join(f'{n} {a} {b}\n' for n, a, b in windows), newline='\n')
     if args.read_delay_ms is not None:
         if not 0 <= args.read_delay_ms <= 10000:
             raise ValueError('Read delay must be 0..10000 ms')
@@ -178,7 +187,7 @@ def main():
     manifest = dict(private=True, scenario=args.scenario, apk_sha256=EXPECTED,
                     benchmark_sha256=sha(executable), records=count,
                     asset_files=len(files), asset_bytes=sum(f['bytes'] for f in files.values() if f is not None),
-                    packed_assets=len(packed), virtual_clock=args.virtual_clock, read_delay_ms=args.read_delay_ms,
+                    packed_assets=len(packed), virtual_clock=args.virtual_clock, read_delay_ms=args.read_delay_ms, windows=windows,
                     first_frame=first, last_frame=last, frames=last-first+1,
                     replay_sha256=sha(destination / 'replay.txt'), asset_hashes=files,
                     replay_anchor='TitleForm.GetId()==1',

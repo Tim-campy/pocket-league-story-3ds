@@ -96,7 +96,7 @@ void wait_condition(std::condition_variable& condition,std::unique_lock<std::mut
 // notification there and would sleep for the whole timeout.
 template<class Predicate>
 bool wait_condition_for(std::condition_variable& condition,std::unique_lock<std::mutex>& lock,std::chrono::milliseconds timeout,Predicate predicate) {
-#if defined(__3DS__)
+#if defined(__3DS__) && !defined(PLS_GC_LEGACY_RENDEZVOUS)
     const auto deadline=std::chrono::steady_clock::now()+timeout;
     while(!predicate()){
         if(std::chrono::steady_clock::now()>=deadline)return predicate();

@@ -37,7 +37,7 @@
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
     "src/runtime/managed_gc_bridge.inc": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77",
+    "src/runtime/tracing_gc.cpp": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"
   },
   "historical_oracle": {

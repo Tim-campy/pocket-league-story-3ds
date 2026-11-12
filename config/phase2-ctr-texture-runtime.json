@@ -37,7 +37,7 @@
     "src/kairo/common/memory_ranges.hpp": "237593f45c5bc1b201793228f4615d4fa493bdedded05eae30bc6e107ff2305e",
     "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
     "src/kairo/common/render_mode.hpp": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0",
-    "src/kairo/common/resource_load_trace.hpp": "8496536999de669e08e01c518d78a3b45d6ccb97292dc467287e4324db3c8967",
+    "src/kairo/common/resource_load_trace.hpp": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f",
     "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430",
     "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -48,10 +48,10 @@
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
     "src/runtime/managed_gc_bridge.inc": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
-    "src/runtime/tracing_gc.cpp": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77",
+    "src/runtime/tracing_gc.cpp": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"
   },
   "game_assets_used": false,
-  "executable_sha256": "92cd49540578ccd5597e88a51c3a00bb73a0c7a28e69cf4c62b67775587cb124",
+  "executable_sha256": "1bf805f8d4e7f3ad6a959373a0439c2faa40b55d29b7d614cd437a9212c83ca8",
   "log_sha256": "d681f9052b5a81734d429cb256df1dfee1902216b5a5f63dc3127694bc7c3a73"
 }

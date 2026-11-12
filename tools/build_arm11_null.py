@@ -22,6 +22,7 @@ def main():
     p.add_argument('--lto',action='store_true')
     p.add_argument('--keep-unused-sections',action='store_true')
     p.add_argument('--memory-categories',action='store_true')
+    p.add_argument('--legacy-rendezvous',action='store_true',help='Diagnosis only: former timed condvar wait in the GC rendezvous')
     p.add_argument('--gc-trace',action='store_true',help='Diagnosis only: one line per collection')
     a=p.parse_args();output=a.output.resolve();source=a.snapshot.resolve()
     if not output.is_relative_to(ROOT/'build'):raise ValueError('ARM build must remain in ignored build/')
@@ -45,6 +46,7 @@ def main():
                '-DPLS_ALLOCATION_PROBE=OFF','-DPLS_REPORT_ALLOCATION_FAILURE=OFF',
                '-DPLS_MEMORY_CATEGORIES='+('ON'if a.memory_categories else'OFF'),
                '-DPLS_GC_TRACE='+('ON'if a.gc_trace else'OFF'),
+               '-DPLS_GC_LEGACY_RENDEZVOUS='+('ON'if a.legacy_rendezvous else'OFF'),
                '-DPLS_ARM_OPTIMIZATION='+a.optimization,'-DPLS_ARM_LTO='+('ON'if a.lto else'OFF'),
                '-DPLS_ARM_GC_SECTIONS='+('OFF'if a.keep_unused_sections else'ON')]
     command=['cmake','--build',msys(output),'--parallel','1']
@@ -58,7 +60,7 @@ def main():
     validate_diagnostic_manifest(source)
     receipt=dict(operation='authenticated-arm11-null-build',apk_sha256=APK_SHA,inputs=before,
                  optimization=a.optimization,lto=a.lto,gc_sections=not a.keep_unused_sections,
-                 memory_categories=a.memory_categories,gc_trace=a.gc_trace,diagnostic_only=a.gc_trace or a.memory_categories,allocation_probe=False,method_instrumentation=False,
+                 memory_categories=a.memory_categories,gc_trace=a.gc_trace,legacy_rendezvous=a.legacy_rendezvous,diagnostic_only=a.gc_trace or a.memory_categories or a.legacy_rendezvous,allocation_probe=False,method_instrumentation=False,
                  executable_sha256=digest(output/'null_game.3dsx'),elf_sha256=digest(output/'null_game.elf'))
     (output/'build-proof.json').write_text(json.dumps(receipt,indent=2)+'\n')
     print(json.dumps({k:v for k,v in receipt.items()if k!='inputs'}))

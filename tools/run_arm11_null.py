@@ -23,7 +23,7 @@ def main():
     parser.add_argument('--apk', type=Path, required=True)
     parser.add_argument('--image', type=Path, required=True)
     parser.add_argument('--output', type=Path, required=True)
-    parser.add_argument('--scenario', choices=['menu', 'match'], required=True)
+    parser.add_argument('--scenario', choices=['menu', 'match', 'suite'], required=True)
     parser.add_argument('--model', choices=['new', 'old'], required=True)
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--gdb-port', type=int)
@@ -104,6 +104,9 @@ def main():
     anchor_verified=manifest.get('replay_anchor')=='TitleForm.GetId()==1' and len(anchors)==1 and anchors[0].get('form_id')==1 and 0<=anchors[0].get('boot_frames',-1)<=12000
     expected = list(range(manifest['first_frame'], manifest['last_frame'] + 1))
     expected_form = 4 if args.scenario == 'menu' else 2
+    if args.scenario == 'suite':
+        report_file = private / 'result.txt'
+        (output / 'result.txt').write_bytes(report_file.read_bytes() if report_file.exists() else b'')
     valid_frames = (anchor_verified and [row['frame'] for row in frames] == expected and
                     all(row['form_id'] == expected_form for row in frames))
     emulator_log = text(launcher / 'user/log/azahar_log.txt')
@@ -113,6 +116,9 @@ def main():
         'Core_CPUClockPercentage: 100', 'Renderer_FrameLimit: 100'])
     if status == 'WINDOW_COMPLETE' and not (valid_frames and settings_verified):
         status = 'UNQUALIFIED_OUTPUT'
+    if args.scenario == 'suite' and status in ('WINDOW_COMPLETE', 'UNQUALIFIED_OUTPUT'):
+        result_text = (output / 'result.txt').read_text(errors='replace')
+        status = 'SUITE_COMPLETE' if 'PLS_BENCH_STATUS complete' in result_text and settings_verified and anchor_verified else 'SUITE_INCOMPLETE'
     final_image_sha256 = digest(image)
     if final_image_sha256 != launch_image_sha256:
         status = 'ARTIFACT_CHANGED'

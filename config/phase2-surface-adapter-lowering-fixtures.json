@@ -25,10 +25,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.20851359999505803,
-    "native-compile": 53.23222550000355,
-    "managed-output": 0.4456486999988556,
-    "native-output": 0.5336913999926765
+    "csharp-compile": 0.2129583000059938,
+    "native-compile": 52.92476710000483,
+    "managed-output": 0.4028459999972256,
+    "native-output": 0.30012270000588614
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -110,11 +110,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/surface-adapter-differential/Harness.exe",
-    "sha256": "a22f202542354a33b422d1b67b145c2ad345cb80e782b11f54b2fab43a6bb656"
+    "sha256": "3d06c8eca2a8b18a683d36e6f904c77f508a4c54b0febd4a8c3c763992f3a2dd"
   },
   "source_oracle_executable": {
     "path": "build/translator/surface-adapter-differential/Harness-managed.exe",
-    "sha256": "c1b5f330b757f0ffa44c33b11d33c578b645bb42e6f181e03df0dc6aaec8d8bf"
+    "sha256": "9879b624574ebf2979fb9c5d642989418f57466936be4502875cbc125bba2da7"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -716,7 +716,7 @@
     },
     {
       "path": "src/kairo/common/resource_load_trace.hpp",
-      "sha256": "8496536999de669e08e01c518d78a3b45d6ccb97292dc467287e4324db3c8967"
+      "sha256": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -768,7 +768,7 @@
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
-      "sha256": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77"
+      "sha256": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6"
     },
     {
       "path": "src/runtime/tracing_gc.hpp",

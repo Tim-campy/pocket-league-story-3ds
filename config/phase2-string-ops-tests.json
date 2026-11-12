@@ -35,7 +35,7 @@
   },
   "native_executable": {
     "path": "build/string-ops-fixtures/string-ops-fixtures.exe",
-    "sha256": "119310637380d8aa8863d1fe2ec935d8730c874ab274d16667708070b3a7b004"
+    "sha256": "9a86e198d443bab4016797b3a7bf6765aaa5e3f033fbe013a319c3e504cd07ef"
   },
   "profile_differences": 411,
   "production_methods_promoted": 0,

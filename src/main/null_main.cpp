@@ -19,6 +19,9 @@
 #include "resource_load_trace.hpp"
 #include "virtual_clock.hpp"
 #include <fstream>
+#include <algorithm>
+#include <cmath>
+#include <set>
 #include <iostream>
 #include <chrono>
 #if defined(PLS_DIAGNOSTIC_BUILD)
@@ -115,6 +118,17 @@ std::uint64_t resident_bytes(){
     return 0;
 #endif
 }
+struct Report {
+    std::string text;
+    void line(const std::string& value){text+=value;text+='\n';}
+    void write()const{
+#if defined(__3DS__)
+        if(std::FILE* file=std::fopen("sdmc:/pls-benchmark/result.txt","wb")){std::fwrite(text.data(),1,text.size(),file);std::fclose(file);}
+#endif
+    }
+};
+Report report;
+struct Window{std::string name;std::uint64_t first,last;};
 class Text final:public pls::kairo::TextInputPresenter {
 public:void Begin(pls::cs::String,std::int32_t,std::int32_t)override{}bool Blocking()const override{return false;}
 };
@@ -138,6 +152,7 @@ int main(int argc,char**argv){
     const auto model_result=R_SUCCEEDED(config_result)?CFGU_GetSystemModel(&model):config_result;
     if(R_SUCCEEDED(config_result))cfguExit();
     std::fprintf(stdout,"PLS_NULL_ARM_MODEL model=%u model_result=%ld new3ds=%d new3ds_result=%ld speedup_requested=1 clock=system_tick\n",unsigned(model),long(model_result),int(new_model),long(new_result));
+    {char line[160];std::snprintf(line,sizeof(line),"model=%u model_result=%ld new3ds=%d new3ds_result=%ld",unsigned(model),long(model_result),int(new_model),long(new_result));report.line(std::string("PLS_BENCH_MODEL ")+line);}
     std::fflush(stdout);
 #endif
     if(argc!=7){std::cerr<<"Expected assets preferences replay total_frames sample_first sample_last\n";return 2;}
@@ -147,6 +162,17 @@ int main(int argc,char**argv){
         std::ifstream replay(argv[3]);if(!replay)throw std::runtime_error("Replay missing");
         std::string line,keys;while(std::getline(replay,line)){if(line.empty()||line[0]=='#')continue;if(!keys.empty())keys+=',';keys+=line;}
         const auto inputs=pls::pc::parse_scripted_keys(keys);
+        std::vector<Window> windows{{"window",first,last}};bool suite=false;
+#if defined(__3DS__)
+        {
+            std::ifstream list("sdmc:/pls-benchmark/windows.txt");std::string name;std::uint64_t a=0,b=0;std::vector<Window> parsed;
+            while(list>>name>>a>>b){if(!a||a>b||b>total||(!parsed.empty()&&a<=parsed.back().last))throw std::runtime_error("Invalid benchmark windows");parsed.push_back({name,a,b});}
+            if(!parsed.empty()){windows=parsed;suite=true;}
+        }
+#endif
+        const auto in_window=[&](std::uint64_t frame){for(const auto& w:windows)if(frame>=w.first&&frame<=w.last)return true;return false;};
+        const auto window_first=windows.front().first,window_last=windows.back().last;
+        std::uint64_t window_frames=0;for(const auto& w:windows)window_frames+=w.last-w.first+1;
         memory_report();std::cerr<<"PLS_NULL_STAGE=runtime\n";std::cerr.flush();
         pls::cs::GcMutatorScope mutator;pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture({1033,{9},"en",false});
         pls::sdl::install_globalization_backend();
@@ -185,6 +211,7 @@ int main(int argc,char**argv){
         auto app=pls::game::create_application();app->host_configure(240,280,pls::cs::String::from_utf8(preferences.u8string()),{});
         pls::kairo::WindowOrientation orientation=pls::kairo::WindowOrientation::portrait;
         app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::portrait;});app->host_orientation_reader([&]{return orientation;});app->host_orientation_writer([&](auto v){orientation=v;});app->host_fullscreen_writer([](bool){});
+        std::string deferred_clock;
         {
             // Deterministic clock for benchmark/diagnosis (seeds, LoadStart slices).
             std::string clock;
@@ -201,6 +228,7 @@ int main(int argc,char**argv){
 #pragma warning(pop)
 #endif
 #endif
+            if(suite){deferred_clock=clock;clock.clear();if(!deferred_clock.empty())pls::diagnostic::resource_event_list.store(false);pls::diagnostic::enable_resource_events(true);}
             if(!clock.empty()){pls::kairo::virtual_clock::install(pls::kairo::virtual_clock::parse(clock));std::fprintf(stdout,"PLS_NULL_VIRTUAL_CLOCK=%s\n",clock.c_str());std::fflush(stdout);}
         }
         std::cerr<<"PLS_NULL_STAGE=bootstrap\n";std::cerr.flush();
@@ -217,17 +245,30 @@ int main(int argc,char**argv){
                 auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
                 // TitleForm's original constructor calls base(1). Wait by
                 // observing the game, never by forcing its state or skipping LoadStart.
-                if(form&&form->GetId()==1){pls::kairo::virtual_clock::rebase();break;}
+                if(form&&form->GetId()==1){if(!suite)pls::kairo::virtual_clock::rebase();break;}
                 if(app->IsTermination()||boot_frames>=12000)throw std::runtime_error("Benchmark did not reach TitleForm");
                 const auto start=Clock::now();pls::cs::gc_safepoint();execute_frame();++boot_frames;
                 if(boot_frames%60==0){std::fprintf(stderr,"PLS_NULL_BOOT_FRAMES=%llu\n",static_cast<unsigned long long>(boot_frames));std::fflush(stderr);}
-                pls::diagnostic::flush_resource_events();pls::kairo::UnityApplication::pace(start);
+                if(!suite)pls::diagnostic::flush_resource_events();pls::kairo::UnityApplication::pace(start);
             }
             std::fprintf(stdout,"PLS_NULL_REPLAY_ANCHOR={\"form_id\":1,\"boot_frames\":%llu,\"boot_ns\":%llu,\"retention_hits\":%llu}\n",static_cast<unsigned long long>(boot_frames),static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-boot_started).count()),static_cast<unsigned long long>(assets.retention_hits()));std::fflush(stdout);
+            if(suite){
+                char summary[256];const auto boot_ns=static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-boot_started).count());
+                std::snprintf(summary,sizeof(summary),"PLS_BENCH_LOAD boot_frames=%llu boot_ns=%llu retention_hits=%llu clock=real",static_cast<unsigned long long>(boot_frames),boot_ns,static_cast<unsigned long long>(assets.retention_hits()));report.line(summary);
+                {
+                    std::lock_guard<std::mutex> lock(pls::diagnostic::resource_event_mutex);
+                    for(std::size_t i=0;i<pls::diagnostic::resource_aggregate_count;++i){const auto& a=pls::diagnostic::resource_aggregates[i];
+                        std::snprintf(summary,sizeof(summary),"PLS_BENCH_LOAD_STAGE stage=%s count=%llu ns=%llu maximum_ns=%llu bytes=%llu",a.stage,a.count,a.ns,a.maximum_ns,a.bytes);report.line(summary);}
+                    if(pls::diagnostic::resource_aggregate_dropped)report.line("PLS_BENCH_LOAD_STAGE dropped="+std::to_string(pls::diagnostic::resource_aggregate_dropped));
+                    pls::diagnostic::resource_aggregate_count=pls::diagnostic::resource_aggregate_dropped=pls::diagnostic::resource_event_count=pls::diagnostic::resource_event_dropped=0;
+                }
+                pls::diagnostic::enable_resource_events(false);report.write();
+                if(!deferred_clock.empty()){pls::kairo::virtual_clock::install(pls::kairo::virtual_clock::parse(deferred_clock));pls::kairo::virtual_clock::rebase();report.line("PLS_BENCH_CLOCK virtual="+deferred_clock+" from=title_anchor");}
+            }
         }
 #endif
         std::cerr<<"PLS_NULL_STAGE=frames\n";std::cerr.flush();
-        struct Sample{std::uint64_t frame,cpu,wall,begin,end;int form;pls::allocation_probe::Snapshot memory;std::uint64_t thread_ns,thread_cycles;};std::vector<Sample>samples;samples.reserve(last-first+1);
+        struct Sample{std::uint64_t frame,cpu,wall,begin,end;int form;pls::allocation_probe::Snapshot memory;std::uint64_t thread_ns,thread_cycles;};std::vector<Sample>samples;samples.reserve(window_frames);
 #if defined(_WIN32)
         LARGE_INTEGER frequency;QueryPerformanceFrequency(&frequency);std::cout<<"PLS_NULL_QPC_FREQUENCY="<<frequency.QuadPart<<"\nPLS_NULL_PID="<<GetCurrentProcessId()<<"\n";
 #endif
@@ -235,10 +276,10 @@ int main(int argc,char**argv){
         pls::allocation_probe::enabled=true;
 #endif
         for(std::uint64_t completed=0;completed<total&&!app->IsTermination();++completed){
-            if(completed+1==first){memory_categories("before_window");gc_measurement("before_window");}
+            if(completed+1==window_first){memory_categories("before_window");gc_measurement("before_window");}
             // Startup diagnosis only, outside the measured window and timer.
-            if(completed+1<first&&completed%60==0){std::fprintf(stderr,"PLS_NULL_WARMUP_BEGIN=%llu\n",static_cast<unsigned long long>(completed+1));std::fflush(stderr);}
-            if(completed+1==first)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC")){
+            if(completed+1<window_first&&completed%60==0){std::fprintf(stderr,"PLS_NULL_WARMUP_BEGIN=%llu\n",static_cast<unsigned long long>(completed+1));std::fflush(stderr);}
+            if(completed+1==window_first)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC")){
                 std::ofstream(std::string(sync)+".request")<<"ready\n";const auto deadline=Clock::now()+std::chrono::seconds(60);
                 while(!std::filesystem::exists(std::string(sync)+".ready")){if(Clock::now()>deadline)throw std::runtime_error("External sampling collector did not start");std::this_thread::sleep_for(std::chrono::milliseconds(20));}
             }
@@ -260,10 +301,10 @@ int main(int argc,char**argv){
 #endif
             pls::allocation_sites::window(-1);
             pls::source_allocations::window(-1);
-            if(completed+1>=first&&completed+1<=last){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;samples.push_back({completed+1,elapsed_cpu,std::uint64_t(elapsed_wall),begin,end,form?form->GetId():-1,after,thread_end.ns-thread_start.ns,thread_end.cycles-thread_start.cycles});}
-            if(completed+1==first||completed+1==last){std::cerr<<"PLS_NULL_WINDOW="<<(completed+1)<<"\n";std::cerr.flush();}
-            if(completed+1<first&&completed%60==0){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;std::fprintf(stderr,"PLS_NULL_WARMUP_END=%llu form=%d\n",static_cast<unsigned long long>(completed+1),form?form->GetId():-1);std::fflush(stderr);}
-            if(completed+1==last)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC"))std::ofstream(std::string(sync)+".done")<<"done\n";
+            if(in_window(completed+1)){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;samples.push_back({completed+1,elapsed_cpu,std::uint64_t(elapsed_wall),begin,end,form?form->GetId():-1,after,thread_end.ns-thread_start.ns,thread_end.cycles-thread_start.cycles});}
+            if(std::any_of(windows.begin(),windows.end(),[&](const Window& w){return completed+1==w.first||completed+1==w.last;})){std::cerr<<"PLS_NULL_WINDOW="<<(completed+1)<<"\n";std::cerr.flush();}
+            if(!in_window(completed+1)&&completed%60==0){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;std::fprintf(stderr,"PLS_NULL_WARMUP_END=%llu form=%d\n",static_cast<unsigned long long>(completed+1),form?form->GetId():-1);std::fflush(stderr);}
+            if(completed+1==window_last)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC"))std::ofstream(std::string(sync)+".done")<<"done\n";
             pls::diagnostic::flush_resource_events();pls::kairo::UnityApplication::pace(start);
         }
         for(const auto&s:samples)std::cout<<"PLS_NULL_FRAME={\"frame\":"<<s.frame<<",\"cpu_ns\":"<<s.cpu<<",\"wall_ns\":"<<s.wall<<",\"form_id\":"<<s.form<<",\"cpp_allocations\":"<<s.memory.allocations<<",\"cpp_allocation_bytes\":"<<s.memory.bytes<<",\"collections\":"<<s.memory.collections<<",\"collection_ns\":"<<s.memory.collection_ns<<",\"longest_collection_ns\":"<<s.memory.longest_collection_ns<<"}\n";
@@ -271,6 +312,21 @@ int main(int argc,char**argv){
         for(const auto&s:samples)std::cout<<"PLS_NULL_THREAD={\"frame\":"<<s.frame<<",\"cpu_ns\":"<<s.thread_ns<<",\"cycles\":"<<s.thread_cycles<<",\"wall_ns\":"<<s.wall<<"}\n";
         pls::allocation_sites::dump(stdout);
         pls::source_allocations::dump(stdout);
-        gc_measurement("after_window");memory_categories("after_window");memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==last-first+1?0:3;
-    }catch(const pls::cs::Exception&e){memory_report();std::cerr<<e.what()<<'\n';return 1;}catch(const std::exception&e){memory_report();std::cerr<<e.what()<<'\n';return 1;}
+        for(const auto& w:windows){
+            std::vector<double> wall;std::uint64_t collections=0,collection_ns=0,longest=0;std::set<int> forms;
+            for(const auto& s:samples)if(s.frame>=w.first&&s.frame<=w.last){wall.push_back(double(s.wall)/1e6);collections+=s.memory.collections;collection_ns+=s.memory.collection_ns;longest=std::max<std::uint64_t>(longest,s.memory.longest_collection_ns);forms.insert(s.form);}
+            std::sort(wall.begin(),wall.end());double sum=0;for(double v:wall)sum+=v;
+            char summary[320];std::string form_list;for(int f:forms){if(!form_list.empty())form_list+=',';form_list+=std::to_string(f);}
+            std::snprintf(summary,sizeof(summary),"PLS_BENCH_WINDOW name=%s first=%llu last=%llu frames=%zu expected=%llu forms=%s mean_ms=%.4f p95_ms=%.4f max_ms=%.4f collections=%llu collection_ms=%.4f longest_collection_ms=%.4f",
+                w.name.c_str(),static_cast<unsigned long long>(w.first),static_cast<unsigned long long>(w.last),wall.size(),static_cast<unsigned long long>(w.last-w.first+1),form_list.c_str(),
+                wall.empty()?0.0:sum/double(wall.size()),wall.empty()?0.0:wall[std::size_t(std::ceil(0.95*double(wall.size())))-1],wall.empty()?0.0:wall.back(),
+                static_cast<unsigned long long>(collections),double(collection_ns)/1e6,double(longest)/1e6);
+            report.line(summary);
+        }
+#if defined(__3DS__)
+        {const auto heap=mallinfo();char summary[200];std::snprintf(summary,sizeof(summary),"PLS_BENCH_MEMORY malloc_used=%d malloc_free=%d app_region_used=%u gc_objects=%llu",heap.uordblks,heap.fordblks,unsigned(osGetMemRegionUsed(MEMREGION_APPLICATION)),static_cast<unsigned long long>(pls::cs::gc_registry_stats().entries));report.line(summary);}
+#endif
+        report.line(std::string("PLS_BENCH_STATUS ")+(samples.size()==window_frames?"complete":"incomplete"));report.write();
+        gc_measurement("after_window");memory_categories("after_window");memory_report();std::cout<<"PLS_NULL_MEMORY="<<resident_bytes()<<"\n";std::cout.flush();app->host_stop();return samples.size()==window_frames?0:3;
+    }catch(const pls::cs::Exception&e){memory_report();std::cerr<<e.what()<<'\n';report.line(std::string("PLS_BENCH_STATUS failed ")+e.what());report.write();return 1;}catch(const std::exception&e){memory_report();std::cerr<<e.what()<<'\n';report.line(std::string("PLS_BENCH_STATUS failed ")+e.what());report.write();return 1;}
 }

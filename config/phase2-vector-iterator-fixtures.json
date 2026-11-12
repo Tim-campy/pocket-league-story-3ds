@@ -37,10 +37,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.24605659999360796,
-    "native-compile": 32.6900028000091,
-    "managed-output": 0.5827773999917554,
-    "native-output": 0.5179135000071255
+    "csharp-compile": 0.28472080000210553,
+    "native-compile": 31.458996400004253,
+    "managed-output": 0.6294190999906277,
+    "native-output": 0.334448000008706
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -98,11 +98,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/vector-iterator/differential/Harness.exe",
-    "sha256": "b959eb5ebb7017935a1517c34e050c63aac9aa8ea472dd7c3fad097535390c36"
+    "sha256": "2285e361d7fbbbad248a131033b751e1488bd41dfdd4a3e9d90c5678612b39a6"
   },
   "source_oracle_executable": {
     "path": "build/translator/vector-iterator/differential/Harness-managed.exe",
-    "sha256": "520cefe301ab5caad8c9149f3f5a6b8cde7b10e36908334d41656676205f59de"
+    "sha256": "f4c67d38b8c78d66df680fc64e5b0deb1e003c338ebe8f39892ce23bf6fd3fc8"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -680,7 +680,7 @@
     },
     {
       "path": "src/kairo/common/resource_load_trace.hpp",
-      "sha256": "8496536999de669e08e01c518d78a3b45d6ccb97292dc467287e4324db3c8967"
+      "sha256": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -732,7 +732,7 @@
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
-      "sha256": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77"
+      "sha256": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6"
     },
     {
       "path": "src/runtime/tracing_gc.hpp",

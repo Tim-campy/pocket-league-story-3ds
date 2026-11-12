@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.2252542000060203,
-    "native-compile": 306.0275174000126,
-    "managed-output": 40.53286749999097,
-    "native-output": 67.60680110000249
+    "csharp-compile": 1.2152360000036424,
+    "native-compile": 307.80359429999953,
+    "managed-output": 41.579259499994805,
+    "native-output": 67.16372370001045
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1522,11 +1522,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "de79f5303d68d68529dc12c65d33d05f02b835e3871b9992947c05d4c6d05a99"
+    "sha256": "51a995751a3980034bc6a15d04a90e17d98f89dcf40d1301190e1de5088c96fe"
   },
   "source_oracle_executable": {
     "path": "build/translator/split-differential/Harness-managed.exe",
-    "sha256": "5c374e4d55029e1869b158c2bfda0778a009d4393bbafdb3fd97bb7ff808fc4a"
+    "sha256": "23effcf6fa5095db653308fbd1239ea0d00946e66a2f893b885f9f35f0569722"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -2792,7 +2792,7 @@
     },
     {
       "path": "src/kairo/common/resource_load_trace.hpp",
-      "sha256": "8496536999de669e08e01c518d78a3b45d6ccb97292dc467287e4324db3c8967"
+      "sha256": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f"
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
@@ -2848,7 +2848,7 @@
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
-      "sha256": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77"
+      "sha256": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6"
     },
     {
       "path": "src/runtime/tracing_gc.hpp",

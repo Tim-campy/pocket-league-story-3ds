@@ -9,7 +9,7 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "60cf30a9e9bec4971878757ccac9b520b7ce88a89280ea1afba2b5f1ae35dd3a"
+    "sha256": "5d048ea795740ebbb6d1827575f6877ea22684960ae16dad59e737069dfb317c"
   },
   "inputs": {
     "tools/test_ui_dispatch_gc.py": "eba1f943afce1064cbef1efb9d38fc9cc4264a1833c6548df9ba05d66ee505ca",
@@ -21,7 +21,7 @@
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
-    "src/runtime/managed_gc_bridge.inc": "97e1dbcd8be58f15ed9789d8d92367e0ef2d5a0b61b1ad96ce202c45a009ac8a",
+    "src/runtime/managed_gc_bridge.inc": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
     "src/runtime/tracing_gc.cpp": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"

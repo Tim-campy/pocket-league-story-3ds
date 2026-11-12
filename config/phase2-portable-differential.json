@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.23994120000134,
-    "native-compile": 322.346701100003,
-    "managed-output": 42.842622599993774,
-    "native-output": 63.04863530000148
+    "csharp-compile": 1.2219165999995312,
+    "native-compile": 306.4979052999988,
+    "managed-output": 41.910997200000565,
+    "native-output": 66.20409700000891
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1274,11 +1274,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "7e34d952ff0bb3bb6f4fb4fafda5a2ceaa48aff554721cb1ed3e5f6d392b0899"
+    "sha256": "30886efd6e18d5b78e1e22e29430a7d84ab6b08e650105ab1ee2ba5436b89a1b"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "63c442cd8f2f5c46adfdbe8e60b5aaa7f93ba562a675a4008e0c07d46211f10b"
+    "sha256": "c253fef99b62805599ab0d30b548e165a000566e925501e4d2a947c177cfba0d"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -1432,11 +1432,11 @@
     },
     {
       "path": "src/kairo/common/asset_catalog.cpp",
-      "sha256": "705d4f424c8b2fc161339c9b86fcb481f7a278130790f67621887906f0711b55"
+      "sha256": "11733069359e8e7c10d37a280576c5e7077d352e9d8f81e3b2848b00d32569c8"
     },
     {
       "path": "src/kairo/common/asset_catalog.hpp",
-      "sha256": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f"
+      "sha256": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e"
     },
     {
       "path": "src/kairo/common/asset_reader.cpp",
@@ -2083,6 +2083,10 @@
       "sha256": "2d5504c48d59ad05d05d56df5545f737e4040181b17d84e0cf7bff0b55161ef4"
     },
     {
+      "path": "src/kairo/common/virtual_clock.hpp",
+      "sha256": "e7ee09d9c96fbf454202db60004b668b15f90e096a35d8f4799ee3a21b9822ad"
+    },
+    {
       "path": "src/kairo/platform/sdl/globalization.cpp",
       "sha256": "16c4af626da9c714b35485ac86f85e1f24e9438f3c4959226fd7dba531edc018"
     },
@@ -2100,7 +2104,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "97e1dbcd8be58f15ed9789d8d92367e0ef2d5a0b61b1ad96ce202c45a009ac8a"
+      "sha256": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db"
     },
     {
       "path": "src/runtime/managed_reference.hpp",

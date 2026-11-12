@@ -27,15 +27,21 @@ int main(int argc,char**argv){
  const auto* entry=strict.find(Kind::image,"own-0");check(entry!=nullptr);
  auto original=strict.read(*entry);check(prepared.read(*entry)==original);prepared.verify(*entry);
  check(strict.prepare_stream(*entry)==strict.path(*entry));check(prepared.prepare_stream(*entry)==prepared.path(*entry));
- auto changed=original;changed.back()^=1;write(root/entry->path,changed);
+ auto changed=original;changed.back()^=1;write(root/entry->path,changed);strict.release_retained();prepared.release_retained();
  io_failure([&]{(void)strict.read(*entry);});check(prepared.read(*entry)==changed);io_failure([&]{prepared.verify(*entry);});
  io_failure([&]{(void)strict.prepare_stream(*entry);});check(prepared.prepare_stream(*entry)==prepared.path(*entry));
- changed.pop_back();write(root/entry->path,changed);io_failure([&]{(void)prepared.read(*entry);});io_failure([&]{(void)prepared.prepare_stream(*entry);});write(root/entry->path,original);
+ changed.pop_back();write(root/entry->path,changed);prepared.release_retained();io_failure([&]{(void)prepared.read(*entry);});io_failure([&]{(void)prepared.prepare_stream(*entry);});write(root/entry->path,original);
  auto marker=read(root/"converted/prevalidated.sha256");
  std::vector<std::uint8_t> lf,crlf;
  for(auto c:marker)if(c!='\r'){lf.push_back(c);if(c=='\n')crlf.push_back('\r');crlf.push_back(c);}
  for(const auto& lines:{lf,crlf}){write(root/"converted/prevalidated.sha256",lines);Catalog portable(root,ReadValidation::PreparedCatalog);check(portable.read(*entry)==original);}
  auto wrong=marker;wrong[wrong.size()-2]=wrong[wrong.size()-2]=='0'?'1':'0';write(root/"converted/prevalidated.sha256",wrong);
  io_failure([&]{Catalog invalid(root,ReadValidation::PreparedCatalog);});write(root/"converted/prevalidated.sha256",marker);
+ {Catalog retained(root,ReadValidation::PreparedCatalog);check(retained.read(*entry)==original);const auto hits=retained.retention_hits();
+  auto altered=original;altered.back()^=1;write(root/entry->path,altered);
+  check(retained.read(*entry)==original);check(retained.retention_hits()==hits+1);
+  retained.release_retained();check(retained.read(*entry)==altered);check(retained.retention_hits()==hits+1);
+  check(retained.prepare_stream(*entry)==retained.path(*entry));check(retained.prepare_stream(*entry)==retained.path(*entry));check(retained.retention_hits()==hits+2);
+  write(root/entry->path,original);}
  std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<assertions<<"}\n";
 }

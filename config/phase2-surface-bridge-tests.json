@@ -189,7 +189,7 @@
     "src/kairo/common/image_lifetime.cpp": "774416fccb5580ac4b95fdcce3fcb66510c60317a95b4fbbb9ecb1a08375d3aa",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
     "src/kairo/platform/sdl/font.cpp": "d69e187f1ef6c30f6d19576a7576780c1d39516fd249978e5f4c682b4e9fe26d",
-    "src/kairo/common/asset_catalog.cpp": "705d4f424c8b2fc161339c9b86fcb481f7a278130790f67621887906f0711b55",
+    "src/kairo/common/asset_catalog.cpp": "11733069359e8e7c10d37a280576c5e7077d352e9d8f81e3b2848b00d32569c8",
     "src/kairo/common/semantic_runtime.cpp": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf",
     "tests/kairo/SurfaceBridgeOracle.cs": "647d04d52e86789e2c5807f42317a0dec2fd011d109613781e8d02a756b95ccc",
     "tools/test_surface_bridge.py": "ad25c0f635d580ba00bd9c1b740fb3b87fa5f08d88391a965e7ab431e5049199",
@@ -206,7 +206,7 @@
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
     "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "src/kairo/common/asset_catalog.hpp": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f",
+    "src/kairo/common/asset_catalog.hpp": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/platform/sdl/font.hpp": "285a3ffc32ed8c3290d1c2fee20129f4932bb872d0285b970327af972be43081"
   },
@@ -245,7 +245,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "b76a794f9dc5e7811cc1a9456648e8ce1aa8d152feda38f4aae3648d9f3082ca"
+    "sha256": "8a7b027a9eb390c38d7b17a70126c6e58aed15d3476b90a0bdda97b87a697057"
   },
   "verified_boundary_ids": [],
   "ordering": {

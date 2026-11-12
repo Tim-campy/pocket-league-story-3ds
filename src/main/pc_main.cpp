@@ -17,6 +17,7 @@
 #include "diagnostic_keys.hpp"
 #include "diagnostic_profile.hpp"
 #include "capture.hpp"
+#include "virtual_clock.hpp"
 #include "../kairo/platform/sdl/text_input.hpp"
 #include "../kairo/platform/sdl/globalization.hpp"
 #include <exception>
@@ -115,6 +116,10 @@ int main(int argc,char** argv){
         app->host_orientation_reader([&backend]{return backend.orientation();});
         app->host_orientation_writer([&backend](auto value){backend.set_orientation(value);});
         app->host_fullscreen_writer([&backend](bool enabled){backend.set_fullscreen(enabled);});
+#if defined(PLS_DIAGNOSTIC_BUILD)
+        // Diagnostic runs may request the deterministic clock; the normal game build never installs it.
+        if(pls::kairo::virtual_clock::install_from_environment())std::cerr<<"PLS_PC_VIRTUAL_CLOCK="<<std::getenv("PLS_VIRTUAL_CLOCK")<<'\n';
+#endif
         pls::game::configure_application(app);
         app->host_start();
         std::uint64_t presented_frames=0;
@@ -126,6 +131,12 @@ int main(int argc,char** argv){
         const auto scripted_keys=pls::pc::parse_scripted_keys(std::getenv("PLS_PC_KEY_FRAMES")?std::getenv("PLS_PC_KEY_FRAMES"):"");
         std::uint64_t dismiss_until=0;
         const bool dismiss_unlabeled_only=std::getenv("PLS_PC_DISMISS_UNLABELED_ONLY")!=nullptr;
+        // Optional anchor: scripted frames count from the first TitleForm
+        // (original base id 1) frame, assigned this number. Boot worker
+        // timing then cannot shift inputs or the virtual clock.
+        std::uint64_t anchor_frame=0;bool anchored=true;
+        if(const auto* value=std::getenv("PLS_PC_TITLE_ANCHOR")){std::size_t used=0;anchor_frame=std::stoull(value,&used);if(value[used]!='\0'||anchor_frame==0||anchor_frame>pls::pc::max_scripted_key_frame)throw pls::cs::ArgumentOutOfRangeException();anchored=false;}
+        std::uint64_t script_frame=0;
         if(const auto* value=std::getenv("PLS_PC_DISMISS_POPUPS_UNTIL")){std::size_t used=0;dismiss_until=std::stoull(value,&used);if(value[used]!='\0'||dismiss_until<300||dismiss_until>pls::pc::max_scripted_key_frame)throw pls::cs::ArgumentOutOfRangeException();}
 #endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
@@ -136,14 +147,19 @@ int main(int argc,char** argv){
             pls::cs::gc_safepoint();
             const auto frame_start=std::chrono::steady_clock::now();
 #if defined(PLS_DIAGNOSTIC_BUILD)
-            if(dismiss_until&&presented_frames>=300&&presented_frames<=dismiss_until&&presented_frames%18==0&&std::find(select_frames.begin(),select_frames.end(),presented_frames)==select_frames.end()&&std::none_of(scripted_keys.begin(),scripted_keys.end(),[&](const auto&key){return key.frame==presented_frames;})){
+            if(!anchored){auto manager=app->GetFormManager();auto top=manager?manager->GetTopForm():nullptr;
+                if(top&&top->GetId()==1){anchored=true;script_frame=anchor_frame;pls::kairo::virtual_clock::rebase();std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_TITLE_ANCHOR="<<presented_frames<<'\n';}}
+            else if(anchor_frame)++script_frame;
+            if(!anchor_frame)script_frame=presented_frames;
+            const std::uint64_t input_frame=anchored?script_frame:0;
+            if(dismiss_until&&input_frame>=300&&input_frame<=dismiss_until&&input_frame%18==0&&std::find(select_frames.begin(),select_frames.end(),input_frame)==select_frames.end()&&std::none_of(scripted_keys.begin(),scripted_keys.end(),[&](const auto&key){return key.frame==input_frame;})){
                 auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
                 // SubForm's original base ID is 4. No generated fields/flags
                 // are changed: these are ordinary source Canvas button clicks.
-                if(form){auto label=form->GetRightSoftLabel();auto key=pls::pc::popup_dismiss_key(form->GetId(),!label.is_null()&&label.length()!=0,dismiss_unlabeled_only);if(!key.empty()){canvas->KeyClick(key=="SOFT2"?pls::kairo::Canvas::KEY_SOFT2:pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_DISMISS_POPUP_FRAME="<<presented_frames<<':'<<key<<'\n';}}
+                if(form){auto label=form->GetRightSoftLabel();auto key=pls::pc::popup_dismiss_key(form->GetId(),!label.is_null()&&label.length()!=0,dismiss_unlabeled_only);if(!key.empty()){canvas->KeyClick(key=="SOFT2"?pls::kairo::Canvas::KEY_SOFT2:pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_DISMISS_POPUP_FRAME="<<input_frame<<':'<<key<<'\n';}}
             }
-            if(std::find(select_frames.begin(),select_frames.end(),presented_frames)!=select_frames.end()){canvas->KeyClick(pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_SELECT_FRAME="<<presented_frames<<'\n';}
-            for(const auto& key:scripted_keys)if(key.frame==presented_frames){
+            if(std::find(select_frames.begin(),select_frames.end(),input_frame)!=select_frames.end()){canvas->KeyClick(pls::kairo::Canvas::KEY_SELECT);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_SELECT_FRAME="<<input_frame<<'\n';}
+            for(const auto& key:scripted_keys)if(key.frame==input_frame){
                 const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;
                 canvas->KeyClick(code);std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_PC_SCRIPTED_KEY_FRAME="<<key.frame<<':'<<key.name<<'\n';
             }
@@ -165,7 +181,11 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::audio);
             app->host_draw();
             pls::kairo::Offscreen::EndFrame();
-            pls::cs::gc_frame_end();
+            pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.release_retained();
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            // Calibration only: cumulative clock reads, paired with PLS_FRAME_PROFILE.
+            if(pls::kairo::virtual_clock::observing()||pls::kairo::virtual_clock::active())std::cerr<<"PLS_CLOCK_READS="<<pls::kairo::virtual_clock::reads()<<','<<pls::kairo::virtual_clock::thread_reads()<<'\n';
+#endif
             text_input->Draw(display);
             pls::kairo::finish_captures(display);
             timing.mark(pls::pc::FrameStage::game_draw);

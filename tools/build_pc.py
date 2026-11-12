@@ -19,6 +19,13 @@ APK_SHA='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def source_list_record(rows,folder=None):
+    """Digest and count in the shared history; full list only in the private attempt folder."""
+    canonical=json.dumps(rows,sort_keys=True,separators=(',',':'))
+    if folder is not None:(folder/'generated-game-sources.json').write_text(canonical+'\n',encoding='utf-8',newline='\n')
+    return dict(files=len(rows),sha256=hashlib.sha256(canonical.encode('utf-8')).hexdigest())
+
+
 def next_attempt_number(history,folder):
     used=[row['number']for row in history.get('attempts',[])]
     directory=Path(folder)/'attempts'
@@ -220,6 +227,8 @@ def main():
     parser.add_argument('--diagnostic-key-frame',action='append',default=[],help='Private FRAME:KEY; KEY is SELECT/UP/DOWN/LEFT/RIGHT/SOFT1/SOFT2')
     parser.add_argument('--diagnostic-dismiss-popups-until-frame',type=int,help='Private tutorial replay: SELECT for unlabeled dialogs, SOFT2 for SubForm windows with a right soft label; starts at frame300')
     parser.add_argument('--diagnostic-save-from-attempt',type=int,help='Copy an earlier own diagnostic save into this fresh isolated attempt')
+    parser.add_argument('--diagnostic-title-anchor',type=int,help='Diagnostic runs only: scripted frames start at this number on the first original TitleForm frame (also rebases --virtual-clock)')
+    parser.add_argument('--virtual-clock',help='Diagnostic runs only: deterministic clock start_ms,read_us,frame_ms (or observe)')
     parser.add_argument('--diagnostic-unlabeled-popups-only',action='store_true',help='During popup replay, leave windows with a right soft label untouched')
     args=parser.parse_args()
     if not 1<=args.run_seconds<=600:parser.error('--run-seconds must be1..600')
@@ -247,6 +256,14 @@ def main():
     env.pop('PLS_PC_SELECT_FRAME',None)
     if args.diagnostic_select_frame is not None:env['PLS_PC_SELECT_FRAME']=','.join(str(n)for n in args.diagnostic_select_frame)
     env.pop('PLS_PC_KEY_FRAMES',None)
+    env.pop('PLS_VIRTUAL_CLOCK',None)
+    env.pop('PLS_PC_TITLE_ANCHOR',None)
+    if args.diagnostic_title_anchor is not None:
+        if not args.diagnostic_generated or not args.run or not 1<=args.diagnostic_title_anchor<=12000:parser.error('--diagnostic-title-anchor requires a diagnostic run and 1..12000')
+        env['PLS_PC_TITLE_ANCHOR']=str(args.diagnostic_title_anchor)
+    if args.virtual_clock is not None:
+        if not args.diagnostic_generated or not args.run:parser.error('--virtual-clock requires a diagnostic run')
+        env['PLS_VIRTUAL_CLOCK']=args.virtual_clock
     env.pop('PLS_PC_DISMISS_POPUPS_UNTIL',None)
     env.pop('PLS_PC_DISMISS_UNLABELED_ONLY',None)
     if args.diagnostic_unlabeled_popups_only:env['PLS_PC_DISMISS_UNLABELED_ONLY']='1'
@@ -268,7 +285,7 @@ def main():
     if not args.fixtures_only:
         attempts=ROOT/('config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')
         history=json.loads(attempts.read_text(encoding='utf-8')) if attempts.exists() else dict(operation='generated-game-build-and-boot-attempts',attempts=[])
-        attempt=dict(number=next_attempt_number(history,folder),configuration=args.configuration,apk_sha256=APK_SHA,generated_game_sources=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))],game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
+        attempt=dict(number=next_attempt_number(history,folder),configuration=args.configuration,apk_sha256=APK_SHA,generated_game_sources=source_list_record([dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))]),game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
         attempt_folder=folder/'attempts'/str(attempt['number'])
         attempt_folder.mkdir(parents=True,exist_ok=False)
         if args.diagnostic_save_from_attempt is not None:
@@ -279,6 +296,8 @@ def main():
         attempt['diagnostic_dismiss_popups_until_frame']=args.diagnostic_dismiss_popups_until_frame
         attempt['diagnostic_unlabeled_popups_only']=args.diagnostic_unlabeled_popups_only
         attempt['scripted_key_frame']=args.diagnostic_key_frame
+        attempt['virtual_clock']=args.virtual_clock
+        attempt['title_anchor']=args.diagnostic_title_anchor
         if args.metrics:env['PLS_PC_CAPTURE_DIR']=str((attempt_folder/'frames').resolve())
         if diagnostic_folder:
             attempt.update(diagnostic_only=True,diagnostic_manifest_sha256=digest(diagnostic_folder/'manifest.json'),trap_count=len(diagnostic_manifest['traps']),
@@ -292,7 +311,7 @@ def main():
         manifest=attempt_folder/'source-inputs.before.json'
         manifest.write_text(json.dumps(inputs_before,sort_keys=True,indent=2)+'\n',encoding='utf-8',newline='\n')
         attempt['source_inputs']=dict(path=manifest.relative_to(ROOT).as_posix(),sha256=digest(manifest),files=len(inputs_before))
-        attempt['generated_game_sources']=[dict(path=p,sha256=h) for p,h in inputs_before.items() if p.startswith('src/game/')]
+        attempt['generated_game_sources']=source_list_record([dict(path=p,sha256=h) for p,h in inputs_before.items() if p.startswith('src/game/')],attempt_folder)
     for index,command in enumerate(commands):
         step_started=time.perf_counter_ns()
         result=subprocess.run([str(p) for p in command],cwd=ROOT,env=env,capture_output=True)
@@ -308,7 +327,7 @@ def main():
                 messages=(result.stdout+result.stderr).decode('utf-8',errors='replace')
                 diagnostics=[line for line in messages.splitlines() if re.search(r'(error [A-Z]+\d+|fatal error|undefined reference)',line)]
                 attempt.update(stage='configure-failed' if index==0 else 'compile-or-link-failed',exit_code=result.returncode,diagnostics=diagnostics[:8],log_sha256=digest(folder/f'step-{index}.log'))
-                history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
+                history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
     portable_unit=next(iter(sorted((ROOT/'src/kairo/common/generated').glob('portable_generated_type_*.cpp'))),ROOT/'src/kairo/common/generated/portable_generated.cpp')
     required={'CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp',
@@ -324,7 +343,7 @@ def main():
         if inputs_before!=inputs_after:
             changed=sorted(p for p in set(inputs_before)|set(inputs_after) if inputs_before.get(p)!=inputs_after.get(p))
             attempt.update(stage='concurrent-source-change',exit_code=0,changed_inputs=changed,game_boot=False)
-            history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
+            history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError('Native inputs changed during compilation; no process was launched. Retry after the producers are stable.')
         attempt.update(stage='linked',exit_code=0,dependency_audit=dependency_audit,clean_for_dependency_policy=clean)
         if args.run:
@@ -350,13 +369,13 @@ def main():
                 try:collect(attempt,attempt_folder,history)
                 except Exception as error:
                     attempt.update(stage='execution-receipt-failed',execution_receipt_error=type(error).__name__+': '+str(error))
-                    history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf8',newline='\n')
+                    history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf8',newline='\n')
                     raise
             if args.metrics:
                 attempt['metrics_log_summary']=metric_log_summary((attempt_folder/'game-run.stderr').read_bytes())
                 attempt['metrics_recorded']=attempt['metrics_log_summary']['records']>0
                 attempt['frame_captures']=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p),bytes=p.stat().st_size)for p in sorted((attempt_folder/'frames').glob('frame-*.bmp'))]
-        history['attempts'].append(attempt);attempts.write_text(json.dumps(history,indent=2)+'\n',encoding='utf-8',newline='\n')
+        history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
         print(json.dumps(attempt));return
     result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,dependency_audit=dependency_audit,
                 compiler='existing MSVC',sdl2='2.32.10',game_assets_used=False)

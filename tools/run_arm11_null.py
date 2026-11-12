@@ -28,6 +28,8 @@ def main():
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--gdb-port', type=int)
     parser.add_argument('--asset-root', type=Path, default=ROOT/'assets')
+    parser.add_argument('--read-delay-ms',type=int,help='Diagnosis only: artificial delay per real storage access')
+    parser.add_argument('--virtual-clock',help='Deterministic benchmark clock start_ms,read_us,frame_ms')
     parser.add_argument('--profile-resources', action='store_true',help='Enable deferred load-stage diagnostics; omit for frame measurements')
     args = parser.parse_args()
     output, image = args.output.resolve(), args.image.resolve(strict=True)
@@ -49,7 +51,7 @@ def main():
     sd = launcher / 'user/sdmc'
     subprocess.run([sys.executable, ROOT / 'tools/prepare_arm11_sd.py',
                     '--apk', args.apk, '--image', image, '--scenario', args.scenario,
-                    '--output', sd, '--asset-root', args.asset_root], check=True)
+                    '--output', sd, '--asset-root', args.asset_root]+(['--virtual-clock',args.virtual_clock] if args.virtual_clock else [])+(['--read-delay-ms',str(args.read_delay_ms)] if args.read_delay_ms is not None else []), check=True)
     if args.profile_resources:
         (sd/'pls-benchmark/assets/converted/profile-resources.flag').write_text('diagnostic load timings\n')
     config = launcher / 'user/config'

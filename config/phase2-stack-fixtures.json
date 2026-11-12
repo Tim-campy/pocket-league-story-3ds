@@ -30,7 +30,7 @@
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
-    "src/runtime/managed_gc_bridge.inc": "97e1dbcd8be58f15ed9789d8d92367e0ef2d5a0b61b1ad96ce202c45a009ac8a",
+    "src/runtime/managed_gc_bridge.inc": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
     "src/runtime/tracing_gc.cpp": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596",
@@ -324,10 +324,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "c47b4357c1b5bade8ad0a628d62c257ca2731b38f9296eb370cbce742eb4eff2"
+    "sha256": "a9ce644cf3375cf88c0bf6900c42b8d268fe7a926bcdd25e62d110ea7d92f9e5"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "697d276d192af10eea7baa319683e6505e5b4c20b5c0db2033c5e4e494a4b23c"
+    "sha256": "9d701dcc6b6863d286d7c5bcece5e6f0a27b1fc8bb733104b205928930d276b1"
   }
 }

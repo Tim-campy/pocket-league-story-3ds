@@ -1,5 +1,9 @@
 #pragma once
+#include <chrono>
 #include <cstdint>
+#include <cstdio>
+#include <memory>
+#include <mutex>
 #include <filesystem>
 #include <map>
 #include <optional>
@@ -13,6 +17,29 @@ class Catalog {
     std::filesystem::path root_;
     bool prepared_{};
     std::map<std::pair<Kind,std::string>,Entry> entries_;
+    // Prepared SD only: one pack opened once instead of one file per read.
+    // Pack membership, size and digest are checked against catalog.idx.
+    struct Packed { std::uint64_t offset{},size{}; };
+    std::map<std::string,Packed> packed_;
+    std::shared_ptr<std::FILE> pack_;
+    std::unique_ptr<std::mutex> pack_mutex_=std::make_unique<std::mutex>();
+    void open_pack();
+    // One-slot retention of the last platform load (payload or prepared
+    // stream). ResourceManager.LoadStart returns before its index increment
+    // when a slice reaches 150 ms; reloading the same item is idempotent in
+    // the original (a new object with the same data). Serving the retained
+    // result makes progress independent of storage speed. At most one extra
+    // payload is held; it is dropped when another resource is requested or
+    // at the host frame end (release_retained).
+    mutable std::unique_ptr<std::mutex> retain_mutex_=std::make_unique<std::mutex>();
+    mutable const Entry* retained_entry_{};
+    mutable std::vector<std::uint8_t> retained_;
+    mutable const Entry* retained_stream_entry_{};
+    mutable std::filesystem::path retained_stream_;
+    mutable std::uint64_t retention_hits_{};
+    std::chrono::milliseconds read_delay_{};
+    std::vector<std::uint8_t> read_uncached(const Entry&)const;
+    std::filesystem::path prepare_stream_uncached(const Entry&)const;
 public:
     explicit Catalog(std::filesystem::path assets_root,ReadValidation=ReadValidation::EveryPayload);
     const Entry* find(Kind,const std::string&)const;
@@ -24,6 +51,10 @@ public:
     std::filesystem::path prepare_stream(const Entry&)const;
     std::uint64_t total_bytes(Kind)const;
     std::size_t size()const{return entries_.size();}
+    void release_retained()const;
+    std::uint64_t retention_hits()const;
+    // Diagnostic hosts only: artificial delay per real storage access.
+    void set_diagnostic_read_delay(std::chrono::milliseconds delay){read_delay_=delay;}
 };
 inline const Catalog* installed_catalog{};
 inline void install(const Catalog* catalog){installed_catalog=catalog;}

@@ -111,3 +111,40 @@ Boot ARM até título/menu/partida nos perfis New e Old com a correção de
 fatias; isolamento da sondagem da rendezvous; relógio virtual para semente
 fixa; benchmark de hardware; limpeza adiada (candidato em
 `build/claude-gc-lazy/`, não medido).
+
+## 7. Rodada seguinte (2026-11-12): boot ARM até o menu
+
+Causa final do salto de memória: `title00.png` (textura 524.312 bytes) passa
+de 150 ms no Azahar (abertura de arquivo mediana 16,5 ms; leitura ~5 MB/s).
+`ResourceManager.LoadStart` retorna antes do incremento e repete o item
+indefinidamente; sem coleta durante a carga, o lixo chegava a 94 MB. Medido
+pelo rastreio `--gc-trace`, que passou a registrar a última chave lida.
+
+Correções de plataforma (`LoadStart` intacto):
+
+- Pacote único `converted/catalog.pak` + índice, gerado por
+  `prepare_arm11_sd.py` (fontes e áudio continuam arquivos: tipos 4, 5 e 6).
+  Leitura de catálogo: 17 ms → 0,8 ms (mediana, Azahar). `--no-pack` mantém
+  o modo antigo. Tamanho e SHA-256 de cada entrada conferidos contra
+  `catalog.idx`.
+- Retenção de uma entrada no catálogo (`read` e `prepare_stream`), liberada
+  ao pedir outro recurso ou no fim do frame. Recarga idempotente no original:
+  `img[l]=LoadImage`/`Image.Load`, `seb[l]=new Seb` (Reverse/SetCacheSize no
+  novo objeto), `sound[l]=SoundOGG.Load`; índices e contadores iguais.
+- Atraso artificial de leitura só para diagnóstico (`--read-delay-ms`).
+
+Resultado Azahar New 100%, relógio real, imagem de diagnóstico: título em
+13,8 s (108 frames), 86 acertos da retenção, janela de menu completa (300
+frames, form 4), média 8,13 ms/frame, malloc 43,8 MB. Não é medição de hardware.
+
+Resultado negativo: com 500 ms por leitura o boot não chegou ao título em
+50 min; ciclo de 77 leituras reais por coleta com objetos estáveis. Causa
+UNKNOWN; anel de leituras (`--gc-trace`) preparado para identificar.
+
+Relógio virtual (diagnóstico/benchmark): início fixo, 1 ms por consulta,
+50 ms por frame; âncora no primeiro `TitleForm`. Duas execuções do replay
+completo no PC: 96/97 capturas idênticas (a diferente é o frame 1, antes da
+âncora) e mesmo placar 0–0. Sem âncora: 10/97 idênticas, placares 2–1 e 0–0.
+
+Recibo de tentativas: lista de fontes por tentativa trocada por SHA-256 +
+contagem (lista completa na pasta privada); 2.091.515 → 404.487 bytes.

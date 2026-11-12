@@ -80,7 +80,7 @@
     },
     {
       "path": "src/kairo/common/asset_catalog.hpp",
-      "sha256": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f"
+      "sha256": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e"
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
@@ -205,6 +205,10 @@
     {
       "path": "src/kairo/common/source_allocation_probe.hpp",
       "sha256": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83"
+    },
+    {
+      "path": "src/kairo/common/virtual_clock.hpp",
+      "sha256": "e7ee09d9c96fbf454202db60004b668b15f90e096a35d8f4799ee3a21b9822ad"
     }
   ],
   "generated_files": [
@@ -235,10 +239,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "f350a22063158b6ed9a9f3389d3472238e00517521820d9d8e83816f9faf7627"
+    "sha256": "009b1b5bb4104a6937d456d66a8b4cf55338e479104b0fa12186c737744c175f"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "66ea06256e285c25d5df7bfb2b40ed480d735a16f1cc85aed772256ea3cd8f1f"
+    "sha256": "6a4c74ef5c44b287b6b47d67690e1b1ac056aa1f4837fa647fd2e0b7561e1e99"
   }
 }

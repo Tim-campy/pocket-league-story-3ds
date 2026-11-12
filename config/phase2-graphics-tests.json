@@ -23,8 +23,8 @@
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
     "src/kairo/platform/sdl/font.hpp": "285a3ffc32ed8c3290d1c2fee20129f4932bb872d0285b970327af972be43081",
     "src/kairo/platform/sdl/font.cpp": "d69e187f1ef6c30f6d19576a7576780c1d39516fd249978e5f4c682b4e9fe26d",
-    "src/kairo/common/asset_catalog.hpp": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f",
-    "src/kairo/common/asset_catalog.cpp": "705d4f424c8b2fc161339c9b86fcb481f7a278130790f67621887906f0711b55",
+    "src/kairo/common/asset_catalog.hpp": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e",
+    "src/kairo/common/asset_catalog.cpp": "11733069359e8e7c10d37a280576c5e7077d352e9d8f81e3b2848b00d32569c8",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/common/ctr_texture.hpp": "1fee5b07af1f711b6d4ca560c79ede7a9fbf40f26ced31a10dabc4407becb59b",
     "tests/kairo/graphics_api_test.cpp": "f7e65b44fe8bbd806a51a4bdf095f07e6a80b670bf769ac2dc0ab3117b2c74ce",
@@ -63,10 +63,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "629677da398ea70fd7967e49571e6d6a0673c998c384244a8fc6800a72a21f46",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "c3065a42608fba4752a6de02005b287c29f6cfd8bac3c621406e90b9179e75a7"
+    "build/graphics-tests/GraphicsOracle.dll": "30dc191c6c43db09e94ceaae862110e20169e11f36c9d39c2e634ab6ed7185b1",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "08ffd807dc99489797ee315391ecdb0eb6cee41d2d0e904a14d0e640cd6810bb"
   },
-  "executable_sha256": "806f1852b58497d0e2adc08c741465dfbfa277650d2689a567ee47755fa5b717",
+  "executable_sha256": "ac85baf98fbe323b8ecc6342a25f8c3d0e4e8ce2fe1e070b8687eb801e2cdb97",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

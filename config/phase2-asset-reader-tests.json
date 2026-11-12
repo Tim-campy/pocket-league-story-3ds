@@ -68,7 +68,7 @@
   "inputs": {
     "tests/kairo/asset_reader_fixtures.cpp": "0b45697e86033bf0c22a285db7c68dae439d3f215700130c39c2ac8eedc7db27",
     "src/kairo/common/asset_reader.cpp": "5ff6a06b27b8511de6af8ac9d2fd33fbb29cf7863381068b7030dcfc3d2def63",
-    "src/kairo/common/asset_catalog.cpp": "705d4f424c8b2fc161339c9b86fcb481f7a278130790f67621887906f0711b55",
+    "src/kairo/common/asset_catalog.cpp": "11733069359e8e7c10d37a280576c5e7077d352e9d8f81e3b2848b00d32569c8",
     "src/kairo/common/managed_encoding.cpp": "2f326befca3d6116395d531f705b772b2626200cdf979f307c20c4f224660fd1",
     "src/kairo/common/semantic_runtime.cpp": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf",
     "tests/kairo/DisplayMetricsOracle.cs": "c9bec8a1773c09a235f7cda9bbe13f307545c2f4b4683383ffaaf525d8a4c02b",
@@ -78,7 +78,7 @@
     "src/kairo/api/display_metrics.hpp": "3303d5ca28d2845963f1e442d9e577f14775fa5c643a9f4dd49048c96bb0fc70",
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
     "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430",
-    "src/kairo/common/asset_catalog.hpp": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f",
+    "src/kairo/common/asset_catalog.hpp": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66"
   },
@@ -90,7 +90,7 @@
   ],
   "native_executable": {
     "path": "build/asset-reader-tests/asset-reader-fixtures.exe",
-    "sha256": "a58f8693fd8fe3c534d19780967b1734571199f635d6c3f2ebe2697b53f40036"
+    "sha256": "78c535b6258af17f33e02cc2635b1094c4cc36d698f3d8c2512e3c2735079d75"
   },
   "game_assets_used": true,
   "original_binaries_executed": false,

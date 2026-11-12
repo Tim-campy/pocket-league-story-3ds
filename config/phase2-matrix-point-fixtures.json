@@ -23,10 +23,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.18810779999330407,
-    "native-compile": 27.02836560000287,
-    "managed-output": 0.40083169999707025,
-    "native-output": 0.2072288999988814
+    "csharp-compile": 0.18585690000327304,
+    "native-compile": 26.976945900009014,
+    "managed-output": 0.3991695000004256,
+    "native-output": 0.5316145999968285
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -72,11 +72,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/matrix-point-differential/Harness.exe",
-    "sha256": "3e0cc03d386cc13fb899e0e17a8803c26d05bc506af3d256d00d1560b0643cd9"
+    "sha256": "745268caa7675e1c1d5c0e77a5fd81b18dfd8df2133a56cd8fb2e4dcbb90b780"
   },
   "source_oracle_executable": {
     "path": "build/translator/matrix-point-differential/Harness-managed.exe",
-    "sha256": "84d83ff5dc3516659bc33faa00c53483a49546c541ef62f82fb215e34770979c"
+    "sha256": "94d9e0930e09dcecef7a6debcff3bf111cce3ddd83513e9811b770356fe268b4"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -254,7 +254,7 @@
     },
     {
       "path": "src/kairo/common/asset_catalog.hpp",
-      "sha256": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f"
+      "sha256": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e"
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
@@ -665,6 +665,10 @@
       "sha256": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83"
     },
     {
+      "path": "src/kairo/common/virtual_clock.hpp",
+      "sha256": "e7ee09d9c96fbf454202db60004b668b15f90e096a35d8f4799ee3a21b9822ad"
+    },
+    {
       "path": "src/kairo/platform/sdl/globalization.cpp",
       "sha256": "16c4af626da9c714b35485ac86f85e1f24e9438f3c4959226fd7dba531edc018"
     },
@@ -682,7 +686,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "97e1dbcd8be58f15ed9789d8d92367e0ef2d5a0b61b1ad96ce202c45a009ac8a"
+      "sha256": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db"
     },
     {
       "path": "src/runtime/managed_reference.hpp",

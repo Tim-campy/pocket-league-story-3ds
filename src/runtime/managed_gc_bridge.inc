@@ -67,6 +67,16 @@ GcNativeBlockingScope::~GcNativeBlockingScope(){tracing_heap().end_native_wait()
 namespace {std::mutex tracing_stats_mutex;GcCollectionStats tracing_last;std::atomic<bool> tracing_collection_pending{false};}
 GcCollectionStats gc_last_collection(){std::lock_guard<std::mutex>lock(tracing_stats_mutex);return tracing_last;}
 GcRegistryStats gc_registry_stats(){return {tracing_heap().statistics().objects,0};}
+#if defined(PLS_GC_TRACE)
+}
+// Diagnostic build only: written by the asset catalog, printed per collection.
+extern "C" char pls_gc_trace_note[160]={};
+extern "C" unsigned long pls_gc_trace_reads=0;
+// Last 128 real catalog reads: kind digit and key prefix.
+extern "C" char pls_gc_trace_ring[128][24]={};
+namespace {unsigned long pls_gc_trace_printed=0;}
+namespace pls::cs {
+#endif
 void gc_collect(std::int32_t generation){
     if(generation<0)throw ArgumentOutOfRangeException();
     ensure_gc_thread();
@@ -87,10 +97,14 @@ void gc_collect(std::int32_t generation){
 #else
         const long malloc_used=-1;
 #endif
-        std::fprintf(stderr,"PLS_GC_TRACE={\"collection\":%llu,\"objects_before\":%llu,\"objects_after\":%llu,\"retained_after\":%llu,\"pause_ns\":%llu,\"malloc_used\":%ld}\n",
+        std::fprintf(stderr,"PLS_GC_TRACE={\"collection\":%llu,\"objects_before\":%llu,\"objects_after\":%llu,\"retained_after\":%llu,\"pause_ns\":%llu,\"malloc_used\":%ld,\"catalog_reads\":%lu,\"last_catalog_key\":\"%s\"}\n",
             static_cast<unsigned long long>(after.collections),static_cast<unsigned long long>(before.objects),
             static_cast<unsigned long long>(after.objects),static_cast<unsigned long long>(after.bytes),
-            static_cast<unsigned long long>(after.last_pause_ns),malloc_used);std::fflush(stderr);
+            static_cast<unsigned long long>(after.last_pause_ns),malloc_used,pls_gc_trace_reads,pls_gc_trace_note);
+        {const auto total=pls_gc_trace_reads;auto first=total>128&&total-128>pls_gc_trace_printed?total-128:pls_gc_trace_printed;
+         std::fprintf(stderr,"PLS_GC_RING=%lu:",first);for(auto i=first;i<total;++i)std::fprintf(stderr,"%s%s",i==first?"":",",pls_gc_trace_ring[i%128]);
+         std::fputc(10,stderr);pls_gc_trace_printed=total;}
+        std::fflush(stderr);
     }
 #endif
 }

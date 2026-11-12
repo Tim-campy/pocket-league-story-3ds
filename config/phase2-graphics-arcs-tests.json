@@ -42,8 +42,8 @@
     "src/kairo/common/allocation_probe.hpp": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19",
     "src/kairo/common/arc_geometry.hpp": "c7a85271de77a6b1e024c327bdd0dffc9e867f0dfac75dfd1dc6b24b216689e2",
     "src/kairo/common/arc_raster.hpp": "cee9ea25f471c59335a7393261d836c03e1656ca18872476bb3ff6583e730f1f",
-    "src/kairo/common/asset_catalog.cpp": "705d4f424c8b2fc161339c9b86fcb481f7a278130790f67621887906f0711b55",
-    "src/kairo/common/asset_catalog.hpp": "4bc3f82e694feef866e75336ba639668294118cf0d46e0949e3c3c020d64718f",
+    "src/kairo/common/asset_catalog.cpp": "11733069359e8e7c10d37a280576c5e7077d352e9d8f81e3b2848b00d32569c8",
+    "src/kairo/common/asset_catalog.hpp": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e",
     "src/kairo/common/asset_reader.cpp": "5ff6a06b27b8511de6af8ac9d2fd33fbb29cf7863381068b7030dcfc3d2def63",
     "src/kairo/common/baked_arrays.hpp": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf",
     "src/kairo/common/bootstrap.cpp": "99e4d3dd1d177e6a5bff1a6375fa1ac7a3c3229b0e0c979594121823b4374419",
@@ -220,6 +220,7 @@
     "src/kairo/common/source_allocation_probe.hpp": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83",
     "src/kairo/common/storage.cpp": "2d5504c48d59ad05d05d56df5545f737e4040181b17d84e0cf7bff0b55161ef4",
     "src/kairo/common/text_input.cpp": "cc07b863b981d1e4140c97ad4f44ed43e7598133bdb72bc378e8ef78818d1374",
+    "src/kairo/common/virtual_clock.hpp": "e7ee09d9c96fbf454202db60004b668b15f90e096a35d8f4799ee3a21b9822ad",
     "src/kairo/platform/null/platform.cpp": "301cfe46c7e695fe9ef21d1422701b454d6c1d0706ebcbe88cf3d1832908f6cd",
     "src/kairo/platform/null/sound.hpp": "64d3c6fc9dd6f75f62a93f56cd5c820e504662f5f0f96ef5b062429be6e9a053",
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
@@ -248,7 +249,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "7a8b2df53fad5257bd97b952b89f99b96ff6d97237d830b278ca19e4e10d76e2"
+    "sha256": "5f579d550a6238be89d27c426e6e5868a6dcbacd72bcca78b14da260649d9cc0"
   },
   "verified_boundary_ids": [],
   "limitations": [

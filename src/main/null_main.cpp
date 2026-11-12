@@ -17,6 +17,7 @@
 #include "native_allocation_sites.hpp"
 #include "thread_cpu_clock.hpp"
 #include "resource_load_trace.hpp"
+#include "virtual_clock.hpp"
 #include <fstream>
 #include <iostream>
 #include <chrono>
@@ -157,6 +158,24 @@ int main(int argc,char**argv){
         if(std::filesystem::exists(converted/"prevalidated.sha256")&&!std::filesystem::exists(converted/"verify-on-read.flag"))validation=pls::assets::ReadValidation::PreparedCatalog;
 #endif
         pls::assets::Catalog assets(std::filesystem::u8path(argv[1]),validation);pls::kairo::install_asset_catalog(&assets);
+        {
+            // Diagnosis only: artificial delay per real storage access.
+            std::string delay;
+#if defined(__3DS__)
+            std::ifstream setting("sdmc:/pls-benchmark/read-delay-ms.txt");if(setting)std::getline(setting,delay);
+            if(!delay.empty()&&delay.back()=='\r')delay.pop_back();
+#else
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4996)
+#endif
+            if(const auto* value=std::getenv("PLS_DIAGNOSTIC_READ_DELAY_MS"))delay=value;
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#endif
+            if(!delay.empty()){assets.set_diagnostic_read_delay(std::chrono::milliseconds(std::stoul(delay)));std::fprintf(stdout,"PLS_NULL_READ_DELAY_MS=%s\n",delay.c_str());std::fflush(stdout);}
+        }
         const auto preferences=std::filesystem::u8path(argv[2]);
         pls::services::OfflineServices services(preferences);pls::services::install(&services);services.device_id();
         pls::kairo::configure_storage(preferences,&assets);pls::kairo::configure_capture(preferences/"captures");
@@ -166,27 +185,45 @@ int main(int argc,char**argv){
         auto app=pls::game::create_application();app->host_configure(240,280,pls::cs::String::from_utf8(preferences.u8string()),{});
         pls::kairo::WindowOrientation orientation=pls::kairo::WindowOrientation::portrait;
         app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::portrait;});app->host_orientation_reader([&]{return orientation;});app->host_orientation_writer([&](auto v){orientation=v;});app->host_fullscreen_writer([](bool){});
+        {
+            // Deterministic clock for benchmark/diagnosis (seeds, LoadStart slices).
+            std::string clock;
+#if defined(__3DS__)
+            std::ifstream setting("sdmc:/pls-benchmark/virtual-clock.txt");if(setting)std::getline(setting,clock);
+            if(!clock.empty()&&clock.back()=='\r')clock.pop_back();
+#else
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4996)
+#endif
+            if(const auto* value=std::getenv("PLS_VIRTUAL_CLOCK"))clock=value;
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
+#endif
+            if(!clock.empty()){pls::kairo::virtual_clock::install(pls::kairo::virtual_clock::parse(clock));std::fprintf(stdout,"PLS_NULL_VIRTUAL_CLOCK=%s\n",clock.c_str());std::fflush(stdout);}
+        }
         std::cerr<<"PLS_NULL_STAGE=bootstrap\n";std::cerr.flush();
         pls::game::configure_application(app);app->host_start();
         memory_categories("after_bootstrap");
         const auto execute_frame=[&]{
             app->host_update();pls::kairo::Offscreen::RenderAll();if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error("Null offscreen error: "+pls::kairo::Offscreen::LastRenderError());
-            sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();pls::cs::gc_frame_end();
+            sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.release_retained();
         };
 #if defined(__3DS__)
         if(std::filesystem::exists(converted/"replay-after-title.flag")){
-            std::uint64_t boot_frames=0;
+            std::uint64_t boot_frames=0;const auto boot_started=Clock::now();
             for(;;){
                 auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
                 // TitleForm's original constructor calls base(1). Wait by
                 // observing the game, never by forcing its state or skipping LoadStart.
-                if(form&&form->GetId()==1)break;
+                if(form&&form->GetId()==1){pls::kairo::virtual_clock::rebase();break;}
                 if(app->IsTermination()||boot_frames>=12000)throw std::runtime_error("Benchmark did not reach TitleForm");
                 const auto start=Clock::now();pls::cs::gc_safepoint();execute_frame();++boot_frames;
                 if(boot_frames%60==0){std::fprintf(stderr,"PLS_NULL_BOOT_FRAMES=%llu\n",static_cast<unsigned long long>(boot_frames));std::fflush(stderr);}
                 pls::diagnostic::flush_resource_events();pls::kairo::UnityApplication::pace(start);
             }
-            std::fprintf(stdout,"PLS_NULL_REPLAY_ANCHOR={\"form_id\":1,\"boot_frames\":%llu}\n",static_cast<unsigned long long>(boot_frames));std::fflush(stdout);
+            std::fprintf(stdout,"PLS_NULL_REPLAY_ANCHOR={\"form_id\":1,\"boot_frames\":%llu,\"boot_ns\":%llu,\"retention_hits\":%llu}\n",static_cast<unsigned long long>(boot_frames),static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-boot_started).count()),static_cast<unsigned long long>(assets.retention_hits()));std::fflush(stdout);
         }
 #endif
         std::cerr<<"PLS_NULL_STAGE=frames\n";std::cerr.flush();

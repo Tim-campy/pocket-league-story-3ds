@@ -49,12 +49,34 @@ def catalog(root):
         if path.stat().st_size != size or sha(path) != digest:
             raise ValueError('Catalog payload does not match local pipeline')
         previous = files.setdefault(relative.as_posix(), dict(bytes=size, sha256=digest))
-        if previous != dict(bytes=size, sha256=digest):
+        previous.setdefault('kinds', set()).add(kind)
+        if {k: v for k, v in previous.items() if k != 'kinds'} != dict(bytes=size, sha256=digest):
             raise ValueError('Conflicting catalog file')
     if pos != len(data):
         raise ValueError('Unexpected catalog suffix')
     files['converted/catalog.idx'] = dict(bytes=len(data), sha256=sha(root / 'converted/catalog.idx'))
     return count, files
+
+
+STREAMED_KINDS = {4, 5, 6}  # fonts, audio and built-in fonts are opened by path (prepare_stream)
+
+
+def write_pack(assets, files, converted):
+    """One contiguous pack plus index: the runtime opens it once (prepared SD only)."""
+    names = sorted(n for n, f in files.items() if f.get('kinds') and not (f['kinds'] & STREAMED_KINDS))
+    index = bytearray(b'PLSPAK1\0' + EXPECTED.encode() + struct.pack('<I', len(names)))
+    offset = 0
+    with (converted / 'catalog.pak').open('xb') as pack:
+        for name in names:
+            payload = (assets / name).read_bytes()
+            if len(payload) != files[name]['bytes'] or hashlib.sha256(payload).hexdigest() != files[name]['sha256']:
+                raise ValueError('Payload changed while packing: ' + name)
+            pack.write(payload)
+            encoded = name.encode('utf8')
+            index += struct.pack('<I', len(encoded)) + encoded + struct.pack('<QQ', offset, len(payload)) + bytes.fromhex(files[name]['sha256'])
+            offset += len(payload)
+    (converted / 'catalog.pak.idx').write_bytes(bytes(index))
+    return set(names)
 
 
 def main():
@@ -63,6 +85,9 @@ def main():
     p.add_argument('--image', type=Path, required=True)
     p.add_argument('--output', type=Path, required=True, help='New local SD staging directory')
     p.add_argument('--scenario', choices=['menu', 'match'], required=True)
+    p.add_argument('--virtual-clock', help='Benchmark determinism: start_ms,read_us,frame_ms written to virtual-clock.txt')
+    p.add_argument('--read-delay-ms', type=int, help='Diagnosis only: artificial delay per real storage access')
+    p.add_argument('--no-pack', action='store_true', help='Copy one SD file per asset instead of the single pack')
     p.add_argument('--asset-root', type=Path, default=ROOT/'assets', help='Authenticated native CTR pipeline output, or the original PC catalog')
     args = p.parse_args()
     if sha(args.apk) != EXPECTED:
@@ -122,19 +147,38 @@ def main():
         raise ValueError('Missing diagnostic save or linked path')
     destination = output / 'pls-benchmark'
     destination.mkdir(parents=True)
+    packed = set()
+    if not args.no_pack and 'converted/prevalidated.sha256' in files:
+        (destination / 'assets/converted').mkdir(parents=True)
+        packed = write_pack(assets, files, destination / 'assets/converted')
     for name in files:
+        if name in packed:
+            continue
         target = destination / 'assets' / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(assets / name, target)
+    for name in ('converted/catalog.pak', 'converted/catalog.pak.idx'):
+        if packed:
+            path = destination / 'assets' / name
+            files[name] = dict(bytes=path.stat().st_size, sha256=sha(path))
+    for value in files.values():
+        value.pop('kinds', None)
     shutil.copytree(source_save, destination / 'preferences')
     (destination/'assets/converted/replay-after-title.flag').write_text('Wait for original TitleForm before replay frame zero.\n',newline='\n')
+    if args.read_delay_ms is not None:
+        if not 0 <= args.read_delay_ms <= 10000:
+            raise ValueError('Read delay must be 0..10000 ms')
+        (destination / 'read-delay-ms.txt').write_text(str(args.read_delay_ms) + '\n', newline='\n')
+    if args.virtual_clock:
+        (destination / 'virtual-clock.txt').write_text(args.virtual_clock + '\n', newline='\n')
     (destination / 'replay.txt').write_text(''.join(f'{n}:{k}\n' for n, k in sorted(keys.items()) if n < last), newline='\n')
     (destination / 'config.txt').write_text(f'/pls-benchmark/assets\n/pls-benchmark/preferences\n/pls-benchmark/replay.txt\n{last}\n{first}\n{last}\n', newline='\n')
     executable = output / '3ds/pls-benchmark/pls-benchmark.3dsx'
     executable.parent.mkdir(parents=True); shutil.copy2(image, executable)
     manifest = dict(private=True, scenario=args.scenario, apk_sha256=EXPECTED,
                     benchmark_sha256=sha(executable), records=count,
-                    asset_files=len(files), asset_bytes=sum(f['bytes'] for f in files.values()),
+                    asset_files=len(files), asset_bytes=sum(f['bytes'] for f in files.values() if f is not None),
+                    packed_assets=len(packed), virtual_clock=args.virtual_clock, read_delay_ms=args.read_delay_ms,
                     first_frame=first, last_frame=last, frames=last-first+1,
                     replay_sha256=sha(destination / 'replay.txt'), asset_hashes=files,
                     replay_anchor='TitleForm.GetId()==1',

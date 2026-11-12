@@ -144,15 +144,21 @@ public:
     void release_edges()override{cs::Object::release_edges();cs::release_value(data_path_);cs::release_value(initialization_owner_);initialization_={};}
     void Terminate(){if(termination_)return;if(!termination_handler_)throw cs::InvalidOperationException("Termination event/finish bridge is not installed");termination_=true;termination_handler_();}
     static void Sleep(std::int32_t ms){if(ms<-1)throw cs::ArgumentOutOfRangeException();if(ms==-1)throw cs::NotSupportedException("Infinite app sleep needs a cancellation host");std::this_thread::sleep_for(std::chrono::milliseconds(ms));}
+    // Loading safe point only after the OUTERMOST inline UI call returns:
+    // e.g. between ResourceManager.LoadStart slices, never inside a slice
+    // (Image.Use is itself an inline UI call), so the original 150 ms slice
+    // clock never includes a collection.
+    static int& inline_ui_depth(){thread_local int depth=0;return depth;}
+    struct InlineUiCall{InlineUiCall(){++inline_ui_depth();}~InlineUiCall(){--inline_ui_depth();}};
     void RunOnUiThread(cs::Delegate<void()> method,bool wait=false){
-        if(CheckUiThread()){try{method();}catch(const cs::Exception&){if(wait)throw;}return;}
+        if(CheckUiThread()){{InlineUiCall nested;try{method();}catch(const cs::Exception&){if(wait)throw;}}if(wait&&!inline_ui_depth())cs::gc_loading_safepoint();return;}
         auto invocation=std::make_shared<UiInvocation<void>>(std::move(method));
         auto task=std::make_shared<std::packaged_task<void()>>([invocation]{invocation->run();});auto done=task->get_future();
         {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}
         if(wait){{cs::GcNativeBlockingScope parked;cs::platform_future_wait(done);}done.get();}
     }
     cs::Ref<cs::Object> RunOnUiThread(UIMethod method,bool wait=false){
-        if(CheckUiThread()){try{return method();}catch(const cs::Exception&){if(wait)throw;return {};}}
+        if(CheckUiThread()){cs::Ref<cs::Object> result;{InlineUiCall nested;try{result=method();}catch(const cs::Exception&){if(wait)throw;return {};}}if(wait&&!inline_ui_depth())cs::gc_loading_safepoint();return result;}
         auto invocation=std::make_shared<UiInvocation<cs::Ref<cs::Object>>>(std::move(method));
         auto task=std::make_shared<std::packaged_task<cs::Ref<cs::Object>()>>([invocation]{return invocation->run();});auto done=task->get_future();
         {std::lock_guard<std::mutex> lock(tasks_mutex_);ui_tasks_.push_back([task]{(*task)();});}

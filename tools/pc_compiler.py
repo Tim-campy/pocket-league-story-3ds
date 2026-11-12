@@ -11,7 +11,33 @@ CMAKE=VS/'Common7/IDE/CommonExtensions/Microsoft/CMake/CMake/bin/cmake.exe'
 NINJA=VS/'Common7/IDE/CommonExtensions/Microsoft/CMake/Ninja/ninja.exe'
 
 
+_CONSOLE_UTF8=False
+
+
+def utf8_console():
+    """cl.exe localizes /showIncludes in the console output code page (OEM 850
+    here), while CMake writes the Ninja prefix as UTF-8. Ninja compares bytes, so
+    children must inherit code page 65001. Restored when this process exits."""
+    global _CONSOLE_UTF8
+    if _CONSOLE_UTF8 or os.name!='nt':return
+    import atexit,ctypes
+    kernel=ctypes.windll.kernel32
+    previous=kernel.GetConsoleOutputCP()
+    if previous and previous!=65001 and kernel.SetConsoleOutputCP(65001):
+        atexit.register(kernel.SetConsoleOutputCP,previous)
+    _CONSOLE_UTF8=True
+
+
+def build_jobs(default=2):
+    """Parallel compile/test jobs; PLS_BUILD_JOBS (set by verify_phase2 --jobs) caps it."""
+    value=os.environ.get('PLS_BUILD_JOBS')
+    if not value:return default
+    if not value.isdigit() or not 1<=int(value)<=8:raise ValueError('PLS_BUILD_JOBS must be 1..8')
+    return min(default,int(value)) if default>0 else int(value)
+
+
 def environment():
+    utf8_console()
     # Select installed headers/libs directly, avoiding cmd quoting and env dumps.
     vc=VS/'VC/Tools/MSVC/14.51.36231'
     kits=Path(os.environ.get('ProgramFiles(x86)','C:/Program Files (x86)'))/'Windows Kits/10'

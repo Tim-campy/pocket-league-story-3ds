@@ -962,22 +962,22 @@
   ],
   "inputs_sha256": {
     "tests/kairo/application_properties_fixtures.cpp": "969b1787bcb979866daf4dfd95626d7162934d45ff1d2da0b88cb51b7ee0d8f7",
-    "src/kairo/common/semantic_runtime.cpp": "6ae5bbbe505cf4247862934c2660c18ab1c28503e50f83fea8981e73a19fe336",
+    "src/kairo/common/semantic_runtime.cpp": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf",
     "src/kairo/platform/sdl/globalization.cpp": "16c4af626da9c714b35485ac86f85e1f24e9438f3c4959226fd7dba531edc018",
     "tests/kairo/ApplicationPropertiesOracle.cs": "5f9535874848aefc73363d118b67adaa0adfff63bc8754846620478faa22b8b0",
     "tools/test_application_properties.py": "4bd26a88ef8d3c9fdf0d1499bc016d01ded0a9c99726dd811a4bc62774bfd3ee",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/api/application.hpp": "730ae9dffe396c1ea07e647f55aa57bc3e1084d20286fe46d93a3790a7a86b93",
+    "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
     "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
-    "src/kairo/common/semantic_runtime.hpp": "5796570ac4d34c2b97f611dbcbca7a96e35eee26c813ad4ae6b96950c87638fa",
+    "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
     "src/kairo/platform/sdl/globalization.hpp": "9a5f11c69a8a41c03cc026741da7d4d6c7ef5d95afe94d228f2630871669c2d7"
   },
   "native_executable": {
     "path": "build/application-properties-tests/application-properties-fixtures.exe",
-    "sha256": "204b812473fc4298164c48d0fc7e14d4afa9981b31062039f1d817c3f5f8ea3b"
+    "sha256": "0b198528ab4984093f8d8d26d88b58694fe98ac15d18df4276ae64ff668c12b3"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "source_only_jsystem": [

@@ -8,7 +8,7 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
 from inventory import compiler_paths
-from pc_compiler import CMAKE,environment
+from pc_compiler import CMAKE,environment,build_jobs
 
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -17,7 +17,7 @@ def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
     folder=ROOT/'build/graphics-tests';folder.mkdir(parents=True,exist_ok=True)
     with (folder/'native-build.log').open('wb') as log:
-        subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','graphics_api_test','asset_catalog_test','asset_path_test','--parallel','2'],cwd=ROOT,env=environment(),stdout=log,stderr=subprocess.STDOUT,check=True)
+        subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','graphics_api_test','asset_catalog_test','asset_path_test','--parallel',str(build_jobs(2))],cwd=ROOT,env=environment(),stdout=log,stderr=subprocess.STDOUT,check=True)
     original=ROOT/'reference/src/KairoLibrary/kairo/unity/ui/Graphics.cs'
     text=original.read_text(encoding='utf-8-sig')
     signatures=['public static int GetColorOfRGB(int r, int g, int b)',

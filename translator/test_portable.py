@@ -16,6 +16,7 @@ import time
 
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'tools'))
+from pc_compiler import utf8_console;utf8_console()
 sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
 from inventory import compiler_paths
 from pc_compiler import environment

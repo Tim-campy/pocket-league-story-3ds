@@ -3,8 +3,10 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+import os
 import subprocess
 import sys
+import time
 
 ROOT=Path(__file__).resolve().parents[1]
 EXPECTED='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
@@ -16,8 +18,47 @@ def code_snapshot():
     paths={ROOT/'CMakeLists.txt',ROOT/'AGENTS.md',ROOT/'.gitignore'}
     for name in ('src','translator','tools','tests','reference/src'):
         paths|={p for p in (ROOT/name).rglob('*')if p.is_file()and (p.suffix in {'.cpp','.hpp','.inc','.cs','.py','.toml','.asm','.S','.c','.java','.xml','.ps1','.bat','.sh','.cmake'} or p.name=='CMakeLists.txt')}
-    paths|={p for p in (ROOT/'config').glob('*')if p.is_file()and((p.suffix=='.json'and not p.name.startswith('phase2-'))or(p.suffix=='.csv'and p.name!='translation.csv'))}
+    paths|={p for p in (ROOT/'config').glob('*')if p.is_file()and((p.suffix=='.json'and not p.name.startswith('phase2-')and p.name!='collation-license-audit.json')or(p.suffix=='.csv'and p.name!='translation.csv'))}
     return {p.relative_to(ROOT).as_posix():sha(p)for p in sorted(paths)}
+
+def digest_json(value):return hashlib.sha256(json.dumps(value,sort_keys=True).encode('utf8')).hexdigest()
+
+def managed_identity(folder):
+    return digest_json({p.relative_to(folder).as_posix():sha(p) for p in sorted(folder.rglob('*')) if p.is_file()})
+
+def run_measured(argv):
+    """Run one check; on Windows a job object holds the whole process tree, so
+    the peak committed memory covers compilers and test binaries too."""
+    started=time.monotonic()
+    if os.name!='nt':
+        result=subprocess.run(argv,cwd=ROOT,capture_output=True)
+        return result.returncode,result.stdout+result.stderr,None,time.monotonic()-started
+    import ctypes
+    from ctypes import wintypes
+    kernel=ctypes.WinDLL('kernel32',use_last_error=True);ntdll=ctypes.WinDLL('ntdll')
+    class IO(ctypes.Structure):_fields_=[(n,ctypes.c_ulonglong) for n in ('r','w','o','rb','wb','ob')]
+    class BASIC(ctypes.Structure):_fields_=[('a',ctypes.c_longlong),('b',ctypes.c_longlong),('flags',wintypes.DWORD),('minws',ctypes.c_size_t),('maxws',ctypes.c_size_t),('active',wintypes.DWORD),('affinity',ctypes.c_size_t),('priority',wintypes.DWORD),('sched',wintypes.DWORD)]
+    class EXT(ctypes.Structure):_fields_=[('basic',BASIC),('io',IO),('process_limit',ctypes.c_size_t),('job_limit',ctypes.c_size_t),('peak_process',ctypes.c_size_t),('peak_job',ctypes.c_size_t)]
+    kernel.CreateJobObjectW.restype=wintypes.HANDLE
+    kernel.AssignProcessToJobObject.argtypes=[wintypes.HANDLE,wintypes.HANDLE]
+    kernel.QueryInformationJobObject.argtypes=[wintypes.HANDLE,ctypes.c_int,ctypes.c_void_p,wintypes.DWORD,ctypes.c_void_p]
+    kernel.CloseHandle.argtypes=[wintypes.HANDLE]
+    ntdll.NtResumeProcess.argtypes=[wintypes.HANDLE]
+    job=kernel.CreateJobObjectW(None,None)
+    process=subprocess.Popen(argv,cwd=ROOT,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,creationflags=0x4) # CREATE_SUSPENDED
+    peak=None
+    try:
+        handle=wintypes.HANDLE(int(process._handle))
+        assigned=bool(job and kernel.AssignProcessToJobObject(job,handle))
+        ntdll.NtResumeProcess(handle)
+        output,_=process.communicate()
+        if assigned:
+            info=EXT()
+            if kernel.QueryInformationJobObject(job,9,ctypes.byref(info),ctypes.sizeof(info),None):peak=int(info.peak_job)
+    finally:
+        if process.poll() is None:process.kill()
+        if job:kernel.CloseHandle(job)
+    return process.returncode,output,peak,time.monotonic()-started
 
 def refresh_run_receipts():
     # A new replay is evidence, not a source change. Never reuse full checks
@@ -40,9 +81,13 @@ def refresh_run_receipts():
 
 
 def main():
+    # Children (cl, csc, mono) localize output in the inherited console code page.
+    sys.path.insert(0,str(Path(__file__).resolve().parent));from pc_compiler import utf8_console;utf8_console()
     p=argparse.ArgumentParser(description=__doc__)
     p.add_argument('--apk',type=Path)
     p.add_argument('--original-managed',type=Path)
+    p.add_argument('--full',action='store_true',help='Ignore per-check receipts and run every check')
+    p.add_argument('--jobs',type=int,choices=range(1,9),default=1,help='Cap for parallel compilation/test jobs (PLS_BUILD_JOBS); default 1 is conservative')
     p.add_argument('--refresh-run-receipts',action='store_true',help='After a new replay only, validate hashes and retain the same complete full-check result; refuses any code/test or other proof change')
     args=p.parse_args()
     if args.refresh_run_receipts:refresh_run_receipts();return
@@ -169,30 +214,54 @@ def main():
         ('progress',['tools/progress']),
     ]
     folder=ROOT/'build/phase2-verification';folder.mkdir(parents=True,exist_ok=True)
+    receipts=folder/'receipts';receipts.mkdir(exist_ok=True)
+    os.environ['PLS_BUILD_JOBS']=str(args.jobs)
+    producer=sha(Path(__file__));managed_hash=managed_identity(managed)
+    def state():
+        # Every check is bound to the whole code tree: a cheap, conservative
+        # dependency model. Generated proof receipts in config/ are excluded.
+        return dict(code=digest_json(code_snapshot()),apk=EXPECTED,managed=managed_hash,producer=producer)
     checks=[]
     for name,command in commands:
-        result=subprocess.run([sys.executable,*command],cwd=ROOT,capture_output=True)
-        log=folder/(name+'.log');log.write_bytes(result.stdout+result.stderr)
-        exit_code=result.returncode
+        receipt_path=receipts/(name+'.json');log=folder/(name+'.log')
+        key=dict(state(),command=command)
+        if not args.full and receipt_path.is_file():
+            try:previous=json.loads(receipt_path.read_text(encoding='utf8'))
+            except json.JSONDecodeError:previous=None
+            if previous and previous.get('key')==key and previous.get('exit_code')==0 and log.is_file() and sha(log)==previous.get('log_sha256'):
+                checks.append(dict(name=name,exit_code=0,log_sha256=previous['log_sha256'],reused=True,peak_commit_bytes=previous.get('peak_commit_bytes'),elapsed_seconds=previous.get('elapsed_seconds')))
+                print(json.dumps(dict(check=name,status='PASS',reused=True)),flush=True)
+                continue
+        exit_code,output,peak,elapsed=run_measured([sys.executable,*command])
+        log.write_bytes(output)
         # Interactive progress intentionally preserves an older coherent
         # publication while producers move. A checkpoint must not accept that
         # PENDING response as a successful final publication.
         if name=='progress' and exit_code==0:
-            for line in result.stdout.decode('utf-8-sig',errors='replace').splitlines():
+            for line in output.decode('utf-8-sig',errors='replace').splitlines():
                 try:message=json.loads(line)
                 except json.JSONDecodeError:continue
                 if isinstance(message,dict) and message.get('status')=='PENDING':exit_code=1
-        checks.append(dict(name=name,exit_code=exit_code,log_sha256=sha(log)))
-        print(json.dumps(dict(check=name,status='PASS' if exit_code==0 else 'FAIL')),flush=True)
+        row=dict(name=name,exit_code=exit_code,log_sha256=sha(log),reused=False,peak_commit_bytes=peak,elapsed_seconds=round(elapsed,3))
+        checks.append(row)
+        receipt_path.write_text(json.dumps(dict(row,key=key),indent=2)+'\n',encoding='utf-8',newline='\n')
+        print(json.dumps(dict(check=name,status='PASS' if exit_code==0 else 'FAIL',peak_commit_bytes=peak,elapsed_seconds=round(elapsed,1))),flush=True)
         if exit_code:
             failure=dict(operation='phase2-checkpoint-full-verification',status='FAIL',checks=checks,
-                failed_check=name,producer_sha256=sha(Path(__file__)),apk_sha256=EXPECTED,
+                failed_check=name,producer_sha256=producer,apk_sha256=EXPECTED,
                 complete=False,game_boot=False)
             (ROOT/'config/phase2-verification.json').write_text(json.dumps(failure,indent=2)+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError('Verification failed; inspect '+str(log))
+    # Approval needs every receipt valid for the tree as it is NOW: a check
+    # that rewrote code (e.g. regeneration) invalidates reused receipts.
+    final=state()
+    stale=[name for name,command in commands
+           if json.loads((receipts/(name+'.json')).read_text(encoding='utf8'))['key']!=dict(final,command=command)]
+    if stale:raise RuntimeError('Code tree changed during verification; rerun to refresh: '+', '.join(stale[:10]))
     if sha(args.apk)!=EXPECTED:raise ValueError('Original APK changed during verification')
     report=dict(operation='phase2-checkpoint-full-verification',status='PASS',complete=True,checks=checks,
-        verification_code_inputs=code_snapshot(),
+        verification_code_inputs=code_snapshot(),jobs=args.jobs,
+        heaviest_checks=sorted(({'name':c['name'],'peak_commit_bytes':c['peak_commit_bytes']} for c in checks if c.get('peak_commit_bytes')),key=lambda c:-c['peak_commit_bytes'])[:3],
         producer_sha256=sha(Path(__file__)),apk_sha256=EXPECTED,game_boot=False,
         receipts={path.name:sha(path) for path in sorted(set((ROOT/'config').glob('phase2-*.json'))|{ROOT/'config/collation-license-audit.json'})
                   if path.name!='phase2-verification.json'})

@@ -11,6 +11,12 @@
 #include <atomic>
 #include <cerrno>
 #include <cstdlib>
+#if defined(PLS_GC_TRACE)
+#include <cstdio>
+#if defined(__3DS__)
+#include <malloc.h>
+#endif
+#endif
 
 // All standalone API/emitter fixture recipes already link this runtime unit.
 // Keep the engine in that unit too, so no consumer can accidentally select raw

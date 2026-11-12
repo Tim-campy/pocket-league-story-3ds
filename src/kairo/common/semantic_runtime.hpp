@@ -241,9 +241,14 @@ void gc_collect(std::int32_t generation=2);
 #if PLS_TRACING_GC
 void gc_request_collection();
 void gc_frame_end();
+// Loading safe point: collects only when the volume threshold is due. Called
+// by the platform after a synchronous UI-thread call returns (the slice loop
+// of ResourceManager.LoadStart runs inline on the UI thread for many slices).
+void gc_loading_safepoint();
 #else
 inline void gc_request_collection(){}
 inline void gc_frame_end(){}
+inline void gc_loading_safepoint(){}
 #endif
 std::int32_t gc_max_generation()noexcept;
 std::int32_t gc_generation(const Ref<Object>&object);

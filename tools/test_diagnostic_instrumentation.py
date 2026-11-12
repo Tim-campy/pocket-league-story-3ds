@@ -1,7 +1,7 @@
 """Own profile/capture fixtures, including independent PNG decompression."""
 import binascii,hashlib,json,struct,subprocess,zlib
 from pathlib import Path
-from pc_compiler import CMAKE,environment
+from pc_compiler import CMAKE,environment,build_jobs
 ROOT=Path(__file__).resolve().parents[1]
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def decode_png(path,width,height):
@@ -18,7 +18,7 @@ def main():
  sources=[ROOT/p for p in ['tools/test_diagnostic_instrumentation.py','CMakeLists.txt','src/kairo/common/diagnostic_profile.hpp','src/kairo/platform/sdl/capture.cpp','src/kairo/platform/sdl/capture.hpp','tests/kairo/capture_fixtures.cpp','tests/kairo/diagnostic_profile_fixtures.cpp']]
  before={p.relative_to(ROOT).as_posix():sha(p)for p in sources};env=environment()
  before['src/kairo/api/capture.hpp']=sha(ROOT/'src/kairo/api/capture.hpp')
- r=subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','capture_test','diagnostic_profile_test','--parallel','2'],env=env,cwd=ROOT,capture_output=True);(folder/'compile.log').write_bytes(r.stdout+r.stderr)
+ r=subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','capture_test','diagnostic_profile_test','--parallel',str(build_jobs(2))],env=env,cwd=ROOT,capture_output=True);(folder/'compile.log').write_bytes(r.stdout+r.stderr)
  if r.returncode:raise RuntimeError('See build/diagnostic-instrumentation-tests/compile.log')
  cases=[]
  for name,args in [('diagnostic_profile_test',[]),('capture_test',[str(folder)])]:

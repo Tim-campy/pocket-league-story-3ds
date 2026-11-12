@@ -1,7 +1,7 @@
 """Own synthetic offscreen lifecycle and CPU mesh admission; no Android oracle."""
 import hashlib,json,subprocess
 from pathlib import Path
-from pc_compiler import CMAKE,environment
+from pc_compiler import CMAKE,environment,build_jobs
 ROOT=Path(__file__).resolve().parents[1]
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 def main():
@@ -11,7 +11,7 @@ def main():
     paths|={p for p in (ROOT/'src/kairo').rglob('*')if p.is_file()and p.suffix in ('.cpp','.hpp','.inc')}
     paths|=set((ROOT/'build/generated/mono-collation').glob('*.inc'))
     inputs={p.relative_to(ROOT).as_posix():sha(p)for p in sorted(paths)};env=environment()
-    result=subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','offscreen_test','mesh_test','--parallel','2'],env=env,cwd=ROOT,capture_output=True)
+    result=subprocess.run([str(CMAKE),'--build',str(ROOT/'build/pc'),'--target','offscreen_test','mesh_test','--parallel',str(build_jobs(2))],env=env,cwd=ROOT,capture_output=True)
     (folder/'compile.log').write_bytes(result.stdout+result.stderr)
     if result.returncode:raise RuntimeError('See build/offscreen-tests/compile.log')
     cases=[]

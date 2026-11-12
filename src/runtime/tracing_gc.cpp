@@ -10,6 +10,19 @@
 #include <thread>
 #include <unordered_map>
 #include <vector>
+#if defined(PLS_GC_ROOT_TRACE)
+#include <atomic>
+#include <cstdio>
+#include <unordered_set>
+#if defined(_WIN32)
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <windows.h>
+#include <dbghelp.h>
+#pragma comment(lib,"dbghelp.lib")
+#endif
+#endif
 #if defined(PLS_GC_PHASE_PROFILE)
 #include <array>
 #include <cstdio>
@@ -29,6 +42,11 @@
 #endif
 
 namespace pls::gc {
+#if defined(PLS_GC_ROOT_TRACE)
+// Diagnostic only: address of an object whose retention must be explained.
+// Stored as an integer in static data, which the collector never scans.
+std::atomic<std::uintptr_t> root_trace_target{0};
+#endif
 namespace {
 #if defined(PLS_GC_PHASE_PROFILE)
 enum class Phase { setup,registers,stack_copy,rendezvous,account_before,ranges,clear_marks,roots,stack_scan,mark,sweep,account_after,destroy,resume,count };
@@ -71,6 +89,22 @@ void wait_condition(std::condition_variable& condition,std::unique_lock<std::mut
     while(!predicate())condition.wait_for(lock,std::chrono::milliseconds(1));
 #else
     condition.wait(lock,predicate);
+#endif
+}
+// Bounded wait with the same protected-predicate polling on CTR (see
+// wait_condition): an indefinite or timed condvar wait may miss the parking
+// notification there and would sleep for the whole timeout.
+template<class Predicate>
+bool wait_condition_for(std::condition_variable& condition,std::unique_lock<std::mutex>& lock,std::chrono::milliseconds timeout,Predicate predicate) {
+#if defined(__3DS__)
+    const auto deadline=std::chrono::steady_clock::now()+timeout;
+    while(!predicate()){
+        if(std::chrono::steady_clock::now()>=deadline)return predicate();
+        condition.wait_for(lock,std::chrono::milliseconds(1));
+    }
+    return true;
+#else
+    return condition.wait_for(lock,timeout,predicate);
 #endif
 }
 struct Snapshot {
@@ -435,6 +469,96 @@ struct Heap::Impl {
             mark(reinterpret_cast<const void*>(value));
         }
     }
+#if defined(PLS_GC_ROOT_TRACE)
+    // After marking, re-enumerate every root WITHOUT marking and report each
+    // one from which the target is reachable through precise heap edges.
+    void trace_root_paths() {
+        const auto target=root_trace_target.load();
+        if(!target)return;
+        Block* goal=blocks.find(target);
+        std::fprintf(stderr,"PLS_GC_ROOT_TRACE target=0x%llx registered=%d retained=%d\n",(unsigned long long)target,goal?1:0,goal&&goal->marked?1:0);
+        if(!goal||!goal->marked)return;
+        auto resolve=[&](std::uintptr_t v)->Block*{if(v<=1)return nullptr;Block* b=blocks.find(v);return b?b:indexed_owner(v);};
+        struct Walk{Impl* state;std::vector<Block*>* stack;std::unordered_set<Block*>* seen;};
+        auto reaches=[&](Block* start)->bool{
+            std::vector<Block*> stack{start};std::unordered_set<Block*> seen{start};Walk walk{this,&stack,&seen};
+            while(!stack.empty()){
+                Block* b=stack.back();stack.pop_back();if(b==goal)return true;
+                if(b->descriptor.trace)b->descriptor.trace(b->pointer,Edges{&walk,[](void* c,const void* p){
+                    auto& w=*static_cast<Walk*>(c);const auto v=reinterpret_cast<std::uintptr_t>(p);if(v<=1)return;
+                    Block* n=w.state->blocks.find(v);if(!n)n=w.state->indexed_owner(v);
+                    if(n&&w.seen->insert(n).second)w.stack->push_back(n);}});
+            }
+            return false;
+        };
+        auto name=[](Block* b){return b->descriptor.name?b->descriptor.name:"?";};
+#if defined(_WIN32)
+        static bool symbols=SymInitialize(GetCurrentProcess(),nullptr,TRUE)!=FALSE;
+        auto symbol=[&](std::uintptr_t address,char* out,std::size_t size){
+            alignas(SYMBOL_INFO) unsigned char buffer[sizeof(SYMBOL_INFO)+512]{};auto* info=reinterpret_cast<SYMBOL_INFO*>(buffer);
+            info->SizeOfStruct=sizeof(SYMBOL_INFO);info->MaxNameLen=511;DWORD64 displacement=0;
+            if(symbols&&SymFromAddr(GetCurrentProcess(),address,&displacement,info))std::snprintf(out,size,"%s+0x%llx",info->Name,(unsigned long long)displacement);
+            else std::snprintf(out,size,"0x%llx",(unsigned long long)address);
+        };
+        auto describe=[&](Block* b){
+            char text[600];std::uintptr_t vtable=0;if(b->bytes>=sizeof(vtable))std::memcpy(&vtable,b->pointer,sizeof(vtable));
+            symbol(vtable,text,sizeof(text));
+            std::fprintf(stderr,"PLS_GC_ROOT_TRACE root_object=0x%llx bytes=%zu first_word=%s\n",(unsigned long long)reinterpret_cast<std::uintptr_t>(b->pointer),b->bytes,text);
+        };
+#endif
+        for(const auto& row:roots){
+            std::vector<std::uintptr_t> hits;
+            row.second(Edges{&hits,[](void* c,const void* p){static_cast<std::vector<std::uintptr_t>*>(c)->push_back(reinterpret_cast<std::uintptr_t>(p));}});
+            for(auto v:hits)if(auto b=resolve(v))if(reaches(b))
+                std::fprintf(stderr,"PLS_GC_ROOT_TRACE kind=provider token=%llu value=0x%llx block=%s\n",(unsigned long long)row.first,(unsigned long long)v,name(b));
+        }
+        std::size_t thread_index=0;
+        for(const auto& row:threads){
+            const auto& saved=row.second.snapshot;
+            std::fprintf(stderr,"PLS_GC_ROOT_TRACE thread=%zu bottom=0x%llx top=0x%llx copied_words=%zu copied_low=0x%llx native=%zu parked=%d\n",thread_index,
+                (unsigned long long)row.second.bottom,(unsigned long long)row.second.top,saved.words.size(),(unsigned long long)(row.second.top-saved.words.size()*sizeof(void*)),row.second.native,row.second.parked?1:0);
+            const auto* regs=reinterpret_cast<const unsigned char*>(&saved.registers);
+            for(std::size_t i=0;i+sizeof(void*)<=sizeof(saved.registers);i+=sizeof(void*)){
+                std::uintptr_t v;std::memcpy(&v,regs+i,sizeof(v));
+                if(auto b=resolve(v))if(reaches(b))std::fprintf(stderr,"PLS_GC_ROOT_TRACE kind=register thread=%zu context_offset=%zu value=0x%llx block=%s\n",thread_index,i,(unsigned long long)v,name(b));
+            }
+            const auto& w=saved.words;
+            for(std::size_t i=0;i<w.size();++i)if(auto b=resolve(w[i]))if(reaches(b)){
+                std::fprintf(stderr,"PLS_GC_ROOT_TRACE kind=stack thread=%zu word_from_sp=%zu address=0x%llx value=0x%llx block=%s neighbors=",thread_index,i,
+                    (unsigned long long)(row.second.top-(w.size()-i)*sizeof(void*)),(unsigned long long)w[i],name(b));
+                for(std::size_t j=i>=8?i-8:0;j<w.size()&&j<i+24;++j)std::fprintf(stderr,"%s0x%llx",j==(i>=8?i-8:0)?"":",",(unsigned long long)w[j]);
+                std::fprintf(stderr,"\n");
+#if defined(_WIN32)
+                describe(b);
+                // Return addresses near the word identify its frame on any thread.
+                for(std::size_t j=i>=16?i-16:0;j<w.size()&&j<i+48;++j){
+                    alignas(SYMBOL_INFO) unsigned char buffer[sizeof(SYMBOL_INFO)+512]{};auto* info=reinterpret_cast<SYMBOL_INFO*>(buffer);
+                    info->SizeOfStruct=sizeof(SYMBOL_INFO);info->MaxNameLen=511;DWORD64 displacement=0;
+                    if(symbols&&SymFromAddr(GetCurrentProcess(),w[j],&displacement,info)&&displacement<0x4000)
+                        std::fprintf(stderr,"PLS_GC_ROOT_TRACE near word_from_sp=%zu (root %+lld) code=%s+0x%llx\n",j,(long long)j-(long long)i,info->Name,(unsigned long long)displacement);
+                }
+                if(row.first==std::this_thread::get_id()){
+                    // Unwind the collector's own (still intact) stack from the
+                    // captured context; report the frame whose extent holds the word.
+                    const auto address=row.second.top-(w.size()-i)*sizeof(void*);
+                    CONTEXT context=saved.registers;
+                    for(int frame=0;frame<64&&context.Rip;++frame){
+                        DWORD64 image=0;const auto rip=context.Rip,sp=context.Rsp;
+                        auto* entry=RtlLookupFunctionEntry(rip,&image,nullptr);
+                        if(!entry){context.Rip=*reinterpret_cast<DWORD64*>(context.Rsp);context.Rsp+=8;}
+                        else{void* handler=nullptr;DWORD64 establisher=0;RtlVirtualUnwind(UNW_FLAG_NHANDLER,image,rip,entry,&context,&handler,&establisher,nullptr);}
+                        char text[600];symbol(rip,text,sizeof(text));
+                        std::fprintf(stderr,"PLS_GC_ROOT_TRACE frame=%d function=%s frame_sp=0x%llx frame_end=0x%llx%s\n",frame,text,(unsigned long long)sp,(unsigned long long)context.Rsp,address>=sp&&address<context.Rsp?" CONTAINS_ROOT":"");
+                    }
+                }
+#endif
+            }
+            for(auto p:row.second.constructing)if(auto b=resolve(reinterpret_cast<std::uintptr_t>(p)))if(reaches(b))std::fprintf(stderr,"PLS_GC_ROOT_TRACE kind=constructing thread=%zu block=%s\n",thread_index,name(b));
+            ++thread_index;
+        }
+    }
+#endif
+    std::uintptr_t collect_body();
     void resume() {
         snapshot_active=false;
         snapshot_ranges.clear();
@@ -606,12 +730,12 @@ void Heap::remove_roots(std::size_t token) {
     std::lock_guard<std::mutex> lock(impl_->mutex);
     impl_->roots.erase(token);
 }
-PLS_GC_NOINLINE void Heap::collect() {
+PLS_GC_NOINLINE std::uintptr_t Heap::Impl::collect_body() {
 #if defined(PLS_GC_PHASE_PROFILE)
     CollectionProbe profile;
 #endif
     const auto started = std::chrono::steady_clock::now();
-    auto& s = *impl_;
+    auto& s = *this;
     std::unique_lock<std::mutex> lock(s.mutex);
     auto& thread = s.current();
     if (thread.native) throw std::logic_error("Collection inside native wait");
@@ -624,11 +748,11 @@ PLS_GC_NOINLINE void Heap::collect() {
         s.changed.notify_all();
         wait_condition(s.changed,lock, [&] { return !s.requested; });
         thread.parked = false;
-        return;
+        return thread.bottom;
     }
     s.requested = true; s.collector = std::this_thread::get_id();
     try {
-        const bool stopped = s.changed.wait_for(lock, s.timeout, [&] {
+        const bool stopped = wait_condition_for(s.changed, lock, s.timeout, [&] {
             for (const auto& row : s.threads)
                 if (row.first != s.collector && !row.second.native && !row.second.parked) return false;
             return true;
@@ -683,12 +807,15 @@ PLS_GC_NOINLINE void Heap::collect() {
         }
         // Unlink all dead objects before destruction. Destructors release native
         // payloads only; no managed callbacks, allocations or resurrection.
+#if defined(PLS_GC_ROOT_TRACE)
+        s.trace_root_paths();
+#endif
         PLS_GC_PHASE(sweep);
         s.snapshot_active=false;
         s.snapshot_ranges.clear();
-        auto& dead=s.dead;
-        dead.clear();
-        dead.reserve(s.blocks.size());
+        auto& dead_list=s.dead;
+        dead_list.clear();
+        dead_list.reserve(s.blocks.size());
         // Compact each page once for dense reclamation, instead of moving its
         // range vector for every dead object. Sparse collections keep the
         // individual path. All block records remain valid during compaction.
@@ -708,7 +835,7 @@ PLS_GC_NOINLINE void Heap::collect() {
         }
         for (auto it = s.blocks.begin(); it != s.blocks.end();) {
             if (it->second.marked) { ++it; continue; }
-            dead.push_back(it->second);
+            dead_list.push_back(it->second);
             --s.stats.objects; s.stats.bytes -= it->second.bytes;
             s.stats.body_bytes -= it->second.bytes;
             s.stable_external_bytes-=it->second.stable_bytes;
@@ -735,8 +862,8 @@ PLS_GC_NOINLINE void Heap::collect() {
         // or root handles without recursively taking the heap lock.
         lock.unlock();
         PLS_GC_PHASE(destroy);
-        for (const auto& block : dead) if (block.descriptor.destroy) block.descriptor.destroy(block.pointer);
-        dead.clear();
+        for (const auto& block : dead_list) if (block.descriptor.destroy) block.descriptor.destroy(block.pointer);
+        dead_list.clear();
         lock.lock();
         ++s.stats.collections; s.since_collection = 0;
         PLS_GC_PHASE(resume);
@@ -748,7 +875,30 @@ PLS_GC_NOINLINE void Heap::collect() {
 #if defined(PLS_GC_PHASE_PROFILE)
         profile.complete=true;
 #endif
+        return thread.bottom;
     } catch (...) { s.resume(); throw; }
+}
+namespace {
+// Zero dead stack below the caller. The collector's own frame and marking
+// callees leave words naming objects marked in THIS cycle; the next collection
+// at the same depth would otherwise find them in its uninitialized slots and
+// retain garbage for one more cycle (measured: Stack fixture, slot 75 words
+// above SP inside Heap::collect). Bounded by the registered stack bottom so
+// small CTR thread stacks are never overrun.
+template<std::size_t N> PLS_GC_NOINLINE void scrub_dead_stack() {
+    volatile unsigned char area[N];
+    for (std::size_t i = 0; i < N; ++i) area[i] = 0;
+}
+PLS_GC_NOINLINE void scrub_below(std::uintptr_t bottom) {
+    volatile unsigned char anchor = 0;
+    const auto here = reinterpret_cast<std::uintptr_t>(&anchor);
+    const auto available = here > bottom ? here - bottom : 0;
+    if (available > 16384 + 8192) scrub_dead_stack<16384>();
+    else if (available > 4096 + 4096) scrub_dead_stack<4096>();
+}
+}
+PLS_GC_NOINLINE void Heap::collect() {
+    scrub_below(impl_->collect_body());
 }
 bool Heap::collect_if_needed() {
     if (!collection_due()) return false;
@@ -771,7 +921,7 @@ void Heap::inspect(const std::function<void(void*,std::size_t,const Descriptor&)
     }
     s.requested=true;s.collector=std::this_thread::get_id();
     try{
-        if(!s.changed.wait_for(lock,s.timeout,[&]{
+        if(!wait_condition_for(s.changed,lock,s.timeout,[&]{
             for(const auto& row:s.threads)if(row.first!=s.collector&&!row.second.native&&!row.second.parked)return false;
             return true;
         }))throw std::runtime_error("Managed worker did not reach heap inspection safepoint");

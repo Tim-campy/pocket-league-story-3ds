@@ -14,7 +14,7 @@
   "original_renderrect_exception_preserved": true,
   "android_raster_comparison": "UNKNOWN",
   "sources": {
-    "tools/test_graphics.py": "e4d2c27023fb5e8f33fbd2861dacdfa806ba67a38e5be7ab298c2eccd7cfbd28",
+    "tools/test_graphics.py": "8a3005bd9afc908902767fdf0d0fa83fd866378397ac5ee04941fb52c562347d",
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -30,8 +30,8 @@
     "tests/kairo/graphics_api_test.cpp": "f7e65b44fe8bbd806a51a4bdf095f07e6a80b670bf769ac2dc0ab3117b2c74ce",
     "tests/kairo/asset_catalog_test.cpp": "b8655c27a68999031124fd3fa6232669e05fee5d42f60338a0dde9c97179b866",
     "tests/kairo/asset_path_test.cpp": "9c9f2a46d2a1f6480fe2d9956728d9745698b17620ad9a2c455239dc61ea4987",
-    "src/kairo/common/semantic_runtime.hpp": "5796570ac4d34c2b97f611dbcbca7a96e35eee26c813ad4ae6b96950c87638fa",
-    "src/kairo/common/semantic_runtime.cpp": "6ae5bbbe505cf4247862934c2660c18ab1c28503e50f83fea8981e73a19fe336",
+    "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430",
+    "src/kairo/common/semantic_runtime.cpp": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src/kairo/common/managed_dictionary.hpp": "d8e3201a2d0a97a09a1d207d1c7733a0c1d05067e39668e3a357adf067bf4b68",
@@ -63,10 +63,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "fc0aeff2dc30f16d159df3e50171dea35ba3057d1f198668e0921f7ff909cd2a",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "24d3de1fdcfc7ba87dd76cef147152349494bb12afe14f34309a7e018003649e"
+    "build/graphics-tests/GraphicsOracle.dll": "629677da398ea70fd7967e49571e6d6a0673c998c384244a8fc6800a72a21f46",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "c3065a42608fba4752a6de02005b287c29f6cfd8bac3c621406e90b9179e75a7"
   },
-  "executable_sha256": "6303bd72498c8479e489c500e2b38aebbf44f1628e31a0b126405a8e181b48d3",
+  "executable_sha256": "806f1852b58497d0e2adc08c741465dfbfa277650d2689a567ee47755fa5b717",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

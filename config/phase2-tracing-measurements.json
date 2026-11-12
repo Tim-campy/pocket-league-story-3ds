@@ -4,10 +4,10 @@
   "arm_fixture": {
     "build": {
       "path": "build/ctr-gc-fixture/build-proof.json",
-      "sha256": "bbb980a9d5434c998a8ae080714b882f44be07703d72bf1b69eeae410a5500ac"
+      "sha256": "b3e112a305c69ee3edd1e95b192f11a09f41ca2c4d5fd6579aefabfb0aa5e3fe"
     },
     "inputs": {
-      "src\\runtime\\tracing_gc.cpp": "2ad9973ff217575c4f2083974660066264f0d58d5b92e855ab4fd11358243cba",
+      "src\\runtime\\tracing_gc.cpp": "349c0cfe832d48596f28c97c9d2540e99419c37c74052e614433436f5c0a7b77",
       "src\\runtime\\tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596",
       "src\\runtime\\ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
       "tests\\translator\\tracing_gc_fixtures.cpp": "fd23ae53966ac7c252e98d7f270750611326db7894d66b5ff2da92528213b56c",
@@ -18,7 +18,7 @@
       "src\\runtime\\ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
       "tools\\cmake\\ctr_thread_lifecycle.cmake": "0f540cf001fd74f664ac062ba6515098ad2d681267b4e1a82be1b56e224e257a"
     },
-    "image_sha256": "e2ec4fe55521dabc9b64e72f0b7f3a3d4e33eaf67a0c655b3a4a547855440662",
+    "image_sha256": "57e22af63bfb086bd38ed0d365de75027d5893632d06d7bf61f8701a7a2c2285",
     "runs": [
       {
         "model": "new",
@@ -26,9 +26,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-new/result.json",
-          "sha256": "14ab950b75334d856685639b80565987480f167f5e8d430ab4c703ca1cad8bb3"
+          "sha256": "e8d35a1ec7a9992a28342f220941b21ec6d5afa5e1bd7869a1ca05bf9bd4d691"
         },
-        "emulator_log_sha256": "e97921bcc10aa2f3a099c0f46816ed8b634a23d3f63d1f329c1547502c7ca7c8"
+        "emulator_log_sha256": "f84a6fb3caa5b905a906fdf03a0c9573a5ab3b8557674ac2f0795e7e0e5b6218"
       },
       {
         "model": "old",
@@ -36,9 +36,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-old/result.json",
-          "sha256": "ea570ff34b3b33d18053716e85989848a22a46e33859389f5d234fb94d6ef5af"
+          "sha256": "38ee169adb2a1de622a6d1c5841d3680019e5261f2b10334a9f4565f85d374ce"
         },
-        "emulator_log_sha256": "49ba1e29e2e09d6cfdc60ba6239b53f644403dcab31932cdd8df24e1251a2e18"
+        "emulator_log_sha256": "772a034641fec287b236f97fe6b4489f2f458a1d82b86471a5235068049951b4"
       }
     ],
     "game_boot": false,

@@ -79,8 +79,26 @@ void gc_collect(std::int32_t generation){
     const auto after=tracing_heap().statistics();
     const auto freed=after.reclaimed_objects-before.reclaimed_objects;
     {std::lock_guard<std::mutex>lock(tracing_stats_mutex);tracing_last={before.objects,after.last_roots,freed,freed};}
+#if defined(PLS_GC_TRACE)
+    // Diagnostic build only: one line per collection, after the pause clock.
+    {
+#if defined(__3DS__)
+        const auto heap=mallinfo();const long malloc_used=heap.uordblks;
+#else
+        const long malloc_used=-1;
+#endif
+        std::fprintf(stderr,"PLS_GC_TRACE={\"collection\":%llu,\"objects_before\":%llu,\"objects_after\":%llu,\"retained_after\":%llu,\"pause_ns\":%llu,\"malloc_used\":%ld}\n",
+            static_cast<unsigned long long>(after.collections),static_cast<unsigned long long>(before.objects),
+            static_cast<unsigned long long>(after.objects),static_cast<unsigned long long>(after.bytes),
+            static_cast<unsigned long long>(after.last_pause_ns),malloc_used);std::fflush(stderr);
+    }
+#endif
 }
 void gc_request_collection(){tracing_collection_pending.store(true,std::memory_order_release);}
+void gc_loading_safepoint(){
+    ensure_gc_thread();
+    if(tracing_heap().collection_due())gc_collect(0);
+}
 void gc_frame_end(){
     ensure_gc_thread();
     tracing_heap().refresh_memory_accounting();

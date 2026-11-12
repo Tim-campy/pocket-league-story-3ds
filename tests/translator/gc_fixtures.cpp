@@ -16,23 +16,23 @@ static int own_native_tests(){
 #if PLS_TRACING_GC
     GcMutatorScope host;
     auto root=Array<std::int32_t>::from({37});Weak<Node> weak;
-    gc_collect();const auto before=gc_registry_stats();
-    isolated_gc_mutator([&]{for(int i=0;i<8192;++i){auto value=make_ref<Node>();value->value=i;weak=value;}});
+    scrub_stack();isolated_gc_collect();const auto before=gc_registry_stats();
+    scrub_stack();isolated_gc_mutator([&]{for(int i=0;i<8192;++i){auto value=make_ref<Node>();value->value=i;weak=value;}});
     check(gc_registry_stats().entries==before.entries+8192);
     isolated_gc_mutator([&]{check(!weak.expired());}); // No last-reference release.
-    gc_collect();isolated_gc_mutator([&]{check(weak.expired());});check(root[0]==37);
-    auto cycle=[&](auto configure){isolated_gc_mutator([&]{auto value=make_ref<Node>();configure(value);weak=value;});gc_collect();isolated_gc_mutator([&]{check(weak.expired());});};
-    cycle([](auto node){node->next=node;});
-    cycle([](auto node){node->next=make_ref<Node>();node->next->next=node;});
-    cycle([](auto node){node->array=Array<Ref<Object>>::from({node});});
-    cycle([](auto node){node->list=List<Ref<Object>>::make();node->list.Add(node);});
-    cycle([](auto node){node->dictionary=Dictionary<String,Ref<Object>>::make();node->dictionary.Add(String(u"self"),node);});
-    cycle([](auto node){node->body=make_ref<Cell<Ref<Node>>>(node);});
-    cycle([](auto node){node->callback=Delegate<std::int32_t()>::from_native("exact-native-cycle",[node]{return node->value;},node);});
+    scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{check(weak.expired());});check(root[0]==37);
+    auto cycle=[&](auto configure){isolated_gc_mutator([&]{auto value=make_ref<Node>();configure(value);weak=value;});isolated_gc_collect();isolated_gc_mutator([&]{check(weak.expired());});};
+    scrub_stack();cycle([](auto node){node->next=node;});
+    scrub_stack();cycle([](auto node){node->next=make_ref<Node>();node->next->next=node;});
+    scrub_stack();cycle([](auto node){node->array=Array<Ref<Object>>::from({node});});
+    scrub_stack();cycle([](auto node){node->list=List<Ref<Object>>::make();node->list.Add(node);});
+    scrub_stack();cycle([](auto node){node->dictionary=Dictionary<String,Ref<Object>>::make();node->dictionary.Add(String(u"self"),node);});
+    scrub_stack();cycle([](auto node){node->body=make_ref<Cell<Ref<Node>>>(node);});
+    scrub_stack();cycle([](auto node){node->callback=Delegate<std::int32_t()>::from_native("exact-native-cycle",[node]{return node->value;},node);});
     Ref<Node> held{};
-    isolated_gc_mutator([&]{held=make_ref<Node>();held->next=held;held->value=29;weak=held;});
-    gc_collect();isolated_gc_mutator([&]{check(!weak.expired()&&held->next==held&&held->value==29);clear_ref(held);});
-    gc_collect();isolated_gc_mutator([&]{check(weak.expired());});
+    scrub_stack();isolated_gc_mutator([&]{held=make_ref<Node>();held->next=held;held->value=29;weak=held;});
+    scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{check(!weak.expired()&&held->next==held&&held->value==29);clear_ref(held);});
+    scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{check(weak.expired());});
     check(gc_max_generation()==0&&gc_generation(root.as_object())==0);
     check(error([]{gc_collect(-1);})=="System.ArgumentOutOfRangeException");
     check(error([]{gc_collect(999);})=="none");

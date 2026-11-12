@@ -19,6 +19,8 @@ EXTRA_CSHARP_REFERENCES={}
 EXTRA_MONO_REFERENCES={}
 sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
 from inventory import compiler_paths
+sys.path.insert(0,str(ROOT/'tools'))
+from pc_compiler import utf8_console;utf8_console()
 FIXTURES={
     'SemanticFixtures':('semantic-fixtures','semantic_fixtures.cpp','runtime'),
     'CollectionFixtures':('collection-fixtures','collection_fixtures.cpp','collections'),

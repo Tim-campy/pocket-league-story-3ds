@@ -37,7 +37,7 @@
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "fc6754740cf1c258aa859edcdad51e347ee47322616dd0a6e33a674be7b7c3e7",
+  "native_executable_sha256": "599b19bd5e8458f1f4b23160379c50fa122da556af07851e954bcc2edf23af3b",
   "native_stdout_sha256": "094678f5eaf59041269a49d4d1fba2c8dbf38c5b38e478dffe4f840efa6bac29",
   "ffmpeg_comparisons": [
     {

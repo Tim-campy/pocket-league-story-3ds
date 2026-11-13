@@ -23,13 +23,14 @@ O orçamento é 50 ms por frame (`Main.OnUpdate`, `SetTargetFps(20)`).
 
 - New 3DS ou New 3DS XL com Homebrew Launcher (custom firmware).
 - Cartão SD com ~60 MB livres.
-- A pasta preparada no PC: `build/sd-benchmark/` (gerada a partir do seu
+- A pasta preparada no PC: `build/sd-benchmark-v5/` (v5, executável
+  `72b3a5f5…`; gerada a partir do seu
   APK; é privada, não a compartilhe nem a coloque no Git).
 
 Para regenerar a pasta (opcional; já está pronta nesta máquina):
 
 ```powershell
-python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_SEU_APK" --image build/benchmark-arm11-4/null_game.3dsx --scenario suite --output build/sd-benchmark --asset-root build/ctr-assets-native-v1
+python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_SEU_APK" --image build/benchmark-arm11-5/null_game.3dsx --scenario suite --output build/sd-benchmark-v5 --asset-root build/ctr-assets-native-v1
 ```
 
 A preparação confere o SHA-256 do APK, de cada asset e do executável, e
@@ -40,7 +41,7 @@ recusa uma pasta de saída existente.
 1. Desligue o console e coloque o cartão SD no PC.
 2. Se existir uma pasta `pls-benchmark` na raiz do cartão de uma execução
    anterior, mova-a para fora do cartão (guarde o `result.txt` antigo).
-3. Copie **o conteúdo** de `build/sd-benchmark/` para a **raiz** do cartão.
+3. Copie **o conteúdo** de `build/sd-benchmark-v5/` para a **raiz** do cartão.
    Depois da cópia o cartão deve ter:
    - `3ds/pls-benchmark/pls-benchmark.3dsx`
    - `pls-benchmark/` (com `assets/`, `preferences/`, `config.txt`,
@@ -101,6 +102,36 @@ corrigida para o dia da medição. Uma execução completa.
 Backend nulo: sem vídeo nem áudio. Execuções anteriores no console
 falharam por falhas de plataforma corrigidas depois (gravação do save no SD,
 que recusa renomear sobre um arquivo existente).
+
+## v5 (2026-11-13): o que mudou e previsão no Azahar
+
+Executável `72b3a5f5…`. Duas mudanças de plataforma, sem tocar na lógica do
+jogo:
+
+- A coleta solicitada por mudança de formulário passa a ocorrer só quando o
+  formulário é janela principal (`CheckMainWindow()`, a mesma regra que o
+  `FormManager` original usa para desenhar). Sub-janelas e diálogos
+  (`SubForm`, `BillingForm`, `HttpForm`, `LanguageForm`) ficam para a coleta
+  por volume. `JSystem.Gc` explícito e os pontos de carregamento seguem iguais.
+- Limiar por volume no 3DS: 2 → 4 MiB (heap estável medido após o título:
+  ~16,5 MB retidos; folga de `malloc` ~15 MB).
+
+| Azahar, New, suíte | v4 (rastreio) | v5 |
+|---|---|---|
+| Coletas na janela de menu | 6 | 3 |
+| Tempo total de coleta no menu | 185 ms | 127 ms |
+| Maior pausa no menu | 68,9 ms | 71,4 ms |
+| Menu: máx. por frame | 98,7 ms | 78,1 ms |
+| Partida: média / máx. | 12,6 / 15,4 ms | 14,1 / 16,1 ms |
+| Até o título | 13,34 s | 13,38 s |
+
+A maior pausa restante é a primeira coleta da janela de menu: uma transição
+de tela real, com ~10 mil objetos mortos para varrer e ~25 mil vivos para
+marcar. No v4 a razão hardware/Azahar dessa pausa foi ~1,5 (102,4 / 68,9 ms);
+a previsão para o v5 no console é ~105 ms, **acima de 50 ms**. A redução de
+frequência não basta sozinha; a correção é o custo por coleta (reforma do
+coletor, `docs/notes/gc-reform-plan.md`). O v5 serve para confirmar isso no
+aparelho e medir a razão com mais uma amostra.
 
 ## Referência no emulador (não é hardware)
 

@@ -41,10 +41,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.22041879998869263,
-    "native-compile": 31.25715439999476,
-    "managed-output": 0.6136835000070278,
-    "native-output": 0.24293049998232163
+    "csharp-compile": 0.20297779999964405,
+    "native-compile": 30.78134610000052,
+    "managed-output": 0.4997272000000521,
+    "native-output": 0.29462409999905503
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -98,11 +98,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/shared-field-differential/Harness.exe",
-    "sha256": "994c7efcc6eba61e4717d5d78ac2ac163e35a5b66265a0228431115172e65d64"
+    "sha256": "b2531800ad0394ff6d81b081dba06dda2604ba3905261df0e4906e28ed77463c"
   },
   "source_oracle_executable": {
     "path": "build/translator/shared-field-differential/Harness-managed.exe",
-    "sha256": "ad3ad2335a6c5133a53137142432c426cfb905391a5fc8b62f012df0d60e54bf"
+    "sha256": "640b5fa23680555bc8d5914a4a6c48a9f354d0fe648a21fa6045b52c16e97731"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -720,7 +720,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "764569092a0bc9d7e347c1daec22097cf7e8587d095b505f44659e01407a37db"
+      "sha256": "6dc38b833dd24ef7981c702194eaf539bafd20d1e0d4cda49e1334901858373b"
     },
     {
       "path": "src/runtime/managed_reference.hpp",

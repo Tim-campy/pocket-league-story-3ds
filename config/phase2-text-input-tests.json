@@ -52,7 +52,7 @@
     "src/kairo/common/diagnostic_profile.hpp": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca",
     "src/kairo/common/dialog_service.cpp": "1906513d7fd7cfe5685be63dac90631bd09f8b7cfd31a806865479560a9397ff",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
-    "src/kairo/common/forms.cpp": "18f44c0e8600dc7bddb5f93c418609970d48965f946b1427db451c8f6b2304d4",
+    "src/kairo/common/forms.cpp": "5f1da7f84f8486ed4266b9687885d54d2dd4f48dcf59f13a91d36e6463aa1c8c",
     "src/kairo/common/forms_execution.cpp": "166bba8ec5f819e9438e9730983aa8560a602fa57ea8ed6093d6f8861439c983",
     "src/kairo/common/generated/portable_generated.cpp": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a",
     "src/kairo/common/generated/portable_generated.hpp": "71bdfcd5e6a6d6009836b3fa0ae5c4d1682b4b87c2b82cfe1d08ebbd5e266d5a",
@@ -249,7 +249,7 @@
   },
   "native_executable": {
     "path": "build/pc/text_input_test.exe",
-    "sha256": "e8ab3acd055ea6c7c9624344bd77e49a11e1130021d84970b920a5d20d65b3b6"
+    "sha256": "e1b041c79ffb5ed14eaeaaf4bd999ffa8e125c9221967c7c8dee09210201a2e3"
   },
   "verified_boundary_ids": [],
   "original_binaries_executed": false,

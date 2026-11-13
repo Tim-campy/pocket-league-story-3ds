@@ -101,7 +101,7 @@
     "tests/kairo/bootstrap_fixtures.cpp": "92d4b5739c128005371e1609c2d2efe875d95db2019c8872c5b6883f00d5a731",
     "src/kairo/common/bootstrap.cpp": "99e4d3dd1d177e6a5bff1a6375fa1ac7a3c3229b0e0c979594121823b4374419",
     "src/kairo/common/forms_execution.cpp": "166bba8ec5f819e9438e9730983aa8560a602fa57ea8ed6093d6f8861439c983",
-    "src/kairo/common/forms.cpp": "18f44c0e8600dc7bddb5f93c418609970d48965f946b1427db451c8f6b2304d4",
+    "src/kairo/common/forms.cpp": "5f1da7f84f8486ed4266b9687885d54d2dd4f48dcf59f13a91d36e6463aa1c8c",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -146,7 +146,7 @@
   ],
   "native_executable": {
     "path": "build/bootstrap-tests/bootstrap-fixtures.exe",
-    "sha256": "d6b98aca0adb986194afbd547a899a1b61d02b988f50d481761a441c3aa16236"
+    "sha256": "549432928d8bc4b4738235a5835f4adfdff81bd1a640b947a7b4d711ceef1da0"
   },
   "limits": [
     "Own collaborators with the exact original Awake body prove callback ordering, optional-resource exception behavior and ownership only.",

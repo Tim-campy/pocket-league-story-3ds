@@ -215,3 +215,45 @@ coleta (resíduo no quadro de `Heap::collect` de uma thread anterior que usou
 as mesmas páginas, medido com `PLS_GC_ROOT_TRACE`). Fixture do motor:
 `isolated()` desloca as chamadas para pilha não usada e o caso de buffer
 imutável coleta sem raízes do chamador. Motor: 0 falhas em 400 execuções.
+
+## 10. Frequência das coletas e benchmark v5 (2026-11-13)
+
+**Perfil no PC (janela de menu ocioso, 300 frames, sonda de alocação):**
+27.600 alocações, 4,88 MB. Strings do código do jogo (~14.700, originais);
+`MeshManager` reconstruindo vetores de lotes a cada frame (~3.000 / 2,1 MB,
+memória nativa da plataforma, fora do heap gerenciado); `Font` e adaptadores
+de fonte criados por frame (~3.600, plataforma). No PC, zero coletas na
+janela.
+
+**Rastreio no Azahar (`--gc-trace`):** as coletas dentro da janela de menu
+eram pedidas por *toda* inicialização/finalização de formulário
+(`FormManagerBase::source_ExecuteInitAndFinish`), com 1–420 KB alocados entre
+elas. Cada uma custa ≥ 20 ms (marcar ~25 mil vivos).
+
+**Mudanças (plataforma, sem lógica do jogo):**
+- Pedido de coleta só quando o formulário que entra ou sai é janela
+  principal (`CheckMainWindow()`), a regra do próprio `FormManager` original.
+- Limiar por volume no 3DS de 2 para 4 MiB (heap estável ~16,5 MB retidos).
+
+**Antes / depois (Azahar, New, suíte, mesmo método):**
+
+| | antes | depois |
+|---|---|---|
+| Coletas na janela de menu | 6 | 3 |
+| Tempo de coleta no menu | 185 ms | 127 ms |
+| Maior pausa no menu | 68,9 ms | 71,4 ms |
+| Máximo por frame no menu | 98,7 ms | 78,1 ms |
+| Partida: coletas | 0 | 0 |
+| Até o título | 13,34 s | 13,38 s |
+
+O limiar maior não encurtou o carregamento (dominado por E/S). A maior pausa
+é uma transição de tela real com ~10 mil mortos: ~21 ms fixos + ~4,6 µs por
+morto. **Previsão para o console: ~105 ms, reprovado.** Plano da reforma em
+`docs/notes/gc-reform-plan.md`.
+
+v5: `build/benchmark-arm11-5/null_game.3dsx` (`72b3a5f5…`), pasta do cartão
+`build/sd-benchmark-v5/`.
+
+**Tradução:** distribuição dos 190 em `docs/notes/translation-pending.md`;
+plano de cobertura em `docs/coverage-plan.md`; lista de nunca alcançados em
+`docs/coverage-never-reached.md`.

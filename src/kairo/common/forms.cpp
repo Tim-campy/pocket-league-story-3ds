@@ -48,10 +48,12 @@ void FormManagerBase::source_ExecuteInitAndFinish(){
     auto clear=[&]{const auto surface=canvas->GetSurfaceManager();if(surface)surface->ClearGameTouch();canvas->ClearKeyBuffer();};
     auto warn=[&](cs::Ref<FormBase> form,bool init){if(!warning_){if(!on_lifecycle_warning)throw cs::NotSupportedException("FormManager lifecycle warning bridge is not installed");warning_=true;on_lifecycle_warning(form,init);}};
     for(auto i=static_cast<std::int32_t>(stack_.size())-1;i>=0;--i){auto form=GetForm(i);if(form->mode_.load()!=4)continue;
-        transitioned=true;
+        // Screen transitions (main windows) are full-collection points; sub-window
+        // and dialog lifecycles are left to volume collection.
+        if(form->CheckMainWindow())transitioned=true;
         cs::run_finally([&]{current_=form;if(form->Finish()){if(form->mode_.load()==4)stack_.erase(stack_.begin()+i);}else warn(form,false);},[&]{pls::cs::clear_ref(current_);});clear();}
     for(std::size_t i=0;i<stack_.size();++i){auto form=stack_[i];if(form->mode_.load()!=0)continue;
-        transitioned=true;
+        if(form->CheckMainWindow())transitioned=true;
         cs::run_finally([&]{current_=form;if(form->Init()){if(form->mode_.load()==0)form->mode_.store(1);}else warn(form,true);},[&]{pls::cs::clear_ref(current_);});clear();}
     if(transitioned)cs::gc_request_collection();
 }

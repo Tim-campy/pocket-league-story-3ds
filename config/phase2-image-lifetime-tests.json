@@ -466,7 +466,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "9f51baa4120c21be013f8bf3d22b855132641d22a82c912e02ae23419707159f"
+    "sha256": "19df4c88626f4fb738228cd6c6e60ec7df6fc7e81f0c664fac0fc1fe6babbe7e"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

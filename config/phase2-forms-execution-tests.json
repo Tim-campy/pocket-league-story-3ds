@@ -375,7 +375,7 @@
   "inputs": {
     "tests/kairo/forms_execution_fixtures.cpp": "7b64d6d8f9860dea06bf6a6ad2e3039fe892e585126ac28d253ab10a98ea6f0e",
     "src/kairo/common/forms_execution.cpp": "166bba8ec5f819e9438e9730983aa8560a602fa57ea8ed6093d6f8861439c983",
-    "src/kairo/common/forms.cpp": "18f44c0e8600dc7bddb5f93c418609970d48965f946b1427db451c8f6b2304d4",
+    "src/kairo/common/forms.cpp": "5f1da7f84f8486ed4266b9687885d54d2dd4f48dcf59f13a91d36e6463aa1c8c",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -481,7 +481,7 @@
   ],
   "native_executable": {
     "path": "build/forms-execution-tests/forms-execution-fixtures.exe",
-    "sha256": "c4ec54d5f970c5d76b6014506fa301cbcea00e6dd5b38cf5a8df839216f89524"
+    "sha256": "c6f87c8daa8cb43950425051f1a60389b8be99fd659e5375289645298bcb9791"
   },
   "limits": [
     "Synthetic services prove call order, states, forced save unlock, retries/finally and rendering through SurfaceManager; not a game boot.",

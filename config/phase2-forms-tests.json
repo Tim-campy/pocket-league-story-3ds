@@ -516,16 +516,16 @@
   },
   "native_concurrent_fields": {
     "status": "PASS",
-    "assertions": 734,
+    "assertions": 951,
     "writer_iterations": 2000,
-    "collections_while_writer_registered": 105,
+    "collections_while_writer_registered": 136,
     "whole_method_lock": false,
     "game_boot": false
   },
   "inputs": {
     "tests/kairo/forms_fixtures.cpp": "33af23c3fbdd1dc7539fd64fe19cefaddb71c7c22bf7c0bfa36b5b65369e8989",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
-    "src/kairo/common/forms.cpp": "18f44c0e8600dc7bddb5f93c418609970d48965f946b1427db451c8f6b2304d4",
+    "src/kairo/common/forms.cpp": "5f1da7f84f8486ed4266b9687885d54d2dd4f48dcf59f13a91d36e6463aa1c8c",
     "src/kairo/platform/sdl/input.cpp": "98895936ed7906c7cf71c5edfcfe3fe54001d0bdd0dcd75e1f092059528ca139",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -617,7 +617,7 @@
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "c4c9a95b6280df8c1e36502e97704d5c78138d53490d830e761a5d164d6d3d79"
+    "sha256": "cae045112dd302bf5e4806b69d4f933730e9aa2b79e58ab7a761cc4be60ccbed"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

@@ -9,11 +9,13 @@ gc::Heap& tracing_heap(){
     static auto* heap=[](){
         auto value=std::make_unique<gc::Heap>();
         // Volume collections are a fallback; explicit source calls and screen
-        // transitions remain immediate safe points. ARM has a smaller reserve.
-        // Hardware validation must still confirm the ARM memory/latency budget.
+        // transitions remain immediate safe points. ARM: the stable heap after
+        // the title is ~16.5 MB retained (Azahar suite trace, 2026-11-13) with
+        // ~15 MB malloc headroom; 4 MiB (about a quarter of the stable heap)
+        // halves load-time volume collections and keeps the peak within reserve.
 #ifndef PLS_GC_THRESHOLD_BYTES_DEFAULT
 #if defined(__3DS__)
-#define PLS_GC_THRESHOLD_BYTES_DEFAULT (2u*1024u*1024u)
+#define PLS_GC_THRESHOLD_BYTES_DEFAULT (4u*1024u*1024u)
 #else
 #define PLS_GC_THRESHOLD_BYTES_DEFAULT (8u*1024u*1024u)
 #endif
@@ -97,10 +99,11 @@ void gc_collect(std::int32_t generation){
 #else
         const long malloc_used=-1;
 #endif
-        std::fprintf(stderr,"PLS_GC_TRACE={\"collection\":%llu,\"objects_before\":%llu,\"objects_after\":%llu,\"retained_after\":%llu,\"pause_ns\":%llu,\"malloc_used\":%ld,\"catalog_reads\":%lu,\"last_catalog_key\":\"%s\"}\n",
+        std::fprintf(stderr,"PLS_GC_TRACE={\"collection\":%llu,\"objects_before\":%llu,\"objects_after\":%llu,\"retained_after\":%llu,\"pause_ns\":%llu,\"malloc_used\":%ld,\"catalog_reads\":%lu,\"last_catalog_key\":\"%s\",\"allocated_bytes_total\":%llu,\"external_growth_total\":%llu,\"allocations_total\":%llu}\n",
             static_cast<unsigned long long>(after.collections),static_cast<unsigned long long>(before.objects),
             static_cast<unsigned long long>(after.objects),static_cast<unsigned long long>(after.bytes),
-            static_cast<unsigned long long>(after.last_pause_ns),malloc_used,pls_gc_trace_reads,pls_gc_trace_note);
+            static_cast<unsigned long long>(after.last_pause_ns),malloc_used,pls_gc_trace_reads,pls_gc_trace_note,
+            static_cast<unsigned long long>(after.allocated_bytes),static_cast<unsigned long long>(after.external_growth_bytes),static_cast<unsigned long long>(after.allocations));
         {const auto total=pls_gc_trace_reads;auto first=total>128&&total-128>pls_gc_trace_printed?total-128:pls_gc_trace_printed;
          std::fprintf(stderr,"PLS_GC_RING=%lu:",first);for(auto i=first;i<total;++i)std::fprintf(stderr,"%s%s",i==first?"":",",pls_gc_trace_ring[i%128]);
          std::fputc(10,stderr);pls_gc_trace_printed=total;}

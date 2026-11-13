@@ -236,7 +236,7 @@ int main(int argc,char**argv){
         memory_categories("after_bootstrap");
         const auto execute_frame=[&]{
             app->host_update();pls::kairo::Offscreen::RenderAll();if(!pls::kairo::Offscreen::LastRenderError().empty())throw std::runtime_error("Null offscreen error: "+pls::kairo::Offscreen::LastRenderError());
-            sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.release_retained();
+            sound->Pump();app->host_draw();pls::kairo::Offscreen::EndFrame();pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.age_retained();
         };
 #if defined(__3DS__)
         if(std::filesystem::exists(converted/"replay-after-title.flag")){
@@ -254,7 +254,7 @@ int main(int argc,char**argv){
             std::fprintf(stdout,"PLS_NULL_REPLAY_ANCHOR={\"form_id\":1,\"boot_frames\":%llu,\"boot_ns\":%llu,\"retention_hits\":%llu}\n",static_cast<unsigned long long>(boot_frames),static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-boot_started).count()),static_cast<unsigned long long>(assets.retention_hits()));std::fflush(stdout);
             if(suite){
                 char summary[256];const auto boot_ns=static_cast<unsigned long long>(std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-boot_started).count());
-                std::snprintf(summary,sizeof(summary),"PLS_BENCH_LOAD boot_frames=%llu boot_ns=%llu retention_hits=%llu clock=real",static_cast<unsigned long long>(boot_frames),boot_ns,static_cast<unsigned long long>(assets.retention_hits()));report.line(summary);
+                std::snprintf(summary,sizeof(summary),"PLS_BENCH_LOAD boot_frames=%llu boot_ns=%llu retention_hits=%llu clock=real real_utc_unix_s=%lld",static_cast<unsigned long long>(boot_frames),boot_ns,static_cast<unsigned long long>(assets.retention_hits()),static_cast<long long>((pls::cs::utc_clock_ticks()-621355968000000000ll)/10000000ll));report.line(summary);
                 {
                     std::lock_guard<std::mutex> lock(pls::diagnostic::resource_event_mutex);
                     for(std::size_t i=0;i<pls::diagnostic::resource_aggregate_count;++i){const auto& a=pls::diagnostic::resource_aggregates[i];

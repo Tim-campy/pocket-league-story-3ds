@@ -26,9 +26,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-new/result.json",
-          "sha256": "301c5b33415cd8d4731405e8bbbc4047aacf83a03ebafc2ef76298208a81f425"
+          "sha256": "96ded3930116f57440077a5e2d2d39ecc96a0c4addb5e975a0c8e3b8e7bad351"
         },
-        "emulator_log_sha256": "134c2f9eb339d4df553a79d013ad1dce9ddaa1d6298320536647a854979098d3"
+        "emulator_log_sha256": "8dfa9595a1c023637375f5983e3946bc6d933efecae5e9f3b62ab59ac258a748"
       },
       {
         "model": "old",
@@ -36,9 +36,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-old/result.json",
-          "sha256": "4ad2c22d7ddbb016f1558a67ad0bede105527e470f57a7dd1327b2caa68c225b"
+          "sha256": "1cf82fad79b1a27c92a11773896c1257b5d04dc24371b27e9cee93c909e7d219"
         },
-        "emulator_log_sha256": "fec4f3170fb33239c0d87cfa5136927cafb0b229101fc0fadf660ad55b75d6ee"
+        "emulator_log_sha256": "17fb0b11d553acf143e0d67cf187207f26bb6192a7e4bcd3cabc03b2be59c9f2"
       }
     ],
     "game_boot": false,

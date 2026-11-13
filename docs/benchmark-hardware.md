@@ -29,7 +29,7 @@ O orçamento é 50 ms por frame (`Main.OnUpdate`, `SetTargetFps(20)`).
 Para regenerar a pasta (opcional; já está pronta nesta máquina):
 
 ```powershell
-python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_SEU_APK" --image build/benchmark-arm11-1/null_game.3dsx --scenario suite --output build/sd-benchmark --asset-root build/ctr-assets-native-v1
+python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_SEU_APK" --image build/benchmark-arm11-4/null_game.3dsx --scenario suite --output build/sd-benchmark --asset-root build/ctr-assets-native-v1
 ```
 
 A preparação confere o SHA-256 do APK, de cada asset e do executável, e
@@ -81,18 +81,47 @@ Linhas do arquivo:
 | `PLS_BENCH_MEMORY` | `malloc` usado e livre, região de aplicação, objetos do coletor |
 | `PLS_BENCH_STATUS` | `complete`, `incomplete` ou `failed <motivo>` |
 
+## Resultado em hardware (New 3DS XL, 2026-11-12)
+
+Executável `a1175e80…` (v4), console modelo 4 (`new3ds=1`), data do sistema
+corrigida para o dia da medição. Uma execução completa.
+
+| Medida | Valor | Orçamento |
+|---|---|---|
+| Até o título | 14,23 s (104 frames) | — |
+| Leitura do cartão | 3,53 MB/s; posicionamento médio 1,79 ms (máx. 27,5 ms) | — |
+| Maior carga de imagem | 246 ms (retenção: 116 acertos) | fatia de 150 ms |
+| Preparo de stream | média 11,5 ms | — |
+| Menu (230 frames): média / p95 / máx. | 7,05 / 6,52 / 143,4 ms | 50 ms |
+| Coletas no menu (maior pausa) | 6 (102,4 ms) | — |
+| Partida (300 frames): média / p95 / máx. | 12,05 / 12,70 / 13,03 ms | 50 ms |
+| Coletas na partida | 0 | — |
+| `malloc` no fim | 47,5 MB | — |
+
+Backend nulo: sem vídeo nem áudio. Execuções anteriores no console
+falharam por falhas de plataforma corrigidas depois (gravação do save no SD,
+que recusa renomear sobre um arquivo existente).
+
 ## Referência no emulador (não é hardware)
 
-Azahar 2126.2, CPU 100%, mesma imagem
-(`9291da1c…` no cartão; ver `private-manifest.json`):
+Azahar 2126.2, CPU 100%, mesma imagem (`ed1729a1…`; ver
+`private-manifest.json` no cartão):
 
 | Medida | New | Old |
 |---|---|---|
-| Até o título | 13,77 s | 13,81 s |
-| Leitura do pacote | 4,75 MB/s | 4,74 MB/s |
-| Menu (230 frames): média / p95 / máx. | 7,09 / 6,93 / 95,2 ms | 7,12 / 6,97 / 96,7 ms |
-| Partida (300 frames): média / p95 / máx. | 14,88 / 16,55 / 17,3 ms | 14,33 / 16,29 / 17,0 ms |
-| `malloc` no fim | 47,5 MB | 47,5 MB |
+| Até o título | 13,46 s | 13,37 s |
+| Acertos da retenção | 113 | 112 |
+| Leitura do pacote | 4,75 MB/s | 4,75 MB/s |
+| Menu (230 frames): média / p95 / máx. | 7,08 / 6,90 / 95,6 ms | 7,10 / 6,93 / 97,5 ms |
+| Partida (300 frames): média / p95 / máx. | 14,70 / 16,41 / 17,0 ms | 14,07 / 16,67 / 84,9 ms |
+| Coletas na partida (maior pausa) | 0 | 1 (72,6 ms) |
+| `malloc` no fim | 47,5 MB | 46,8 MB |
+
+A fase de carga usa o relógio real; o estado do heap na âncora pode variar
+entre execuções e deslocar o momento das coletas nas janelas.
+
+Teste de E/S lenta (diagnóstico, 500 ms artificiais por leitura): título em
+451 s, 379 acertos da retenção, menu completo, `malloc` máximo 44 MB.
 
 O Azahar não reproduz a velocidade de CPU nem do cartão do aparelho; só o
 resultado do console decide.

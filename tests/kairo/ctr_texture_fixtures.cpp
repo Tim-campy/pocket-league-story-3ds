@@ -42,6 +42,9 @@ int main(int argc,char**argv){
   check(retained.read(*entry)==original);check(retained.retention_hits()==hits+1);
   retained.release_retained();check(retained.read(*entry)==altered);check(retained.retention_hits()==hits+1);
   check(retained.prepare_stream(*entry)==retained.path(*entry));check(retained.prepare_stream(*entry)==retained.path(*entry));check(retained.retention_hits()==hits+2);
+  write(root/entry->path,original);retained.release_retained();check(retained.read(*entry)==original);
+  retained.age_retained();check(retained.read(*entry)==original);check(retained.retention_hits()==hits+3);
+  write(root/entry->path,altered);retained.age_retained();retained.age_retained();check(retained.read(*entry)==altered);
   write(root/entry->path,original);}
  std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<assertions<<"}\n";
 }

@@ -237,6 +237,10 @@ void register_managed_object(const Ref<Object>&object,std::size_t body_bytes=0,c
 // changes game references. Callback must not allocate managed objects.
 void visit_managed_memory(const memory::RangeVisitor&,const std::function<void()>&finish={});
 void gc_safepoint();
+// Diagnosis for hosts without dialogs: type and message of the most recent
+// exception bound by a managed catch (capture_exception). Never game state.
+std::string last_captured_exception();
+void record_captured_exception(std::string value);
 void gc_collect(std::int32_t generation=2);
 #if PLS_TRACING_GC
 void gc_request_collection();

@@ -37,6 +37,7 @@ class Catalog {
     mutable const Entry* retained_stream_entry_{};
     mutable std::filesystem::path retained_stream_;
     mutable std::uint64_t retention_hits_{};
+    mutable unsigned retained_age_{},retained_stream_age_{};
     std::chrono::milliseconds read_delay_{};
     std::vector<std::uint8_t> read_uncached(const Entry&)const;
     std::filesystem::path prepare_stream_uncached(const Entry&)const;
@@ -52,6 +53,11 @@ public:
     std::uint64_t total_bytes(Kind)const;
     std::size_t size()const{return entries_.size();}
     void release_retained()const;
+    // Host frame end: a slice may run once per frame when the loader is a
+    // worker posting to the UI thread (BootForm.Run), so retention survives
+    // frame boundaries and is dropped only after two frames without a request
+    // (or at once when another resource is requested).
+    void age_retained()const;
     std::uint64_t retention_hits()const;
     // Diagnostic hosts only: artificial delay per real storage access.
     void set_diagnostic_read_delay(std::chrono::milliseconds delay){read_delay_=delay;}

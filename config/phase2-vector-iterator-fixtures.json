@@ -37,10 +37,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.28472080000210553,
-    "native-compile": 31.458996400004253,
-    "managed-output": 0.6294190999906277,
-    "native-output": 0.334448000008706
+    "csharp-compile": 0.22561869997298345,
+    "native-compile": 31.57699699999648,
+    "managed-output": 0.535817899974063,
+    "native-output": 0.20133199999690987
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -98,11 +98,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/vector-iterator/differential/Harness.exe",
-    "sha256": "2285e361d7fbbbad248a131033b751e1488bd41dfdd4a3e9d90c5678612b39a6"
+    "sha256": "0299f780ebc479f5dc513696d1022822c5a49ae28d591164368996bb004eba8c"
   },
   "source_oracle_executable": {
     "path": "build/translator/vector-iterator/differential/Harness-managed.exe",
-    "sha256": "f4c67d38b8c78d66df680fc64e5b0deb1e003c338ebe8f39892ce23bf6fd3fc8"
+    "sha256": "29fdf42fe76c54f8f0258f8ce877514f5fe9c363c8d76353e7d9e943c263c2e4"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -292,7 +292,7 @@
     },
     {
       "path": "src/kairo/common/asset_catalog.hpp",
-      "sha256": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e"
+      "sha256": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663"
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
@@ -572,7 +572,7 @@
     },
     {
       "path": "src/kairo/common/managed_exceptions.cpp",
-      "sha256": "1167c5ee17d04f8534bd52cd9db5e750d14511f2ae6d4abfe93b0e242df4232f"
+      "sha256": "2145bb96dbcda899d0350f81f70c213fbae57ffee5f9e713f170da2b4df223b9"
     },
     {
       "path": "src/kairo/common/managed_exceptions.hpp",
@@ -684,11 +684,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf"
+      "sha256": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430"
+      "sha256": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1"
     },
     {
       "path": "src/kairo/common/services.hpp",

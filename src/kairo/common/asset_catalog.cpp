@@ -134,11 +134,11 @@ void Catalog::verify(const Entry& entry)const{
 std::filesystem::path Catalog::prepare_stream(const Entry& entry)const{
     {
         std::lock_guard<std::mutex> lock(*retain_mutex_);
-        if(retained_stream_entry_==&entry){++retention_hits_;return retained_stream_;}
+        if(retained_stream_entry_==&entry){++retention_hits_;retained_stream_age_=0;return retained_stream_;}
     }
     auto result=prepare_stream_uncached(entry);
     std::lock_guard<std::mutex> lock(*retain_mutex_);
-    retained_stream_entry_=&entry;retained_stream_=result;
+    retained_stream_entry_=&entry;retained_stream_=result;retained_stream_age_=0;
     return result;
 }
 std::filesystem::path Catalog::prepare_stream_uncached(const Entry& entry)const{
@@ -161,18 +161,23 @@ void Catalog::release_retained()const{
     retained_entry_=nullptr;std::vector<std::uint8_t>().swap(retained_);
     retained_stream_entry_=nullptr;retained_stream_.clear();
 }
+void Catalog::age_retained()const{
+    std::lock_guard<std::mutex> lock(*retain_mutex_);
+    if(retained_entry_&&++retained_age_>=2){retained_entry_=nullptr;std::vector<std::uint8_t>().swap(retained_);}
+    if(retained_stream_entry_&&++retained_stream_age_>=2){retained_stream_entry_=nullptr;retained_stream_.clear();}
+}
 std::uint64_t Catalog::retention_hits()const{std::lock_guard<std::mutex> lock(*retain_mutex_);return retention_hits_;}
 std::vector<std::uint8_t> Catalog::read(const Entry& entry)const{
     {
         std::lock_guard<std::mutex> lock(*retain_mutex_);
-        if(retained_entry_==&entry){++retention_hits_;return retained_;}
+        if(retained_entry_==&entry){++retention_hits_;retained_age_=0;return retained_;}
         // Another resource: drop the previous payload before reading, so
         // the peak never exceeds one retained payload.
         retained_entry_=nullptr;std::vector<std::uint8_t>().swap(retained_);
     }
     auto data=read_uncached(entry);
     std::lock_guard<std::mutex> lock(*retain_mutex_);
-    retained_entry_=&entry;retained_=data;
+    retained_entry_=&entry;retained_=data;retained_age_=0;
     return data;
 }
 std::vector<std::uint8_t> Catalog::read_uncached(const Entry& entry)const{

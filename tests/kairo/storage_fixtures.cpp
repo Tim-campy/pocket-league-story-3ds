@@ -38,6 +38,13 @@ int policy(const std::filesystem::path& root){
  auto storage=Storage::Open(4,true);
  for(int iteration=0;iteration<32;++iteration){payload.at(0)=static_cast<std::uint8_t>(iteration);storage->Write(Str(u"opaque-import"),payload);require(B(storage->Read(Str(u"opaque-import")))==B(payload));}
  storage->Write(Str(u"\u96ea.dat"),Bytes::from({0,1}));require(storage->Read(Str(u"\u96ea.dat")).length()==2);
+ // A replacement interrupted between its two renames (3DS SD path) leaves only
+ // "<name>.port-old": the previous complete file is recovered before reading.
+ storage->Write(Str(u"recover.dat"),Bytes::from({5,6,7}));
+ std::filesystem::rename(root/"rs/recover.dat",root/"rs/recover.dat.port-old");
+ require(storage->Exists(Str(u"recover.dat")));require(B(storage->Read(Str(u"recover.dat")))==B(Bytes::from({5,6,7})));
+ require(std::filesystem::is_regular_file(root/"rs/recover.dat")&&!std::filesystem::exists(root/"rs/recover.dat.port-old"));
+ storage->Write(Str(u"recover.dat"),Bytes::from({8}));require(storage->Read(Str(u"recover.dat")).length()==1);
  std::filesystem::create_directories(root/"rs/directory-target");
  bool rejected=false;try{storage->Write(Str(u"directory-target"),payload);}catch(const pls::cs::IOException&){rejected=true;}require(rejected);
  require(std::filesystem::is_directory(root/"rs/directory-target"));

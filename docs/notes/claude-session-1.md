@@ -148,3 +148,37 @@ completo no PC: 96/97 capturas idênticas (a diferente é o frame 1, antes da
 
 Recibo de tentativas: lista de fontes por tentativa trocada por SHA-256 +
 contagem (lista completa na pasta privada); 2.091.515 → 404.487 bytes.
+
+## 8. Benchmark em hardware (2026-11-12)
+
+Suíte única (`--scenario suite`): carga com relógio real até o `TitleForm`,
+depois relógio virtual e janelas de menu (191–420) e partida (1201–1500);
+`sdmc:/pls-benchmark/result.txt` com modelo do console. Guia:
+`docs/benchmark-hardware.md`. Resultados privados em `build/hw-return/`.
+
+Execuções no New 3DS XL:
+
+1. v2 (`ed1729a1…`): carga até o título 14,44 s; falha após o frame 181 com
+   diálogo de erro do jogo (exceção capturada por `Main.OnUpdate`). Save
+   devolvido idêntico ao enviado. Reproduções no Azahar com RTC em 2011 e 2024
+   completaram: hipótese da data refutada.
+2. v3 (`fbfb2973…`, com registro da última exceção capturada): causa
+   `System.IO.IOException: cannot rename` ao gravar `rs/0000`. O sdmc da libctru
+   não renomeia sobre arquivo existente; Windows e Azahar substituem.
+   Correção em `storage.cpp`: troca via `<nome>.port-old` só para arquivo comum,
+   com recuperação antes de leituras e testes de existência.
+3. v4 (`a1175e80…`): **completa**. Partida média 12,05 ms, máx. 13,03 ms, sem
+   coletas; menu média 7,05 ms, máx. 143,4 ms por coleta de 102,4 ms; título em
+   14,23 s; leitura 3,53 MB/s; maior carga de imagem 246 ms.
+
+Retenção de recurso: a liberação no fim do frame anulava a retenção quando o
+`LoadStart` roda em worker (`BootForm.Run`) e cada fatia cai num frame.
+Agora a entrada só cai após dois frames sem pedido ou a pedido de outro
+recurso. Atraso artificial de 500 ms por leitura: título em 451 s, 379 acertos,
+memória estável (44 MB). 2 s por leitura: não testado.
+
+Isolamento da sondagem da rendezvous (Azahar New, menu): 23 coletas, pausa
+média 97,5 ms com e sem sondagem; sem efeito mensurável neste caminho.
+
+Teste `image-lifetime`: falha intermitente (4/60) por resíduo de pilha;
+coletas e checagens de expiração em worker unido + `scrub_stack`: 0/300.

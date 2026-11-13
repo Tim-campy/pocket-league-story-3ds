@@ -32,7 +32,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf"
+      "sha256": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66"
     },
     {
       "path": "src/kairo/common/managed_streams.cpp",
@@ -40,7 +40,7 @@
     },
     {
       "path": "src/kairo/common/managed_exceptions.cpp",
-      "sha256": "1167c5ee17d04f8534bd52cd9db5e750d14511f2ae6d4abfe93b0e242df4232f"
+      "sha256": "2145bb96dbcda899d0350f81f70c213fbae57ffee5f9e713f170da2b4df223b9"
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
@@ -80,7 +80,7 @@
     },
     {
       "path": "src/kairo/common/asset_catalog.hpp",
-      "sha256": "e1f9873af2ae1fc4b115b8a1584632393c0779b7cc10a99bb47ace02d9dc9d2e"
+      "sha256": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663"
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
@@ -192,7 +192,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430"
+      "sha256": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -239,10 +239,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "02c716fc2a550e5df907a9744bdab5d87f6ef3d491e7edc33cd9bd1dcaeb1260"
+    "sha256": "af8e704f4b93029553274b542941e1de4331b8a1772802768b13c61dda370c7b"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "fe66617264e3a62fd172db30b968dd2a6fb2e7df9a58712b48deb462d9efc9d3"
+    "sha256": "82bd99f0f45630cddae75e27851bbc3b0f270c0830b5b130865c903713326c3f"
   }
 }

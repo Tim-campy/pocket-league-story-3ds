@@ -13,7 +13,7 @@ void P(const char* name,std::initializer_list<pls::cs::Ref<Image>> images){const
 }
 int main(int argc,char**argv){
  if(argc!=2&&argc!=3)return 2;pls::assets::Catalog catalog(std::filesystem::u8path(argv[1]));install_asset_catalog(&catalog);
- unsigned int assertions=0;auto check=[&](bool b){if(!b)throw std::runtime_error("Image lifetime policy failed");++assertions;};
+ unsigned int assertions=0;auto check=[&](bool b){if(!b){std::cerr<<"Image lifetime assertion "<<(assertions+1)<<'\n';throw std::runtime_error("Image lifetime policy failed");}++assertions;};
  if(argc==3&&std::string(argv[2])=="pixels"){
   const auto retained=[](const pls::cs::Ref<Image>& image){std::size_t bytes=0;image->memory_ranges([&](const void*,std::size_t n,auto){bytes+=n;});return bytes;};
   for(const auto shape:{std::array<std::uint8_t,2>{3,2},{4,1},{1,1}}){
@@ -37,8 +37,8 @@ int main(int argc,char**argv){
  runtime.measure_source=pls::cs::Delegate<pls::cs::Array<std::int32_t>(pls::cs::Array<std::uint8_t>)>::from_static("own-header",[](pls::cs::Array<std::uint8_t> data){return pls::cs::Array<std::int32_t>::from({data.at(0),data.at(1)});});
  runtime.read_source=pls::cs::Delegate<pls::cs::Array<std::uint8_t>(std::int32_t,std::int32_t,pls::cs::String,pls::cs::String)>::from_static("own-file",[](std::int32_t rs,std::int32_t rc,pls::cs::String file,pls::cs::String palette){if(rs!=-1||rc!=-1||!palette.is_null())throw pls::cs::NotSupportedException();return file==pls::cs::String(u"synthetic")?pls::cs::Array<std::uint8_t>::from({3,2,41}):pls::cs::Array<std::uint8_t>{};});install_image_runtime(std::move(runtime));
  if(argc==3){
-  pls::cs::Weak<Owner> weak;isolated_gc_mutator([&]{auto owner=pls::cs::make_ref<Owner>();auto raw=pls::cs::raw(owner);owner->image=Image::FromLoader(pls::cs::Delegate<pls::cs::Array<std::uint8_t>()>::bind(owner,"own-image-cycle",[raw]{(void)raw;return pls::cs::Array<std::uint8_t>::from({3,2,41});}));weak=owner;});pls::cs::gc_collect();check(weak.expired());
-  pls::cs::Weak<Image> image;isolated_gc_mutator([&]{auto value=Image::FromSource(pls::cs::Array<std::uint8_t>::from({3,2,41}));value->Use();value->SetExpiration(true,1);image=value;});pls::cs::gc_collect();isolated_gc_mutator([&]{check(!image.expired());frame=2;Image::UnuseExpirationImages();});pls::cs::gc_collect();check(image.expired());check(create_area==0);
+  scrub_stack();pls::cs::Weak<Owner> weak;isolated_gc_mutator([&]{auto owner=pls::cs::make_ref<Owner>();auto raw=pls::cs::raw(owner);owner->image=Image::FromLoader(pls::cs::Delegate<pls::cs::Array<std::uint8_t>()>::bind(owner,"own-image-cycle",[raw]{(void)raw;return pls::cs::Array<std::uint8_t>::from({3,2,41});}));weak=owner;});scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{check(weak.expired());});
+  scrub_stack();pls::cs::Weak<Image> image;isolated_gc_mutator([&]{auto value=Image::FromSource(pls::cs::Array<std::uint8_t>::from({3,2,41}));value->Use();value->SetExpiration(true,1);image=value;});scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{check(!image.expired());frame=2;Image::UnuseExpirationImages();});scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{check(image.expired());});check(create_area==0);
   std::cout<<"{\"assertions\":"<<assertions<<",\"missing_bindings_rejected\":true,\"loader_cycle_collected\":true,\"source_cache_owns_resident_images\":true,\"game_boot\":false}\n";return 0;
  }
  reset();auto a=S(3,2);a->SetExpiration(true,40);P("lazy",{a});frame=10;a->Use();P("used",{a});frame=11;a->Use();frame=50;Image::UnuseExpirationImages();P("threshold-equal",{a});frame=51;Image::UnuseExpirationImages();P("threshold-past",{a});frame=52;a->Use();P("reloaded",{a});a->Dispose();P("disposed",{a});

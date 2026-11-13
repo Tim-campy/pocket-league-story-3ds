@@ -28,6 +28,7 @@ def main():
     parser.add_argument('--timeout', type=int, default=300)
     parser.add_argument('--gdb-port', type=int)
     parser.add_argument('--asset-root', type=Path, default=ROOT/'assets')
+    parser.add_argument('--rtc-unix',type=int,help='Diagnosis: fixed emulated RTC (Unix seconds) instead of the host clock')
     parser.add_argument('--read-delay-ms',type=int,help='Diagnosis only: artificial delay per real storage access')
     parser.add_argument('--virtual-clock',help='Deterministic benchmark clock start_ms,read_us,frame_ms')
     parser.add_argument('--profile-resources', action='store_true',help='Enable deferred load-stage diagnostics; omit for frame measurements')
@@ -57,7 +58,9 @@ def main():
     config = launcher / 'user/config'
     config.mkdir(parents=True)
     (config / 'qt-config.ini').write_text(
-        '[System]\nis_new_3ds\\default=false\nis_new_3ds=' +
+        '[System]\n' +
+        (f'init_clock\\default=false\ninit_clock=1\ninit_time\\default=false\ninit_time={args.rtc_unix}\n' if args.rtc_unix else '') +
+        'is_new_3ds\\default=false\nis_new_3ds=' +
         ('true' if args.model == 'new' else 'false') +
         '\n[Core]\ncpu_clock_percentage\\default=false\ncpu_clock_percentage=100\n'
         '[Renderer]\nframe_limit\\default=false\nframe_limit=100\n'

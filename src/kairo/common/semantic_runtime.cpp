@@ -206,6 +206,10 @@ void gc_collect(std::int32_t generation){
     }catch(const std::bad_alloc&){throw OutOfMemoryException();}
 }
 #endif
+namespace {std::mutex last_capture_mutex;std::string last_capture;}
+std::string last_captured_exception(){std::lock_guard<std::mutex> lock(last_capture_mutex);return last_capture;}
+void record_captured_exception(std::string value){std::lock_guard<std::mutex> lock(last_capture_mutex);last_capture=std::move(value);}
+
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count){
     if(!source||!dest)throw ArgumentNullException();
     if(source_index<0||dest_index<0||count<0)throw ArgumentOutOfRangeException();

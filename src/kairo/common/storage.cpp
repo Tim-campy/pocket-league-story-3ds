@@ -43,7 +43,18 @@ std::vector<std::uint8_t> vector(Bytes bytes) {
     std::vector<std::uint8_t> result(static_cast<std::size_t>(bytes.length()));
     for(std::int32_t i=0;i<bytes.length();++i)result[static_cast<std::size_t>(i)]=bytes.at(i);return result;
 }
+// The 3DS SD archive (libctru sdmc devoptab) refuses to rename onto an
+// existing file; Windows and the emulator replace it. A replacement then goes
+// through "<name>.port-old". If the process stops between the two renames,
+// the previous complete file is recovered before any read or existence test.
+std::filesystem::path replaced_backup(const std::filesystem::path& path){auto backup=path;backup+=".port-old";return backup;}
+const std::filesystem::path& recover_replaced(const std::filesystem::path& path){
+    std::error_code error;
+    if(!std::filesystem::exists(path,error)&&std::filesystem::exists(replaced_backup(path),error))std::filesystem::rename(replaced_backup(path),path);
+    return path;
+}
 std::vector<std::uint8_t> read_file(const std::filesystem::path& path) {
+    recover_replaced(path);
     std::ifstream input(path,std::ios::binary);if(!input)throw cs::IOException("Cannot read storage file");
     return {std::istreambuf_iterator<char>(input),std::istreambuf_iterator<char>()};
 }
@@ -57,7 +68,18 @@ void atomic_write(const std::filesystem::path& path,const std::vector<std::uint8
         {std::ofstream output(temp,std::ios::binary|std::ios::trunc);if(!output)throw cs::IOException("Cannot create storage temporary file");
          if(!data.empty())output.write(reinterpret_cast<const char*>(data.data()),static_cast<std::streamsize>(data.size()));
          output.flush();if(!output)throw cs::IOException("Cannot flush storage temporary file");}
-        std::filesystem::rename(temp,path);
+        recover_replaced(path);
+        std::error_code direct;
+        std::filesystem::rename(temp,path,direct);
+        if(direct){
+            // Only a regular file is replaced; a directory or other target keeps the original refusal.
+            if(!std::filesystem::is_regular_file(path))throw std::filesystem::filesystem_error("cannot rename",temp,path,direct);
+            const auto backup=replaced_backup(path);std::error_code ignored;
+            std::filesystem::remove(backup,ignored);
+            std::filesystem::rename(path,backup);
+            try{std::filesystem::rename(temp,path);}catch(...){std::filesystem::rename(backup,path,ignored);throw;}
+            std::filesystem::remove(backup,ignored);
+        }
     }catch(...){std::error_code ignored;std::filesystem::remove(temp,ignored);throw;}
 }
 template<class F> auto filesystem_call(F&& call)->decltype(call()) {
@@ -74,7 +96,7 @@ Bag& bag(bool bytes) {
     if(result.loaded)return result;
     const auto path=bag_path(bytes);
     std::map<std::u16string,Value> parsed;
-    if(std::filesystem::exists(path)) {
+    if(std::filesystem::exists(recover_replaced(path))) {
         const auto data=read_file(path);constexpr char magic[]="PLSPREF1";
         if(data.size()<12||!std::equal(data.begin(),data.begin()+8,magic))throw IllegalFileException("Unknown portable preference container");
         std::size_t p=8;const auto count=get32(data,p);
@@ -212,7 +234,7 @@ Bytes Storage::Read(cs::String filename) {
     std::lock_guard<std::recursive_mutex> lock(gate);filename=converted(filename);
     if(media_==2&&state.heap_enabled){const auto found=heap_file(filename);return found==state.heap.end()?Bytes{}:found->second;}
     if(media_==3){const auto* entry=resource_file(filename);return entry?from(state.catalog->read(*entry)):Bytes{};}
-    if(media_==1||media_==4)return filesystem_call([&]{const auto path=file_path(folder_,filename);return std::filesystem::is_regular_file(path)?from(read_file(path)):Bytes{};});
+    if(media_==1||media_==4)return filesystem_call([&]{const auto path=file_path(folder_,filename);return std::filesystem::is_regular_file(recover_replaced(path))?from(read_file(path)):Bytes{};});
     return {};
 }
 void Storage::Write(cs::String filename,Bytes data) {
@@ -229,13 +251,13 @@ bool Storage::Exists(cs::String filename) {
     std::lock_guard<std::recursive_mutex> lock(gate);filename=converted(filename);
     if(media_==2&&state.heap_enabled)return heap_file(filename)!=state.heap.end();
     if(media_==3)return resource_file(filename)!=nullptr;
-    return (media_==1||media_==4)&&filesystem_call([&]{return std::filesystem::is_regular_file(file_path(folder_,filename));});
+    return (media_==1||media_==4)&&filesystem_call([&]{return std::filesystem::is_regular_file(recover_replaced(file_path(folder_,filename)));});
 }
 std::int32_t Storage::GetSize(cs::String filename){
     std::lock_guard<std::recursive_mutex> lock(gate);
     filename=converted(filename);
     if(media_==2&&state.heap_enabled){const auto found=heap_file(filename);return found==state.heap.end()?-1:found->second.length();}
-    if(media_==1||media_==4)return filesystem_call([&]{const auto path=file_path(folder_,filename);return std::filesystem::is_regular_file(path)?cs::cast_integral<std::int32_t>(std::filesystem::file_size(path)):-1;});
+    if(media_==1||media_==4)return filesystem_call([&]{const auto path=file_path(folder_,filename);return std::filesystem::is_regular_file(recover_replaced(path))?cs::cast_integral<std::int32_t>(std::filesystem::file_size(path)):-1;});
     auto bytes=Read(filename);return bytes.is_null()?-1:bytes.length();
 }
 cs::Array<cs::String> Storage::GetFiles() {

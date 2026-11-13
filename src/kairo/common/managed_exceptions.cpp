@@ -109,6 +109,7 @@ void ExceptionObject::release_edges(){release_value(message_);clear_ref(inner_);
 ExceptionRef make_exception(const std::string& name){auto object=make_ref<ExceptionObject>(name);object->source_ctor(name);return object;}
 ExceptionRef make_exception(const std::string& name,String message,ExceptionRef inner){auto object=make_ref<ExceptionObject>(name);object->source_ctor(name,std::move(message),std::move(inner));return object;}
 ExceptionRef capture_exception(const Exception& exception,std::exception_ptr native){
+    record_captured_exception(std::string(exception.type_name())+": "+exception.what());
     std::lock_guard<std::mutex> guard(exception.identity_token()->mutex);
     if(auto cached=pls::cs::dynamic_pointer_cast<ExceptionObject>(exception.identity_token()->managed_view.lock()))return cached;
     auto object=exception.uses_default_message()?make_exception(exception.type_name()):make_exception(exception.type_name(),String::from_utf8(exception.what()));

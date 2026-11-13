@@ -181,7 +181,7 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::audio);
             app->host_draw();
             pls::kairo::Offscreen::EndFrame();
-            pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.release_retained();
+            pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.age_retained();
 #if defined(PLS_DIAGNOSTIC_BUILD)
             // Calibration only: cumulative clock reads, paired with PLS_FRAME_PROFILE.
             if(pls::kairo::virtual_clock::observing()||pls::kairo::virtual_clock::active())std::cerr<<"PLS_CLOCK_READS="<<pls::kairo::virtual_clock::reads()<<','<<pls::kairo::virtual_clock::thread_reads()<<'\n';

@@ -7,7 +7,9 @@ void install_dialog_service(cs::Ref<DialogPresenter> value,cs::Delegate<cs::Arra
 std::int32_t show_dialog(std::int32_t type,cs::String title,cs::String message,cs::String custom_buttons){
     if(!custom_buttons.is_null())throw cs::NotSupportedException("Custom JNI dialog button return mapping is not verified");
     if(type<0||type>4)throw cs::NotSupportedException("Dialog type is outside the original declared constants");
-    const auto current=presenter;if(!current||!label_provider)throw cs::InvalidOperationException("Native dialog presenter/localized labels are not installed");
+    const auto current=presenter;
+    // Hosts without a presenter (benchmark/diagnosis) report what was asked.
+    if(!current||!label_provider)throw cs::InvalidOperationException("Native dialog presenter/localized labels are not installed (type="+std::to_string(type)+", title="+(title.is_null()?std::string("null"):title.utf8())+", message="+(message.is_null()?std::string("null"):message.utf8())+", last_caught="+cs::last_captured_exception()+")");
     auto app=IApplication::GetCurrentApp();if(!app)throw cs::NullReferenceException();std::int32_t answer=-1;
     app->RunOnUiThread(cs::Delegate<void()>::from_native("native-platform-dialog",[&]{
         const auto labels=label_provider(type);const auto count=type<=2?1:type==3?2:3;

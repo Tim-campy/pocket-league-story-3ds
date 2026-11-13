@@ -18,7 +18,7 @@
   "producer_sha256": "504f781a5c265095c899c773c0f35b9570f45c33cd08ffd545e8da762573af29",
   "inputs_sha256": {
     "tests/translator/stream_reader_fixtures.cpp": "29accb4b1d3ace84d2687f77523a8365c7c2da32b1d0255fd03f324667704b71",
-    "src/kairo/common/semantic_runtime.cpp": "375baa311336f09f11448aca81b7fde6c5a3421b822001ebab909dea03c555cf",
+    "src/kairo/common/semantic_runtime.cpp": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66",
     "src/kairo/common/managed_streams.cpp": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6",
     "src/kairo/common/managed_encoding.cpp": "2f326befca3d6116395d531f705b772b2626200cdf979f307c20c4f224660fd1",
     "src/kairo/common/managed_stream_reader.cpp": "e8f7e507b8ac58aa5a99484cbd07ee0ad35d56b22c201830c9d62cef6af9c699",
@@ -26,11 +26,11 @@
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66",
     "src/kairo/common/managed_stream_reader.hpp": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd",
     "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
-    "src/kairo/common/semantic_runtime.hpp": "091e95d8ac8fcab6099eec3e090771ea2e35f2a9f1f44b1bc1f5be97c6f19430"
+    "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1"
   },
   "native_executable": {
     "path": "build/stream-reader-fixtures/stream-reader-fixtures.exe",
-    "sha256": "2c5aac461e5d5078a08a260aecb3041adcfcfe22062b14abd0b6e2c644728cac"
+    "sha256": "ea122640ba269026066cbcf65bf2771fdd93000e0319bd42efdf22b78410ce73"
   },
   "production_methods_promoted": 0,
   "original_game_binary_loaded": false

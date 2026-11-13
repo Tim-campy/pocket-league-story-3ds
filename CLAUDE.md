@@ -103,6 +103,10 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Snapshot do diagnóstico | `python translator/diagnostic_snapshot.py --output build/<pasta-nova>` | segundos |
 | Build ARM11 (backend nulo) | `python tools/build_arm11_null.py --apk APK --snapshot build/<snapshot> --output build/<pasta-nova>` | gera `null_game.3dsx` + `build-proof.json` |
 | Execução no Azahar | `python tools/run_arm11_null.py --apk APK --image build/<pasta>/null_game.3dsx --output build/<pasta-nova> --scenario menu\|match --model new\|old --asset-root build/ctr-assets-native-v1` | logs do convidado em `<saída>/launcher/user/sdmc/pls-benchmark/` |
+| Tradução do jogo (gera `src/game/` e compila) | `python tools/translate --assembly Assembly-CSharp --bootstrap-main --compile --original-managed MANAGED` | ~20 min, pico ~1,2 GiB; `--diagnostics-only` só lista rejeições |
+| Diferencial de rebaixamento | `python translator/test_lowering.py` | fixtures em `tests/translator/LoweringFixtures.cs` contra o Mono |
+| Livro-razão e `PROGRESS.md` | `python tools/progress` | estados: `todo`, `translated`, `embedded`, `no-body`, `runs`, `verified` |
+| Pasta do cartão para hardware | `python tools/prepare_arm11_sd.py --apk APK --image build/<pasta>/null_game.3dsx --scenario suite --output build/<pasta-nova> --asset-root build/ctr-assets-native-v1` | recusa pasta existente |
 | Simbolizar pilha ARM | `arm-none-eabi-addr2line -f -C -i -e <elf> <endereços>` | em `C:/devkitPro/devkitARM/bin` |
 
 Nomes do C++ gerado são hashes (`cs_<hash>`); para achar o método original,

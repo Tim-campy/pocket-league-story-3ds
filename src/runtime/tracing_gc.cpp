@@ -559,6 +559,7 @@ struct Heap::Impl {
     }
 #endif
     std::uintptr_t collect_body();
+    std::uintptr_t current_bottom(){std::lock_guard<std::mutex> lock(mutex);return current().bottom;}
     void resume() {
         snapshot_active=false;
         snapshot_ranges.clear();
@@ -897,7 +898,11 @@ PLS_GC_NOINLINE void scrub_below(std::uintptr_t bottom) {
     else if (available > 4096 + 4096) scrub_dead_stack<4096>();
 }
 }
+// Zero dead stack before the collector's own frames are laid out as well:
+// their uninitialized slots otherwise keep words from earlier calls (or from
+// an earlier thread that used the same stack pages) and retain dead objects.
 PLS_GC_NOINLINE void Heap::collect() {
+    scrub_below(impl_->current_bottom());
     scrub_below(impl_->collect_body());
 }
 bool Heap::collect_if_needed() {

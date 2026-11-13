@@ -4,13 +4,13 @@
   "arm_fixture": {
     "build": {
       "path": "build/ctr-gc-fixture/build-proof.json",
-      "sha256": "2420cf92c5198555b808cc65d82697504737646635992a2c60a783907d734907"
+      "sha256": "069d5412ae00c35c9e1548193eb32781f510ea19c1a2e4d0e65f62c8322890fb"
     },
     "inputs": {
-      "src\\runtime\\tracing_gc.cpp": "c5bd5cedf67aadcce2a0baaed8279e2e1d3f0e31b0f3447d7aa6dbc41bedfda6",
+      "src\\runtime\\tracing_gc.cpp": "31d4acc51a64472b866ce359cbed556afef8009df72ab24ca6650b3ce27d0d4a",
       "src\\runtime\\tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596",
       "src\\runtime\\ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
-      "tests\\translator\\tracing_gc_fixtures.cpp": "fd23ae53966ac7c252e98d7f270750611326db7894d66b5ff2da92528213b56c",
+      "tests\\translator\\tracing_gc_fixtures.cpp": "3f15c540765604f5940d85f50e3a74be21d5a75bd3b98be35452746c30651174",
       "tests\\translator\\tracing_gc_register_arm.S": "a514f12e6a81dc02c11e6b57ff3ab308300654f0a5e4879c32aabd0a14af1b94",
       "tools\\ctr-gc-fixture\\CMakeLists.txt": "ba7fc74d5d01f8e63e7f97f5fc2392f47218e73d2a275184cddf0165d7eb8ff6",
       "tools\\build_ctr_gc_fixture.py": "1c6bca9200c181eb02f28ab7ac9af9ad7bde1e0eb7c7b82508bf30c3407f7da2",
@@ -18,7 +18,7 @@
       "src\\runtime\\ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
       "tools\\cmake\\ctr_thread_lifecycle.cmake": "0f540cf001fd74f664ac062ba6515098ad2d681267b4e1a82be1b56e224e257a"
     },
-    "image_sha256": "57e22af63bfb086bd38ed0d365de75027d5893632d06d7bf61f8701a7a2c2285",
+    "image_sha256": "8a1aed6b993ea9ca1e19a4a14f7a349a3e5920cc84b57eea7b68221be6ee2cbb",
     "runs": [
       {
         "model": "new",
@@ -26,9 +26,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-new/result.json",
-          "sha256": "96ded3930116f57440077a5e2d2d39ecc96a0c4addb5e975a0c8e3b8e7bad351"
+          "sha256": "00ed74264bacc09dc9c324d1784ddf0d315a0b93c478485c909413b94cefc499"
         },
-        "emulator_log_sha256": "8dfa9595a1c023637375f5983e3946bc6d933efecae5e9f3b62ab59ac258a748"
+        "emulator_log_sha256": "f6f4eaff6f8af96cb1abe231ca1bb3013e2f8119d1bcb83d5287bd5c21a20d7b"
       },
       {
         "model": "old",
@@ -36,9 +36,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-old/result.json",
-          "sha256": "1cf82fad79b1a27c92a11773896c1257b5d04dc24371b27e9cee93c909e7d219"
+          "sha256": "25239227bcb9d774e7595ade132cb95d5d30728426e61de2252057f69df3ada3"
         },
-        "emulator_log_sha256": "17fb0b11d553acf143e0d67cf187207f26bb6192a7e4bcd3cabc03b2be59c9f2"
+        "emulator_log_sha256": "d7e54af25d3171513482eb8a54ea59768d3e9ec1b98a5435a5ac00776621ad1c"
       }
     ],
     "game_boot": false,

@@ -6,7 +6,7 @@ def criteria(phase2, game, floating=None):
         ('Tradução completa','em andamento' if count else 'pendente',
          f'{count}/1958 métodos compilados; {slots} slots virtuais pendentes; integração das 53 políticas ainda não comprovada.'),
         ('Coletor e desempenho','em andamento',
-         'Rastreamento integrado e em validação; paridade dos kernels e benchmark <=50 ms no New 3DS real ainda não comprovados.'),
+         'Critério: New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa: partida média 12,05 ms/máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Ainda não cumprido.'),
         ('Percurso completo no PC','em andamento' if phase2.get('game_executed_methods',0) else 'pendente',
          f"{phase2.get('game_executed_methods',0)} métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados."),
         ('Fidelidade resolvida','em andamento',

@@ -19,3 +19,14 @@ genéricos e colisões com palavras reservadas do C++), um arquivo por classe.
 Impacto observado: na depuração do boot ARM desta sessão, cada símbolo da
 pilha teve de ser mapeado à mão pelas cadeias `src/...:M:<método>` próximas
 no `.cpp` gerado.
+
+## Melhorias opcionais
+
+### Paridade C++/Mono nos kernels de referência
+
+Registrado em 2026-11-12, por decisão do usuário: deixou de ser exigência do
+critério 2 do congelamento. Últimos números (ns/chamada, PC, `runtime-cost-final.md`):
+Camera.ConvertScreenToCamera 14,8 contra Mono 6,1; Team.GetSum 138,6 contra 34,9;
+Team.Cal_evaCoatMulti9block 132,6 contra 35,4; AppData.InsertGameObject 183,2
+contra 83,9; ChRect 7,3 contra 10,0. O New 3DS real roda a partida em 12,05 ms
+de média com backend nulo, contra 50 ms de orçamento.

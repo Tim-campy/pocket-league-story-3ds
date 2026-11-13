@@ -977,7 +977,7 @@
   },
   "native_executable": {
     "path": "build/application-properties-tests/application-properties-fixtures.exe",
-    "sha256": "f38d5b95dafa7d6f3db5719a26f327ddd4fa34d8cb73cb2fde0df897be2a3b43"
+    "sha256": "b7206e9642fea2cc672798ca63070e5b1e95e56fc8279d7cbd42fc0bb3b0ddfa"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "source_only_jsystem": [

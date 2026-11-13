@@ -182,3 +182,36 @@ média 97,5 ms com e sem sondagem; sem efeito mensurável neste caminho.
 
 Teste `image-lifetime`: falha intermitente (4/60) por resíduo de pilha;
 coletas e checagens de expiração em worker unido + `scrub_stack`: 0/300.
+
+## 9. Critério 2 alterado e limpeza adiada (2026-11-13)
+
+Critério 2 (decisão do usuário): New 3DS real, backend nulo, nenhum frame
+acima de 50 ms em menu e partida, incluindo coletas, em três execuções, e
+partida com média abaixo de 20 ms. Paridade C++/Mono passou a melhoria opcional
+(`docs/backlog.md`). Medição com vídeo real refeita na Fase 4 (`AGENTS.md`).
+
+Limpeza adiada (marcação por época; coletas por volume só marcam; remoção em
+fatias de 1 ms no fim do frame; coletas explícitas completas). Fixtures do
+coletor aprovadas após correções. **Não adotada**: sonda de pausas do PC,
+replay da partida, mesmo método da rodada herdada:
+
+| Variante | Coletas | Média | Máxima | Pausas >= 2 ms |
+|---|---:|---:|---:|---:|
+| Coletor publicado | 21 | 15,04 ms | 49,83 ms | 20 |
+| Limpeza adiada | 22 | 19,87 ms | 140,62 ms | 19 |
+| Fatias da limpeza adiada | 19 | 5,66 ms | 17,78 ms | — |
+
+Causa: a varredura publicada compacta faixas em bloco quando muitos objetos
+morrem; a adiada remove um objeto por vez (nó de `std::map`, índice por
+página, registro denso), bem mais caro. Com fatias de 1 ms a limpeza não
+termina antes da coleta seguinte, que conclui a sobra dentro da pausa pelo
+caminho lento. Candidato preservado em `build/claude-gc-lazy2/`.
+Consequência: reduzir pausas exige estruturas de metadados mais baratas
+(registro sem `std::map` por objeto, descritor por ponteiro, índice por
+página sem vetores por objeto), não só adiar a varredura.
+
+Adotado do experimento: o coletor zera a pilha morta também **antes** da
+coleta (resíduo no quadro de `Heap::collect` de uma thread anterior que usou
+as mesmas páginas, medido com `PLS_GC_ROOT_TRACE`). Fixture do motor:
+`isolated()` desloca as chamadas para pilha não usada e o caso de buffer
+imutável coleta sem raízes do chamador. Motor: 0 falhas em 400 execuções.

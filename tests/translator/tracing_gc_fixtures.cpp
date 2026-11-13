@@ -34,10 +34,28 @@ struct Node {
     int value = 37;
     static void trace(const void* p, Edges edges) { edges(static_cast<const Node*>(p)->edge); }
 };
+template<class F>
+#if defined(_MSC_VER)
+__declspec(noinline)
+#else
+__attribute__((noinline))
+#endif
+void run_isolated_action(Heap& heap, F& action) { Mutator mutator(heap); action(); }
 template<class F> void isolated(Heap& heap, F action) {
     // No object addresses from this worker remain on the collector's stack.
     std::exception_ptr failure;
-    std::thread thread([&] { try { Mutator mutator(heap); action(); } catch (...) { failure=std::current_exception(); } });
+    // Reused worker stacks keep words from earlier threads (measured: an
+    // uninitialized Heap::collect slot holding a dead fixture object). Clean
+    // the area this worker's calls will occupy, as collect_without_caller_roots does.
+    std::thread thread([&] { try {
+#if defined(__3DS__)
+        volatile std::uintptr_t clean_frame[1024]{};
+#else
+        volatile std::uintptr_t clean_frame[8192]{};
+#endif
+        (void)clean_frame;
+        run_isolated_action(heap, action);
+    } catch (...) { failure=std::current_exception(); } });
     { NativeWait wait(heap); thread.join(); }
     if(failure)std::rethrow_exception(failure);
 }
@@ -433,7 +451,9 @@ void immutable_buffer_accounting() {
     });
     check(calls==1);
     heap.refresh_memory_accounting();check(calls==1); // Per-frame accounting reuses immutable metadata.
-    isolated(heap,[&]{heap.collect();});
+    // The intended root is the explicit provider; exact reclamation must not
+    // count conservative words from earlier workers or this caller.
+    collect_without_caller_roots(heap);
     check(calls==1); // Fixed addresses remain indexed; collection does not enumerate them again.
     check(heap.statistics().objects==1); // Primitive buffer bytes are never traced as pointers.
     check(heap.contains(root));

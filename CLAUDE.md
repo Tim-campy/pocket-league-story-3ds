@@ -29,7 +29,7 @@ Os números deste arquivo são um retrato do momento da troca de agente. Se dive
 | Critério do congelamento | Estado |
 |---|---|
 | 1. Tradução completa | 1.768 de 1.958 métodos do jogo compilam; 190 corpos e 22 slots virtuais pendentes; 26 das 53 políticas offline por integrar |
-| 2. Coletor e desempenho | Coletor integrado. CPU por frame no PC (backend nulo): cerca de 1,6 ms na partida, contra 9,0 ms antes. Boot no ARM falha por memória. Benchmark em hardware ainda não feito |
+| 2. Coletor e desempenho | **Critério alterado em 2026-11-12:** no New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa no New 3DS XL (`891d520`): partida média 12,05 ms / máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Paridade com o Mono virou melhoria opcional (`docs/backlog.md`) |
 | 3. Percurso completo no PC | Título, saves, gestão, partida completa e retorno funcionam. Temporada e roteiro de cobertura pendentes; 776 métodos exercitados |
 | 4. Fidelidade | Regra de ponto flutuante confirmada em emulador Android ARM e adotada; confirmação em aparelho pendente. Comparação de telas com o original pendente |
 | 5. Código legível e aprovado | Não iniciado |
@@ -47,7 +47,7 @@ Nenhum congelamento foi feito. Estamos na Fase 2 (tradução fiel).
 
 ### O orçamento que decide
 
-O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): 50 ms por frame. A estimativa a partir do PC deixa o New 3DS no limite. **Só a medição no aparelho real decide**; o emulador Azahar não reproduz a velocidade do hardware.
+O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): 50 ms por frame. A estimativa a partir do PC deixa o New 3DS no limite. **Só a medição no aparelho real decide**; o emulador Azahar não reproduz a velocidade do hardware. **Medido em 2026-11-12 no New 3DS XL (backend nulo): partida com média de 12,05 ms; o gargalo restante são as pausas do coletor (102 ms no menu).**
 
 ## Decisões já tomadas (não reabrir sem motivo novo)
 

@@ -57,7 +57,7 @@ O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): **50 m
 Termina no congelamento, que exige os cinco critérios abaixo, todos comprovados por script ou medição:
 
 1. **Tradução completa:** 1.958 de 1.958 métodos do jogo compilando, nenhum slot virtual pendente, as 53 políticas offline integradas aos chamadores.
-2. **Coletor aplicado e desempenho confirmado:** razão C++/Mono igual ou menor que 1 nos kernels de referência, e o benchmark de menu e partida dentro do orçamento **no New 3DS real**.
+2. **Coletor aplicado e desempenho confirmado:** no **New 3DS real**, com backend nulo, nenhum frame acima de 50 ms nas janelas de menu e de partida, incluindo coletas, em três execuções; e partida com média abaixo de 20 ms. (Alterado pelo usuário em 2026-11-12; a antiga exigência de razão C++/Mono ≤ 1 nos kernels virou melhoria opcional em `docs/backlog.md`.) A medição com vídeo real é refeita na Fase 4.
 3. **Jogo percorrido de ponta a ponta no PC:** roteiro de cobertura em `docs/coverage-plan.md` (todas as telas, uma temporada completa, saves, todos os tipos de evento) executado sem erro, com a cobertura de execução por método registrada. Métodos nunca alcançados são listados e justificados.
 4. **Fidelidade resolvida:** regra de ponto flutuante confirmada em aparelho Android; divergências de `ref`/`out` e trigonometria resolvidas ou documentadas com decisão do usuário; telas comparadas com o original.
 5. **Código legível:** o tradutor emite C++ adequado a manutenção manual: um arquivo por classe, nomes originais de tipos, membros e parâmetros, sem ruído de runtime visível além do necessário, formatação consistente. O usuário aprova uma amostra antes da geração final.
@@ -79,7 +79,7 @@ Propostas em `docs/design/` para divisão das duas telas (400×240 sem toque, 32
 
 ### Fase 4 — Backend 3DS
 
-Vídeo pela GPU (citro2d/citro3d), som (ndsp), toque e botões, arquivos e saves no SD, empacotamento `.3dsx` e `.cia` sem assets. Validação em hardware.
+Vídeo pela GPU (citro2d/citro3d), som (ndsp), toque e botões, arquivos e saves no SD, empacotamento `.3dsx` e `.cia` sem assets. Validação em hardware. Inclui refazer no New 3DS real a medição de desempenho do critério 2 com vídeo e áudio reais.
 
 ### Fase 5 — Melhorias e 3DS antigo
 

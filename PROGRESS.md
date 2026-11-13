@@ -12,7 +12,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 | Critério | Estado | Evidência / pendência |
 |---|---|---|
 | Tradução completa | em andamento | 1768/1958 métodos compilados; 22 slots virtuais pendentes; integração das 53 políticas ainda não comprovada. |
-| Coletor e desempenho | em andamento | Rastreamento integrado e em validação; paridade dos kernels e benchmark <=50 ms no New 3DS real ainda não comprovados. |
+| Coletor e desempenho | em andamento | Critério: New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa: partida média 12,05 ms/máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Ainda não cumprido. |
 | Percurso completo no PC | em andamento | 780 métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados. |
 | Fidelidade resolvida | em andamento | Ponto flutuante confirmado em emulador ARM; confirmação em aparelho, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
 | Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |

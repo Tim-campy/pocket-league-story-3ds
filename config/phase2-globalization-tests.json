@@ -283,7 +283,7 @@
   },
   "native_executable": {
     "path": "build/globalization-fixtures/globalization-fixtures.exe",
-    "sha256": "baf15ee08aea5ed762077ba069083f7956ccd5e0c592606b76991e6dc5823737"
+    "sha256": "fbec3899a49af4034d6aa4e26387ed85a495d991d51902e4709e77ef5274dfc9"
   },
   "production_methods_promoted": 0,
   "original_game_binary_executed": false,

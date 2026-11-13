@@ -465,7 +465,7 @@
   "producer_sha256": "013dee03016510ea39479230423949fa8c43b303562d875bea4723cdbb11c2be",
   "inputs_sha256": {
     "tests/translator/thread_fixtures.cpp": "bb82c13080409faf9b67b3aeea0d3067e3ad3bf8eb6625393e056c177b1f33f2",
-    "src/kairo/common/semantic_runtime.cpp": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66",
+    "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
     "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "tests/translator/ThreadProbe.cs": "85be9a67d96e7cbd4dbc44e8e5d64251d7f013654cf72054f6a065367cac695f",
@@ -475,7 +475,7 @@
     "src/kairo/common/managed_collation.cpp": "a3ee79c835705e7eff562ef2267713fb0c585cccad1f2d7c3f1b5104ad9dcf90",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
-    "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1",
+    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
@@ -484,7 +484,7 @@
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
-    "src/runtime/managed_gc_bridge.inc": "6dc38b833dd24ef7981c702194eaf539bafd20d1e0d4cda49e1334901858373b",
+    "src/runtime/managed_gc_bridge.inc": "816279c7795dd0f9fa6f2fa12e7c2c51dc9abb575c00b6e4ea5843358d6d6821",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
     "src/runtime/tracing_gc.cpp": "31d4acc51a64472b866ce359cbed556afef8009df72ab24ca6650b3ce27d0d4a",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"
@@ -495,7 +495,7 @@
   },
   "native_executable": {
     "path": "build/thread-fixtures/thread-fixtures.exe",
-    "sha256": "341774a589c83a40fe1a725fac75315a47900d2ad7331509b3f6fac6c623688e"
+    "sha256": "4467b17b7369aa6ab3766940214edaf7034aad552338f6eed0e8c65800af7152"
   },
   "production_methods_promoted": 0,
   "game_binary_loaded": false,

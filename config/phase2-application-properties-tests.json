@@ -962,7 +962,7 @@
   ],
   "inputs_sha256": {
     "tests/kairo/application_properties_fixtures.cpp": "969b1787bcb979866daf4dfd95626d7162934d45ff1d2da0b88cb51b7ee0d8f7",
-    "src/kairo/common/semantic_runtime.cpp": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66",
+    "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
     "src/kairo/platform/sdl/globalization.cpp": "16c4af626da9c714b35485ac86f85e1f24e9438f3c4959226fd7dba531edc018",
     "tests/kairo/ApplicationPropertiesOracle.cs": "5f9535874848aefc73363d118b67adaa0adfff63bc8754846620478faa22b8b0",
     "tools/test_application_properties.py": "4bd26a88ef8d3c9fdf0d1499bc016d01ded0a9c99726dd811a4bc62774bfd3ee",
@@ -970,14 +970,14 @@
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
     "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
-    "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1",
+    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
     "src/kairo/platform/sdl/globalization.hpp": "9a5f11c69a8a41c03cc026741da7d4d6c7ef5d95afe94d228f2630871669c2d7"
   },
   "native_executable": {
     "path": "build/application-properties-tests/application-properties-fixtures.exe",
-    "sha256": "628b13db1ffcd95fbdaa2c54dbff4af7d3933f333ac5da44805c051585d9810b"
+    "sha256": "fb5d138e05bb58f66d46137cd01baba175888dee95b9d5ed2d1c520543d58901"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "source_only_jsystem": [

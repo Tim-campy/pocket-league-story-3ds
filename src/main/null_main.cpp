@@ -269,6 +269,8 @@ int main(int argc,char**argv){
 #endif
         std::cerr<<"PLS_NULL_STAGE=frames\n";std::cerr.flush();
         struct Sample{std::uint64_t frame,cpu,wall,begin,end;int form;pls::allocation_probe::Snapshot memory;std::uint64_t thread_ns,thread_cycles;};std::vector<Sample>samples;samples.reserve(window_frames);
+        // Every collection of the run with its trigger and frame (criterion 2 groups).
+        struct GcRecord{std::uint64_t frame;pls::cs::GcEvent event;};std::vector<GcRecord> gc_records;std::uint64_t gc_seen=0;
 #if defined(_WIN32)
         LARGE_INTEGER frequency;QueryPerformanceFrequency(&frequency);std::cout<<"PLS_NULL_QPC_FREQUENCY="<<frequency.QuadPart<<"\nPLS_NULL_PID="<<GetCurrentProcessId()<<"\n";
 #endif
@@ -301,6 +303,7 @@ int main(int argc,char**argv){
 #endif
             pls::allocation_sites::window(-1);
             pls::source_allocations::window(-1);
+            for(const auto& event:pls::cs::gc_events_after(gc_seen)){gc_records.push_back({completed+1,event});gc_seen=event.sequence;}
             if(in_window(completed+1)){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;samples.push_back({completed+1,elapsed_cpu,std::uint64_t(elapsed_wall),begin,end,form?form->GetId():-1,after,thread_end.ns-thread_start.ns,thread_end.cycles-thread_start.cycles});}
             if(std::any_of(windows.begin(),windows.end(),[&](const Window& w){return completed+1==w.first||completed+1==w.last;})){std::cerr<<"PLS_NULL_WINDOW="<<(completed+1)<<"\n";std::cerr.flush();}
             if(!in_window(completed+1)&&completed%60==0){auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;std::fprintf(stderr,"PLS_NULL_WARMUP_END=%llu form=%d\n",static_cast<unsigned long long>(completed+1),form?form->GetId():-1);std::fflush(stderr);}
@@ -322,6 +325,24 @@ int main(int argc,char**argv){
                 wall.empty()?0.0:sum/double(wall.size()),wall.empty()?0.0:wall[std::size_t(std::ceil(0.95*double(wall.size())))-1],wall.empty()?0.0:wall.back(),
                 static_cast<unsigned long long>(collections),double(collection_ns)/1e6,double(longest)/1e6);
             report.line(summary);
+            // Criterion 2: transition and loading pauses are tolerated up to
+            // 150 ms; every other frame (volume and explicit collections
+            // included) is stable play and must stay within 50 ms.
+            static const char* const names[]={"explicit","volume","transition","loading"};
+            std::uint64_t kind_count[4]{},kind_total[4]{},kind_longest[4]{};std::set<std::uint64_t> tolerated;
+            for(const auto& r:gc_records)if(r.frame>=w.first&&r.frame<=w.last){const auto k=static_cast<int>(r.event.trigger);++kind_count[k];kind_total[k]+=r.event.pause_ns;kind_longest[k]=std::max(kind_longest[k],r.event.pause_ns);
+                if(r.event.trigger==pls::cs::GcTrigger::transition||r.event.trigger==pls::cs::GcTrigger::loading)tolerated.insert(r.frame);}
+            for(int k=0;k<4;++k){char line[200];std::snprintf(line,sizeof(line),"PLS_BENCH_COLLECTIONS window=%s trigger=%s count=%llu total_ms=%.4f max_ms=%.4f",w.name.c_str(),names[k],static_cast<unsigned long long>(kind_count[k]),double(kind_total[k])/1e6,double(kind_longest[k])/1e6);report.line(line);}
+            double stable=0,tolerated_frame=0;std::uint64_t stable_frame=0;
+            for(const auto& s:samples)if(s.frame>=w.first&&s.frame<=w.last){const double ms=double(s.wall)/1e6;
+                if(tolerated.count(s.frame))tolerated_frame=std::max(tolerated_frame,ms);else if(ms>stable){stable=ms;stable_frame=s.frame;}}
+            {char line[200];std::snprintf(line,sizeof(line),"PLS_BENCH_STABLE window=%s stable_max_ms=%.4f stable_max_frame=%llu tolerated_frames=%zu tolerated_max_ms=%.4f",w.name.c_str(),stable,static_cast<unsigned long long>(stable_frame),tolerated.size(),tolerated_frame);report.line(line);}
+        }
+        for(const auto& r:gc_records){
+            std::uint64_t wall=0;for(const auto& s:samples)if(s.frame==r.frame)wall=s.wall;
+            static const char* const names[]={"explicit","volume","transition","loading"};
+            char line[240];std::snprintf(line,sizeof(line),"PLS_BENCH_GC frame=%llu trigger=%s pause_ms=%.4f frame_ms=%.4f source=%s",static_cast<unsigned long long>(r.frame),names[static_cast<int>(r.event.trigger)],double(r.event.pause_ns)/1e6,double(wall)/1e6,r.event.source[0]?r.event.source:"-");
+            if(in_window(r.frame))report.line(line);else{std::fputs(line,stderr);std::fputc(10,stderr);}
         }
 #if defined(__3DS__)
         {const auto heap=mallinfo();char summary[200];std::snprintf(summary,sizeof(summary),"PLS_BENCH_MEMORY malloc_used=%d malloc_free=%d app_region_used=%u gc_objects=%llu",heap.uordblks,heap.fordblks,unsigned(osGetMemRegionUsed(MEMREGION_APPLICATION)),static_cast<unsigned long long>(pls::cs::gc_registry_stats().entries));report.line(summary);}

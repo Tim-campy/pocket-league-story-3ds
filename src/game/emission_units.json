@@ -15799,6 +15799,14 @@
       "header": "game_generated_type_87fb4d668ea5580b.hpp",
       "templates": null
     },
+    "cs_6fa713935dfcd76c": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
+    "cs_6fa713935dfcd76c_init": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
     "cs_6fab53a6524e00ce": {
       "header": "game_generated_type_feb7ae74aa59a27c.hpp",
       "templates": null
@@ -20121,6 +20129,14 @@
     },
     "cs_9221c265df5b5c4a_init": {
       "header": "game_generated_type_2ffa6f51468590ea.hpp",
+      "templates": null
+    },
+    "cs_923493c18d90485c": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
+    "cs_923493c18d90485c_init": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
       "templates": null
     },
     "cs_923e2e9d94b50211": {
@@ -24815,6 +24831,14 @@
       "header": "game_generated_type_7eeafe36a056776c.hpp",
       "templates": null
     },
+    "cs_b8b48b1495fef228": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
+    "cs_b8b48b1495fef228_init": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
     "cs_b8c56c17f1427900": {
       "header": "game_generated_type_8f8054b388e3f93e.hpp",
       "templates": null
@@ -25717,6 +25741,14 @@
     },
     "cs_beb950d6aeeb844b_init": {
       "header": "game_generated_type_3a3d09f9e75a32d2.hpp",
+      "templates": null
+    },
+    "cs_bec22bc6a552aef8": {
+      "header": "game_generated_type_11e0490f60fdc166.hpp",
+      "templates": null
+    },
+    "cs_bec22bc6a552aef8_init": {
+      "header": "game_generated_type_11e0490f60fdc166.hpp",
       "templates": null
     },
     "cs_becdc008e7791991": {
@@ -33437,6 +33469,14 @@
     },
     "cs_f86548878598ca1e_init": {
       "header": "game_generated_type_15f31d4f046b09a8.hpp",
+      "templates": null
+    },
+    "cs_f878e2def0687b14": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
+    "cs_f878e2def0687b14_init": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
       "templates": null
     },
     "cs_f88753a6a366d95c": {

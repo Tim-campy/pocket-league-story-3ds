@@ -602,6 +602,18 @@
         "kind": "bool_false",
         "field_assignments": []
       }
+    },
+    {
+      "symbol": "M:kairo.unity.system.KairoBase.GetSignature",
+      "action": "constant",
+      "result_contract": "fixed local text",
+      "native_hook": null,
+      "reason": "Policy 54: Android package signature replaced by a meaningless local constant; never transmitted (transport is offline)",
+      "lowering": {
+        "kind": "string_exact",
+        "value": "pls-offline",
+        "field_assignments": []
+      }
     }
   ],
   "preserved_original_account_symbols": [

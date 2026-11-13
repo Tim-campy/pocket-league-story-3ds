@@ -6,7 +6,7 @@ def criteria(phase2, game, floating=None):
         ('Tradução completa','em andamento' if count else 'pendente',
          f"{count}/1958 métodos compilados"+(f" (+{phase2['game_embedded_methods']} membros gerados pelo compilador dentro de unidades emitidas, {phase2.get('game_no_body_methods',0)} abstratos sem corpo)" if phase2.get('game_embedded_methods') else '')+f'; {slots} slots virtuais pendentes; integração das 53 políticas ainda não comprovada.'),
         ('Coletor e desempenho','em andamento',
-         'Critério: New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa: partida média 12,05 ms/máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Ainda não cumprido.'),
+         'Critério (2026-11-13): New 3DS real, backend nulo, três execuções; nenhum frame >50 ms em jogo estável (coletas por volume incluídas); pausas em trocas de tela principal e carregamentos até 150 ms; partida com média <20 ms. v5 em três execuções: menu com maior coleta 105,6–107,7 ms, classificação por tipo pendente do v6; partida média 8,9–12,6 ms sem coletas.'),
         ('Percurso completo no PC','em andamento' if phase2.get('game_executed_methods',0) else 'pendente',
          f"{phase2.get('game_executed_methods',0)} métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados."),
         ('Fidelidade resolvida','em andamento',

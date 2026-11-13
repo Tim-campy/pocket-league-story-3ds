@@ -5,6 +5,11 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 
 
+# Policy 54 (user decision 2026-11-13): fixed local text with no meaning. The
+# Android package signature is never read; the offline transport never sends it.
+OFFLINE_SIGNATURE='pls-offline'
+
+
 def typed_lowering(policy):
     """A finite lowering contract; the emitter never parses prose results."""
     identifier=policy['symbol']
@@ -24,6 +29,8 @@ def typed_lowering(policy):
     }
     if identifier=='M:main.AppData.CgiRegist(System.String,System.String)':
         return dict(kind='register_local',native_hook='pls::services::managed::register_local',native_include='services_managed.hpp',field_assignments=[])
+    if identifier=='M:kairo.unity.system.KairoBase.GetSignature':
+        return dict(kind='string_exact',value=OFFLINE_SIGNATURE,field_assignments=[])
     if identifier=='M:kairo.unity.ad.AdMobView.GetAdHeight':
         return dict(kind='int_exact',value=0,field_assignments=[])
     if result not in constants:raise ValueError('No typed lowering for '+identifier)
@@ -104,6 +111,12 @@ def main():
         ('GetNotificationData','','empty string[]'),('GetNotificationFilter','','FilterLevel.None = 0')]:
         add('M:kairo.unity.native.KairoPlugin.'+name+('('+args+')' if args else ''),'constant',result)
     add('M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification','constant','false')
+    # Policy 54: KairoBase.Connect* answers "server unavailable" through the
+    # original no-network path (Connect -> ConnectLogin/HttpConnect -> Http ->
+    # HttpObject, offline WWW -> IOException). Only the JNI signature leaf is
+    # replaced; the bodies that handle the failure stay original.
+    add('M:kairo.unity.system.KairoBase.GetSignature','constant','fixed local text',
+        reason='Policy 54: Android package signature replaced by a meaningless local constant; never transmitted (transport is offline)')
     for policy in policies:policy['lowering']=typed_lowering(policy)
     # No fabricated license result. The transitive call site has an explicit
     # throwing platform guard; the removed JNI/checker body is never generated.

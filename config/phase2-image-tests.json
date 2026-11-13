@@ -8,7 +8,7 @@
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
-  "executable_sha256": "02ef67bc3a1a53827207d9c54fa4f5382769c56f50f60a8d2932cf5d87c811a3",
+  "executable_sha256": "1bca2629caf1bad31cfd7643a701a8aa975052a31c2bbddaa0bdd4289bdad44b",
   "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
   "sources": [
     {
@@ -49,11 +49,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66"
+      "sha256": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1"
+      "sha256": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
     }
   ]
 }

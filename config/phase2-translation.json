@@ -14145,7 +14145,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "54d1335c1ece24103268446fdf7b13c43241f8ff89a7e1a8e07069b32a362264",
+    "translator_source_sha256": "e52c5bab6f4a948cc98a52d57cb64df5ee0a4e240283bf9d69182417f053fde7",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
     "driver_sha256": "326ef7dbc3156a8901bd8e18f0fe38d9b28b2929317104ae1a7a8bdd4e532be4"
   },
@@ -14835,224 +14835,224 @@
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7050e83748bf61d9.obj",
-        "sha256": "796fe9a3d787846da82a2e7eda212e45f82d5f734366d03b0f7bc9848fec252b"
+        "sha256": "fc10e8d428c90dd7936702858b33cfd735762f8dd7fb760219192ea99855497f"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_b9188de9464f0742.obj",
-        "sha256": "18b71072635cb7ee8d30aa3dcfbab575999fc64e2c7971548cb913d245a72d19"
+        "sha256": "b52ba0a929ec3d2ad13693a91eb86097b192fd6420afcb59b0566e695650e4b4"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_151e33114450683d.obj",
-        "sha256": "c0bcddc707d96588c4eeb5fcf43646cf8321980c1f43eb7907816ff86ef5a8ed"
+        "sha256": "5376adf817b80ffb57a71049b6fe093dd136609afd367aa32a4d4915326a7bc2"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_237e53d89b726d8e.obj",
-        "sha256": "71fe439a8fa6c35d13e57c199946941c6b59ba644fed2086f86c7cade268dcd2"
+        "sha256": "12d748e513d54e596669122c1fc7887a28b26ba45aba8fbf5076cc14ad1bb7fa"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_d52094f8a71cc022.obj",
-        "sha256": "c82030b25a7f76fcd78fbde33ce79b18bce50f91bb7374e9edc0d8859e609904"
+        "sha256": "c88dc6182ddfe952c5a42f1f5e53bb093bb20b0014ab40124631561ce2a36e42"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_09ab66fa9efa53c7.obj",
-        "sha256": "6e395243f42802ef3b0c505df59fd3c98cc9f68c5e5261bf37be83b5e09929ad"
+        "sha256": "77da39469847fa54218e2103dd71f538ed595a494461145535d5200ca1ec878c"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f53655830c33af49.obj",
-        "sha256": "dd1c6bdf0f4d2cfaa4191ad11666a2f38648db800afea2ad4600195533b17ef2"
+        "sha256": "352cb9f69d2040d0825c76bd10acab30a81a6b3d7b3aff6e605c91287000cb49"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_6059baa061e97917.obj",
-        "sha256": "3bcb66cb09dae6214b864e8dfa7bba5f67e31347dbc6a27afcef75d93a71d34f"
+        "sha256": "d9e5d69e364c5f9a40d83093207f4f34d51b44667279be1ba14aa25813332290"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f2cbe14d1c8ba95f.obj",
-        "sha256": "818cd9d72a5bdc2a6020f111b507c063a1033f2c7cb8abb8bb66447692d78099"
+        "sha256": "70732ae192547fc3a83a522a6ff6e7a9114b27d22ac16bcccf3d70a17c666b2d"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e5d3d40359612c5f.obj",
-        "sha256": "6321bf6f710fe9badc191fbaa07b19aca269e4d9e3832d134d2fa9292d0dabd2"
+        "sha256": "b15b640e6ac83eebdb55f13bf18bdcb37560330d1fd20d115ee53b0ed4a7426f"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_71becf9feb0b55c9.obj",
-        "sha256": "b6a85fba533c0b31f4ea2a83341dbdfcfc05ced8502db0db3b050226fd31df20"
+        "sha256": "7dc6d9311b57ce3ce08c7653cd57cd4f53939308f0985328be29557d0c90ee82"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f6da18c1f1e46ebc.obj",
-        "sha256": "3bfb8c6366a9b6bc5f5dab24ddf6210759d1e69d5d4fc2ac17cf4f1141aa96c6"
+        "sha256": "8b0ef8b9c123fa170f9398838ae8b78aaad802a7c1ae7f6fd674a76037427aa7"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_d5a434ceae0e29ac.obj",
-        "sha256": "62eac8b3df11c7acc1d8099aaa7d1ac874f27c71b07a512193a6513358263cff"
+        "sha256": "8cc377a2ed0bd8a56f6e826bec73ace93480e77a39e88abee3b103a8750f3dc9"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_1cb9f5c9577a1b79.obj",
-        "sha256": "700cd50b4c24cc97f62034b43ae78d3320d2eb8e8af99b6628f7424cdc4817a0"
+        "sha256": "8dcfdf328b94dd17d8ea374ed26661d76f3c1cc69f980b79d88ed9bc13a3a47b"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_ff3137528a7c11e2.obj",
-        "sha256": "9af6e90181c808a8f8b93ed9ea374c77e81aeb98feb79e4b676ce754cded8f97"
+        "sha256": "92b0a8e4848070fa8c477b8fab2a352e1d2099dbae33d56f6c591c8b2476d479"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e011e73fb262e4a7.obj",
-        "sha256": "214c50dc384080c53995604f83a22cd0871b2fa4a6ebf5c2cc509a2fbc0a8981"
+        "sha256": "585ca0ef43bc75034a5717244210d8dd84f923df582240e2b540cae273add840"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_0cb7c7581aeca012.obj",
-        "sha256": "c2d9dffd22d659f49c411a378dbcbaad8a978f92f962096312113f1ec7a6ae11"
+        "sha256": "f8b5624c74f707a3c707ba964914b11b84e903800f5fb63914e83bf1d392755e"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_c46d6626be045431.obj",
-        "sha256": "d3b9ea60fbf54dc3f03f693656ea96d7ab2973956d6d9e4a6eed3342f384abe8"
+        "sha256": "bf77539c99c55670011fa47000f04d1b6da21505d8d43dffdea93e8bb65f03fa"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_af39bea8abf874ce.obj",
-        "sha256": "f4e32050a8c2062dae631ebca671a52a6f005b01a10f4ee3298b460b142f82a1"
+        "sha256": "6a8da6a1a726069b68406083c02b665e2f91a305ff1c72168ab3346d4786d5ea"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_052c1096a756eb18.obj",
-        "sha256": "55dcebaa7747e87c34109c4781a3369c858ae7a5b59046dc8c6696b26a60bad5"
+        "sha256": "d67e4e5fa348991255e27e399afd55bbcbb5b3da1ffe12712aeac49b2763ac70"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7b20b8825890f6c5.obj",
-        "sha256": "a4cddea56ade56480a17645642c92d72831fa0371e0a49eeae08bccff5787ef7"
+        "sha256": "a6b44820b80f1d5aa6b3b644de8e54efeb45a133a314d099440d95a6e00db3fe"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_34211caea0490646.obj",
-        "sha256": "9739bb1f8df0fcda3d07c887d839223e775643d0593afbbc6d682a81d00cda41"
+        "sha256": "8732147dd8c454741393e9d4801b51416eb7c9fd1281929c3da8078d52079050"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_237cddbf5bce3995.obj",
-        "sha256": "840795935e7c682cc7382d09c6591a59054187dc91cf353cdc21bfcaa8464d96"
+        "sha256": "74b6bf86be3988888b85fd3f3489f9c995a64815ee685feefc0b829e20046ce5"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_21211c07a89ba25d.obj",
-        "sha256": "4ee141260aa77f8ddfdfe6c6d307a6370945dca232b7d2d3b223a5e6c2987101"
+        "sha256": "cdb16a8d45bef3e270f7afc8aaef502af6a806ee8cc95bda63fc1fe8804bb334"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_2313ee85f5a3645a.obj",
-        "sha256": "8aadcb2bf0727c89f66f9e7d8f2f3a0af2a9d1cca30562703510bbf345645ebe"
+        "sha256": "482cc06c9b9cf8df818f73e8dc875308f8888a4e540a00bb1212d7ac808b3c67"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_ca791f7458f7a9dc.obj",
-        "sha256": "ed6ac63ec226583a9780c67159b822a7971ba98a34de916c16f8f63717a3bbb9"
+        "sha256": "157965ed33e767f8269a74fee535d81e1893dd7cd29ea1dcffc0359116d877c4"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_fba3088c14dbc4f2.obj",
-        "sha256": "1f46f1e33e564766b0dd5cbcbc52596b426c710c8c0dede346861864e6f6df0f"
+        "sha256": "006162f21fa79d839085c3a6bacc561c55e3c48293fcc9fd786fd60554fd8f1b"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_a3346126a482060c.obj",
-        "sha256": "1568a55afb945bfcc09c331c19e0febd10ac6b7d7738d1ff3790b6e95eae823d"
+        "sha256": "3964653f25f151c290e35c55fcde921a6edf3e8c3d2dac2a6cc53e61af313f6d"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_b593e384706381b0.obj",
-        "sha256": "11680bacba1e0505f2ca4f5b52480fbff6cb2f57ef28e6484515485e1fef09f6"
+        "sha256": "5ec9694fda80d1afe1afd3a643c4f9b2baa1354ec6c16e0f620855a1c13d4b97"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_75ac4d89e2b1d14c.obj",
-        "sha256": "e0b8dd282a8323a2c202fde411cf1e37a386b6d8811bdd0e8d98537418c533ac"
+        "sha256": "01d9c97579d48f01eb7b671f8652b116128392482e4fcd8a3ff67adf450e26d5"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e9e00a694086ca82.obj",
-        "sha256": "a016b3bcee7bc2b612f7046257ed8110ae293d595a4cc27e0316f77b18a41a97"
+        "sha256": "258b7c605db263f5e912428d5197bc0bb12beb840191177d7c5f9247d3ce6c75"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7d24c4b01b617a98.obj",
-        "sha256": "50afab269479fda08460ad6babfdc7cd46cc51a8d3e9dbdd1452d3ea4d30669a"
+        "sha256": "d043e51399ff1b764d57740dcb7acba46be4865dc9df3ecbd415eec0fb14114c"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_4a44a7dd64a9cd03.obj",
-        "sha256": "da357c99e8cdcd744d1cd2addc93f173401301f5dee182150979293731110b4f"
+        "sha256": "f5935a5d38b63b09a92ce39c85ff8640bd78e15b42896aed90f91ac25d2d0b57"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_a388eec8299c101c.obj",
-        "sha256": "f131af8945f9e707e5a997f84ef0185c865de4d2103e469a817bbe06c72006e9"
+        "sha256": "347797c2f4bd9d4ab6e7b31eca8264bf39b5a17156947c88d8ce71c699dd97d5"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_bb5e9df8695503a7.obj",
-        "sha256": "ee9c94d84028bca114265d15fd31e4eea8d2bd1802c4e631133735e38a7ea6f6"
+        "sha256": "bf32408fd6eb4082e957ec3469b8b80269458a868ee34e199caa0c856efe3de6"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_0ae25ebd2559e89d.obj",
-        "sha256": "10b255c4e267239781a996dcff2cdb137954a91da739e4d694fbb4c1e220f91e"
+        "sha256": "837212d147262e396b72f2a570b0f6b7358a19bef4decd6cf90312329cd4d7f2"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_b6a1a540e6745ffd.obj",
-        "sha256": "3c2cfb3585058093bc56a782f45915e00bfe844bdd0ee51a22ca0a3b89d55a1f"
+        "sha256": "bd9e3d18802d14f48016ff7938a3665aec0d5362bb426e60f39b8ad82a35db45"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7f034171d873086e.obj",
-        "sha256": "5613d52abea02553f83b1def7750ad1323d1201b039ab3bde35a399631a6a45c"
+        "sha256": "75b67f840f30a53c9d002efd809f37e81cc910d80207cee48debc155855653ac"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_1b30d515b5fa07dc.obj",
-        "sha256": "bb18ce42eda5282dcd245df8f9c55311950326f8b5965ef8e344e177671b8193"
+        "sha256": "1e9b2c053c34943dac42c9226eeace4b58504dece68a9687e37f41de9dcbfdda"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_a6197f5dcc9a8bc0.obj",
-        "sha256": "6bba795fccc23321d38020eda5925f6e8897819fd7e2c2cb047d62612b949df0"
+        "sha256": "3faadb2cc166148ab8a92cfa2cd26f7649368dc3a6a7a7ca578d60244648b0f7"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e377890b23f9b788.obj",
-        "sha256": "e1b4e70d91c077108d76175ba9149b002c85754c9e67058a2481ccf9db3aed5b"
+        "sha256": "53afb3751c5ceb8dacff4975be0c9805133b464133dd5f4d11dc2e1c1023bf62"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e2dbe7150e310547.obj",
-        "sha256": "6e1e1bf2703fc3fc463d7945cc5d0a0e5571ebe2eb37bb359e335bc8265e6a53"
+        "sha256": "c1b5e2d5de61334bcf79abbe067e655c64475827a93555db3aba58d052e8527a"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_d75debd26825164c.obj",
-        "sha256": "dc57719bee465fafbe02aee91a2999a2461807258ae9b24b5abb652d72630a3e"
+        "sha256": "62e188771bf100fc5b3f0d9fbc2b2d5f09a66a7f5e2986bab75f9c4d1fc3df3c"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_56b2db913c556cea.obj",
-        "sha256": "9dfa7c5089929c689859ad920215c9d3f3be66ec9275d80603962619d300af31"
+        "sha256": "bba13e0da4154ba22128349c9bbd83ccfadd3b4f8b3750f5ce0dc0cab3c3d069"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_bf54c42b29d58795.obj",
-        "sha256": "e4eae8c4b97694a34db13b988d3f5d89e4a9e612b0a73a4db6ff14bc66f897e9"
+        "sha256": "d3424debb7735a022aede172a1d4e7404960f2fc05196e410349d59cd030ab08"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_780a30a1afe2b340.obj",
-        "sha256": "9ea0866b6c3f680c12df00f0fc812ea0890cdd3185f7beba05705efd4e71f38d"
+        "sha256": "0bf03e4c36049d2cc6f4af4c465d1afc6abdd00513bbec98102161cc8586fa6c"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f3933618a0ecdc38.obj",
-        "sha256": "5d179e56093577dbd1cd0f435e170099804400756800f038f221e9751387af91"
+        "sha256": "8f0b9ac83d12cec6d34a3c5b2b3d303a1595b19e77ef88e8b46075a3905d0909"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_6349b873ea7cd4d7.obj",
-        "sha256": "674a3b772848755735fc87371f306ecc42af02f22c7524b64348bc8677d88096"
+        "sha256": "6522465602cb11c1f9c544466d872d64cd5e9e0c8c0cfdfd771353aefc91e065"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_08c2d1fbaa535a28.obj",
-        "sha256": "f1830751567bd9e18f26743a784dcbf56cc6a848396b817a06e67402889a4dca"
+        "sha256": "93cfe062e456379863b17fc22a01f4ad5e2254489e020d49019d551298c97937"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_742b7c0d2c901f06.obj",
-        "sha256": "b79ab661200902f878ed8950e20d84f8e25b94090483833ea53d5bd35427f6a4"
+        "sha256": "fc5c3f90066660321483791951a02533ef62a7c5a5474dedc5f0675985f94012"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_00d24c438ed8bcb9.obj",
-        "sha256": "296989e60cfced68f7b2cc803994dd910115b91d22392a4ad200757b7e11516d"
+        "sha256": "e4f81b1c439345a844125306a5ac4234dc0da76b6647a19c9fe8b9349fcbe3cc"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_3c1371771bd041e2.obj",
-        "sha256": "c7643e9614f62c575db10613d72820475289d351b10a43cca6b2b74b1cbba3d7"
+        "sha256": "45d5f2e07953de8355c4af30adb54fca0f6fb3f5112f94c6acc4fce1d8f68534"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_72fb073d9858faed.obj",
-        "sha256": "27c997dbe4c9c27a59598f0cfd550e3c9b1080509f35c674ae19bba51a8dfc11"
+        "sha256": "6f5b74a1146550fdc00595151c489953bd92b043b4b50441bbea98dd0e8cf43b"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_138d56e668f2e1bc.obj",
-        "sha256": "3b5ed81570cd8a49a066c95ca012608d903b61516725b82aa70744fae895b92f"
+        "sha256": "23160165f0c3219cfe6788f8052a41ff98a1b54e5d8fee3165d87784f5e0531b"
       }
     ],
     "incremental_build": {
       "exit_code": 0,
-      "elapsed_ns": 67582259300,
+      "elapsed_ns": 68580146500,
       "optimization": "/Od",
       "jobs": 1,
       "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
@@ -15084,272 +15084,272 @@
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_15e3f7b692b3f380.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7050e83748bf61d9.obj",
-          "sha256": "796fe9a3d787846da82a2e7eda212e45f82d5f734366d03b0f7bc9848fec252b"
+          "sha256": "fc10e8d428c90dd7936702858b33cfd735762f8dd7fb760219192ea99855497f"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_18054fa8aeee43c7.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_b9188de9464f0742.obj",
-          "sha256": "18b71072635cb7ee8d30aa3dcfbab575999fc64e2c7971548cb913d245a72d19"
+          "sha256": "b52ba0a929ec3d2ad13693a91eb86097b192fd6420afcb59b0566e695650e4b4"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_1feb9ce0db5130ce.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_151e33114450683d.obj",
-          "sha256": "c0bcddc707d96588c4eeb5fcf43646cf8321980c1f43eb7907816ff86ef5a8ed"
+          "sha256": "5376adf817b80ffb57a71049b6fe093dd136609afd367aa32a4d4915326a7bc2"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_1ff3292665c8e0c4.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_237e53d89b726d8e.obj",
-          "sha256": "71fe439a8fa6c35d13e57c199946941c6b59ba644fed2086f86c7cade268dcd2"
+          "sha256": "12d748e513d54e596669122c1fc7887a28b26ba45aba8fbf5076cc14ad1bb7fa"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_3af9088680f95fb3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_d52094f8a71cc022.obj",
-          "sha256": "c82030b25a7f76fcd78fbde33ce79b18bce50f91bb7374e9edc0d8859e609904"
+          "sha256": "c88dc6182ddfe952c5a42f1f5e53bb093bb20b0014ab40124631561ce2a36e42"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_3b41638e424b9ee0.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_09ab66fa9efa53c7.obj",
-          "sha256": "6e395243f42802ef3b0c505df59fd3c98cc9f68c5e5261bf37be83b5e09929ad"
+          "sha256": "77da39469847fa54218e2103dd71f538ed595a494461145535d5200ca1ec878c"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_3c64e1d398f2e00f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f53655830c33af49.obj",
-          "sha256": "dd1c6bdf0f4d2cfaa4191ad11666a2f38648db800afea2ad4600195533b17ef2"
+          "sha256": "352cb9f69d2040d0825c76bd10acab30a81a6b3d7b3aff6e605c91287000cb49"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_42d69496680e17fc.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_6059baa061e97917.obj",
-          "sha256": "3bcb66cb09dae6214b864e8dfa7bba5f67e31347dbc6a27afcef75d93a71d34f"
+          "sha256": "d9e5d69e364c5f9a40d83093207f4f34d51b44667279be1ba14aa25813332290"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_4978cb69e37b8564.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f2cbe14d1c8ba95f.obj",
-          "sha256": "818cd9d72a5bdc2a6020f111b507c063a1033f2c7cb8abb8bb66447692d78099"
+          "sha256": "70732ae192547fc3a83a522a6ff6e7a9114b27d22ac16bcccf3d70a17c666b2d"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_5098bfda9cf65745.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e5d3d40359612c5f.obj",
-          "sha256": "6321bf6f710fe9badc191fbaa07b19aca269e4d9e3832d134d2fa9292d0dabd2"
+          "sha256": "b15b640e6ac83eebdb55f13bf18bdcb37560330d1fd20d115ee53b0ed4a7426f"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_51222df74ac70bab.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_71becf9feb0b55c9.obj",
-          "sha256": "b6a85fba533c0b31f4ea2a83341dbdfcfc05ced8502db0db3b050226fd31df20"
+          "sha256": "7dc6d9311b57ce3ce08c7653cd57cd4f53939308f0985328be29557d0c90ee82"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_52158c8b20364c2b.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f6da18c1f1e46ebc.obj",
-          "sha256": "3bfb8c6366a9b6bc5f5dab24ddf6210759d1e69d5d4fc2ac17cf4f1141aa96c6"
+          "sha256": "8b0ef8b9c123fa170f9398838ae8b78aaad802a7c1ae7f6fd674a76037427aa7"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_582a926e9c7748a6.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_d5a434ceae0e29ac.obj",
-          "sha256": "62eac8b3df11c7acc1d8099aaa7d1ac874f27c71b07a512193a6513358263cff"
+          "sha256": "8cc377a2ed0bd8a56f6e826bec73ace93480e77a39e88abee3b103a8750f3dc9"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_64732f8c8acf2fd3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_1cb9f5c9577a1b79.obj",
-          "sha256": "700cd50b4c24cc97f62034b43ae78d3320d2eb8e8af99b6628f7424cdc4817a0"
+          "sha256": "8dcfdf328b94dd17d8ea374ed26661d76f3c1cc69f980b79d88ed9bc13a3a47b"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_66dbad5679f8ab87.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_ff3137528a7c11e2.obj",
-          "sha256": "9af6e90181c808a8f8b93ed9ea374c77e81aeb98feb79e4b676ce754cded8f97"
+          "sha256": "92b0a8e4848070fa8c477b8fab2a352e1d2099dbae33d56f6c591c8b2476d479"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_67cd241ab51652f1.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e011e73fb262e4a7.obj",
-          "sha256": "214c50dc384080c53995604f83a22cd0871b2fa4a6ebf5c2cc509a2fbc0a8981"
+          "sha256": "585ca0ef43bc75034a5717244210d8dd84f923df582240e2b540cae273add840"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_7254e4706a01e4e7.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_0cb7c7581aeca012.obj",
-          "sha256": "c2d9dffd22d659f49c411a378dbcbaad8a978f92f962096312113f1ec7a6ae11"
+          "sha256": "f8b5624c74f707a3c707ba964914b11b84e903800f5fb63914e83bf1d392755e"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_72d9658ed61145d6.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_c46d6626be045431.obj",
-          "sha256": "d3b9ea60fbf54dc3f03f693656ea96d7ab2973956d6d9e4a6eed3342f384abe8"
+          "sha256": "bf77539c99c55670011fa47000f04d1b6da21505d8d43dffdea93e8bb65f03fa"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_7de6788b61a5af56.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_af39bea8abf874ce.obj",
-          "sha256": "f4e32050a8c2062dae631ebca671a52a6f005b01a10f4ee3298b460b142f82a1"
+          "sha256": "6a8da6a1a726069b68406083c02b665e2f91a305ff1c72168ab3346d4786d5ea"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_7fd3b635ed6929d0.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_052c1096a756eb18.obj",
-          "sha256": "55dcebaa7747e87c34109c4781a3369c858ae7a5b59046dc8c6696b26a60bad5"
+          "sha256": "d67e4e5fa348991255e27e399afd55bbcbb5b3da1ffe12712aeac49b2763ac70"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_832d81e198eeeec2.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7b20b8825890f6c5.obj",
-          "sha256": "a4cddea56ade56480a17645642c92d72831fa0371e0a49eeae08bccff5787ef7"
+          "sha256": "a6b44820b80f1d5aa6b3b644de8e54efeb45a133a314d099440d95a6e00db3fe"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_83a7bc36395d16bd.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_34211caea0490646.obj",
-          "sha256": "9739bb1f8df0fcda3d07c887d839223e775643d0593afbbc6d682a81d00cda41"
+          "sha256": "8732147dd8c454741393e9d4801b51416eb7c9fd1281929c3da8078d52079050"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_86e62a3c0e632a0f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_237cddbf5bce3995.obj",
-          "sha256": "840795935e7c682cc7382d09c6591a59054187dc91cf353cdc21bfcaa8464d96"
+          "sha256": "74b6bf86be3988888b85fd3f3489f9c995a64815ee685feefc0b829e20046ce5"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_8b851671e0d8b17f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_21211c07a89ba25d.obj",
-          "sha256": "4ee141260aa77f8ddfdfe6c6d307a6370945dca232b7d2d3b223a5e6c2987101"
+          "sha256": "cdb16a8d45bef3e270f7afc8aaef502af6a806ee8cc95bda63fc1fe8804bb334"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_8c57b816bbc8fd6e.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_2313ee85f5a3645a.obj",
-          "sha256": "8aadcb2bf0727c89f66f9e7d8f2f3a0af2a9d1cca30562703510bbf345645ebe"
+          "sha256": "482cc06c9b9cf8df818f73e8dc875308f8888a4e540a00bb1212d7ac808b3c67"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_8d93189702e4084b.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_ca791f7458f7a9dc.obj",
-          "sha256": "ed6ac63ec226583a9780c67159b822a7971ba98a34de916c16f8f63717a3bbb9"
+          "sha256": "157965ed33e767f8269a74fee535d81e1893dd7cd29ea1dcffc0359116d877c4"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_922b87749168eb15.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_fba3088c14dbc4f2.obj",
-          "sha256": "1f46f1e33e564766b0dd5cbcbc52596b426c710c8c0dede346861864e6f6df0f"
+          "sha256": "006162f21fa79d839085c3a6bacc561c55e3c48293fcc9fd786fd60554fd8f1b"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_924db3d974bae2af.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_a3346126a482060c.obj",
-          "sha256": "1568a55afb945bfcc09c331c19e0febd10ac6b7d7738d1ff3790b6e95eae823d"
+          "sha256": "3964653f25f151c290e35c55fcde921a6edf3e8c3d2dac2a6cc53e61af313f6d"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_9487cb83e3a46e0a.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_b593e384706381b0.obj",
-          "sha256": "11680bacba1e0505f2ca4f5b52480fbff6cb2f57ef28e6484515485e1fef09f6"
+          "sha256": "5ec9694fda80d1afe1afd3a643c4f9b2baa1354ec6c16e0f620855a1c13d4b97"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_98f0a1bec2084c3c.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_75ac4d89e2b1d14c.obj",
-          "sha256": "e0b8dd282a8323a2c202fde411cf1e37a386b6d8811bdd0e8d98537418c533ac"
+          "sha256": "01d9c97579d48f01eb7b671f8652b116128392482e4fcd8a3ff67adf450e26d5"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a09270023ec48eca.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e9e00a694086ca82.obj",
-          "sha256": "a016b3bcee7bc2b612f7046257ed8110ae293d595a4cc27e0316f77b18a41a97"
+          "sha256": "258b7c605db263f5e912428d5197bc0bb12beb840191177d7c5f9247d3ce6c75"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a0cf9aef6a251bfd.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7d24c4b01b617a98.obj",
-          "sha256": "50afab269479fda08460ad6babfdc7cd46cc51a8d3e9dbdd1452d3ea4d30669a"
+          "sha256": "d043e51399ff1b764d57740dcb7acba46be4865dc9df3ecbd415eec0fb14114c"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a0dc211eb3feb56d.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_4a44a7dd64a9cd03.obj",
-          "sha256": "da357c99e8cdcd744d1cd2addc93f173401301f5dee182150979293731110b4f"
+          "sha256": "f5935a5d38b63b09a92ce39c85ff8640bd78e15b42896aed90f91ac25d2d0b57"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a465028bea3432a3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_a388eec8299c101c.obj",
-          "sha256": "f131af8945f9e707e5a997f84ef0185c865de4d2103e469a817bbe06c72006e9"
+          "sha256": "347797c2f4bd9d4ab6e7b31eca8264bf39b5a17156947c88d8ce71c699dd97d5"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_ab1b1085a7ab32b9.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_bb5e9df8695503a7.obj",
-          "sha256": "ee9c94d84028bca114265d15fd31e4eea8d2bd1802c4e631133735e38a7ea6f6"
+          "sha256": "bf32408fd6eb4082e957ec3469b8b80269458a868ee34e199caa0c856efe3de6"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_acb158b492b43017.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_0ae25ebd2559e89d.obj",
-          "sha256": "10b255c4e267239781a996dcff2cdb137954a91da739e4d694fbb4c1e220f91e"
+          "sha256": "837212d147262e396b72f2a570b0f6b7358a19bef4decd6cf90312329cd4d7f2"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_bb652fbb61000386.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_b6a1a540e6745ffd.obj",
-          "sha256": "3c2cfb3585058093bc56a782f45915e00bfe844bdd0ee51a22ca0a3b89d55a1f"
+          "sha256": "bd9e3d18802d14f48016ff7938a3665aec0d5362bb426e60f39b8ad82a35db45"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_bd164c3c94a49e2a.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7f034171d873086e.obj",
-          "sha256": "5613d52abea02553f83b1def7750ad1323d1201b039ab3bde35a399631a6a45c"
+          "sha256": "75b67f840f30a53c9d002efd809f37e81cc910d80207cee48debc155855653ac"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_bfe2a01361163e7a.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_1b30d515b5fa07dc.obj",
-          "sha256": "bb18ce42eda5282dcd245df8f9c55311950326f8b5965ef8e344e177671b8193"
+          "sha256": "1e9b2c053c34943dac42c9226eeace4b58504dece68a9687e37f41de9dcbfdda"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c0fae45144034cf9.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_a6197f5dcc9a8bc0.obj",
-          "sha256": "6bba795fccc23321d38020eda5925f6e8897819fd7e2c2cb047d62612b949df0"
+          "sha256": "3faadb2cc166148ab8a92cfa2cd26f7649368dc3a6a7a7ca578d60244648b0f7"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c20c229ea63037d8.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e377890b23f9b788.obj",
-          "sha256": "e1b4e70d91c077108d76175ba9149b002c85754c9e67058a2481ccf9db3aed5b"
+          "sha256": "53afb3751c5ceb8dacff4975be0c9805133b464133dd5f4d11dc2e1c1023bf62"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c4521f4960c4f908.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e2dbe7150e310547.obj",
-          "sha256": "6e1e1bf2703fc3fc463d7945cc5d0a0e5571ebe2eb37bb359e335bc8265e6a53"
+          "sha256": "c1b5e2d5de61334bcf79abbe067e655c64475827a93555db3aba58d052e8527a"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c783ca99640a5ce3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_d75debd26825164c.obj",
-          "sha256": "dc57719bee465fafbe02aee91a2999a2461807258ae9b24b5abb652d72630a3e"
+          "sha256": "62e188771bf100fc5b3f0d9fbc2b2d5f09a66a7f5e2986bab75f9c4d1fc3df3c"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_cbac662a28aa40b1.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_56b2db913c556cea.obj",
-          "sha256": "9dfa7c5089929c689859ad920215c9d3f3be66ec9275d80603962619d300af31"
+          "sha256": "bba13e0da4154ba22128349c9bbd83ccfadd3b4f8b3750f5ce0dc0cab3c3d069"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_d4a32b46456ca92c.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_bf54c42b29d58795.obj",
-          "sha256": "e4eae8c4b97694a34db13b988d3f5d89e4a9e612b0a73a4db6ff14bc66f897e9"
+          "sha256": "d3424debb7735a022aede172a1d4e7404960f2fc05196e410349d59cd030ab08"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_e7a5499b363ef51b.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_780a30a1afe2b340.obj",
-          "sha256": "9ea0866b6c3f680c12df00f0fc812ea0890cdd3185f7beba05705efd4e71f38d"
+          "sha256": "0bf03e4c36049d2cc6f4af4c465d1afc6abdd00513bbec98102161cc8586fa6c"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_e7d772862db62924.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f3933618a0ecdc38.obj",
-          "sha256": "5d179e56093577dbd1cd0f435e170099804400756800f038f221e9751387af91"
+          "sha256": "8f0b9ac83d12cec6d34a3c5b2b3d303a1595b19e77ef88e8b46075a3905d0909"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_ea324a0bbfe717fe.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_6349b873ea7cd4d7.obj",
-          "sha256": "674a3b772848755735fc87371f306ecc42af02f22c7524b64348bc8677d88096"
+          "sha256": "6522465602cb11c1f9c544466d872d64cd5e9e0c8c0cfdfd771353aefc91e065"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_ead0ac0906403160.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_08c2d1fbaa535a28.obj",
-          "sha256": "f1830751567bd9e18f26743a784dcbf56cc6a848396b817a06e67402889a4dca"
+          "sha256": "93cfe062e456379863b17fc22a01f4ad5e2254489e020d49019d551298c97937"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_edf182ae9bfd734d.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_742b7c0d2c901f06.obj",
-          "sha256": "b79ab661200902f878ed8950e20d84f8e25b94090483833ea53d5bd35427f6a4"
+          "sha256": "fc5c3f90066660321483791951a02533ef62a7c5a5474dedc5f0675985f94012"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_f3ea616d36334b95.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_00d24c438ed8bcb9.obj",
-          "sha256": "296989e60cfced68f7b2cc803994dd910115b91d22392a4ad200757b7e11516d"
+          "sha256": "e4f81b1c439345a844125306a5ac4234dc0da76b6647a19c9fe8b9349fcbe3cc"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_f59223d2c773f078.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_3c1371771bd041e2.obj",
-          "sha256": "c7643e9614f62c575db10613d72820475289d351b10a43cca6b2b74b1cbba3d7"
+          "sha256": "45d5f2e07953de8355c4af30adb54fca0f6fb3f5112f94c6acc4fce1d8f68534"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_f8b20a4d1d9d695f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_72fb073d9858faed.obj",
-          "sha256": "27c997dbe4c9c27a59598f0cfd550e3c9b1080509f35c674ae19bba51a8dfc11"
+          "sha256": "6f5b74a1146550fdc00595151c489953bd92b043b4b50441bbea98dd0e8cf43b"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_fb60578b3098a284.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_138d56e668f2e1bc.obj",
-          "sha256": "3b5ed81570cd8a49a066c95ca012608d903b61516725b82aa70744fae895b92f"
+          "sha256": "23160165f0c3219cfe6788f8052a41ff98a1b54e5d8fee3165d87784f5e0531b"
         }
       ],
       "ninja_file": {
@@ -15535,7 +15535,7 @@
       "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
       "src/kairo/common/managed_stream_reader.hpp": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd",
       "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
-      "src/kairo/common/managed_string_ops.hpp": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0",
+      "src/kairo/common/managed_string_ops.hpp": "1af96fe46e3f95a43a554764cb7127a1c03f8e9bb477d5f3bb7b413f9301ed21",
       "src/kairo/common/managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
       "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
       "src/kairo/common/managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
@@ -15546,7 +15546,7 @@
       "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
       "src/kairo/common/render_mode.hpp": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0",
       "src/kairo/common/resource_load_trace.hpp": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f",
-      "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1",
+      "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
       "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
       "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
       "src/kairo/common/source_allocation_probe.hpp": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83",

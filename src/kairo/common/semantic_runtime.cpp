@@ -11,6 +11,7 @@
 #include <atomic>
 #include <cerrno>
 #include <cstdlib>
+#include <array>
 #if defined(PLS_GC_TRACE)
 #include <cstdio>
 #if defined(__3DS__)

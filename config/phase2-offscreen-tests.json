@@ -6,12 +6,12 @@
     {
       "fixture": "offscreen_test",
       "assertions": 23,
-      "executable_sha256": "aa2f0ff1689efe262b341d93aed682c9c35d556919792de5b6660856177b161b"
+      "executable_sha256": "8fae29a786617b5af0c119da74378f41143f83de926165bdc21a6acaec41b2cc"
     },
     {
       "fixture": "mesh_test",
       "assertions": 15,
-      "executable_sha256": "dc03867ec343c64eae72997ff5af20b39b4ce49ad193bb7699499b7f67acd29d"
+      "executable_sha256": "a1674bacc1f7d05d1590394d1616fc218c1040534318c0d6a30bd728d44b1176"
     }
   ],
   "inputs_sha256": {
@@ -62,7 +62,7 @@
     "src/kairo/common/diagnostic_profile.hpp": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca",
     "src/kairo/common/dialog_service.cpp": "1906513d7fd7cfe5685be63dac90631bd09f8b7cfd31a806865479560a9397ff",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
-    "src/kairo/common/forms.cpp": "5f1da7f84f8486ed4266b9687885d54d2dd4f48dcf59f13a91d36e6463aa1c8c",
+    "src/kairo/common/forms.cpp": "10128d8e7ffb2ad26dc65c41d1c81054d747d5d83a21cd2c48695dcd18a93ab2",
     "src/kairo/common/forms_execution.cpp": "166bba8ec5f819e9438e9730983aa8560a602fa57ea8ed6093d6f8861439c983",
     "src/kairo/common/generated/portable_generated.cpp": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a",
     "src/kairo/common/generated/portable_generated.hpp": "71bdfcd5e6a6d6009836b3fa0ae5c4d1682b4b87c2b82cfe1d08ebbd5e266d5a",
@@ -206,8 +206,8 @@
     "src/kairo/common/managed_stream_reader.hpp": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd",
     "src/kairo/common/managed_streams.cpp": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6",
     "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
-    "src/kairo/common/managed_string_ops.cpp": "7fd1900708389a7b0da3376148a47232d4eb50954d299fc4bb7ac8ea765e346b",
-    "src/kairo/common/managed_string_ops.hpp": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0",
+    "src/kairo/common/managed_string_ops.cpp": "e33872d7a00296fb8c21bd8384ea4ea4b92b75a67535de3a77fee89957bf48e2",
+    "src/kairo/common/managed_string_ops.hpp": "1af96fe46e3f95a43a554764cb7127a1c03f8e9bb477d5f3bb7b413f9301ed21",
     "src/kairo/common/managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
     "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
     "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
@@ -221,8 +221,8 @@
     "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
     "src/kairo/common/render_mode.hpp": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0",
     "src/kairo/common/resource_load_trace.hpp": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f",
-    "src/kairo/common/semantic_runtime.cpp": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66",
-    "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1",
+    "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
+    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
     "src/kairo/common/services.cpp": "62ab4911f93cc8af666196088b869b441d709fd28e50d632d6e8171cb48ee16f",
     "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",

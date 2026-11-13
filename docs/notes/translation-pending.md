@@ -106,3 +106,15 @@ offline cobre a conexão em si. Proposta: política "servidor indisponível"
 no ponto `KairoBase.Connect(...)` (mesma resposta que o jogo recebe sem rede),
 e assinatura do pacote como valor fixo local sem significado. Precisa de
 aprovação por tocar o comportamento de serviços.
+
+## 7. Segunda etapa (2026-11-13, após decisões do usuário)
+
+- **Política 54** (servidor indisponível; assinatura local fixa) emitida: 28
+  políticas emitidas. Detalhes em `docs/design/services.md`.
+- **MD5** (`MD5.Create().ComputeHash(byte[])`, intrínseco exato, RFC 1321 no
+  runtime): diferencial contra o Mono 1.435/1.435 (inclui vetores RFC e nulo).
+- A cadeia `ConnectLogin` avança mais um nível e para em
+  `JInteger.ToHexString` → `Convert.ToString(int, 16)` (29 métodos). Itens
+  seguintes, por métodos destravados: `Convert.ToString(int, 2|8|16)`,
+  `Enumerable.ElementAt` sobre `List<T>` (6), inicializador de objeto em
+  método genérico (9), `byte.Parse(s, HexNumber)` (4), `Keys/Values.ToList()`.

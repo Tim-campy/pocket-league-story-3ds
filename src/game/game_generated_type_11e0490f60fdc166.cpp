@@ -186,4 +186,11 @@ return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<c
 }
 }
 }
+
+// M:kairo.unity.io.Http.set_IsRetryEnable(System.Boolean)
+void cs_bec22bc6a552aef8(bool v_value) { cs_init_11e0490f60fdc166();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.Http.set_IsRetryEnable(System.Boolean)",kairo);
+{cs_ba8d1e73ebddc909_value=v_value;}
+}
+}
 }

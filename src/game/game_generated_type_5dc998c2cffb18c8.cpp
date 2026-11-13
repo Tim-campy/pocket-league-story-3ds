@@ -125,8 +125,8 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); pls::cs::String cs_arg0 = v_text_2980; float cs_arg1 = static_cast<float>(([&]() -> std::int32_t { auto cs_left = ([&]() -> std::int32_t { auto cs_left = v_num_2492; auto cs_right = ([&]() -> std::int32_t { auto cs_left = v_num3_3011; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::div_i32(cs_left,cs_right); }()); return pls::cs::sub_i32(cs_left,cs_right); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull)); return pls::cs::sub_i32(cs_left,cs_right); }())); float cs_arg2 = static_cast<float>(([&]() -> std::int32_t { auto cs_left = v_num2_2535; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2aull)); return pls::cs::sub_i32(cs_left,cs_right); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->DrawString(cs_arg0,cs_arg1,cs_arg2); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->PopFont(); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->PopOrigin(); }());});
-} catch(const pls::cs::Exception& cs_caught_880) {auto cs_exception_880=pls::cs::capture_exception(cs_caught_880);
-if(pls::cs::exception_is(cs_exception_880,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_881) {auto cs_exception_881=pls::cs::capture_exception(cs_caught_881);
+if(pls::cs::exception_is(cs_exception_881,"System.Exception")) {{
 
 }}
 else {throw;} }
@@ -192,8 +192,8 @@ if (([&](){auto cs_left=([&]() { auto cs_receiver = cs_this; if(!cs_receiver)thr
 }
 ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3ae23c92a69c00cc; }()); auto cs_rhs = true; auto cs_value = cs_rhs; cs_961e1edcb72ada4a(static_cast<pls::cs::Ref<cs_408ac5c74e5f3515>>(cs_receiver),cs_value); return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = cs_34052c1785c8754e_value; pls::game::cs_require(cs_target)->cs_4ec59762286c4307 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_881) {auto cs_exception_881=pls::cs::capture_exception(cs_caught_881);
-if(pls::cs::exception_is(cs_exception_881,"System.Exception")) {auto v_ex_4374=cs_exception_881;{
+} catch(const pls::cs::Exception& cs_caught_882) {auto cs_exception_882=pls::cs::capture_exception(cs_caught_882);
+if(pls::cs::exception_is(cs_exception_882,"System.Exception")) {auto v_ex_4374=cs_exception_882;{
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/system/form/HttpForm.cs:M:system.form.HttpForm.Run:4407",([&]() { auto cs_left = pls::cs::String(u""); auto cs_right = pls::game::cs_object_string(pls::cs::box(v_ex_4374)); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_arg1 = pls::cs::Ref<pls::cs::ExceptionObject>{}; return pls::generated::cs_812090ed79928522(cs_arg0,cs_arg1); }());});
 ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3ae23c92a69c00cc; }()); auto cs_rhs = ([&]() -> pls::cs::String { return cs_42eaa879561f279c(); }()); auto cs_value = cs_rhs; cs_491eae3eae7d9573(static_cast<pls::cs::Ref<cs_408ac5c74e5f3515>>(cs_receiver),cs_value); return cs_value; }());
 ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3ae23c92a69c00cc; }()); auto cs_rhs = v_ex_4374; auto cs_value = cs_rhs; cs_8d58629cef163b32(static_cast<pls::cs::Ref<cs_408ac5c74e5f3515>>(cs_receiver),cs_value); return cs_value; }());

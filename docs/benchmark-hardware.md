@@ -23,14 +23,14 @@ O orçamento é 50 ms por frame (`Main.OnUpdate`, `SetTargetFps(20)`).
 
 - New 3DS ou New 3DS XL com Homebrew Launcher (custom firmware).
 - Cartão SD com ~60 MB livres.
-- A pasta preparada no PC: `build/sd-benchmark-v5/` (v5, executável
-  `72b3a5f5…`; gerada a partir do seu
+- A pasta preparada no PC: `build/sd-benchmark-v6/` (v6, executável
+  `68634525…`; gerada a partir do seu
   APK; é privada, não a compartilhe nem a coloque no Git).
 
 Para regenerar a pasta (opcional; já está pronta nesta máquina):
 
 ```powershell
-python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_SEU_APK" --image build/benchmark-arm11-5/null_game.3dsx --scenario suite --output build/sd-benchmark-v5 --asset-root build/ctr-assets-native-v1
+python tools/prepare_arm11_sd.py --apk "CAMINHO_DO_SEU_APK" --image build/benchmark-arm11-6d/null_game.3dsx --scenario suite --output build/sd-benchmark-v6 --asset-root build/ctr-assets-native-v1
 ```
 
 A preparação confere o SHA-256 do APK, de cada asset e do executável, e
@@ -41,7 +41,7 @@ recusa uma pasta de saída existente.
 1. Desligue o console e coloque o cartão SD no PC.
 2. Se existir uma pasta `pls-benchmark` na raiz do cartão de uma execução
    anterior, mova-a para fora do cartão (guarde o `result.txt` antigo).
-3. Copie **o conteúdo** de `build/sd-benchmark-v5/` para a **raiz** do cartão.
+3. Copie **o conteúdo** de `build/sd-benchmark-v6/` para a **raiz** do cartão.
    Depois da cópia o cartão deve ter:
    - `3ds/pls-benchmark/pls-benchmark.3dsx`
    - `pls-benchmark/` (com `assets/`, `preferences/`, `config.txt`,
@@ -79,6 +79,9 @@ Linhas do arquivo:
 | `PLS_BENCH_LOAD_STAGE` | por etapa: contagem, tempo total, máximo, bytes (`catalog-open` = posicionar no pacote; `catalog-read` = leitura; `stream-extent` = consulta de arquivo de áudio/fonte) |
 | `PLS_BENCH_CLOCK` | relógio virtual instalado na âncora do título |
 | `PLS_BENCH_WINDOW` | por janela: frames, formulário, média/p95/máximo em ms, coletas, maior pausa |
+| `PLS_BENCH_COLLECTIONS` | (v6) por janela e tipo — `volume`, `transition` (tela principal), `loading`, `explicit` (`JSystem.Gc` do fonte): quantidade, total, maior pausa |
+| `PLS_BENCH_STABLE` | (v6) maior frame fora das coletas toleradas (transição e carregamento); coletas por volume e explícitas contam como jogo estável |
+| `PLS_BENCH_GC` | (v6) uma linha por coleta nas janelas: frame, tipo, pausa, tempo do frame e origem (`Init/Finish <formulário>` ou tela) |
 | `PLS_BENCH_MEMORY` | `malloc` usado e livre, região de aplicação, objetos do coletor |
 | `PLS_BENCH_STATUS` | `complete`, `incomplete` ou `failed <motivo>` |
 
@@ -132,6 +135,27 @@ a previsão para o v5 no console é ~105 ms, **acima de 50 ms**. A redução de
 frequência não basta sozinha; a correção é o custo por coleta (reforma do
 coletor, `docs/notes/gc-reform-plan.md`). O v5 serve para confirmar isso no
 aparelho e medir a razão com mais uma amostra.
+
+## Resultado do v5 em hardware (New 3DS XL, 2026-11-13, três execuções)
+
+| Medida | Execução 1 | Execução 2 | Execução 3 |
+|---|---|---|---|
+| Até o título | 14,23 s | 14,32 s | 14,11 s |
+| Menu: média / p95 / máx. | 6,83 / 6,53 / 113,2 ms | 7,02 / 6,74 / 115,2 ms | 6,91 / 6,63 / 113,4 ms |
+| Coletas no menu (frame: pausa / frame) | 361: 105,6/113,2; 397: 45,0/52,6; 415: 40,4/63,2 | 361: 107,7/115,2; 397: 47,8/55,4; 415: 41,2/64,0 | 361: 105,9/113,4; 397: 45,6/53,0; 415: 40,2/62,8 |
+| Menu: maior frame sem coleta | 10,8 ms | 11,0 ms | 10,9 ms |
+| Partida: média / p95 / máx. | 8,87 / 9,57 / 25,9 ms | 12,57 / 13,21 / 15,7 ms | 11,87 / 13,45 / 15,2 ms |
+| Coletas na partida | 0 | 0 | 0 |
+
+A previsão a partir do Azahar (~105 ms) se confirmou. Na execução 1 a janela
+de partida terminou a partida antes do fim (formulários 2 e 4 na janela),
+por isso a média mais baixa; a carga usa relógio real e o estado na âncora
+varia.
+
+**Classificação (v6, Azahar):** as três coletas do menu são **explícitas**,
+do próprio fonte: `SubForm.Finish()` chama `JSystem.Gc()`
+(`SubForm.cs:7428`), isto é, cada sub-janela fechada faz uma coleta completa.
+Não são transições de tela principal nem coletas por volume.
 
 ## Referência no emulador (não é hardware)
 

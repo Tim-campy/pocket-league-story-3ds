@@ -125,6 +125,55 @@ da fixture é síncrona para medir ordem; concorrência não é alegada por ela.
 Nenhuma rede é contatada. Os dois recibos mantêm integração gerada PENDING até
 o emissor compilar e exercitar os respectivos corpos.
 
+## Política 54 — servidor da Kairosoft indisponível (aprovada em 2026-11-13)
+
+**Decisão do usuário:** `KairoBase.Connect` responde "servidor indisponível",
+com o mesmo resultado que o jogo original trata quando está sem rede. A
+assinatura do pacote usa um valor local fixo, sem significado, nunca
+transmitido.
+
+**Implementação.** Nenhum corpo de conexão é substituído. O caminho original
+sem rede já termina em falha de transporte, e é ele que roda:
+
+1. `KairoBase.Connect(string, byte[], bool)` (`KairoBase.cs:1647–1661`): se
+   não houver login, chama `ConnectLogin()`; depois `HttpConnect(MakeUrl(...))`.
+2. `ConnectLogin` (`KairoBase.cs:658–690`) chama `CgiLogin` → `HttpConnect`
+   (`KairoBase.cs:1429–1437`, `2544–2560`) → `Http.Connect` (`Http.cs:38–63`)
+   → `HttpObject.Connect/_connect` (`HttpObject.cs:40–140`). Com o `WWW`
+   offline do port (seção "Transporte indisponível"), a requisição falha sem
+   abrir transporte e o corpo original lança `IOException`.
+   `ConnectLogin(false)` engole a exceção e devolve `false` (`KairoBase.cs:676–688`);
+   `ConnectLogin(true)` a relança.
+3. Em seguida, `HttpConnect` da própria chamada falha da mesma forma e a
+   `IOException` chega ao chamador de `Connect`. `Connected(...)` não é
+   alcançado, como no original sem rede.
+
+A única folha trocada é `KairoBase.GetSignature` (`KairoBase.cs:1784–1787`,
+que chamava `KairoPlugin.GetSignature` via JNI): devolve o texto fixo
+`pls-offline`. Ele só entra no URL e no corpo de uma requisição que o
+transporte offline nunca envia. Recibo: `config/service-overrides.json`
+(política 54, `string_exact`); fixture `translator/test_service_lowering.py`.
+
+**Pedido de nova tentativa.** Quando a falha ocorre com
+`Http.IsRetryEnable` ligado, o `HttpObject` original mostra o diálogo
+"Retry/Cancel" (`HttpObject.cs:50–70`). No port ele aparece igual; "Retry"
+falha de novo, "Cancel" segue para a exceção. Nenhum laço sem saída: cada
+volta exige escolha do jogador.
+
+**Fluxos afetados e comportamento esperado:**
+
+| Fluxo | Caminho | Resultado sem servidor |
+|---|---|---|
+| Partida online (`MatchForm.Run`) | `MatchForm.cs:366–505`: `ConnectLogin(true)` e `ConnectGameData*` em thread própria | `catch` → `error_ = Http.PopErrorText()`, `threadState_ = 3`; `_update` (`MatchForm.cs:246–257`) mostra o diálogo de erro e, no tipo 1, volta (`Pop`) |
+| Amigos (`FriendForm`, `FriendData`) | `FriendData.cs:235–325` (`friend/*.php`); chamadores em `FriendForm.cs:687–971` | cada `catch` mostra `MakeErrorDialog(Http.PopErrorText(), ...)`; a lista de amigos não muda |
+| Presentes (`BillingForm`, código de presente) | `BillingForm.cs:977–995`: `ConnectGift(password_)` em thread | `catch` → `threadState_ = 3` → diálogo de erro (`BillingForm.cs:508`); nenhum item concedido |
+| Escalações (`LineupForm` → `LineupManager`) | `LineupManager.cs:134–330`: `ConnectLineupList/Image` | `catch` registra e encerra a busca; o que a tela mostra depois é UNKNOWN até a execução |
+
+A verificação de que nenhum fluxo fica preso em tela de espera é feita por
+leitura de todos os `catch` acima e, quando a tradução permitir, por execução
+do roteiro 6 de `docs/coverage-plan.md`. Até lá, o estado é **lido no fonte,
+não executado**.
+
 ## Testes e o que ainda não foi provado
 
 `python tools/test_services.py` compila C++17 com MSVC existente, `/W4 /WX /fp:strict`, sem instalar ferramentas. Os testes próprios verificam resposta de registro, identidade estável após dois processos reais, nova identidade em outro diretório, UID vazio e prévio conservados, rejeição de identidade inválida sem substituir o arquivo, save sintético com bytes/campos desconhecidos intacto após todas as operações indisponíveis, ausência de concessão, anúncios zero e notificações vazias/desligadas. Recibo gerado: `config/phase2-services-tests.json`.

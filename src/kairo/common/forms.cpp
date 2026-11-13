@@ -44,18 +44,18 @@ void FormManagerBase::SetLoadingForm(cs::Ref<FormBase> form){owner();if(loading_
 void FormManagerBase::SetPrintForm(cs::Ref<FormBase> form){owner();if(print_)print_->Finish();print_=form;if(print_)print_->Init();}
 void FormManagerBase::source_ExecuteInitAndFinish(){
     owner();const auto canvas=Canvas::GetInstance();
-    bool transitioned=false;
+    bool transitioned=false;std::string transition_source;
     auto clear=[&]{const auto surface=canvas->GetSurfaceManager();if(surface)surface->ClearGameTouch();canvas->ClearKeyBuffer();};
     auto warn=[&](cs::Ref<FormBase> form,bool init){if(!warning_){if(!on_lifecycle_warning)throw cs::NotSupportedException("FormManager lifecycle warning bridge is not installed");warning_=true;on_lifecycle_warning(form,init);}};
     for(auto i=static_cast<std::int32_t>(stack_.size())-1;i>=0;--i){auto form=GetForm(i);if(form->mode_.load()!=4)continue;
         // Screen transitions (main windows) are full-collection points; sub-window
         // and dialog lifecycles are left to volume collection.
-        if(form->CheckMainWindow())transitioned=true;
-        cs::run_finally([&]{current_=form;if(form->Finish()){if(form->mode_.load()==4)stack_.erase(stack_.begin()+i);}else warn(form,false);},[&]{pls::cs::clear_ref(current_);});clear();}
+        if(form->CheckMainWindow()){transitioned=true;transition_source=form->managed_type_name();}
+        cs::run_finally([&]{current_=form;cs::gc_context(("Finish "+form->managed_type_name()).c_str());if(form->Finish()){if(form->mode_.load()==4)stack_.erase(stack_.begin()+i);}else warn(form,false);},[&]{cs::gc_context(nullptr);pls::cs::clear_ref(current_);});clear();}
     for(std::size_t i=0;i<stack_.size();++i){auto form=stack_[i];if(form->mode_.load()!=0)continue;
-        if(form->CheckMainWindow())transitioned=true;
-        cs::run_finally([&]{current_=form;if(form->Init()){if(form->mode_.load()==0)form->mode_.store(1);}else warn(form,true);},[&]{pls::cs::clear_ref(current_);});clear();}
-    if(transitioned)cs::gc_request_collection();
+        if(form->CheckMainWindow()){transitioned=true;transition_source=form->managed_type_name();}
+        cs::run_finally([&]{current_=form;cs::gc_context(("Init "+form->managed_type_name()).c_str());if(form->Init()){if(form->mode_.load()==0)form->mode_.store(1);}else warn(form,true);},[&]{cs::gc_context(nullptr);pls::cs::clear_ref(current_);});clear();}
+    if(transitioned)cs::gc_request_collection(transition_source.c_str());
 }
 void FormManagerBase::Draw(cs::Ref<Graphics> graphics){
     try{for(std::size_t i=0;i<stack_.size();++i){auto form=stack_[i];if(!draw_all_&&i!=stack_.size()-1&&!form->CheckMainWindow())continue;

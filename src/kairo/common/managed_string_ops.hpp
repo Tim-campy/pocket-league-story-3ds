@@ -13,6 +13,8 @@ std::int32_t int32_parse_hex_number(const String& value,bool allow_spaces=true);
 // Int32.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out r):
 // Mono returns false with r=0 for null, format and overflow failures.
 bool int32_try_parse_hex_number(const String& value,std::int32_t& result);
+// MD5.Create().ComputeHash(byte[]): RFC 1321 digest, 16 bytes; null throws ArgumentNullException.
+Array<std::uint8_t> md5_compute_hash(const Array<std::uint8_t>& buffer);
 float single_parse_legacy(const String& value);
 String string_replace(const String& value,const String& old_value,const String& replacement);
 String string_replace(const String& value,char16_t old_value,char16_t replacement);

@@ -242,15 +242,28 @@ void gc_safepoint();
 std::string last_captured_exception();
 void record_captured_exception(std::string value);
 void gc_collect(std::int32_t generation=2);
+// Why a collection ran. explicit_call: GC.Collect/JSystem.Gc from source;
+// transition: a main-window form was initialized or finished; loading: the
+// volume threshold was due inside a loading safe point; volume: due at a frame end.
+enum class GcTrigger:std::uint8_t{explicit_call=0,volume=1,transition=2,loading=3};
+struct GcEvent{std::uint64_t sequence=0;GcTrigger trigger=GcTrigger::explicit_call;std::uint64_t pause_ns=0;char source[48]{};};
 #if PLS_TRACING_GC
-void gc_request_collection();
+// source: static text naming the transition (form type); copied, may be null.
+void gc_request_collection(const char* source=nullptr);
+// Collections after `sequence`, oldest first; a bounded ring keeps the last 64.
+std::vector<GcEvent> gc_events_after(std::uint64_t sequence);
+// Platform context for explicit collections (e.g. "Finish form.SubForm");
+// copied into the event source. Null clears it. UI thread only.
+void gc_context(const char* context);
 void gc_frame_end();
 // Loading safe point: collects only when the volume threshold is due. Called
 // by the platform after a synchronous UI-thread call returns (the slice loop
 // of ResourceManager.LoadStart runs inline on the UI thread for many slices).
 void gc_loading_safepoint();
 #else
-inline void gc_request_collection(){}
+inline void gc_request_collection(const char* =nullptr){}
+inline std::vector<GcEvent> gc_events_after(std::uint64_t){return {};}
+inline void gc_context(const char*){}
 inline void gc_frame_end(){}
 inline void gc_loading_safepoint(){}
 #endif

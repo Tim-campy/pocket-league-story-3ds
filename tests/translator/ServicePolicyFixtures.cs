@@ -20,6 +20,7 @@ namespace SyntheticPolicy {
   public static int Restore(){return 0;}
   public static string Missing(){return "must not run";}
   public static string[] Notifications(){throw new NotImplementedException();}
+  public static string Signature(){throw new NotImplementedException();}
   public static byte[] Register(string ignored){throw new NotImplementedException();}
  }
  public static class Scenario {
@@ -28,7 +29,7 @@ namespace SyntheticPolicy {
   public static int Preserve(){Billing value=new DerivedBilling();value.Refresh(Arg());value.Provision();return value.rights*100+value.pending+value.grants*10000;}
   public static int NullCaller(){trace=0;Billing value=null;try{value.Refresh(Arg());return -1;}catch(NullReferenceException){return trace;}}
   public static int Assignments(){Disabled.ShowOffers();Disabled.UpdateAd();return (int)Disabled.offer*100+Disabled.size+(Disabled.ads?10000:0);}
-  public static bool Constants(){return Disabled.Ready()&&Disabled.Restore()==1&&Disabled.Missing()==null&&Disabled.Notifications().Length==0;}
+  public static bool Constants(){return Disabled.Ready()&&Disabled.Restore()==1&&Disabled.Missing()==null&&Disabled.Notifications().Length==0&&Disabled.Signature()=="pls-offline"&&Disabled.Signature().Length==11;}
   public static byte[] Registration(){return Disabled.Register("caller argument is still evaluated");}
  }
 }

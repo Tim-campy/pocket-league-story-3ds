@@ -47,7 +47,7 @@ static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_4ed30b03deb528a2_value{};
 static pls::cs::Ref<cs_b728593e3dcffe31> cs_a251c18c9d0f913d_value{};
 
 void cs_init_d01bf6d528df5d3e(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ed30b03deb528a2_value,visitor);pls::cs::trace_value(cs_a251c18c9d0f913d_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.LineupForm",[](){
-cs_4ed30b03deb528a2_value = pls::cs::evaluate_type_initializer_field("F:system.form.LineupForm.configData_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/LineupForm.cs:M:system.form.LineupForm.#ctor:425",([&](){auto cs_initial_array_887=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(1);cs_initial_array_887.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/LineupForm.cs:M:system.form.LineupForm.#ctor:440",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));return cs_initial_array_887;}()));});
+cs_4ed30b03deb528a2_value = pls::cs::evaluate_type_initializer_field("F:system.form.LineupForm.configData_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/LineupForm.cs:M:system.form.LineupForm.#ctor:425",([&](){auto cs_initial_array_888=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(1);cs_initial_array_888.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/LineupForm.cs:M:system.form.LineupForm.#ctor:440",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));return cs_initial_array_888;}()));});
 
 });}
 

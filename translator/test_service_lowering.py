@@ -22,7 +22,7 @@ def main():
         policy(declaring+'.Refresh(System.Int32)','bool_false');policy(declaring+'.Provision','void')
     policy('Disabled.ShowOffers','bool_false');policies['M:SyntheticPolicy.Disabled.ShowOffers']['field_assignments']=[dict(field='F:SyntheticPolicy.Disabled.offer',kind='enum',value=2,enum_member='F:SyntheticPolicy.Disabled.OfferState.Failed')]
     policy('Disabled.UpdateAd','void');policies['M:SyntheticPolicy.Disabled.UpdateAd']['field_assignments']=[dict(field='F:SyntheticPolicy.Disabled.ads',kind='bool',value=False),dict(field='F:SyntheticPolicy.Disabled.size',kind='int',value=65)]
-    policy('Disabled.Ready','bool_true');policy('Disabled.Restore','int_exact',value=1);policy('Disabled.Missing','null');policy('Disabled.Notifications','empty_string_array');policy('Disabled.Register(System.String)','register_local')
+    policy('Disabled.Ready','bool_true');policy('Disabled.Restore','int_exact',value=1);policy('Disabled.Missing','null');policy('Disabled.Notifications','empty_string_array');policy('Disabled.Signature','string_exact',value='pls-offline');policy('Disabled.Register(System.String)','register_local')
     request=dict(assembly='ServicePolicyFixtures',sources=[str(source)],references=[str(unity/(name+'.dll'))for name in ['mscorlib','System','System.Core']],selected=[],select_all_source_methods=True,output=str(output),service_overrides=policies,native_includes=['services_managed.hpp'])
     request_file=folder/'service-policy-input.json';report_file=folder/'service-policy-report.json'
     request_file.write_text(json.dumps(request)+'\n',encoding='utf8',newline='\n');run([runtime,tool,request_file,report_file],folder/'service-policy-translator.log')

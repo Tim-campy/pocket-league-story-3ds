@@ -79,8 +79,29 @@ extern "C" char pls_gc_trace_ring[128][24]={};
 namespace {unsigned long pls_gc_trace_printed=0;}
 namespace pls::cs {
 #endif
+namespace {
+std::mutex gc_event_mutex;std::array<GcEvent,64> gc_event_ring{};std::uint64_t gc_event_sequence=0;
+char gc_pending_source[48]{};char gc_explicit_context[48]{};
+void gc_collect_as(GcTrigger trigger,const char* source);
+}
 void gc_collect(std::int32_t generation){
     if(generation<0)throw ArgumentOutOfRangeException();
+    char context[48];{std::lock_guard<std::mutex>lock(gc_event_mutex);std::memcpy(context,gc_explicit_context,sizeof(context));}
+    gc_collect_as(GcTrigger::explicit_call,context[0]?context:nullptr);
+}
+void gc_context(const char* context){
+    std::lock_guard<std::mutex>lock(gc_event_mutex);std::size_t i=0;
+    if(context)for(;context[i]&&i+1<sizeof(gc_explicit_context);++i)gc_explicit_context[i]=context[i];
+    gc_explicit_context[i]=0;
+}
+std::vector<GcEvent> gc_events_after(std::uint64_t sequence){
+    std::lock_guard<std::mutex>lock(gc_event_mutex);std::vector<GcEvent> result;
+    const auto first=gc_event_sequence>gc_event_ring.size()?gc_event_sequence-gc_event_ring.size():0;
+    for(auto s=std::max(first,sequence);s<gc_event_sequence;++s)result.push_back(gc_event_ring[s%gc_event_ring.size()]);
+    return result;
+}
+namespace {
+void gc_collect_as(GcTrigger trigger,const char* source){
     ensure_gc_thread();
     const auto before=tracing_heap().statistics();
     [[maybe_unused]] allocation_probe::Collection measurement;
@@ -91,6 +112,9 @@ void gc_collect(std::int32_t generation){
     const auto after=tracing_heap().statistics();
     const auto freed=after.reclaimed_objects-before.reclaimed_objects;
     {std::lock_guard<std::mutex>lock(tracing_stats_mutex);tracing_last={before.objects,after.last_roots,freed,freed};}
+    {std::lock_guard<std::mutex>lock(gc_event_mutex);auto& event=gc_event_ring[gc_event_sequence%gc_event_ring.size()];
+     event=GcEvent{};event.sequence=++gc_event_sequence;event.trigger=trigger;event.pause_ns=after.last_pause_ns;
+     if(source){std::size_t i=0;for(;source[i]&&i+1<sizeof(event.source);++i)event.source[i]=source[i];event.source[i]=0;}}
 #if defined(PLS_GC_TRACE)
     // Diagnostic build only: one line per collection, after the pause clock.
     {
@@ -111,13 +135,21 @@ void gc_collect(std::int32_t generation){
     }
 #endif
 }
-void gc_request_collection(){tracing_collection_pending.store(true,std::memory_order_release);}
+}
+void gc_request_collection(const char* source){
+    {std::lock_guard<std::mutex>lock(gc_event_mutex);
+     std::size_t i=0;if(source)for(;source[i]&&i+1<sizeof(gc_pending_source);++i)gc_pending_source[i]=source[i];gc_pending_source[i]=0;}
+    tracing_collection_pending.store(true,std::memory_order_release);
+}
 void gc_loading_safepoint(){
     ensure_gc_thread();
-    if(tracing_heap().collection_due())gc_collect(0);
+    if(tracing_heap().collection_due())gc_collect_as(GcTrigger::loading,nullptr);
 }
 void gc_frame_end(){
     ensure_gc_thread();
     tracing_heap().refresh_memory_accounting();
-    if(tracing_collection_pending.exchange(false,std::memory_order_acq_rel)||tracing_heap().collection_due())gc_collect(0);
+    if(tracing_collection_pending.exchange(false,std::memory_order_acq_rel)){
+        char source[48];{std::lock_guard<std::mutex>lock(gc_event_mutex);std::memcpy(source,gc_pending_source,sizeof(source));}
+        gc_collect_as(GcTrigger::transition,source);
+    }else if(tracing_heap().collection_due())gc_collect_as(GcTrigger::volume,nullptr);
 }

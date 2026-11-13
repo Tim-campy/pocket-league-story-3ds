@@ -1,8 +1,8 @@
 {
   "operation": "differential-generated-portable-method-source-oracle",
-  "cases": 1421,
-  "passed": 1421,
-  "methods": 203,
+  "cases": 1435,
+  "passed": 1435,
+  "methods": 205,
   "verified_method_ids": [
     "M:LoweringFixtures.AbstractCtorDispatch",
     "M:LoweringFixtures.AliasBase(Synthetic.VirtualBase@)",
@@ -77,6 +77,8 @@
     "M:LoweringFixtures.LiteralOther",
     "M:LoweringFixtures.ManagedList(System.Int32)",
     "M:LoweringFixtures.MathDigits(System.Int32)",
+    "M:LoweringFixtures.Md5Abc(System.Int32)",
+    "M:LoweringFixtures.Md5Digests(System.Int32)",
     "M:LoweringFixtures.MethodGroups(System.Int32)",
     "M:LoweringFixtures.Modulo(System.Int32,System.Int32)",
     "M:LoweringFixtures.NestedClosure(System.Int32)",
@@ -284,6 +286,8 @@
     "M:LoweringFixtures.LiteralOther",
     "M:LoweringFixtures.ManagedList(System.Int32)",
     "M:LoweringFixtures.MathDigits(System.Int32)",
+    "M:LoweringFixtures.Md5Abc(System.Int32)",
+    "M:LoweringFixtures.Md5Digests(System.Int32)",
     "M:LoweringFixtures.MethodGroups(System.Int32)",
     "M:LoweringFixtures.Modulo(System.Int32,System.Int32)",
     "M:LoweringFixtures.NestedClosure(System.Int32)",
@@ -425,14 +429,14 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.566386300000886,
-    "native-compile": 149.88261839999905,
-    "managed-output": 0.639608200001021,
-    "native-output": 0.572063600000547
+    "csharp-compile": 0.7018611999992572,
+    "native-compile": 145.68719539999802,
+    "managed-output": 0.7238069999984873,
+    "native-output": 0.7040741999990132
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
-  "source_oracle_sha256": "6cc6e137cbb01c10d4a332f108863ec883c98b4a362d0f555251210aa5daa7b5",
+  "source_oracle_sha256": "2581fba2fc3d95830ea3fc10735d11f81b42e07384c4d586514f1819d67d2b50",
   "cpp_generated_sha256": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a",
   "hpp_generated_sha256": "b169aef2f7d950a03f634cc52fed0aca442e2baa1438c638ccc683e09cf76330",
   "generated_files": [
@@ -454,7 +458,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.cpp",
-      "sha256": "24ee14d8b4dd5d17e351c4042a1bad5eddb2ddf3e17959f1abe78397be803acf"
+      "sha256": "b05af5aff32678f00f6d93f91ffb83a84ebe7776a911bdd895f11873029744a0"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.hpp",
@@ -478,11 +482,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "a9c759768b182dc8e66d6c8c2a8078453909be70d546ae623ac50f955d762a36"
+      "sha256": "5f1e609580288ca1a3e3d85e882c98da25e994aadf6aaff8c888c8fb8c70d2de"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
-      "sha256": "0adfb5e7392cadbe04f7e8d73b8b20791a3241cd28b3e7e62030b34908168bda"
+      "sha256": "c281c239ec325fbd55ce896e40d3690abc2e48130889c0014812de7a54d4129f"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1bb228ee3b09f5bc.cpp",
@@ -618,7 +622,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.cpp",
-      "sha256": "8384aec662608638ac759ea1005340f87de3c0a688bf240f28270341654faba0"
+      "sha256": "f8d3bc22814e90ffab9cfe3a196b41fbc796a3ec2112c07c6e637ea0fb14630b"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.hpp",
@@ -650,7 +654,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.cpp",
-      "sha256": "a2ff193a29941ef49fcfe1bb7dc6d5894620d883879d71041180db6023759d87"
+      "sha256": "ae9f25f02b5ad138c9e9fc6244b02c6f3ffcf17549219d9d170655e5d1fdcfac"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.hpp",
@@ -698,7 +702,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.cpp",
-      "sha256": "e68e660a343f01bde4210cef3485ec0951f7f6511ec7bbf6e15e690a1eb71c77"
+      "sha256": "a6812a8f5cd457bf8342acb24922984593acac1033e4a51476c2ec9df6995100"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.hpp",
@@ -718,11 +722,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "9b8cf673aab3535bb2d76d0ec5f6e593400e6e1eb52b8afee7604140ed6696b6"
+    "sha256": "0b809857f3e22de53e836abe16350a9bb1d7b6bbbeb13228f55de2d37961feb2"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "917f68be107f22d4e091c9a580e99172e94b31c5c3a21f00bda94271675a7c7c"
+    "sha256": "baede4a10ece147dcc402351c70d28c01afd7e8b7651aa3523ecd4df76d6486d"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -740,7 +744,7 @@
     },
     {
       "path": "build/translator/lowering-differential/Harness.cpp",
-      "sha256": "b3e964ed3b72c371b84683a8885dd60184abbf9b825f34682486deac750bb8b0"
+      "sha256": "d3d4a3b156cf77653c11ef85950707b0601ff69833bae955cdedde317999363a"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.cpp",
@@ -760,7 +764,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.cpp",
-      "sha256": "24ee14d8b4dd5d17e351c4042a1bad5eddb2ddf3e17959f1abe78397be803acf"
+      "sha256": "b05af5aff32678f00f6d93f91ffb83a84ebe7776a911bdd895f11873029744a0"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.hpp",
@@ -784,11 +788,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "a9c759768b182dc8e66d6c8c2a8078453909be70d546ae623ac50f955d762a36"
+      "sha256": "5f1e609580288ca1a3e3d85e882c98da25e994aadf6aaff8c888c8fb8c70d2de"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
-      "sha256": "0adfb5e7392cadbe04f7e8d73b8b20791a3241cd28b3e7e62030b34908168bda"
+      "sha256": "c281c239ec325fbd55ce896e40d3690abc2e48130889c0014812de7a54d4129f"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1bb228ee3b09f5bc.cpp",
@@ -924,7 +928,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.cpp",
-      "sha256": "8384aec662608638ac759ea1005340f87de3c0a688bf240f28270341654faba0"
+      "sha256": "f8d3bc22814e90ffab9cfe3a196b41fbc796a3ec2112c07c6e637ea0fb14630b"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.hpp",
@@ -956,7 +960,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.cpp",
-      "sha256": "a2ff193a29941ef49fcfe1bb7dc6d5894620d883879d71041180db6023759d87"
+      "sha256": "ae9f25f02b5ad138c9e9fc6244b02c6f3ffcf17549219d9d170655e5d1fdcfac"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.hpp",
@@ -1004,7 +1008,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.cpp",
-      "sha256": "e68e660a343f01bde4210cef3485ec0951f7f6511ec7bbf6e15e690a1eb71c77"
+      "sha256": "a6812a8f5cd457bf8342acb24922984593acac1033e4a51476c2ec9df6995100"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.hpp",
@@ -1492,11 +1496,11 @@
     },
     {
       "path": "src/kairo/common/managed_string_ops.cpp",
-      "sha256": "7fd1900708389a7b0da3376148a47232d4eb50954d299fc4bb7ac8ea765e346b"
+      "sha256": "e33872d7a00296fb8c21bd8384ea4ea4b92b75a67535de3a77fee89957bf48e2"
     },
     {
       "path": "src/kairo/common/managed_string_ops.hpp",
-      "sha256": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0"
+      "sha256": "1af96fe46e3f95a43a554764cb7127a1c03f8e9bb477d5f3bb7b413f9301ed21"
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
@@ -1536,11 +1540,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66"
+      "sha256": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1"
+      "sha256": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -1576,7 +1580,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "6dc38b833dd24ef7981c702194eaf539bafd20d1e0d4cda49e1334901858373b"
+      "sha256": "816279c7795dd0f9fa6f2fa12e7c2c51dc9abb575c00b6e4ea5843358d6d6821"
     },
     {
       "path": "src/runtime/managed_reference.hpp",
@@ -1610,7 +1614,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "54d1335c1ece24103268446fdf7b13c43241f8ff89a7e1a8e07069b32a362264",
+    "translator_source_sha256": "e52c5bab6f4a948cc98a52d57cb64df5ee0a4e240283bf9d69182417f053fde7",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
     "driver_sha256": "326ef7dbc3156a8901bd8e18f0fe38d9b28b2929317104ae1a7a8bdd4e532be4"
   },
@@ -1628,5 +1632,5 @@
     "expected_seen": 9,
     "factory_defined": false
   },
-  "fixture_source_sha256": "c2fd4805e5dfdbd40dd6273a996a700e352c574fa200a7814e5162231858ea7b"
+  "fixture_source_sha256": "b91eaa9b576340b3a315262127143d52e32bacd3b600137279c3452d8ded0aa1"
 }

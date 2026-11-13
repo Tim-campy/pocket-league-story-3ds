@@ -57,7 +57,7 @@ O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): **50 m
 Termina no congelamento, que exige os cinco critérios abaixo, todos comprovados por script ou medição:
 
 1. **Tradução completa:** 1.958 de 1.958 métodos do jogo compilando, nenhum slot virtual pendente, as 53 políticas offline integradas aos chamadores.
-2. **Coletor aplicado e desempenho confirmado:** no **New 3DS real**, com backend nulo, nenhum frame acima de 50 ms nas janelas de menu e de partida, incluindo coletas, em três execuções; e partida com média abaixo de 20 ms. (Alterado pelo usuário em 2026-11-12; a antiga exigência de razão C++/Mono ≤ 1 nos kernels virou melhoria opcional em `docs/backlog.md`.) A medição com vídeo real é refeita na Fase 4.
+2. **Coletor aplicado e desempenho confirmado:** no **New 3DS real**, com backend nulo, em três execuções: (a) nenhum frame acima de 50 ms em jogo estável, isto é, nas janelas de partida e de menu parado, incluindo coletas por volume; (b) pausas de coleta em trocas de tela principal e em carregamentos toleradas até 150 ms; (c) partida com média abaixo de 20 ms. O benchmark classifica cada coleta como volume, transição, carregamento ou explícita (`JSystem.Gc` do fonte) e relata os grupos separadamente. (Alterado pelo usuário em 2026-11-12 e em 2026-11-13; a antiga exigência de razão C++/Mono ≤ 1 nos kernels virou melhoria opcional em `docs/backlog.md`.) A medição com vídeo real é refeita na Fase 4.
 3. **Jogo percorrido de ponta a ponta no PC:** roteiro de cobertura em `docs/coverage-plan.md` (todas as telas, uma temporada completa, saves, todos os tipos de evento) executado sem erro, com a cobertura de execução por método registrada. Métodos nunca alcançados são listados e justificados.
 4. **Fidelidade resolvida:** regra de ponto flutuante confirmada em aparelho Android; divergências de `ref`/`out` e trigonometria resolvidas ou documentadas com decisão do usuário; telas comparadas com o original.
 5. **Código legível:** o tradutor emite C++ adequado a manutenção manual: um arquivo por classe, nomes originais de tipos, membros e parâmetros, sem ruído de runtime visível além do necessário, formatação consistente. O usuário aprova uma amostra antes da geração final.
@@ -100,6 +100,7 @@ Melhorias de jogo pedidas pelo usuário, feitas no C++ após o congelamento, cad
 6. `src/game/` é editado diretamente. Toda mudança de comportamento em relação à tag `v1.0.0-faithful` é intencional, isolada em commit próprio e registrada em `docs/changes-from-original.md`.
 7. Correções de fidelidade descobertas depois são feitas à mão e registradas como tais.
 8. Mudanças no formato de save exigem decisão do usuário sobre compatibilidade com os saves do Android.
+9. O runtime (`src/runtime/`, coletor incluído) pode evoluir depois do congelamento sem alterar o código do jogo, desde que a interface usada pelo código gerado se mantenha. (Decisão do usuário, 2026-11-13; ex.: a reforma do coletor em `docs/backlog.md`.)
 
 ### Sempre
 

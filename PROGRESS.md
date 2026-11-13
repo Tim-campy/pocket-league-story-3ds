@@ -12,7 +12,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 | Critério | Estado | Evidência / pendência |
 |---|---|---|
 | Tradução completa | em andamento | 1768/1958 métodos compilados (+62 membros gerados pelo compilador dentro de unidades emitidas, 2 abstratos sem corpo); 22 slots virtuais pendentes; integração das 53 políticas ainda não comprovada. |
-| Coletor e desempenho | em andamento | Critério: New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa: partida média 12,05 ms/máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Ainda não cumprido. |
+| Coletor e desempenho | em andamento | Critério (2026-11-13): New 3DS real, backend nulo, três execuções; nenhum frame >50 ms em jogo estável (coletas por volume incluídas); pausas em trocas de tela principal e carregamentos até 150 ms; partida com média <20 ms. v5 em três execuções: menu com maior coleta 105,6–107,7 ms, classificação por tipo pendente do v6; partida média 8,9–12,6 ms sem coletas. |
 | Percurso completo no PC | em andamento | 780 métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados. |
 | Fidelidade resolvida | em andamento | Ponto flutuante confirmado em emulador ARM; confirmação em aparelho, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
 | Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |
@@ -75,7 +75,7 @@ Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets]
 - Fronteira: 252/775 símbolos verificados: 171 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend grafico CTR ainda nao implementado; o benchmark ARM11 usa backend nulo.
 - Assembly-CSharp: 1768 corpos emitidos, 1768 compilados em objeto C++; 1768/1958 (90.30%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4841 identidades declaradas; o pedido atual inclui 1900 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
 - Sintaxe: 69/123 SyntaxKinds na união dos corpos emitidos (63 Kairo, 69 Game); observação não comprova cobertura semântica integral de cada construção.
-- Serviços: 53 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.
+- Serviços: 54 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.
 - Assets: 654 RGBA8 únicos (16933248 bytes) com readback integral; 2 TTF e 27 Ogg exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.
 - Marco de partida completa e retorno ao menu registrado em [recibo](config/phase2-match-complete.json) e [evidencia](docs/notes/phase2-match-complete.md). Cobertura por metodo depende dos recibos autenticados; comparacao Android pendente.
 - Próxima integração: completar corpos, slots e serviços restantes; medir o runtime sem rasterização. Nenhuma decisão de telas 3DS foi tomada.

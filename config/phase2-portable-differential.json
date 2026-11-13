@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.2134786000005988,
-    "native-compile": 330.2388195000003,
-    "managed-output": 40.18286509999962,
-    "native-output": 65.12285479999991
+    "csharp-compile": 1.3264660999993794,
+    "native-compile": 316.0230292000015,
+    "managed-output": 48.43574740000258,
+    "native-output": 62.716186099998595
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1274,11 +1274,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "8df07ac33c349e8f17d81c36829efe233ea7ad778818127139e5545088c683ba"
+    "sha256": "52579795328732dccf07c03d11d3baea7577d8d5ef81e285e2f8ccdcdecc733a"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "4a65e64b53a5d5ddfa33005e92ab99b9536542a1372eb3ca5e34feddbbb97ce5"
+    "sha256": "806fc90ac814c9e48f2b78f5875e86c3f74fc17eed7c73c81c3a38a8057586be"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -2016,11 +2016,11 @@
     },
     {
       "path": "src/kairo/common/managed_string_ops.cpp",
-      "sha256": "7fd1900708389a7b0da3376148a47232d4eb50954d299fc4bb7ac8ea765e346b"
+      "sha256": "e33872d7a00296fb8c21bd8384ea4ea4b92b75a67535de3a77fee89957bf48e2"
     },
     {
       "path": "src/kairo/common/managed_string_ops.hpp",
-      "sha256": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0"
+      "sha256": "1af96fe46e3f95a43a554764cb7127a1c03f8e9bb477d5f3bb7b413f9301ed21"
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
@@ -2060,11 +2060,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66"
+      "sha256": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1"
+      "sha256": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -2104,7 +2104,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "6dc38b833dd24ef7981c702194eaf539bafd20d1e0d4cda49e1334901858373b"
+      "sha256": "816279c7795dd0f9fa6f2fa12e7c2c51dc9abb575c00b6e4ea5843358d6d6821"
     },
     {
       "path": "src/runtime/managed_reference.hpp",

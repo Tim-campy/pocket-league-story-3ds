@@ -84,15 +84,23 @@ void cs_706bcbd9776cf6ef(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 pls::cs::Array<cs_c87dc3d2d0f9440a> cs_7e52a7f62521b1ee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_languageOnly,bool v_releaseOnly);
 
+pls::cs::String cs_6fa713935dfcd76c(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
 pls::cs::String cs_047c3ab4bcca9557(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 pls::cs::Ref<cs_b489b0d33bb37bb8> cs_3eff1227bb0de063();
 
 std::int32_t cs_033269c53e74ac43(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
+pls::cs::String cs_f878e2def0687b14(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
+pls::cs::String cs_923493c18d90485c();
+
 pls::cs::String cs_87f9285131d0cba9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 bool cs_89868493b44dd8bd(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data);
+
+pls::cs::Array<std::uint8_t> cs_b8b48b1495fef228(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check);
 
 bool cs_ab34005322458eed(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 

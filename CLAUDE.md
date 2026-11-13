@@ -29,7 +29,7 @@ Os números deste arquivo são um retrato do momento da troca de agente. Se dive
 | Critério do congelamento | Estado |
 |---|---|
 | 1. Tradução completa | 1.768 de 1.958 métodos do jogo compilam; 190 corpos e 22 slots virtuais pendentes; 26 das 53 políticas offline por integrar |
-| 2. Coletor e desempenho | **Critério alterado em 2026-11-12:** no New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa no New 3DS XL (`891d520`): partida média 12,05 ms / máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Paridade com o Mono virou melhoria opcional (`docs/backlog.md`) |
+| 2. Coletor e desempenho | **Critério alterado em 2026-11-13:** no New 3DS real, backend nulo, três execuções: (a) nenhum frame >50 ms em jogo estável (partida e menu parado, com coletas por volume); (b) pausas em trocas de tela principal e carregamentos até 150 ms; (c) partida com média <20 ms. Coletas classificadas por tipo no benchmark (v6). v5 no New 3DS XL, três execuções: menu com 3 coletas por janela, maior 105,6–107,7 ms (frame 113–115 ms); frames sem coleta ≤ 11 ms; partida média 8,9–12,6 ms, máx. 15,2–25,9 ms, sem coletas |
 | 3. Percurso completo no PC | Título, saves, gestão, partida completa e retorno funcionam. Temporada e roteiro de cobertura pendentes; 776 métodos exercitados |
 | 4. Fidelidade | Regra de ponto flutuante confirmada em emulador Android ARM e adotada; confirmação em aparelho pendente. Comparação de telas com o original pendente |
 | 5. Código legível e aprovado | Não iniciado |

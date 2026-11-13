@@ -96,6 +96,10 @@ std::int32_t int32_parse_hex_number(const String& value,bool allow_spaces){
     if(!digit_found||pos!=text.size())throw FormatException();
     if(overflow)throw OverflowException();return cast_integral<std::int32_t>(bits);
 }
+bool int32_try_parse_hex_number(const String& value,std::int32_t& result){
+    result=0;if(value.is_null())return false;
+    try{result=int32_parse_hex_number(value,true);return true;}catch(const FormatException&){return false;}catch(const OverflowException&){return false;}
+}
 String string_replace(const String& value,char16_t old_value,char16_t replacement){
     const auto& text=value.code_units();if(old_value==replacement||text.find(old_value)==std::u16string::npos)return value;
     auto result=text;std::replace(result.begin(),result.end(),old_value,replacement);return String(std::move(result));

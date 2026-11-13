@@ -14,15 +14,15 @@
     "tests/translator/FloatParseFixtures.cs": "a6a7ae3efb9ea608d0eca614f865f5197d3b7807960f2ebae17f983f925f34e2",
     "tests/translator/float_parse_fixtures.cpp": "5ae7b9b6d4424dfa419301fb5b648b9d05c216a3e666088bb4fdc82083b6a4d4",
     "src/kairo/common/semantic_runtime.cpp": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66",
-    "src/kairo/common/managed_string_ops.cpp": "e5b6be372c774ce44506afb96fab1ee60c998801cf7c4bc25b59a68be8804c06",
+    "src/kairo/common/managed_string_ops.cpp": "7fd1900708389a7b0da3376148a47232d4eb50954d299fc4bb7ac8ea765e346b",
     "tools/probe_float_parse.py": "44bc4b3ff5a43d0f53d201d942f7645e895ca6eff5dca773e7115db3093fb85a",
     "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1",
-    "src/kairo/common/managed_string_ops.hpp": "48b397e67a19e92784a66aa8c6d8a3f51500b3ba848d8180571fd64759b3647e",
+    "src/kairo/common/managed_string_ops.hpp": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e"
   },
   "native_executable": {
     "path": "build/float-parse-probe/float-parse.exe",
-    "sha256": "52eb71a9bab50fac017918c102fc58c6141ffc4f7261bc1a7993721683c990d7"
+    "sha256": "ad6172ba004a8f3795923e76932e2ab1f675ec50accce9317c37d5895f512c64"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "historical_runtime_sha256": "3d102d9a63dae72e48396998bdbae4e9b2d8952ca6a8ebbcba698d3bc4345076",

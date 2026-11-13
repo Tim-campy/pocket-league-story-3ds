@@ -43,6 +43,10 @@ public static class LoweringFixtures {
     public static int ArrayCopyFive(int seed){var values=new int[]{seed,2,3,4};Array.Copy(values,0,values,1,3);return values[1]+values[2]+values[3];}
     public static int ArrayBaseAlias(int seed){Array a=new int[]{seed};Array b=a;Array.Copy(a,0,b,0,1);return ((int[])b)[0];}
     public static int TryParseText(string value){int result=37;bool success=int.TryParse(value,out result);return success?result:result-100;}
+    // KairoBase.ConnectLogin shape: out into an array element, decimal then hexadecimal with the invariant culture.
+    public static int TryParseElement(int seed){string[] text={"12"," 7 ","x","2147483648","1f","0x1F",null,"-3"};int[] values=new int[text.Length];int code=0;for(int i=0;i<text.Length;i++){values[i]=seed;bool ok=int.TryParse(text[i],out values[i]);if(!ok&&text[i]!=null&&text[i].StartsWith("0x"))ok=int.TryParse(text[i].Substring(2),System.Globalization.NumberStyles.HexNumber,System.Globalization.CultureInfo.InvariantCulture,out values[i]);code=code*3+(ok?1:0)+values[i];}return code;}
+    public static int TryParseHexText(int seed){string[] text={"ff"," ff ","FFFFFFFF","100000000","-1","+f","g",""," \t1A\n",null,"7fffffff","FF\0"};int[] values=new int[1];int code=seed;for(int i=0;i<text.Length;i++){values[0]=seed;bool ok=int.TryParse(text[i],System.Globalization.NumberStyles.HexNumber,System.Globalization.CultureInfo.InvariantCulture,out values[0]);code=code*31+(ok?7:3)+values[0];}return code;}
+    public static int TryParseElementBounds(int seed){int[] values=new int[1];try{int.TryParse("5",out values[seed<0?2:1]);return -1;}catch(IndexOutOfRangeException){return values[0];}}
     public static int TryParseLimit(int seed){int result=seed;bool success=int.TryParse(seed<0?"-2147483648":"2147483648",out result);return success?result:result-100;}
     public static string ObjectConcatSingle(int seed){trace_=seed;return string.Concat(seed<0?null:new Synthetic.ConcatValue(4,false,seed==0));}
     public static string UriEscapeMarks(){return Uri.EscapeDataString("azAZ09_~!'()*-. /?:@&=+$,%#[]\\\"\u0000\u00e9\ud800");}

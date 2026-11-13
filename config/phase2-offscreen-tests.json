@@ -6,12 +6,12 @@
     {
       "fixture": "offscreen_test",
       "assertions": 23,
-      "executable_sha256": "f562b2434dbfde02e2f515d8baedc4263082adc8f66d524bf6ee7f47386aee3e"
+      "executable_sha256": "aa2f0ff1689efe262b341d93aed682c9c35d556919792de5b6660856177b161b"
     },
     {
       "fixture": "mesh_test",
       "assertions": 15,
-      "executable_sha256": "f8af36415ff7c5997c050fec36017e356a77e4ec5633125e4d07c45e967d2c0d"
+      "executable_sha256": "dc03867ec343c64eae72997ff5af20b39b4ce49ad193bb7699499b7f67acd29d"
     }
   ],
   "inputs_sha256": {
@@ -206,8 +206,8 @@
     "src/kairo/common/managed_stream_reader.hpp": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd",
     "src/kairo/common/managed_streams.cpp": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6",
     "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
-    "src/kairo/common/managed_string_ops.cpp": "e5b6be372c774ce44506afb96fab1ee60c998801cf7c4bc25b59a68be8804c06",
-    "src/kairo/common/managed_string_ops.hpp": "48b397e67a19e92784a66aa8c6d8a3f51500b3ba848d8180571fd64759b3647e",
+    "src/kairo/common/managed_string_ops.cpp": "7fd1900708389a7b0da3376148a47232d4eb50954d299fc4bb7ac8ea765e346b",
+    "src/kairo/common/managed_string_ops.hpp": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0",
     "src/kairo/common/managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
     "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
     "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",

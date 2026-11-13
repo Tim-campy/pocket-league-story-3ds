@@ -175,7 +175,7 @@ def main():
     b=load('config/boundary-summary.json');a=load('config/asset-summary.json')
     if len(boundary)!=b['kairo']['unique_symbols']:raise ValueError('Boundary summary differs from ledger')
     if len(translation)!=1958 or len({r['id'] for r in translation})!=1958:raise ValueError('Translation identities differ')
-    allowed=[(boundary,{'todo','stub','implemented','verified'}),(translation,{'todo','translated','runs','verified'}),
+    allowed=[(boundary,{'todo','stub','implemented','verified'}),(translation,{'todo','translated','embedded','no-body','runs','verified'}),
              (assets,{'inventoried','extracts','converts','loads'})]
     for inventory,states in allowed:
         if any(row['estado'] not in states for row in inventory):raise ValueError('Invalid generated state')

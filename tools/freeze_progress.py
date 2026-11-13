@@ -4,7 +4,7 @@ def criteria(phase2, game, floating=None):
     slots=len(game['missing_virtual_definitions']) if 'missing_virtual_definitions' in game else 'UNKNOWN'
     return [
         ('Tradução completa','em andamento' if count else 'pendente',
-         f'{count}/1958 métodos compilados; {slots} slots virtuais pendentes; integração das 53 políticas ainda não comprovada.'),
+         f"{count}/1958 métodos compilados"+(f" (+{phase2['game_embedded_methods']} membros gerados pelo compilador dentro de unidades emitidas, {phase2.get('game_no_body_methods',0)} abstratos sem corpo)" if phase2.get('game_embedded_methods') else '')+f'; {slots} slots virtuais pendentes; integração das 53 políticas ainda não comprovada.'),
         ('Coletor e desempenho','em andamento',
          'Critério: New 3DS real, backend nulo, nenhum frame >50 ms em menu e partida (com coletas) em três execuções, e partida com média <20 ms. Primeira execução completa: partida média 12,05 ms/máx. 13,03 ms; menu máx. 143,4 ms por coleta de 102,4 ms. Ainda não cumprido.'),
         ('Percurso completo no PC','em andamento' if phase2.get('game_executed_methods',0) else 'pendente',

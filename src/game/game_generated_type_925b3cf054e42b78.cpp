@@ -202,8 +202,8 @@ pls::cs::Ref<cs_6ee7d14059be1acf> v_instance2_4173 = ([&]() -> pls::cs::Ref<cs_6
 if (([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(v_instance2_4173); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_54b9118ddf48a0fd(cs_receiver); }())) {
 ([&]() { auto cs_target = cs_this; auto cs_value = false; pls::game::cs_require(cs_target)->cs_42ee6ef0eb7e8761 = cs_value; return cs_value; }());
 }
-} catch(const pls::cs::Exception& cs_caught_903) {auto cs_exception_903=pls::cs::capture_exception(cs_caught_903);
-if(pls::cs::exception_is(cs_exception_903,"System.Exception")) {auto v_t_4406=cs_exception_903;{
+} catch(const pls::cs::Exception& cs_caught_905) {auto cs_exception_905=pls::cs::capture_exception(cs_caught_905);
+if(pls::cs::exception_is(cs_exception_905,"System.Exception")) {auto v_t_4406=cs_exception_905;{
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_t_4406; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 }
@@ -217,8 +217,8 @@ else {throw;} } }, [&]() {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_89c0d586cfe20341>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0f9909df8253bfe0; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b9636031b790b537(cs_receiver); }());
 try {
 ([&]() -> void { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(std::uint64_t(0x14ull)); cs_26244a61d0d2e16c(cs_arg0); }());
-} catch(const pls::cs::Exception& cs_caught_904) {auto cs_exception_904=pls::cs::capture_exception(cs_caught_904);
-if(pls::cs::exception_is(cs_exception_904,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_906) {auto cs_exception_906=pls::cs::capture_exception(cs_caught_906);
+if(pls::cs::exception_is(cs_exception_906,"System.Exception")) {{
 
 }}
 else {throw;} }

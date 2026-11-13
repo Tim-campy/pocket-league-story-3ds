@@ -19,7 +19,7 @@
   },
   "native_executable": {
     "path": "build/runtime-memory-fixtures/heap-fixtures.exe",
-    "sha256": "83634af51d9f7a46d5ce7c5c31bcd3a748da5f9c3c35c2a441d9f865d3d3ffa8"
+    "sha256": "f6365524757153ecfe718020785e6beec98f8bf9950476e9161c97da92f6ef80"
   },
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "verified_boundary_ids": [],

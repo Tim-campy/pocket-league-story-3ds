@@ -17,12 +17,12 @@ métodos do fonte rejeitados pelo tradutor.
 |---|---:|---|
 | Construtor estático (`.cctor`) | 49 | 47 já emitidos como inicializador de tipo (`type_initializers`); 2 em `AppPlugin`/`WebBoxPlugin` (Android) |
 | Lambda / closure (`<X>m__N`, `AnonStorey`) | 42 | 12 dentro de métodos já emitidos (traduzidos em linha); 30 dentro de métodos rejeitados (seguem o pai) |
-| Construtor implícito (`.ctor` sem fonte) | 12 | 2 de classes já geradas; 10 de classes não geradas (`IabHelper`, `Json`, `MyConfig`, `KairoText`, `TJPlacement`…) |
+| Construtor implícito (`.ctor` sem fonte) | 12 | 3 de classes já geradas (inclui `MatchForm+UserRecord`, aninhada); 9 de classes não geradas (`IabHelper`, `Json`, `MyConfig`, `KairoText`, `TJPlacement`…) |
 | Membros de delegate (`HttpForm+HttpMethod`) | 4 | `Invoke/BeginInvoke/EndInvoke/.ctor`; o delegate é traduzido como chamável |
 | `HttpForm+ResultData.IEnumerable.GetEnumerator` | 1 | tipo `IEnumerator` não suportado (conta também em 1b) |
 
-**61 dos 108 já existem no C++** (47 + 12 + 2) e só faltam no livro-razão:
-falta a regra de associação IL → fonte para membros gerados. Os outros 47
+**62 dos 108 já existem no C++** (47 + 12 + 3) e só faltam no livro-razão:
+falta a regra de associação IL → fonte para membros gerados. Os outros 46
 seguem o pai/classe da seção 1b ou dependem de um tipo ainda não gerado.
 
 ### 1b. Métodos do fonte rejeitados (82 no livro-razão; 106 diagnósticos)
@@ -64,7 +64,9 @@ Integrar as políticas é, na prática, destravar as cadeias da seção 1b.
 
 1. **Livro-razão** (sem mudar C++): associar `.cctor` → inicializador de tipo,
    lambdas → método pai, construtores implícitos → classe gerada, abstratos →
-   sem corpo. Fecha 63 dos 190.
+   sem corpo. Fecha 64 dos 190. **Feito em 2026-11-13:** estados `embedded`
+   (62) e `no-body` (2) no livro-razão, por regra com autoteste em
+   `tools/update_phase2_progress.py`; pendentes reais: 126.
 2. **Tradutor, recursos gerais:** chamada `ref/out` para método do fonte
    (destrava 25, inclusive `MatchForm.Run`); inicializador de objeto em método
    genérico (9); `String.Concat(object…)` com contrato `ToString` exato (4).
@@ -81,3 +83,26 @@ Integrar as políticas é, na prática, destravar as cadeias da seção 1b.
 
 Ver `docs/coverage-plan.md` (roteiro de execução e lista de métodos nunca
 alcançados).
+
+## 6. Resultado da primeira etapa do tradutor (2026-11-13)
+
+`int.TryParse` com destino `out` em elemento de array e a sobrecarga
+`(string, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out int)`
+passaram a ser traduzidos (runtime: `int32_try_parse_hex_number`, semântica do
+Mono: nulo, formato inválido e estouro devolvem `false` com zero). Três casos
+novos em `LoweringFixtures` (elemento, hexadecimal, índice fora dos limites
+antes da chamada); diferencial contra o Mono: 1.421/1.421.
+
+`KairoBase.ConnectLogin` saiu da causa primeira, mas a cadeia continua
+bloqueada um nível abaixo: `KairoBase.GetSignature` →
+`KairoPlugin._getSignature` (assinatura do pacote Android, via objeto Java).
+Emitidos continuam 1.768; rejeitados 106 → 109 (os três novos são a cadeia
+`GetSignature`, antes escondida atrás do `TryParse`).
+
+**Decisão pendente do usuário:** a cadeia `ConnectLogin`/`Connect*` (25
+métodos, inclusive o slot `MatchForm.Run`, amigos, escalações e presentes) é o
+login e a troca de dados com o servidor da Kairosoft. Nenhuma das 53 políticas
+offline cobre a conexão em si. Proposta: política "servidor indisponível"
+no ponto `KairoBase.Connect(...)` (mesma resposta que o jogo recebe sem rede),
+e assinatura do pacote como valor fixo local sem significado. Precisa de
+aprovação por tocar o comportamento de serviços.

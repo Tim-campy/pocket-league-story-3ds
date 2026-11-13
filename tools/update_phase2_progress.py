@@ -412,6 +412,55 @@ def culture_evidence():
         by_operation=dict(Counter(r['operation'] for r in calls)),historical_ordinal_calls=len(proof['historical_ordinal_calls']),culture_assignments=len(proof['culture_assignments']))
 
 
+def classify_generated_members(rows,report):
+    """IL members the C# compiler generates without a source declaration.
+    They are not translated separately: a static constructor is the emitted
+    type initializer, a lambda or closure member lives in its emitted parent
+    body, an implicit constructor is part of the generated class. Abstract
+    declarations have no body. Any ambiguity keeps the row pending."""
+    def plain(doc):return doc[2:].split('(')[0]
+    emitted={}
+    for m in report['emitted_methods']:emitted.setdefault(plain(m['id']),[]).append(m['id'])
+    rejected={}
+    for doc,value in report['rejected_methods'].items():rejected.setdefault(plain(doc),[]).append(value['reason'])
+    initializers={t['id'][2:] for t in report['type_initializers']}
+    classes={(c['id'] if isinstance(c,dict) else c)[2:] for c in report['generated_classes']}
+    result={}
+    for row in rows:
+        match=re.fullmatch(r'Assembly-CSharp::(.+)::([^(:]+)\((.*)\)->(.+)',row['id'])
+        if not match:continue
+        owner,name,parameters,_=match.groups()
+        source=owner+'.'+name.replace('.ctor','#ctor').replace('.cctor','#cctor')
+        if source in rejected:
+            if all(r=='abstract method has no emitted body' for r in rejected[source]):result[row['id']]=('no-body','abstract declaration; overrides carry the bodies')
+            continue
+        if name=='.cctor':
+            if owner in initializers:result[row['id']]=('embedded','static constructor emitted as type initializer T:'+owner)
+            continue
+        closure=re.search(r'\+<(\w+)>c__AnonStorey\d+$',owner)
+        lam=re.fullmatch(r'<(\w+)>m__\w+',name)
+        if closure or lam:
+            parent=(owner[:closure.start()]+'.'+closure.group(1)) if closure else owner+'.'+lam.group(1)
+            if parent in emitted and parent not in rejected:result[row['id']]=('embedded','compiler-generated closure/lambda inside emitted '+parent)
+            continue
+        if name=='.ctor' and not parameters and owner.replace('+','.') in {c.replace('+','.') for c in classes} and source not in emitted:
+            result[row['id']]=('embedded','implicit constructor of generated class T:'+owner)
+    return result
+
+
+def self_test_generated_members():
+    report=dict(emitted_methods=[dict(id='M:f.T.Run'),dict(id='M:f.T.Mixed(System.Int32)')],
+        rejected_methods={'M:f.T.Mixed(System.String)':dict(reason='x'),'M:f.T.Abs':dict(reason='abstract method has no emitted body'),'M:f.T.Bad':dict(reason='x')},
+        type_initializers=[dict(id='T:f.T')],generated_classes=[dict(id='T:f.C')])
+    rows=[dict(id='Assembly-CSharp::f.T::'+s) for s in ('.cctor()->System.Void','<Run>m__0()->System.Void','<Mixed>m__1()->System.Void','<Bad>m__2()->System.Void','Abs()->System.Void')]
+    rows+=[dict(id='Assembly-CSharp::f.U::.cctor()->System.Void'),dict(id='Assembly-CSharp::f.C::.ctor()->System.Void'),dict(id='Assembly-CSharp::f.T+<Run>c__AnonStorey0::<>m__0()->System.Void')]
+    got={k.split('::',1)[1]:v[0] for k,v in classify_generated_members(rows,report).items()}
+    expected={'f.T::.cctor()->System.Void':'embedded','f.T::<Run>m__0()->System.Void':'embedded','f.T::Abs()->System.Void':'no-body',
+        'f.C::.ctor()->System.Void':'embedded','f.T+<Run>c__AnonStorey0::<>m__0()->System.Void':'embedded'}
+    if got!=expected:raise AssertionError('Generated member fixture failed: '+json.dumps(got,sort_keys=True))
+    return dict(operation='generated-member-ledger-self-test',cases=len(rows),passed=len(rows))
+
+
 def self_test_mapping():
     def row(doc,owner,name,parameters,result,constructor=False):
         return dict(id=doc,containing_type=owner,name=name,parameters=[dict(type=t) for t in parameters],return_type=result,is_constructor=constructor)
@@ -514,6 +563,9 @@ def refresh():
         if row['id'] in game_mapped:
             row['estado']='runs' if row['id']in game_runs else 'translated'
             row['notas']+='; phase2: unique full-signature Roslyn DocID '+game_mapped[row['id']]+'; generated C++ object compiled with input/compiler hashes; '+('completed in authenticated diagnostic; behavior not verified'if row['id']in game_runs else 'no completed diagnostic invocation recorded; behavior not verified')
+    generated=classify_generated_members([r for r in translation if r['estado']=='todo'],load('config/phase2-game-translation.json'))
+    for row in translation:
+        if row['id'] in generated:row['estado'],note=generated[row['id']];row['notas']+='; phase2: '+note+'; no separate body'
     report = dict(operation='hash-validated-phase2-ledger-update',producer_sha256=sha(Path(__file__)),
         requested_portable_symbols=emitted['requested_symbols'],requested_root_methods=emitted['requested_methods'],
         emitted_methods=len(methods),emitted_root_methods=len(roots),emitted_dependency_methods=len(methods)-len(roots),
@@ -528,7 +580,8 @@ def refresh():
         game_emitted_cpp_methods=game_counts['emitted'],game_compiled_cpp_methods=game_counts['compiled'],game_source_method_declarations=game_counts['source_declarations'],
         game_requested_method_identities=game_counts['requested'],
         game_identity_mapping='unique complete declaring-type/name/parameter-types/return-type; constructors return System.Void; no arity-only match',
-        identity_mapping_self_test=self_test_mapping(),
+        identity_mapping_self_test=self_test_mapping(),generated_member_self_test=self_test_generated_members(),
+        game_embedded_methods=sum(r['estado']=='embedded' for r in translation),game_no_body_methods=sum(r['estado']=='no-body' for r in translation),
         game_mapping_unknown=game_unmapped,game_original_ids_not_mapped=sorted(r['id'] for r in translation if r['id'] not in game_mapped),
         game_translation_states=dict(Counter(r['estado'] for r in translation)),
         service_contracts=len(load('config/service-overrides.json')['overrides']),service_native_assertions=services['policy_assertions'],

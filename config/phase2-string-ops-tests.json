@@ -26,16 +26,16 @@
   "inputs_sha256": {
     "tests/translator/string_ops_fixtures.cpp": "ff58061afea187b3ebd490513a654c29ba4030501e8205633bd90e57c87c01f3",
     "src/kairo/common/semantic_runtime.cpp": "64985d28ded7663ca3b5418e6b0fb135b960d66c2d6629edb465e6b0ce1f4d66",
-    "src/kairo/common/managed_string_ops.cpp": "e5b6be372c774ce44506afb96fab1ee60c998801cf7c4bc25b59a68be8804c06",
+    "src/kairo/common/managed_string_ops.cpp": "7fd1900708389a7b0da3376148a47232d4eb50954d299fc4bb7ac8ea765e346b",
     "tests/translator/StringOpsFixtures.cs": "3001a4c92f08d0a8f595b1b551a91263abebcf6cf90fa6b332802d6186b329c1",
-    "src/kairo/common/managed_string_ops.hpp": "48b397e67a19e92784a66aa8c6d8a3f51500b3ba848d8180571fd64759b3647e",
+    "src/kairo/common/managed_string_ops.hpp": "2440c6975df2f1d7607bbf16ae92ebc31903b4febfc992a02868a2f1d66594c0",
     "src/kairo/common/semantic_runtime.hpp": "37b696da925c898a56d26d81362a0305e83bc1640ce178275d891c3c6b76c8e1",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
     "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0"
   },
   "native_executable": {
     "path": "build/string-ops-fixtures/string-ops-fixtures.exe",
-    "sha256": "a7b471ee0645bda41314ad6d9a89faec2d1b7577899cfca94af3bd11197af161"
+    "sha256": "59f9248a24416c62c6321c68c08e7f69664849708a452d0dcaf3397fff3b6216"
   },
   "profile_differences": 411,
   "production_methods_promoted": 0,

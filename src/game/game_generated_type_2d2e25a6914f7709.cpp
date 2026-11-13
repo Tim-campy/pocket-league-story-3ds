@@ -298,8 +298,8 @@ return false;
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text_13885; return pls::cs::string_trim(cs_arg0); }());}); return pls::generated::cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
 return false;
 }
-} catch(const pls::cs::Exception& cs_caught_874) {auto cs_exception_874=pls::cs::capture_exception(cs_caught_874);
-if(pls::cs::exception_is(cs_exception_874,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_876) {auto cs_exception_876=pls::cs::capture_exception(cs_caught_876);
+if(pls::cs::exception_is(cs_exception_876,"System.Exception")) {{
 return false;
 }}
 else {throw;} }

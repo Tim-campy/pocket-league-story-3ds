@@ -10,6 +10,9 @@ String format_i32_hex(std::int32_t value,std::int32_t width,bool uppercase);
 String string_remove(const String& value,std::int32_t start);
 String string_remove(const String& value,std::int32_t start,std::int32_t count);
 std::int32_t int32_parse_hex_number(const String& value,bool allow_spaces=true);
+// Int32.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out r):
+// Mono returns false with r=0 for null, format and overflow failures.
+bool int32_try_parse_hex_number(const String& value,std::int32_t& result);
 float single_parse_legacy(const String& value);
 String string_replace(const String& value,const String& old_value,const String& replacement);
 String string_replace(const String& value,char16_t old_value,char16_t replacement);

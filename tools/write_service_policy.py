@@ -22,10 +22,12 @@ def typed_lowering(policy):
         'null Purchase':dict(kind='null'),
         'null string[][]':dict(kind='null'),
         'null string':dict(kind='null'),
+        'null AdMobView':dict(kind='null'),
         'empty string[]':dict(kind='empty_string_array'),
         'RestoreResult.Faild = 1':dict(kind='int_exact',value=1),
         'State.None = -1':dict(kind='int_exact',value=-1),
         'FilterLevel.None = 0':dict(kind='int_exact',value=0),
+        'closed by the user: 0':dict(kind='int_exact',value=0),
         'void; never enable transport':dict(kind='void'),
     }
     if identifier=='M:main.AppData.CgiRegist(System.String,System.String)':
@@ -112,6 +114,19 @@ def main():
         ('GetNotificationData','','empty string[]'),('GetNotificationFilter','','FilterLevel.None = 0')]:
         add('M:kairo.unity.native.KairoPlugin.'+name+('('+args+')' if args else ''),'constant',result)
     add('M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification','constant','false')
+    # Removed Android services (user decision 2026-11-13): no effect; no caller waits
+    # for a callback or state change (survey of reference/src, docs/design/services.md).
+    add('M:native.AppPlugin.ShowPurchaseLog(System.String,System.Int32,System.String,System.Boolean)','constant','closed by the user: 0',
+        reason='Removed Android purchase-log dialog; PurchaseLogView.Show clears the log only on 1')
+    add('M:native.AppPlugin.LaunchMailer(System.String,System.String)','constant','void',
+        reason='Removed Android mailer; FriendData.ActionSendMail continues as after the user backs out')
+    for name,result in [('Create','false'),('SetViewRect(System.Int32,System.Int32,System.Int32,System.Int32)','void'),
+        ('LoadUrl(System.String)','void'),('Dispose','void'),('Visible','false'),('SetVisible(System.Boolean)','void')]:
+        add('M:native.WebBoxPlugin.'+name,'constant',result,reason='Removed Android web view; main.WebBox has no caller in the game source')
+    # Ads removed: Canvas has no ad object (same contract as Canvas.UpdateAdMobView).
+    add('M:kairo.unity.ui.Canvas.GetAdMobView','constant','null AdMobView',reason='Ads removed; admobView_ is always null in the port')
+    # Device vibration: no vibrator on the PC or 3DS targets; platform leaf a Phase 3 design may replace.
+    add('M:kairo.unity.ui.Canvas.Vibrator(System.Int64)','constant','void',reason='No vibration hardware; KairoPlugin.Vibrator JNI leaf not called')
     # Notification family (removed): push registration id. Reached only when IsPushEnable() is true (KairoBase.cs:1675-1693).
     add('M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId','constant','null string',
         reason='Notifications removed: no GCM registration; JNI leaf not called')

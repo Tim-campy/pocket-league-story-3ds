@@ -22,7 +22,11 @@ def main():
     report=json.loads(report_file.read_text(encoding='utf-8-sig'))
     rejected=report['rejected_methods']
     expected_rejected={'M:LoweringFixtures.UnsupportedClosureGoto(System.Int32)','M:Synthetic.IRun.Run','M:Synthetic.ImplicitScope.NeverCalled(System.Int32)','M:Synthetic.AbstractBase.Read'}
+    # Deliberate negative control: an overridden generic virtual has no C++ lowering (no virtual templates).
+    generic_virtual={'M:LoweringFixtures.GenericVirtualOverridden(System.Int32)','M:Synthetic.GenericVirtualBase.Make``1','M:Synthetic.GenericVirtualDerived.Make``1'}
+    expected_rejected|=generic_virtual
     if set(rejected)!=expected_rejected:raise ValueError('Unexpected supported/unsupported fixture set: '+str(rejected))
+    if any(rejected[i]['reason']!='overridden generic virtual method not lowered' for i in generic_virtual):raise ValueError('Generic virtual negative control rejected for another reason: '+str({i:rejected[i] for i in generic_virtual}))
     emitted={m['id']for m in report['emitted_methods']}
     if not {'M:LoweringFixtures.ImplicitConstructorScope','M:Synthetic.ImplicitScope.#ctor'}<=emitted:raise ValueError('Implicit constructor inherited an unreachable method scope')
     subprocess.run([sys.executable,ROOT/'translator/test_portable.py','--report',report_file,'--generated',output,'--oracle',output/'source_oracle.cs','--folder',folder/'lowering-differential','--result',ROOT/'config/phase2-lowering-fixtures.json'],check=True,cwd=ROOT)

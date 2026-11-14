@@ -15,6 +15,9 @@
 #include "managed_exceptions.hpp"
 #include "pc_metrics.hpp"
 #include "diagnostic_keys.hpp"
+#if defined(PLS_DIAGNOSTIC_BUILD)
+#include "diagnostic_route.hpp"
+#endif
 #include "diagnostic_profile.hpp"
 #include "capture.hpp"
 #include "virtual_clock.hpp"
@@ -138,6 +141,22 @@ int main(int argc,char** argv){
         if(const auto* value=std::getenv("PLS_PC_TITLE_ANCHOR")){std::size_t used=0;anchor_frame=std::stoull(value,&used);if(value[used]!='\0'||anchor_frame==0||anchor_frame>pls::pc::max_scripted_key_frame)throw pls::cs::ArgumentOutOfRangeException();anchored=false;}
         std::uint64_t script_frame=0;
         if(const auto* value=std::getenv("PLS_PC_DISMISS_POPUPS_UNTIL")){std::size_t used=0;dismiss_until=std::stoull(value,&used);if(value[used]!='\0'||dismiss_until<300||dismiss_until>pls::pc::max_scripted_key_frame)throw pls::cs::ArgumentOutOfRangeException();}
+        // Condition-driven route (diagnostic only). Read-only UI snapshot from
+        // platform accessors at the end of each frame; no generated method is
+        // called, no managed object is allocated, the clock is not read.
+        std::unique_ptr<pls::pc::route::Runner> route;
+        if(const auto* path=std::getenv("PLS_PC_ROUTE"))route=std::make_unique<pls::pc::route::Runner>(pls::pc::route::load(path));
+        const bool ui_trace=std::getenv("PLS_PC_UI_TRACE")!=nullptr;
+        pls::pc::route::UiState ui_state;std::string ui_signature;std::uint64_t route_anchor=0;bool route_anchored=false;
+        auto capture_ui=[&](std::uint64_t frame){
+            ui_state.frame=frame;ui_state.stack.clear();
+            if(auto manager=app->GetFormManager()){const auto count=manager->GetFormsNum();
+                for(std::int32_t i=0;i<count;++i){auto form=manager->GetForm(i);if(!form)continue;
+                    auto left=form->GetLeftSoftLabel();auto right=form->GetRightSoftLabel();
+                    ui_state.stack.push_back({form->managed_type_name(),form->GetId(),form->GetProcessMode(),left.is_null()?std::string():left.utf8(),right.is_null()?std::string():right.utf8()});}}
+            {auto l=canvas->GetSoftLabelL();auto r=canvas->GetSoftLabelR();ui_state.soft_left=l.is_null()?std::string():l.utf8();ui_state.soft_right=r.is_null()?std::string():r.utf8();}
+            ui_state.text_panel=text_input->Active();pls::pc::route::derive(ui_state);
+        };
 #endif
         while(!app->IsTermination()&&!pls::kairo::host_finish_requested.load()){
             pls::pc::FrameClock timing(metrics.enabled());
@@ -152,6 +171,22 @@ int main(int argc,char** argv){
             else if(anchor_frame)++script_frame;
             if(!anchor_frame)script_frame=presented_frames;
             const std::uint64_t input_frame=anchored?script_frame:0;
+            if(route&&!route->finished()){
+                // Keys are logged with frames counted from the route's anchor
+                // (same line format the null/3DS replay builders read).
+                const auto route_frame=route_anchored?presented_frames-route_anchor:presented_frames;
+                auto action=route->step(ui_state);
+                std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);
+                if(action.anchor){route_anchored=true;route_anchor=presented_frames;pls::kairo::virtual_clock::rebase();std::cerr<<"PLS_PC_TITLE_ANCHOR="<<presented_frames<<'\n';}
+                if(!action.key.empty()){
+                    const auto& k=action.key;
+                    const auto code=k=="SELECT"?pls::kairo::Canvas::KEY_SELECT:k=="UP"?pls::kairo::Canvas::KEY_UP:k=="DOWN"?pls::kairo::Canvas::KEY_DOWN:k=="LEFT"?pls::kairo::Canvas::KEY_LEFT:k=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:k=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;
+                    canvas->KeyClick(code);std::cerr<<"PLS_PC_SCRIPTED_KEY_FRAME="<<route_frame<<':'<<k<<'\n';
+                }
+                if(action.step>=0)std::cerr<<"PLS_ROUTE_STEP={\"step\":"<<action.step<<",\"frame\":"<<presented_frames<<"}\n";
+                if(action.timed_out){std::cerr<<"PLS_ROUTE_TIMEOUT={\"frame\":"<<presented_frames<<",\"note\":\""<<pls::pc::route::json_escape(action.note)<<"\",\"state\":"<<pls::pc::route::to_line(ui_state)<<"}\n";pls::kairo::host_finish_requested=true;}
+                if(action.done){std::cerr<<"PLS_ROUTE_DONE="<<presented_frames<<'\n';pls::kairo::host_finish_requested=true;}
+            }
             if(dismiss_until&&input_frame>=300&&input_frame<=dismiss_until&&input_frame%18==0&&std::find(select_frames.begin(),select_frames.end(),input_frame)==select_frames.end()&&std::none_of(scripted_keys.begin(),scripted_keys.end(),[&](const auto&key){return key.frame==input_frame;})){
                 auto manager=app->GetFormManager();auto form=manager?manager->GetTopForm():nullptr;
                 // SubForm's original base ID is 4. No generated fields/flags
@@ -198,6 +233,10 @@ int main(int argc,char** argv){
             }
 #if defined(PLS_DIAGNOSTIC_BUILD)
             {auto profile=pls::diagnostic::end_frame();std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_FRAME_PROFILE={\"frame\":"<<(presented_frames+1)<<",\"ns\":["<<profile[0]<<','<<profile[1]<<','<<profile[2]<<','<<profile[3]<<"]}\n";}
+#endif
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            if(route||ui_trace){capture_ui(presented_frames+1);auto signature=pls::pc::route::signature(ui_state);
+                if(signature!=ui_signature){ui_signature=std::move(signature);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_UI_STATE="<<pls::pc::route::to_line(ui_state)<<'\n';}}
 #endif
             pls::kairo::UnityApplication::pace(frame_start);
             const auto sample=timing.finish();

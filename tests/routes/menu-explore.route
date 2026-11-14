@@ -1,0 +1,203 @@
+# Diagnostic route (no game data), generated layout: management menu, two levels.
+# Each main item i: open menu, move down i, enter, visit 5 sub-items (enter, then
+# back out to depth 3), then return to management (depth 1).
+anchor timeout=2400
+wait frames=104
+key SELECT
+wait frames=36
+key UP
+wait frames=24
+key SELECT
+wait form=GameForm label_right=* timeout=600
+# main item 0
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+dismiss until depth=1 timeout=300 optional
+# main item 1
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+key DOWN repeat=1 gap=10
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+dismiss until depth=1 timeout=300 optional
+# main item 2
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+key DOWN repeat=2 gap=10
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+dismiss until depth=1 timeout=300 optional
+# main item 3
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+key DOWN repeat=3 gap=10
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+dismiss until depth=1 timeout=300 optional
+# main item 4
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+key DOWN repeat=4 gap=10
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+dismiss until depth=1 timeout=300 optional
+# main item 5
+dismiss until depth=1 timeout=300 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+key DOWN repeat=5 gap=10
+wait frames=20
+key SELECT
+wait frames=40
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until depth=3 timeout=240 optional
+dismiss until depth=1 timeout=300 optional
+end

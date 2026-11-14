@@ -87,7 +87,10 @@ void gc_collect_as(GcTrigger trigger,const char* source);
 void gc_collect(std::int32_t generation){
     if(generation<0)throw ArgumentOutOfRangeException();
     char context[48];{std::lock_guard<std::mutex>lock(gc_event_mutex);std::memcpy(context,gc_explicit_context,sizeof(context));}
-    gc_collect_as(GcTrigger::explicit_call,context[0]?context:nullptr);
+    // Criterion 2 (user decision 2026-11-13): an explicit source collection
+    // inside a form Finish (e.g. JSystem.Gc in SubForm.Finish) is a transition.
+    const bool in_finish=std::strncmp(context,"Finish ",7)==0;
+    gc_collect_as(in_finish?GcTrigger::transition:GcTrigger::explicit_call,context[0]?context:nullptr);
 }
 void gc_context(const char* context){
     std::lock_guard<std::mutex>lock(gc_event_mutex);std::size_t i=0;

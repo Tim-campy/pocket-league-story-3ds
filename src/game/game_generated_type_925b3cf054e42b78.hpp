@@ -48,6 +48,10 @@ void cs_15b3a4a01f584c1b(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
 
 pls::cs::Ref<cs_925b3cf054e42b78> cs_fd047093624d8d65();
 
+void cs_ad48a6fa95fff7d9(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
+
+void cs_4d9b442f4896b0e7(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+
 void cs_6e4860eac11a2eaf(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
 
 void cs_ee25274aa8cb5d52(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,bool v_take);

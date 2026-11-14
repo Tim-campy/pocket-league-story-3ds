@@ -29,6 +29,8 @@ pls::cs::Ref<cs_18d5b680efad7752> cs_424a1f3830f8b281();
 
 pls::cs::Ref<cs_18d5b680efad7752> cs_c97cedff510ba4db();
 
+std::int32_t cs_6fd89426aaa425c1();
+
 pls::cs::String cs_42eaa879561f279c();
 
 void cs_bec22bc6a552aef8(bool v_value);

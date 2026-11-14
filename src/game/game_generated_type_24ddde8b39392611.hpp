@@ -23,4 +23,6 @@ pls::cs::Ref<cs_24ddde8b39392611> cs_67a7684996012e79(pls::cs::String v_title);
 void cs_67a7684996012e79_init(pls::cs::Ref<cs_24ddde8b39392611> cs_this,pls::cs::String v_title);
 
 void cs_5ff6954fb3a61a02(pls::cs::Ref<cs_24ddde8b39392611> cs_this,std::int32_t v_num,pls::cs::String v_text,bool v_log);
+
+void cs_6efbb6e7157ce9b0(pls::cs::Ref<cs_24ddde8b39392611> cs_this);
 }

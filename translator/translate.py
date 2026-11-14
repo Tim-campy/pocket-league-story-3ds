@@ -134,7 +134,13 @@ def main():
         request['external_methods'].update({
             'M:kairo.unity.native.KairoPlugin.StartFepPanel(System.String,System.String,System.Int32,System.String,System.String,System.Int32)':'pls::kairo::start_text_panel',
             'M:kairo.unity.native.KairoPlugin.IsFepPanelFinish':'pls::kairo::text_panel_finished',
-            'M:kairo.unity.native.KairoPlugin.GetFepPanelResult':'pls::kairo::text_panel_result'})
+            'M:kairo.unity.native.KairoPlugin.GetFepPanelResult':'pls::kairo::text_panel_result',
+            # Phase 3 design pending (docs/design/pending-text-and-language.md): bodies bound to a
+            # platform interface whose PC/null default the 3DS design replaces.
+            'M:kairo.unity.native.KairoPlugin.ShowFepPanel(System.String,System.String,System.Int32,System.String,System.String,System.Int32)':'pls::kairo::show_text_panel',
+            'M:kairo.unity.native.KairoPlugin.StartLanguagePanel(System.String[],System.Int32,System.String,System.Int32)':'pls::kairo::start_language_panel',
+            'M:kairo.unity.native.KairoPlugin.IsLanguagePanelFinish':'pls::kairo::language_panel_finished',
+            'M:kairo.unity.native.KairoPlugin.GetLanguagePanelResult':'pls::kairo::language_panel_result'})
         request['source_native_helpers']+=['M:kairo.unity.ui.Graphics.DrawText(System.String,System.Single,System.Single,System.Single,System.Int32)',
             'M:kairo.unity.ui.Graphics.DrawText(kairo.unity.ui.TextFormat,System.String,System.Single,System.Single,System.Single,System.Int32)']
         request['external_methods'].update({
@@ -258,6 +264,7 @@ def main():
             'M:kairo.unity.ui.Image.Load(System.Byte[],kairo.unity.ui.Image.Format,kairo.unity.ui.Image.Filter)':'native',
             'M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)':'pls::kairo::native_plugin_init',
             'M:UnityEngine.Application.set_targetFrameRate(System.Int32)':'pls::kairo::UnityApplication::set_targetFrameRate',
+            'M:UnityEngine.Application.get_platform':'pls::kairo::UnityApplication::get_platform',
             'M:UnityEngine.QualitySettings.set_vSyncCount(System.Int32)':'pls::kairo::QualitySettings::set_vSyncCount'})
         request['external_types']['T:UnityEngine.WWW']='pls::kairo::OfflineWebRequest'
         request['native_includes'].append('offline_http.hpp')

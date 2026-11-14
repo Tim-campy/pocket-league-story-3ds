@@ -162,3 +162,22 @@ com contrato de `ToString` (3).
   `ConnectPaymemtMoney`), concatenações em `ToString` de depuração
   (`TouchEvent`, `GameDataRecord`) e `BillingForm._update`,
   `String.Concat(object[])` em `SpForm.Run`.
+
+## 10. Quinta etapa (2026-11-14, decisões da rodada)
+
+- **Serviços Android removidos:** `AppPlugin.LaunchMailer`, `ShowPurchaseLog`
+  (0, "fechado pelo usuário") e `WebBoxPlugin.*`; o inicializador estático
+  das pontes Java não é emitido para corpos de política.
+- **Plataforma:** `Application.platform` = Android; `Canvas.GetAdMobView`
+  nulo; `Canvas.Vibrator` sem efeito.
+- **Painéis (Fase 3):** `ShowFepPanel` e o painel de idioma ligados a uma
+  interface (`text_input.hpp`) cujo padrão no PC/nulo é: painel síncrono
+  devolve "cancelado"; idioma termina já com o índice atual.
+- **Construções novas:** `String.Concat(params object[])` expandido;
+  `a ?? b` em strings; `s += objeto`. Diferencial 1.547/1.547.
+- Resultado: **1.818 emitidos, 36 rejeitados, 9 slots**. Restam: `new T()`
+  em `BillingManager.Init/Load<T>` (6 slots; necessário para carregar o
+  estado de cobrança do save) e o painel síncrono `kfw/panel.MainPanel.Show`
+  (3 slots), que depende de um `IApplication.Sleep` fiel (o original chama
+  `AdjustSurfaceLayout` a cada 50 ms; a plataforma só dorme). Nenhum chamador
+  do jogo usa o painel síncrono.

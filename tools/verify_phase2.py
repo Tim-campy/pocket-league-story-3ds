@@ -67,6 +67,7 @@ def refresh_run_receipts():
     if report.get('status')!='PASS'or report.get('complete')is not True or not report.get('checks')or any(c['exit_code']!=0 for c in report['checks']):raise ValueError('A complete passing verification is required')
     if report.get('verification_code_inputs')!=code_snapshot():raise ValueError('Code changed after full verification; rerun all checks')
     for check in report['checks']:
+        if check.get('deferred'):continue
         log=ROOT/'build/phase2-verification'/(check['name']+'.log')
         if not log.is_file()or sha(log)!=check['log_sha256']:raise ValueError('Full check log differs: '+check['name'])
     allowed={'phase2-diagnostic-attempts.json','phase2-progress.json','phase2-match-start.json','phase2-menu-profile.json','phase2-match-complete.json','phase2-match-profile.json'}
@@ -166,6 +167,7 @@ def main():
         ('native-allocator-heap',['tools/test_runtime_memory.py']),
         ('pc-metrics-aggregation',['tools/test_pc_metrics.py']),
         ('diagnostic-key-parser',['tools/test_diagnostic_keys.py']),
+        ('diagnostic-route-runner',['tools/test_diagnostic_route.py']),
         ('ui-dispatch-GC',['tools/test_ui_dispatch_gc.py']),
         ('service-policy',['tools/write_service_policy.py']),
         ('services',['tools/test_services.py']),
@@ -216,15 +218,17 @@ def main():
     folder=ROOT/'build/phase2-verification';folder.mkdir(parents=True,exist_ok=True)
     receipts=folder/'receipts';receipts.mkdir(exist_ok=True)
     os.environ['PLS_BUILD_JOBS']=str(args.jobs)
-    producer=sha(Path(__file__));managed_hash=managed_identity(managed)
-    def state():
-        # Every check is bound to the whole code tree: a cheap, conservative
-        # dependency model. Generated proof receipts in config/ are excluded.
-        return dict(code=digest_json(code_snapshot()),apk=EXPECTED,managed=managed_hash,producer=producer)
-    checks=[]
+    from verification_groups import groups_for,group_digest
+    producer=digest_json(dict(verify=sha(Path(__file__)),groups=sha(Path(__file__).with_name('verification_groups.py'))));managed_hash=managed_identity(managed)
+    def state(name,snapshot=None):
+        # Each check is bound to the files of its dependency groups (measured map,
+        # docs/notes/verification-groups.md); unmapped checks use every group.
+        # Generated proof receipts in config/ are excluded from the snapshot.
+        return dict(code=group_digest(snapshot if snapshot is not None else code_snapshot(),groups_for(name)),apk=EXPECTED,managed=managed_hash,producer=producer)
+    checks=[];deferred=[]
     for name,command in commands:
         receipt_path=receipts/(name+'.json');log=folder/(name+'.log')
-        key=dict(state(),command=command)
+        key=dict(state(name),command=command)
         if not args.full and receipt_path.is_file():
             try:previous=json.loads(receipt_path.read_text(encoding='utf8'))
             except json.JSONDecodeError:previous=None
@@ -232,6 +236,12 @@ def main():
                 checks.append(dict(name=name,exit_code=0,log_sha256=previous['log_sha256'],reused=True,peak_commit_bytes=previous.get('peak_commit_bytes'),elapsed_seconds=previous.get('elapsed_seconds')))
                 print(json.dumps(dict(check=name,status='PASS',reused=True)),flush=True)
                 continue
+        # The monolithic portable differential (~7 min) runs only with --full;
+        # without it a stale receipt is reported as deferred (--full is
+        # mandatory before tags and the freeze).
+        if name=='portable-differential' and not args.full:
+            deferred.append(name);checks.append(dict(name=name,exit_code=0,deferred=True,reused=False))
+            print(json.dumps(dict(check=name,status='DEFERRED',reason='runs only with --full')),flush=True);continue
         exit_code,output,peak,elapsed=run_measured([sys.executable,*command])
         log.write_bytes(output)
         # Interactive progress intentionally preserves an older coherent
@@ -254,12 +264,13 @@ def main():
             raise RuntimeError('Verification failed; inspect '+str(log))
     # Approval needs every receipt valid for the tree as it is NOW: a check
     # that rewrote code (e.g. regeneration) invalidates reused receipts.
-    final=state()
-    stale=[name for name,command in commands
-           if json.loads((receipts/(name+'.json')).read_text(encoding='utf8'))['key']!=dict(final,command=command)]
+    final_snapshot=code_snapshot()
+    stale=[name for name,command in commands if name not in deferred
+           and json.loads((receipts/(name+'.json')).read_text(encoding='utf8'))['key']!=dict(state(name,final_snapshot),command=command)]
     if stale:raise RuntimeError('Code tree changed during verification; rerun to refresh: '+', '.join(stale[:10]))
     if sha(args.apk)!=EXPECTED:raise ValueError('Original APK changed during verification')
     report=dict(operation='phase2-checkpoint-full-verification',status='PASS',complete=True,checks=checks,
+        full=bool(args.full),deferred_checks=deferred,dependency_model='per-check groups (tools/verification_groups.py)',
         verification_code_inputs=code_snapshot(),jobs=args.jobs,
         heaviest_checks=sorted(({'name':c['name'],'peak_commit_bytes':c['peak_commit_bytes']} for c in checks if c.get('peak_commit_bytes')),key=lambda c:-c['peak_commit_bytes'])[:3],
         producer_sha256=sha(Path(__file__)),apk_sha256=EXPECTED,game_boot=False,

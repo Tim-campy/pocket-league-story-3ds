@@ -69,6 +69,8 @@ void cs_008d18ec9ef5cd90(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 
 bool cs_305dfcfb28ab9c87(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 
+void cs_b6164ecc2daf6f3a(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
+
 void cs_b858b36069a76eb9(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this);
 
 void cs_70a4bf233f4613fb(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,std::int32_t v_type,std::int32_t v_value);

@@ -106,3 +106,18 @@ formulário X"; estados `política` e `morto` ainda não existem no livro-razão
 navegação que confira a tela (ou um roteiro escrito tela a tela com as
 capturas); o modelo "entrar/voltar/descer" às cegas atinge só o primeiro
 nível. Saves úteis: 31 (antes da 1ª partida), 50 (gestão após a partida).
+
+## Roteiros com condições (2026-11-14)
+
+Gancho somente leitura e executor por condições no build de diagnóstico
+(`src/main/diagnostic_route.hpp`; projeto em
+`docs/notes/route-runner-design.md`; teste isolado 38 asserções). Roteiros em
+`tests/routes/` (só teclas e condições; nenhum dado do jogo).
+
+| Tentativa | Roteiro | Resultado |
+|---|---|---|
+| 55 | `menu-trace` (1ª versão) | carga até `GameForm` em 183 frames; esperou rótulo por texto (os rótulos são o texto japonês original) e esgotou o tempo |
+| 56 | `menu-trace` | concluído no frame 912; estrutura: Menu = `SubForm` profundidade 2; item → sub-janela profundidade 3 |
+| 57 | `menu-explore` (6 itens × 5 subitens, 2 níveis, gerado) | sem lacuna de tradução; parou no passo 162 de 203 pelo limite de 480 s |
+
+Cobertura após 55–57: **809 métodos com execução comprovada** (era 806).

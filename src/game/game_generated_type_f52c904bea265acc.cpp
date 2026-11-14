@@ -106,8 +106,8 @@ if (([&]() { auto cs_left = pls::cs::box(cs_b120e26ea937bc88_value); auto cs_rig
 }
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_f52c904bea265acc>>(cs_b120e26ea937bc88_value); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->Draw(cs_arg0); }());
 ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_f52c904bea265acc>>(cs_b120e26ea937bc88_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->Update(); }());
-} catch(const pls::cs::Exception& cs_caught_848) {auto cs_exception_848=pls::cs::capture_exception(cs_caught_848);
-if(pls::cs::exception_is(cs_exception_848,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_864) {auto cs_exception_864=pls::cs::capture_exception(cs_caught_864);
+if(pls::cs::exception_is(cs_exception_864,"System.Exception")) {{
 
 }}
 else {throw;} }
@@ -194,8 +194,8 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool 
 try {
 ([&]() -> void { cs_012506043193cb2a(); }());
 ([&]() -> void { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(std::uint64_t(0x32ull)); cs_26244a61d0d2e16c(cs_arg0); }());
-} catch(const pls::cs::Exception& cs_caught_849) {auto cs_exception_849=pls::cs::capture_exception(cs_caught_849);
-if(pls::cs::exception_is(cs_exception_849,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_865) {auto cs_exception_865=pls::cs::capture_exception(cs_caught_865);
+if(pls::cs::exception_is(cs_exception_865,"System.Exception")) {{
 
 }}
 else {throw;} }

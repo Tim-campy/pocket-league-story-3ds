@@ -32,6 +32,8 @@ void cs_e3269488b9d47182_init(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
 
 bool cs_dabb624ad9818668(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::String& v_message);
 
+bool cs_fbe88b493ebd35c6(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
+
 pls::cs::Ref<cs_a42daea58251b089> cs_9e9180120f7b6e3a(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
 
 bool cs_0c2ef3da56499922(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
@@ -57,6 +59,10 @@ bool cs_4e71f3b66d66c79d(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
 pls::cs::Ref<cs_a42daea58251b089> cs_87e0519a7f6ab5fc(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::String v_productId);
 
 void cs_6fb7b668d4a70a0f(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
+
+void cs_a616eb249ab21a38(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
+
+void cs_bd86849fa66817e5(pls::cs::Ref<cs_fa01867c9c048464> cs_this);
 
 pls::cs::Ref<cs_51fd12cb14e568f9> cs_3d1833af62584b62(pls::cs::Ref<cs_fa01867c9c048464> cs_this,bool v_querySkuDetails,pls::cs::List<pls::cs::String> v_moreItemSkus,pls::cs::List<pls::cs::String> v_moreSubsSkus);
 

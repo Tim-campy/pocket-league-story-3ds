@@ -1055,7 +1055,7 @@ void cs_3e3974676c651042(pls::cs::Ref<cs_2ef6641b828546ac> cs_this,std::int32_t 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.Player.AddCommandChangeState(System.Int32)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ef6641b828546ac>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.AddCommandChangeState(System.Int32):66848",([&](){auto cs_initial_array_744=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_744.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));cs_initial_array_744.at(1)=v_state;return cs_initial_array_744;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_134f8de9da93b052(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ef6641b828546ac>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.AddCommandChangeState(System.Int32):66848",([&](){auto cs_initial_array_746=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_746.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));cs_initial_array_746.at(1)=v_state;return cs_initial_array_746;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_134f8de9da93b052(cs_receiver,cs_arg0); }());
 }
 }
 }
@@ -1066,7 +1066,7 @@ void cs_432d397263d5992b(pls::cs::Ref<cs_2ef6641b828546ac> cs_this,std::int32_t 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.Player.AddCommandFlag(System.Int32)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ef6641b828546ac>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.AddCommandFlag(System.Int32):67125",([&](){auto cs_initial_array_745=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_745.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull));cs_initial_array_745.at(1)=v_flag;return cs_initial_array_745;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_134f8de9da93b052(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ef6641b828546ac>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.AddCommandFlag(System.Int32):67125",([&](){auto cs_initial_array_747=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_747.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull));cs_initial_array_747.at(1)=v_flag;return cs_initial_array_747;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_134f8de9da93b052(cs_receiver,cs_arg0); }());
 }
 }
 }
@@ -1132,7 +1132,7 @@ void cs_3c75fe40c81a7aad(pls::cs::Ref<cs_2ef6641b828546ac> cs_this,std::int32_t 
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.Player.AddCommandMove(System.Int32)",game);
 {
-([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ef6641b828546ac>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.AddCommandMove(System.Int32):66391",([&](){auto cs_initial_array_746=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_746.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));cs_initial_array_746.at(1)=v_moveNode_id;return cs_initial_array_746;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_134f8de9da93b052(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ef6641b828546ac>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.AddCommandMove(System.Int32):66391",([&](){auto cs_initial_array_748=pls::cs::Array<std::int32_t>::make(2);cs_initial_array_748.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));cs_initial_array_748.at(1)=v_moveNode_id;return cs_initial_array_748;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_134f8de9da93b052(cs_receiver,cs_arg0); }());
 }
 }
 }

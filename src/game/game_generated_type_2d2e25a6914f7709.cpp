@@ -1,4 +1,5 @@
 // GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
+#include "game_generated_type_0aa80b0fbeb1b2af.hpp"
 #include "game_generated_type_1406fd70a8ee6f2f.hpp"
 #include "game_generated_type_22115ea4236d0eaa.hpp"
 #include "game_generated_type_2d2e25a6914f7709.hpp"
@@ -50,7 +51,7 @@ void cs_init_2d2e25a6914f7709(){static pls::cs::GcRootProvider roots([](const pl
 cs_4d39e0560b934a4f_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveP_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1538",pls::cs::Array<pls::cs::Ref<pls::generated::cs_c20c229ea63037d8>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));});
 cs_e2d16fab426c5d2f_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveI_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1608",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x6ull))));});
 cs_2f2e8e46132e7fcc_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveL_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1668",pls::cs::Array<std::int64_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));});
-cs_1633c4562f4c40eb_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveS_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1731",([&](){auto cs_initial_array_829=pls::cs::Array<pls::cs::String>::make(1);cs_initial_array_829.at(0)=pls::cs::String(u"");return cs_initial_array_829;}()));});
+cs_1633c4562f4c40eb_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveS_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1731",([&](){auto cs_initial_array_818=pls::cs::Array<pls::cs::String>::make(1);cs_initial_array_818.at(0)=pls::cs::String(u"");return cs_initial_array_818;}()));});
 cs_01b07286e746610e_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveB_",[&](){return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::uint8_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1839",pls::assets::baked_array<std::int32_t>("6e365c19c558a914ef00a7a1b5233f61b516f4a502c6ac57d0fecabb75ac07cf")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::uint8_t>>>(cs_arg0); }());});});
 
 });}
@@ -86,6 +87,15 @@ cs_this->cs_ab8cb0b69ebcac70 = pls::cs::cast_integral<std::int64_t>(std::uint64_
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendData.#ctor",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.ui.FriendData.#ctor:2500",([&]() -> pls::cs::Ref<pls::generated::cs_c20c229ea63037d8> { pls::cs::Array<pls::cs::Ref<pls::generated::cs_c20c229ea63037d8>> cs_arg0 = cs_4d39e0560b934a4f(); pls::cs::Array<std::int32_t> cs_arg1 = cs_e2d16fab426c5d2f(); pls::cs::Array<std::int64_t> cs_arg2 = cs_2f2e8e46132e7fcc(); pls::cs::Array<pls::cs::String> cs_arg3 = cs_1633c4562f4c40eb(); pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_arg4 = cs_01b07286e746610e(); return pls::generated::cs_1ec84b4dfcd94394(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }())); pls::game::cs_require(cs_target)->cs_dc19769b18c674e0 = cs_value; return cs_value; }());
+}
+}
+}
+
+// M:system.friend.ui.FriendData.ActionSendMail(System.String,System.String)
+void cs_7d659fe0cb1d3eac(pls::cs::String v_subject,pls::cs::String v_text) { cs_init_2d2e25a6914f7709();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendData.ActionSendMail(System.String,System.String)",game);
+{
+([&]() -> void { pls::cs::String cs_arg0 = v_subject; pls::cs::String cs_arg1 = v_text; cs_364ba559501338c9(cs_arg0,cs_arg1); }());
 }
 }
 }
@@ -144,8 +154,8 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_265901ac3e38e5a5; }());
-} catch(const pls::cs::Exception& cs_caught_888) {auto cs_exception_888=pls::cs::capture_exception(cs_caught_888);
-if(pls::cs::exception_is(cs_exception_888,"System.Exception")) {auto v_ex_6677=cs_exception_888;{
+} catch(const pls::cs::Exception& cs_caught_890) {auto cs_exception_890=pls::cs::capture_exception(cs_caught_890);
+if(pls::cs::exception_is(cs_exception_890,"System.Exception")) {auto v_ex_6677=cs_exception_890;{
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_265901ac3e38e5a5; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_54587d7da8ff8dbc(cs_receiver); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c8c9d3daa8567fa6; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_54587d7da8ff8dbc(cs_receiver); }());});
 pls::cs::throw_exception(v_ex_6677);
@@ -434,8 +444,8 @@ return false;
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text_13885; return pls::cs::string_trim(cs_arg0); }());}); return pls::generated::cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
 return false;
 }
-} catch(const pls::cs::Exception& cs_caught_883) {auto cs_exception_883=pls::cs::capture_exception(cs_caught_883);
-if(pls::cs::exception_is(cs_exception_883,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_888) {auto cs_exception_888=pls::cs::capture_exception(cs_caught_888);
+if(pls::cs::exception_is(cs_exception_888,"System.Exception")) {{
 return false;
 }}
 else {throw;} }
@@ -602,8 +612,8 @@ if ((!(v_flag2_10915))) {
 }
 pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_11274 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_11274); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_3481915358ac0fff(); }());
-} catch(const pls::cs::Exception& cs_caught_887) {auto cs_exception_887=pls::cs::capture_exception(cs_caught_887);
-if(pls::cs::exception_is(cs_exception_887,"System.Exception")) {auto v_ex_11345=cs_exception_887;{
+} catch(const pls::cs::Exception& cs_caught_889) {auto cs_exception_889=pls::cs::capture_exception(cs_caught_889);
+if(pls::cs::exception_is(cs_exception_889,"System.Exception")) {auto v_ex_11345=cs_exception_889;{
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_ex_11345; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 }
@@ -705,8 +715,8 @@ bool cs_dfcfbfdb98c1e305(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this) { cs_init_2d
 pls::cs::Ref<cs_9465f7541f51c47e> v_friend_11523 = pls::cs::Ref<cs_9465f7541f51c47e>{};
 try {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_9465f7541f51c47e> { auto cs_receiver = static_cast<pls::cs::Ref<cs_2d2e25a6914f7709>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3f1c65ebd05b652a(cs_receiver); }()); v_friend_11523 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_908) {auto cs_exception_908=pls::cs::capture_exception(cs_caught_908);
-if(pls::cs::exception_is(cs_exception_908,"System.Exception")) {auto v_t_11596=cs_exception_908;{
+} catch(const pls::cs::Exception& cs_caught_921) {auto cs_exception_921=pls::cs::capture_exception(cs_caught_921);
+if(pls::cs::exception_is(cs_exception_921,"System.Exception")) {auto v_t_11596=cs_exception_921;{
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_t_11596; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 }

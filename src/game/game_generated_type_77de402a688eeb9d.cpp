@@ -420,6 +420,19 @@ return pls::source_allocations::completed("concat_operator","src/KairoLibrary/ka
 }
 }
 
+// M:kairo.unity.io.HttpObject.PopErrorCode
+std::int32_t cs_82fd3d9e6535f380(pls::cs::Ref<cs_77de402a688eeb9d> cs_this) { cs_init_77de402a688eeb9d();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.HttpObject.PopErrorCode",kairo);
+{
+std::int32_t v_errorCode_8655 = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_77de402a688eeb9d>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_bc4c613a89384b31(cs_receiver); }());
+([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::game::cs_require(cs_target)->cs_32388247d17bb567 = cs_value; return cs_value; }());
+return v_errorCode_8655;
+}
+}
+}
+}
+
 // M:kairo.unity.io.HttpObject.PopErrorText
 pls::cs::String cs_0c1c941d76211aca(pls::cs::Ref<cs_77de402a688eeb9d> cs_this) { cs_init_77de402a688eeb9d();
 { if(!cs_this)throw pls::cs::NullReferenceException();

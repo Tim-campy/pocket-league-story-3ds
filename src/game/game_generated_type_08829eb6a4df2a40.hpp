@@ -40,5 +40,7 @@ pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_bb154ea958b26a29(pls::cs::Ref
 
 pls::cs::Ref<cs_08829eb6a4df2a40> cs_aaf24b850afadd84();
 
+void cs_f69ec435bbd73998(pls::cs::Ref<cs_08829eb6a4df2a40> cs_this);
+
 void cs_9194ae34030bef1a(pls::cs::Ref<cs_08829eb6a4df2a40> cs_this,pls::cs::Ref<cs_feb7ae74aa59a27c> v_task);
 }

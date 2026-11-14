@@ -39,6 +39,8 @@ void cs_f93cc86620424e6c(pls::cs::Array<std::uint8_t> v_data);
 
 pls::cs::String cs_334563e946ad4962(pls::cs::String v_text,pls::cs::String v_arg);
 
+void cs_bf98c676cfdc6f32(bool v_japanese,std::int32_t v_version,pls::cs::String& v_file,pls::cs::String& v_data);
+
 bool cs_1acec610f93846f1(pls::cs::String v_file,pls::cs::Array<std::uint8_t> v_data,bool v_save);
 
 void cs_45076861cf1dc76f(pls::cs::Array<pls::cs::Array<pls::cs::String>> v_softlabelTable);

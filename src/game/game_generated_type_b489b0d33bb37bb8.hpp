@@ -76,6 +76,10 @@ void cs_d710b4eaf3ab212a_init(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 void cs_b70446c7450e6993(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_type,pls::cs::String v_name,std::int32_t v_up,bool v_save);
 
+void cs_715865c4f62161af(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_type,pls::cs::String v_name);
+
+bool cs_ea29fe1b69e442bc(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_product_id,pls::cs::String v_order_code,pls::cs::String v_purchaseToken,std::int32_t v_amount,std::int32_t v_action,bool v_async);
+
 pls::cs::Array<pls::cs::String> cs_d25d214fdb748da9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_userid,pls::cs::String v_c,pls::cs::String v_pkg,pls::cs::String v_r,pls::cs::Array<std::uint8_t> v_signature);
 
 bool cs_f13bfb412c6bef66(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_bit);
@@ -95,6 +99,8 @@ pls::cs::Array<std::uint8_t> cs_c77ff3eb49370828(pls::cs::String v_cgi,pls::cs::
 pls::cs::Array<std::uint8_t> cs_f1aa1aebdc918786(pls::cs::String v_cgi);
 
 void cs_6111a681581cbed5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
+void cs_dfa1ec7a43208754(pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,std::int32_t v_count,std::int32_t v_day);
 
 void cs_a6a3a2dac688088b(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
 
@@ -116,6 +122,12 @@ pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_093af82d1ebe2c52(pls::cs::R
 
 pls::cs::Array<pls::cs::String> cs_51215d437b3290df(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_pw);
 
+bool cs_9cddf9fb0bfb3a5c(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_file,std::int32_t v_ver,std::int32_t v_hash);
+
+void cs_5dddcc5560debce0(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_file,std::int32_t v_ver,std::int32_t v_hash,pls::cs::String v_data);
+
+void cs_a2af63e3dfb449f0(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_file);
+
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_867838439237eaa5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_files);
 
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_8f0a63baa42add5b(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_time);
@@ -123,6 +135,8 @@ pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_8f0a63baa42add5b(pls::cs::Ref<cs
 bool cs_8c83b0e389fd09c4(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enforce,bool v_retry);
 
 void cs_748a5ed43677ac51(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_gcmId);
+
+std::int32_t cs_9b4d30ba65e7cbcf(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_mode,pls::cs::List<pls::cs::Ref<cs_8e2bf0f8fe011785>> v_paymemtListData,bool v_async);
 
 pls::cs::String cs_6d911e9b0dc23922(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_get);
 
@@ -148,6 +162,8 @@ std::int32_t cs_033269c53e74ac43(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 pls::cs::String cs_f878e2def0687b14(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
+std::int32_t cs_729b05919a633345(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
 pls::cs::String cs_923493c18d90485c();
 
 pls::cs::String cs_87f9285131d0cba9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
@@ -167,6 +183,8 @@ bool cs_09868bc9a4810065(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 void cs_b2a7adc10d3ecb29(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 pls::cs::Array<cs_c87dc3d2d0f9440a> cs_bf2fb5b5178771c9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Array<std::uint8_t> v_data,std::int32_t& v_date);
+
+pls::cs::String cs_ddbd7d5d846c75d2(pls::cs::String v_query,std::int32_t v_param);
 
 pls::cs::String cs_e458c0b11b9d98e1(pls::cs::String v_query,pls::cs::String v_param);
 

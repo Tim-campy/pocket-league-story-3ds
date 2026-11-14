@@ -58,6 +58,14 @@ sealed partial class Lowerer {
     static Dictionary<string,string> oracleExternalMethods=new();
     static Dictionary<string,string> externalSlots=new();
     static HashSet<string> externalCompleteBases=new();
+    // Closed world: generic virtual methods that some source type overrides.
+    // C++ has no virtual templates, so only a never-overridden generic virtual
+    // is lowered (as a direct, non-virtual call).
+    static HashSet<string> genericVirtualOverrides=new();
+    // Method type parameters ("method id|ordinal") whose `new T()` needs a
+    // concrete class; the compile receipt instantiates them with the class constraint.
+    static HashSet<string> newInstanceParameters=new();
+    readonly Dictionary<string,HashSet<string>> newInstanceConstructors=new();
     readonly Dictionary<string,string> externalMethods;
     readonly Dictionary<string,string> externalFields;
     readonly Request request;
@@ -159,6 +167,7 @@ sealed partial class Lowerer {
         oracleExternalMethods=request?.oracle_external_methods??new();
         externalTypes=request?.external_types??new();externalValueTypes=request?.external_value_types??new();externalMethods=request?.external_methods??new();externalFields=request?.external_fields??new();
         externalSlots=request?.external_slots??new();externalCompleteBases=new(request?.external_complete_bases??Array.Empty<string>());
+        genericVirtualOverrides=new();newInstanceParameters=new();
         foreach(var id in this.request.shared_fields){
             var field=DocumentationCommentId.GetSymbolsForDeclarationId(id,c).OfType<IFieldSymbol>().SingleOrDefault();
             if(field==null||field.IsStatic||field.IsConst||field.IsReadOnly||field.ContainingType.IsValueType||field.DeclaringSyntaxReferences.Length==0)throw new InvalidOperationException("Shared field policy requires a mutable source instance field in a reference class: "+id);
@@ -169,6 +178,7 @@ sealed partial class Lowerer {
             foreach(var d in tree.GetRoot().DescendantNodes().OfType<BaseMethodDeclarationSyntax>()) {
                 var s=m.GetDeclaredSymbol(d) as IMethodSymbol; if(s==null||s.MethodKind==MethodKind.StaticConstructor)continue;
                 var id=Id(s); methods[id]=s;syntax[id]=d;
+                for(var overridden=s.IsOverride?s.OverriddenMethod:null;overridden!=null;overridden=overridden.OverriddenMethod)if(overridden.IsGenericMethod)genericVirtualOverrides.Add(Id(overridden));
             }
             foreach(var d in tree.GetRoot().DescendantNodes().OfType<BasePropertyDeclarationSyntax>()) {
                 if(m.GetDeclaredSymbol(d) is not IPropertySymbol property)continue;
@@ -203,12 +213,18 @@ sealed partial class Lowerer {
         return type.FindImplementationForInterfaceMember(member) as IMethodSymbol;
     }
     static IEnumerable<string> MethodSlots(IMethodSymbol method){
-        var slots=new HashSet<string>();if(method.IsVirtual||method.IsOverride||method.IsAbstract)slots.Add(Slot(method));
+        var slots=new HashSet<string>();if((method.IsVirtual||method.IsOverride||method.IsAbstract)&&!method.IsGenericMethod)slots.Add(Slot(method));
         foreach(var iface in method.ContainingType.AllInterfaces.Where(t=>t.DeclaringSyntaxReferences.Length!=0))foreach(var member in InterfaceMethods(iface))if(InterfaceImplementation(method.ContainingType,member) is IMethodSymbol implementation&&SymbolEqualityComparer.Default.Equals(implementation.OriginalDefinition,method.OriginalDefinition))slots.Add(Slot(member));
         return slots;
     }
-    static string ConcreteCpp(ITypeParameterSymbol parameter)=>parameter.ContainingSymbol is IMethodSymbol m&&m.Name=="MakeArray"&&m.ContainingType.ToDisplayString()=="java.util.JTool"?"pls::cs::Array<pls::cs::Array<std::uint8_t>>":"std::int32_t";
-    static string ConcreteCs(ITypeParameterSymbol parameter)=>parameter.ContainingSymbol is IMethodSymbol m&&m.Name=="MakeArray"&&m.ContainingType.ToDisplayString()=="java.util.JTool"?"byte[][]":"int";
+    // A generic virtual method has no C++ slot (no virtual templates). It is
+    // callable only when no source type overrides it: then dispatch is direct.
+    static bool DirectGenericVirtual(IMethodSymbol method)=>method.IsGenericMethod&&method.IsVirtual&&!method.IsOverride&&!method.IsAbstract&&!genericVirtualOverrides.Contains(Id(method));
+    static bool UnloweredGenericVirtual(IMethodSymbol method)=>method.IsGenericMethod&&(method.IsVirtual||method.IsOverride||method.IsAbstract)&&!DirectGenericVirtual(method);
+    static string ParameterKey(ITypeParameterSymbol parameter)=>Id(parameter.ContainingSymbol)+"|"+parameter.Ordinal;
+    static INamedTypeSymbol? NewConstraintClass(ITypeParameterSymbol parameter)=>newInstanceParameters.Contains(ParameterKey(parameter))?parameter.ConstraintTypes.OfType<INamedTypeSymbol>().FirstOrDefault(t=>t.TypeKind==TypeKind.Class):null;
+    static string ConcreteCpp(ITypeParameterSymbol parameter)=>NewConstraintClass(parameter) is INamedTypeSymbol constraint?TypeName(constraint):parameter.ContainingSymbol is IMethodSymbol m&&m.Name=="MakeArray"&&m.ContainingType.ToDisplayString()=="java.util.JTool"?"pls::cs::Array<pls::cs::Array<std::uint8_t>>":"std::int32_t";
+    static string ConcreteCs(ITypeParameterSymbol parameter)=>NewConstraintClass(parameter) is INamedTypeSymbol constraint?constraint.ToDisplayString():parameter.ContainingSymbol is IMethodSymbol m&&m.Name=="MakeArray"&&m.ContainingType.ToDisplayString()=="java.util.JTool"?"byte[][]":"int";
     static string Concrete(string type,IEnumerable<ITypeParameterSymbol> parameters,bool cpp=false) {foreach(var p in parameters)type=cpp?type.Replace("T_"+p.Name,ConcreteCpp(p)):System.Text.RegularExpressions.Regex.Replace(type,"\\b"+p.Name+"\\b",ConcreteCs(p));return type;}
     static bool SystemList(ITypeSymbol? t)=>t is INamedTypeSymbol n&&n.OriginalDefinition.ToDisplayString()=="System.Collections.Generic.List<T>";
     static bool SystemDictionary(ITypeSymbol? t)=>t is INamedTypeSymbol n&&n.OriginalDefinition.ToDisplayString()=="System.Collections.Generic.Dictionary<TKey, TValue>";
@@ -354,6 +370,10 @@ sealed partial class Lowerer {
             if(from is INamedTypeSymbol f&&to is INamedTypeSymbol t&&(FrameworkClass(f)!=null||PlainClass(f)||f.TypeKind==TypeKind.Interface||externalTypes.ContainsKey(Id(f)))&&(FrameworkClass(t)!=null||PlainClass(t)||t.TypeKind==TypeKind.Interface||externalTypes.ContainsKey(Id(t)))) {
                 Type(to,node);return compilation.ClassifyConversion(from,to).IsImplicit?value:"pls::cs::unbox<"+Type(to,node)+">(pls::cs::box("+value+"))";
             }
+            // T : SourceClass to that class or one of its bases: an implicit reference
+            // conversion; T_T is instantiated as Ref<derived>, upcast at instantiation.
+            if(from is ITypeParameterSymbol fromParameter&&fromParameter.ConstraintTypes.Any(c=>c.TypeKind==TypeKind.Class)&&to is INamedTypeSymbol upcast&&(PlainClass(upcast)||FrameworkClass(upcast)!=null)&&compilation.ClassifyConversion(from,to).IsImplicit)
+                return "static_cast<"+Type(to,node)+">("+value+")";
             throw new Unsupported(node,"reference covariance/interface conversion not lowered");
         }
         Type(to,node);return value;
@@ -646,6 +666,15 @@ sealed partial class Lowerer {
             case ObjectCreationExpressionSyntax creation:
                 if(model.GetTypeInfo(creation).Type is INamedTypeSymbol{TypeKind:TypeKind.Delegate} createdDelegate&&creation.ArgumentList?.Arguments.Count==1&&creation.Initializer==null)return Converted(creation.ArgumentList.Arguments[0].Expression,createdDelegate);
                 var ctor=model.GetSymbolInfo(creation).Symbol as IMethodSymbol;
+                if(ctor==null&&model.GetTypeInfo(creation).Type is ITypeParameterSymbol createdParameter&&creation.Initializer==null&&(creation.ArgumentList?.Arguments.Count??0)==0){
+                    // new T() with T : SourceClass, new(): the parameterless constructor factory
+                    // (field initializers, then the constructor body) of the closed type argument,
+                    // selected by argument-dependent lookup on a T* tag at instantiation. Known
+                    // difference: Mono's Activator wraps a constructor exception in
+                    // TargetInvocationException; here the constructor's exception propagates as is.
+                    MarkNewInstanceParameter(createdParameter,creation);
+                    return "cs_new_instance(static_cast<"+Type(createdParameter,creation)+"*>(nullptr))";
+                }
                 if(ctor==null)throw new Unsupported(creation,"object initializer/unresolved constructor not lowered");
                 if(creation.Initializer!=null){
                     // Object initializer on a source class: constructor (arguments, body) first, then each
@@ -735,6 +764,9 @@ sealed partial class Lowerer {
         throw new Unsupported(site,"string formatting requires exact ToString contract for this value type");
     }
     string Binary(BinaryExpressionSyntax b) {
+        // a ?? b on strings: left evaluated once; right evaluated only when left is null.
+        if(b.IsKind(SyntaxKind.CoalesceExpression)&&model.GetTypeInfo(b).Type?.SpecialType==SpecialType.System_String&&model.GetTypeInfo(b.Left).Type?.SpecialType==SpecialType.System_String)
+            return "([&]() -> pls::cs::String { auto cs_left = "+Expr(b.Left)+"; if(!cs_left.is_null())return cs_left; return "+Converted(b.Right,model.GetTypeInfo(b).Type)+"; }())";
         if(b.IsKind(SyntaxKind.IsExpression)||b.IsKind(SyntaxKind.AsExpression)){
             var target=model.GetTypeInfo(b.Right).Type;if(target==null)throw new Unsupported(b,"type test target is not bound");
             var value="pls::cs::box("+Expr(b.Left)+")";var cpp=Type(target,b);
@@ -889,6 +921,8 @@ sealed partial class Lowerer {
                 var rightType=model.GetTypeInfo(a.Right).Type;
                 if(rightType?.SpecialType==SpecialType.System_String)operation="pls::cs::String::concat(cs_old,cs_rhs)";
                 else if(rightType?.SpecialType==SpecialType.System_Char)operation="pls::cs::String::concat(cs_old,cs_char_string(cs_rhs))";
+                // s += obj (reference type) is String.Concat(object, object): obj.ToString(), null as empty.
+                else if(rightType!=null&&rightType.IsReferenceType&&rightType.TypeKind is TypeKind.Class or TypeKind.Interface&&rightType is not IArrayTypeSymbol)operation="cs_concat_objects2(pls::cs::box(cs_old),pls::cs::box(cs_rhs))";
                 else throw new Unsupported(a,"compound string concatenation requires exact operand ToString contract");
             }
             value="auto cs_old = "+target+(shared?".load()":"")+"; auto cs_rhs = "+Expr(a.Right)+"; auto cs_value = "+Cast(operation,type,type,a)+"; "+(shared?target+".store(cs_value);":target+" = cs_value;")+" return cs_value;";
@@ -1067,7 +1101,7 @@ sealed partial class Lowerer {
         else if(owner=="string"&&symbol.Name=="Concat"&&args.Count==2&&symbol.Parameters.Length==2&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_Object))callee="cs_concat_objects2";
         else if(owner=="string"&&symbol.Name=="Concat"&&args.Count==4&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_String))callee="cs_concat_strings4";
         else if(owner=="string"&&symbol.Name=="Concat"&&args.Count==3&&symbol.Parameters.Length==3&&symbol.Parameters.All(p=>p.Type.SpecialType==SpecialType.System_String))callee="cs_concat_strings3";
-        else if(owner=="string"&&symbol.Name=="Concat"&&args.Count==1&&symbol.Parameters[0].Type is IArrayTypeSymbol concatArray&&concatArray.Rank==1&&concatArray.ElementType.SpecialType==SpecialType.System_Object)callee="cs_concat_object_array";
+        else if(owner=="string"&&symbol.Name=="Concat"&&symbol.Parameters.Length==1&&(args.Count==1||symbol.Parameters[0].IsParams)&&symbol.Parameters[0].Type is IArrayTypeSymbol concatArray&&concatArray.Rank==1&&concatArray.ElementType.SpecialType==SpecialType.System_Object)callee="cs_concat_object_array";
         else if((owner=="int"||owner=="long"||owner=="System.Int32"||owner=="System.Int64")&&symbol.Name=="Parse"&&args.Count==1&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_String)callee=(symbol.ReturnType.SpecialType==SpecialType.System_Int32)?"pls::cs::int32_parse":"pls::cs::int64_parse";
         else if(symbol.ReturnType.SpecialType==SpecialType.System_Int32&&symbol.Name=="Parse"&&symbol.ContainingType.SpecialType==SpecialType.System_Int32&&args.Count==2&&model.GetConstantValue(args[1]) is {HasValue:true,Value:int style}&&style is 512 or 515)return "([&](){auto cs_value="+Expr(args[0])+";return pls::cs::int32_parse_hex_number(cs_value,"+(style==515?"true":"false")+");}())";
         else if(owner=="System.Array"&&symbol.Name=="CreateInstance"&&args.Count==2&&symbol.Parameters[1].Type.SpecialType==SpecialType.System_Int32)callee="pls::cs::runtime_create_array";
@@ -1097,6 +1131,8 @@ sealed partial class Lowerer {
             dependencies[current].Add(id);callee=Name(symbol);
             return OrderedCall(symbol,args,n,null,true,callee);
         } else throw new Unsupported(n,"external invocation not implemented: "+id);
+        // Expanded params (e.g. string.Concat(a, b, c, ...) -> Concat(object[])): OrderedCall builds the array in order.
+        if(callee=="cs_concat_object_array"&&(args.Count!=1||!model.ClassifyConversion(args[0],symbol.Parameters[0].Type).IsImplicit))return OrderedCall(symbol,args,n,null,true,callee);
         var body=new StringBuilder("([&]() -> "+Type(returnType,n)+" { ");
         for(int i=0;i<args.Count;i++) {
             ITypeSymbol? parameter=intrinsic!=null?(i==0?model.GetTypeInfo(args[i]).Type:symbol.Parameters[i-1].Type):symbol.Parameters[Math.Min(i,symbol.Parameters.Length-1)].Type;
@@ -1155,6 +1191,22 @@ sealed partial class Lowerer {
         if(!methods.TryGetValue(adapterId,out var adapter)||!adapter.IsStatic||method.IsStatic!=isStatic||method.IsVirtual||method.IsOverride||method.IsAbstract||adapter.Parameters.Length!=method.Parameters.Length+offset||offset==1&&!SymbolEqualityComparer.Default.Equals(adapter.Parameters[0].Type,method.ContainingType)||!SymbolEqualityComparer.Default.Equals(adapter.ReturnType,method.ReturnType)||!adapter.Parameters.Skip(offset).Zip(method.Parameters).All(pair=>SymbolEqualityComparer.Default.Equals(pair.First.Type,pair.Second.Type)&&pair.First.RefKind==pair.Second.RefKind))throw new Unsupported(site,"source adapter requires identical static/receiver shape, parameters and result");
         dependencies[current].Add(adapterId);return Name(adapter);
     }
+    // A type parameter used by new T() (directly, or forwarded to a new()-constrained
+    // parameter) must be closed by a concrete source class; its compile receipt uses
+    // the class constraint, which therefore needs the same constructor overload.
+    void MarkNewInstanceParameter(ITypeParameterSymbol parameter,SyntaxNode site){
+        if(parameter.ContainingSymbol is not IMethodSymbol||!parameter.HasConstructorConstraint)throw new Unsupported(site,"new T() requires a generic method type parameter with new()");
+        var constraint=parameter.ConstraintTypes.OfType<INamedTypeSymbol>().FirstOrDefault(t=>t.TypeKind==TypeKind.Class)??throw new Unsupported(site,"new T() requires a source class constraint for its concrete compile receipt");
+        RequireNewInstance(constraint,site);newInstanceParameters.Add(ParameterKey(parameter));
+    }
+    void RequireNewInstance(ITypeSymbol argument,SyntaxNode site){
+        if(argument is ITypeParameterSymbol forwarded){MarkNewInstanceParameter(forwarded,site);return;}
+        if(argument is not INamedTypeSymbol{TypeKind:TypeKind.Class,IsAbstract:false} type||type.TypeArguments.Length!=0||!PlainClass(type)||externalTypes.ContainsKey(Id(type)))throw new Unsupported(site,"new() type argument must be a concrete non-generic source class: "+argument.ToDisplayString());
+        var ctor=type.InstanceConstructors.FirstOrDefault(c=>c.Parameters.Length==0)??throw new Unsupported(site,"new() type argument has no parameterless constructor: "+type.ToDisplayString());
+        RequireClass(type,site);dependencies[current].Add(Id(ctor));
+        if(!newInstanceConstructors.TryGetValue(current,out var constructors))newInstanceConstructors[current]=constructors=new();
+        constructors.Add(Id(ctor));
+    }
     string OrderedCall(IMethodSymbol method,List<ExpressionSyntax> args,SyntaxNode site,string? receiver,bool dispatch=true,string? nativeCallee=null) {
         if(IsSourceAdapter(nativeCallee))nativeCallee=ResolveSourceAdapter(method,nativeCallee!,site);
         var paramsIndex=method.Parameters.Length-1;
@@ -1177,9 +1229,13 @@ sealed partial class Lowerer {
         }
         if(receiver!=null)b.Append("if(!cs_receiver)throw pls::cs::NullReferenceException(); ");
         var nativeMember=nativeCallee?.StartsWith("member:",StringComparison.Ordinal)??false;
-        var virtualCall=dispatch&&!nativeMember&&receiver!=null&&(method.IsVirtual||method.IsOverride||method.IsAbstract);
+        if(method.IsGenericMethod&&nativeCallee==null){
+            if(dispatch&&receiver!=null&&UnloweredGenericVirtual(method))throw new Unsupported(site,"overridden generic virtual method not lowered");
+            foreach(var (parameter,argument) in method.TypeParameters.Zip(method.TypeArguments))if(parameter.HasConstructorConstraint)RequireNewInstance(argument,site);
+        }
+        var virtualCall=dispatch&&!nativeMember&&receiver!=null&&(method.IsVirtual||method.IsOverride||method.IsAbstract)&&!DirectGenericVirtual(method);
         var values=Enumerable.Range(0,method.Parameters.Length).Select(i=>"cs_arg"+i).ToList();if(receiver!=null&&!virtualCall&&!nativeMember)values.Insert(0,"cs_receiver");
-        var callee=nativeCallee??Name(method);if(method.IsGenericMethod&&nativeCallee!=null&&!nativeMember)callee+="<"+String.Join(",",method.TypeArguments.Select(t=>Type(t,site)))+">";if(method.MethodKind==MethodKind.Constructor&&method.ContainingType.TypeArguments.Length!=0)callee+="<"+String.Join(",",method.ContainingType.TypeArguments.Select(t=>Type(t,site)))+">";
+        var callee=nativeCallee??Name(method);if(method.IsGenericMethod&&!nativeMember)callee+="<"+String.Join(",",(nativeCallee==null?method.ContainingType.TypeArguments.Concat(method.TypeArguments):method.TypeArguments).Select(t=>Type(t,site)))+">";if(method.MethodKind==MethodKind.Constructor&&method.ContainingType.TypeArguments.Length!=0)callee+="<"+String.Join(",",method.ContainingType.TypeArguments.Select(t=>Type(t,site)))+">";
         if(nativeMember)callee="cs_receiver->"+nativeCallee!.Substring("member:".Length);
         if(virtualCall)callee="cs_receiver->"+Slot(method);
         b.Append(result=="void"?"":"return ");b.Append(callee+"("+String.Join(",",values)+"); }())");return b.ToString();
@@ -1423,6 +1479,7 @@ sealed partial class Lowerer {
             var externalGeneratedHelper=externalTypes.TryGetValue(Id(method.ContainingType),out var externalOwner)&&externalOwner.StartsWith("pls::generated::",StringComparison.Ordinal)&&!MethodSlots(method).Any();
             var sourceNativeHelper=request.source_native_helpers.Contains(id);
             if((externalTypes.ContainsKey(Id(method.ContainingType))||externalValueTypes.ContainsKey(Id(method.ContainingType)))&&!hasServicePolicy&&!externalGeneratedHelper&&!sourceNativeHelper)throw new Unsupported(declaration,"native class/value member requires an exact external API binding");
+            if(UnloweredGenericVirtual(method))throw new Unsupported(declaration,"overridden generic virtual method not lowered");
             if(method.IsAbstract)throw new Unsupported(declaration,"abstract method has no emitted body");
             if(method.MethodKind==MethodKind.UserDefinedOperator&&method.Name is "op_Equality" or "op_Inequality"){
                 var partner=method.Name=="op_Equality"?"op_Inequality":"op_Equality";
@@ -1430,7 +1487,10 @@ sealed partial class Lowerer {
             }
             if(!method.IsStatic)RequireClass(method.ContainingType,declaration);
             if(method.MethodKind==MethodKind.StaticConstructor)throw new Unsupported(declaration,"type initializer emitted through once-per-type initialization, not a callable source method");
-            if(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper)EnsureTypeInitializer(method.ContainingType,declaration);
+            // A policy body on a removed Android bridge (every static field is UnityEngine.AndroidJava*) never touches
+            // that state; the type initializer only builds the Java classes, so it is not emitted.
+            var removedJavaBridge=hasServicePolicy&&method.IsStatic&&method.ContainingType.GetMembers().OfType<IFieldSymbol>().Where(f=>f.IsStatic&&!f.IsConst).All(f=>f.Type.ToDisplayString().StartsWith("UnityEngine.AndroidJava",StringComparison.Ordinal));
+            if((!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper)&&!removedJavaBridge)EnsureTypeInitializer(method.ContainingType,declaration);
             if(method.Parameters.Any(p=>p.RefKind is not (RefKind.None or RefKind.Ref or RefKind.Out)))throw new Unsupported(declaration,"in/ref-readonly parameter signature not lowered");
             var (sourceBlock,sourceArrow)=ExecutableBody(declaration);
             var autoBacking=method.AssociatedSymbol is IPropertySymbol autoProperty?method.ContainingType.GetMembers().OfType<IFieldSymbol>().FirstOrDefault(field=>SymbolEqualityComparer.Default.Equals(field.AssociatedSymbol,autoProperty)):null;
@@ -1500,7 +1560,7 @@ sealed partial class Lowerer {
                 body+="\n"+template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
                 if(method.ContainingType.IsAbstract)body=template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
             } else if(!method.IsStatic) body="{ if(!cs_this)throw pls::cs::NullReferenceException();\n"+body+"\n}";
-            if(!constructor&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))body="{ "+TypeInitFunction(method.ContainingType)+"();\n"+body+"\n}";
+            if(!constructor&&!removedJavaBridge&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))body="{ "+TypeInitFunction(method.ContainingType)+"();\n"+body+"\n}";
             var source=QualifyHelpers(constructor&&method.ContainingType.IsAbstract?body:template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
             foreach(var dependency in dependencies[id].ToArray())if(!Emit(dependency))throw new Unsupported(declaration,"dependency not lowered: "+dependency);
             emitted[id]=source;return true;
@@ -1605,6 +1665,10 @@ sealed partial class Lowerer {
             header.Append(Template(TypeParameters(method))+TypeName(ctor?method.ContainingType:method.ReturnType)+" "+Name(method)+"("+String.Join(",",parameters)+");\n");
             if(ctor)header.Append(Template(TypeParameters(method))+"void "+Name(method)+"_init("+TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"* cs_this":" cs_this")+(parameters.Count==0?"":","+String.Join(",",parameters))+");\n");
         }
+        // new T(): one overload per closed source class, found by argument-dependent
+        // lookup on the T* tag; a type argument without one fails to compile.
+        var newInstances=emitted.Keys.Where(newInstanceConstructors.ContainsKey).SelectMany(id=>newInstanceConstructors[id]).Distinct().OrderBy(x=>x).Select(id=>methods[id]).ToArray();
+        foreach(var newCtor in newInstances)header.Append(TypeName(newCtor.ContainingType)+" cs_new_instance("+TypeName(newCtor.ContainingType)+"*);\n");
         foreach(var pair in emitted.OrderBy(p=>p.Key))if(TypeParameters(methods[pair.Key]).Length!=0)header.Append("// "+pair.Key+"\n"+pair.Value+"\n");
         foreach(var id in usedClasses.OrderBy(x=>x)) {
             var type=classes[id];if(type.TypeKind==TypeKind.Interface)continue;var baseType=type.BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
@@ -1640,10 +1704,11 @@ sealed partial class Lowerer {
                 var ctor=m.MethodKind==MethodKind.Constructor;
                 var parameters=m.Parameters.Select(p=>Concrete(ParameterType(p),tp,true)).ToList();
                 if(!m.IsStatic&&!ctor)parameters.Insert(0,Concrete(TypeName(m.ContainingType),tp,true)+(RecordStruct(m.ContainingType)?"*":""));
-                cpp.Append("// Concrete compile receipt: "+pair.Key+" [int]\n");
+                cpp.Append("// Concrete compile receipt: "+pair.Key+" ["+String.Join(",",tp.Select(ConcreteCs))+"]\n");
                 cpp.Append("template "+Concrete(TypeName(ctor?m.ContainingType:m.ReturnType),tp,true)+" "+Name(m)+"<"+String.Join(",",tp.Select(ConcreteCpp))+">("+String.Join(",",parameters)+");\n");
             }
         }
+        foreach(var newCtor in newInstances)cpp.Append("// new T() with T = "+newCtor.ContainingType.ToDisplayString()+"\n"+TypeName(newCtor.ContainingType)+" cs_new_instance("+TypeName(newCtor.ContainingType)+"*){return "+Name(newCtor)+"();}\n");
         if(bootstrap!=null&&emitted.ContainsKey(input.bootstrap_method))cpp.Append("pls::cs::Ref<pls::kairo::IApplication> create_application(){return "+Name(bootstrap)+"();}\n");
         cpp.Append("}\n");
         header.Insert(0,"#include \"diagnostic_profile.hpp\"\n");
@@ -1748,7 +1813,7 @@ sealed partial class Lowerer {
         }}
         var usedKinds=new Dictionary<string,int>();
         foreach(var id in emitted.Keys)foreach(var pair in methodKinds[id])usedKinds[pair.Key]=usedKinds.GetValueOrDefault(pair.Key)+pair.Value;
-        var emittedMetadata=emitted.Keys.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(methods[id]),name=methods[id].Name,is_abstract_type=methods[id].ContainingType.IsAbstract,constructor_factory_defined=methods[id].MethodKind!=MethodKind.Constructor||!methods[id].ContainingType.IsAbstract,body_origin=input.service_overrides.ContainsKey(id)?"authorized_service_policy":"source",identity_hash_result=IdentityHash(methods[id]),kind=methods[id].MethodKind.ToString(),root=selectedMethods.Contains(id),source=syntax[id].SyntaxTree.FilePath,line=syntax[id].GetLocation().GetLineSpan().StartLinePosition.Line+1,return_type=Concrete((methods[id].MethodKind==MethodKind.Constructor?methods[id].ContainingType:methods[id].ReturnType).ToDisplayString(),TypeParameters(methods[id])),is_static=methods[id].IsStatic,is_constructor=methods[id].MethodKind==MethodKind.Constructor,is_indexer=(methods[id].AssociatedSymbol as IPropertySymbol)?.IsIndexer??false,containing_type=Concrete(methods[id].ContainingType.ToDisplayString(),TypeParameters(methods[id])),concrete_cpp_type_arguments=TypeParameters(methods[id]).Select(ConcreteCpp).ToArray(),concrete_cs_type_arguments=TypeParameters(methods[id]).Select(ConcreteCs).ToArray(),parameters=methods[id].Parameters.Select(p=>new{name=p.Name,ref_kind=p.RefKind.ToString(),type=Concrete(p.Type.ToDisplayString(),TypeParameters(methods[id]))}).ToArray()}).ToArray();
+        var emittedMetadata=emitted.Keys.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(methods[id]),name=methods[id].Name,is_abstract_type=methods[id].ContainingType.IsAbstract,constructor_factory_defined=methods[id].MethodKind!=MethodKind.Constructor||!methods[id].ContainingType.IsAbstract,body_origin=input.service_overrides.ContainsKey(id)?"authorized_service_policy":"source",identity_hash_result=IdentityHash(methods[id]),kind=methods[id].MethodKind.ToString(),root=selectedMethods.Contains(id),source=syntax[id].SyntaxTree.FilePath,line=syntax[id].GetLocation().GetLineSpan().StartLinePosition.Line+1,return_type=Concrete((methods[id].MethodKind==MethodKind.Constructor?methods[id].ContainingType:methods[id].ReturnType).ToDisplayString(),TypeParameters(methods[id])),is_static=methods[id].IsStatic,is_constructor=methods[id].MethodKind==MethodKind.Constructor,is_indexer=(methods[id].AssociatedSymbol as IPropertySymbol)?.IsIndexer??false,containing_type=Concrete(methods[id].ContainingType.ToDisplayString(),TypeParameters(methods[id])),concrete_cpp_type_arguments=TypeParameters(methods[id]).Select(ConcreteCpp).ToArray(),concrete_cs_type_arguments=TypeParameters(methods[id]).Select(ConcreteCs).ToArray(),concrete_cs_method_type_arguments=methods[id].TypeParameters.Select(ConcreteCs).ToArray(),parameters=methods[id].Parameters.Select(p=>new{name=p.Name,ref_kind=p.RefKind.ToString(),type=Concrete(p.Type.ToDisplayString(),TypeParameters(methods[id]))}).ToArray()}).ToArray();
         var reportedMethods=game?emittedMetadata.Where(m=>Path.GetRelativePath(input.source_root,m.source).Replace(Path.DirectorySeparatorChar,'/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)).ToArray():emittedMetadata;
         var gameForeachCaptures=new List<object>();
         foreach(var method in methods.Values.Where(m=>m.DeclaringSyntaxReferences.Length!=0)){

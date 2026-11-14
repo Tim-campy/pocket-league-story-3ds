@@ -20,6 +20,7 @@
 #include "generated/portable_generated_type_83a7bc36395d16bd.hpp"
 #include "generated/portable_generated_type_e7a5499b363ef51b.hpp"
 #include "generated/portable_generated_type_ea324a0bbfe717fe.hpp"
+#include "game_generated_type_6ee7d14059be1acf_templates.hpp"
 namespace pls::game {
 
 void cs_fa01867c9c048464::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_e92a9e2b4e70e8aa,visitor);pls::cs::trace_value(cs_02fc10f7a3f6285a,visitor);pls::cs::trace_value(cs_7051bba65972fd27,visitor);pls::cs::trace_value(cs_4826f2c7dff1307e,visitor);pls::cs::trace_value(cs_6769193235ceb92f,visitor);}
@@ -66,8 +67,8 @@ return false;
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(v_instance2_8985); bool cs_arg0 = false; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_1bfb44d4e16bae10(cs_receiver,cs_arg0); }());
 ([&]() { auto cs_value = (((pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { return pls::generated::cs_ce0912b8167f3504(); }());})) ? ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x8ab2" u"\x91d1" u"\x60c5" u"\x5831" u"\x306e" u"\x5fa9" u"\x5143" u"\x304c" u"\x5b8c" u"\x4e86" u"\x3057" u"\x307e" u"\x3057" u"\x305f" u"\x3002" u"",15);return cs_literal;}()) : ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0050" u"\x0075" u"\x0072" u"\x0063" u"\x0068" u"\x0061" u"\x0073" u"\x0065" u"\x0020" u"\x0069" u"\x006e" u"\x0066" u"\x006f" u"\x0020" u"\x0072" u"\x0065" u"\x0073" u"\x0074" u"\x006f" u"\x0072" u"\x0065" u"\x0064" u"\x002e" u"",23);return cs_literal;}()))); v_message = cs_value; return cs_value; }());
 return true;
-} catch(const pls::cs::Exception& cs_caught_828) {auto cs_exception_828=pls::cs::capture_exception(cs_caught_828);
-if(pls::cs::exception_is(cs_exception_828,"System.Exception")) {auto v_t_9455=cs_exception_828;{
+} catch(const pls::cs::Exception& cs_caught_832) {auto cs_exception_832=pls::cs::capture_exception(cs_caught_832);
+if(pls::cs::exception_is(cs_exception_832,"System.Exception")) {auto v_t_9455=cs_exception_832;{
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_t_9455; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 ([&]() { auto cs_value = ([&]() -> pls::cs::String { return cs_11f71ced6c57f274(); }()); v_message = cs_value; return cs_value; }());
 return false;
@@ -78,12 +79,43 @@ else {throw;} }
 }
 }
 
+// M:system.billing.ui.StoreBase.CheckPaymentMaintenance
+bool cs_fbe88b493ebd35c6(pls::cs::Ref<cs_fa01867c9c048464> cs_this) { cs_init_fa01867c9c048464();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.CheckPaymentMaintenance",game);
+{
+bool v_flag_7171 = true;
+try {
+pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_7210 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
+std::int32_t v_paymentMoney_7254 = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_7210); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_729b05919a633345(cs_receiver); }());
+if (([&]() -> bool { auto cs_left = v_paymentMoney_7254; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left == cs_right); }())) {
+throw pls::cs::Exception();
+}
+([&]() { auto cs_value = false; v_flag_7171 = cs_value; return cs_value; }());
+} catch(const pls::cs::Exception& cs_caught_833) {auto cs_exception_833=pls::cs::capture_exception(cs_caught_833);
+if(pls::cs::exception_is(cs_exception_833,"System.Exception")) {auto v_ex_7397=cs_exception_833;{
+pls::cs::String v_text_7428 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x901a" u"\x4fe1" u"\x306b" u"\x5931" u"\x6557" u"\x3057" u"\x307e" u"\x3057" u"\x305f" u"",9);return cs_literal;}());
+if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { return cs_3c5e64aab4be4dca(); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left != cs_right); }())) {
+([&]() { auto cs_value = ([&]() -> pls::cs::String { return cs_11f71ced6c57f274(); }()); v_text_7428 = cs_value; return cs_value; }());
+}
+pls::cs::Ref<cs_0286a0dbe9da0b33> v_dialog_7538 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/StoreBase.cs:M:system.billing.ui.StoreBase.CheckPaymentMaintenance:7547",([&]() -> pls::cs::Ref<cs_0286a0dbe9da0b33> { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\xff74" u"\xff97" u"\xff70" u"",3);return cs_literal;}()); return cs_63545d46c6887c12(cs_arg0,cs_arg1); }()));
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_0286a0dbe9da0b33>>(v_dialog_7538); pls::cs::String cs_arg0 = v_text_7428; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d53653cbf2469429(cs_receiver,cs_arg0); }());
+([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_0286a0dbe9da0b33>>(v_dialog_7538); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_1727d3688d4d03e6(cs_receiver); }());
+pls::cs::throw_exception(v_ex_7397);
+}}
+else {throw;} }
+return v_flag_7171;
+}
+}
+}
+}
+
 // M:system.billing.ui.StoreBase.CompletePayment(system.billing.util.Purchase)
 pls::cs::Ref<cs_a42daea58251b089> cs_9e9180120f7b6e3a(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase) { cs_init_fa01867c9c048464();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.CompletePayment(system.billing.util.Purchase)",game);
 {
-{auto cs_list_enum832=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope832{decltype(cs_list_enum832)&e;~cs_list_scope832(){e.Dispose();}} cs_scope832{cs_list_enum832};while(cs_list_enum832.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_3591=cs_list_enum832.get_Current();{
+{auto cs_list_enum848=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope848{decltype(cs_list_enum848)&e;~cs_list_scope848(){e.Dispose();}} cs_scope848{cs_list_enum848};while(cs_list_enum848.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_3591=cs_list_enum848.get_Current();{
 if (([&]() -> bool { auto cs_left = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(v_item_3591); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_e8fea88a1ccd74d6(cs_receiver); }()); auto cs_right = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_a42daea58251b089>>(v_purchase); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_30a95d92bd1ce70c(cs_receiver); }()); return (cs_left != cs_right); }())) {
 continue;
 }
@@ -120,7 +152,7 @@ pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>> cs_880efa9ef8cb946d(pls::cs::Re
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.GetIncompletePayments",game);
 {
 pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>> v_list_3032 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/StoreBase.cs:M:system.billing.ui.StoreBase.GetIncompletePayments:3039",pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>>::make());
-{auto cs_list_enum833=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope833{decltype(cs_list_enum833)&e;~cs_list_scope833(){e.Dispose();}} cs_scope833{cs_list_enum833};while(cs_list_enum833.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_3063=cs_list_enum833.get_Current();{
+{auto cs_list_enum849=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope849{decltype(cs_list_enum849)&e;~cs_list_scope849(){e.Dispose();}} cs_scope849{cs_list_enum849};while(cs_list_enum849.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_3063=cs_list_enum849.get_Current();{
 if (([&]() { auto cs_receiver = v_item_3063; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_d6ae59bf543478aa; }())) {
 continue;
 }
@@ -218,7 +250,7 @@ bool cs_e407b08e50b1dd2c(pls::cs::Ref<cs_fa01867c9c048464> cs_this) { cs_init_fa
 if (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6769193235ceb92f; }())) {
 return false;
 }
-{auto cs_list_enum834=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope834{decltype(cs_list_enum834)&e;~cs_list_scope834(){e.Dispose();}} cs_scope834{cs_list_enum834};while(cs_list_enum834.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_3337=cs_list_enum834.get_Current();{
+{auto cs_list_enum850=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope850{decltype(cs_list_enum850)&e;~cs_list_scope850(){e.Dispose();}} cs_scope850{cs_list_enum850};while(cs_list_enum850.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_3337=cs_list_enum850.get_Current();{
 if (([&]() { auto cs_receiver = v_item_3337; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_d6ae59bf543478aa; }())) {
 continue;
 }
@@ -267,7 +299,7 @@ bool cs_53ba148e029fe26b(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<
 if (([&]() { auto cs_left = pls::cs::box(v_purchase); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 return false;
 }
-{auto cs_list_enum835=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope835{decltype(cs_list_enum835)&e;~cs_list_scope835(){e.Dispose();}} cs_scope835{cs_list_enum835};while(cs_list_enum835.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_4134=cs_list_enum835.get_Current();{
+{auto cs_list_enum851=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope851{decltype(cs_list_enum851)&e;~cs_list_scope851(){e.Dispose();}} cs_scope851{cs_list_enum851};while(cs_list_enum851.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_4134=cs_list_enum851.get_Current();{
 if (([&]() -> bool { auto cs_left = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(v_item_4134); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_e8fea88a1ccd74d6(cs_receiver); }()); auto cs_right = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_a42daea58251b089>>(v_purchase); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_30a95d92bd1ce70c(cs_receiver); }()); return (cs_left != cs_right); }())) {
 continue;
 }
@@ -331,14 +363,78 @@ if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { return cs_4e9bffcbf
 }
 }
 
+// M:system.billing.ui.StoreBase.ProcessIncompletePayment(system.billing.ui.BillingItem,system.billing.util.Purchase)
+void cs_a616eb249ab21a38(pls::cs::Ref<cs_fa01867c9c048464> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item,pls::cs::Ref<cs_a42daea58251b089> v_purchase) { cs_init_fa01867c9c048464();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.ProcessIncompletePayment(system.billing.ui.BillingItem,system.billing.util.Purchase)",game);
+{try{
+if ((!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_931908081ea62151>>(v_item); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f10af6d4bfbcc001(cs_receiver); }()); auto cs_arg1 = cs_e9c57a349e970656_value; return pls::game::cs_string_equals(cs_arg0,cs_arg1); }());})))) {
+throw pls::cs::ReturnFlow<void>{};
+}
+pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_4535 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
+pls::cs::Ref<cs_6ee7d14059be1acf> v_billingManager_4589 = pls::cs::unbox<pls::cs::Ref<cs_6ee7d14059be1acf>>(pls::cs::box(cs_this));
+pls::cs::run_finally([&]() {{
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_4535); bool cs_arg0 = false; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_5d101ae71ba29127(cs_receiver,cs_arg0); }());
+([&]() { auto cs_target = v_item; auto cs_value = false; pls::game::cs_require(cs_target)->cs_fd8816021d9a3386 = cs_value; return cs_value; }());
+try {
+pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance2_4740 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
+([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance2_4740); pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_931908081ea62151>>(v_item); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_dd481314101ac6b7(cs_receiver); }()); pls::cs::String cs_arg1 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_a42daea58251b089>>(v_purchase); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_30a95d92bd1ce70c(cs_receiver); }()); pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_a42daea58251b089>>(v_purchase); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f88753a6a366d95c(cs_receiver); }()); std::int32_t cs_arg3 = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_931908081ea62151>>(v_item); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_1d621b133c4f5a78(cs_receiver); }()); std::int32_t cs_arg4 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_arg5 = false; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_ea29fe1b69e442bc(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5); }());
+([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_a42daea58251b089> { auto cs_receiver = static_cast<pls::cs::Ref<cs_fa01867c9c048464>>(cs_this); pls::cs::Ref<cs_a42daea58251b089> cs_arg0 = v_purchase; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_9e9180120f7b6e3a(cs_receiver,cs_arg0); }()); v_purchase = cs_value; return cs_value; }());
+} catch(const pls::cs::Exception& cs_caught_852) {auto cs_exception_852=pls::cs::capture_exception(cs_caught_852);
+if(pls::cs::exception_is(cs_exception_852,"System.Exception")) {auto v_ex_4962=cs_exception_852;{
+pls::cs::throw_exception(v_ex_4962);
+}}
+else {throw;} }
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_4535); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0075" u"\x0072" u"\x0063" u"\x0068" u"\x0061" u"\x0073" u"\x0065" u"",8);return cs_literal;}()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_715865c4f62161af(cs_receiver,cs_arg0,cs_arg1); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_931908081ea62151>>(v_item); pls::cs::Ref<cs_a42daea58251b089> cs_arg0 = v_purchase; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_c1ebd2cf1827c239(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(v_billingManager_4589); pls::cs::Ref<cs_931908081ea62151> cs_arg0 = v_item; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_624524290cf44192(cs_receiver,cs_arg0); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(v_billingManager_4589); bool cs_arg0 = true; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_1bfb44d4e16bae10(cs_receiver,cs_arg0); }());
+}}, [&]() {
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_4535); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_3481915358ac0fff(); }());
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_4535); bool cs_arg0 = true; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_5d101ae71ba29127(cs_receiver,cs_arg0); }());
+});
+}catch(const pls::cs::ReturnFlow<void>& cs_return){return;}}
+}
+}
+}
+
+// M:system.billing.ui.StoreBase.ProcessIncompletePayments
+void cs_bd86849fa66817e5(pls::cs::Ref<cs_fa01867c9c048464> cs_this) { cs_init_fa01867c9c048464();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.ProcessIncompletePayments",game);
+{
+if ((!(([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_fa01867c9c048464>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_e407b08e50b1dd2c(cs_receiver); }())))) {
+return;
+}
+pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>> v_incompletePayments_5370 = ([&]() -> pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>> { auto cs_receiver = static_cast<pls::cs::Ref<cs_fa01867c9c048464>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_880efa9ef8cb946d(cs_receiver); }());
+while (([&]() -> bool { auto cs_left = (v_incompletePayments_5370).get_Count(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left > cs_right); }())) {
+pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> v_items_5479 = ([&]() -> pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> { auto cs_receiver = static_cast<pls::cs::Ref<cs_fa01867c9c048464>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_virtual_0f79ffed5440eb44(); }());
+pls::cs::Ref<cs_15f31d4f046b09a8> v_receipt_5511 = ([&]() { auto cs_array = v_incompletePayments_5370; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }());
+pls::cs::Ref<cs_931908081ea62151> v_billingItem_5560 = pls::cs::Ref<cs_931908081ea62151>{};
+{ auto cs_each857 = v_items_5479; for (std::int32_t cs_i857=0; cs_i857<cs_each857.length(); ++cs_i857) { pls::cs::Ref<cs_931908081ea62151> v_billingItem2_5585 = cs_each857.get_Item(cs_i857); {
+if ((([&]() { auto cs_left = pls::cs::box(v_billingItem2_5585); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }()) && ([&]() -> bool { auto cs_left = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_931908081ea62151>>(v_billingItem2_5585); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_dd481314101ac6b7(cs_receiver); }()); auto cs_right = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(v_receipt_5511); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_69ca60609ca07561(cs_receiver); }()); return (cs_left == cs_right); }()))) {
+([&]() { auto cs_value = v_billingItem2_5585; v_billingItem_5560 = cs_value; return cs_value; }());
+break;
+}
+} } }
+if (([&]() { auto cs_left = pls::cs::box(v_billingItem_5560); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_fa01867c9c048464>>(cs_this); pls::cs::Ref<cs_931908081ea62151> cs_arg0 = v_billingItem_5560; pls::cs::Ref<cs_a42daea58251b089> cs_arg1 = ([&]() -> pls::cs::Ref<cs_a42daea58251b089> { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(v_receipt_5511); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_9766d64ee1bba541(cs_receiver); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_a616eb249ab21a38(cs_receiver,cs_arg0,cs_arg1); }());
+}
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = v_incompletePayments_5370; auto cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_receiver.RemoveAt(cs_arg0); }());});
+}
+}
+}
+}
+}
+
 // M:system.billing.ui.StoreBase.QueryInventory(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})
 pls::cs::Ref<cs_51fd12cb14e568f9> cs_3d1833af62584b62(pls::cs::Ref<cs_fa01867c9c048464> cs_this,bool v_querySkuDetails,pls::cs::List<pls::cs::String> v_moreItemSkus,pls::cs::List<pls::cs::String> v_moreSubsSkus) { cs_init_fa01867c9c048464();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.QueryInventory(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String})",game);
 {
 pls::cs::List<pls::cs::String> v_list_1950 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/StoreBase.cs:M:system.billing.ui.StoreBase.QueryInventory(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String}):1957",pls::cs::List<pls::cs::String>::make());
-pls::cs::Array<pls::cs::List<pls::cs::String>> v_array_1995 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/StoreBase.cs:M:system.billing.ui.StoreBase.QueryInventory(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String}):2003",([&](){auto cs_initial_array_842=pls::cs::Array<pls::cs::List<pls::cs::String>>::make(2);cs_initial_array_842.at(0)=v_moreItemSkus;cs_initial_array_842.at(1)=v_moreSubsSkus;return cs_initial_array_842;}()));
-{ auto cs_each843 = v_array_1995; for (std::int32_t cs_i843=0; cs_i843<cs_each843.length(); ++cs_i843) { pls::cs::List<pls::cs::String> v_list2_2059 = cs_each843.get_Item(cs_i843); {
+pls::cs::Array<pls::cs::List<pls::cs::String>> v_array_1995 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/StoreBase.cs:M:system.billing.ui.StoreBase.QueryInventory(System.Boolean,System.Collections.Generic.List{System.String},System.Collections.Generic.List{System.String}):2003",([&](){auto cs_initial_array_858=pls::cs::Array<pls::cs::List<pls::cs::String>>::make(2);cs_initial_array_858.at(0)=v_moreItemSkus;cs_initial_array_858.at(1)=v_moreSubsSkus;return cs_initial_array_858;}()));
+{ auto cs_each859 = v_array_1995; for (std::int32_t cs_i859=0; cs_i859<cs_each859.length(); ++cs_i859) { pls::cs::List<pls::cs::String> v_list2_2059 = cs_each859.get_Item(cs_i859); {
 if (([&]() { auto cs_left = pls::cs::box(v_list2_2059); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 
 } else {
@@ -390,7 +486,7 @@ pls::cs::Ref<cs_15f31d4f046b09a8> cs_9004764138986aa8(pls::cs::Ref<cs_fa01867c9c
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.SearchReceipt(System.String)",game);
 {
-{auto cs_list_enum844=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope844{decltype(cs_list_enum844)&e;~cs_list_scope844(){e.Dispose();}} cs_scope844{cs_list_enum844};while(cs_list_enum844.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_2706=cs_list_enum844.get_Current();{
+{auto cs_list_enum860=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7051bba65972fd27; }())).GetEnumerator();struct cs_list_scope860{decltype(cs_list_enum860)&e;~cs_list_scope860(){e.Dispose();}} cs_scope860{cs_list_enum860};while(cs_list_enum860.MoveNext()){ pls::cs::Ref<cs_15f31d4f046b09a8> v_item_2706=cs_list_enum860.get_Current();{
 if (([&]() -> bool { auto cs_left = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(v_item_2706); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }()); auto cs_right = v_json; return (cs_left == cs_right); }())) {
 return v_item_2706;
 }

@@ -9,6 +9,7 @@
 #include "generated/portable_generated_type_bb652fbb61000386.hpp"
 #include "generated/portable_generated_type_e7a5499b363ef51b.hpp"
 #include "generated/portable_generated_type_ea324a0bbfe717fe.hpp"
+#include "game_generated_type_6ee7d14059be1acf_templates.hpp"
 namespace pls::game {
 
 void cs_feb7ae74aa59a27c::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_88b3d0bc7988e77a,visitor);pls::cs::trace_value(cs_48404c380c305c6b,visitor);pls::cs::trace_value(cs_1f1b271de448ce48,visitor);pls::cs::trace_value(cs_625190bccd0d0fa4,visitor);pls::cs::trace_value(cs_9764b5b60381a8b6,visitor);pls::cs::trace_value(cs_ccc8fd33eda36b9e,visitor);pls::cs::trace_value(cs_7d0600ed44e25c28,visitor);pls::cs::trace_value(cs_924ce9254cf3db30,visitor);pls::cs::trace_value(cs_f369b68d3e3a2183,visitor);pls::cs::trace_value(cs_9fc1ef5d1c5e7bde,visitor);pls::cs::trace_value(cs_cea09c6a91d7c902,visitor);pls::cs::trace_value(cs_26183201ac982bca,visitor);}
@@ -164,8 +165,8 @@ if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { a
 } else {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/ApplyTask.cs:M:system.billing.ui.ApplyTask.Init(system.billing.ui.BillingItem,System.String,System.Int32,System.Boolean):2619",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_bb652fbb61000386>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f369b68d3e3a2183; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_6dd0b8d6220bd2b3(cs_receiver); }());}); return pls::generated::cs_2dbfed27c63e8b3d(cs_arg0); }());}); return pls::generated::cs_891849d99054b970(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_9fc1ef5d1c5e7bde = cs_value; return cs_value; }());
 }
-} catch(const pls::cs::Exception& cs_caught_815) {auto cs_exception_815=pls::cs::capture_exception(cs_caught_815);
-if(pls::cs::exception_is(cs_exception_815,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_820) {auto cs_exception_820=pls::cs::capture_exception(cs_caught_820);
+if(pls::cs::exception_is(cs_exception_820,"System.Exception")) {{
 
 }}
 else {throw;} }

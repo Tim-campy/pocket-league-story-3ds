@@ -26,6 +26,9 @@ public:
     static void OpenURL(const cs::String&);
     static void set_targetFrameRate(std::int32_t value){target_.store(value);}
     static std::int32_t get_targetFrameRate(){return target_.load();}
+    // UnityEngine.Application.platform: the port reproduces the Android build,
+    // so the source sees RuntimePlatform.Android (Unity enum value 11).
+    static std::int32_t get_platform(){return 11;}
     static void pace(std::chrono::steady_clock::time_point frame_start){
         const auto rate=target_.load();
         if(rate>0){

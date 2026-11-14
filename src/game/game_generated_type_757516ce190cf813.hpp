@@ -38,4 +38,6 @@ void cs_76be1a4ec43b41ef(pls::cs::Ref<cs_757516ce190cf813> cs_this);
 bool cs_b85e74354de5635b(pls::cs::Ref<cs_757516ce190cf813> cs_this);
 
 bool cs_f8630b89ac30a6e6(std::int32_t v_type);
+
+pls::cs::String cs_94ac3fd922c20ee0(pls::cs::Ref<cs_757516ce190cf813> cs_this);
 }

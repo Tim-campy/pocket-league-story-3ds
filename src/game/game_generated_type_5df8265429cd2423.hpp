@@ -72,6 +72,8 @@ pls::cs::Ref<cs_b728593e3dcffe31>& cs_f21e72e05ec4cb79();
 
 void cs_eb341bfe377d7469(pls::cs::Ref<cs_5df8265429cd2423> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g);
 
+bool cs_7b30a1d18c70f6ea(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
+
 pls::cs::Ref<cs_5df8265429cd2423> cs_b1cdb422de7c19d2();
 
 void cs_b1cdb422de7c19d2_init(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
@@ -151,6 +153,8 @@ void cs_1b77d58a6eb05a2c(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t 
 void cs_b9bbd2b4e1a59f2c(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_type);
 
 pls::cs::String cs_d8a792a28d79d9b9(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
+
+bool cs_08f4420b10be1ebb(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
 
 void cs_16641f71ed4d7f8a(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
 }

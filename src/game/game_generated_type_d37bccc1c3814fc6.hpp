@@ -44,6 +44,8 @@ void cs_c28309dd1ee0c605(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,pls::cs::Ref<
 
 void cs_88ddecbed02f84a4(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this,std::int32_t v_key,pls::cs::String v_text);
 
+void cs_d27ae7b1db5140b5(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this);
+
 void cs_eb726d3fffc72be0(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this);
 
 bool cs_c54513f5ba5b96e8(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this);

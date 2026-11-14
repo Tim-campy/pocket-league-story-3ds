@@ -61,4 +61,6 @@ pls::cs::String cs_25f8eaa78d9b4e98(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pl
 std::int64_t cs_db199ac474798a83(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name);
 
 void cs_962a524c84eef9ee(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
+
+pls::cs::String cs_27ff635ad5111b5f(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this);
 }

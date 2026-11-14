@@ -1,5 +1,6 @@
 // GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
 #include "game_generated_type_2ffa6f51468590ea.hpp"
+#include "game_generated_type_487b2c2b346d5c73.hpp"
 #include "game_generated_type_4a8bef2ab48b32d7.hpp"
 #include "game_generated_type_4c145fe8f008af05.hpp"
 #include "game_generated_type_6485f92c2f04639f.hpp"
@@ -144,6 +145,17 @@ void cs_dc9257b0bbd34fc9(pls::cs::Ref<cs_6485f92c2f04639f> cs_this,std::int32_t 
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.FormManager.SetTargetFps(System.Int32)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> std::int32_t { auto cs_left = v_fps; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); pls::game::cs_require(cs_target)->cs_67befa25cd8b724d = cs_value; return cs_value; }());
+}
+}
+}
+}
+
+// M:form.FormManager.StartVibrator(System.Int32)
+void cs_51e1214e267b76fe(pls::cs::Ref<cs_6485f92c2f04639f> cs_this,std::int32_t v_ms) { cs_init_6485f92c2f04639f();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:form.FormManager.StartVibrator(System.Int32)",game);
+{
+([&]() -> void { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(v_ms); cs_02ee26ac128939d0(cs_arg0); }());
 }
 }
 }

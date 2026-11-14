@@ -27,4 +27,16 @@ cs::Array<cs::String> text_panel_result(){
     auto current=current_presenter();auto app=cs::nonnull(IApplication::GetCurrentApp());
     auto value=app->RunOnUiThread(cs::Delegate<cs::Ref<cs::Object>()>::from_native("PC-text-panel-result",[current]{return current->PanelResult().as_object();},current),true);return cs::Array<cs::String>::from_object(value);
 }
+cs::Array<cs::String> show_text_panel(cs::String title,cs::String text,std::int32_t mode,cs::String positive,cs::String negative,std::int32_t max_length){
+    auto current=current_presenter();auto app=cs::nonnull(IApplication::GetCurrentApp());
+    auto value=app->RunOnUiThread(cs::Delegate<cs::Ref<cs::Object>()>::from_native("text-panel-synchronous",[current,title,text,mode,positive,negative,max_length]{return current->ShowPanel({title,text,positive,negative,mode,max_length}).as_object();},current,title,text,positive,negative),true);
+    return cs::Array<cs::String>::from_object(value);
+}
+namespace {std::mutex language_mutex;cs::Ref<LanguagePanelPresenter> language_presenter{};}
+namespace {cs::GcRootProvider language_roots([](const cs::EdgeVisitor&visitor){cs::trace_value(language_presenter,visitor);});}
+namespace {cs::Ref<LanguagePanelPresenter> current_language(){std::lock_guard<std::mutex> lock(language_mutex);if(!language_presenter)language_presenter=cs::make_ref<LanguagePanelPresenter>();return language_presenter;}}
+void install_language_panel(cs::Ref<LanguagePanelPresenter> value){std::lock_guard<std::mutex> lock(language_mutex);language_presenter=std::move(value);}
+void start_language_panel(cs::Array<cs::String> languages,std::int32_t index,cs::String custom_pack_location,std::int32_t mode){current_language()->Begin({languages,index,custom_pack_location,mode});}
+bool language_panel_finished(){return current_language()->Finished();}
+cs::Array<cs::String> language_panel_result(){return current_language()->Result();}
 }

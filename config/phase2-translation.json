@@ -24,6 +24,7 @@
       "containing_type": "java.io.ByteArrayInputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -51,6 +52,7 @@
       "containing_type": "java.io.ByteArrayInputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -72,6 +74,7 @@
       "containing_type": "java.io.ByteArrayOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -93,6 +96,7 @@
       "containing_type": "java.io.ByteArrayOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -114,6 +118,7 @@
       "containing_type": "java.io.ByteArrayOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -135,6 +140,7 @@
       "containing_type": "java.io.ByteArrayOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -156,6 +162,7 @@
       "containing_type": "java.io.DataInputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -183,6 +190,7 @@
       "containing_type": "java.io.DataInputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -204,6 +212,7 @@
       "containing_type": "java.io.DataInputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -225,6 +234,7 @@
       "containing_type": "java.io.EOFException",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -252,6 +262,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -273,6 +284,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -294,6 +306,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -315,6 +328,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -336,6 +350,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -357,6 +372,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -378,6 +394,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "readlimit",
@@ -405,6 +422,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -426,6 +444,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -453,6 +472,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -474,6 +494,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -511,6 +532,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "buf",
@@ -538,6 +560,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -559,6 +582,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -586,6 +610,7 @@
       "containing_type": "java.io.InputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "cnt",
@@ -613,6 +638,7 @@
       "containing_type": "java.io.OutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -634,6 +660,7 @@
       "containing_type": "java.io.OutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -655,6 +682,7 @@
       "containing_type": "java.io.OutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -676,6 +704,7 @@
       "containing_type": "java.io.OutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -713,6 +742,7 @@
       "containing_type": "java.io.OutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -740,6 +770,7 @@
       "containing_type": "java.io.OutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -767,6 +798,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "ist",
@@ -794,6 +826,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -815,6 +848,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -836,6 +870,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -857,6 +892,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -878,6 +914,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -899,6 +936,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -920,6 +958,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -941,6 +980,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -962,6 +1002,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -983,6 +1024,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "nb",
@@ -1010,6 +1052,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "buffer",
@@ -1047,6 +1090,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1068,6 +1112,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "offset",
@@ -1100,6 +1145,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -1127,6 +1173,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -1154,6 +1201,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "buffer",
@@ -1191,6 +1239,7 @@
       "containing_type": "java.io.WrappedSystemStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -1218,6 +1267,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -1245,6 +1295,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -1272,6 +1323,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1293,6 +1345,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1314,6 +1367,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -1341,6 +1395,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -1368,6 +1423,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1389,6 +1445,7 @@
       "containing_type": "java.lang.JInteger",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -1416,6 +1473,7 @@
       "containing_type": "java.lang.JLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -1443,6 +1501,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -1470,6 +1529,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -1497,6 +1557,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -1524,6 +1585,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -1551,6 +1613,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -1578,6 +1641,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -1605,6 +1669,7 @@
       "containing_type": "java.lang.JMath",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "angdeg",
@@ -1632,6 +1697,7 @@
       "containing_type": "java.lang.JRuntime",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1653,6 +1719,7 @@
       "containing_type": "java.lang.JRuntime",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1674,6 +1741,7 @@
       "containing_type": "java.lang.JRuntime",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -1695,6 +1763,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "sjis_bytes",
@@ -1732,6 +1801,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "sjis",
@@ -1759,6 +1829,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "bytes",
@@ -1791,6 +1862,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "bytes",
@@ -1818,6 +1890,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -1845,6 +1918,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "c",
@@ -1872,6 +1946,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "i",
@@ -1899,6 +1974,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "l",
@@ -1926,6 +2002,7 @@
       "containing_type": "java.lang.JString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -1953,6 +2030,7 @@
       "containing_type": "java.lang.JSystem",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -2000,6 +2078,7 @@
       "containing_type": "java.lang.JSystem",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2021,6 +2100,7 @@
       "containing_type": "java.lang.JSystem",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2042,6 +2122,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2074,6 +2155,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2106,6 +2188,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2133,6 +2216,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2165,6 +2249,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2192,6 +2277,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2229,6 +2315,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2266,6 +2353,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2298,6 +2386,7 @@
       "containing_type": "java.lang.StringEx",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -2325,6 +2414,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2346,6 +2436,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -2373,6 +2464,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "field",
@@ -2400,6 +2492,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2421,6 +2514,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2442,6 +2536,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2463,6 +2558,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "date",
@@ -2490,6 +2586,7 @@
       "containing_type": "java.util.JCalendar",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "millis",
@@ -2517,6 +2614,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2538,6 +2636,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "date",
@@ -2565,6 +2664,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -2592,6 +2692,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2613,6 +2714,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2634,6 +2736,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2655,6 +2758,7 @@
       "containing_type": "java.util.JDate",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "time",
@@ -2682,6 +2786,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "language",
@@ -2714,6 +2819,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -2741,6 +2847,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2762,6 +2869,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2783,6 +2891,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2804,6 +2913,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2825,6 +2935,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj1",
@@ -2857,6 +2968,7 @@
       "containing_type": "java.util.JLocale",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj1",
@@ -2889,6 +3001,7 @@
       "containing_type": "java.util.JRandom",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2910,6 +3023,7 @@
       "containing_type": "java.util.JRandom",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "seed",
@@ -2937,6 +3051,7 @@
       "containing_type": "java.util.JRandom",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -2958,6 +3073,7 @@
       "containing_type": "java.util.JTimeZone",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "id",
@@ -2985,6 +3101,7 @@
       "containing_type": "java.util.JTimeZone",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3006,6 +3123,7 @@
       "containing_type": "java.util.JTimeZone",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3029,6 +3147,9 @@
         "pls::cs::Array<pls::cs::Array<std::uint8_t>>"
       ],
       "concrete_cs_type_arguments": [
+        "byte[][]"
+      ],
+      "concrete_cs_method_type_arguments": [
         "byte[][]"
       ],
       "parameters": [
@@ -3058,6 +3179,7 @@
       "containing_type": "java.util.JTool",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "type",
@@ -3095,6 +3217,7 @@
       "containing_type": "java.util.Vector",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3116,6 +3239,7 @@
       "containing_type": "java.util.Vector",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3147,6 +3271,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3172,6 +3297,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3203,6 +3329,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3234,6 +3361,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3259,6 +3387,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "index",
@@ -3290,6 +3419,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3321,6 +3451,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3346,6 +3477,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3371,6 +3503,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "elem",
@@ -3402,6 +3535,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3438,6 +3572,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -3474,6 +3609,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "a",
@@ -3510,6 +3646,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3535,6 +3672,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3566,6 +3704,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "index",
@@ -3597,6 +3736,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -3633,6 +3773,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3658,6 +3799,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3679,6 +3821,7 @@
       "containing_type": "kairo.common.cfg.Config",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3700,6 +3843,7 @@
       "containing_type": "kairo.common.cfg.Config",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3727,6 +3871,7 @@
       "containing_type": "kairo.common.cfg.Config",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "sourceUrl",
@@ -3754,6 +3899,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3781,6 +3927,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3808,6 +3955,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3829,6 +3977,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3856,6 +4005,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3883,6 +4033,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3910,6 +4061,7 @@
       "containing_type": "kairo.unity.io.AssetReader",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -3937,6 +4089,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -3958,6 +4111,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "listNum",
@@ -3985,6 +4139,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4006,6 +4161,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4027,6 +4183,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4048,6 +4205,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4069,6 +4227,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "index",
@@ -4106,6 +4265,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "index",
@@ -4138,6 +4298,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -4175,6 +4336,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -4202,6 +4364,7 @@
       "containing_type": "kairo.unity.io.ByteListOutputStream",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "b",
@@ -4229,6 +4392,7 @@
       "containing_type": "kairo.unity.io.ConnectionException",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4250,6 +4414,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4271,6 +4436,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "x",
@@ -4308,6 +4474,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "v",
@@ -4335,6 +4502,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "x",
@@ -4372,6 +4540,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -4399,6 +4568,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4420,6 +4590,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4441,6 +4612,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4462,6 +4634,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -4489,6 +4662,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "v",
@@ -4516,6 +4690,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "x",
@@ -4553,6 +4728,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "x",
@@ -4580,6 +4756,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "y",
@@ -4607,6 +4784,7 @@
       "containing_type": "kairo.unity.m3d4.util3d.Vector3D",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "z",
@@ -4634,6 +4812,7 @@
       "containing_type": "kairo.unity.util.Base64",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -4661,6 +4840,7 @@
       "containing_type": "kairo.unity.util.Base64",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "bytes",
@@ -4688,6 +4868,7 @@
       "containing_type": "kairo.unity.util.BitUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "v",
@@ -4720,6 +4901,7 @@
       "containing_type": "kairo.unity.util.BitUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "high",
@@ -4752,6 +4934,7 @@
       "containing_type": "kairo.unity.util.BitUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "v",
@@ -4784,6 +4967,7 @@
       "containing_type": "kairo.unity.util.BitUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "v",
@@ -4816,6 +5000,7 @@
       "containing_type": "kairo.unity.util.BitUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -4843,6 +5028,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4864,6 +5050,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "list",
@@ -4891,6 +5078,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4912,6 +5100,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4933,6 +5122,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -4954,6 +5144,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -4981,6 +5172,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "bit",
@@ -5008,6 +5200,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "v",
@@ -5035,6 +5228,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "node",
@@ -5062,6 +5256,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5089,6 +5284,7 @@
       "containing_type": "kairo.unity.util.Compressor",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5116,6 +5312,7 @@
       "containing_type": "kairo.unity.util.Compressor.Node",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5137,6 +5334,7 @@
       "containing_type": "kairo.unity.util.Compressor.Node",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "parent",
@@ -5184,6 +5382,7 @@
       "containing_type": "kairo.unity.util.CRC64",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "buf",
@@ -5211,6 +5410,7 @@
       "containing_type": "kairo.unity.util.CRC64",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5232,6 +5432,7 @@
       "containing_type": "kairo.unity.util.CRC64",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "crc",
@@ -5269,6 +5470,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5301,6 +5503,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5333,6 +5536,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5365,6 +5569,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5397,6 +5602,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5429,6 +5635,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5461,6 +5668,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5493,6 +5701,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5525,6 +5734,7 @@
       "containing_type": "kairo.unity.util.EncodeUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -5557,6 +5767,7 @@
       "containing_type": "kairo.unity.util.Encrypter",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -5589,6 +5800,7 @@
       "containing_type": "kairo.unity.util.Encrypter",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -5616,6 +5828,7 @@
       "containing_type": "kairo.unity.util.Encrypter",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -5648,6 +5861,7 @@
       "containing_type": "kairo.unity.util.Encrypter",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "key",
@@ -5675,6 +5889,7 @@
       "containing_type": "kairo.unity.util.FastVector",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5700,6 +5915,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5725,6 +5941,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -5756,6 +5973,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -5787,6 +6005,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "elem",
@@ -5818,6 +6037,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "index",
@@ -5849,6 +6069,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5874,6 +6095,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5899,6 +6121,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "elem",
@@ -5930,6 +6153,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -5966,6 +6190,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -5991,6 +6216,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6016,6 +6242,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6041,6 +6268,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -6072,6 +6300,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "index",
@@ -6103,6 +6332,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6128,6 +6358,7 @@
       "concrete_cs_type_arguments": [
         "int"
       ],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6149,6 +6380,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -6176,6 +6408,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "name",
@@ -6203,6 +6436,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -6230,6 +6464,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6251,6 +6486,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -6278,6 +6514,7 @@
       "containing_type": "kairo.unity.util.JarInflater.FileInfo",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6299,6 +6536,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "name",
@@ -6326,6 +6564,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "name",
@@ -6353,6 +6592,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -6380,6 +6620,7 @@
       "containing_type": "kairo.unity.util.JarInflater",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "name",
@@ -6407,6 +6648,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -6434,6 +6676,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -6461,6 +6704,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "file",
@@ -6493,6 +6737,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6514,6 +6759,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "locale",
@@ -6541,6 +6787,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6562,6 +6809,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6583,6 +6831,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6604,6 +6853,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "textTable",
@@ -6631,6 +6881,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "softlabel",
@@ -6658,6 +6909,7 @@
       "containing_type": "kairo.unity.util.Language",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -6690,6 +6942,7 @@
       "containing_type": "kairo.unity.util.Log",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -6717,6 +6970,7 @@
       "containing_type": "kairo.unity.util.Log",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -6749,6 +7003,7 @@
       "containing_type": "kairo.unity.util.Log",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "t",
@@ -6776,6 +7031,7 @@
       "containing_type": "kairo.unity.util.Log",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "t",
@@ -6803,6 +7059,7 @@
       "containing_type": "kairo.unity.util.Log",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -6835,6 +7092,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6856,6 +7114,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "property",
@@ -6883,6 +7142,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "pros",
@@ -6930,6 +7190,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -6951,6 +7212,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -6978,6 +7240,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -7005,6 +7268,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -7047,6 +7311,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -7074,6 +7339,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -7101,6 +7367,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -7128,6 +7395,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -7155,6 +7423,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -7182,6 +7451,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "type",
@@ -7209,6 +7479,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7230,6 +7501,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -7257,6 +7529,7 @@
       "containing_type": "kairo.unity.util.Property",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -7289,6 +7562,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7310,6 +7584,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -7337,6 +7612,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7364,6 +7640,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "n",
@@ -7391,6 +7668,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -7418,6 +7696,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7439,6 +7718,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7460,6 +7740,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -7487,6 +7768,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -7514,6 +7796,7 @@
       "containing_type": "kairo.unity.util.SecureInt",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7541,6 +7824,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7562,6 +7846,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7589,6 +7874,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "n",
@@ -7616,6 +7902,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -7643,6 +7930,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7664,6 +7952,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7685,6 +7974,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -7712,6 +8002,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -7739,6 +8030,7 @@
       "containing_type": "kairo.unity.util.SecureLong",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7766,6 +8058,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7787,6 +8080,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7814,6 +8108,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7841,6 +8136,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7862,6 +8158,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7883,6 +8180,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -7910,6 +8208,7 @@
       "containing_type": "kairo.unity.util.SecureNumber",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -7931,6 +8230,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "property",
@@ -7958,6 +8258,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "pros",
@@ -8005,6 +8306,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8026,6 +8328,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -8053,6 +8356,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8080,6 +8384,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -8122,6 +8427,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8149,6 +8455,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8176,6 +8483,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8203,6 +8511,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8230,6 +8539,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8257,6 +8567,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8284,6 +8595,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8311,6 +8623,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "data",
@@ -8338,6 +8651,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "type",
@@ -8365,6 +8679,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8386,6 +8701,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -8413,6 +8729,7 @@
       "containing_type": "kairo.unity.util.SecureProperty",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -8445,6 +8762,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -8472,6 +8790,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -8499,6 +8818,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "srcArray",
@@ -8546,6 +8866,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "suffix",
@@ -8573,6 +8894,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "anObject",
@@ -8600,6 +8922,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "obj",
@@ -8627,6 +8950,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "anObject",
@@ -8654,6 +8978,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -8681,6 +9006,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "from",
@@ -8713,6 +9039,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8734,6 +9061,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8755,6 +9083,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8776,6 +9105,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "ch",
@@ -8803,6 +9133,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8824,6 +9155,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "z",
@@ -8856,6 +9188,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -8883,6 +9216,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "s",
@@ -8910,6 +9244,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -8937,6 +9272,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "prefix",
@@ -8964,6 +9300,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": []
     },
     {
@@ -8985,6 +9322,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -9012,6 +9350,7 @@
       "containing_type": "kairo.unity.util.SecureString",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "str",
@@ -9039,6 +9378,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9071,6 +9411,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9103,6 +9444,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9130,6 +9472,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9157,6 +9500,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9184,6 +9528,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9211,6 +9556,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9238,6 +9584,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9265,6 +9612,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9292,6 +9640,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9319,6 +9668,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9346,6 +9696,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9383,6 +9734,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9415,6 +9767,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9447,6 +9800,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9479,6 +9833,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9511,6 +9866,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9543,6 +9899,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9575,6 +9932,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9607,6 +9965,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9639,6 +9998,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9671,6 +10031,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9703,6 +10064,7 @@
       "containing_type": "kairo.unity.util.StreamUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "os",
@@ -9735,6 +10097,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -9762,6 +10125,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -9804,6 +10168,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -9841,6 +10206,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -9873,6 +10239,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "bytes",
@@ -9900,6 +10267,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "bytes",
@@ -9927,6 +10295,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "stream",
@@ -9959,6 +10328,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "jar",
@@ -9996,6 +10366,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "jar",
@@ -10028,6 +10399,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -10065,6 +10437,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -10097,6 +10470,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "text",
@@ -10144,6 +10518,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "value",
@@ -10176,6 +10551,7 @@
       "containing_type": "kairo.unity.util.StringUtil",
       "concrete_cpp_type_arguments": [],
       "concrete_cs_type_arguments": [],
+      "concrete_cs_method_type_arguments": [],
       "parameters": [
         {
           "name": "src",
@@ -12645,7 +13021,7 @@
     },
     {
       "file": "portable_generated_type_cbac662a28aa40b1.cpp",
-      "bytes": 3665
+      "bytes": 3670
     },
     {
       "file": "portable_generated_type_cbac662a28aa40b1_templates.hpp",
@@ -14145,9 +14521,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "fa1c7165c2480969a43a8f4a10cbce4c99597df6c4ac07ed3a1eb3c90574004b",
-    "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
-    "driver_sha256": "947cf79a29321834c67a44fff0d826f1416edfe30c0a28c579f7d13309f50683"
+    "translator_source_sha256": "aa8e82cfbf8a7df85361dfe5ee5afff7738f88c0a65a5eb205ba2e89f9985cab",
+    "emission_source_sha256": "f718015b120848a233a0f46b2a1a32fbf08e039bfd4b3f6b784b7c67138f00ef",
+    "driver_sha256": "9e57500b42e50079f6abd59254f026041bb4da506148e638d550d6c55faac041"
   },
   "source_manifest": [
     {
@@ -14835,224 +15211,224 @@
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7050e83748bf61d9.obj",
-        "sha256": "4b9104ad52f59e0e0bf397bfdedc71ee1134baf665fc0aeac2a5e978d852741c"
+        "sha256": "04c21b0fc6f07d52be17c19e81859e6ffc462150c6d5d5bb35aac30b2a3f3c41"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_b9188de9464f0742.obj",
-        "sha256": "d16f13f8943fec740e8da22b6992b8a13111b7fc959cc9ffbd989d5d7359789b"
+        "sha256": "4157f36d8c0ea020d8e934414ea713daaca123667417529546534eee63036072"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_151e33114450683d.obj",
-        "sha256": "390d20270e47998e4ead75d5d1ed0918587dd34aae8e2d924206084911d50993"
+        "sha256": "c963b98bc5d33246ebd171fe14e4efcb9046da1588b666379b030763476972cf"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_237e53d89b726d8e.obj",
-        "sha256": "ce1ac81467d02fa25346be961d80f7ee36d2f0c41d8b92520ef6096a85d07bd1"
+        "sha256": "0a87d70aa8d4aae27e4cdd03caead25aae13ad5935ceda38b5297be2f9f41b2d"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_d52094f8a71cc022.obj",
-        "sha256": "98956ec6ed4f5edd912af284a70321de8295ef546bc9b37d94e938f8d203e680"
+        "sha256": "ae299178f2314c5ef24eb8ccdbacb5b079bb542420be94408ac65f48ff171ad7"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_09ab66fa9efa53c7.obj",
-        "sha256": "ad32cae6ba02ea1e45b0529c36e4a8a714e97d7b07cdb1cc8185215add964771"
+        "sha256": "13ed5f7482352949190df1a28d7491036bb6213d420142c7266bf6178d2167fe"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f53655830c33af49.obj",
-        "sha256": "0ec5ab760f756bcdcbef8e0b12f29e06e04186fd42feb1e6000be2e4ed55e5ea"
+        "sha256": "b1d1147959a407b9917439caf930cd089d516f3349e3bff2088ab924d2045367"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_6059baa061e97917.obj",
-        "sha256": "53ca34c17a68a0bc2595b993eb617e46acaad6a8a82c392b56548aafb96ce7f8"
+        "sha256": "76b6e61cf5ca4ca82cc833220130b6b102965dd809fa4db8ccf621a97e00b419"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f2cbe14d1c8ba95f.obj",
-        "sha256": "d0d8915feb4a391721a1deab709f47d43ff93aab5566c7913571a72d787419f9"
+        "sha256": "1f82ca2d9bdbb59e4cde8bf5420b7aa248e5b512e423e4d6bf9b1f0d48f73254"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e5d3d40359612c5f.obj",
-        "sha256": "ec46b9b50756831d3351f75c134876015668e9ff1388ddee88e98745623ffaec"
+        "sha256": "292aefc35162edbfc590fd2969aa6fd8e1e00841db8fa9badfceacb5d1fc1bd5"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_71becf9feb0b55c9.obj",
-        "sha256": "56dadfdadee319ab7b81ed5df471456ed7bb009af2094f162651326289e2922a"
+        "sha256": "ab5bde089afcb184b3b1f32d7742d313542e9016682c5716b49fc9bb98c17fca"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f6da18c1f1e46ebc.obj",
-        "sha256": "31fc0744bc3a86510abab87143d52d0b21b3a40648879457ad60ec7f3b7b5791"
+        "sha256": "884f61aaea898b15f2aba518b627767838e36d6b92d858e2f1e308e09a3d98fd"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_d5a434ceae0e29ac.obj",
-        "sha256": "12bf2791948f910a8a39b559d54e5fad6afebe1ed3c717c8a9d2b29203c7285e"
+        "sha256": "863fb0bfaadcf62b6b9d765954de0042bc583bb60fea8f916578dd417b6e7de7"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_1cb9f5c9577a1b79.obj",
-        "sha256": "e1fd86670ab5d9b18725d5ca2929d5fe1edcd759fd6278485c37366d3960688c"
+        "sha256": "790cdebb15abdf7e0e6e8e7aab78a5166cbaf7f83edcb86fe9e12077b2bcac43"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_ff3137528a7c11e2.obj",
-        "sha256": "fab5cdb801eae58ea3582c4a6f2d70075bcfe47292fb7cd07ed019eb163c8474"
+        "sha256": "2d408c1ebf554fca715f707ac3b3771b48c2f1e1d274bf96568658460e7949eb"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e011e73fb262e4a7.obj",
-        "sha256": "07b599528425f9a7a66c59dcb706be5f47cd9116848da8fa2612eb01dcb96551"
+        "sha256": "56ab78728e0b6b69f77e088c578ac1c9d8489d4bfb840b5d686b8bdab7b4fed3"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_0cb7c7581aeca012.obj",
-        "sha256": "22753f2c8aafa7e1be4b6cdc7b694ed3a392533cc32796dee0993e97dcd7b717"
+        "sha256": "83308f2a87c404dc8416865356a97cd5fad4c1afa8650c89cd0c479d82e72d59"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_c46d6626be045431.obj",
-        "sha256": "b28e69d46141e5600ee80fa581b4508d0e9bf4b01d3136ba3ffb4a2da36d7048"
+        "sha256": "6637ee728283ef34ab924f23b4d391a82d516aebe4340afbe320b5d795dfc210"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_af39bea8abf874ce.obj",
-        "sha256": "7b73fd89245ed0551560489decde783adb6daf5771ddbff59ca497c3828909f3"
+        "sha256": "c51858f6b14699233a38a1b2b97a3a8c9a0302371c67065437941acb24a9482a"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_052c1096a756eb18.obj",
-        "sha256": "94703ba28f32bbdbf7e7edc0a3f4a0eb110f6ed70eea5ed883d736094c672f69"
+        "sha256": "57feb745ea7e5345e26151c0bc259f7c00b5d9124d80001f02910cb6d3dc58d2"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7b20b8825890f6c5.obj",
-        "sha256": "4a87391b95c5b01a1734f0e76f05ded05cc19f28414f6d8e52652be5776cedaf"
+        "sha256": "ea183ad9cc07d04a28cfcb1f9de51983e78e2f7bf9be8c6f82c3cb48d17c50c7"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_34211caea0490646.obj",
-        "sha256": "416a861831fd8ad2f520606d0dc18d905514d445c7950df1439ec49e394caaef"
+        "sha256": "c34aef90e915363fa90bafc023c6237dd305d442c032bf7fb3b463b9faec50eb"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_237cddbf5bce3995.obj",
-        "sha256": "ed6040dfc18312bd9c082d8ed07f94edaf1aeb8d019e8956f9731d11a4063b17"
+        "sha256": "2d4312e2cb404fdd45890bfa4403e006b6b9f2036a924d32690dfd2131e782cf"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_21211c07a89ba25d.obj",
-        "sha256": "bf9139c9594e3631c154a480a23870421a51b19eb7d6bca978bcbc2a18c29868"
+        "sha256": "e22506e4f02d8a3cef7e1bdecde0e4dfabaeb620ec06c18cb7985ee627c87220"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_2313ee85f5a3645a.obj",
-        "sha256": "8eced5f42c7919d86e877144dab9d50614a03eed020f76d3015346b7c35a7a1b"
+        "sha256": "d7d77e69c2544b9f13a350b4778951f71245baed00332e731bbdbef76df240d5"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_ca791f7458f7a9dc.obj",
-        "sha256": "b250424adfede6c2b659e9ab533f18a361bf3f0ba44aa01e05380aff31844c7c"
+        "sha256": "e1883cfa1d99316f5bb0583836e576f4276a2359c36ab9f7558bb398d1c255ac"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_fba3088c14dbc4f2.obj",
-        "sha256": "66b4e307afbc47b9494aaa830ce29d9f514ba7d522edd8a1d108e9b0f095c37d"
+        "sha256": "c462220ae7227eb5526a6a7073a6cf035968155056b8c113b7834399282d2498"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_a3346126a482060c.obj",
-        "sha256": "b29df37bfd626931de53eacb5f8a23f9ea96228045301e791470259b630ce1f6"
+        "sha256": "415352004b8f13ab081ad97676315f8aed5e52a40ec248726598a74367a5dc45"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_b593e384706381b0.obj",
-        "sha256": "e6cad5e56207e24212111cfe721e6ad6196fa475ad766dbbcfd7f4a5241115db"
+        "sha256": "b25b29d20f6fa7c436b1975f190a462799a2dd233304f94cb2e61d2ba8051d51"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_75ac4d89e2b1d14c.obj",
-        "sha256": "b61fbe5a4fa0bfbea5dc0ff7100c61870b1d65c3782e9728f3fd40a6483f38e2"
+        "sha256": "20ea11ed4b10b2402132bf552a72406bf2880e3c44c3004219205d898dfb9789"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e9e00a694086ca82.obj",
-        "sha256": "dbe5fbdbbf0395afbb18316b1eb5ef1413b2dde0991cee26a9c2c618e8e3c68d"
+        "sha256": "f091947f541150664dd3107c16de28eceef2b4c3518a789f7c56415d9e096f91"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7d24c4b01b617a98.obj",
-        "sha256": "cb4742a2674a6fbe077ae6b27662befaddd18838632a956d6644621e99805402"
+        "sha256": "adf78e5803229709173bbfc9828f4a7cc53355ce271538a9478d9b21b19d58a6"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_4a44a7dd64a9cd03.obj",
-        "sha256": "b79354ec410b380b4b61ae51f2b62b69e6214c4f8ccceb9d3bf933b616c3ffec"
+        "sha256": "2962e526114e4d2ae0113a3e43e47e92f2a62060e22d576083a5312ddfb8d441"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_a388eec8299c101c.obj",
-        "sha256": "e3ab510120bd938c4dc13a3e57c0eda96d1190f6173f01baf770490e306ef5f1"
+        "sha256": "2ba6515728c5932a62dac0d7d7cc460cee71a5ebbc57b47ce5fb6734ae9547e3"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_bb5e9df8695503a7.obj",
-        "sha256": "cea5807a1f41328a0bef31673d3585e4d3184ac97a99390ce88b44c6c78db80e"
+        "sha256": "3c449e90dbba8a4f8dcd7fc25754920d7120422e07277cd58f849a882ec118d9"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_0ae25ebd2559e89d.obj",
-        "sha256": "0663757db7125086efc94fcd10cc726873c8e804670f3c4ded2d5f58aca079f4"
+        "sha256": "ca593d5d643d7c66a6226b30751ae1e66d8f7703cebdd4c84d1b7ada6fd8a5c0"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_b6a1a540e6745ffd.obj",
-        "sha256": "d2f515617aafcc9320e1ddb4007437b3e71f6c349b6569b655b24f23c112ce8d"
+        "sha256": "f23f455c52be675b2941a4af896ed6bf77e9e8b6e7f514218547c05b196f14d4"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_7f034171d873086e.obj",
-        "sha256": "b12437ec9bec7893188844c204a821830fb4f2bf9a42a1dbb7b4d618e5b07063"
+        "sha256": "9a65e68097cb40b12496d79661c0e9dd3bd9fa54d8c67f3bd8eb82d608a705f9"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_1b30d515b5fa07dc.obj",
-        "sha256": "f3b9cd69bc74ef32ece6fb2e727473b86622816294d0309fa9f063728fac5096"
+        "sha256": "e36de1e39ea84f5f9cf0481c74a5e6fe8201836e137f16958f32ade9ad406e25"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_a6197f5dcc9a8bc0.obj",
-        "sha256": "190ac967253bc37b4d7c963227af62fba1ccb707bb2184b51594d6f56db745ef"
+        "sha256": "5fc85663569edf8d74316ca596f1e4004ddfaafdc5665a8d9c57b0bb13012266"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e377890b23f9b788.obj",
-        "sha256": "f40c038582e7b0eefbf15fd4629f8b87d9d1460ed214638d32921322936726b1"
+        "sha256": "399339065ae0389d9c0c62ebe0eeff442dee727b027da2f928c43d53e2a0443d"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_e2dbe7150e310547.obj",
-        "sha256": "70a0d740b34738558de336f299c657674eb0436d45799cde3d8ad9f719e9faea"
+        "sha256": "723025b5fecefeae6123b0af4f32762ce60579f6541105e2a8a783cfb2ffe839"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_d75debd26825164c.obj",
-        "sha256": "ef70e62700803ec6d646014ab1b1c729a77dc918cf696ecff150599fd4f51d28"
+        "sha256": "412170f55015e5b7677a18f431502a67c02bb6407c8c075a20052fdfd935198c"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_56b2db913c556cea.obj",
-        "sha256": "4eb1dacf0179f7f534780f22eb2f235859870b2cbe3c25fe144b939dd9e7abd3"
+        "sha256": "15e6bb2c9ae40914105d505acebb60d6d14bbb98c7738d6d769afd192ddaddc3"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_bf54c42b29d58795.obj",
-        "sha256": "82b7d34a28e94a3c62b7e86c5ac21527bd832d18dfb4a92ebde7e65fcfb4d183"
+        "sha256": "1cf9d3bbed05b9004b1cd97fef5cc0549b97bbc80ab5a445d9a06d1984763aea"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_780a30a1afe2b340.obj",
-        "sha256": "f06c5445157bafb6db98fd3f75c961b3fda62547c9a032f6801364974ad9a53c"
+        "sha256": "66e2efb7b95c4b805cc7871ed2f1cdb45600e1bcbde3f936ecd3d8a37b85ed15"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_f3933618a0ecdc38.obj",
-        "sha256": "44df27d692fcf9b69d2e3a54c58e8958d7a14ed92458c88d862d4a97a61e2721"
+        "sha256": "47833c5c5de56e7dd3f84a821d1eaad08107787fcce7067a0e52431756e4d79b"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_6349b873ea7cd4d7.obj",
-        "sha256": "5cd30492df7bb19bf1fc1732c8dd1ebe62cc359fdf8a32130b9d0993314a601b"
+        "sha256": "d7830519625d48ccf4dc163544a2ef18f50d24fc7f8428e33d3331222b469db4"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_08c2d1fbaa535a28.obj",
-        "sha256": "0562f7faf6cb327d6aa357cd9eb72febfa6d4b1d66c8c95ee48994a95c1f5905"
+        "sha256": "6767fc3c3acc618ab13f66f9a20409cd94fc9316ddac67d0f0ad9d8672d50b2c"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_742b7c0d2c901f06.obj",
-        "sha256": "e0b3b1be987959a3fe775f84103ad9eaadabcffc33cdcc3ed4c7598411580623"
+        "sha256": "b9aa296dd2a06987fef281ea4873cdd253af9145506763e41855a8c17bd166da"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_00d24c438ed8bcb9.obj",
-        "sha256": "bb25b60e41ef41ab75376ead8e2488ff8eb55fc9048ce5499d75d1defbe56f07"
+        "sha256": "9291d3e2ed5c363c3b1bcc1d0ff3432558357c2042a61890a57f0c96b0185d8f"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_3c1371771bd041e2.obj",
-        "sha256": "c66e8cf437167eb9b7d194c16428cd40e6d447740fbb0e8f99053101014b4a19"
+        "sha256": "d65ea0dcb923ff59a11f1c5428988f26f02377472f4bcdb22da35a5d8de19377"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_72fb073d9858faed.obj",
-        "sha256": "4e2d8f045bc6b0fb99b5a9e9d24ac3a9f84d2d5922ddd3ec2e3f3f48e48564a9"
+        "sha256": "2670d2b0412e5507640dd467b15fc9efc4a0a595d79db775945171b6bfb096f8"
       },
       {
         "path": "build/translator/native/KairoLibrary/unit_138d56e668f2e1bc.obj",
-        "sha256": "b666765af4de3d0f678dc51abfe0d5a3a79be730205f37c1315e6cbb35136fec"
+        "sha256": "41442178044aaef0e9e488a2c84ad5c25970077f55745319d6fb22eba08b1eaa"
       }
     ],
     "incremental_build": {
       "exit_code": 0,
-      "elapsed_ns": 53792200,
+      "elapsed_ns": 62012700,
       "optimization": "/Od",
       "jobs": 1,
       "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
@@ -15084,272 +15460,272 @@
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_15e3f7b692b3f380.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7050e83748bf61d9.obj",
-          "sha256": "4b9104ad52f59e0e0bf397bfdedc71ee1134baf665fc0aeac2a5e978d852741c"
+          "sha256": "04c21b0fc6f07d52be17c19e81859e6ffc462150c6d5d5bb35aac30b2a3f3c41"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_18054fa8aeee43c7.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_b9188de9464f0742.obj",
-          "sha256": "d16f13f8943fec740e8da22b6992b8a13111b7fc959cc9ffbd989d5d7359789b"
+          "sha256": "4157f36d8c0ea020d8e934414ea713daaca123667417529546534eee63036072"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_1feb9ce0db5130ce.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_151e33114450683d.obj",
-          "sha256": "390d20270e47998e4ead75d5d1ed0918587dd34aae8e2d924206084911d50993"
+          "sha256": "c963b98bc5d33246ebd171fe14e4efcb9046da1588b666379b030763476972cf"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_1ff3292665c8e0c4.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_237e53d89b726d8e.obj",
-          "sha256": "ce1ac81467d02fa25346be961d80f7ee36d2f0c41d8b92520ef6096a85d07bd1"
+          "sha256": "0a87d70aa8d4aae27e4cdd03caead25aae13ad5935ceda38b5297be2f9f41b2d"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_3af9088680f95fb3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_d52094f8a71cc022.obj",
-          "sha256": "98956ec6ed4f5edd912af284a70321de8295ef546bc9b37d94e938f8d203e680"
+          "sha256": "ae299178f2314c5ef24eb8ccdbacb5b079bb542420be94408ac65f48ff171ad7"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_3b41638e424b9ee0.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_09ab66fa9efa53c7.obj",
-          "sha256": "ad32cae6ba02ea1e45b0529c36e4a8a714e97d7b07cdb1cc8185215add964771"
+          "sha256": "13ed5f7482352949190df1a28d7491036bb6213d420142c7266bf6178d2167fe"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_3c64e1d398f2e00f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f53655830c33af49.obj",
-          "sha256": "0ec5ab760f756bcdcbef8e0b12f29e06e04186fd42feb1e6000be2e4ed55e5ea"
+          "sha256": "b1d1147959a407b9917439caf930cd089d516f3349e3bff2088ab924d2045367"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_42d69496680e17fc.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_6059baa061e97917.obj",
-          "sha256": "53ca34c17a68a0bc2595b993eb617e46acaad6a8a82c392b56548aafb96ce7f8"
+          "sha256": "76b6e61cf5ca4ca82cc833220130b6b102965dd809fa4db8ccf621a97e00b419"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_4978cb69e37b8564.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f2cbe14d1c8ba95f.obj",
-          "sha256": "d0d8915feb4a391721a1deab709f47d43ff93aab5566c7913571a72d787419f9"
+          "sha256": "1f82ca2d9bdbb59e4cde8bf5420b7aa248e5b512e423e4d6bf9b1f0d48f73254"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_5098bfda9cf65745.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e5d3d40359612c5f.obj",
-          "sha256": "ec46b9b50756831d3351f75c134876015668e9ff1388ddee88e98745623ffaec"
+          "sha256": "292aefc35162edbfc590fd2969aa6fd8e1e00841db8fa9badfceacb5d1fc1bd5"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_51222df74ac70bab.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_71becf9feb0b55c9.obj",
-          "sha256": "56dadfdadee319ab7b81ed5df471456ed7bb009af2094f162651326289e2922a"
+          "sha256": "ab5bde089afcb184b3b1f32d7742d313542e9016682c5716b49fc9bb98c17fca"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_52158c8b20364c2b.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f6da18c1f1e46ebc.obj",
-          "sha256": "31fc0744bc3a86510abab87143d52d0b21b3a40648879457ad60ec7f3b7b5791"
+          "sha256": "884f61aaea898b15f2aba518b627767838e36d6b92d858e2f1e308e09a3d98fd"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_582a926e9c7748a6.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_d5a434ceae0e29ac.obj",
-          "sha256": "12bf2791948f910a8a39b559d54e5fad6afebe1ed3c717c8a9d2b29203c7285e"
+          "sha256": "863fb0bfaadcf62b6b9d765954de0042bc583bb60fea8f916578dd417b6e7de7"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_64732f8c8acf2fd3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_1cb9f5c9577a1b79.obj",
-          "sha256": "e1fd86670ab5d9b18725d5ca2929d5fe1edcd759fd6278485c37366d3960688c"
+          "sha256": "790cdebb15abdf7e0e6e8e7aab78a5166cbaf7f83edcb86fe9e12077b2bcac43"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_66dbad5679f8ab87.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_ff3137528a7c11e2.obj",
-          "sha256": "fab5cdb801eae58ea3582c4a6f2d70075bcfe47292fb7cd07ed019eb163c8474"
+          "sha256": "2d408c1ebf554fca715f707ac3b3771b48c2f1e1d274bf96568658460e7949eb"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_67cd241ab51652f1.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e011e73fb262e4a7.obj",
-          "sha256": "07b599528425f9a7a66c59dcb706be5f47cd9116848da8fa2612eb01dcb96551"
+          "sha256": "56ab78728e0b6b69f77e088c578ac1c9d8489d4bfb840b5d686b8bdab7b4fed3"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_7254e4706a01e4e7.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_0cb7c7581aeca012.obj",
-          "sha256": "22753f2c8aafa7e1be4b6cdc7b694ed3a392533cc32796dee0993e97dcd7b717"
+          "sha256": "83308f2a87c404dc8416865356a97cd5fad4c1afa8650c89cd0c479d82e72d59"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_72d9658ed61145d6.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_c46d6626be045431.obj",
-          "sha256": "b28e69d46141e5600ee80fa581b4508d0e9bf4b01d3136ba3ffb4a2da36d7048"
+          "sha256": "6637ee728283ef34ab924f23b4d391a82d516aebe4340afbe320b5d795dfc210"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_7de6788b61a5af56.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_af39bea8abf874ce.obj",
-          "sha256": "7b73fd89245ed0551560489decde783adb6daf5771ddbff59ca497c3828909f3"
+          "sha256": "c51858f6b14699233a38a1b2b97a3a8c9a0302371c67065437941acb24a9482a"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_7fd3b635ed6929d0.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_052c1096a756eb18.obj",
-          "sha256": "94703ba28f32bbdbf7e7edc0a3f4a0eb110f6ed70eea5ed883d736094c672f69"
+          "sha256": "57feb745ea7e5345e26151c0bc259f7c00b5d9124d80001f02910cb6d3dc58d2"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_832d81e198eeeec2.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7b20b8825890f6c5.obj",
-          "sha256": "4a87391b95c5b01a1734f0e76f05ded05cc19f28414f6d8e52652be5776cedaf"
+          "sha256": "ea183ad9cc07d04a28cfcb1f9de51983e78e2f7bf9be8c6f82c3cb48d17c50c7"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_83a7bc36395d16bd.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_34211caea0490646.obj",
-          "sha256": "416a861831fd8ad2f520606d0dc18d905514d445c7950df1439ec49e394caaef"
+          "sha256": "c34aef90e915363fa90bafc023c6237dd305d442c032bf7fb3b463b9faec50eb"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_86e62a3c0e632a0f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_237cddbf5bce3995.obj",
-          "sha256": "ed6040dfc18312bd9c082d8ed07f94edaf1aeb8d019e8956f9731d11a4063b17"
+          "sha256": "2d4312e2cb404fdd45890bfa4403e006b6b9f2036a924d32690dfd2131e782cf"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_8b851671e0d8b17f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_21211c07a89ba25d.obj",
-          "sha256": "bf9139c9594e3631c154a480a23870421a51b19eb7d6bca978bcbc2a18c29868"
+          "sha256": "e22506e4f02d8a3cef7e1bdecde0e4dfabaeb620ec06c18cb7985ee627c87220"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_8c57b816bbc8fd6e.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_2313ee85f5a3645a.obj",
-          "sha256": "8eced5f42c7919d86e877144dab9d50614a03eed020f76d3015346b7c35a7a1b"
+          "sha256": "d7d77e69c2544b9f13a350b4778951f71245baed00332e731bbdbef76df240d5"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_8d93189702e4084b.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_ca791f7458f7a9dc.obj",
-          "sha256": "b250424adfede6c2b659e9ab533f18a361bf3f0ba44aa01e05380aff31844c7c"
+          "sha256": "e1883cfa1d99316f5bb0583836e576f4276a2359c36ab9f7558bb398d1c255ac"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_922b87749168eb15.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_fba3088c14dbc4f2.obj",
-          "sha256": "66b4e307afbc47b9494aaa830ce29d9f514ba7d522edd8a1d108e9b0f095c37d"
+          "sha256": "c462220ae7227eb5526a6a7073a6cf035968155056b8c113b7834399282d2498"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_924db3d974bae2af.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_a3346126a482060c.obj",
-          "sha256": "b29df37bfd626931de53eacb5f8a23f9ea96228045301e791470259b630ce1f6"
+          "sha256": "415352004b8f13ab081ad97676315f8aed5e52a40ec248726598a74367a5dc45"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_9487cb83e3a46e0a.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_b593e384706381b0.obj",
-          "sha256": "e6cad5e56207e24212111cfe721e6ad6196fa475ad766dbbcfd7f4a5241115db"
+          "sha256": "b25b29d20f6fa7c436b1975f190a462799a2dd233304f94cb2e61d2ba8051d51"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_98f0a1bec2084c3c.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_75ac4d89e2b1d14c.obj",
-          "sha256": "b61fbe5a4fa0bfbea5dc0ff7100c61870b1d65c3782e9728f3fd40a6483f38e2"
+          "sha256": "20ea11ed4b10b2402132bf552a72406bf2880e3c44c3004219205d898dfb9789"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a09270023ec48eca.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e9e00a694086ca82.obj",
-          "sha256": "dbe5fbdbbf0395afbb18316b1eb5ef1413b2dde0991cee26a9c2c618e8e3c68d"
+          "sha256": "f091947f541150664dd3107c16de28eceef2b4c3518a789f7c56415d9e096f91"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a0cf9aef6a251bfd.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7d24c4b01b617a98.obj",
-          "sha256": "cb4742a2674a6fbe077ae6b27662befaddd18838632a956d6644621e99805402"
+          "sha256": "adf78e5803229709173bbfc9828f4a7cc53355ce271538a9478d9b21b19d58a6"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a0dc211eb3feb56d.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_4a44a7dd64a9cd03.obj",
-          "sha256": "b79354ec410b380b4b61ae51f2b62b69e6214c4f8ccceb9d3bf933b616c3ffec"
+          "sha256": "2962e526114e4d2ae0113a3e43e47e92f2a62060e22d576083a5312ddfb8d441"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_a465028bea3432a3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_a388eec8299c101c.obj",
-          "sha256": "e3ab510120bd938c4dc13a3e57c0eda96d1190f6173f01baf770490e306ef5f1"
+          "sha256": "2ba6515728c5932a62dac0d7d7cc460cee71a5ebbc57b47ce5fb6734ae9547e3"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_ab1b1085a7ab32b9.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_bb5e9df8695503a7.obj",
-          "sha256": "cea5807a1f41328a0bef31673d3585e4d3184ac97a99390ce88b44c6c78db80e"
+          "sha256": "3c449e90dbba8a4f8dcd7fc25754920d7120422e07277cd58f849a882ec118d9"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_acb158b492b43017.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_0ae25ebd2559e89d.obj",
-          "sha256": "0663757db7125086efc94fcd10cc726873c8e804670f3c4ded2d5f58aca079f4"
+          "sha256": "ca593d5d643d7c66a6226b30751ae1e66d8f7703cebdd4c84d1b7ada6fd8a5c0"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_bb652fbb61000386.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_b6a1a540e6745ffd.obj",
-          "sha256": "d2f515617aafcc9320e1ddb4007437b3e71f6c349b6569b655b24f23c112ce8d"
+          "sha256": "f23f455c52be675b2941a4af896ed6bf77e9e8b6e7f514218547c05b196f14d4"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_bd164c3c94a49e2a.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_7f034171d873086e.obj",
-          "sha256": "b12437ec9bec7893188844c204a821830fb4f2bf9a42a1dbb7b4d618e5b07063"
+          "sha256": "9a65e68097cb40b12496d79661c0e9dd3bd9fa54d8c67f3bd8eb82d608a705f9"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_bfe2a01361163e7a.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_1b30d515b5fa07dc.obj",
-          "sha256": "f3b9cd69bc74ef32ece6fb2e727473b86622816294d0309fa9f063728fac5096"
+          "sha256": "e36de1e39ea84f5f9cf0481c74a5e6fe8201836e137f16958f32ade9ad406e25"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c0fae45144034cf9.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_a6197f5dcc9a8bc0.obj",
-          "sha256": "190ac967253bc37b4d7c963227af62fba1ccb707bb2184b51594d6f56db745ef"
+          "sha256": "5fc85663569edf8d74316ca596f1e4004ddfaafdc5665a8d9c57b0bb13012266"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c20c229ea63037d8.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e377890b23f9b788.obj",
-          "sha256": "f40c038582e7b0eefbf15fd4629f8b87d9d1460ed214638d32921322936726b1"
+          "sha256": "399339065ae0389d9c0c62ebe0eeff442dee727b027da2f928c43d53e2a0443d"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c4521f4960c4f908.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_e2dbe7150e310547.obj",
-          "sha256": "70a0d740b34738558de336f299c657674eb0436d45799cde3d8ad9f719e9faea"
+          "sha256": "723025b5fecefeae6123b0af4f32762ce60579f6541105e2a8a783cfb2ffe839"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_c783ca99640a5ce3.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_d75debd26825164c.obj",
-          "sha256": "ef70e62700803ec6d646014ab1b1c729a77dc918cf696ecff150599fd4f51d28"
+          "sha256": "412170f55015e5b7677a18f431502a67c02bb6407c8c075a20052fdfd935198c"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_cbac662a28aa40b1.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_56b2db913c556cea.obj",
-          "sha256": "4eb1dacf0179f7f534780f22eb2f235859870b2cbe3c25fe144b939dd9e7abd3"
+          "sha256": "15e6bb2c9ae40914105d505acebb60d6d14bbb98c7738d6d769afd192ddaddc3"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_d4a32b46456ca92c.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_bf54c42b29d58795.obj",
-          "sha256": "82b7d34a28e94a3c62b7e86c5ac21527bd832d18dfb4a92ebde7e65fcfb4d183"
+          "sha256": "1cf9d3bbed05b9004b1cd97fef5cc0549b97bbc80ab5a445d9a06d1984763aea"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_e7a5499b363ef51b.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_780a30a1afe2b340.obj",
-          "sha256": "f06c5445157bafb6db98fd3f75c961b3fda62547c9a032f6801364974ad9a53c"
+          "sha256": "66e2efb7b95c4b805cc7871ed2f1cdb45600e1bcbde3f936ecd3d8a37b85ed15"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_e7d772862db62924.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_f3933618a0ecdc38.obj",
-          "sha256": "44df27d692fcf9b69d2e3a54c58e8958d7a14ed92458c88d862d4a97a61e2721"
+          "sha256": "47833c5c5de56e7dd3f84a821d1eaad08107787fcce7067a0e52431756e4d79b"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_ea324a0bbfe717fe.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_6349b873ea7cd4d7.obj",
-          "sha256": "5cd30492df7bb19bf1fc1732c8dd1ebe62cc359fdf8a32130b9d0993314a601b"
+          "sha256": "d7830519625d48ccf4dc163544a2ef18f50d24fc7f8428e33d3331222b469db4"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_ead0ac0906403160.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_08c2d1fbaa535a28.obj",
-          "sha256": "0562f7faf6cb327d6aa357cd9eb72febfa6d4b1d66c8c95ee48994a95c1f5905"
+          "sha256": "6767fc3c3acc618ab13f66f9a20409cd94fc9316ddac67d0f0ad9d8672d50b2c"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_edf182ae9bfd734d.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_742b7c0d2c901f06.obj",
-          "sha256": "e0b3b1be987959a3fe775f84103ad9eaadabcffc33cdcc3ed4c7598411580623"
+          "sha256": "b9aa296dd2a06987fef281ea4873cdd253af9145506763e41855a8c17bd166da"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_f3ea616d36334b95.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_00d24c438ed8bcb9.obj",
-          "sha256": "bb25b60e41ef41ab75376ead8e2488ff8eb55fc9048ce5499d75d1defbe56f07"
+          "sha256": "9291d3e2ed5c363c3b1bcc1d0ff3432558357c2042a61890a57f0c96b0185d8f"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_f59223d2c773f078.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_3c1371771bd041e2.obj",
-          "sha256": "c66e8cf437167eb9b7d194c16428cd40e6d447740fbb0e8f99053101014b4a19"
+          "sha256": "d65ea0dcb923ff59a11f1c5428988f26f02377472f4bcdb22da35a5d8de19377"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_f8b20a4d1d9d695f.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_72fb073d9858faed.obj",
-          "sha256": "4e2d8f045bc6b0fb99b5a9e9d24ac3a9f84d2d5922ddd3ec2e3f3f48e48564a9"
+          "sha256": "2670d2b0412e5507640dd467b15fc9efc4a0a595d79db775945171b6bfb096f8"
         },
         {
           "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common\\generated\\portable_generated_type_fb60578b3098a284.cpp",
           "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\translator\\native\\KairoLibrary\\unit_138d56e668f2e1bc.obj",
-          "sha256": "b666765af4de3d0f678dc51abfe0d5a3a79be730205f37c1315e6cbb35136fec"
+          "sha256": "41442178044aaef0e9e488a2c84ad5c25970077f55745319d6fb22eba08b1eaa"
         }
       ],
       "ninja_file": {
@@ -15391,8 +15767,8 @@
       "src/kairo/api/services_managed.hpp": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5",
       "src/kairo/api/sound.hpp": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78",
       "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
-      "src/kairo/api/system.hpp": "c34de6982530c431ec6ef141bf7245325d91ac12e3b4baa753733c007c69f35e",
-      "src/kairo/api/text_input.hpp": "9009ecdacce110b7eb1ab0594332d6f298b2a64e30bb181a9ee3a4adb72e3034",
+      "src/kairo/api/system.hpp": "c57e8463e277ed47bd25bfb2e2e02d037e4356a8da102418153b090fe5a3f80b",
+      "src/kairo/api/text_input.hpp": "83ed30d7ac205e62909db5e9f5325c7cd4b0132f2bf3bce4b2cdc4a6a6e4b25b",
       "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
       "src/kairo/api/vector2.hpp": "09ab95478fdd27af71e0a03d0de8e3084c6388b7842d86ea6915ef68204315e9",
       "src/kairo/api/vector3.hpp": "4830f223a65124ea07c7e49f119e14a581d8ef2eee901c1a37c9c863f6bfac81",
@@ -15497,7 +15873,7 @@
       "src/kairo/common/generated/portable_generated_type_c4521f4960c4f908.hpp": "efefa520ab7da3a632ad4087d78230297ade190b7ba1e261d8fc676c19e3dec3",
       "src/kairo/common/generated/portable_generated_type_c783ca99640a5ce3.cpp": "98ca1e1512b9296eab9eb2366da0cab66bbd0623ec6638012b85eb3ea8acb355",
       "src/kairo/common/generated/portable_generated_type_c783ca99640a5ce3.hpp": "92def09c793bfbc49cb45416a2c950fb3f812ff4ef589659b8663d9fb736741c",
-      "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp": "5c52989724dfd004cf880d00267c10254d6040635117d8c13269984bb015c878",
+      "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp": "354f4b3369cc1889deddc728960837800020f95a74b054d61824515d97342946",
       "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.hpp": "f604fca4066cb59f0d7de4532e364d44d20bf2a469903987be61fc3554f63851",
       "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1_templates.hpp": "a00e735ce49404139e2e183097163d5e3c8f8276e4448d71f37c0948a35b6b1b",
       "src/kairo/common/generated/portable_generated_type_d4a32b46456ca92c.cpp": "93cbaff76bc381f3e285e6c75ba577d9815276ae511edc337f292bead7751e78",
@@ -15546,7 +15922,7 @@
       "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
       "src/kairo/common/render_mode.hpp": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0",
       "src/kairo/common/resource_load_trace.hpp": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f",
-      "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
+      "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
       "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
       "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
       "src/kairo/common/source_allocation_probe.hpp": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83",
@@ -15946,7 +16322,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp",
-      "sha256": "5c52989724dfd004cf880d00267c10254d6040635117d8c13269984bb015c878"
+      "sha256": "354f4b3369cc1889deddc728960837800020f95a74b054d61824515d97342946"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.hpp",

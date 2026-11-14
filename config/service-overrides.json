@@ -604,6 +604,117 @@
       }
     },
     {
+      "symbol": "M:native.AppPlugin.ShowPurchaseLog(System.String,System.Int32,System.String,System.Boolean)",
+      "action": "constant",
+      "result_contract": "closed by the user: 0",
+      "native_hook": null,
+      "reason": "Removed Android purchase-log dialog; PurchaseLogView.Show clears the log only on 1",
+      "lowering": {
+        "kind": "int_exact",
+        "value": 0,
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.AppPlugin.LaunchMailer(System.String,System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Removed Android mailer; FriendData.ActionSendMail continues as after the user backs out",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.WebBoxPlugin.Create",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Removed Android web view; main.WebBox has no caller in the game source",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.WebBoxPlugin.SetViewRect(System.Int32,System.Int32,System.Int32,System.Int32)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Removed Android web view; main.WebBox has no caller in the game source",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.WebBoxPlugin.LoadUrl(System.String)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Removed Android web view; main.WebBox has no caller in the game source",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.WebBoxPlugin.Dispose",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Removed Android web view; main.WebBox has no caller in the game source",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.WebBoxPlugin.Visible",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Removed Android web view; main.WebBox has no caller in the game source",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.WebBoxPlugin.SetVisible(System.Boolean)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Removed Android web view; main.WebBox has no caller in the game source",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:kairo.unity.ui.Canvas.GetAdMobView",
+      "action": "constant",
+      "result_contract": "null AdMobView",
+      "native_hook": null,
+      "reason": "Ads removed; admobView_ is always null in the port",
+      "lowering": {
+        "kind": "null",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:kairo.unity.ui.Canvas.Vibrator(System.Int64)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "No vibration hardware; KairoPlugin.Vibrator JNI leaf not called",
+      "lowering": {
+        "kind": "void",
+        "field_assignments": []
+      }
+    },
+    {
       "symbol": "M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId",
       "action": "constant",
       "result_contract": "null string",

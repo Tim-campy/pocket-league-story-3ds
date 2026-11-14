@@ -51,4 +51,6 @@ void cs_826469405b7c0a34(pls::cs::Ref<cs_af32d28251411c95> cs_this,pls::cs::Ref<
 void cs_98117d8ad36b8cc1(pls::cs::Ref<cs_af32d28251411c95> cs_this);
 
 void cs_2fc41a4e0b75b7e8(pls::cs::Ref<cs_af32d28251411c95> cs_this);
+
+bool cs_b327d9f17774e75f(pls::cs::Ref<cs_af32d28251411c95> cs_this);
 }

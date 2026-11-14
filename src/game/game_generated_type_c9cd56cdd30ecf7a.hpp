@@ -28,6 +28,8 @@ void cs_init_c9cd56cdd30ecf7a();
 
 pls::cs::Delegate<void()>& cs_169d42739a93e08e();
 
+pls::cs::String& cs_5f281ccd452f793d();
+
 bool& cs_40a53d57b75c7593();
 
 pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_b8786f8cf097476e();
@@ -47,4 +49,6 @@ bool cs_d89100ce3e5567b3(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this);
 bool cs_233f6a98cc8c5aff(pls::cs::Ref<cs_757516ce190cf813> v_e);
 
 pls::cs::String cs_e349d7428c1381fa(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this);
+
+bool cs_f92e685b818a445c(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this);
 }

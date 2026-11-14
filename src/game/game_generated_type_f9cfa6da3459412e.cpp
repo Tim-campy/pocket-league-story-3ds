@@ -151,8 +151,8 @@ if (([&]() -> bool { auto cs_left = v_flag2_4177; auto cs_right = pls::diagnosti
 if (v_flag_1940) {
 try {
 ([&]() -> void { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(std::uint64_t(0x64ull)); cs_26244a61d0d2e16c(cs_arg0); }());
-} catch(const pls::cs::Exception& cs_caught_808) {auto cs_exception_808=pls::cs::capture_exception(cs_caught_808);
-if(pls::cs::exception_is(cs_exception_808,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_810) {auto cs_exception_810=pls::cs::capture_exception(cs_caught_810);
+if(pls::cs::exception_is(cs_exception_810,"System.Exception")) {{
 
 }}
 else {throw;} }

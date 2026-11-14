@@ -42,6 +42,8 @@ pls::cs::String cs_cab4479c3676c376(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
 
 pls::cs::String cs_c4f4767aa3a57458(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
 
+std::int32_t cs_82fd3d9e6535f380(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
+
 pls::cs::String cs_0c1c941d76211aca(pls::cs::Ref<cs_77de402a688eeb9d> cs_this);
 
 void cs_2756d68ee4aaa074(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,bool v_value);

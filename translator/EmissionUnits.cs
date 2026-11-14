@@ -61,6 +61,9 @@ sealed partial class Lowerer {
         string WithoutComments(string value)=>Regex.Replace(value,@"//[^\n]*|/\*.*?\*/","",RegexOptions.Singleline).Trim();
         TypeUnit? DeclarationOwner(string block){
             var clean=WithoutComments(block);
+            // new T() overloads belong to the closed class they construct.
+            var newInstance=Regex.Match(clean,@"\bcs_new_instance\s*\(\s*pls::cs::Ref<(cs_[0-9a-f]{16})>\s*\*");
+            if(newInstance.Success)return owners.GetValueOrDefault(newInstance.Groups[1].Value);
             var structure=Regex.Match(clean,@"^(?:template\s*<[^>]*>\s*)?struct\s+(\w+)");
             if(structure.Success)return owners.GetValueOrDefault(structure.Groups[1].Value);
             var member=Regex.Match(clean,@"\b(cs_[0-9a-f]{16})(?:<[^<>;{}()]*>)?::\w+\s*\(");

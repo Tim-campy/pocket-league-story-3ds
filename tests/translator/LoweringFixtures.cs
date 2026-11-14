@@ -9,6 +9,7 @@ public static class LoweringFixtures {
     public static int EmptyLiteralIdentity(int seed){string a="";string b=seed==0?"":"";return object.ReferenceEquals(a,b)?seed+1:seed-1;}
     public static int FloatingConcatOrder(int seed){trace_=0;string value=""+(float)Stamp(1)+":"+(double)Stamp(2)+":"+1.5f+":"+(-2.25d);return value=="1:2:1.5:-2.25"&&trace_==12?seed+1:seed-1;}
     public static int Stamp(int value) { trace_ = trace_ * 10 + value; return value; }
+    private static string StampText(int value) { trace_ = trace_ * 10 + value; return value==3?"three":"five"; }
     private static int Pair(int a, int b) { return a * 100 + b; }
     public static int SourceAdapterCall(int seed){var target=new Synthetic.SourceAdapterTarget();target.value=seed;return target.Read(7)+target.Read();}
     public static int SourceAdapterNull(int seed){trace_=0;Synthetic.SourceAdapterTarget target=null;try{return target.Read(Stamp(3));}catch(NullReferenceException){return trace_+seed;}}
@@ -58,7 +59,16 @@ public static class LoweringFixtures {
     public static string StringConcatThree(int seed){string a=seed<0?null:"a";string b="";string c=null;return string.Concat(a,b,"z")+"|"+string.Concat(c,c,c)+"|"+string.Concat("x",a,c)+"|"+string.Concat(c,"y",a).Length;}
     public static int ObjectInitializerOrder(int seed){trace_=0;var a=new Synthetic.InitTarget(Stamp(1)){b=Stamp(2),c=Stamp(3)};return a.a*100+a.b*10+a.c+trace_*1000+seed;}
     public static int ObjectInitializerSelfField(int seed){var src=new Synthetic.InitTarget(seed){flag=true};var copy=src.Clone();return (copy.flag?1:0)+copy.a*2+copy.b*4+(object.ReferenceEquals(copy,src)?100:0);}
+    public static int GenericNewConstraint(int seed){var host=new Synthetic.GenericFactoryHost();return host.Build<Synthetic.NewItem>(seed)+host.Build<Synthetic.NewItemBase>(seed)*1000;}
+    public static int GenericNewVirtualCall(int seed){Synthetic.GenericFactoryHost host=new Synthetic.GenericFactoryHost();return host.Count<Synthetic.NewItem>(new[]{"1","2"})+host.Count<Synthetic.NewItemBase>(new[]{"3"})*1000+seed;}
+    public static int GenericNewForwarded(int seed){var host=new Synthetic.GenericFactoryHost();return host.Forward<Synthetic.NewItem>(seed)+host.Fresh<Synthetic.NewItem>().id+(object.ReferenceEquals(host.Fresh<Synthetic.NewItem>(),host.Fresh<Synthetic.NewItem>())?100:0);}
+    public static int GenericNewNullReceiver(int seed){trace_=0;Synthetic.GenericFactoryHost host=null;try{return host.Count<Synthetic.NewItemBase>(new[]{Stamp(1).ToString()});}catch(NullReferenceException){return seed+1+trace_*10;}}
+    public static int GenericNewParseFailure(int seed){var host=new Synthetic.GenericFactoryHost();try{return host.Count<Synthetic.NewItem>(new[]{"x"});}catch(FormatException){return seed+2;}}
+    public static int GenericVirtualOverridden(int seed){Synthetic.GenericVirtualBase value=new Synthetic.GenericVirtualDerived();return value.Make<Synthetic.NewItem>()+seed;}
     public static int ObjectInitializerBaseField(int seed){var d=new Synthetic.InitDerived(seed){a=7,d=seed+1};return d.a*1000+d.b*100+d.d;}
+    public static string ConcatParamsExpanded(int seed){trace_=0;object[] row={null,seed,"q"};string date=seed<0?null:"d";string s=string.Concat("a","&file=",row[1],"&index=",row[2],"&date=(",date,")");return s+"|"+string.Concat("x",null,seed,"y",new Synthetic.ConcatValue(4,false,false))+"|"+trace_;}
+    public static string StringCoalesce(int seed){string a=seed<0?null:"a";string n=null;trace_=0;string r=(n??"b")+"|"+(a??"c")+"|"+(n??n??"d")+"|"+(n??StampText(3))+"|"+(a??StampText(5));return r+"|"+trace_;}
+    public static string CompoundObjectConcat(int seed){string s=seed<0?null:"s";object o=new Synthetic.ConcatValue(4);s+=o;object none=null;s+=none;Synthetic.ConcatValue typed=new Synthetic.ConcatValue(5);s+=typed;return s;}
     public static int TryParseLimit(int seed){int result=seed;bool success=int.TryParse(seed<0?"-2147483648":"2147483648",out result);return success?result:result-100;}
     public static string ObjectConcatSingle(int seed){trace_=seed;return string.Concat(seed<0?null:new Synthetic.ConcatValue(4,false,seed==0));}
     public static string UriEscapeMarks(){return Uri.EscapeDataString("azAZ09_~!'()*-. /?:@&=+$,%#[]\\\"\u0000\u00e9\ud800");}
@@ -256,6 +266,16 @@ namespace Synthetic {
     public static class StaticWriteA {public static int value=Init();public static int Init(){StaticWriteB.noInitializer=StaticWriteB.first+1;return StaticWriteB.noInitializer;}}
     public static class StaticWriteB {public static int noInitializer;public static int first=37;}
     public class InitTarget{public int a,b,c;public bool flag;public InitTarget(int a){this.a=a;b=-1;}public InitTarget Clone(){return new InitTarget(a){flag=flag};}}
+    public class NewItemBase{public int stamp=11;public int id;public virtual int Kind(){return 1;}}
+    public class NewItem:NewItemBase{public NewItem(){stamp+=5;}public override int Kind(){return 2;}}
+    public class GenericFactoryHost{
+        public int Build<T>(int seed) where T:NewItemBase,new(){NewItemBase item=new T();item.id=seed;return item.stamp*10+item.Kind()+item.id;}
+        public virtual int Count<T>(string[] data) where T:NewItemBase,new(){int total=0;for(int i=0;i<data.Length;i++){NewItemBase item=new T();item.id=int.Parse(data[i]);total+=item.id*item.stamp+item.Kind();}return total;}
+        public int Forward<U>(int seed) where U:NewItemBase,new(){return Build<U>(seed+1)+Count<U>(new[]{"4"});}
+        public T Fresh<T>() where T:NewItemBase,new(){T item=new T();item.id=7;return item;}
+    }
+    public class GenericVirtualBase{public virtual int Make<T>() where T:NewItemBase,new(){return new T().Kind();}}
+    public class GenericVirtualDerived:GenericVirtualBase{public override int Make<T>(){return new T().Kind()+10;}}
     public class InitDerived:InitTarget{public int d;public InitDerived(int x):base(x){b=x*2;}}
     public sealed class ConcatValue {
         public int step;public bool fail;public bool nullResult;

@@ -10,6 +10,7 @@
 #include "game_generated_type_6485f92c2f04639f.hpp"
 #include "game_generated_type_6ee7d14059be1acf.hpp"
 #include "game_generated_type_757516ce190cf813.hpp"
+#include "game_generated_type_7a470603d6db57af.hpp"
 #include "game_generated_type_931908081ea62151.hpp"
 #include "game_generated_type_9326c27a92cfea3a.hpp"
 #include "game_generated_type_af32d28251411c95.hpp"
@@ -20,6 +21,7 @@
 #include "generated/portable_generated_type_a0cf9aef6a251bfd.hpp"
 #include "generated/portable_generated_type_e7d772862db62924.hpp"
 #include "generated/portable_generated_type_f8b20a4d1d9d695f.hpp"
+#include "game_generated_type_6ee7d14059be1acf_templates.hpp"
 namespace pls::game {
 
 void cs_af32d28251411c95::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_9326c27a92cfea3a::trace_edges(visitor);pls::cs::trace_value(cs_449a72c816bc8b81,visitor);pls::cs::trace_value(cs_7098c1837eb30f29,visitor);pls::cs::trace_value(cs_f7b1fd704bdd2c8a,visitor);pls::cs::trace_value(cs_a6d9872478ce823a,visitor);pls::cs::trace_value(cs_d08ec7df0a5c34ee,visitor);pls::cs::trace_value(cs_522c8c247df0b8bb,visitor);pls::cs::trace_value(cs_790b10da4e9ff66f,visitor);pls::cs::trace_value(cs_9104d50d4078e9c9,visitor);pls::cs::trace_value(cs_6c5020fb7ea0a4fb,visitor);}
@@ -163,6 +165,24 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 ([&]() { auto cs_value = pls::cs::Ref<pls::kairo::Image>{}; cs_de24cebe7367b9a6_value = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); pls::game::cs_require(cs_target)->cs_a6d9872478ce823a = cs_value; return cs_value; }());
+}
+}
+}
+}
+
+// M:system.surface.GameBanner.Visible
+bool cs_b327d9f17774e75f(pls::cs::Ref<cs_af32d28251411c95> cs_this) { cs_init_af32d28251411c95();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.surface.GameBanner.Visible",game);
+{
+if (([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_449a72c816bc8b81; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetHeight(); }());}); auto cs_right = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_e806cfaebaa3c9d5(cs_receiver); }()); return (cs_left <= cs_right); }())) {
+return false;
+}
+pls::cs::Ref<cs_7a470603d6db57af> v_adMobView_5256 = ([&]() -> pls::cs::Ref<cs_7a470603d6db57af> { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Canvas>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7098c1837eb30f29; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_41d83ea0dc47b19d(cs_receiver); }());
+if ((([&]() { auto cs_left = pls::cs::box(v_adMobView_5256); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }()) && ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_7a470603d6db57af>>(v_adMobView_5256); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_e3e9b6fd73c21e45(cs_receiver); }()))) {
+return false;
+}
+return true;
 }
 }
 }

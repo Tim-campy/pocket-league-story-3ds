@@ -182,6 +182,36 @@ leitura de todos os `catch` acima e, quando a tradução permitir, por execuçã
 do roteiro 6 de `docs/coverage-plan.md`. Até lá, o estado é **lido no fonte,
 não executado**.
 
+## Políticas 55 e seguintes — serviços Android removidos (decisão de 2026-11-13)
+
+`AppPlugin.LaunchMailer` e `WebBox*` são serviços Android removidos, sem
+efeito. Para cada chamador, conferido no fonte que o jogo não aguarda retorno,
+callback ou mudança de estado. Não há `UnitySendMessage`, campo estático
+escrito pelo Java nem consulta repetida: todas as chamadas passavam por
+`IApplication.RunOnUiThread(delegate, true)`, síncronas.
+
+| Membro | Resultado | Chamadores | Aguarda? |
+|---|---|---|---|
+| `AppPlugin.LaunchMailer(string,string)` | sem efeito, sem exceção | `FriendData.ActionSendMail` (`FriendData.cs:527`) ← `FriendForm.cs:609/642/770` | não: nenhuma mudança de estado depois da chamada; com exceção, o `catch` mostraria erro, por isso a política não lança |
+| `AppPlugin.ShowPurchaseLog(string,int,string,bool)` | `0` ("fechado pelo usuário") | `PurchaseLogView.Show` (`PurchaseLogView.cs:33`) ← `BillingForm.cs:682/702` | bloqueava até o diálogo Java fechar; só `== 1` limpa o histórico e salva, então `0` preserva o save (regra da cobrança) |
+| `WebBoxPlugin.Create` | `false` | só `main.WebBox` (`WebBox.cs:11,16`) | não: `main.WebBox` não tem chamador no jogo |
+| `WebBoxPlugin.Visible` | `false` ("fechado") | só `WebBox.cs:54` | não |
+| `WebBoxPlugin.SetViewRect/LoadUrl/Dispose/SetVisible` | sem efeito | só `WebBox.cs` | não |
+
+`AppPlugin.Init` e `AppPlugin.Finish` já eram ligados à plataforma
+(`native_plugin_init`, `request_host_finish`). O inicializador estático de
+`AppPlugin`/`WebBoxPlugin` só criava as classes Java e não é emitido para os
+corpos substituídos por política (regra no tradutor: todos os campos estáticos
+do tipo são `UnityEngine.AndroidJava*`).
+
+**Também nesta rodada:**
+- `Canvas.GetAdMobView` → nulo (anúncios removidos; mesmo contrato de
+  `Canvas.UpdateAdMobView`).
+- `Canvas.Vibrator(long)` → sem efeito: não há vibrador no PC nem no 3DS.
+  Folha de plataforma que a Fase 3 pode trocar.
+- `Application.platform` → `RuntimePlatform.Android` (11): o port reproduz
+  a versão Android, então os ramos por plataforma seguem o Android.
+
 ## Testes e o que ainda não foi provado
 
 `python tools/test_services.py` compila C++17 com MSVC existente, `/W4 /WX /fp:strict`, sem instalar ferramentas. Os testes próprios verificam resposta de registro, identidade estável após dois processos reais, nova identidade em outro diretório, UID vazio e prévio conservados, rejeição de identidade inválida sem substituir o arquivo, save sintético com bytes/campos desconhecidos intacto após todas as operações indisponíveis, ausência de concessão, anúncios zero e notificações vazias/desligadas. Recibo gerado: `config/phase2-services-tests.json`.

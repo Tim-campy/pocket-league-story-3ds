@@ -205,12 +205,12 @@
     "src/kairo/platform/sdl/debug_input.hpp": "2fb4d8352d8b783efbc41bf81bc4b9eae974bdd560266307b6d53bdc216cbefb",
     "src/kairo/platform/sdl/backend.hpp": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df",
     "src/kairo/api/platform.hpp": "a8aa73dcc40333a6a528be69fd1374cae4d841aeb364cb6e6605dfdb06140add",
-    "src/kairo/api/system.hpp": "c34de6982530c431ec6ef141bf7245325d91ac12e3b4baa753733c007c69f35e",
-    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
+    "src/kairo/api/system.hpp": "c57e8463e277ed47bd25bfb2e2e02d037e4356a8da102418153b090fe5a3f80b",
+    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364"
   },
   "native_executable": {
     "path": "build/debug-input-tests/debug-input-fixtures.exe",
-    "sha256": "b4ebfa746119e511b73a91197640a260bfba51c4be2bef9b20bfc2b66c104109"
+    "sha256": "eed137fe04f94b6ea0a6ff85edbfa086c75527fb4ea27f0285a7729a461ee591"
   },
   "external_api_metadata": {
     "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",

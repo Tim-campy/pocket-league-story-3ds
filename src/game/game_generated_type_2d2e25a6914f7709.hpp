@@ -52,6 +52,8 @@ pls::cs::Ref<cs_2d2e25a6914f7709> cs_7a28af13c1c2f5ac();
 
 void cs_7a28af13c1c2f5ac_init(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 
+void cs_7d659fe0cb1d3eac(pls::cs::String v_subject,pls::cs::String v_text);
+
 void cs_1acc9dc621224acf(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_friendId);
 
 void cs_4346f0ecaf3acf26(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_friendId);

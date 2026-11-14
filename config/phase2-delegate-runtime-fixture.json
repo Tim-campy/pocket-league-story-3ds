@@ -10,7 +10,7 @@
     "tests/kairo/delegate_runtime.cpp": "4853310d3f6034eca55cac06d375472c61a891db073da9590975114b0ee2e52b",
     "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
     "src/main/allocation_probe.cpp": "4d18ccc9a0cbe2bb728c362131d82496bf90d8a8c9da3e4c81c31a94da6b7678",
-    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
+    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
     "src/kairo/common/platform_condition.hpp": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e",
     "src/kairo/common/allocation_probe.hpp": "421148421531082938084b303d7ae468e149154dd2771a2ff5fc25d226f46d19",
     "src/main/native_allocation_sites.hpp": "b0236c6107302fea92b4aa1b763c91770f579e0c37e20a5c4efcc4c6a8b90d02",
@@ -18,7 +18,7 @@
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
-    "src/runtime/managed_gc_bridge.inc": "816279c7795dd0f9fa6f2fa12e7c2c51dc9abb575c00b6e4ea5843358d6d6821",
+    "src/runtime/managed_gc_bridge.inc": "55ff690145e3bcd9ce1f272cddcba56c87eae7be1b8aebd959cd5664d0df74d3",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
     "src/runtime/tracing_gc.cpp": "31d4acc51a64472b866ce359cbed556afef8009df72ab24ca6650b3ce27d0d4a",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"

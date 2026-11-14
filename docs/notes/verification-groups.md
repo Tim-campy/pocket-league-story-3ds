@@ -2,7 +2,8 @@
 
 Levantamento só por leitura dos 122 checks de `tools/verify_phase2.py`
 (nenhum build executado). Base para trocar a chave "árvore inteira" por
-chaves por grupo. **Ainda não implementado.**
+chaves por grupo. **Implementado em 2026-11-14** (`tools/verification_groups.py`,
+teste de mecanismo `tests/repository/test_verification_groups.py`, 9 casos).
 
 ## Grupos
 
@@ -81,3 +82,35 @@ chaves por grupo. **Ainda não implementado.**
 Implementar a chave por grupo com essas regras, mais um teste de mecanismo
 (mudar um arquivo de cada grupo e conferir quais checks invalidam), e medir o
 tempo de uma mudança pequena por grupo.
+
+## Implementação e tempos (2026-11-14)
+
+- Grupos: runtime (inclui todos os cabeçalhos de `src/kairo`), kairo
+  (`.cpp` da plataforma e `src/main`), portable (`generated/**`), game,
+  translator (`translator/**`), fixtures (`tests/translator/**`, separado
+  porque os executores de fixtures do runtime só leem fixtures), reference,
+  config, tools (`tools/**`, `tests/**`, `CMakeLists.txt`, `AGENTS.md`).
+- Checks não confirmados, que leem recibos de outros checks ou artefatos fora
+  da chave ficam em todos os grupos (lista no módulo).
+- `portable-differential` (7,2 min) só roda com `--full`; sem ele, um recibo
+  vencido é relatado `DEFERRED` em `deferred_checks`. `--full` é obrigatório
+  antes de tags e do congelamento.
+- Produtores que reescrevem entradas: a checagem final por grupo detecta e
+  pede uma segunda passada, que reutiliza o resto (medido: 118 reutilizados,
+  5 refeitos, ~74 s).
+
+Tempo de reverificação depois de mudar um arquivo de cada grupo (soma dos
+tempos medidos dos checks invalidados, rodada `--full` de 2026-11-14, 43,6 min
+no total, `--jobs 1`):
+
+| Grupo alterado | Checks | Minutos |
+|---|---:|---:|
+| game | 16 | 15,5 |
+| portable | 18 | 16,2 |
+| config | 28 | 18,7 |
+| reference | 42 | 21,8 |
+| translator | 50 | 29,8 |
+| kairo (`.cpp`) | 71 | 32,5 |
+| fixtures | 76 | 32,7 |
+| runtime / cabeçalhos | 102 | 35,8 |
+| tools | 122 | 36,4 |

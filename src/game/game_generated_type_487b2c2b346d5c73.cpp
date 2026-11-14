@@ -4,6 +4,7 @@
 #include "game_generated_type_487b2c2b346d5c73.hpp"
 #include "game_generated_type_72d9658ed61145d6.hpp"
 #include "game_generated_type_77de402a688eeb9d.hpp"
+#include "game_generated_type_7a470603d6db57af.hpp"
 #include "game_generated_type_8e2bf0f8fe011785.hpp"
 #include "game_generated_type_b489b0d33bb37bb8.hpp"
 #include "game_generated_type_c87dc3d2d0f9440a.hpp"
@@ -21,6 +22,15 @@ if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { a
 return;
 }
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { bool cs_arg0 = v_enable; cs_933c73fabeb9213d(cs_arg0); }());});
+}
+}
+}
+
+// M:kairo.unity.ui.Canvas.GetAdMobView
+pls::cs::Ref<cs_7a470603d6db57af> cs_41d83ea0dc47b19d(pls::cs::Ref<pls::kairo::Canvas> cs_this) { if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Canvas.GetAdMobView",kairo);
+{
+return pls::cs::Ref<cs_7a470603d6db57af>{};
 }
 }
 }
@@ -146,6 +156,13 @@ void cs_bc7b8b04f006df42(pls::cs::Ref<pls::kairo::Canvas> cs_this,bool v_enable)
 void cs_ac34c1502cb07afe(pls::cs::String v_url) {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Canvas.VersionUp(System.String)",kairo);
 {
 
+}
+}
+
+// M:kairo.unity.ui.Canvas.Vibrator(System.Int64)
+void cs_02ee26ac128939d0(std::int64_t v_ms) {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Canvas.Vibrator(System.Int64)",kairo);
+{
+return;
 }
 }
 }

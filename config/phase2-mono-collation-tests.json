@@ -763,7 +763,7 @@
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "tests/translator/mono_collation_fixtures.cpp": "28f32a9539bcfdca03319b3d60bd28db0cc96b50ad2d631cf59c8627e7b578f0",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
-    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
+    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
     "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
     "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
     "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0",
@@ -778,15 +778,15 @@
   },
   "native_executable": {
     "path": "build/mono-collation-fixtures/mono-collation-fixtures.exe",
-    "sha256": "bc0dc462693ab5a2baf2c22a254b6ab2163701268d03b4698ea351bdc8eba928"
+    "sha256": "0cb9df4df86bab74f4ea81ffd55efcd3adcf22d58ba215a2ea41676e6a930865"
   },
   "edge_native_executable": {
     "path": "build/mono-collation-fixtures/mono-collation-edge-fixtures.exe",
-    "sha256": "c59eac3e56ec684b3c80096309935756c59f36c23aa1ae489f1f88132b36b8e3"
+    "sha256": "5c0803b1663da980e78e31026cf6b0896996f645464573af71020d2c5283783c"
   },
   "bmp_native_executable": {
     "path": "build/mono-collation-fixtures/mono-bmp-fixtures.exe",
-    "sha256": "5dbdd98e3cc093560bed47422ff740b9581a201f1bb9d16d9739c2b05708b098"
+    "sha256": "324eeccba6dd78f952fd68762f105ae01d6ef00341a3bfc20291538f5471fa4c"
   },
   "compiler": {
     "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",

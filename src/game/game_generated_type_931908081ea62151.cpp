@@ -10,21 +10,37 @@
 #include "generated/portable_generated_type_e7a5499b363ef51b.hpp"
 #include "generated/portable_generated_type_ea324a0bbfe717fe.hpp"
 #include "generated/portable_generated_type_f3ea616d36334b95.hpp"
+#include "game_generated_type_6ee7d14059be1acf_templates.hpp"
 namespace pls::game {
 
 void cs_931908081ea62151::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_bbde759dc3b81081,visitor);pls::cs::trace_value(cs_1947569898ac6eaf,visitor);pls::cs::trace_value(cs_e8fb66fe9cd2c6fa,visitor);pls::cs::trace_value(cs_25ef515e28c2f1c3,visitor);pls::cs::trace_value(cs_18b42457ec8905ed,visitor);pls::cs::trace_value(cs_42e87afb27f20974,visitor);pls::cs::trace_value(cs_feae4d6092e68c7b,visitor);pls::cs::trace_value(cs_4ed7d84c1dce4799,visitor);pls::cs::trace_value(cs_fd8816021d9a3386,visitor);pls::cs::trace_value(cs_9e45a15cae334c64,visitor);pls::cs::trace_value(cs_c121762e04d9e472,visitor);pls::cs::trace_value(cs_1bc5442ab3af463e,visitor);pls::cs::trace_value(cs_15351a5f19e951e7,visitor);pls::cs::trace_value(cs_5994cfa5fd307cd3,visitor);pls::cs::trace_value(cs_ffd30ff59c7f2fa7,visitor);pls::cs::trace_value(cs_041f0f865fe45ade,visitor);pls::cs::trace_value(cs_cd268ae5907f6b9b,visitor);pls::cs::trace_value(cs_de33231c384fd439,visitor);pls::cs::trace_value(cs_689025ebd1ac5aa9,visitor);}
 
 void cs_931908081ea62151::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_bbde759dc3b81081);pls::cs::release_value(cs_1947569898ac6eaf);pls::cs::release_value(cs_e8fb66fe9cd2c6fa);pls::cs::release_value(cs_25ef515e28c2f1c3);pls::cs::release_value(cs_18b42457ec8905ed);pls::cs::release_value(cs_42e87afb27f20974);pls::cs::release_value(cs_feae4d6092e68c7b);pls::cs::release_value(cs_4ed7d84c1dce4799);pls::cs::release_value(cs_fd8816021d9a3386);pls::cs::release_value(cs_9e45a15cae334c64);pls::cs::release_value(cs_c121762e04d9e472);pls::cs::release_value(cs_1bc5442ab3af463e);pls::cs::release_value(cs_15351a5f19e951e7);pls::cs::release_value(cs_5994cfa5fd307cd3);pls::cs::release_value(cs_ffd30ff59c7f2fa7);pls::cs::release_value(cs_041f0f865fe45ade);pls::cs::release_value(cs_cd268ae5907f6b9b);pls::cs::release_value(cs_de33231c384fd439);pls::cs::release_value(cs_689025ebd1ac5aa9);}
 
-void cs_931908081ea62151::cs_virtual_d1e3bc579a0b32eb(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_d1e3bc579a0b32eb(pls::cs::static_pointer_cast<cs_931908081ea62151>(shared_from_this()),v_stream);}
-
 void cs_931908081ea62151::cs_virtual_d1922bb59f7ed3bf(std::int32_t v_id,std::int32_t v_flag,pls::cs::String v_productId,pls::cs::String v_name,pls::cs::String v_price,std::int32_t v_type,pls::cs::String v_explain) {cs_d1922bb59f7ed3bf(pls::cs::static_pointer_cast<cs_931908081ea62151>(shared_from_this()),v_id,v_flag,v_productId,v_name,v_price,v_type,v_explain);}
+
+void cs_931908081ea62151::cs_virtual_d1e3bc579a0b32eb(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_d1e3bc579a0b32eb(pls::cs::static_pointer_cast<cs_931908081ea62151>(shared_from_this()),v_stream);}
 
 void cs_931908081ea62151::cs_virtual_eae24f37838268a3(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_eae24f37838268a3(pls::cs::static_pointer_cast<cs_931908081ea62151>(shared_from_this()),v_os);}
 
 void cs_init_931908081ea62151(){static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingItem",[](){
 
 });}
+
+// M:system.billing.ui.BillingItem.#ctor
+pls::cs::Ref<cs_931908081ea62151> cs_d9871f7e20992ddf() { cs_init_931908081ea62151();
+{ auto cs_this = pls::cs::make_ref<cs_931908081ea62151>(); cs_d9871f7e20992ddf_init(cs_this); return cs_this; }
+}
+
+void cs_d9871f7e20992ddf_init(pls::cs::Ref<cs_931908081ea62151> cs_this) {
+cs_this->cs_feae4d6092e68c7b = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:654",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
+cs_this->cs_4ed7d84c1dce4799 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:702",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
+cs_this->cs_5994cfa5fd307cd3 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:936",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
+cs_this->cs_689025ebd1ac5aa9 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:1117",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingItem.#ctor",game);
+{}
+}
+}
 
 // M:system.billing.ui.BillingItem.ChangeState(System.Int32)
 void cs_34602a275b94fc86(pls::cs::Ref<cs_931908081ea62151> cs_this,std::int32_t v_state) { cs_init_931908081ea62151();
@@ -284,8 +300,8 @@ if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { a
 } else {
 try {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.Init(System.Int32,System.Int32,System.String,System.String,System.String,System.Int32,System.String):2506",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_15351a5f19e951e7; }()); return pls::generated::cs_1192c1f2378de3bb(cs_arg0); }());}); return pls::generated::cs_2dbfed27c63e8b3d(cs_arg0); }());}); return pls::generated::cs_891849d99054b970(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_5994cfa5fd307cd3 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_816) {auto cs_exception_816=pls::cs::capture_exception(cs_caught_816);
-if(pls::cs::exception_is(cs_exception_816,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_819) {auto cs_exception_819=pls::cs::capture_exception(cs_caught_819);
+if(pls::cs::exception_is(cs_exception_819,"System.Exception")) {{
 
 }}
 else {throw;} }
@@ -358,4 +374,7 @@ void cs_c1ebd2cf1827c239(pls::cs::Ref<cs_931908081ea62151> cs_this,pls::cs::Ref<
 }
 }
 }
+
+// new T() with T = system.billing.ui.BillingItem
+pls::cs::Ref<cs_931908081ea62151> cs_new_instance(pls::cs::Ref<cs_931908081ea62151>*){return cs_d9871f7e20992ddf();}
 }

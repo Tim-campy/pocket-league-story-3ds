@@ -36,6 +36,10 @@ virtual void cs_virtual_d1e3bc579a0b32eb(pls::cs::Ref<pls::generated::cs_e7a5499
 
 void cs_init_931908081ea62151();
 
+pls::cs::Ref<cs_931908081ea62151> cs_d9871f7e20992ddf();
+
+void cs_d9871f7e20992ddf_init(pls::cs::Ref<cs_931908081ea62151> cs_this);
+
 void cs_34602a275b94fc86(pls::cs::Ref<cs_931908081ea62151> cs_this,std::int32_t v_state);
 
 bool cs_526dc02241eb9cf2(pls::cs::Ref<cs_931908081ea62151> cs_this,std::int32_t v_bit);
@@ -85,4 +89,6 @@ void cs_eae24f37838268a3(pls::cs::Ref<cs_931908081ea62151> cs_this,pls::cs::Ref<
 void cs_86d43294891eab63(pls::cs::Ref<cs_931908081ea62151> cs_this,bool v_provision);
 
 void cs_c1ebd2cf1827c239(pls::cs::Ref<cs_931908081ea62151> cs_this,pls::cs::Ref<cs_a42daea58251b089> v_purchase);
+
+pls::cs::Ref<cs_931908081ea62151> cs_new_instance(pls::cs::Ref<cs_931908081ea62151>*);
 }

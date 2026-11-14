@@ -17,4 +17,10 @@ std::int32_t cs_1ca562f042f1542c{};
 std::int32_t cs_2d7489c80764903f{};
 std::int32_t cs_c665fb818f47218f{};
 };
+
+void cs_init_88b206217a8b30c2();
+
+pls::cs::Ref<cs_88b206217a8b30c2> cs_780e36bec4975ef3();
+
+void cs_780e36bec4975ef3_init(pls::cs::Ref<cs_88b206217a8b30c2> cs_this);
 }

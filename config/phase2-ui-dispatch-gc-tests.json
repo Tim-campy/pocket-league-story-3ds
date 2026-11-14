@@ -9,19 +9,19 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "e44e6e7e5b1929c143d616aea8bf9b844dd627a8ff39ad3588c34f6665cd20e2"
+    "sha256": "e6daa9ea1de58e90d9a435e5fc9184fbad2324b3e64c1f68544921fcca63f32a"
   },
   "inputs": {
     "tools/test_ui_dispatch_gc.py": "eba1f943afce1064cbef1efb9d38fc9cc4264a1833c6548df9ba05d66ee505ca",
     "tests/kairo/ui_dispatch_gc.cpp": "e663b217970f33ac86fe68690060d82b3c987bf1c221fa1edaef2d6b3262703d",
     "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
-    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
+    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
-    "src/runtime/managed_gc_bridge.inc": "816279c7795dd0f9fa6f2fa12e7c2c51dc9abb575c00b6e4ea5843358d6d6821",
+    "src/runtime/managed_gc_bridge.inc": "55ff690145e3bcd9ce1f272cddcba56c87eae7be1b8aebd959cd5664d0df74d3",
     "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
     "src/runtime/tracing_gc.cpp": "31d4acc51a64472b866ce359cbed556afef8009df72ab24ca6650b3ce27d0d4a",
     "src/runtime/tracing_gc.hpp": "67b0edb048a4cabe6e2c22dee9f432ae6ad04f563d713f6c7d5d1e2746dc8596"

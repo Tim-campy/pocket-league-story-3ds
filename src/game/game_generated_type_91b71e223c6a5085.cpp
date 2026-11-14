@@ -91,6 +91,17 @@ return cs_this;
 }
 }
 
+// M:kairo.unity.util.SecureByteArray.ToArray
+pls::cs::Array<std::uint8_t> cs_043210b1767b19c7(pls::cs::Ref<cs_91b71e223c6a5085> cs_this) { cs_init_91b71e223c6a5085();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureByteArray.ToArray",kairo);
+{
+return ([&]() -> pls::cs::Array<std::uint8_t> { auto cs_receiver = static_cast<pls::cs::Ref<cs_91b71e223c6a5085>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_1c987cdcc36f7bac(cs_receiver); }());
+}
+}
+}
+}
+
 // M:kairo.unity.util.SecureByteArray.ToArray(kairo.unity.util.SecureByteArray)
 pls::cs::Array<std::uint8_t> cs_fe020e7913ef1e99(pls::cs::Ref<cs_91b71e223c6a5085> v_ary) { cs_init_91b71e223c6a5085();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureByteArray.ToArray(kairo.unity.util.SecureByteArray)",kairo);

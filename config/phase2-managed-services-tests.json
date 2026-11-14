@@ -13,15 +13,15 @@
     "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
     "src/kairo/api/services_managed.hpp": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5",
     "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
-    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
+    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
     "tools/test_managed_services.py": "2f9fe5f0344e226dc77855b1133f298655967a1f9832f1a450b61adbf3ceb6e9",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a"
   },
   "native_executable": {
     "path": "build/managed-services-tests/managed-services.exe",
-    "sha256": "9b215625d225229451c4c95a2819ac069845f825a9e89ab76a27893f5d64be06"
+    "sha256": "8a7a2e34f6ad207ca969fe5b3a1b5ac73758e99e3bae6808c5f94cff971a0639"
   },
-  "policy_sha256": "1da0e89e37cc8a6c9cf0dadbe2cb5daf32a28000827c0a34ae31a43deb15ea45",
+  "policy_sha256": "0b11246951c611424ece630401e992433d5281d380940cdf651775b7946bc4d4",
   "intended_symbol": "M:main.AppData.CgiRegist(System.String,System.String)",
   "native_hook": "pls::services::managed::register_local",
   "integration_status": "ADAPTER_TESTED; generated caller binding is separate evidence",

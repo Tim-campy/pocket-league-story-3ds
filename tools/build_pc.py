@@ -230,7 +230,14 @@ def main():
     parser.add_argument('--diagnostic-title-anchor',type=int,help='Diagnostic runs only: scripted frames start at this number on the first original TitleForm frame (also rebases --virtual-clock)')
     parser.add_argument('--virtual-clock',help='Diagnostic runs only: deterministic clock start_ms,read_us,frame_ms (or observe)')
     parser.add_argument('--diagnostic-unlabeled-popups-only',action='store_true',help='During popup replay, leave windows with a right soft label untouched')
+    parser.add_argument('--diagnostic-route',type=Path,help='Diagnostic runs only: condition-driven route file (docs/notes/route-runner-design.md); excludes the frame-based input flags')
+    parser.add_argument('--ui-trace',action='store_true',help='Diagnostic runs only: log PLS_UI_STATE on every UI state change')
     args=parser.parse_args()
+    if args.diagnostic_route is not None:
+        if not args.diagnostic_generated or not args.run:parser.error('--diagnostic-route requires a diagnostic run')
+        if args.diagnostic_select_frame or args.diagnostic_key_frame or args.diagnostic_dismiss_popups_until_frame is not None or args.diagnostic_title_anchor is not None:parser.error('--diagnostic-route replaces the frame-based input flags')
+        if not args.diagnostic_route.is_file():parser.error('Route file not found')
+    if args.ui_trace and(not args.diagnostic_generated or not args.run):parser.error('--ui-trace requires a diagnostic run')
     if not 1<=args.run_seconds<=600:parser.error('--run-seconds must be1..600')
     if args.diagnostic_dismiss_popups_until_frame is not None and(not args.diagnostic_generated or not args.run or not 300<=args.diagnostic_dismiss_popups_until_frame<=12000):parser.error('Popup replay requires a private run and a final frame300..12000')
     if args.diagnostic_save_from_attempt is not None and(not args.diagnostic_generated or not args.run or args.diagnostic_save_from_attempt<1):parser.error('Private save reuse requires a diagnostic run and an earlier positive attempt number')
@@ -269,6 +276,8 @@ def main():
     if args.diagnostic_unlabeled_popups_only:env['PLS_PC_DISMISS_UNLABELED_ONLY']='1'
     if args.diagnostic_dismiss_popups_until_frame is not None:env['PLS_PC_DISMISS_POPUPS_UNTIL']=str(args.diagnostic_dismiss_popups_until_frame)
     if args.diagnostic_key_frame:env['PLS_PC_KEY_FRAMES']=','.join(args.diagnostic_key_frame)
+    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None)
+    if args.ui_trace:env['PLS_PC_UI_TRACE']='1'
     diagnostic_source=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
     diagnostic_manifest=validate_diagnostic_manifest(diagnostic_source)if diagnostic_source else None
     diagnostic_folder=diagnostic_working_tree(diagnostic_source,diagnostic_manifest)if diagnostic_source else None
@@ -298,6 +307,11 @@ def main():
         attempt['scripted_key_frame']=args.diagnostic_key_frame
         attempt['virtual_clock']=args.virtual_clock
         attempt['title_anchor']=args.diagnostic_title_anchor
+        if args.diagnostic_route is not None:
+            route_copy=attempt_folder/'route.txt';route_copy.write_bytes(args.diagnostic_route.read_bytes())
+            env['PLS_PC_ROUTE']=str(route_copy.resolve())
+            attempt['route']=dict(name=args.diagnostic_route.name,sha256=hashlib.sha256(route_copy.read_bytes()).hexdigest(),
+                                  steps=sum(1 for line in route_copy.read_text(encoding='utf-8').splitlines() if line.split('#',1)[0].strip()))
         if args.metrics:env['PLS_PC_CAPTURE_DIR']=str((attempt_folder/'frames').resolve())
         if diagnostic_folder:
             attempt.update(diagnostic_only=True,diagnostic_manifest_sha256=digest(diagnostic_folder/'manifest.json'),trap_count=len(diagnostic_manifest['traps']),
@@ -354,6 +368,12 @@ def main():
                 attempt.update(run)
                 attempt['stopped_at_timeout']=run['stopped_reason']=='timeout'
                 exit_code=run['process_exit_code']
+                if args.diagnostic_route is not None:
+                    text=(attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace')
+                    done=re.findall(r'^PLS_ROUTE_DONE=(\d+)',text,re.M);timeout=re.findall(r'^PLS_ROUTE_TIMEOUT=(.*)$',text,re.M)
+                    steps=re.findall(r'^PLS_ROUTE_STEP=\{"step":(\d+)',text,re.M)
+                    attempt['route_result']=dict(status='done'if done else'timeout'if timeout else'incomplete',
+                        frame=int(done[-1])if done else None,last_step=int(steps[-1])if steps else None,timeout=timeout[-1][:2000]if timeout else None)
             else:
                 process=subprocess.Popen([str(exe),str(ROOT/'assets')],cwd=ROOT,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
                 try:stdout,stderr=process.communicate(timeout=args.run_seconds)

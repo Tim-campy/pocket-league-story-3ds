@@ -15,6 +15,7 @@
 #include "generated/portable_generated_type_3b41638e424b9ee0.hpp"
 #include "generated/portable_generated_type_5098bfda9cf65745.hpp"
 #include "generated/portable_generated_type_51222df74ac70bab.hpp"
+#include "generated/portable_generated_type_7de6788b61a5af56.hpp"
 #include "generated/portable_generated_type_7fd3b635ed6929d0.hpp"
 #include "generated/portable_generated_type_bb652fbb61000386.hpp"
 #include "generated/portable_generated_type_e7a5499b363ef51b.hpp"
@@ -22,6 +23,7 @@
 #include "generated/portable_generated_type_ea324a0bbfe717fe.hpp"
 #include "generated/portable_generated_type_f8b20a4d1d9d695f.hpp"
 #include "generated/portable_generated_type_fb60578b3098a284.hpp"
+#include "game_generated_type_6ee7d14059be1acf_templates.hpp"
 #include "generated/portable_generated_type_51222df74ac70bab_templates.hpp"
 namespace pls::game {
 
@@ -36,6 +38,10 @@ pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> cs_6ee7d14059be1acf::cs_virtua
 void cs_6ee7d14059be1acf::cs_virtual_5255d4c2789eac48(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {cs_5255d4c2789eac48(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
 
 bool cs_6ee7d14059be1acf::cs_virtual_39912b67b6e00cf6(pls::cs::Ref<cs_feb7ae74aa59a27c> v_task) {return cs_39912b67b6e00cf6(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_task);}
+
+void cs_6ee7d14059be1acf::cs_virtual_d3abbeacfed9ec8c(pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscription) {cs_2295d61cf16de536(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_data,v_paymentProduct,v_subscription);}
+
+void cs_6ee7d14059be1acf::cs_virtual_f9baf743614aca01(pls::cs::Array<std::uint8_t> v_data) {cs_f9baf743614aca01(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_data);}
 
 void cs_6ee7d14059be1acf::cs_virtual_52c48544109f9d2d(pls::cs::Array<std::uint8_t> v_data) {cs_52c48544109f9d2d(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(shared_from_this()),v_data);}
 
@@ -414,6 +420,34 @@ return v_array_15553;
 }
 }
 
+// M:system.billing.ui.BillingManager.Init(System.String[][],System.String,System.String[])
+void cs_2295d61cf16de536(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscription) { cs_init_6ee7d14059be1acf();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingManager.Init(System.String[][],System.String,System.String[])",game);
+{
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(cs_this); pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_arg0 = v_data; pls::cs::String cs_arg1 = v_paymentProduct; pls::cs::Array<pls::cs::String> cs_arg2 = v_subscription; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_6a336d8e7a818aa0<pls::cs::Ref<cs_931908081ea62151>>(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
+}
+}
+}
+}
+
+// M:system.billing.ui.BillingManager.Init(System.String[][])
+void cs_2e16e2400acc854c(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data) { cs_init_6ee7d14059be1acf();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingManager.Init(System.String[][])",game);
+{
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(cs_this); pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_arg0 = v_data; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0070" u"\x0061" u"\x0079" u"\x006d" u"\x0065" u"\x006e" u"\x0074" u"",7);return cs_literal;}()); pls::cs::Array<pls::cs::String> cs_arg2 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.ui.BillingManager.Init(System.String[][]):1131",pls::cs::Array<pls::cs::String>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)))); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_6a336d8e7a818aa0<pls::cs::Ref<cs_931908081ea62151>>(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());
+}
+}
+}
+}
+
+// Concrete compile receipt: M:system.billing.ui.BillingManager.Init``1(System.String[][],System.String,System.String[]) [system.billing.ui.BillingItem]
+template void cs_6a336d8e7a818aa0<pls::cs::Ref<cs_931908081ea62151>>(pls::cs::Ref<cs_6ee7d14059be1acf>,pls::cs::Array<pls::cs::Array<pls::cs::String>>,pls::cs::String,pls::cs::Array<pls::cs::String>);
+
+// Concrete compile receipt: M:system.billing.ui.BillingManager.Init``1(System.String[][]) [system.billing.ui.BillingItem]
+template void cs_41f3c4e83fbe34c2<pls::cs::Ref<cs_931908081ea62151>>(pls::cs::Ref<cs_6ee7d14059be1acf>,pls::cs::Array<pls::cs::Array<pls::cs::String>>);
+
 // M:system.billing.ui.BillingManager.LaunchPurchaseFlow(system.billing.ui.BillingItem)
 bool cs_f3ece5a1d40dcbef(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item) { cs_init_6ee7d14059be1acf();
 { if(!cs_this)throw pls::cs::NullReferenceException();
@@ -424,6 +458,20 @@ return false;
 }
 }
 }
+
+// M:system.billing.ui.BillingManager.Load(System.Byte[])
+void cs_f9baf743614aca01(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<std::uint8_t> v_data) { cs_init_6ee7d14059be1acf();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingManager.Load(System.Byte[])",game);
+{
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(cs_this); pls::cs::Array<std::uint8_t> cs_arg0 = v_data; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_9ea20ca469cb3e8b<pls::cs::Ref<cs_931908081ea62151>>(cs_receiver,cs_arg0); }());
+}
+}
+}
+}
+
+// Concrete compile receipt: M:system.billing.ui.BillingManager.Load``1(System.Byte[]) [system.billing.ui.BillingItem]
+template void cs_9ea20ca469cb3e8b<pls::cs::Ref<cs_931908081ea62151>>(pls::cs::Ref<cs_6ee7d14059be1acf>,pls::cs::Array<std::uint8_t>);
 
 // M:system.billing.ui.BillingManager.LoadGame(System.Byte[])
 void cs_52c48544109f9d2d(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<std::uint8_t> v_data) { cs_init_6ee7d14059be1acf();

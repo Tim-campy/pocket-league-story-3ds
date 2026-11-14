@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "assertions": 38,
+  "operation": "own-PC-diagnostic-route-runner",
+  "inputs": {
+    "src/main/diagnostic_route.hpp": "9a8ce9f8aa45921082478a9b55252a0ed1faeb30f2144ce3478a3cd6ad4d68ee",
+    "tests/kairo/diagnostic_route_fixtures.cpp": "5569a3adb8ae25f98effd1a04c3297db78e9f7341d62083ddb52ea6ed9753ba6",
+    "tools/test_diagnostic_route.py": "9bddb3d40576c3a9d12f0df896163bcebd01f7d04615a4eac6da3a84f999a0e5"
+  },
+  "native_executable_sha256": "c85a647df38c6921d255c4b62413662f292a59b0a13dfd0365fa589d39949fad",
+  "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
+  "game_executed": false,
+  "verified_boundary_ids": []
+}

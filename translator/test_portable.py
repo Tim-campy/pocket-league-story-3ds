@@ -350,7 +350,7 @@ def main():
                 invocation=native_callee+'('+','.join([('&' if CLASSES.get(method['containing_type'],{}).get('is_value_type') else '')+'self']+args)+')'
                 if method['kind']=='PropertyGet':managed_invocation='self['+','.join(args)+']' if method.get('is_indexer') else 'self.'+method['name'][4:]
                 elif method['kind']=='PropertySet':managed_invocation=('self['+','.join(args[:-1])+']' if method.get('is_indexer') else 'self.'+method['name'][4:])+'='+args[-1]
-                else:managed_invocation='self.'+method['name']+'('+','.join(managed_args)+')'
+                else:managed_invocation='self.'+method['name']+('<'+','.join(method['concrete_cs_method_type_arguments'])+'>' if method.get('concrete_cs_method_type_arguments') else '')+'('+','.join(managed_args)+')'
             elif method['kind']=='Conversion':managed_invocation='('+method['return_type']+')'+args[0]
             elif method['kind']=='UserDefinedOperator':
                 token={'op_Equality':'==','op_Inequality':'!=','op_Addition':'+','op_Subtraction':'-','op_Multiply':'*','op_Division':'/'}[method['name']]

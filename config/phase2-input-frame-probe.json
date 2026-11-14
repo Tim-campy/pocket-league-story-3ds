@@ -494,7 +494,7 @@
   },
   "normal_key_regression": {
     "receipt": "config/phase2-input-tests.json",
-    "sha256": "f69c875624ef49841ce6aae37241154d8ab1ea8daeeecc38c21c31b8fc7568a2",
+    "sha256": "0eb85a7f5d47fa09cf12dcb65b3d227024948b0bac48b4a7451e7fac7a132711",
     "fixture_cases": 56,
     "passed": 56,
     "native_adapter_assertions": 19,
@@ -521,9 +521,9 @@
     "tools/probe_input_frames.py": "f45bb14a35b9c4ca1e07d04cb2fcd780f4fa71679e057855d6faa1ffd05c1d2d",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/input.hpp": "0c3f2ab9a63f94359e6aace100913ab684dddfae5e453b9ea4ba8802b9d20fbf",
-    "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66",
+    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "config/phase2-input-tests.json": "f69c875624ef49841ce6aae37241154d8ab1ea8daeeecc38c21c31b8fc7568a2"
+    "config/phase2-input-tests.json": "0eb85a7f5d47fa09cf12dcb65b3d227024948b0bac48b4a7451e7fac7a132711"
   },
   "source_manifest": [
     {
@@ -534,7 +534,7 @@
   "keycode_metadata_sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
   "native_executable": {
     "path": "build/input-frame-probe/input-frame-fixtures.exe",
-    "sha256": "5459c28cca81db09fe2dcc193dd9b67da084e4f83ba1302266c7e3bacf02952f"
+    "sha256": "3ae4b0e1dab93d4a086ae3d506535ee004647a608b43f02ba302558adbbda964"
   },
   "original_methods": [
     "public void DecideKeyState(): complete body",

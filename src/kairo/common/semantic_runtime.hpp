@@ -243,7 +243,8 @@ std::string last_captured_exception();
 void record_captured_exception(std::string value);
 void gc_collect(std::int32_t generation=2);
 // Why a collection ran. explicit_call: GC.Collect/JSystem.Gc from source;
-// transition: a main-window form was initialized or finished; loading: the
+// transition: a main-window form was initialized or finished, or an explicit
+// source collection ran inside a form Finish (source "Finish <type>"); loading: the
 // volume threshold was due inside a loading safe point; volume: due at a frame end.
 enum class GcTrigger:std::uint8_t{explicit_call=0,volume=1,transition=2,loading=3};
 struct GcEvent{std::uint64_t sequence=0;GcTrigger trigger=GcTrigger::explicit_call;std::uint64_t pause_ns=0;char source[48]{};};

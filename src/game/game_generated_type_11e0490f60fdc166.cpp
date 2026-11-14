@@ -174,6 +174,19 @@ return v_httpThread_2791;
 }
 }
 
+// M:kairo.unity.io.Http.PopErrorCode
+std::int32_t cs_6fd89426aaa425c1() { cs_init_11e0490f60fdc166();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.Http.PopErrorCode",kairo);
+{
+pls::cs::Ref<cs_18d5b680efad7752> v_http_2239 = ([&]() -> pls::cs::Ref<cs_18d5b680efad7752> { return cs_424a1f3830f8b281(); }());
+if (([&]() { auto cs_left = pls::cs::box(v_http_2239); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
+return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
+}
+return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_77de402a688eeb9d>>(([&]() { auto cs_receiver = v_http_2239; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_fda18c2ca470418e; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_82fd3d9e6535f380(cs_receiver); }());
+}
+}
+}
+
 // M:kairo.unity.io.Http.PopErrorText
 pls::cs::String cs_42eaa879561f279c() { cs_init_11e0490f60fdc166();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.Http.PopErrorText",kairo);

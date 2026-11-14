@@ -7,7 +7,7 @@ void cs_init_cbac662a28aa40b1(){static pls::cs::TypeInitState state;state.run("j
 
 });}
 
-// Concrete compile receipt: M:java.util.JTool.MakeArray``1(System.Int32[]) [int]
+// Concrete compile receipt: M:java.util.JTool.MakeArray``1(System.Int32[]) [byte[][]]
 template pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::uint8_t>>>(pls::cs::Array<std::int32_t>);
 
 // M:java.util.JTool.MakeArrayRecursive(System.Type,System.Int32[],System.Int32)

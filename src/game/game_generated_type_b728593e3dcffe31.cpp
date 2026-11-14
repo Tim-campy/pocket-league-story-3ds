@@ -691,7 +691,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> cs_f22a8aac0144b99b(std::int32_t v_rsId,std::int32_t v_rcId) { cs_init_b728593e3dcffe31();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.ResourceManager.OpenJarCache(System.Int32,System.Int32)",kairo);
 {
-{auto cs_list_enum799=(cs_6e1bce9006dd3621_value).GetEnumerator();struct cs_list_scope799{decltype(cs_list_enum799)&e;~cs_list_scope799(){e.Dispose();}} cs_scope799{cs_list_enum799};while(cs_list_enum799.MoveNext()){ cs_bf56843843fb840d v_item_23191=cs_list_enum799.get_Current();{
+{auto cs_list_enum801=(cs_6e1bce9006dd3621_value).GetEnumerator();struct cs_list_scope801{decltype(cs_list_enum801)&e;~cs_list_scope801(){e.Dispose();}} cs_scope801{cs_list_enum801};while(cs_list_enum801.MoveNext()){ cs_bf56843843fb840d v_item_23191=cs_list_enum801.get_Current();{
 if ((([&]() -> bool { auto cs_left = (v_item_23191).cs_85aa6688644f1732; auto cs_right = v_rsId; return (cs_left == cs_right); }()) && ([&]() -> bool { auto cs_left = (v_item_23191).cs_0e1d8386a566c122; auto cs_right = v_rcId; return (cs_left == cs_right); }()))) {
 return (v_item_23191).cs_061de919f485a022;
 }

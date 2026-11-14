@@ -9,9 +9,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "fa1c7165c2480969a43a8f4a10cbce4c99597df6c4ac07ed3a1eb3c90574004b",
-    "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
-    "driver_sha256": "947cf79a29321834c67a44fff0d826f1416edfe30c0a28c579f7d13309f50683"
+    "translator_source_sha256": "aa8e82cfbf8a7df85361dfe5ee5afff7738f88c0a65a5eb205ba2e89f9985cab",
+    "emission_source_sha256": "f718015b120848a233a0f46b2a1a32fbf08e039bfd4b3f6b784b7c67138f00ef",
+    "driver_sha256": "9e57500b42e50079f6abd59254f026041bb4da506148e638d550d6c55faac041"
   },
   "inputs": [
     {
@@ -192,7 +192,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
+      "sha256": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -239,10 +239,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "5e8e911a746d69fd399f00bea13f77edc4389656261d6899dde138e0d5c16a16"
+    "sha256": "fb9766b812cd63bebf96ead41c6f6d646b290c4a55658752b803727d06024883"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "0ec8e5264d2f3b78b25c26384fece17088f7f632c45f5e312120ee42d315a272"
+    "sha256": "1dfc7406e8ffba461c50eece995e7c3e10dbf34d16a0563a11eb7ed05a99b831"
   }
 }

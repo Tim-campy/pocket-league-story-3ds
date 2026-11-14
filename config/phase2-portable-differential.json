@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.72781400000531,
-    "native-compile": 331.5756410000031,
-    "managed-output": 52.820384300001024,
-    "native-output": 62.09880929999781
+    "csharp-compile": 1.234294800000498,
+    "native-compile": 319.3016940000016,
+    "managed-output": 46.852768800003105,
+    "native-output": 63.39754990000074
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1170,7 +1170,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp",
-      "sha256": "5c52989724dfd004cf880d00267c10254d6040635117d8c13269984bb015c878"
+      "sha256": "354f4b3369cc1889deddc728960837800020f95a74b054d61824515d97342946"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.hpp",
@@ -1274,13 +1274,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "93bafa730e8930b13946935d55d54e87a339c4720d6255865ae5dcdb7e62a553"
+    "sha256": "a6b11f491f28862ea88902ca8b0848d73dd82299ec5886688d8a074eeed5c1b2"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "74268771958d9fd68945710f4e2e70c065c81419b61e062ad7151495611a5475"
+    "sha256": "a8b5707b3af01cec8dd9c803d05be13ad07819c556b77e27d2a2a32fdcf05579"
   },
-  "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
+  "differential_runner_sha256": "eb7897c054d3cb0cf32e51261b48ccf3fc81d371fb9a6984a9fd9e8758ea8368",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -1400,11 +1400,11 @@
     },
     {
       "path": "src/kairo/api/system.hpp",
-      "sha256": "c34de6982530c431ec6ef141bf7245325d91ac12e3b4baa753733c007c69f35e"
+      "sha256": "c57e8463e277ed47bd25bfb2e2e02d037e4356a8da102418153b090fe5a3f80b"
     },
     {
       "path": "src/kairo/api/text_input.hpp",
-      "sha256": "9009ecdacce110b7eb1ab0594332d6f298b2a64e30bb181a9ee3a4adb72e3034"
+      "sha256": "83ed30d7ac205e62909db5e9f5325c7cd4b0132f2bf3bce4b2cdc4a6a6e4b25b"
     },
     {
       "path": "src/kairo/api/touch_value_accessor.hpp",
@@ -1832,7 +1832,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.cpp",
-      "sha256": "5c52989724dfd004cf880d00267c10254d6040635117d8c13269984bb015c878"
+      "sha256": "354f4b3369cc1889deddc728960837800020f95a74b054d61824515d97342946"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_cbac662a28aa40b1.hpp",
@@ -2064,7 +2064,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
+      "sha256": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -2104,7 +2104,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "816279c7795dd0f9fa6f2fa12e7c2c51dc9abb575c00b6e4ea5843358d6d6821"
+      "sha256": "55ff690145e3bcd9ce1f272cddcba56c87eae7be1b8aebd959cd5664d0df74d3"
     },
     {
       "path": "src/runtime/managed_reference.hpp",

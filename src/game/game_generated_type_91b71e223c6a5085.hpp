@@ -31,6 +31,8 @@ pls::cs::Array<std::uint8_t> cs_1c987cdcc36f7bac(pls::cs::Ref<cs_91b71e223c6a508
 
 pls::cs::Ref<cs_91b71e223c6a5085> cs_c9412b840f7da0bf(pls::cs::Ref<cs_91b71e223c6a5085> cs_this,pls::cs::Array<std::uint8_t> v_ary);
 
+pls::cs::Array<std::uint8_t> cs_043210b1767b19c7(pls::cs::Ref<cs_91b71e223c6a5085> cs_this);
+
 pls::cs::Array<std::uint8_t> cs_fe020e7913ef1e99(pls::cs::Ref<cs_91b71e223c6a5085> v_ary);
 
 pls::cs::Ref<cs_91b71e223c6a5085> cs_afd97ff1c93f8bf4(pls::cs::Array<std::uint8_t> v_ary);

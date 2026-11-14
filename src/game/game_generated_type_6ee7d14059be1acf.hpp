@@ -9,7 +9,7 @@ struct cs_6ee7d14059be1acf : cs_fa01867c9c048464 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_6ee7d14059be1acf)||target==typeid(cs_fa01867c9c048464)||cs_fa01867c9c048464::source_reference_assignable(target)||target==typeid(cs_10edc785c24978fc);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
 void release_edges()override;
-std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_d3abbeacfed9ec8c")return "M:system.billing.ui.BillingManager.Init(System.String[][],System.String,System.String[])";if(slot=="cs_virtual_6a336d8e7a818aa0")return "M:system.billing.ui.BillingManager.Init``1(System.String[][],System.String,System.String[])";if(slot=="cs_virtual_f9baf743614aca01")return "M:system.billing.ui.BillingManager.Load(System.Byte[])";if(slot=="cs_virtual_9ea20ca469cb3e8b")return "M:system.billing.ui.BillingManager.Load``1(System.Byte[])";if(slot=="cs_virtual_0c7e726b5f1c3198")return "M:system.billing.ui.BillingManager.Write";if(slot=="cs_virtual_83421b64347901dd")return "M:system.billing.ui.BillingManager.NewGame(System.Boolean)";if(slot=="cs_virtual_52c48544109f9d2d")return "M:system.billing.ui.BillingManager.LoadGame(System.Byte[])";if(slot=="cs_virtual_9d8c67a5fdbb3c7d")return "M:system.billing.ui.BillingManager.WriteGame";if(slot=="cs_virtual_4ebd3696a44e4f6b")return "M:system.billing.ui.BillingManager.UpdateBillingItems(System.Boolean)";if(slot=="cs_virtual_0f79ffed5440eb44")return "M:system.billing.ui.BillingManager.GetItems";if(slot=="cs_virtual_39912b67b6e00cf6")return "M:system.billing.ui.BillingManager.ExecuteApplyTask(system.billing.ui.ApplyTask)";if(slot=="cs_virtual_219ebd8a0b10d8e7")return "M:system.billing.ui.BillingManager.Provisioning(system.billing.ui.ApplyTask)";if(slot=="cs_virtual_5255d4c2789eac48")return "M:system.billing.ui.BillingManager.Cancel(system.billing.ui.ApplyTask)";if(slot=="cs_virtual_6e47643190d08935")return "M:system.billing.ui.BillingManager.CheckPlayingGame";return cs_fa01867c9c048464::managed_delegate_method_id(slot);}
+std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_d3abbeacfed9ec8c")return "M:system.billing.ui.BillingManager.Init(System.String[][],System.String,System.String[])";if(slot=="cs_virtual_f9baf743614aca01")return "M:system.billing.ui.BillingManager.Load(System.Byte[])";if(slot=="cs_virtual_0c7e726b5f1c3198")return "M:system.billing.ui.BillingManager.Write";if(slot=="cs_virtual_83421b64347901dd")return "M:system.billing.ui.BillingManager.NewGame(System.Boolean)";if(slot=="cs_virtual_52c48544109f9d2d")return "M:system.billing.ui.BillingManager.LoadGame(System.Byte[])";if(slot=="cs_virtual_9d8c67a5fdbb3c7d")return "M:system.billing.ui.BillingManager.WriteGame";if(slot=="cs_virtual_4ebd3696a44e4f6b")return "M:system.billing.ui.BillingManager.UpdateBillingItems(System.Boolean)";if(slot=="cs_virtual_0f79ffed5440eb44")return "M:system.billing.ui.BillingManager.GetItems";if(slot=="cs_virtual_39912b67b6e00cf6")return "M:system.billing.ui.BillingManager.ExecuteApplyTask(system.billing.ui.ApplyTask)";if(slot=="cs_virtual_219ebd8a0b10d8e7")return "M:system.billing.ui.BillingManager.Provisioning(system.billing.ui.ApplyTask)";if(slot=="cs_virtual_5255d4c2789eac48")return "M:system.billing.ui.BillingManager.Cancel(system.billing.ui.ApplyTask)";if(slot=="cs_virtual_6e47643190d08935")return "M:system.billing.ui.BillingManager.CheckPlayingGame";return cs_fa01867c9c048464::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.billing.ui.BillingManager";}
 std::string managed_type_name()const override{return source_managed_type_name();}
 pls::cs::Ref<cs_931908081ea62151> cs_94d79db9e67a6f5b{};
@@ -26,9 +26,7 @@ bool cs_0ad5c065f86902f7{};
 pls::cs::Ref<pls::cs::Object> cs_712a37a136a3e228{};
 pls::cs::Ref<pls::cs::Object> cs_7fef88b0a5547c46{};
 virtual void cs_virtual_d3abbeacfed9ec8c(pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscription);
-virtual void cs_virtual_6a336d8e7a818aa0(pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscription);
 virtual void cs_virtual_f9baf743614aca01(pls::cs::Array<std::uint8_t> v_data);
-virtual void cs_virtual_9ea20ca469cb3e8b(pls::cs::Array<std::uint8_t> v_data);
 virtual pls::cs::Array<std::uint8_t> cs_virtual_0c7e726b5f1c3198();
 virtual void cs_virtual_83421b64347901dd(bool v_take);
 virtual void cs_virtual_52c48544109f9d2d(pls::cs::Array<std::uint8_t> v_data);
@@ -93,7 +91,22 @@ pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_26628cac4dee43ab(pls::cs::R
 
 pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> cs_5ec95513c85ebc20(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this);
 
+void cs_2295d61cf16de536(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscription);
+
+void cs_2e16e2400acc854c(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data);
+
+template<typename T_T>
+void cs_6a336d8e7a818aa0(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data,pls::cs::String v_paymentProduct,pls::cs::Array<pls::cs::String> v_subscription);
+
+template<typename T_T>
+void cs_41f3c4e83fbe34c2(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<pls::cs::Array<pls::cs::String>> v_data);
+
 bool cs_f3ece5a1d40dcbef(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item);
+
+void cs_f9baf743614aca01(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<std::uint8_t> v_data);
+
+template<typename T_T>
+void cs_9ea20ca469cb3e8b(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<std::uint8_t> v_data);
 
 void cs_52c48544109f9d2d(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this,pls::cs::Array<std::uint8_t> v_data);
 

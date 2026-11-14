@@ -7,7 +7,7 @@
     "tests/kairo/diagnostic_keys_fixtures.cpp": "b5d4bb323980c7ca9f382dd17083b1e9a56005625a8907259fbf4acf4c97f50f",
     "tools/test_diagnostic_keys.py": "52a23e02a7ad97613c9f5f67f28ff8d81f18f3e840a28708933a04ee3f5c6068"
   },
-  "native_executable_sha256": "fa28253a0d19d5b5564255c552079faaf0dbbc7d7635bbd402963f526b624acc",
+  "native_executable_sha256": "923a19e91aa229c1074c16db3661cf65100c51b51666c7c6910eb2c8d1280a5e",
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "game_executed": false,
   "verified_boundary_ids": []

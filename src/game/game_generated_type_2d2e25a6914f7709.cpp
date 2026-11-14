@@ -705,8 +705,8 @@ bool cs_dfcfbfdb98c1e305(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this) { cs_init_2d
 pls::cs::Ref<cs_9465f7541f51c47e> v_friend_11523 = pls::cs::Ref<cs_9465f7541f51c47e>{};
 try {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_9465f7541f51c47e> { auto cs_receiver = static_cast<pls::cs::Ref<cs_2d2e25a6914f7709>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3f1c65ebd05b652a(cs_receiver); }()); v_friend_11523 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_902) {auto cs_exception_902=pls::cs::capture_exception(cs_caught_902);
-if(pls::cs::exception_is(cs_exception_902,"System.Exception")) {auto v_t_11596=cs_exception_902;{
+} catch(const pls::cs::Exception& cs_caught_908) {auto cs_exception_908=pls::cs::capture_exception(cs_caught_908);
+if(pls::cs::exception_is(cs_exception_908,"System.Exception")) {auto v_t_11596=cs_exception_908;{
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_t_11596; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 }

@@ -66,3 +66,27 @@ métodos `translated` sem um dos três estados: `runs`, `política`, `morto`.
   atual de diagnóstico.
 - Roteiro 4 depende de `MatchForm.Run` e da cadeia `KairoBase.ConnectLogin`
   só se o jogo exigir modo online para avançar; a verificar.
+
+## Como executar um roteiro hoje (levantamento de 2026-11-13)
+
+- **Caminho:** `tools/build_pc.py` com o `pc_game.exe` diagnóstico
+  (instrumentado por `PLS_METHOD_SCOPE`). O caminho nulo (`build_null.py`) é
+  só benchmark e não registra métodos.
+- **Comando de um segmento** (modelo das tentativas 46–49):
+  `python tools/build_pc.py --apk APK --diagnostic-generated build/<snapshot> --configuration Release --run --run-seconds 600 --metrics --diagnostic-save-from-attempt 31 --virtual-clock 1767225600000,1000,50 --diagnostic-title-anchor 16 --diagnostic-select-frame <f> ... --diagnostic-key-frame <f>:<TECLA> ... [--diagnostic-dismiss-popups-until-frame <f> [--diagnostic-unlabeled-popups-only]]`
+  — antes: tradução do jogo e `translator/diagnostic_snapshot.py`.
+- **Entradas:** teclas SELECT, UP, DOWN, LEFT, RIGHT, SOFT1, SOFT2 como
+  pulsos em frames fixos (1..12000, crescentes), contados a partir da âncora
+  do título; dispensa automática de pop-ups; relógio virtual.
+- **Resultado:** cada tentativa grava `build/pc-diagnostic-release/attempts/<N>/`
+  (log, capturas a cada 60 frames, save) e uma linha em
+  `config/phase2-diagnostic-attempts.json`; `python tools/progress`
+  recalcula `runs` a partir de todas as tentativas, revalidando seus hashes
+  (as pastas de tentativas em `build/` precisam ser mantidas).
+- **Saves de partida:** tentativa 31 (jogo novo até a escalação); 35–49
+  (partida completa e volta à gestão).
+
+**Lacunas:** sem formato de roteiro nem gravador (o roteiro é escrito por
+tentativa e erro com as capturas); sem avanço rápido (cada segmento ≤ 10 min,
+encadeados pelo save — roteiro 4 exige muitos segmentos); sem "esperar pelo
+formulário X"; estados `política` e `morto` ainda não existem no livro-razão.

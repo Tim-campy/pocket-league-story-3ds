@@ -56,6 +56,9 @@ public static class LoweringFixtures {
     public static string SplitOptionsFixture(int seed){string[] text={"","a","\n","a\n\nb\n","\n\na","x\ny",seed<0?"q":"q\n"};string result="";for(int i=0;i<text.Length;i++){string[] keep=text[i].Split(new char[1]{'\n'},StringSplitOptions.RemoveEmptyEntries);string[] all=text[i].Split(new char[1]{'\n'},StringSplitOptions.None);result=result+keep.Length+":"+all.Length+":";for(int j=0;j<keep.Length;j++)result=result+keep[j]+"|";result=result+";";}return result;}
     public static string ObjectConcatPair(int seed){object a=seed;object b=null;object c=new Synthetic.ConcatValue(3,false,seed==0);string s="x";return string.Concat(s,a)+"|"+string.Concat(b,a)+"|"+string.Concat(a,b)+"|"+string.Concat(b,b)+"|"+string.Concat(c,s);}
     public static string StringConcatThree(int seed){string a=seed<0?null:"a";string b="";string c=null;return string.Concat(a,b,"z")+"|"+string.Concat(c,c,c)+"|"+string.Concat("x",a,c)+"|"+string.Concat(c,"y",a).Length;}
+    public static int ObjectInitializerOrder(int seed){trace_=0;var a=new Synthetic.InitTarget(Stamp(1)){b=Stamp(2),c=Stamp(3)};return a.a*100+a.b*10+a.c+trace_*1000+seed;}
+    public static int ObjectInitializerSelfField(int seed){var src=new Synthetic.InitTarget(seed){flag=true};var copy=src.Clone();return (copy.flag?1:0)+copy.a*2+copy.b*4+(object.ReferenceEquals(copy,src)?100:0);}
+    public static int ObjectInitializerBaseField(int seed){var d=new Synthetic.InitDerived(seed){a=7,d=seed+1};return d.a*1000+d.b*100+d.d;}
     public static int TryParseLimit(int seed){int result=seed;bool success=int.TryParse(seed<0?"-2147483648":"2147483648",out result);return success?result:result-100;}
     public static string ObjectConcatSingle(int seed){trace_=seed;return string.Concat(seed<0?null:new Synthetic.ConcatValue(4,false,seed==0));}
     public static string UriEscapeMarks(){return Uri.EscapeDataString("azAZ09_~!'()*-. /?:@&=+$,%#[]\\\"\u0000\u00e9\ud800");}
@@ -252,6 +255,8 @@ namespace Synthetic {
     public static class UnusedStatic {private static System.WeakReference neverUsed;public static int value=37;}
     public static class StaticWriteA {public static int value=Init();public static int Init(){StaticWriteB.noInitializer=StaticWriteB.first+1;return StaticWriteB.noInitializer;}}
     public static class StaticWriteB {public static int noInitializer;public static int first=37;}
+    public class InitTarget{public int a,b,c;public bool flag;public InitTarget(int a){this.a=a;b=-1;}public InitTarget Clone(){return new InitTarget(a){flag=flag};}}
+    public class InitDerived:InitTarget{public int d;public InitDerived(int x):base(x){b=x*2;}}
     public sealed class ConcatValue {
         public int step;public bool fail;public bool nullResult;
         public ConcatValue(int step,bool fail=false,bool nullResult=false){this.step=step;this.fail=fail;this.nullResult=nullResult;}

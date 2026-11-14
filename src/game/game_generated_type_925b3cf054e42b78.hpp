@@ -52,6 +52,8 @@ void cs_6e4860eac11a2eaf(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<
 
 void cs_ee25274aa8cb5d52(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,bool v_take);
 
+void cs_8081b8c4e247b091(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
+
 void cs_aae6871b403a2662(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
 
 void cs_5ebe1d2502f4ce47(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);

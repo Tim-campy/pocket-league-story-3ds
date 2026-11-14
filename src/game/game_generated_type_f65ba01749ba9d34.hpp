@@ -21,4 +21,6 @@ void cs_init_f65ba01749ba9d34();
 pls::cs::Ref<cs_f65ba01749ba9d34> cs_e166ffa7af3293c0(pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_value,bool v_toset);
 
 void cs_e166ffa7af3293c0_init(pls::cs::Ref<cs_f65ba01749ba9d34> cs_this,pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_value,bool v_toset);
+
+pls::cs::Ref<cs_f65ba01749ba9d34> cs_23754ab97f073ec8(pls::cs::Ref<cs_f65ba01749ba9d34> cs_this);
 }

@@ -26,4 +26,15 @@ void cs_e166ffa7af3293c0_init(pls::cs::Ref<cs_f65ba01749ba9d34> cs_this,pls::cs:
 }
 }
 }
+
+// M:kairo.unity.system.GameDataRecord.Data.Clone
+pls::cs::Ref<cs_f65ba01749ba9d34> cs_23754ab97f073ec8(pls::cs::Ref<cs_f65ba01749ba9d34> cs_this) { cs_init_f65ba01749ba9d34();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.GameDataRecord.Data.Clone",kairo);
+{
+return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/GameDataRecord.cs:M:kairo.unity.system.GameDataRecord.Data.Clone:556",([&](){auto cs_init=([&]() -> pls::cs::Ref<cs_f65ba01749ba9d34> { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_ac47dab08454a832; }()); return pls::generated::cs_1192c1f2378de3bb(cs_arg0); }());}); pls::cs::Array<std::uint8_t> cs_arg1 = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Ref<cs_91b71e223c6a5085> cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_e3cc350442bf2617; }()); return cs_fe020e7913ef1e99(cs_arg0); }()); bool cs_arg2 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b485e3aec4989e77; }()); return cs_e166ffa7af3293c0(cs_arg0,cs_arg1,cs_arg2); }());cs_init->cs_abeb2739082898db=([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_abeb2739082898db; }());return cs_init;}()));
+}
+}
+}
+}
 }

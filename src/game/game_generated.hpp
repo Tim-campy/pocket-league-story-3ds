@@ -59,6 +59,7 @@
 #include "game_generated_type_52158c8b20364c2b.hpp"
 #include "game_generated_type_5451b2154f09f4c5.hpp"
 #include "game_generated_type_57e2b41d1ee1c149.hpp"
+#include "game_generated_type_582a926e9c7748a6.hpp"
 #include "game_generated_type_5841296a01607078.hpp"
 #include "game_generated_type_5ac9304f9db0671e.hpp"
 #include "game_generated_type_5ad2213598dfcd5d.hpp"

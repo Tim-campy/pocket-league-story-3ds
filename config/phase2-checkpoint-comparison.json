@@ -15,7 +15,7 @@
   },
   "game_compiled_methods": {
     "previous": 1220,
-    "current": 1785,
+    "current": 1789,
     "gained_ids": [
       "M:analytics.AnalyticsTracker.TrackPageView(System.Boolean,System.String[])",
       "M:analytics.AnalyticsTracker.TrackPageViewId(System.Boolean,System.String,System.String[])",
@@ -465,6 +465,7 @@
       "M:system.KairoService.GetInstance",
       "M:system.KairoService.OnLoadGame(java.io.InputStream)",
       "M:system.KairoService.OnNewGame(System.Boolean)",
+      "M:system.KairoService.OnStart",
       "M:system.KairoService.OnWrite(java.io.OutputStream)",
       "M:system.KairoService.OnWriteGame(java.io.OutputStream)",
       "M:system.KairoService.Save",
@@ -554,8 +555,10 @@
       "M:system.form.MatchForm.Draw(kairo.unity.ui.Graphics)",
       "M:system.form.MatchForm.GetTouchValue(System.Int32,System.Int32)",
       "M:system.form.MatchForm.Init",
+      "M:system.form.MatchForm.Run",
       "M:system.form.MatchForm.SetTouchValue(System.Int32,System.Int32)",
       "M:system.form.MatchForm.Update",
+      "M:system.form.MatchForm.UserRecord.#ctor",
       "M:system.form.MatchForm._draw(kairo.unity.ui.Graphics)",
       "M:system.form.MatchForm._update",
       "M:system.form.RestoreForm.Draw(kairo.unity.ui.Graphics)",
@@ -575,6 +578,7 @@
       "M:system.friend.ui.FriendData.IsEffectiveRegistName(System.String,System.Int32)",
       "M:system.friend.ui.FriendData.RefreshFriendList",
       "M:system.friend.ui.FriendData.UpdateRandomFriend",
+      "M:system.lineup.MyLineup.Start",
       "M:system.notification.MyNotify.#ctor",
       "M:system.notification.MyNotify.GetInstance",
       "M:system.panel.InputPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)",
@@ -604,15 +608,15 @@
     },
     {
       "path": "config/phase2-translation.json",
-      "sha256": "0a5cbc796ec43a74201c8fcd0c55ca845732a09377ab0792781a028e4c563720"
+      "sha256": "c5708e4079e29e1bc4843e0fdc3969f078283739ad96482699774fb67d22faf5"
     },
     {
       "path": "config/phase2-portable-differential.json",
-      "sha256": "f241db9aafd522959e8ad133f544034ef460894268b3e262a0c737f2e4018152"
+      "sha256": "7ff25019fa14f517993e17f76e8428c832955e8a25446da57b24d04be82320ae"
     },
     {
       "path": "config/phase2-game-translation.json",
-      "sha256": "aec911512322b08827b1e60a0cb18e2598aeb9164087a459ccfac4afe4aeba00"
+      "sha256": "9f27e677a5e01f7d16b00af395e61975e10ddd71c44515ebb83623ca914b6509"
     }
   ]
 }

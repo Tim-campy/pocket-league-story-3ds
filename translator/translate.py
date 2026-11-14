@@ -381,6 +381,10 @@ def main():
         request['external_methods']['M:kairo.unity.ui.Font.SetScale(System.Int32)']='pls::kairo::Font::SetScale'
         request['external_methods']['M:kairo.unity.io.Storage.Write(System.Int32,System.Boolean,System.String,System.Byte[])']='pls::kairo::Storage::Write'
         request['external_methods']['M:kairo.unity.io.Storage.Exists(System.Int32,System.String)']='pls::kairo::Storage::Exists'
+        request['external_methods']['M:kairo.unity.io.Storage.Open(System.Int32,System.Boolean)']='pls::kairo::Storage::Open'
+        for signature in ('Close','Read(System.String)','Write(System.String,System.Byte[])','Delete(System.String)',
+                          'Exists(System.String)','GetSize(System.String)','GetFiles'):
+            request['external_methods']['M:kairo.unity.io.Storage.'+signature]='member:'+signature.split('(')[0]
         for signature in ('GetAction','GetX','GetY','GetX(System.Int32)','GetY(System.Int32)',
                           'GetDeltaX','GetDeltaY','GetDeltaTime','GetDeltaX(System.Int32)','GetDeltaY(System.Int32)','GetDeltaTime(System.Int32)',
                           'IsMousePointer','GetPointerCount','GetPointerId(System.Int32)'):

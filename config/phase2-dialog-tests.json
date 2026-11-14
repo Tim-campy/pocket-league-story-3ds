@@ -27,7 +27,7 @@
   ],
   "native_executable": {
     "path": "build/dialog-tests/dialog-fixtures.exe",
-    "sha256": "c0317da805b51fe2e7ee9d027389811a0dd9e9a1e40563a734987a458dad530b"
+    "sha256": "d78b786c8c01a8e72b8f781f425c2e56cb28d3aabb037a11a768e36d5fe45c97"
   },
   "verified_boundary_ids": [],
   "intended_leaf": "M:kairo.unity.native.KairoPlugin.ShowDialog(System.Int32,System.String,System.String,System.String)",

@@ -29,10 +29,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.24508780000178376,
-    "native-compile": 47.40960189999896,
-    "managed-output": 0.4916813999952865,
-    "native-output": 0.327134200000728
+    "csharp-compile": 0.2591739999988931,
+    "native-compile": 47.55902349999815,
+    "managed-output": 0.5218164000034449,
+    "native-output": 0.38580009999714093
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -110,11 +110,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/image-metadata-differential/Harness.exe",
-    "sha256": "af47a295e2e5b2d8194bc2707651c661da110f984e334e5ae19a2d065ead7fff"
+    "sha256": "63f78c54bc353da104c35dec3b92c1a5523c13a6134394dfcfe128373405d30f"
   },
   "source_oracle_executable": {
     "path": "build/translator/image-metadata-differential/Harness-managed.exe",
-    "sha256": "131bfb3f66979534f2514af06cea040fb3cf280b251a1d755f1acabb645fefb6"
+    "sha256": "5fa8350c0f123fa8a9aab6b1ba1d8a85449774167983b4059b534a27fb11d44a"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -790,9 +790,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "68ebb7ba69f0a3cfb3109851cfe6e22633d86c7d4368227807131700c1ee374a",
+    "translator_source_sha256": "fa1c7165c2480969a43a8f4a10cbce4c99597df6c4ac07ed3a1eb3c90574004b",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
-    "driver_sha256": "49e3ad1e945a25f26b9d130eec756ddac1505d34a3993172533a38e5b6df21cb"
+    "driver_sha256": "947cf79a29321834c67a44fff0d826f1416edfe30c0a28c579f7d13309f50683"
   },
   "runner_sha256": "51c1e119bbe180b17b83c51338ead4ae0dec35dec1732421074c965371afebae",
   "fixture_sha256": "316ecdbabe7334be75fba23f52d4df4da0a115b116ecffcfb965f2e882ba06e9",

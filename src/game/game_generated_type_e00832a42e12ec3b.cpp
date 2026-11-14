@@ -36,4 +36,15 @@ return pls::cs::unbox<pls::cs::Ref<cs_e00832a42e12ec3b>>(pls::cs::box(cs_eb626cd
 }
 }
 }
+
+// M:system.lineup.MyLineup.Start
+void cs_3a26b20c9b7c14af(pls::cs::Ref<cs_e00832a42e12ec3b> cs_this) { cs_init_e00832a42e12ec3b();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.lineup.MyLineup.Start",game);
+{
+([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_1ab688350081022a>>(cs_this); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_aff45949a4a776ab(cs_receiver,cs_arg0); }());
+}
+}
+}
+}
 }

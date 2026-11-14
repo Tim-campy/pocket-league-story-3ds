@@ -24,6 +24,10 @@ pls::cs::Ref<cs_1ab688350081022a> cs_c91e4943a0e046f2();
 
 void cs_c91e4943a0e046f2_init(pls::cs::Ref<cs_1ab688350081022a> cs_this);
 
+bool cs_e8395e9d72ce688b(pls::cs::Ref<cs_1ab688350081022a> cs_this);
+
+bool cs_8792fac7b186047a(pls::cs::String v_key);
+
 pls::cs::Array<std::uint8_t> cs_da3162f01de6e1eb(pls::cs::String v_key);
 
 pls::cs::Array<pls::cs::Ref<cs_fd683372658feff4>> cs_39cb7b83aa99de82(pls::cs::Ref<cs_1ab688350081022a> cs_this);
@@ -31,6 +35,8 @@ pls::cs::Array<pls::cs::Ref<cs_fd683372658feff4>> cs_39cb7b83aa99de82(pls::cs::R
 void cs_843876287e794125(pls::cs::Ref<cs_1ab688350081022a> cs_this,pls::cs::Array<std::uint8_t> v_data);
 
 void cs_c8bf4745da1fd956(pls::cs::String v_key,pls::cs::Array<std::uint8_t> v_data);
+
+void cs_aff45949a4a776ab(pls::cs::Ref<cs_1ab688350081022a> cs_this,std::int32_t v_num);
 
 void cs_04c28d155861f704(pls::cs::Ref<cs_1ab688350081022a> cs_this);
 

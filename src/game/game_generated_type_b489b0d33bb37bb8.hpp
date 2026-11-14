@@ -98,7 +98,25 @@ void cs_6111a681581cbed5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 void cs_a6a3a2dac688088b(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
 
+pls::cs::Ref<cs_b6ad7779caeeb23c> cs_6d060eec63026a1c(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Ref<cs_b6ad7779caeeb23c> v_gameData);
+
+pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_684ae9c30d046343(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> v_dataList);
+
+pls::cs::Ref<cs_b6ad7779caeeb23c> cs_02e0ea6d486b4d3a(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_tbname,pls::cs::Ref<cs_b6ad7779caeeb23c> v_gameData);
+
+pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_6f2b3c43c8b42f52(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_tbname,pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> v_dataList);
+
+pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>> cs_3210d55ced32f488(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_friendId,pls::cs::String v_get,pls::cs::String v_where,pls::cs::String v_column,pls::cs::String v_top,bool v_self,pls::cs::String v_order);
+
+pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>> cs_45725cf9b86d6361(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_tbname,pls::cs::String v_friendId,pls::cs::String v_get,pls::cs::String v_where,pls::cs::String v_column,pls::cs::String v_top,bool v_self,pls::cs::String v_order);
+
+pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_ad612419c432650e(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_get,pls::cs::String v_where,pls::cs::String v_order,pls::cs::String v_column,std::int64_t v_value,std::int64_t v_low,std::int64_t v_high,pls::cs::String v_count,std::int32_t v_logic);
+
+pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_093af82d1ebe2c52(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_tbname,pls::cs::String v_get,pls::cs::String v_where,pls::cs::String v_order,pls::cs::String v_column,std::int64_t v_value,std::int64_t v_low,std::int64_t v_high,pls::cs::String v_count,std::int32_t v_logic);
+
 pls::cs::Array<pls::cs::String> cs_51215d437b3290df(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_pw);
+
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_867838439237eaa5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_files);
 
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_8f0a63baa42add5b(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_time);
 
@@ -106,11 +124,19 @@ bool cs_8c83b0e389fd09c4(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enforc
 
 void cs_748a5ed43677ac51(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_gcmId);
 
+pls::cs::String cs_6d911e9b0dc23922(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_get);
+
+pls::cs::String cs_f6e538100474f903(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_where);
+
 void cs_60933d5b25c3e702(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 void cs_706bcbd9776cf6ef(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
+pls::cs::Array<std::uint8_t> cs_39b091cad469739d(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_table,pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_value);
+
 pls::cs::Array<cs_c87dc3d2d0f9440a> cs_7e52a7f62521b1ee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_languageOnly,bool v_releaseOnly);
+
+std::int32_t cs_c9cb5f156b3b447d(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_table,pls::cs::String v_column);
 
 pls::cs::String cs_6fa713935dfcd76c(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
@@ -173,6 +199,8 @@ void cs_e63aaf6292bf7187(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_playin
 void cs_5d101ae71ba29127(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enable);
 
 void cs_f0a4f1a9eae00df8(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_progress);
+
+pls::cs::Array<std::uint8_t> cs_04eca12bba16344c(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_table,pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_value);
 
 void cs_9ca5e184bd541bee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 }

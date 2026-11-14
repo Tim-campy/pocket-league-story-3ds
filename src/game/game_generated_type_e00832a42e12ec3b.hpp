@@ -20,4 +20,6 @@ pls::cs::Ref<cs_e00832a42e12ec3b> cs_1da4a6941cbe6a25();
 void cs_1da4a6941cbe6a25_init(pls::cs::Ref<cs_e00832a42e12ec3b> cs_this);
 
 pls::cs::Ref<cs_e00832a42e12ec3b> cs_9cfcc2afb24b5e63();
+
+void cs_3a26b20c9b7c14af(pls::cs::Ref<cs_e00832a42e12ec3b> cs_this);
 }

@@ -22,6 +22,10 @@ virtual std::int32_t GetHashCode();
 
 void cs_init_b6ad7779caeeb23c();
 
+pls::cs::Ref<cs_b6ad7779caeeb23c> cs_90ee7811a5836c91();
+
+void cs_90ee7811a5836c91_init(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this);
+
 pls::cs::Ref<cs_b6ad7779caeeb23c> cs_a5fcfa14b1e244ef(std::int32_t v_number,bool v_insert);
 
 void cs_a5fcfa14b1e244ef_init(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,std::int32_t v_number,bool v_insert);
@@ -30,13 +34,31 @@ pls::cs::Ref<cs_b6ad7779caeeb23c> cs_2c9eb5964aff96b8(std::int32_t v_friendId,st
 
 void cs_2c9eb5964aff96b8_init(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,std::int32_t v_friendId,std::int32_t v_number,bool v_insert);
 
+void cs_88b2f71bcc6dfbb4(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_data);
+
 void cs_e33b1dbd8b024056(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_data);
 
 void cs_4b07aac51b58d37f(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name,std::int64_t v_value);
 
 void cs_1c90a1b23419daad(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name,pls::cs::String v_value);
 
+void cs_ae95295deef710ce(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name);
+
+pls::cs::Ref<cs_b6ad7779caeeb23c> cs_b00e39372198ba93(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this);
+
+pls::cs::Ref<cs_b6ad7779caeeb23c> cs_3d477e91fe6d5e5e(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,bool v_to_set);
+
+pls::cs::Array<std::uint8_t> cs_ba240a218e1d699e(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name);
+
+std::int32_t cs_4c82a6900ba11d6b(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this);
+
 std::int32_t cs_02a7dd0b0ae9540d(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this);
 
 std::int32_t cs_ef9be39d8956d084(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this);
+
+pls::cs::String cs_25f8eaa78d9b4e98(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name);
+
+std::int64_t cs_db199ac474798a83(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::String v_name);
+
+void cs_962a524c84eef9ee(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os);
 }

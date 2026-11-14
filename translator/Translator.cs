@@ -646,7 +646,26 @@ sealed partial class Lowerer {
             case ObjectCreationExpressionSyntax creation:
                 if(model.GetTypeInfo(creation).Type is INamedTypeSymbol{TypeKind:TypeKind.Delegate} createdDelegate&&creation.ArgumentList?.Arguments.Count==1&&creation.Initializer==null)return Converted(creation.ArgumentList.Arguments[0].Expression,createdDelegate);
                 var ctor=model.GetSymbolInfo(creation).Symbol as IMethodSymbol;
-                if(ctor==null||creation.Initializer!=null)throw new Unsupported(creation,"object initializer/unresolved constructor not lowered");
+                if(ctor==null)throw new Unsupported(creation,"object initializer/unresolved constructor not lowered");
+                if(creation.Initializer!=null){
+                    // Object initializer on a source class: constructor (arguments, body) first, then each
+                    // member assignment left to right; right-hand sides read the enclosing scope.
+                    var created=ctor.ContainingType;
+                    if(!creation.Initializer.IsKind(SyntaxKind.ObjectInitializerExpression)||created.TypeKind!=TypeKind.Class||created.DeclaringSyntaxReferences.Length==0||externalTypes.ContainsKey(Id(created))||externalMethods.ContainsKey(Id(ctor))||RecordStruct(created))
+                        throw new Unsupported(creation,"object initializer/unresolved constructor not lowered");
+                    var init=new StringBuilder("([&](){auto cs_init=");
+                    RequireClass(created,creation);dependencies[current].Add(Id(ctor));
+                    init.Append(OrderedCall(ctor,creation.ArgumentList?.Arguments.Select(a=>a.Expression).ToList()??new(),creation,null)+";");
+                    foreach(var member in creation.Initializer.Expressions){
+                        if(member is not AssignmentExpressionSyntax{RawKind:(int)SyntaxKind.SimpleAssignmentExpression,Left:IdentifierNameSyntax target} assignment||model.GetSymbolInfo(target).Symbol is not IFieldSymbol{IsStatic:false} initField||assignment.Right is InitializerExpressionSyntax||sharedFields.Contains(Id(initField)))
+                            throw new Unsupported(member,"object initializer member is not a plain instance field assignment");
+                        var owner=created;while(owner!=null&&!SymbolEqualityComparer.Default.Equals(owner,initField.ContainingType))owner=owner.BaseType;
+                        if(owner==null)throw new Unsupported(member,"object initializer field does not belong to the created type");
+                        RequireClass(initField.ContainingType,member);
+                        init.Append("cs_init->"+NativeFieldMember(initField,target)+"="+Converted(assignment.Right,initField.Type)+";");
+                    }
+                    return init+"return cs_init;}())";
+                }
                 if(ctor.ContainingType.SpecialType==SpecialType.System_Object&&ctor.Parameters.Length==0)return "pls::cs::make_ref<pls::cs::Object>()";
                 if(ctor.ContainingType.TypeKind==TypeKind.Delegate&&creation.ArgumentList?.Arguments.Count==1)return Converted(creation.ArgumentList.Arguments[0].Expression,ctor.ContainingType);
                 if(externalMethods.TryGetValue(Id(ctor),out var externalCtor))return OrderedCall(ctor,creation.ArgumentList?.Arguments.Select(a=>a.Expression).ToList()??new(),creation,null,true,externalCtor);

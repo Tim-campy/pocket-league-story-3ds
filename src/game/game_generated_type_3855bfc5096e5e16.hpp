@@ -23,4 +23,10 @@ pls::cs::String cs_b4b1d410d46a2933{};
 pls::cs::String cs_b5ce9137008c708d{};
 pls::cs::Ref<pls::kairo::Image> cs_ddce1bf3232442d7{};
 };
+
+void cs_init_3855bfc5096e5e16();
+
+pls::cs::Ref<cs_3855bfc5096e5e16> cs_927f6709c23b7c76();
+
+void cs_927f6709c23b7c76_init(pls::cs::Ref<cs_3855bfc5096e5e16> cs_this);
 }

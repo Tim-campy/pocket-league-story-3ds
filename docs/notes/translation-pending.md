@@ -144,3 +144,21 @@ inicializador de objeto (5 slots), `ShowFepPanel` (3; depende da política de
 texto no PC), `Storage.Open(int,bool)` (1), `String.Concat(object[])` (1),
 `AppPlugin.LaunchMailer` (1; serviço Android removido), concatenação composta
 com contrato de `ToString` (3).
+
+## 9. Quarta etapa (2026-11-13)
+
+- **Inicializador de objeto** (`new C(args){ campo = valor, ... }`) em classes
+  do fonte: construtor primeiro, depois cada atribuição da esquerda para a
+  direita, lado direito no escopo de fora. Fixtures de ordem, campo do próprio
+  objeto (`Clone`) e campo da classe base; diferencial 1.519/1.519.
+- **`Storage`**: `Open(int,bool)` e os 7 métodos de instância ligados à
+  plataforma já existente (`security_` é gravado e nunca lido no original,
+  `Storage.cs:49/70/76`).
+- Resultado: 1.789 emitidos, 74 rejeitados, 15 slots (`MatchForm.Run` e
+  `KairoService.OnStart` definidos).
+- Restantes, por natureza: serviços Android (`AppPlugin.LaunchMailer`,
+  `WebBox*`), painel de texto `ShowFepPanel` (design), painel de idioma
+  (design), cobrança (`new T()` em métodos virtuais genéricos,
+  `ConnectPaymemtMoney`), concatenações em `ToString` de depuração
+  (`TouchEvent`, `GameDataRecord`) e `BillingForm._update`,
+  `String.Concat(object[])` em `SpForm.Run`.

@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.4906493999951635,
-    "native-compile": 327.0661693000002,
-    "managed-output": 49.39806099999987,
-    "native-output": 65.4972620999979
+    "csharp-compile": 1.8601803000055952,
+    "native-compile": 329.9644304999965,
+    "managed-output": 46.869101299998874,
+    "native-output": 65.97915240000293
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1522,11 +1522,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "ae3ca73f1a158ceb86d5bc50c6c66dfef6f731a6af0aacc08efc098a6f2d05d1"
+    "sha256": "afd7fdb77cec3f909be9592d2dd0c684cace218cc45c7643f88b9f0e12f25d9f"
   },
   "source_oracle_executable": {
     "path": "build/translator/split-differential/Harness-managed.exe",
-    "sha256": "4005953183dd00d728ed867b508334760f75169b453f297d1ff3b3796049a63f"
+    "sha256": "deba880db198ac407c509ce0a9db21f162ac45cba493540d82c6b313067f5171"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -2878,9 +2878,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "68ebb7ba69f0a3cfb3109851cfe6e22633d86c7d4368227807131700c1ee374a",
+    "translator_source_sha256": "fa1c7165c2480969a43a8f4a10cbce4c99597df6c4ac07ed3a1eb3c90574004b",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
-    "driver_sha256": "49e3ad1e945a25f26b9d130eec756ddac1505d34a3993172533a38e5b6df21cb"
+    "driver_sha256": "947cf79a29321834c67a44fff0d826f1416edfe30c0a28c579f7d13309f50683"
   },
   "chunk_budget_bytes": 32768,
   "chunk_count": 179,

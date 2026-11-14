@@ -14,4 +14,13 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::
 }
 }
 }
+
+// M:java.lang.JInteger.ToHexString(System.Int32)
+pls::cs::String cs_4f16d65e85f49d6f(std::int32_t v_i) { pls::generated::cs_init_7de6788b61a5af56();
+{PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JInteger.ToHexString(System.Int32)",kairo);
+{
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_value=v_i;return pls::cs::convert_to_string_base(cs_value,16);}());});
+}
+}
+}
 }

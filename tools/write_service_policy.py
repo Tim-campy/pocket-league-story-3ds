@@ -21,6 +21,7 @@ def typed_lowering(policy):
         'true (disabled local backend is ready; not shop availability)':dict(kind='bool_true'),
         'null Purchase':dict(kind='null'),
         'null string[][]':dict(kind='null'),
+        'null string':dict(kind='null'),
         'empty string[]':dict(kind='empty_string_array'),
         'RestoreResult.Faild = 1':dict(kind='int_exact',value=1),
         'State.None = -1':dict(kind='int_exact',value=-1),
@@ -111,12 +112,21 @@ def main():
         ('GetNotificationData','','empty string[]'),('GetNotificationFilter','','FilterLevel.None = 0')]:
         add('M:kairo.unity.native.KairoPlugin.'+name+('('+args+')' if args else ''),'constant',result)
     add('M:kairo.unity.iOSsupport.DeviceUtil.CheckPushNotification','constant','false')
+    # Notification family (removed): push registration id. Reached only when IsPushEnable() is true (KairoBase.cs:1675-1693).
+    add('M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId','constant','null string',
+        reason='Notifications removed: no GCM registration; JNI leaf not called')
     # Policy 54: KairoBase.Connect* answers "server unavailable" through the
     # original no-network path (Connect -> ConnectLogin/HttpConnect -> Http ->
     # HttpObject, offline WWW -> IOException). Only the JNI signature leaf is
     # replaced; the bodies that handle the failure stay original.
     add('M:kairo.unity.system.KairoBase.GetSignature','constant','fixed local text',
         reason='Policy 54: Android package signature replaced by a meaningless local constant; never transmitted (transport is offline)')
+    # Policy 54: no network. Original body: Application.internetReachability != NotReachable (KairoBase.cs:1831-1834).
+    add('M:kairo.unity.system.KairoBase.CheckNetwork','constant','false',
+        reason='Policy 54: the port has no network; same value as the original with internetReachability == NotReachable')
+    # Policy 54: Android clock bridge fed only by server time after a successful login (ClockTime.cs:12).
+    add('M:kairo.unity.native.KairoPlugin.SetClockTime(System.Int64,System.Int32)','constant','void',
+        reason='Policy 54: no server time offline; the Android setClockTime JNI leaf is not called')
     for policy in policies:policy['lowering']=typed_lowering(policy)
     # No fabricated license result. The transitive call site has an explicit
     # throwing platform guard; the removed JNI/checker body is never generated.

@@ -103,6 +103,18 @@ bool int32_try_parse_hex_number(const String& value,std::int32_t& result){
 namespace {
 std::uint32_t md5_rotate(std::uint32_t value,unsigned bits){return (value<<bits)|(value>>(32u-bits));}
 }
+std::uint8_t byte_parse_hex_number(const String& value,bool allow_spaces){
+    const auto bits=static_cast<std::uint32_t>(int32_parse_hex_number(value,allow_spaces));
+    if(bits>255u)throw OverflowException();return static_cast<std::uint8_t>(bits);
+}
+String convert_to_string_base(std::int32_t value,std::int32_t to_base){
+    unsigned shift=to_base==2?1u:to_base==8?3u:to_base==16?4u:0u;
+    if(!shift)throw ArgumentException();
+    auto bits=static_cast<std::uint32_t>(value);std::u16string text;
+    const char16_t* digits=u"0123456789abcdef";
+    do{text.push_back(digits[bits&((1u<<shift)-1u)]);bits>>=shift;}while(bits);
+    std::reverse(text.begin(),text.end());return String(std::move(text));
+}
 Array<std::uint8_t> md5_compute_hash(const Array<std::uint8_t>& buffer){
     if(buffer.is_null())throw ArgumentNullException();
     static const std::uint32_t k[64]={
@@ -167,5 +179,14 @@ Array<String> string_split(const String& value,const Array<char16_t>& separators
     if(parts.empty())return Array<String>::from({value});
     parts.emplace_back(text.substr(start));if(parts.size()>static_cast<std::size_t>(INT32_MAX))throw OutOfMemoryException();
     auto result=Array<String>::make(static_cast<std::int32_t>(parts.size()));for(std::int32_t i=0;i<result.length();++i)result[i]=std::move(parts[static_cast<std::size_t>(i)]);return result;
+}
+Array<String> string_split(const String& value,const Array<char16_t>& separators,bool remove_empty){
+    if(!remove_empty)return string_split(value,separators);
+    const auto all=string_split(value,separators);
+    std::int32_t kept=0;for(std::int32_t i=0;i<all.length();++i)if(all[i].length()!=0)++kept;
+    if(kept==all.length())return all;
+    auto result=Array<String>::make(kept);std::int32_t at=0;
+    for(std::int32_t i=0;i<all.length();++i)if(all[i].length()!=0)result[at++]=all[i];
+    return result;
 }
 }

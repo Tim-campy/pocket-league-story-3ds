@@ -23,9 +23,17 @@ pls::cs::Ref<cs_9465f7541f51c47e> cs_2ce578f5724575d0();
 
 void cs_2ce578f5724575d0_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this);
 
+pls::cs::Ref<cs_9465f7541f51c47e> cs_64e4e3906ae79838(pls::cs::Array<std::uint8_t> v_src);
+
+void cs_64e4e3906ae79838_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::Array<std::uint8_t> v_src);
+
 pls::cs::Ref<cs_9465f7541f51c47e> cs_0f10e92aa7924479(pls::cs::String v_friendId,pls::cs::String v_name,std::int32_t v_state,std::int32_t v_minute,std::int32_t v_updated);
 
 void cs_0f10e92aa7924479_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::String v_friendId,pls::cs::String v_name,std::int32_t v_state,std::int32_t v_minute,std::int32_t v_updated);
+
+pls::cs::Ref<cs_9465f7541f51c47e> cs_8df91cf012e20150(pls::cs::String v_src);
+
+void cs_8df91cf012e20150_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::String v_src);
 
 void cs_ab2f2c9f1fce2e02(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream);
 

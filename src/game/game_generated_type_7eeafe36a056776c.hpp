@@ -117,6 +117,8 @@ std::int32_t cs_bbd44ad53610e27c(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);
 
 std::int32_t cs_cfa914e2f676e2a8(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,std::int32_t v_type,std::int32_t v_index);
 
+bool cs_5225d59512713f09(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);
+
 void cs_1d17a4b2334bbb84();
 
 pls::cs::Ref<pls::kairo::FormBase> cs_bdd6740f5b4600f8(pls::cs::Ref<cs_7eeafe36a056776c> cs_this);

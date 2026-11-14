@@ -154,6 +154,14 @@ que chamava `KairoPlugin.GetSignature` via JNI): devolve o texto fixo
 transporte offline nunca envia. Recibo: `config/service-overrides.json`
 (política 54, `string_exact`); fixture `translator/test_service_lowering.py`.
 
+`KairoBase.CheckNetwork` (`KairoBase.cs:1831–1834`, que lia
+`Application.internetReachability`) devolve `false`: o valor do original com
+`NetworkReachability.NotReachable`. Com isso `ConnectLogin(false)` segue o
+ramo original de rede ausente (`KairoBase.cs:682–686`). O diálogo de partida "Network was not
+detected" com encerramento do app (`KairoBase.Start`, `KairoBase.cs:379–418`)
+não é alcançável: `KairoBase.Init/Start` não têm chamador no fonte reconstruído
+(busca em `reference/src`, 2026-11-13).
+
 **Pedido de nova tentativa.** Quando a falha ocorre com
 `Http.IsRetryEnable` ligado, o `HttpObject` original mostra o diálogo
 "Retry/Cancel" (`HttpObject.cs:50–70`). No port ele aparece igual; "Retry"

@@ -604,6 +604,17 @@
       }
     },
     {
+      "symbol": "M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId",
+      "action": "constant",
+      "result_contract": "null string",
+      "native_hook": null,
+      "reason": "Notifications removed: no GCM registration; JNI leaf not called",
+      "lowering": {
+        "kind": "null",
+        "field_assignments": []
+      }
+    },
+    {
       "symbol": "M:kairo.unity.system.KairoBase.GetSignature",
       "action": "constant",
       "result_contract": "fixed local text",
@@ -612,6 +623,28 @@
       "lowering": {
         "kind": "string_exact",
         "value": "pls-offline",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:kairo.unity.system.KairoBase.CheckNetwork",
+      "action": "constant",
+      "result_contract": "false",
+      "native_hook": null,
+      "reason": "Policy 54: the port has no network; same value as the original with internetReachability == NotReachable",
+      "lowering": {
+        "kind": "bool_false",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:kairo.unity.native.KairoPlugin.SetClockTime(System.Int64,System.Int32)",
+      "action": "constant",
+      "result_contract": "void",
+      "native_hook": null,
+      "reason": "Policy 54: no server time offline; the Android setClockTime JNI leaf is not called",
+      "lowering": {
+        "kind": "void",
         "field_assignments": []
       }
     }

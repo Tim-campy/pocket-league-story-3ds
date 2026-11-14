@@ -136,6 +136,8 @@ bool cs_ead3618c8cf94cf7(pls::cs::Ref<cs_5df8265429cd2423> cs_this,pls::cs::Ref<
 
 bool cs_62252863f9b5a066(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
 
+void cs_aa594da7cb68bfa9(pls::cs::Ref<cs_5df8265429cd2423> cs_this);
+
 void cs_5e76b9a5115ec3c6(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_num,std::int32_t v_showMax);
 
 void cs_ac42dbacd2c8b2e5(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_num,std::int32_t v_showMax,std::int32_t v_value);

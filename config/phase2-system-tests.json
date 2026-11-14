@@ -7,11 +7,11 @@
     "tests/kairo/system_fixtures.cpp": "caa19ad47e47644a2687c3b46dd02461ce0f156d1f33309968170357d15a2d27",
     "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
     "tools/test_system.py": "459c62d9adee04c4f34ab5dc46bb07b223c630b53482906d55c78ab0ae20fa20",
-    "src/kairo/api/system.hpp": "35ef88ea81d5683d5264f95ff987fdcc9029b75ae343b4b0743a9e031e05eb6e",
+    "src/kairo/api/system.hpp": "c34de6982530c431ec6ef141bf7245325d91ac12e3b4baa753733c007c69f35e",
     "src/kairo/common/semantic_runtime.hpp": "adff431b6758d5c570a3ac9c2de8ef74a54843abb178c622847701635577bf66"
   },
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
-  "executable_sha256": "2fb45122572c948bc3bde55db2f6c07425d6d2131e9ba7a35ba876a94db87431",
+  "executable_sha256": "2c5c1ab9904958a9b38ef687299794622f46148076c03574d308589e0827bbb9",
   "original_source_methods": [
     "main.Main.OnCreate",
     "main.Main.OnUpdate",

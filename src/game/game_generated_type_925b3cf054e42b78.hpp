@@ -42,6 +42,8 @@ pls::cs::Ref<cs_925b3cf054e42b78> cs_f6c1ebd73ba5dcdc();
 
 void cs_f6c1ebd73ba5dcdc_init(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
 
+void cs_2a43471433d2b6fd(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
+
 void cs_15b3a4a01f584c1b(pls::cs::Ref<cs_925b3cf054e42b78> cs_this);
 
 pls::cs::Ref<cs_925b3cf054e42b78> cs_fd047093624d8d65();

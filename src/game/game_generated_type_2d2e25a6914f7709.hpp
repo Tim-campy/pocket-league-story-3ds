@@ -52,6 +52,20 @@ pls::cs::Ref<cs_2d2e25a6914f7709> cs_7a28af13c1c2f5ac();
 
 void cs_7a28af13c1c2f5ac_init(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 
+void cs_1acc9dc621224acf(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_friendId);
+
+void cs_4346f0ecaf3acf26(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_friendId);
+
+pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_d865bbafdeb43983(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
+
+pls::cs::Ref<cs_9465f7541f51c47e> cs_3f1c65ebd05b652a(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
+
+void cs_b36aac6fc331f307(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_friendId);
+
+void cs_c0e1c6fe3ae02761(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_name,std::int64_t v_minute);
+
+pls::cs::Ref<cs_9465f7541f51c47e> cs_3e2a404cbbd84e10(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_friendId);
+
 bool cs_dae07ea79e855f60(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 
 void cs_c8383603f8c4d277(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_dx,std::int32_t v_dy,std::int32_t v_sx,std::int32_t v_sy,std::int32_t v_w,std::int32_t v_h,std::int32_t v_sr,std::int32_t v_sg,std::int32_t v_sb,std::int32_t v_dr,std::int32_t v_dg,std::int32_t v_db);
@@ -90,11 +104,15 @@ void cs_576c42e42f2dbf1d(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,bool v_take);
 
 void cs_e7c4ad65df297928(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 
+void cs_ab27af1b0dd1116f(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
+
 void cs_2bce05baf892a620(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this,pls::cs::String v_name);
 
 void cs_48e169a17c41b95f(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 
 void cs_0f1705dcc62b5add(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
+
+bool cs_dfcfbfdb98c1e305(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 
 pls::cs::Array<std::uint8_t> cs_017d03dcf50da0a1(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this);
 

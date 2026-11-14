@@ -15,6 +15,8 @@ inline void debug_log(const cs::String& text){
     std::lock_guard<std::mutex> guard(debug_log_mutex);std::cerr<<output<<'\n';
 }
 inline void debug_log(const cs::Ref<cs::Object>& value){debug_log(value?value->ToString():cs::String(u"Null"));}
+// UnityEngine.Debug.LogException: the player writes the exception text to the log.
+inline void debug_log_exception(const cs::Ref<cs::Object>& exception){debug_log(exception);}
 // Platform replacements for the two Unity setters reached by Main.OnUpdate.
 // The host paces explicit positive target rates. A non-positive rate leaves
 // pacing to the platform; it does not silently substitute a game frame rate.

@@ -118,3 +118,29 @@ aprovação por tocar o comportamento de serviços.
   seguintes, por métodos destravados: `Convert.ToString(int, 2|8|16)`,
   `Enumerable.ElementAt` sobre `List<T>` (6), inicializador de objeto em
   método genérico (9), `byte.Parse(s, HexNumber)` (4), `Keys/Values.ToList()`.
+
+## 8. Terceira etapa (2026-11-13)
+
+Construções novas no tradutor/runtime, todas com fixture contra o Mono
+(diferencial 1.477/1.477): `Convert.ToString(int, 2|8|16)`,
+`List<T>.ElementAt` (Linq), `byte.Parse(s, HexNumber|AllowHexSpecifier)`,
+`String.Split(char[], StringSplitOptions)`, `String.Concat(object, object)`,
+`String.Concat(string, string, string)`; `Debug.LogException` ligado ao log da
+plataforma. Políticas: 54 ampliada com `KairoBase.CheckNetwork` (= sem rede) e
+`KairoPlugin.SetClockTime` (sem hora de servidor); notificações:
+`KairoPlugin.GetGCMRegistrationId` → nulo.
+
+| | antes | agora |
+|---|---:|---:|
+| Métodos emitidos | 1.768 | 1.785 |
+| Rejeitados (diagnóstico do tradutor) | 109 | 85 |
+| Slots virtuais sem definição | 22 | 17 |
+| Políticas emitidas / não alcançadas | 28 / 25 | 33 / 23 |
+
+A cadeia `ConnectLogin`/`Connect*` traduz inteira. `MatchForm.Run` agora para
+em `GameDataRecord.Data.Clone` (inicializador de objeto), a mesma construção
+de `BillingManager.Init/Load`. Próximos, por slots destravados:
+inicializador de objeto (5 slots), `ShowFepPanel` (3; depende da política de
+texto no PC), `Storage.Open(int,bool)` (1), `String.Concat(object[])` (1),
+`AppPlugin.LaunchMailer` (1; serviço Android removido), concatenação composta
+com contrato de `ToString` (3).

@@ -40,9 +40,16 @@ template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(va
 
 [[maybe_unused]] static pls::cs::String cs_object_string(const pls::cs::Ref<pls::cs::Object>&value){return value?value->ToString():pls::cs::String(u"");}
 
+// Mono String.Concat(object,object): null arguments are empty; then Concat(ToString(), ToString()).
+[[maybe_unused]] static pls::cs::String cs_concat_objects2(const pls::cs::Ref<pls::cs::Object>&first,const pls::cs::Ref<pls::cs::Object>&second){
+ auto a=cs_object_string(first);auto b=cs_object_string(second);return pls::cs::String::concat(a,b);
+}
+
 [[maybe_unused]] static pls::cs::String cs_concat_objects3(const pls::cs::Ref<pls::cs::Object>&first,const pls::cs::Ref<pls::cs::Object>&second,const pls::cs::Ref<pls::cs::Object>&third){
  auto a=cs_object_string(first);auto b=cs_object_string(second);auto c=cs_object_string(third);return pls::cs::String::concat(pls::cs::String::concat(a,b),c);
 }
+
+[[maybe_unused]] static pls::cs::String cs_concat_strings3(const pls::cs::String&a,const pls::cs::String&b,const pls::cs::String&c){return pls::cs::String::concat(pls::cs::String::concat(a,b),c);}
 
 [[maybe_unused]] static pls::cs::String cs_concat_strings4(const pls::cs::String&a,const pls::cs::String&b,const pls::cs::String&c,const pls::cs::String&d){return pls::cs::String::concat(pls::cs::String::concat(pls::cs::String::concat(a,b),c),d);}
 

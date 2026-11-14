@@ -56,6 +56,24 @@ return;
 }
 }
 
+// M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId
+pls::cs::String cs_1472447681b25d61() { cs_init_381ecfc7910ffbab();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId",kairo);
+{
+return pls::cs::String{};
+}
+}
+}
+
+// M:kairo.unity.native.KairoPlugin.GetNotificationFilter
+std::int32_t cs_e26bb0fd33c26b1a() { cs_init_381ecfc7910ffbab();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.native.KairoPlugin.GetNotificationFilter",kairo);
+{
+return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
+}
+}
+}
+
 // M:kairo.unity.native.KairoPlugin.GetReleaseNumber
 pls::cs::String cs_0d8fb4e4b5984298() { cs_init_381ecfc7910ffbab();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.native.KairoPlugin.GetReleaseNumber",kairo);
@@ -79,6 +97,15 @@ bool cs_8f839333536cd1aa() { cs_init_381ecfc7910ffbab();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.native.KairoPlugin.IsWeakDrawDevice",kairo);
 {
 return false;
+}
+}
+}
+
+// M:kairo.unity.native.KairoPlugin.SetClockTime(System.Int64,System.Int32)
+void cs_facff58abc6dd9db(std::int64_t v_time,std::int32_t v_precision) { cs_init_381ecfc7910ffbab();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.native.KairoPlugin.SetClockTime(System.Int64,System.Int32)",kairo);
+{
+return;
 }
 }
 }

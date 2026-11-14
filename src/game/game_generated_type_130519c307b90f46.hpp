@@ -10,4 +10,6 @@ bool& cs_0aabbac1b4cc00d9();
 void cs_252b02044b3d6557();
 
 std::int64_t cs_e285ad46e15aa69f();
+
+void cs_958a7158ea6fe576(std::int64_t v_time,std::int32_t v_precision);
 }

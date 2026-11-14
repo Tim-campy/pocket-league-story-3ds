@@ -195,6 +195,7 @@ def main():
         request['external_methods'].update({app+n:'member:source_'+n for n in ['OnCreate','OnResume','OnSuspend','OnDestroy']})
         request['external_methods']['M:native.AppPlugin.Finish']='pls::kairo::request_host_finish'
         request['external_methods']['M:UnityEngine.Debug.Log(System.Object)']='pls::kairo::debug_log'
+        request['external_methods']['M:UnityEngine.Debug.LogException(System.Exception)']='pls::kairo::debug_log_exception'
         # Exact native API leaves. A mapping supplies a declaration/implementation;
         # it does not promote API verification or game execution states.
         native_types={

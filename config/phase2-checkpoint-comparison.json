@@ -15,7 +15,7 @@
   },
   "game_compiled_methods": {
     "previous": 1220,
-    "current": 1768,
+    "current": 1785,
     "gained_ids": [
       "M:analytics.AnalyticsTracker.TrackPageView(System.Boolean,System.String[])",
       "M:analytics.AnalyticsTracker.TrackPageViewId(System.Boolean,System.String,System.String[])",
@@ -460,6 +460,7 @@
       "M:surface.SurfaceManager.Draw(kairo.unity.ui.Graphics)",
       "M:surface.SurfaceManager.Setup",
       "M:system.KairoService.#ctor",
+      "M:system.KairoService.Connected(System.String,System.Byte[],System.Boolean)",
       "M:system.KairoService.Finish",
       "M:system.KairoService.GetInstance",
       "M:system.KairoService.OnLoadGame(java.io.InputStream)",
@@ -505,6 +506,7 @@
       "M:system.form.BillingForm.GetTouchValue(System.Int32,System.Int32)",
       "M:system.form.BillingForm.Init",
       "M:system.form.BillingForm.LoadResource",
+      "M:system.form.BillingForm.Run",
       "M:system.form.BillingForm.SetTouchValue(System.Int32,System.Int32)",
       "M:system.form.BillingForm.UpdateSaleList",
       "M:system.form.BillingForm._draw(kairo.unity.ui.Graphics)",
@@ -516,6 +518,7 @@
       "M:system.form.FriendForm.DrawNumImage(kairo.unity.ui.Graphics,System.Int32,System.Int64,System.Int32,System.Int32,System.Int32,System.Int32)",
       "M:system.form.FriendForm.DrawRandomFriend(kairo.unity.ui.Graphics,System.Int32,System.Int32)",
       "M:system.form.FriendForm.GetTouchValue(System.Int32,System.Int32)",
+      "M:system.form.FriendForm.Init",
       "M:system.form.FriendForm.LoadResource",
       "M:system.form.FriendForm.MakeErrorDialog",
       "M:system.form.FriendForm.MakeErrorDialog(System.String,System.String)",
@@ -557,9 +560,23 @@
       "M:system.form.MatchForm._update",
       "M:system.form.RestoreForm.Draw(kairo.unity.ui.Graphics)",
       "M:system.form.RestoreForm.Init",
+      "M:system.friend.MyFriend.CgiGetFriendList",
+      "M:system.friend.ui.Friend.#ctor(System.Byte[])",
+      "M:system.friend.ui.Friend.#ctor(System.String)",
+      "M:system.friend.ui.FriendData.CgiApplyFriend(System.String)",
+      "M:system.friend.ui.FriendData.CgiApproveFriend(System.String)",
+      "M:system.friend.ui.FriendData.CgiGetFriendList",
+      "M:system.friend.ui.FriendData.CgiRandomFriend",
+      "M:system.friend.ui.FriendData.CgiRefuseFriend(System.String)",
+      "M:system.friend.ui.FriendData.CgiRegistFriend(System.String,System.Int64)",
+      "M:system.friend.ui.FriendData.CgiSearchFriend(System.String)",
       "M:system.friend.ui.FriendData.GetFriendID",
       "M:system.friend.ui.FriendData.IsEffectiveRegistName(System.String)",
       "M:system.friend.ui.FriendData.IsEffectiveRegistName(System.String,System.Int32)",
+      "M:system.friend.ui.FriendData.RefreshFriendList",
+      "M:system.friend.ui.FriendData.UpdateRandomFriend",
+      "M:system.notification.MyNotify.#ctor",
+      "M:system.notification.MyNotify.GetInstance",
       "M:system.panel.InputPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)",
       "M:system.panel.InputPanel.Show(kairo.unity.ui.Canvas,kfw.panel.MainPanel.OnFinishMethod)",
       "M:system.surface.GameBanner.#ctor",
@@ -587,15 +604,15 @@
     },
     {
       "path": "config/phase2-translation.json",
-      "sha256": "e406863795f2b7e924649b83d7ccf7386d127b7733e2220cfb4860e87688f651"
+      "sha256": "0a5cbc796ec43a74201c8fcd0c55ca845732a09377ab0792781a028e4c563720"
     },
     {
       "path": "config/phase2-portable-differential.json",
-      "sha256": "bbadaaa1752f364574e993c7b5e04135c66b96e7243da2b464df2ec0988f6e59"
+      "sha256": "f241db9aafd522959e8ad133f544034ef460894268b3e262a0c737f2e4018152"
     },
     {
       "path": "config/phase2-game-translation.json",
-      "sha256": "cb3612135dd778bec280ed5876cf1582147876ee9b1488484e1a185d72ec10d5"
+      "sha256": "aec911512322b08827b1e60a0cb18e2598aeb9164087a459ccfac4afe4aeba00"
     }
   ]
 }

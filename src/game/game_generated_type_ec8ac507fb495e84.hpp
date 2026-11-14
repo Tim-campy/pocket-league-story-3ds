@@ -21,6 +21,8 @@ pls::cs::Ref<cs_ec8ac507fb495e84> cs_f0504e3d15ead28a();
 
 void cs_f0504e3d15ead28a_init(pls::cs::Ref<cs_ec8ac507fb495e84> cs_this);
 
+pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_c5779f8fec16f545(pls::cs::Ref<cs_ec8ac507fb495e84> cs_this);
+
 pls::cs::Ref<cs_ec8ac507fb495e84> cs_b3ac47ebcf5c05fb();
 
 void cs_c9feed9f197e9812(pls::cs::Ref<cs_ec8ac507fb495e84> cs_this,std::int32_t v_value);

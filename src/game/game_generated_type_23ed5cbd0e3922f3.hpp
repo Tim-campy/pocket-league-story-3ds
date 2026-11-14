@@ -17,6 +17,12 @@ virtual void cs_virtual_2186b93ea03d07c2();
 
 void cs_init_23ed5cbd0e3922f3();
 
+pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_ad74a61a58fd6836();
+
+void cs_ad74a61a58fd6836_init(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this);
+
+pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_baa886ffdf138e8e();
+
 void cs_a56b328f925cc5e4(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this);
 
 void cs_e17b9d62b02e038f(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this);

@@ -34,7 +34,7 @@
     "src/kairo/api/services_managed.hpp": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5",
     "src/kairo/api/sound.hpp": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78",
     "src/kairo/api/storage.hpp": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2",
-    "src/kairo/api/system.hpp": "35ef88ea81d5683d5264f95ff987fdcc9029b75ae343b4b0743a9e031e05eb6e",
+    "src/kairo/api/system.hpp": "c34de6982530c431ec6ef141bf7245325d91ac12e3b4baa753733c007c69f35e",
     "src/kairo/api/text_input.hpp": "9009ecdacce110b7eb1ab0594332d6f298b2a64e30bb181a9ee3a4adb72e3034",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/vector2.hpp": "09ab95478fdd27af71e0a03d0de8e3084c6388b7842d86ea6915ef68204315e9",
@@ -57,7 +57,7 @@
     "src/kairo/common/generated/portable_generated.cpp": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a",
     "src/kairo/common/generated/portable_generated.hpp": "71bdfcd5e6a6d6009836b3fa0ae5c4d1682b4b87c2b82cfe1d08ebbd5e266d5a",
     "src/kairo/common/generated/portable_generated_forward.hpp": "27f16f54f214aebe173dd431e286d8628607df7d17744e4c1dd2b691bf31510d",
-    "src/kairo/common/generated/portable_generated_runtime.hpp": "d0cc811973620ab853bd4979756eed595eca749f6a28ce2adf7deedbebcee076",
+    "src/kairo/common/generated/portable_generated_runtime.hpp": "be369d74d12fa7ceff233f879cd0b2c443d70c1891c24952b7865ebb7973d8cd",
     "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.cpp": "83fc93bf5b347e75f145d394820304d3a68435a1708ea61873c933ae2b288b73",
     "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp": "8429df3c31f1d9d0767e31ccb79c7fe9bcb4feee97308dd6af6712c572a92af6",
     "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.cpp": "7e6907dc6dad6f42fc3ba336d364ed820af4cad737f2d8fdebd994815335fa68",
@@ -196,8 +196,8 @@
     "src/kairo/common/managed_stream_reader.hpp": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd",
     "src/kairo/common/managed_streams.cpp": "b7640bb0abeed3ed65f6ea616b034a4df7b031a9e6197c74ef55d818914bb6d6",
     "src/kairo/common/managed_streams.hpp": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f",
-    "src/kairo/common/managed_string_ops.cpp": "e33872d7a00296fb8c21bd8384ea4ea4b92b75a67535de3a77fee89957bf48e2",
-    "src/kairo/common/managed_string_ops.hpp": "1af96fe46e3f95a43a554764cb7127a1c03f8e9bb477d5f3bb7b413f9301ed21",
+    "src/kairo/common/managed_string_ops.cpp": "31d7b2d04e73ada41ef640f92fef116c7019f64db99cb690d4434f08c4be070f",
+    "src/kairo/common/managed_string_ops.hpp": "15371a3c07aab211be37aeb8d396360a01e748819b85be39f032c3183033be87",
     "src/kairo/common/managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
     "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
     "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
@@ -249,7 +249,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "4488ac5092cca727d9481de8f137e47dfee2480df8f785738c2afb4675d9dc08"
+    "sha256": "9c578024c33a2ecdf1e7ebab4011bd9a7127756f8dffda4447d38a31685ac8ee"
   },
   "verified_boundary_ids": [],
   "limitations": [

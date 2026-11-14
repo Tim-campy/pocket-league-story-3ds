@@ -76,9 +76,37 @@ void cs_d710b4eaf3ab212a_init(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 void cs_b70446c7450e6993(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_type,pls::cs::String v_name,std::int32_t v_up,bool v_save);
 
+pls::cs::Array<pls::cs::String> cs_d25d214fdb748da9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_userid,pls::cs::String v_c,pls::cs::String v_pkg,pls::cs::String v_r,pls::cs::Array<std::uint8_t> v_signature);
+
 bool cs_f13bfb412c6bef66(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_bit);
 
+bool cs_a3db3fad61078ff6(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
+bool cs_34d0a6cf33d80948(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
 bool cs_312c009a993a1e26(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_024f569bc22d06a3(pls::cs::String v_cgi,bool v_split);
+
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_e61e40c68b731ecd(pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
+
+pls::cs::Array<std::uint8_t> cs_c77ff3eb49370828(pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send);
+
+pls::cs::Array<std::uint8_t> cs_f1aa1aebdc918786(pls::cs::String v_cgi);
+
+void cs_6111a681581cbed5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
+
+void cs_a6a3a2dac688088b(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send,bool v_split);
+
+pls::cs::Array<pls::cs::String> cs_51215d437b3290df(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_pw);
+
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_8f0a63baa42add5b(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_time);
+
+bool cs_8c83b0e389fd09c4(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enforce,bool v_retry);
+
+void cs_748a5ed43677ac51(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_gcmId);
+
+void cs_60933d5b25c3e702(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 void cs_706bcbd9776cf6ef(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
@@ -100,7 +128,11 @@ pls::cs::String cs_87f9285131d0cba9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 bool cs_89868493b44dd8bd(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_requestCode,std::int32_t v_resultCode,pls::cs::Ref<pls::cs::Object> v_data);
 
+pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_fcb504960c7fedd8(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split);
+
 pls::cs::Array<std::uint8_t> cs_b8b48b1495fef228(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check);
+
+bool cs_05927ece94d37303(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
 bool cs_ab34005322458eed(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 
@@ -111,6 +143,10 @@ void cs_b2a7adc10d3ecb29(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 pls::cs::Array<cs_c87dc3d2d0f9440a> cs_bf2fb5b5178771c9(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Array<std::uint8_t> v_data,std::int32_t& v_date);
 
 pls::cs::String cs_e458c0b11b9d98e1(pls::cs::String v_query,pls::cs::String v_param);
+
+pls::cs::String cs_c9e97c6156727a98(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send);
+
+pls::cs::String cs_dfcbf5d9c3395ea5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_cgi);
 
 void cs_11a43a7110c29351(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_bit);
 
@@ -135,6 +171,8 @@ void cs_9a7c0378d22d6bd5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::Ref<
 void cs_e63aaf6292bf7187(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_playing);
 
 void cs_5d101ae71ba29127(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enable);
+
+void cs_f0a4f1a9eae00df8(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_progress);
 
 void cs_9ca5e184bd541bee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this);
 }

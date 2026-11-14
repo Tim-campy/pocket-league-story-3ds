@@ -1,5 +1,6 @@
 // GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
 #include "game_generated_type_130519c307b90f46.hpp"
+#include "game_generated_type_381ecfc7910ffbab.hpp"
 #include "generated/portable_generated_type_3af9088680f95fb3.hpp"
 namespace pls::game {
 
@@ -28,6 +29,16 @@ if ((!(cs_0aabbac1b4cc00d9_value))) {
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());});
 }
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int64_t { return pls::generated::cs_55fcf3528750ae31(); }());});
+}
+}
+}
+
+// M:kairo.unity.util.ClockTime.SetTime(System.Int64,System.Int32)
+void cs_958a7158ea6fe576(std::int64_t v_time,std::int32_t v_precision) { cs_init_130519c307b90f46();
+{PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.ClockTime.SetTime(System.Int64,System.Int32)",kairo);
+{
+([&]() -> void { std::int64_t cs_arg0 = v_time; std::int32_t cs_arg1 = v_precision; cs_facff58abc6dd9db(cs_arg0,cs_arg1); }());
+([&]() { auto cs_value = true; cs_0aabbac1b4cc00d9_value = cs_value; return cs_value; }());
 }
 }
 }

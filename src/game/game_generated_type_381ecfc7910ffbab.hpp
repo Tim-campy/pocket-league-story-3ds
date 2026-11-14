@@ -23,9 +23,15 @@ std::int32_t& cs_92a1a5572c032916();
 
 void cs_749d49646f9339d3(bool v_notify,bool v_ararm);
 
+pls::cs::String cs_1472447681b25d61();
+
+std::int32_t cs_e26bb0fd33c26b1a();
+
 pls::cs::String cs_0d8fb4e4b5984298();
 
 bool cs_8f839333536cd1aa();
+
+void cs_facff58abc6dd9db(std::int64_t v_time,std::int32_t v_precision);
 
 void cs_b0502ca03ca03061(bool v_enable);
 }

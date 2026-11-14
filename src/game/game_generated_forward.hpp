@@ -133,11 +133,17 @@ struct cs_6517d63c01870958;
 
 struct cs_c87dc3d2d0f9440a;
 
+struct cs_b6ad7779caeeb23c;
+
+struct cs_f65ba01749ba9d34;
+
 struct cs_b489b0d33bb37bb8;
 
 struct cs_7f70540c4f85d74f;
 
 struct cs_2c2ce8625d613473;
+
+struct cs_88b206217a8b30c2;
 
 struct cs_50c5a567a6876ee3;
 
@@ -190,6 +196,8 @@ struct cs_d86010513034d6a0;
 struct cs_3da6da0799f0bdf8;
 
 struct cs_23a020152d468724;
+
+struct cs_91b71e223c6a5085;
 
 struct cs_8bf13b560e1e05e9;
 

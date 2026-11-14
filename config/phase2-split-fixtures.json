@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.3281615000014426,
-    "native-compile": 314.4153759000001,
-    "managed-output": 47.65442429999894,
-    "native-output": 59.28080249999766
+    "csharp-compile": 1.4906493999951635,
+    "native-compile": 327.0661693000002,
+    "managed-output": 49.39806099999987,
+    "native-output": 65.4972620999979
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -806,7 +806,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_runtime.hpp",
-      "sha256": "d0cc811973620ab853bd4979756eed595eca749f6a28ce2adf7deedbebcee076"
+      "sha256": "be369d74d12fa7ceff233f879cd0b2c443d70c1891c24952b7865ebb7973d8cd"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_15e3f7b692b3f380.cpp",
@@ -1522,11 +1522,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "52cea328f202136f7551c5645ae0f415fd815623ec42d146deae657e0366d883"
+    "sha256": "ae3ca73f1a158ceb86d5bc50c6c66dfef6f731a6af0aacc08efc098a6f2d05d1"
   },
   "source_oracle_executable": {
     "path": "build/translator/split-differential/Harness-managed.exe",
-    "sha256": "e66f3fe8aac3f366e6752c281e0f759b37401da9fe6d0f76a235a215b3af8ee7"
+    "sha256": "4005953183dd00d728ed867b508334760f75169b453f297d1ff3b3796049a63f"
   },
   "differential_runner_sha256": "1a96167ade736630b2e4dac7a0f04b9319a6c9f19a3f54de824d8d771a4df110",
   "runtime_sources": [
@@ -1560,7 +1560,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_runtime.hpp",
-      "sha256": "d0cc811973620ab853bd4979756eed595eca749f6a28ce2adf7deedbebcee076"
+      "sha256": "be369d74d12fa7ceff233f879cd0b2c443d70c1891c24952b7865ebb7973d8cd"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_15e3f7b692b3f380.cpp",
@@ -2364,7 +2364,7 @@
     },
     {
       "path": "src/kairo/api/system.hpp",
-      "sha256": "35ef88ea81d5683d5264f95ff987fdcc9029b75ae343b4b0743a9e031e05eb6e"
+      "sha256": "c34de6982530c431ec6ef141bf7245325d91ac12e3b4baa753733c007c69f35e"
     },
     {
       "path": "src/kairo/api/text_input.hpp",
@@ -2428,7 +2428,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_runtime.hpp",
-      "sha256": "d0cc811973620ab853bd4979756eed595eca749f6a28ce2adf7deedbebcee076"
+      "sha256": "be369d74d12fa7ceff233f879cd0b2c443d70c1891c24952b7865ebb7973d8cd"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp",
@@ -2752,11 +2752,11 @@
     },
     {
       "path": "src/kairo/common/managed_string_ops.cpp",
-      "sha256": "e33872d7a00296fb8c21bd8384ea4ea4b92b75a67535de3a77fee89957bf48e2"
+      "sha256": "31d7b2d04e73ada41ef640f92fef116c7019f64db99cb690d4434f08c4be070f"
     },
     {
       "path": "src/kairo/common/managed_string_ops.hpp",
-      "sha256": "1af96fe46e3f95a43a554764cb7127a1c03f8e9bb477d5f3bb7b413f9301ed21"
+      "sha256": "15371a3c07aab211be37aeb8d396360a01e748819b85be39f032c3183033be87"
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
@@ -2878,9 +2878,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "e52c5bab6f4a948cc98a52d57cb64df5ee0a4e240283bf9d69182417f053fde7",
+    "translator_source_sha256": "68ebb7ba69f0a3cfb3109851cfe6e22633d86c7d4368227807131700c1ee374a",
     "emission_source_sha256": "d70ab3ae2d8fe8526c42ea42703df2e3146360c6b35d870dd562eac882c751c0",
-    "driver_sha256": "326ef7dbc3156a8901bd8e18f0fe38d9b28b2929317104ae1a7a8bdd4e532be4"
+    "driver_sha256": "49e3ad1e945a25f26b9d130eec756ddac1505d34a3993172533a38e5b6df21cb"
   },
   "chunk_budget_bytes": 32768,
   "chunk_count": 179,
@@ -2888,7 +2888,7 @@
   "generated_chunks": [
     {
       "file": "portable_generated_runtime.hpp",
-      "bytes": 7162
+      "bytes": 7711
     },
     {
       "file": "portable_generated_forward.hpp",

@@ -11,7 +11,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 
 | Critério | Estado | Evidência / pendência |
 |---|---|---|
-| Tradução completa | em andamento | 1768/1958 métodos compilados (+62 membros gerados pelo compilador dentro de unidades emitidas, 2 abstratos sem corpo); 22 slots virtuais pendentes; integração das 53 políticas ainda não comprovada. |
+| Tradução completa | em andamento | 1785/1958 métodos compilados (+63 membros gerados pelo compilador dentro de unidades emitidas, 2 abstratos sem corpo); 17 slots virtuais pendentes; integração das 53 políticas ainda não comprovada. |
 | Coletor e desempenho | em andamento | Critério (2026-11-13): New 3DS real, backend nulo, três execuções; nenhum frame >50 ms em jogo estável (coletas por volume incluídas); pausas em trocas de tela principal e carregamentos até 150 ms; partida com média <20 ms. v5 em três execuções: menu com maior coleta 105,6–107,7 ms, classificação por tipo pendente do v6; partida média 8,9–12,6 ms sem coletas. |
 | Percurso completo no PC | em andamento | 780 métodos exercitados; temporada, todas as telas e tipos de evento ainda não comprovados. |
 | Fidelidade resolvida | em andamento | Ponto flutuante confirmado em emulador ARM; confirmação em aparelho, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
@@ -21,7 +21,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
-| Métodos a traduzir | 1958 | {'todo': 126, 'translated': 988, 'embedded': 62, 'runs': 780, 'no-body': 2} |
+| Métodos a traduzir | 1958 | {'todo': 108, 'translated': 1005, 'embedded': 63, 'runs': 780, 'no-body': 2} |
 
 ## Fronteira da KairoLibrary
 
@@ -48,7 +48,7 @@ A conversão para rastreamento está integrada e em validação. Pico comparativ
 |---|---:|---|
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1768/1958 identidades originais com C++ compilado; 780 com retorno normal registrado em jogo; 0 verificadas.**
+**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1785/1958 identidades originais com C++ compilado; 780 com retorno normal registrado em jogo; 0 verificadas.**
 
 ## Preparação e medições da Fase 1 preservadas
 
@@ -73,9 +73,9 @@ Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets]
 
 - Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 172 raízes + 202 dependências emitidas/compiladas; 374 métodos exercitados e 373 verificados. 2617/2618 observações diferenciais aprovadas; 1 diferenças de plataforma explicitamente retidas, sem promoção a verified.
 - Fronteira: 252/775 símbolos verificados: 171 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend grafico CTR ainda nao implementado; o benchmark ARM11 usa backend nulo.
-- Assembly-CSharp: 1768 corpos emitidos, 1768 compilados em objeto C++; 1768/1958 (90.30%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4841 identidades declaradas; o pedido atual inclui 1900 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
+- Assembly-CSharp: 1785 corpos emitidos, 1785 compilados em objeto C++; 1785/1958 (91.16%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4841 identidades declaradas; o pedido atual inclui 1900 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
 - Sintaxe: 69/123 SyntaxKinds na união dos corpos emitidos (63 Kairo, 69 Game); observação não comprova cobertura semântica integral de cada construção.
-- Serviços: 54 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.
+- Serviços: 57 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.
 - Assets: 654 RGBA8 únicos (16933248 bytes) com readback integral; 2 TTF e 27 Ogg exercitados pelos consumidores nativos de rasterização/streaming; nenhuma API do jogo promovida apenas por isso.
 - Marco de partida completa e retorno ao menu registrado em [recibo](config/phase2-match-complete.json) e [evidencia](docs/notes/phase2-match-complete.md). Cobertura por metodo depende dos recibos autenticados; comparacao Android pendente.
 - Próxima integração: completar corpos, slots e serviços restantes; medir o runtime sem rasterização. Nenhuma decisão de telas 3DS foi tomada.

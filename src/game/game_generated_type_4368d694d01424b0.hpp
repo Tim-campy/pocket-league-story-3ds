@@ -21,6 +21,10 @@ void cs_init_4368d694d01424b0();
 
 pls::cs::Ref<cs_4368d694d01424b0>& cs_af3cecaddfff33af();
 
+pls::cs::Ref<cs_4368d694d01424b0> cs_f936e6cee1a07442();
+
+void cs_f936e6cee1a07442_init(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
+
 void cs_fb49ecfe97c9cd02(pls::cs::Ref<cs_4368d694d01424b0> cs_this);
 
 void cs_f30d255f82bcb932(pls::cs::Ref<cs_4368d694d01424b0> cs_this);

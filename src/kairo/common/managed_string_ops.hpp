@@ -15,8 +15,17 @@ std::int32_t int32_parse_hex_number(const String& value,bool allow_spaces=true);
 bool int32_try_parse_hex_number(const String& value,std::int32_t& result);
 // MD5.Create().ComputeHash(byte[]): RFC 1321 digest, 16 bytes; null throws ArgumentNullException.
 Array<std::uint8_t> md5_compute_hash(const Array<std::uint8_t>& buffer);
+// Convert.ToString(int, 2|8|16): the 32-bit two's complement digits, lowercase,
+// without leading zeros (Mono ConvertToBase2/8/16); zero is "0".
+String convert_to_string_base(std::int32_t value,std::int32_t to_base);
+// Byte.Parse(s, HexNumber/AllowHexSpecifier): Mono parses as UInt32 and throws
+// OverflowException above 255.
+std::uint8_t byte_parse_hex_number(const String& value,bool allow_spaces);
 float single_parse_legacy(const String& value);
 String string_replace(const String& value,const String& old_value,const String& replacement);
 String string_replace(const String& value,char16_t old_value,char16_t replacement);
 Array<String> string_split(const String& value,const Array<char16_t>& separators);
+// Split(char[], StringSplitOptions): remove_empty drops empty parts; an empty
+// string with RemoveEmptyEntries gives an empty array (Mono).
+Array<String> string_split(const String& value,const Array<char16_t>& separators,bool remove_empty);
 }

@@ -5,6 +5,10 @@
 #include "generated/portable_generated_type_86e62a3c0e632a0f.hpp"
 namespace pls::game {
 
+void cs_851a96be86c28dd2::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
+
+void cs_851a96be86c28dd2::release_edges(){pls::cs::Object::release_edges();}
+
 static bool cs_66520490d812bf5b_value{};
 
 static pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_99f86cd66d5ccef0_value{};
@@ -17,6 +21,17 @@ cs_99f86cd66d5ccef0_value = pls::cs::evaluate_type_initializer_field("F:system.K
 bool& cs_66520490d812bf5b(){cs_init_851a96be86c28dd2();return cs_66520490d812bf5b_value;}
 
 pls::cs::Array<pls::cs::Array<pls::cs::String>>& cs_99f86cd66d5ccef0(){cs_init_851a96be86c28dd2();return cs_99f86cd66d5ccef0_value;}
+
+// M:system.KairoText.#ctor
+pls::cs::Ref<cs_851a96be86c28dd2> cs_fb860c1d341fcefd() { cs_init_851a96be86c28dd2();
+{ auto cs_this = pls::cs::make_ref<cs_851a96be86c28dd2>(); cs_fb860c1d341fcefd_init(cs_this); return cs_this; }
+}
+
+void cs_fb860c1d341fcefd_init(pls::cs::Ref<cs_851a96be86c28dd2> cs_this) {
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.KairoText.#ctor",game);
+{}
+}
+}
 
 // M:system.KairoText.LT(System.String,System.Int32)
 pls::cs::String cs_62153521fbb1f7f8(pls::cs::String v_text,std::int32_t v_arg) { cs_init_851a96be86c28dd2();

@@ -112,4 +112,15 @@ void cs_961e1edcb72ada4a(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,bool v_value)
 }
 }
 }
+
+// M:system.form.HttpForm.ResultData.System#Collections#IEnumerable#GetEnumerator
+pls::cs::Ref<pls::cs::EnumeratorObject> cs_9b8a4b371f0061da(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this) { cs_init_408ac5c74e5f3515();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.ResultData.System#Collections#IEnumerable#GetEnumerator",game);
+{
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_dictionary=([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_71dbc351ecc57982; }());return pls::cs::box_enumerator<pls::cs::String,pls::cs::Ref<pls::cs::Object>>(cs_dictionary.GetEnumerator());}());});
+}
+}
+}
+}
 }

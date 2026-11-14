@@ -32,6 +32,8 @@ def typed_lowering(policy):
     }
     if identifier=='M:main.AppData.CgiRegist(System.String,System.String)':
         return dict(kind='register_local',native_hook='pls::services::managed::register_local',native_include='services_managed.hpp',field_assignments=[])
+    if policy.get('action')=='forward':
+        return dict(kind='forward',native_hook=policy['native_hook'],field_assignments=[])
     if identifier=='M:kairo.unity.system.KairoBase.GetSignature':
         return dict(kind='string_exact',value=OFFLINE_SIGNATURE,field_assignments=[])
     if identifier=='M:kairo.unity.ad.AdMobView.GetAdHeight':
@@ -127,6 +129,11 @@ def main():
     add('M:kairo.unity.ui.Canvas.GetAdMobView','constant','null AdMobView',reason='Ads removed; admobView_ is always null in the port')
     # Device vibration: no vibrator on the PC or 3DS targets; platform leaf a Phase 3 design may replace.
     add('M:kairo.unity.ui.Canvas.Vibrator(System.Int64)','constant','void',reason='No vibration hardware; KairoPlugin.Vibrator JNI leaf not called')
+    # Platform-bound AppPlugin members: the body forwards to the existing host functions
+    # (same bindings as translate.py), so the Java bridge is never touched.
+    add('M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)','forward','void','pls::kairo::native_plugin_init',
+        reason='Android plugin init replaced by the host native_plugin_init (language, logging, license key unused)')
+    add('M:native.AppPlugin.Finish','forward','void','pls::kairo::request_host_finish',reason='Android finish replaced by the host finish request')
     # Notification family (removed): push registration id. Reached only when IsPushEnable() is true (KairoBase.cs:1675-1693).
     add('M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId','constant','null string',
         reason='Notifications removed: no GCM registration; JNI leaf not called')

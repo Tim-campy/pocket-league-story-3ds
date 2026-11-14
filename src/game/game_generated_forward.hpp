@@ -3,6 +3,12 @@
 #include "game_generated_runtime.hpp"
 namespace pls::game {
 
+struct cs_2e79f4f38b707be7;
+
+struct cs_8a422f6f9c1bd55e;
+
+struct cs_b89c480114cef140;
+
 struct cs_b08d770c239489bf;
 
 struct cs_80d72c9d6f5bfcfe;
@@ -159,6 +165,8 @@ struct cs_c10f171a3a4c8973;
 
 struct cs_8e2bf0f8fe011785;
 
+struct cs_500cf5d961e2c3a4;
+
 struct cs_96c54d9323f24f8e;
 
 struct cs_2eedf806ae9938c7;
@@ -207,6 +215,8 @@ struct cs_8bf13b560e1e05e9;
 
 struct cs_2ffa6f51468590ea;
 
+struct cs_9d34b362d90540bb;
+
 struct cs_bad15ea7469ee2b9;
 
 struct cs_75beb3a42e16f9bd;
@@ -241,7 +251,11 @@ struct cs_15f31d4f046b09a8;
 
 struct cs_fa01867c9c048464;
 
+struct cs_758f7068d68847ba;
+
 struct cs_51fd12cb14e568f9;
+
+struct cs_e6ed65290db381ba;
 
 struct cs_a42daea58251b089;
 
@@ -277,6 +291,8 @@ struct cs_22115ea4236d0eaa;
 
 struct cs_925b3cf054e42b78;
 
+struct cs_851a96be86c28dd2;
+
 struct cs_e00832a42e12ec3b;
 
 struct cs_23ed5cbd0e3922f3;
@@ -284,6 +300,12 @@ struct cs_23ed5cbd0e3922f3;
 struct cs_90cdc908fbacdc4d;
 
 struct cs_af32d28251411c95;
+
+struct cs_a47fef2fb9013301;
+
+struct cs_15d0c6400449da70;
+
+struct cs_f8053a3d49df91b7;
 
 struct cs_764e04aa5493d588;
 

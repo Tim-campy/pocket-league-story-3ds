@@ -213,6 +213,7 @@ def main():
         ('android-math-static',['tools/inspect_android_math.py','--apk',str(args.apk.resolve())]),
         ('culture-characterization',['tools/probe_string_culture.py']),
         ('checkpoint-comparison',['translator/compare_checkpoint.py','--commit','af66d13']),
+        ('reachability-analysis',['tools/callgraph/analyze.py']),
         ('progress',['tools/progress']),
     ]
     folder=ROOT/'build/phase2-verification';folder.mkdir(parents=True,exist_ok=True)

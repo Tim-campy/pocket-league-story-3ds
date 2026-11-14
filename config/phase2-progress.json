@@ -1,6 +1,6 @@
 {
   "operation": "hash-validated-phase2-ledger-update",
-  "producer_sha256": "3e246b022164432c9e862b5567819350ce651fc9fcb3451f7fe78e6180e50887",
+  "producer_sha256": "a87931cba965d51a8ca0c064ab87c101cf8dd5f92b18809ff471df19f2afd6ce",
   "requested_portable_symbols": 254,
   "requested_root_methods": 172,
   "emitted_methods": 374,
@@ -702,8 +702,8 @@
     ]
   },
   "emitted_root_ids_outside_boundary": [],
-  "game_translated_methods": 1822,
-  "game_compiled_methods": 1822,
+  "game_translated_methods": 1860,
+  "game_compiled_methods": 1860,
   "game_executed_methods": 809,
   "game_verified_methods": 0,
   "game_run_ids": [
@@ -1717,15 +1717,15 @@
     "M:kairo.unity.util.StringUtil.Split(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)",
     "M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)"
   ],
-  "game_emitted_cpp_methods": 1828,
-  "game_compiled_cpp_methods": 1828,
+  "game_emitted_cpp_methods": 1860,
+  "game_compiled_cpp_methods": 1860,
   "game_source_method_declarations": 4844,
-  "game_requested_method_identities": 1900,
+  "game_requested_method_identities": 1917,
   "game_identity_mapping": "unique complete declaring-type/name/parameter-types/return-type; constructors return System.Void; no arity-only match",
   "identity_mapping_self_test": {
     "operation": "strict-game-method-identity-self-test",
-    "cases": 10,
-    "passed": 10,
+    "cases": 11,
+    "passed": 11,
     "arity_only_matching": false
   },
   "generated_member_self_test": {
@@ -1733,60 +1733,12 @@
     "cases": 8,
     "passed": 8
   },
-  "game_embedded_methods": 89,
-  "game_no_body_methods": 2,
-  "game_mapping_unknown": [
-    {
-      "doc_id": "M:system.billing.ui.BillingManager.Init(System.String[][])",
-      "reason": "UNKNOWN: multiple emitted identities map to one original",
-      "candidate_ids": [
-        "Assembly-CSharp::system.billing.ui.BillingManager::Init(System.String[][])->System.Void"
-      ]
-    },
-    {
-      "doc_id": "M:system.billing.ui.BillingManager.Init``1(System.String[][])",
-      "reason": "UNKNOWN: multiple emitted identities map to one original",
-      "candidate_ids": [
-        "Assembly-CSharp::system.billing.ui.BillingManager::Init(System.String[][])->System.Void"
-      ]
-    },
-    {
-      "doc_id": "M:system.billing.ui.BillingManager.Init(System.String[][],System.String,System.String[])",
-      "reason": "UNKNOWN: multiple emitted identities map to one original",
-      "candidate_ids": [
-        "Assembly-CSharp::system.billing.ui.BillingManager::Init(System.String[][],System.String,System.String[])->System.Void"
-      ]
-    },
-    {
-      "doc_id": "M:system.billing.ui.BillingManager.Init``1(System.String[][],System.String,System.String[])",
-      "reason": "UNKNOWN: multiple emitted identities map to one original",
-      "candidate_ids": [
-        "Assembly-CSharp::system.billing.ui.BillingManager::Init(System.String[][],System.String,System.String[])->System.Void"
-      ]
-    },
-    {
-      "doc_id": "M:system.billing.ui.BillingManager.Load(System.Byte[])",
-      "reason": "UNKNOWN: multiple emitted identities map to one original",
-      "candidate_ids": [
-        "Assembly-CSharp::system.billing.ui.BillingManager::Load(System.Byte[])->System.Void"
-      ]
-    },
-    {
-      "doc_id": "M:system.billing.ui.BillingManager.Load``1(System.Byte[])",
-      "reason": "UNKNOWN: multiple emitted identities map to one original",
-      "candidate_ids": [
-        "Assembly-CSharp::system.billing.ui.BillingManager::Load(System.Byte[])->System.Void"
-      ]
-    }
-  ],
+  "game_embedded_methods": 90,
+  "game_no_body_methods": 6,
+  "game_mapping_unknown": [],
   "game_original_ids_not_mapped": [
     "Assembly-CSharp::<PrivateImplementationDetails>::.ctor()->System.Void",
-    "Assembly-CSharp::BuildInfos.BuildInfo::.ctor()->System.Void",
-    "Assembly-CSharp::TJPlacement::.ctor()->System.Void",
-    "Assembly-CSharp::UnityEngine.Purchasing.Product::.ctor()->System.Void",
-    "Assembly-CSharp::analytics.AnalyticsTracker::.ctor()->System.Void",
     "Assembly-CSharp::cfg.MyConfig::.cctor()->System.Void",
-    "Assembly-CSharp::cfg.MyConfig::.ctor()->System.Void",
     "Assembly-CSharp::data.FanActData::.cctor()->System.Void",
     "Assembly-CSharp::data.FanBonusData::.cctor()->System.Void",
     "Assembly-CSharp::data.PlayerData::.cctor()->System.Void",
@@ -1824,7 +1776,6 @@
     "Assembly-CSharp::game.UserData::.cctor()->System.Void",
     "Assembly-CSharp::main.AppData+<DrawFukidashiKimochi>c__AnonStorey1::.ctor()->System.Void",
     "Assembly-CSharp::main.AppData+<DrawFukidashiKimochi>c__AnonStorey1::<>m__3(kairo.unity.ui.Graphics,System.Single,kairo.unity.graphics.RectangleF,kairo.unity.graphics.RectangleF)->System.Void",
-    "Assembly-CSharp::main.AppData+stringErrorCode::.ctor()->System.Void",
     "Assembly-CSharp::main.AppData::.cctor()->System.Void",
     "Assembly-CSharp::native.AppPlugin+<LaunchMailer>c__AnonStorey3::.ctor()->System.Void",
     "Assembly-CSharp::native.AppPlugin+<LaunchMailer>c__AnonStorey3::<>m__6()->System.Void",
@@ -1832,8 +1783,6 @@
     "Assembly-CSharp::native.AppPlugin+<ShowPurchaseLog>c__AnonStorey2::<>m__5()->System.Object",
     "Assembly-CSharp::native.AppPlugin::.cctor()->System.Void",
     "Assembly-CSharp::native.AppPlugin::<Finish>m__4()->System.Void",
-    "Assembly-CSharp::native.AppPlugin::Finish()->System.Void",
-    "Assembly-CSharp::native.AppPlugin::Init(System.Int32,System.Boolean,System.String)->System.Void",
     "Assembly-CSharp::native.WebBoxPlugin+<LoadUrl>c__AnonStorey5::.ctor()->System.Void",
     "Assembly-CSharp::native.WebBoxPlugin+<LoadUrl>c__AnonStorey5::<>m__9()->System.Void",
     "Assembly-CSharp::native.WebBoxPlugin+<SetViewRect>c__AnonStorey4::.ctor()->System.Void",
@@ -1844,31 +1793,18 @@
     "Assembly-CSharp::native.WebBoxPlugin::<Create>m__7()->System.Object",
     "Assembly-CSharp::native.WebBoxPlugin::<Dispose>m__A()->System.Void",
     "Assembly-CSharp::native.WebBoxPlugin::<Visible>m__B()->System.Object",
-    "Assembly-CSharp::panel.MainPanel::Show(kairo.unity.ui.Canvas)->System.String",
     "Assembly-CSharp::surface.GamePad::.cctor()->System.Void",
     "Assembly-CSharp::surface.GameView::.cctor()->System.Void",
     "Assembly-CSharp::system.KairoService::<Update>m__D()->System.Void",
     "Assembly-CSharp::system.KairoText::.cctor()->System.Void",
-    "Assembly-CSharp::system.KairoText::.ctor()->System.Void",
     "Assembly-CSharp::system.billing.ui.BillingManager::.cctor()->System.Void",
     "Assembly-CSharp::system.billing.ui.BillingManager::<Provisioning>m__10()->System.Void",
-    "Assembly-CSharp::system.billing.ui.BillingManager::Init(System.String[][])->System.Void",
-    "Assembly-CSharp::system.billing.ui.BillingManager::Init(System.String[][],System.String,System.String[])->System.Void",
-    "Assembly-CSharp::system.billing.ui.BillingManager::Init``1(System.String[][])->System.Void",
-    "Assembly-CSharp::system.billing.ui.BillingManager::Init``1(System.String[][],System.String,System.String[])->System.Void",
-    "Assembly-CSharp::system.billing.ui.BillingManager::Load(System.Byte[])->System.Void",
-    "Assembly-CSharp::system.billing.ui.BillingManager::Load``1(System.Byte[])->System.Void",
     "Assembly-CSharp::system.billing.ui.Receipt::.cctor()->System.Void",
     "Assembly-CSharp::system.billing.ui.StoreBase+<SetRestoreRequest>c__AnonStorey7::.ctor()->System.Void",
     "Assembly-CSharp::system.billing.ui.StoreBase+<SetRestoreRequest>c__AnonStorey7::<>m__F()->System.Void",
     "Assembly-CSharp::system.billing.ui.StoreBase::.cctor()->System.Void",
     "Assembly-CSharp::system.billing.ui.StoreBase::<GetRestoreRequest>m__E()->System.Object",
     "Assembly-CSharp::system.billing.ui.StoreBase::GetItems()->system.billing.ui.BillingItem[]",
-    "Assembly-CSharp::system.billing.util.IabHelper::.ctor()->System.Void",
-    "Assembly-CSharp::system.billing.util.Inventory::GetAllOwnedSkus()->System.Collections.Generic.List`1<System.String>",
-    "Assembly-CSharp::system.billing.util.Inventory::GetAllOwnedSkus(System.String)->System.Collections.Generic.List`1<System.String>",
-    "Assembly-CSharp::system.billing.util.Inventory::GetAllPurchases()->System.Collections.Generic.List`1<system.billing.util.Purchase>",
-    "Assembly-CSharp::system.billing.util.Json::.ctor()->System.Void",
     "Assembly-CSharp::system.form.BillingForm::.cctor()->System.Void",
     "Assembly-CSharp::system.form.ConnectForm::.cctor()->System.Void",
     "Assembly-CSharp::system.form.FriendForm::.cctor()->System.Void",
@@ -1888,7 +1824,6 @@
     "Assembly-CSharp::system.form.HttpForm+HttpMethod::BeginInvoke(system.form.HttpForm,system.form.HttpForm+ResultData,System.AsyncCallback,System.Object)->System.IAsyncResult",
     "Assembly-CSharp::system.form.HttpForm+HttpMethod::EndInvoke(System.IAsyncResult)->System.Void",
     "Assembly-CSharp::system.form.HttpForm+HttpMethod::Invoke(system.form.HttpForm,system.form.HttpForm+ResultData)->System.Void",
-    "Assembly-CSharp::system.form.HttpForm+ResultData::System.Collections.IEnumerable.GetEnumerator()->System.Collections.IEnumerator",
     "Assembly-CSharp::system.form.HttpForm::.cctor()->System.Void",
     "Assembly-CSharp::system.form.LanguageForm::<Update>m__1D(system.form.HttpForm,system.form.HttpForm+ResultData)->System.Void",
     "Assembly-CSharp::system.form.LanguageForm::<Update>m__1E(system.form.HttpForm,system.form.HttpForm+ResultData)->System.Void",
@@ -1899,32 +1834,16 @@
     "Assembly-CSharp::system.form.RestoreForm::<Init>m__21()->System.Void",
     "Assembly-CSharp::system.friend.ui.FriendData::.cctor()->System.Void",
     "Assembly-CSharp::system.friend.ui.FriendData::PlayBonus(System.Int32)->System.Void",
-    "Assembly-CSharp::system.panel.InputPanel::Show(kairo.unity.ui.Canvas)->System.String",
-    "Assembly-CSharp::system.surface.GameBanner::.cctor()->System.Void",
-    "Assembly-CSharp::system.tapjoy.MyTapjoy::.ctor()->System.Void",
-    "Assembly-CSharp::system.tapjoy.MyTapjoy::GetInstance()->system.tapjoy.MyTapjoy",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::.ctor(System.String,System.String,System.Boolean)->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::AddBalance(System.Int32)->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::CallBalance()->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::GetBalance()->System.Int32",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::GetInstance()->system.tapjoy.ui.Tapjoy",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::GetOfferState()->system.tapjoy.ui.Tapjoy+OfferState",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::Init()->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::OnApplicationQuit()->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::Print(System.String)->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::Quit()->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::ShowOffers()->System.Boolean",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::Start()->System.Void",
-    "Assembly-CSharp::system.tapjoy.ui.Tapjoy::SubBalance(System.Int32)->System.Void"
+    "Assembly-CSharp::system.surface.GameBanner::.cctor()->System.Void"
   ],
   "game_translation_states": {
-    "todo": 45,
-    "translated": 1013,
-    "embedded": 89,
+    "translated": 1051,
+    "embedded": 90,
     "runs": 809,
-    "no-body": 2
+    "policy": 2,
+    "no-body": 6
   },
-  "service_contracts": 67,
+  "service_contracts": 69,
   "service_native_assertions": 49,
   "service_integration": "PENDING; no boundary promotion",
   "rgba8_files": 654,
@@ -1948,41 +1867,41 @@
   "source_graphics_oracle_cases": 686,
   "game_boot": false,
   "receipts": {
-    "phase2-translation.json": "352e12c18dba27e824ed43bd25d967135f1b44ec36c373dd74f1862abe0bff7d",
-    "phase2-portable-differential.json": "1aa956219cb5518d838c0befa07386f085ff998038b129326baa68fd1d670a9c",
+    "phase2-translation.json": "f47f79f70e5437e642c970c2ef5ce1532246ab3e4ed443b94aa7ec07e6056d09",
+    "phase2-portable-differential.json": "05469b012afaeaefb8e89d9677368be9c859ba0ff77d143132df35e691c563aa",
     "phase2-assets.json": "6008f5229566e0d45d83c0c1d1ea6f1c44246fa66c8afaed8aab9863663bddd8",
-    "phase2-image-tests.json": "efaf45924a8537c0f6e9ab3acf80ad2dbd42fab9e4e666d5c924e014e2ca4b52",
-    "phase2-services-tests.json": "d876df9b893ff78232c1d59509e3b09d971b8a1eb7d8c1d9f782e5132e911664",
+    "phase2-image-tests.json": "506ef9cdd4b71decf7091f5c319397b39cf1a086233780385ae0235b4b2a4758",
+    "phase2-services-tests.json": "c5cbc5acb9b17c85ca5c0b85a198fc63f0dc760d154d7f97b683bce9a312feeb",
     "phase2-legacy-assets.json": "0c886fda78e72fc95d6c97cc402ecd77efe5a55ada11b4efe1113771ccb7eed1",
-    "phase2-game-translation.json": "ea0bbb588033ebb3cc7b53fee0cc5d281df50a8e49ca43f19d5272add2ae032b",
-    "phase2-graphics-tests.json": "30da26eb708a338c6ae130396bea703f37bb73fc3ece93f09f683914e0c3851c",
-    "phase2-media-tests.json": "4d6a2cd8df031b50b767c6760567f55d841e12afdf2500e581bb2b78acefc106",
+    "phase2-game-translation.json": "125788d92e52e8125503a339a650a736f9840a784f5a990887e38f7166f542bc",
+    "phase2-graphics-tests.json": "025e405024f859c3f7253969d4383487c4b1be297baec0356ff25e99d1e0dacb",
+    "phase2-media-tests.json": "4a6362735f2194d32d000d06084eb2bb78a6f570abd99b559414f5089bd8101d",
     "baked-array-index.json": "9deae19c08a2ab03a0082e1a8dedfb54b4d5d6b8e5cdf83d7370688c9fbba9a1",
-    "phase2-storage-tests.json": "c37dd34848de91cca21dc7ed44ca3bc5319fdb95c6abce971ece0028faf7c2a5",
-    "phase2-input-tests.json": "0eb85a7f5d47fa09cf12dcb65b3d227024948b0bac48b4a7451e7fac7a132711",
-    "phase2-forms-tests.json": "623611a2cf44eb9f0637e02d175f23659b5c73f41bb2d752d60fb62432872184",
-    "phase2-sound-tests.json": "da1bf69a1f029160bb521e0a3f835977c7b58ea5346d98a4c2a93831cea16795",
-    "phase2-type-init-fixtures.json": "f2d36551ede429a0e64ed9d964916babe608a26a1beb5b7ea30be90a717e011f",
-    "phase2-exception-objects-fixtures.json": "e15c639062f2ab984602c6168483d1b0c7521369986c7082353b85e317ae6aa6",
-    "phase2-runtime-encoding-fixtures.json": "db826246d82b7b0eec6589f12631aa7b1f2ceb66f81ac2de6cd351d70132a202",
-    "phase2-regex-fixtures.json": "d5e02c38308acc55a8018243148575968e2f1ed112bc8faba609d540ae428459",
-    "phase2-path-fixtures.json": "f8a51b1e6bebface029bafe913ad82cfd7a959e14944974d185a887b9cf9cf82",
-    "phase2-stream-reader-tests.json": "62c6f280802524361a7206a8a7845250054c375ffde43cc410c8bfeca3271480",
-    "phase2-mono-collation-tests.json": "836baae32afcb2077e25c576ead34ad5be18d7c0705d418dbf61d903d163d723",
-    "phase2-thread-tests.json": "e7f479df443d4b8f6cd3d557dc414a676759841f5dad3d9f4880dc08abec8b27",
-    "phase2-globalization-tests.json": "f6b851a4dee186b45a7f915d71cdada4467223d99c646f39eeb165632cf3bf05",
-    "phase2-bootstrap-tests.json": "5e9d3634d775440184ca4ee66b773e143824f2511488c1d01df971694fcc5f21",
-    "phase2-asset-reader-tests.json": "56f6d4cd30e60679dab8c65d8a384867f11249edac9df5aae6e3af46ad6e9e45",
-    "phase2-string-ops-tests.json": "4ac522b239df00017f00355f55505e60801a7543ecc0411e8930bbd1761cd139",
-    "phase2-image-lifetime-tests.json": "93c1d7410db507df380b952db58f5be26f37de91b8da09209a4be8c5db9bf6d5",
-    "phase2-ui-dispatch-gc-tests.json": "a4b43a810993aa4a392ea136b92e1fcd35c88d3aa49184c226dcce76aa81de9c",
-    "phase2-stack-fixtures.json": "3d809ef36ef6bc7d4270f86071e0f7889433e1e08256cc153fc3cb8059e561f3",
+    "phase2-storage-tests.json": "3bbacaa291d20798bb9984e57315cb172c3b00cab2d7b2a1939aed2eee3cf4de",
+    "phase2-input-tests.json": "6723e0b6e8fcb413467ff53a1901203c58525eaefd562a2f6cfbc55f89e9c98d",
+    "phase2-forms-tests.json": "f874b8362faeadf8ceefa5bdbbc93caea359295bba5e2f3dcf88e9c549c37fd2",
+    "phase2-sound-tests.json": "6e644032ba392fcab5e1fb0642dc4acdef8baff5e8cb5a9cb9a3232f24c07f16",
+    "phase2-type-init-fixtures.json": "db42e1cf240896205a666fb4a1b0361b60e84d11dbcc059441950b539b1b4ed4",
+    "phase2-exception-objects-fixtures.json": "546c3fe21383fa7c915ae7c3faff6b640b35a66a38415f9986d8ec8924070234",
+    "phase2-runtime-encoding-fixtures.json": "f754a1a74efb5de05dcc9d667bbf43e75ff00c2b7eb21b10feaca8b1d6ca69e2",
+    "phase2-regex-fixtures.json": "07d36e609c30f662bfe4e41a9fc32b18151d35853c27fb2f0922c5469c89a2d5",
+    "phase2-path-fixtures.json": "b671baa5f85b48a800c42501bae1249dcfb353eab892d5a95efaf68e966bfada",
+    "phase2-stream-reader-tests.json": "5ee21ad1b91203b5a473d4f51fc630416a4e6fbbd938e1312bc43a1463fbc645",
+    "phase2-mono-collation-tests.json": "9de36420282b7d2520c5ce5b438ecf82906cf5fd4b731ebaf0aebb34694b849b",
+    "phase2-thread-tests.json": "4a76097659bae1e87238d2216897fc1a2c2e966c8869f0a5884f5ffa11d85100",
+    "phase2-globalization-tests.json": "d6d104ebbc652d15b3f74abf3e346e990772cea2be4b40bca324c614013f30e4",
+    "phase2-bootstrap-tests.json": "d54ef946abd6e7dcaa4cb261e9963f07413cb501c9761e9eb24959534fdfd94a",
+    "phase2-asset-reader-tests.json": "ddd71a6b5b8962cc2146129876d5521005e8972ac9bab10cb4ed24a2aaceb16f",
+    "phase2-string-ops-tests.json": "654e1219acd3c2019f35a2ffcb1e98b390d0a56f16f2f198e14ab7ab1b4886f1",
+    "phase2-image-lifetime-tests.json": "f8589d74930c422debdf55502145f58ed7962e278f208de80b1d0182d60d4672",
+    "phase2-ui-dispatch-gc-tests.json": "31350374cdda8da6670ba1d3e19950bb95c562b4504f35dc66e445cede001833",
+    "phase2-stack-fixtures.json": "912af52083af6859875f8bbd3be798ebd3a279ab09ed9577e4b9128dd6f3d602",
     "culture-usage.json": "37f9da475f42a7efb86aab10b4323df4fc954e3bfda827a1779aee0c91123bf3",
-    "phase2-forms-execution-tests.json": "ff7a693d6a3335765287ebf6c5cf8e01aed569a85752a4094fb6d01f5d29e876",
-    "phase2-application-properties-tests.json": "81b879c2c6f9065b41d27052f55a5f3235c8ef651c0a6f4bb17edbc89ad30b78",
-    "phase2-application-orientation-tests.json": "d78bb64ad7e27a9a574f0427af73a32fdfa1126279d899f0fc21602769b80594",
-    "phase2-pc-metrics-tests.json": "66cb8f2cc1c06f8aa7aade514e3df0d138b435772ba6ec43552442236d13dee7",
-    "phase2-surface-bridge-tests.json": "ea3dde655c8e59e5bb4185115bfb1fc7253cbbabeed7bcf98a65f790babbb29d"
+    "phase2-forms-execution-tests.json": "5e5fc0d1b079004f7c1e8acea3e9f9d19bcbf7335845b683c61bbe7859b45874",
+    "phase2-application-properties-tests.json": "b38721616211943c9ce65cc719a3efe6691191d0cc7135c774ad487a82db048b",
+    "phase2-application-orientation-tests.json": "8ff166bd9b9c3dec533f95f0209433b4b5765c33b5c3d201ca289add5d051601",
+    "phase2-pc-metrics-tests.json": "04d79c6e2c0232f4b3e27b532ebc7392d82b2fbb5a7be450fd5dc535b527d79e",
+    "phase2-surface-bridge-tests.json": "b0abe8ec5b1b5ac3554e50306f50519586977a4bf970b5a1fade7eaf436fa188"
   },
   "boundary_states": {
     "todo": 522,

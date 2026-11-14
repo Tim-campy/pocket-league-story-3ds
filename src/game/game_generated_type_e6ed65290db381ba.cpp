@@ -4,9 +4,24 @@
 #include "generated/portable_generated_type_1ff3292665c8e0c4.hpp"
 namespace pls::game {
 
+void cs_e6ed65290db381ba::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
+
+void cs_e6ed65290db381ba::release_edges(){pls::cs::Object::release_edges();}
+
 void cs_init_e6ed65290db381ba(){static pls::cs::TypeInitState state;state.run("system.billing.util.Json",[](){
 
 });}
+
+// M:system.billing.util.Json.#ctor
+pls::cs::Ref<cs_e6ed65290db381ba> cs_44e98bc97ba8204b() { cs_init_e6ed65290db381ba();
+{ auto cs_this = pls::cs::make_ref<cs_e6ed65290db381ba>(); cs_44e98bc97ba8204b_init(cs_this); return cs_this; }
+}
+
+void cs_44e98bc97ba8204b_init(pls::cs::Ref<cs_e6ed65290db381ba> cs_this) {
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Json.#ctor",game);
+{}
+}
+}
 
 // M:system.billing.util.Json.AdjustJson(System.String,System.String,System.String)
 pls::cs::String cs_29cfbbc6ef724690(pls::cs::String v_receipt,pls::cs::String v_productID,pls::cs::String v_iOSPurchaseTime) { cs_init_e6ed65290db381ba();

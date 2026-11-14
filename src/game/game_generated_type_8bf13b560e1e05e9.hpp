@@ -53,4 +53,6 @@ void cs_9ab4bec37ce639be(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::Stri
 void cs_b312c8d19342903d(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::String v_name);
 
 void cs_a3ffc1615f910b95(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod);
+
+pls::cs::String cs_75152158b8b3764c(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas);
 }

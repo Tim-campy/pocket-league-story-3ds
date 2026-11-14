@@ -62,6 +62,45 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto 
 }
 }
 
+// M:system.billing.util.Inventory.GetAllOwnedSkus
+pls::cs::List<pls::cs::String> cs_eb8c73cf06afa4ca(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this) { cs_init_51fd12cb14e568f9();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Inventory.GetAllOwnedSkus",game);
+{
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_dictionary=([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3bdfea24b8fa4dd4; }());auto cs_items=cs_dictionary.KeysToArray();auto cs_list=pls::cs::List<pls::cs::String>::make(cs_items.length());for(std::int32_t cs_i=0;cs_i<cs_items.length();++cs_i)cs_list.Add(cs_items.at(cs_i));return cs_list;}());});
+}
+}
+}
+}
+
+// M:system.billing.util.Inventory.GetAllOwnedSkus(System.String)
+pls::cs::List<pls::cs::String> cs_e6ff2e06fe427587(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::String v_itemType) { cs_init_51fd12cb14e568f9();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Inventory.GetAllOwnedSkus(System.String)",game);
+{
+pls::cs::List<pls::cs::String> v_list_1056 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/util/Inventory.cs:M:system.billing.util.Inventory.GetAllOwnedSkus(System.String):1063",pls::cs::List<pls::cs::String>::make());
+{auto cs_view_enum861=(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3bdfea24b8fa4dd4; }())).GetEnumerator();struct cs_view_scope861{decltype(cs_view_enum861)&e;~cs_view_scope861(){e.Dispose();}} cs_scope861{cs_view_enum861};while(cs_view_enum861.MoveNext()){ pls::cs::Ref<cs_a42daea58251b089> v_value_1086=cs_view_enum861.get_Current().get_Value(); {
+if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_a42daea58251b089>>(v_value_1086); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_835e52407836b201(cs_receiver); }()); auto cs_arg1 = v_itemType; return pls::game::cs_string_equals(cs_arg0,cs_arg1); }());})) {
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = v_list_1056; auto cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_a42daea58251b089>>(v_value_1086); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_e57c9ca2bf077da0(cs_receiver); }()); cs_receiver.Add(cs_arg0); }());});
+}
+} }}
+return v_list_1056;
+}
+}
+}
+}
+
+// M:system.billing.util.Inventory.GetAllPurchases
+pls::cs::List<pls::cs::Ref<cs_a42daea58251b089>> cs_bcfec96e51e3fd81(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this) { cs_init_51fd12cb14e568f9();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Inventory.GetAllPurchases",game);
+{
+return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_dictionary=([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3bdfea24b8fa4dd4; }());auto cs_items=cs_dictionary.ValuesToArray();auto cs_list=pls::cs::List<pls::cs::Ref<cs_a42daea58251b089>>::make(cs_items.length());for(std::int32_t cs_i=0;cs_i<cs_items.length();++cs_i)cs_list.Add(cs_items.at(cs_i));return cs_list;}());});
+}
+}
+}
+}
+
 // M:system.billing.util.Inventory.GetPurchase(System.String)
 pls::cs::Ref<cs_a42daea58251b089> cs_a38e4a52b899543e(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::String v_sku) { cs_init_51fd12cb14e568f9();
 { if(!cs_this)throw pls::cs::NullReferenceException();

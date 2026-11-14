@@ -1,5 +1,6 @@
 // GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
 #include "game_generated_type_0286a0dbe9da0b33.hpp"
+#include "game_generated_type_0aa80b0fbeb1b2af.hpp"
 #include "game_generated_type_23a020152d468724.hpp"
 #include "game_generated_type_2e79f4f38b707be7.hpp"
 #include "game_generated_type_2ffa6f51468590ea.hpp"
@@ -96,7 +97,7 @@ void cs_fe479bb5365005e6(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this) { cs_init_ba
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.Main.OnCreate",game);
 {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::cs::static_pointer_cast<pls::kairo::IApplication>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->source_OnCreate(); }());});
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { return pls::generated::cs_f2f74213ca1ea9bc(); }());}); bool cs_arg1 = pls::generated::cs_4cc76a7a43706693(); pls::cs::String cs_arg2 = pls::generated::cs_1ce7e3797101a750(); pls::kairo::native_plugin_init(cs_arg0,cs_arg1,cs_arg2); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { return pls::generated::cs_f2f74213ca1ea9bc(); }());}); bool cs_arg1 = pls::generated::cs_4cc76a7a43706693(); pls::cs::String cs_arg2 = pls::generated::cs_1ce7e3797101a750(); cs_27592a85fbe0e2b1(cs_arg0,cs_arg1,cs_arg2); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(cs_this); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xf0ull)); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x118ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetViewport(cs_arg0,cs_arg1); }());});
 pls::cs::Ref<cs_2ffa6f51468590ea> v_instance_637 = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }());
 pls::cs::Ref<pls::kairo::Canvas> v_instance2_696 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::Canvas> { return pls::kairo::Canvas::GetInstance(); }());});
@@ -147,7 +148,7 @@ void cs_436207ec3f57c2d7(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this) { cs_init_ba
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.Main.OnDestroy",game);
 {
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::kairo::request_host_finish(); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { cs_6fa3a205c04b8999(); }());});
 }
 }
 }

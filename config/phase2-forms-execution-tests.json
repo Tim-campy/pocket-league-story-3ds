@@ -374,7 +374,7 @@
   },
   "inputs": {
     "tests/kairo/forms_execution_fixtures.cpp": "7b64d6d8f9860dea06bf6a6ad2e3039fe892e585126ac28d253ab10a98ea6f0e",
-    "src/kairo/common/forms_execution.cpp": "166bba8ec5f819e9438e9730983aa8560a602fa57ea8ed6093d6f8861439c983",
+    "src/kairo/common/forms_execution.cpp": "ab6b42238bc4d6b193d00a4873376736c0185495922e12f4805982c45060f1cf",
     "src/kairo/common/forms.cpp": "10128d8e7ffb2ad26dc65c41d1c81054d747d5d83a21cd2c48695dcd18a93ab2",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
@@ -393,7 +393,7 @@
     "tools/test_forms.py": "5fe3d4056c75e9581c828ea666754a6be64ac07a3793aee437b7954a87f253ce",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
-    "src/kairo/api/forms_execution.hpp": "59d1da67851c18ff079772f166b75311c577b08d312a345dbbb68a534ec738ba",
+    "src/kairo/api/forms_execution.hpp": "e30281793db087cd620b025d0f0a25fb19a30b2daff19d387b7c115cac1e3f4d",
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
     "src/kairo/api/forms.hpp": "2881ae09ce7fa7a8515b32c52bc56da6a11231c16df511bd2fe755cbf532aee4",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
@@ -481,7 +481,7 @@
   ],
   "native_executable": {
     "path": "build/forms-execution-tests/forms-execution-fixtures.exe",
-    "sha256": "2dab8d7dfc0d92535accf766472384505a846d9b3603145a2b483442759593f2"
+    "sha256": "f3d5f328045fb6683a5926aa9d6847d34b4b63e8e45bda2a183338c783fea263"
   },
   "limits": [
     "Synthetic services prove call order, states, forced save unlock, retries/finally and rendering through SurfaceManager; not a game boot.",

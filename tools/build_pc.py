@@ -232,12 +232,14 @@ def main():
     parser.add_argument('--diagnostic-unlabeled-popups-only',action='store_true',help='During popup replay, leave windows with a right soft label untouched')
     parser.add_argument('--diagnostic-route',type=Path,help='Diagnostic runs only: condition-driven route file (docs/notes/route-runner-design.md); excludes the frame-based input flags')
     parser.add_argument('--ui-trace',action='store_true',help='Diagnostic runs only: log PLS_UI_STATE on every UI state change')
+    parser.add_argument('--fast',action='store_true',help='Diagnostic runs with --virtual-clock only: no real-time frame pacing')
     args=parser.parse_args()
     if args.diagnostic_route is not None:
         if not args.diagnostic_generated or not args.run:parser.error('--diagnostic-route requires a diagnostic run')
         if args.diagnostic_select_frame or args.diagnostic_key_frame or args.diagnostic_dismiss_popups_until_frame is not None or args.diagnostic_title_anchor is not None:parser.error('--diagnostic-route replaces the frame-based input flags')
         if not args.diagnostic_route.is_file():parser.error('Route file not found')
     if args.ui_trace and(not args.diagnostic_generated or not args.run):parser.error('--ui-trace requires a diagnostic run')
+    if args.fast and(not args.diagnostic_generated or not args.run or args.virtual_clock is None):parser.error('--fast requires a diagnostic run with --virtual-clock')
     if not 1<=args.run_seconds<=600:parser.error('--run-seconds must be1..600')
     if args.diagnostic_dismiss_popups_until_frame is not None and(not args.diagnostic_generated or not args.run or not 300<=args.diagnostic_dismiss_popups_until_frame<=12000):parser.error('Popup replay requires a private run and a final frame300..12000')
     if args.diagnostic_save_from_attempt is not None and(not args.diagnostic_generated or not args.run or args.diagnostic_save_from_attempt<1):parser.error('Private save reuse requires a diagnostic run and an earlier positive attempt number')
@@ -276,7 +278,8 @@ def main():
     if args.diagnostic_unlabeled_popups_only:env['PLS_PC_DISMISS_UNLABELED_ONLY']='1'
     if args.diagnostic_dismiss_popups_until_frame is not None:env['PLS_PC_DISMISS_POPUPS_UNTIL']=str(args.diagnostic_dismiss_popups_until_frame)
     if args.diagnostic_key_frame:env['PLS_PC_KEY_FRAMES']=','.join(args.diagnostic_key_frame)
-    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None)
+    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None);env.pop('PLS_PC_FAST',None)
+    if args.fast:env['PLS_PC_FAST']='1'
     if args.ui_trace:env['PLS_PC_UI_TRACE']='1'
     diagnostic_source=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
     diagnostic_manifest=validate_diagnostic_manifest(diagnostic_source)if diagnostic_source else None

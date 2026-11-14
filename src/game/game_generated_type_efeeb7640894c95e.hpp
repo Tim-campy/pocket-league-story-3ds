@@ -11,4 +11,10 @@ std::string managed_delegate_method_id(const std::string&slot)const override{ret
 static std::string source_managed_type_name(){return "UnityEngine.Purchasing.Product";}
 std::string managed_type_name()const override{return source_managed_type_name();}
 };
+
+void cs_init_efeeb7640894c95e();
+
+pls::cs::Ref<cs_efeeb7640894c95e> cs_93a9b11cf2aeaa11();
+
+void cs_93a9b11cf2aeaa11_init(pls::cs::Ref<cs_efeeb7640894c95e> cs_this);
 }

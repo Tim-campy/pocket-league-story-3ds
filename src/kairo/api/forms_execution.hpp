@@ -48,4 +48,9 @@ public:
 // Install before generated FormManager construction. Existing managers are not
 // retroactively replaced. Passing null removes the factory for isolated tests.
 void install_form_runtime(cs::Ref<FormRuntime>);
+// kairo.unity.ui.IApplication.Sleep(int), as the original (IApplication.cs:717-748):
+// loop on JSystem.CurrentTimeMillis while 0 <= elapsed <= ms, adjusting the surface
+// layout once per <=50 ms step (exceptions -> Canvas.LockAndUnlock, which is empty),
+// then JThread.Sleep(rest) and JThread.Yield. Clock reads happen in the same order.
+void source_app_sleep(std::int32_t ms);
 }

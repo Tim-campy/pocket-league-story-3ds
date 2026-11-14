@@ -26,4 +26,6 @@ pls::cs::Ref<cs_90cdc908fbacdc4d> cs_7236fab2e58bd0b3(pls::cs::String v_label,pl
 void cs_7236fab2e58bd0b3_init(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName);
 
 void cs_8bc9aa25aebc3796(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod);
+
+pls::cs::String cs_2a567fdcd523eb57(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas);
 }

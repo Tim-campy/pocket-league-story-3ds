@@ -19,9 +19,9 @@
   },
   "native_executable": {
     "path": "build/managed-services-tests/managed-services.exe",
-    "sha256": "8a7a2e34f6ad207ca969fe5b3a1b5ac73758e99e3bae6808c5f94cff971a0639"
+    "sha256": "ea672076ae12db14e6d6bf31cef048825d5407b7ac2428c6bb1b0006152af8f2"
   },
-  "policy_sha256": "0b11246951c611424ece630401e992433d5281d380940cdf651775b7946bc4d4",
+  "policy_sha256": "2767fa2c47ea68c3771448cc63ffd090ea912ccdf39cf25eb2371a1a7afc0e7d",
   "intended_symbol": "M:main.AppData.CgiRegist(System.String,System.String)",
   "native_hook": "pls::services::managed::register_local",
   "integration_status": "ADAPTER_TESTED; generated caller binding is separate evidence",

@@ -154,8 +154,8 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_265901ac3e38e5a5; }());
-} catch(const pls::cs::Exception& cs_caught_890) {auto cs_exception_890=pls::cs::capture_exception(cs_caught_890);
-if(pls::cs::exception_is(cs_exception_890,"System.Exception")) {auto v_ex_6677=cs_exception_890;{
+} catch(const pls::cs::Exception& cs_caught_891) {auto cs_exception_891=pls::cs::capture_exception(cs_caught_891);
+if(pls::cs::exception_is(cs_exception_891,"System.Exception")) {auto v_ex_6677=cs_exception_891;{
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_265901ac3e38e5a5; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_54587d7da8ff8dbc(cs_receiver); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c8c9d3daa8567fa6; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_54587d7da8ff8dbc(cs_receiver); }());});
 pls::cs::throw_exception(v_ex_6677);
@@ -444,8 +444,8 @@ return false;
 if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text_13885; return pls::cs::string_trim(cs_arg0); }());}); return pls::generated::cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
 return false;
 }
-} catch(const pls::cs::Exception& cs_caught_888) {auto cs_exception_888=pls::cs::capture_exception(cs_caught_888);
-if(pls::cs::exception_is(cs_exception_888,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_889) {auto cs_exception_889=pls::cs::capture_exception(cs_caught_889);
+if(pls::cs::exception_is(cs_exception_889,"System.Exception")) {{
 return false;
 }}
 else {throw;} }
@@ -612,8 +612,8 @@ if ((!(v_flag2_10915))) {
 }
 pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_11274 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(v_instance_11274); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_3481915358ac0fff(); }());
-} catch(const pls::cs::Exception& cs_caught_889) {auto cs_exception_889=pls::cs::capture_exception(cs_caught_889);
-if(pls::cs::exception_is(cs_exception_889,"System.Exception")) {auto v_ex_11345=cs_exception_889;{
+} catch(const pls::cs::Exception& cs_caught_890) {auto cs_exception_890=pls::cs::capture_exception(cs_caught_890);
+if(pls::cs::exception_is(cs_exception_890,"System.Exception")) {auto v_ex_11345=cs_exception_890;{
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_ex_11345; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 }
@@ -715,8 +715,8 @@ bool cs_dfcfbfdb98c1e305(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this) { cs_init_2d
 pls::cs::Ref<cs_9465f7541f51c47e> v_friend_11523 = pls::cs::Ref<cs_9465f7541f51c47e>{};
 try {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_9465f7541f51c47e> { auto cs_receiver = static_cast<pls::cs::Ref<cs_2d2e25a6914f7709>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3f1c65ebd05b652a(cs_receiver); }()); v_friend_11523 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_921) {auto cs_exception_921=pls::cs::capture_exception(cs_caught_921);
-if(pls::cs::exception_is(cs_exception_921,"System.Exception")) {auto v_t_11596=cs_exception_921;{
+} catch(const pls::cs::Exception& cs_caught_922) {auto cs_exception_922=pls::cs::capture_exception(cs_caught_922);
+if(pls::cs::exception_is(cs_exception_922,"System.Exception")) {auto v_t_11596=cs_exception_922;{
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Ref<pls::cs::ExceptionObject> cs_arg0 = v_t_11596; return pls::generated::cs_b686603f380b2527(cs_arg0); }());});
 }

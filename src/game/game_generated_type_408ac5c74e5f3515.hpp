@@ -39,4 +39,6 @@ void cs_491eae3eae7d9573(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::Stri
 void cs_8d58629cef163b32(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,pls::cs::Ref<pls::cs::ExceptionObject> v_value);
 
 void cs_961e1edcb72ada4a(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this,bool v_value);
+
+pls::cs::Ref<pls::cs::EnumeratorObject> cs_9b8a4b371f0061da(pls::cs::Ref<cs_408ac5c74e5f3515> cs_this);
 }

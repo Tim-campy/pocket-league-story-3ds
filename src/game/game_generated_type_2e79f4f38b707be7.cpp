@@ -3,9 +3,24 @@
 #include "game_generated_type_68277163e843ed70.hpp"
 namespace pls::game {
 
+void cs_2e79f4f38b707be7::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
+
+void cs_2e79f4f38b707be7::release_edges(){pls::cs::Object::release_edges();}
+
 void cs_init_2e79f4f38b707be7(){static pls::cs::TypeInitState state;state.run("analytics.AnalyticsTracker",[](){
 
 });}
+
+// M:analytics.AnalyticsTracker.#ctor
+pls::cs::Ref<cs_2e79f4f38b707be7> cs_7b06faa19a93d0a8() { cs_init_2e79f4f38b707be7();
+{ auto cs_this = pls::cs::make_ref<cs_2e79f4f38b707be7>(); cs_7b06faa19a93d0a8_init(cs_this); return cs_this; }
+}
+
+void cs_7b06faa19a93d0a8_init(pls::cs::Ref<cs_2e79f4f38b707be7> cs_this) {
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:analytics.AnalyticsTracker.#ctor",game);
+{}
+}
+}
 
 // M:analytics.AnalyticsTracker.DispatchPageView
 void cs_ff6aeae8eb9c621a() { cs_init_2e79f4f38b707be7();

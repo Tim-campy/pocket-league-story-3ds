@@ -34,7 +34,7 @@
     "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
-    "src/kairo/common/managed_dictionary.hpp": "d8e3201a2d0a97a09a1d207d1c7733a0c1d05067e39668e3a357adf067bf4b68",
+    "src/kairo/common/managed_dictionary.hpp": "dfda0326f26577190c474b819fb2c6e440398b59b9890a61e0c8c136db36286d",
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66",
     "src/kairo/common/managed_exceptions.hpp": "02d9bfd7def6843ee9034473bbc7f5e3ccf1cf2b1df81b3a645005e7ec1585be",
     "src/kairo/common/managed_float_format.hpp": "4caace3870a09bcadb2e79cefb19f43974ee1cce1c84753b4fa8119f25efd5b6",
@@ -63,10 +63,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "608fe44ddf5ce04cce1a7420bd43fbadd5b25739c82823e22953cc92c8fa473b",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "e1e58e2a7423996f55e4fb445fccb7402930a92b024a15b6ecb73cc3e80884a7"
+    "build/graphics-tests/GraphicsOracle.dll": "34159810ac67f9424fb8855de01e7999ddfe905e8b752ef9fbc6673b6b95664c",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "fe492f508d4be31379dacf6573b23c9b7bb1d2fb17ea5d4f006806682345d855"
   },
-  "executable_sha256": "53c144f458b4e0ee3090def9c8d0d15c194815d82739c6b2972e4d42d110080e",
+  "executable_sha256": "fa23e8d5321d31129c87481579bbdfef8607e6e8a4259441104d900bb67be3c5",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

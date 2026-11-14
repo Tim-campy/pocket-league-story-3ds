@@ -147,6 +147,9 @@ int main(int argc,char** argv){
         std::unique_ptr<pls::pc::route::Runner> route;
         if(const auto* path=std::getenv("PLS_PC_ROUTE"))route=std::make_unique<pls::pc::route::Runner>(pls::pc::route::load(path));
         const bool ui_trace=std::getenv("PLS_PC_UI_TRACE")!=nullptr;
+        // Diagnostic only: skip real-time frame pacing (the virtual clock keeps
+        // game time deterministic), so long coverage routes run at CPU speed.
+        const bool fast=std::getenv("PLS_PC_FAST")!=nullptr&&pls::kairo::virtual_clock::active();
         pls::pc::route::UiState ui_state;std::string ui_signature;std::uint64_t route_anchor=0;bool route_anchored=false;
         auto capture_ui=[&](std::uint64_t frame){
             ui_state.frame=frame;ui_state.stack.clear();
@@ -237,6 +240,9 @@ int main(int argc,char** argv){
 #if defined(PLS_DIAGNOSTIC_BUILD)
             if(route||ui_trace){capture_ui(presented_frames+1);auto signature=pls::pc::route::signature(ui_state);
                 if(signature!=ui_signature){ui_signature=std::move(signature);std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_UI_STATE="<<pls::pc::route::to_line(ui_state)<<'\n';}}
+#endif
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            if(!fast)
 #endif
             pls::kairo::UnityApplication::pace(frame_start);
             const auto sample=timing.finish();

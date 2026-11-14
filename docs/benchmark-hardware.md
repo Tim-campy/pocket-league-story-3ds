@@ -157,6 +157,25 @@ do próprio fonte: `SubForm.Finish()` chama `JSystem.Gc()`
 (`SubForm.cs:7428`), isto é, cada sub-janela fechada faz uma coleta completa.
 Não são transições de tela principal nem coletas por volume.
 
+## Resultado do v6 em hardware (New 3DS XL, 2026-11-14, três execuções) — critério 2 cumprido
+
+Executável `68634525…`. Classificação no aparelho: as três coletas da janela de
+menu são `explicit` com origem `Finish form.SubForm` (transição pela regra do
+critério 2).
+
+| Medida | Execução 1 | Execução 2 | Execução 3 | Limite |
+|---|---|---|---|---|
+| Menu: maior frame estável (sem coleta) | 10,9 ms | 10,7 ms | 11,0 ms | 50 ms |
+| Menu: transições (pausa / frame) | 105,3/112,7; 44,8/52,2; 39,6/62,6 | 111,3/118,8; 47,6/55,3; 40,6/63,2 | 109,1/116,6; 45,1/52,5; 39,9/62,4 | 150 ms |
+| Partida: média / máx. | 11,77 / 14,1 ms | 11,72 / 14,2 ms | 10,49 / 25,9 ms | média 20 ms; máx. 50 ms |
+| Coletas por volume (menu e partida) | 0 | 0 | 0 | — |
+| Até o título | 14,31 s | 14,35 s | 14,31 s | — |
+
+A linha `PLS_BENCH_STABLE` do v6 ainda conta as explícitas como estáveis (a
+regra do `Finish` foi decidida depois do v6); o máximo estável acima vem dos
+frames por quadro (`stdout.log`) sem coleta. Na execução 3 a partida terminou
+dentro da janela (formulários 2 e 4).
+
 ## Referência no emulador (não é hardware)
 
 Azahar 2126.2, CPU 100%, mesma imagem (`ed1729a1…`; ver

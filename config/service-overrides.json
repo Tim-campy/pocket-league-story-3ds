@@ -715,6 +715,30 @@
       }
     },
     {
+      "symbol": "M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)",
+      "action": "forward",
+      "result_contract": "void",
+      "native_hook": "pls::kairo::native_plugin_init",
+      "reason": "Android plugin init replaced by the host native_plugin_init (language, logging, license key unused)",
+      "lowering": {
+        "kind": "forward",
+        "native_hook": "pls::kairo::native_plugin_init",
+        "field_assignments": []
+      }
+    },
+    {
+      "symbol": "M:native.AppPlugin.Finish",
+      "action": "forward",
+      "result_contract": "void",
+      "native_hook": "pls::kairo::request_host_finish",
+      "reason": "Android finish replaced by the host finish request",
+      "lowering": {
+        "kind": "forward",
+        "native_hook": "pls::kairo::request_host_finish",
+        "field_assignments": []
+      }
+    },
+    {
       "symbol": "M:kairo.unity.native.KairoPlugin.GetGCMRegistrationId",
       "action": "constant",
       "result_contract": "null string",

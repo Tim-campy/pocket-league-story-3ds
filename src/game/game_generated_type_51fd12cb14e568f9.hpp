@@ -26,6 +26,12 @@ void cs_8655b0acd5de2cab(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::Ref<
 
 void cs_dbd8e782b8e382eb(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::String v_sku);
 
+pls::cs::List<pls::cs::String> cs_eb8c73cf06afa4ca(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this);
+
+pls::cs::List<pls::cs::String> cs_e6ff2e06fe427587(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::String v_itemType);
+
+pls::cs::List<pls::cs::Ref<cs_a42daea58251b089>> cs_bcfec96e51e3fd81(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this);
+
 pls::cs::Ref<cs_a42daea58251b089> cs_a38e4a52b899543e(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::String v_sku);
 
 pls::cs::Ref<cs_b169f360ee9f1108> cs_dd2b0d12cb37519c(pls::cs::Ref<cs_51fd12cb14e568f9> cs_this,pls::cs::String v_sku);

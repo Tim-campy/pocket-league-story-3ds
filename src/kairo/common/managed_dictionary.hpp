@@ -50,6 +50,8 @@ public:
     static Dictionary from_object(const Ref<Object>&object){Dictionary result;if(object){result.data_=pls::cs::dynamic_pointer_cast<Storage>(object);if(!result.data_)throw InvalidCastException();}return result;}
     std::int32_t get_Count()const{return require().count;}
     Array<K> KeysToArray()const{auto&data=require();auto result=Array<K>::make(data.count);std::int32_t index=0;for(const auto&entry:data.entries)if(entry.item)result.at(index++)=entry.item->key;return result;}
+    // Dictionary.ValueCollection.CopyTo order (entry order), as used by new List<V>(Values).
+    Array<V> ValuesToArray()const{auto&data=require();auto result=Array<V>::make(data.count);std::int32_t index=0;for(const auto&entry:data.entries)if(entry.item)result.at(index++)=entry.item->value;return result;}
     V get_Item(const K&key)const{require();auto hash=dictionary_hash(key);auto i=find(key,hash);if(i==require().entries.size())throw KeyNotFoundException();return require().entries[i].item->value;}
     void set_Item(K key,V value){put(std::move(key),std::move(value),true);}
     void Add(K key,V value){put(std::move(key),std::move(value),false);}
@@ -72,4 +74,28 @@ public:
     };
     Enumerator GetEnumerator()const{require();return Enumerator(data_);}
 };
+// System.Collections.IEnumerator for a boxed Dictionary<K,V>.Enumerator
+// (e.g. IEnumerable.GetEnumerator returning data_.GetEnumerator()). MoveNext,
+// Reset and disposal follow the dictionary enumerator. The non-generic Current
+// contract of Unity Mono 2.6 (boxed KeyValuePair vs DictionaryEntry) is
+// UNKNOWN; no game code enumerates such an object, so Current throws.
+class EnumeratorObject : public Object {
+public:
+    std::string managed_type_name()const override{return "System.Collections.IEnumerator";}
+    virtual bool MoveNext()=0;
+    virtual Ref<Object> get_Current()=0;
+    virtual void Reset()=0;
+};
+template<class K,class V>class DictionaryEnumeratorObject final : public EnumeratorObject {
+    typename Dictionary<K,V>::Enumerator inner_;
+public:
+    explicit DictionaryEnumeratorObject(typename Dictionary<K,V>::Enumerator inner):inner_(std::move(inner)){}
+    std::string managed_type_name()const override{return "System.Collections.Generic.Dictionary`2+Enumerator";}
+    bool MoveNext()override{return inner_.MoveNext();}
+    Ref<Object> get_Current()override{throw NotSupportedException("IEnumerator.Current of a boxed Dictionary enumerator: Mono 2.6 contract not established");}
+    void Reset()override{inner_.Reset();}
+    void trace_edges(const EdgeVisitor&visitor)const override{inner_.trace_edges(visitor);}
+    void release_edges()override{inner_.release_edges();}
+};
+template<class K,class V>Ref<EnumeratorObject> box_enumerator(typename Dictionary<K,V>::Enumerator value){return make_ref<DictionaryEnumeratorObject<K,V>>(std::move(value));}
 } // namespace pls::cs

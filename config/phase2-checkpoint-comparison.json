@@ -15,10 +15,15 @@
   },
   "game_compiled_methods": {
     "previous": 1220,
-    "current": 1828,
+    "current": 1860,
     "gained_ids": [
+      "M:BuildInfos.BuildInfo.#ctor",
+      "M:TJPlacement.#ctor",
+      "M:UnityEngine.Purchasing.Product.#ctor",
+      "M:analytics.AnalyticsTracker.#ctor",
       "M:analytics.AnalyticsTracker.TrackPageView(System.Boolean,System.String[])",
       "M:analytics.AnalyticsTracker.TrackPageViewId(System.Boolean,System.String,System.String[])",
+      "M:cfg.MyConfig.#ctor",
       "M:data.FanActData.#ctor",
       "M:data.FanActData.#ctor(System.String)",
       "M:data.FanActData.AddFanParam(System.Int32,System.Int32)",
@@ -418,6 +423,7 @@
       "M:main.AppData.SendSaveData(System.String,System.Int32,System.Exception)",
       "M:main.AppData.ShowNews(System.Int32,System.String)",
       "M:main.AppData.UpdatePopupMessage",
+      "M:main.AppData.stringErrorCode.#ctor",
       "M:main.Main.OnCreate",
       "M:main.Main.OnUpdate",
       "M:main.Main.SetJingle(kairo.unity.ui.SoundBase,System.Int32)",
@@ -429,6 +435,8 @@
       "M:main.WebBox.SetViewRect(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32)",
       "M:main.WebBox.SetVisible(System.Boolean)",
       "M:main.WebBox.Visible",
+      "M:native.AppPlugin.Finish",
+      "M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)",
       "M:native.AppPlugin.LaunchMailer(System.String,System.String)",
       "M:native.AppPlugin.ShowPurchaseLog(System.String,System.Int32,System.String,System.Boolean)",
       "M:native.WebBoxPlugin.Create",
@@ -439,6 +447,7 @@
       "M:native.WebBoxPlugin.Visible",
       "M:panel.MainPanel.#ctor(System.String,System.String)",
       "M:panel.MainPanel.#ctor(System.String,System.String,System.Int32)",
+      "M:panel.MainPanel.Show(kairo.unity.ui.Canvas)",
       "M:panel.MainPanel.Show(kairo.unity.ui.Canvas,kfw.panel.MainPanel.OnFinishMethod)",
       "M:surface.GamePad.#ctor",
       "M:surface.GamePad.AddTouch(kairo.unity.ui.Graphics,System.Single,System.Single,System.Int32)",
@@ -491,6 +500,7 @@
       "M:system.KairoService.Save",
       "M:system.KairoService.SaveAll",
       "M:system.KairoService.Update",
+      "M:system.KairoText.#ctor",
       "M:system.billing.MyBilling.#ctor",
       "M:system.billing.MyBilling.GetInstance",
       "M:system.billing.MyBilling.Init",
@@ -534,6 +544,11 @@
       "M:system.billing.ui.StoreBase.SetRestoreRequest(System.Int32)",
       "M:system.billing.ui.StoreBase.SetTime(system.billing.ui.Receipt)",
       "M:system.billing.ui.StoreBase.WaitForInitialized",
+      "M:system.billing.util.IabHelper.#ctor",
+      "M:system.billing.util.Inventory.GetAllOwnedSkus",
+      "M:system.billing.util.Inventory.GetAllOwnedSkus(System.String)",
+      "M:system.billing.util.Inventory.GetAllPurchases",
+      "M:system.billing.util.Json.#ctor",
       "M:system.form.BillingForm.Draw(kairo.unity.ui.Graphics)",
       "M:system.form.BillingForm.DrawAdOffButtoan(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)",
       "M:system.form.BillingForm.GetTouchValue(System.Int32,System.Int32)",
@@ -567,6 +582,7 @@
       "M:system.form.HttpForm.DrawConnect(kairo.unity.ui.Graphics)",
       "M:system.form.HttpForm.Init",
       "M:system.form.HttpForm.ResultData.#ctor",
+      "M:system.form.HttpForm.ResultData.System#Collections#IEnumerable#GetEnumerator",
       "M:system.form.HttpForm.ResultData.get_Error",
       "M:system.form.HttpForm.ResultData.get_Exception",
       "M:system.form.HttpForm.ResultData.get_Succeed",
@@ -620,11 +636,27 @@
       "M:system.notification.MyNotify.#ctor",
       "M:system.notification.MyNotify.GetInstance",
       "M:system.panel.InputPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)",
+      "M:system.panel.InputPanel.Show(kairo.unity.ui.Canvas)",
       "M:system.panel.InputPanel.Show(kairo.unity.ui.Canvas,kfw.panel.MainPanel.OnFinishMethod)",
       "M:system.surface.GameBanner.#ctor",
       "M:system.surface.GameBanner.GetInstance",
       "M:system.surface.GameBanner.OnTouchEvent(kairo.unity.surface.TouchEvent)",
-      "M:system.surface.GameBanner.Visible"
+      "M:system.surface.GameBanner.Visible",
+      "M:system.tapjoy.MyTapjoy.#ctor",
+      "M:system.tapjoy.MyTapjoy.GetInstance",
+      "M:system.tapjoy.ui.Tapjoy.#ctor(System.String,System.String,System.Boolean)",
+      "M:system.tapjoy.ui.Tapjoy.AddBalance(System.Int32)",
+      "M:system.tapjoy.ui.Tapjoy.CallBalance",
+      "M:system.tapjoy.ui.Tapjoy.GetBalance",
+      "M:system.tapjoy.ui.Tapjoy.GetInstance",
+      "M:system.tapjoy.ui.Tapjoy.GetOfferState",
+      "M:system.tapjoy.ui.Tapjoy.Init",
+      "M:system.tapjoy.ui.Tapjoy.OnApplicationQuit",
+      "M:system.tapjoy.ui.Tapjoy.Print(System.String)",
+      "M:system.tapjoy.ui.Tapjoy.Quit",
+      "M:system.tapjoy.ui.Tapjoy.ShowOffers",
+      "M:system.tapjoy.ui.Tapjoy.Start",
+      "M:system.tapjoy.ui.Tapjoy.SubBalance(System.Int32)"
     ],
     "lost_ids": []
   },
@@ -647,15 +679,15 @@
     },
     {
       "path": "config/phase2-translation.json",
-      "sha256": "d7bddf5ff97c426ac25e3329bd4bdd4c868ffe26d366a04cdd30c661624f1a68"
+      "sha256": "f47f79f70e5437e642c970c2ef5ce1532246ab3e4ed443b94aa7ec07e6056d09"
     },
     {
       "path": "config/phase2-portable-differential.json",
-      "sha256": "1aa956219cb5518d838c0befa07386f085ff998038b129326baa68fd1d670a9c"
+      "sha256": "05469b012afaeaefb8e89d9677368be9c859ba0ff77d143132df35e691c563aa"
     },
     {
       "path": "config/phase2-game-translation.json",
-      "sha256": "ea0bbb588033ebb3cc7b53fee0cc5d281df50a8e49ca43f19d5272add2ae032b"
+      "sha256": "125788d92e52e8125503a339a650a736f9840a784f5a990887e38f7166f542bc"
     }
   ]
 }

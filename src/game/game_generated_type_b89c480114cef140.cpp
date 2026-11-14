@@ -1,6 +1,11 @@
 // GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
 #include "game_generated_type_b89c480114cef140.hpp"
+#include "generated/portable_generated_type_e7d772862db62924.hpp"
 namespace pls::game {
+
+void cs_b89c480114cef140::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::generated::cs_e7d772862db62924::trace_edges(visitor);}
+
+void cs_b89c480114cef140::release_edges(){pls::generated::cs_e7d772862db62924::release_edges();}
 static std::int32_t cs_b1c98a140c1251bd_value{};
 
 static pls::cs::String cs_3d4ffbeaa2cdf318_value{};
@@ -159,4 +164,15 @@ pls::cs::String& cs_66cdbdd75ac1eff7(){cs_init_b89c480114cef140();return cs_66cd
 bool& cs_c81f69daa2faf6a7(){cs_init_b89c480114cef140();return cs_c81f69daa2faf6a7_value;}
 
 bool& cs_2e0da33461dc09c9(){cs_init_b89c480114cef140();return cs_2e0da33461dc09c9_value;}
+
+// M:cfg.MyConfig.#ctor
+pls::cs::Ref<cs_b89c480114cef140> cs_17b081440f10c655() { cs_init_b89c480114cef140();
+{ auto cs_this = pls::cs::make_ref<cs_b89c480114cef140>(); cs_17b081440f10c655_init(cs_this); return cs_this; }
+}
+
+void cs_17b081440f10c655_init(pls::cs::Ref<cs_b89c480114cef140> cs_this) {
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:cfg.MyConfig.#ctor",game);
+{}
+}
+}
 }

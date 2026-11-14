@@ -781,10 +781,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.2145646999997552,
-    "native-compile": 318.91673920000176,
-    "managed-output": 57.43412420000095,
-    "native-output": 73.38027950000105
+    "csharp-compile": 1.8303535000013653,
+    "native-compile": 326.5711942999915,
+    "managed-output": 49.05680980000761,
+    "native-output": 65.49427700000524
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1522,11 +1522,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "fa6f6d7b8e7583ccada79f2097de2f12b8d32dedcbc98367fe9643bb4021e3ad"
+    "sha256": "6647d8d1d62067a9cc4aff377e853bd3cf3624b9e3777f2c5b0fa723412b1ac3"
   },
   "source_oracle_executable": {
     "path": "build/translator/split-differential/Harness-managed.exe",
-    "sha256": "5f3cef726e28ce708881c276ef6a3ed8f113321eda4544abd97eb539d15fcf1f"
+    "sha256": "46eb29785db46f21cbcf9100c1d8074dbcf0a278597a7a9a0de29848501a7c50"
   },
   "differential_runner_sha256": "eb7897c054d3cb0cf32e51261b48ccf3fc81d371fb9a6984a9fd9e8758ea8368",
   "runtime_sources": [
@@ -2312,7 +2312,7 @@
     },
     {
       "path": "src/kairo/api/forms_execution.hpp",
-      "sha256": "59d1da67851c18ff079772f166b75311c577b08d312a345dbbb68a534ec738ba"
+      "sha256": "e30281793db087cd620b025d0f0a25fb19a30b2daff19d387b7c115cac1e3f4d"
     },
     {
       "path": "src/kairo/api/game_entry.hpp",
@@ -2364,7 +2364,7 @@
     },
     {
       "path": "src/kairo/api/system.hpp",
-      "sha256": "c57e8463e277ed47bd25bfb2e2e02d037e4356a8da102418153b090fe5a3f80b"
+      "sha256": "bb37f69f8698583ce232749451d26d84137ff359f9954bd20083d819e98aedcd"
     },
     {
       "path": "src/kairo/api/text_input.hpp",
@@ -2672,7 +2672,7 @@
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "d8e3201a2d0a97a09a1d207d1c7733a0c1d05067e39668e3a357adf067bf4b68"
+      "sha256": "dfda0326f26577190c474b819fb2c6e440398b59b9890a61e0c8c136db36286d"
     },
     {
       "path": "src/kairo/common/managed_encoding.cpp",
@@ -2878,9 +2878,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "aa8e82cfbf8a7df85361dfe5ee5afff7738f88c0a65a5eb205ba2e89f9985cab",
+    "translator_source_sha256": "e4ef4395d31a433c812d6f4fb392de67ebec2373404f4bb3d0155969803a7410",
     "emission_source_sha256": "f718015b120848a233a0f46b2a1a32fbf08e039bfd4b3f6b784b7c67138f00ef",
-    "driver_sha256": "9e57500b42e50079f6abd59254f026041bb4da506148e638d550d6c55faac041"
+    "driver_sha256": "e58dc8ceaf42f43be96dc1ae17b5b63e44470021823634a68bc6b258641585a5"
   },
   "chunk_budget_bytes": 32768,
   "chunk_count": 179,

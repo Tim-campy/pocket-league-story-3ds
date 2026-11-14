@@ -1,6 +1,7 @@
 #include "forms_execution.hpp"
 #include "application.hpp"
 #include "sound.hpp"
+#include "canvas.hpp"
 namespace pls::kairo {
 namespace {
 cs::Ref<FormRuntime> installed_form_runtime{};
@@ -13,6 +14,23 @@ public:
     void SetGameState(bool value)override{if(auto source=runtime_->Kairo())source->SetGameState(value);}
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}void release_edges()override{pls::cs::clear_ref(runtime_);}
 };
+}
+void source_app_sleep(std::int32_t ms){
+    auto runtime=installed_form_runtime;if(!runtime)throw cs::InvalidOperationException("Form runtime is not installed");
+    auto canvas=Canvas::GetInstance();if(!canvas)throw cs::NullReferenceException();
+    auto surface=pls::cs::dynamic_pointer_cast<FormSurface>(canvas->GetSurfaceManager());
+    const std::int64_t start=runtime->Millis();
+    for(;;){
+        // while (0 <= now - start && now - start <= ms): two reads, short-circuit.
+        if(!(0<=runtime->Millis()-start))break;
+        if(!(runtime->Millis()-start<=ms))break;
+        const std::int64_t step=runtime->Millis();
+        try{if(surface)surface->AdjustSurfaceLayout();}catch(const cs::Exception&){/* Canvas.LockAndUnlock() is empty */}
+        std::int64_t rest=50-(runtime->Millis()-step);
+        if(rest>50)rest=50;
+        if(rest>=0)runtime->Sleep(rest);
+        runtime->Yield();
+    }
 }
 void install_form_runtime(cs::Ref<FormRuntime> runtime){
     installed_form_runtime=runtime;

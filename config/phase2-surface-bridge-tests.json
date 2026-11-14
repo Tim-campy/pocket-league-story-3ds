@@ -196,7 +196,7 @@
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
-    "src/kairo/api/forms_execution.hpp": "59d1da67851c18ff079772f166b75311c577b08d312a345dbbb68a534ec738ba",
+    "src/kairo/api/forms_execution.hpp": "e30281793db087cd620b025d0f0a25fb19a30b2daff19d387b7c115cac1e3f4d",
     "src/kairo/api/forms.hpp": "2881ae09ce7fa7a8515b32c52bc56da6a11231c16df511bd2fe755cbf532aee4",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/canvas.hpp": "4217a5cf57365e6f3fb285064eacd73d69cc4b89ce6a73f2c00816c18d8d51fc",
@@ -245,7 +245,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "c680caaf22b2c6caa7c5e2e0706ac13c67965bb2c6cc60f2560ca7dd5d670541"
+    "sha256": "b15b1d16f7a02d07ff18195fb8ac88e67ead107e11c5db93787484cd484c3149"
   },
   "verified_boundary_ids": [],
   "ordering": {

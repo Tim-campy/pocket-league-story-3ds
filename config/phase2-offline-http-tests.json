@@ -58,7 +58,7 @@
   ],
   "native_executable": {
     "path": "build/offline-http-tests/offline-http-fixtures.exe",
-    "sha256": "200d18233bc977fb9bb67602c31098b5469f8c9e10c697bbce6263f047a2ec61"
+    "sha256": "22aae7773662ea0c4b8251096dae679b83eafa96cc7962cefe2ed8a19b5186b3"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

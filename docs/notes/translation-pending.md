@@ -181,3 +181,30 @@ com contrato de `ToString` (3).
   (3 slots), que depende de um `IApplication.Sleep` fiel (o original chama
   `AdjustSurfaceLayout` a cada 50 ms; a plataforma só dorme). Nenhum chamador
   do jogo usa o painel síncrono.
+
+## 11. Tradução fechada (2026-11-14)
+
+- `IApplication.Sleep` fiel (`pls::kairo::source_app_sleep`: mesma ordem de
+  leituras do relógio, `AdjustSurfaceLayout` por passo de até 50 ms,
+  `LockAndUnlock` vazio no original); destrava os 3 slots do painel síncrono.
+- `Inventory`: `Keys/Values.ToList()` e `foreach` sobre `Values` (mesmo
+  enumerador do dicionário: versão e descarte); diferencial 1.659/1.659.
+- `HttpForm.ResultData` (`IEnumerable.GetEnumerator` explícito):
+  `IEnumerator` mínimo sobre o enumerador do dicionário; `MoveNext/Reset`
+  reais; `Current` lança, porque o contrato não genérico do Mono 2.6
+  (KeyValuePair ou DictionaryEntry) é UNKNOWN e nenhum código do jogo
+  enumera esse objeto. O oráculo do diferencial não reescreve implementação
+  explícita de interface: coberto só pela compilação.
+- Tapjoy: `UnityEngine.MonoBehaviour` como base vazia da plataforma (um
+  `MonoBehaviour` criado com `new` não recebe mensagens da Unity).
+- `AppPlugin.Init/Finish`: política `forward` para as funções já ligadas.
+- Relatório: abstratos em `abstract_declarations`, membros de tipo da
+  plataforma ligados em `platform_bound_methods`, inicializadores das pontes
+  Java removidas em `policy_removed_type_initializers`.
+- Construtores implícitos selecionados; aridade genérica na identidade
+  (`Init``1`); membros de delegate como `no-body`.
+
+**Resultado: 1.860 emitidos, 0 rejeitados, 0 slots; livro-razão 1.958 de
+1.958** (1.051 traduzidos, 809 executados, 90 embutidos, 6 sem corpo, 2 por
+política). Políticas: 47 de 69 emitidas, 22 sem chamador traduzido, 0
+rejeitadas.

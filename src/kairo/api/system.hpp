@@ -20,6 +20,12 @@ inline void debug_log_exception(const cs::Ref<cs::Object>& exception){debug_log(
 // Platform replacements for the two Unity setters reached by Main.OnUpdate.
 // The host paces explicit positive target rates. A non-positive rate leaves
 // pacing to the platform; it does not silently substitute a game frame rate.
+// UnityEngine.MonoBehaviour base for source components created with new and
+// never attached to a GameObject (no Unity messages are sent to them).
+class MonoBehaviour : public cs::Object {
+public:
+    std::string managed_type_name()const override{return "UnityEngine.MonoBehaviour";}
+};
 class UnityApplication {
     inline static std::atomic<std::int32_t> target_{-1};
 public:

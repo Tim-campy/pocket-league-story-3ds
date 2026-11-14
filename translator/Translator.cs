@@ -58,6 +58,7 @@ sealed partial class Lowerer {
     static Dictionary<string,string> oracleExternalMethods=new();
     static Dictionary<string,string> externalSlots=new();
     static HashSet<string> externalCompleteBases=new();
+    static readonly SortedSet<string> removedJavaBridgeTypes=new();
     // Closed world: generic virtual methods that some source type overrides.
     // C++ has no virtual templates, so only a never-overridden generic virtual
     // is lowered (as a direct, non-virtual call).
@@ -231,7 +232,7 @@ sealed partial class Lowerer {
     static bool SystemPair(ITypeSymbol? t)=>t is INamedTypeSymbol n&&n.OriginalDefinition.ToDisplayString()=="System.Collections.Generic.KeyValuePair<TKey, TValue>";
     static bool SystemStack(ITypeSymbol? t)=>t is INamedTypeSymbol n&&n.OriginalDefinition.ToDisplayString()=="System.Collections.Generic.Stack<T>";
     static bool ExceptionClass(ITypeSymbol? type){for(var current=type as INamedTypeSymbol;current!=null;current=current.BaseType)if(current.ToDisplayString()=="System.Exception")return true;return false;}
-    static string? FrameworkClass(ITypeSymbol? t)=>ExceptionClass(t)&&t!.DeclaringSyntaxReferences.Length==0?"pls::cs::ExceptionObject":t?.ToDisplayString() switch {"System.Random"=>"pls::cs::Random","System.Text.StringBuilder"=>"pls::cs::StringBuilder","System.TimeZoneInfo"=>"pls::cs::TimeZoneInfo","System.IO.Stream"=>"pls::cs::Stream","System.IO.MemoryStream"=>"pls::cs::MemoryStream","System.IO.BinaryReader"=>"pls::cs::BinaryReader","System.Type"=>"pls::cs::RuntimeType","System.Reflection.Assembly"=>"pls::cs::RuntimeAssembly","System.Threading.Thread"=>"pls::cs::Thread","System.Text.Encoding"=>"pls::cs::RuntimeEncoding","System.IO.StreamReader"=>"pls::cs::RuntimeStreamReader","System.Text.RegularExpressions.MatchCollection"=>"pls::cs::RegexMatchCollection","System.Text.RegularExpressions.Match"=>"pls::cs::RegexMatch","System.Text.RegularExpressions.GroupCollection"=>"pls::cs::RegexGroupCollection","System.Text.RegularExpressions.Group"=>"pls::cs::RegexGroup","System.Text.RegularExpressions.Capture"=>"pls::cs::RegexGroup",_=>null};
+    static string? FrameworkClass(ITypeSymbol? t)=>ExceptionClass(t)&&t!.DeclaringSyntaxReferences.Length==0?"pls::cs::ExceptionObject":t?.ToDisplayString() switch {"System.Random"=>"pls::cs::Random","System.Collections.IEnumerator"=>"pls::cs::EnumeratorObject","System.Text.StringBuilder"=>"pls::cs::StringBuilder","System.TimeZoneInfo"=>"pls::cs::TimeZoneInfo","System.IO.Stream"=>"pls::cs::Stream","System.IO.MemoryStream"=>"pls::cs::MemoryStream","System.IO.BinaryReader"=>"pls::cs::BinaryReader","System.Type"=>"pls::cs::RuntimeType","System.Reflection.Assembly"=>"pls::cs::RuntimeAssembly","System.Threading.Thread"=>"pls::cs::Thread","System.Text.Encoding"=>"pls::cs::RuntimeEncoding","System.IO.StreamReader"=>"pls::cs::RuntimeStreamReader","System.Text.RegularExpressions.MatchCollection"=>"pls::cs::RegexMatchCollection","System.Text.RegularExpressions.Match"=>"pls::cs::RegexMatch","System.Text.RegularExpressions.GroupCollection"=>"pls::cs::RegexGroupCollection","System.Text.RegularExpressions.Group"=>"pls::cs::RegexGroup","System.Text.RegularExpressions.Capture"=>"pls::cs::RegexGroup",_=>null};
     static string? FrameworkValue(ITypeSymbol? t)=>t is INamedTypeSymbol named&&externalValueTypes.TryGetValue(Id(named),out var native)?native:SystemPair(t)?"pls::cs::KeyValuePair<"+String.Join(",",((INamedTypeSymbol)t!).TypeArguments.Select(TypeName))+">":t?.ToDisplayString() switch {"System.Guid"=>"pls::cs::Guid","System.DateTime"=>"pls::cs::DateTime","System.TimeSpan"=>"pls::cs::TimeSpan",_=>null};
     static string Local(ISymbol symbol)=>"v_"+symbol.Name.TrimStart('@')+(symbol is ILocalSymbol?"_"+symbol.DeclaringSyntaxReferences.FirstOrDefault()?.Span.Start:"");
     static IEnumerable<SyntaxNode> OwnScopeNodes(SyntaxNode body)=>body.DescendantNodes(descendIntoChildren:n=>n is not AnonymousFunctionExpressionSyntax&&n is not LocalFunctionStatementSyntax);
@@ -944,6 +945,8 @@ sealed partial class Lowerer {
             var split=new StringBuilder("([&](){auto cs_text="+Expr(splitAccess.Expression)+";auto cs_separators=pls::cs::Array<char16_t>::make("+args.Count+");");for(int index=0;index<args.Count;index++)split.Append("cs_separators.at("+index+")="+Expr(args[index])+";");return split+"return pls::cs::"+(symbol.Name=="Split"?"string_split":"string_trim")+"(cs_text,cs_separators);}())";
         }
         if(symbol.ReducedFrom?.ContainingType.ToDisplayString()=="System.Linq.Enumerable"&&symbol.Name=="Contains"&&n.Expression is MemberAccessExpressionSyntax containsAccess&&model.GetTypeInfo(containsAccess.Expression).Type?.SpecialType==SpecialType.System_String&&args.Count==1&&model.GetTypeInfo(args[0]).Type?.SpecialType==SpecialType.System_Char)return "([&](){auto cs_text="+Expr(containsAccess.Expression)+";auto cs_char="+Expr(args[0])+";return cs_index_char1(cs_text,cs_char)!=-1;}())";
+        // Enumerable.ToList over Dictionary.Keys/Values: new List<T>(collection) copies in entry order (ICollection<T>.CopyTo).
+        if(symbol.ReducedFrom?.ContainingType.ToDisplayString()=="System.Linq.Enumerable"&&symbol.Name=="ToList"&&args.Count==0&&n.Expression is MemberAccessExpressionSyntax{Expression:MemberAccessExpressionSyntax dictionaryView}&&model.GetSymbolInfo(dictionaryView).Symbol is IPropertySymbol{Name:"Keys" or "Values"} viewProperty&&SystemDictionary(viewProperty.ContainingType))return "([&](){auto cs_dictionary="+Expr(dictionaryView.Expression)+";auto cs_items=cs_dictionary."+(viewProperty.Name=="Keys"?"KeysToArray":"ValuesToArray")+"();auto cs_list="+Type(symbol.ReturnType,n)+"::make(cs_items.length());for(std::int32_t cs_i=0;cs_i<cs_items.length();++cs_i)cs_list.Add(cs_items.at(cs_i));return cs_list;}())";
         if(symbol.ReducedFrom?.ContainingType.ToDisplayString()=="System.Linq.Enumerable"&&symbol.Name=="ToArray"&&args.Count==0&&n.Expression is MemberAccessExpressionSyntax{Expression:MemberAccessExpressionSyntax keys}&&model.GetSymbolInfo(keys).Symbol is IPropertySymbol{Name:"Keys"} keysProperty&&SystemDictionary(keysProperty.ContainingType))return "([&](){auto cs_dictionary="+Expr(keys.Expression)+";return cs_dictionary.KeysToArray();}())";
         if(SystemDictionary(symbol.ContainingType)&&symbol.Name=="TryGetValue"&&args.Count==2&&n.ArgumentList.Arguments[1].RefKindKeyword.IsKind(SyntaxKind.OutKeyword)&&args[1] is IdentifierNameSyntax&&model.GetSymbolInfo(args[1]).Symbol is ILocalSymbol or IParameterSymbol&&n.Expression is MemberAccessExpressionSyntax dictionaryAccess){return "([&](){auto cs_dictionary="+Expr(dictionaryAccess.Expression)+";auto cs_key="+Converted(args[0],symbol.Parameters[0].Type)+";return cs_dictionary.TryGetValue(cs_key,"+Expr(args[1])+");}())";}
         if(symbol.ContainingType.SpecialType==SpecialType.System_Byte&&symbol.Name=="Parse"&&args.Count==2&&symbol.Parameters[0].Type.SpecialType==SpecialType.System_String&&model.GetConstantValue(args[1]) is {HasValue:true,Value:int byteStyle}&&byteStyle is 512 or 515)return "([&](){auto cs_value="+Converted(args[0],symbol.Parameters[0].Type)+";return pls::cs::byte_parse_hex_number(cs_value,"+(byteStyle==515?"true":"false")+");}())";
@@ -1033,6 +1036,11 @@ sealed partial class Lowerer {
         if(!symbol.IsStatic&&(SystemList(symbol.ContainingType)||SystemDictionary(symbol.ContainingType))&&n.Expression is MemberAccessExpressionSyntax listMember) {
             if(SystemList(symbol.ContainingType)&&symbol.Name is "InsertRange" or "AddRange"&&args.Count==(symbol.Name=="InsertRange"?2:1)&&(model.GetTypeInfo(args.Last()).Type is IArrayTypeSymbol||SystemList(model.GetTypeInfo(args.Last()).Type))){
                 var range=new StringBuilder("([&](){auto cs_list="+Expr(listMember.Expression)+";");for(int index=0;index<args.Count;index++)range.Append("auto cs_arg"+index+"="+Expr(args[index])+";");return range+"cs_list."+symbol.Name+"("+String.Join(",",Enumerable.Range(0,args.Count).Select(index=>"cs_arg"+index))+");}())";
+            }
+            // Dictionary.GetEnumerator() converted to the non-generic IEnumerator (boxed enumerator).
+            if(SystemDictionary(symbol.ContainingType)&&symbol.Name=="GetEnumerator"&&args.Count==0&&model.GetTypeInfo(n).ConvertedType?.ToDisplayString()=="System.Collections.IEnumerator"){
+                var dictionaryArgs=String.Join(",",((INamedTypeSymbol)symbol.ContainingType).TypeArguments.Select(t=>Type(t,n)));
+                return "([&](){auto cs_dictionary="+Expr(listMember.Expression)+";return pls::cs::box_enumerator<"+dictionaryArgs+">(cs_dictionary.GetEnumerator());}())";
             }
             var allowed=new[]{"ContainsKey","ContainsValue","Add","Clear","Contains","IndexOf","LastIndexOf","Insert","RemoveAt","Remove","RemoveRange","ToArray","TrimExcess"};
             if(!allowed.Contains(symbol.Name)||symbol.Parameters.Any(p=>p.RefKind!=RefKind.None)||args.Count!=symbol.Parameters.Length)throw new Unsupported(n,"List overload not lowered");
@@ -1309,6 +1317,16 @@ sealed partial class Lowerer {
                     var list=ReadProperty(property,Expr(f.Expression),Array.Empty<string>(),f);
                     return "{auto "+vectorName+"=("+list+").GetEnumerator();struct cs_vector_scope"+vectorUnique+"{decltype("+vectorName+")&e;~cs_vector_scope"+vectorUnique+"(){e.Dispose();}} cs_scope"+vectorUnique+"{"+vectorName+"};while("+vectorName+".MoveNext()){ "+vectorDeclaration+BranchBody(f,Statement(f.Statement,method))+"}}";
                 }
+                // foreach over Dictionary.Keys/Values: the collection enumerator wraps the dictionary
+                // enumerator (same version check and disposal) and yields Current.Key/Value.
+                if(f.Expression is MemberAccessExpressionSyntax viewAccess&&model.GetSymbolInfo(viewAccess).Symbol is IPropertySymbol{Name:"Keys" or "Values"} eachView&&SystemDictionary(eachView.ContainingType)){
+                    var viewUnique=temporary++;var viewLocal=model.GetDeclaredSymbol(f)!;var viewCaptured=capturedVariables.Contains(viewLocal);var viewName="cs_view_enum"+viewUnique;
+                    var element=viewName+".get_Current()."+(eachView.Name=="Keys"?"get_Key()":"get_Value()");
+                    var elementType=((INamedTypeSymbol)eachView.ContainingType).TypeArguments[eachView.Name=="Keys"?0:1];
+                    var converted=SymbolEqualityComparer.Default.Equals(elementType,viewLocal.Type)?element:Cast(element,elementType,viewLocal.Type,f);
+                    var viewDeclaration=(viewCaptured?CellType(viewLocal,f):Type(viewLocal.Type,f))+" "+Local(viewLocal)+(viewCaptured?"_cell":"")+"="+(viewCaptured?CellAllocation(viewLocal,converted,f):converted)+";";
+                    return "{auto "+viewName+"=("+Expr(viewAccess.Expression)+").GetEnumerator();struct cs_view_scope"+viewUnique+"{decltype("+viewName+")&e;~cs_view_scope"+viewUnique+"(){e.Dispose();}} cs_scope"+viewUnique+"{"+viewName+"};while("+viewName+".MoveNext()){ "+viewDeclaration+" "+BranchBody(f,Statement(f.Statement,method))+" }}";
+                }
                 if(SystemList(model.GetTypeInfo(f.Expression).Type)||SystemDictionary(model.GetTypeInfo(f.Expression).Type)){
                     var listUnique=temporary++;var listLocal=model.GetDeclaredSymbol(f)!;var listCaptured=capturedVariables.Contains(listLocal);var name="cs_list_enum"+listUnique;
                     var listDeclaration=(listCaptured?CellType(listLocal,f):Type(listLocal.Type,f))+" "+Local(listLocal)+(listCaptured?"_cell":"")+"="+(listCaptured?CellAllocation(listLocal,name+".get_Current()",f):name+".get_Current()")+";";
@@ -1458,6 +1476,8 @@ sealed partial class Lowerer {
             "empty_string_array" when method.ReturnType is IArrayTypeSymbol{ElementType.SpecialType:SpecialType.System_String}=>"return pls::cs::Array<pls::cs::String>::make(0);",
             "int_exact" when method.ReturnType.SpecialType==SpecialType.System_Int32||method.ReturnType.TypeKind==TypeKind.Enum=>"return "+Constant(policy.GetProperty("value").GetInt32(),method.ReturnType,site)+";",
             "register_local" when method.ReturnType is IArrayTypeSymbol{ElementType.SpecialType:SpecialType.System_Byte}=>"return pls::services::managed::register_local();",
+            // forward: the body is a call to an existing platform function with the same parameters.
+            "forward" when policy.TryGetProperty("native_hook",out var forwardHook)&&forwardHook.GetString() is string hook&&hook.StartsWith("pls::",StringComparison.Ordinal)=>(method.ReturnsVoid?"":"return ")+hook+"("+String.Join(",",method.Parameters.Select(p=>Local(p)))+");"+(method.ReturnsVoid?" return;":""),
             _=>throw new Unsupported(site,"service lowering kind/signature is not supported: "+policyKind)
         };
         return body+result+"\n}";
@@ -1490,6 +1510,7 @@ sealed partial class Lowerer {
             // A policy body on a removed Android bridge (every static field is UnityEngine.AndroidJava*) never touches
             // that state; the type initializer only builds the Java classes, so it is not emitted.
             var removedJavaBridge=hasServicePolicy&&method.IsStatic&&method.ContainingType.GetMembers().OfType<IFieldSymbol>().Where(f=>f.IsStatic&&!f.IsConst).All(f=>f.Type.ToDisplayString().StartsWith("UnityEngine.AndroidJava",StringComparison.Ordinal));
+            if(removedJavaBridge)removedJavaBridgeTypes.Add(Id(method.ContainingType));
             if((!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper)&&!removedJavaBridge)EnsureTypeInitializer(method.ContainingType,declaration);
             if(method.Parameters.Any(p=>p.RefKind is not (RefKind.None or RefKind.Ref or RefKind.Out)))throw new Unsupported(declaration,"in/ref-readonly parameter signature not lowered");
             var (sourceBlock,sourceArrow)=ExecutableBody(declaration);
@@ -1571,6 +1592,19 @@ sealed partial class Lowerer {
     }
     public object Generate(Request input) {
         if(input.select_all_source_methods)input.selected=input.selected.Concat(methods.Keys.Where(id=>input.select_source_prefix.Length==0||Path.GetRelativePath(input.source_root,syntax[id].SyntaxTree.FilePath).Replace('\\','/').StartsWith(input.select_source_prefix,StringComparison.Ordinal))).Distinct().OrderBy(x=>x).ToArray();
+        // Implicit parameterless instance constructors (no source declaration) of selected
+        // source classes are IL methods too; Emit already lowers them.
+        if(input.select_all_source_methods){
+            var implicitCtors=new List<string>();
+            foreach(var tree in compilation.SyntaxTrees){
+                if(input.select_source_prefix.Length!=0&&!Path.GetRelativePath(input.source_root,tree.FilePath).Replace('\\','/').StartsWith(input.select_source_prefix,StringComparison.Ordinal))continue;
+                var treeModel=compilation.GetSemanticModel(tree);
+                foreach(var declaration in tree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>())
+                    if(treeModel.GetDeclaredSymbol(declaration) is INamedTypeSymbol type&&!type.IsStatic)
+                        foreach(var ctor in type.InstanceConstructors.Where(c=>c.IsImplicitlyDeclared&&c.Parameters.Length==0))implicitCtors.Add(Id(ctor));
+            }
+            input.selected=input.selected.Concat(implicitCtors).Distinct().OrderBy(x=>x).ToArray();
+        }
         foreach(var id in input.selected.Where(id=>id.StartsWith("M:",StringComparison.Ordinal)))Emit(id);
         // Allocating a generated C++ class materializes its vtable. A source
         // override/interface implementation must be attempted even when no
@@ -1833,6 +1867,7 @@ sealed partial class Lowerer {
             cpp_body_count=emitted.Count,
             shared_instance_fields=sharedFields.OrderBy(id=>id).ToArray(),
             type_initializers=usedTypes.OrderBy(id=>id).Select(id=>new{id,cpp_name=TypeInitName(initializedTypes[id])}).ToArray(),
+            policy_removed_type_initializers=removedJavaBridgeTypes.ToArray(),
             source_byref_arguments=new{categories=byrefCategories,sites=byrefSites},
             service_policy_emission=input.service_overrides.Keys.OrderBy(id=>id).Select(id=>new{id,emitted=emitted.ContainsKey(id),status=emitted.ContainsKey(id)?"emitted":rejected.ContainsKey(id)?"rejected":"not_reached",diagnostic=rejected.GetValueOrDefault(id)}).ToArray(),
             game_foreach_capture_sites=gameForeachCaptures,

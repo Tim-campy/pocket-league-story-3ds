@@ -1,8 +1,8 @@
 {
   "operation": "differential-generated-portable-method-source-oracle",
-  "cases": 1645,
-  "passed": 1645,
-  "methods": 235,
+  "cases": 1715,
+  "passed": 1715,
+  "methods": 245,
   "verified_method_ids": [
     "M:LoweringFixtures.AbstractCtorDispatch",
     "M:LoweringFixtures.AliasBase(Synthetic.VirtualBase@)",
@@ -40,6 +40,8 @@
     "M:LoweringFixtures.DictionaryKeysNull(System.Int32)",
     "M:LoweringFixtures.DictionaryKeysSnapshot(System.Int32)",
     "M:LoweringFixtures.DictionaryOut(System.Int32)",
+    "M:LoweringFixtures.DictionaryViews(System.Int32)",
+    "M:LoweringFixtures.DictionaryViewsNull(System.Int32)",
     "M:LoweringFixtures.Divide(System.Int32,System.Int32)",
     "M:LoweringFixtures.DoubleNaN(System.Int32)",
     "M:LoweringFixtures.EmptyLiteralIdentity(System.Int32)",
@@ -177,6 +179,7 @@
     "M:Synthetic.AutoProperties.set_Text(System.String)",
     "M:Synthetic.AutoProperties.set_Value(System.Int32)",
     "M:Synthetic.BaseCtor.#ctor(System.Int32)",
+    "M:Synthetic.CatchOnlyException.#ctor",
     "M:Synthetic.ConcatValue.#ctor(System.Int32,System.Boolean,System.Boolean)",
     "M:Synthetic.ConcatValue.ToString",
     "M:Synthetic.DelegateTarget.#ctor(System.Int32)",
@@ -197,6 +200,8 @@
     "M:Synthetic.GenericFactoryHost.Count``1(System.String[])",
     "M:Synthetic.GenericFactoryHost.Forward``1(System.Int32)",
     "M:Synthetic.GenericFactoryHost.Fresh``1",
+    "M:Synthetic.GenericVirtualBase.#ctor",
+    "M:Synthetic.GenericVirtualDerived.#ctor",
     "M:Synthetic.ImplicitScope.#ctor",
     "M:Synthetic.ImplicitScope.get_UnusedAutoFlag",
     "M:Synthetic.ImplicitScope.set_UnusedAutoFlag(System.Boolean)",
@@ -222,17 +227,22 @@
     "M:Synthetic.SourceAdapterTarget.Read(System.Int32)",
     "M:Synthetic.SourceStaticAdapters.Read(System.Int32)",
     "M:Synthetic.SourceStaticTarget.Read(System.Int32)",
+    "M:Synthetic.StaticAuto.#ctor",
     "M:Synthetic.StaticAuto.get_Enabled",
     "M:Synthetic.StaticAuto.get_Text",
     "M:Synthetic.StaticAuto.get_Value",
     "M:Synthetic.StaticAuto.set_Enabled(System.Boolean)",
     "M:Synthetic.StaticAuto.set_Text(System.String)",
     "M:Synthetic.StaticAuto.set_Value(System.Int32)",
+    "M:Synthetic.StaticAutoOrder.#ctor",
     "M:Synthetic.StaticAutoOrder.Capture",
     "M:Synthetic.StaticAutoOrder.get_Enabled",
     "M:Synthetic.StaticAutoOrder.get_Value",
     "M:Synthetic.StaticAutoOrder.set_Enabled(System.Boolean)",
     "M:Synthetic.StaticAutoOrder.set_Value(System.Int32)",
+    "M:Synthetic.StaticCycleA.#ctor",
+    "M:Synthetic.StaticCycleB.#ctor",
+    "M:Synthetic.StaticOrder.#ctor",
     "M:Synthetic.StaticOrder.ReadFirst",
     "M:Synthetic.StaticWriteA.Init",
     "M:Synthetic.VirtualBase.#ctor",
@@ -279,6 +289,8 @@
     "M:LoweringFixtures.DictionaryKeysNull(System.Int32)",
     "M:LoweringFixtures.DictionaryKeysSnapshot(System.Int32)",
     "M:LoweringFixtures.DictionaryOut(System.Int32)",
+    "M:LoweringFixtures.DictionaryViews(System.Int32)",
+    "M:LoweringFixtures.DictionaryViewsNull(System.Int32)",
     "M:LoweringFixtures.Divide(System.Int32,System.Int32)",
     "M:LoweringFixtures.DoubleNaN(System.Int32)",
     "M:LoweringFixtures.EmptyLiteralIdentity(System.Int32)",
@@ -416,6 +428,7 @@
     "M:Synthetic.AutoProperties.set_Text(System.String)",
     "M:Synthetic.AutoProperties.set_Value(System.Int32)",
     "M:Synthetic.BaseCtor.#ctor(System.Int32)",
+    "M:Synthetic.CatchOnlyException.#ctor",
     "M:Synthetic.ConcatValue.#ctor(System.Int32,System.Boolean,System.Boolean)",
     "M:Synthetic.ConcatValue.ToString",
     "M:Synthetic.DelegateTarget.#ctor(System.Int32)",
@@ -436,6 +449,8 @@
     "M:Synthetic.GenericFactoryHost.Count``1(System.String[])",
     "M:Synthetic.GenericFactoryHost.Forward``1(System.Int32)",
     "M:Synthetic.GenericFactoryHost.Fresh``1",
+    "M:Synthetic.GenericVirtualBase.#ctor",
+    "M:Synthetic.GenericVirtualDerived.#ctor",
     "M:Synthetic.ImplicitScope.#ctor",
     "M:Synthetic.ImplicitScope.get_UnusedAutoFlag",
     "M:Synthetic.ImplicitScope.set_UnusedAutoFlag(System.Boolean)",
@@ -461,17 +476,22 @@
     "M:Synthetic.SourceAdapterTarget.Read(System.Int32)",
     "M:Synthetic.SourceStaticAdapters.Read(System.Int32)",
     "M:Synthetic.SourceStaticTarget.Read(System.Int32)",
+    "M:Synthetic.StaticAuto.#ctor",
     "M:Synthetic.StaticAuto.get_Enabled",
     "M:Synthetic.StaticAuto.get_Text",
     "M:Synthetic.StaticAuto.get_Value",
     "M:Synthetic.StaticAuto.set_Enabled(System.Boolean)",
     "M:Synthetic.StaticAuto.set_Text(System.String)",
     "M:Synthetic.StaticAuto.set_Value(System.Int32)",
+    "M:Synthetic.StaticAutoOrder.#ctor",
     "M:Synthetic.StaticAutoOrder.Capture",
     "M:Synthetic.StaticAutoOrder.get_Enabled",
     "M:Synthetic.StaticAutoOrder.get_Value",
     "M:Synthetic.StaticAutoOrder.set_Enabled(System.Boolean)",
     "M:Synthetic.StaticAutoOrder.set_Value(System.Int32)",
+    "M:Synthetic.StaticCycleA.#ctor",
+    "M:Synthetic.StaticCycleB.#ctor",
+    "M:Synthetic.StaticOrder.#ctor",
     "M:Synthetic.StaticOrder.ReadFirst",
     "M:Synthetic.StaticWriteA.Init",
     "M:Synthetic.VirtualBase.#ctor",
@@ -489,16 +509,16 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.64488550000533,
-    "native-compile": 165.45746399999916,
-    "managed-output": 0.5868597000007867,
-    "native-output": 0.7527338999934727
+    "csharp-compile": 0.7126743999979226,
+    "native-compile": 171.744595199998,
+    "managed-output": 0.6305428000050597,
+    "native-output": 0.7525859000015771
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
-  "source_oracle_sha256": "46bb74a2779de04ce313d484d2f61fafd2fe3ad8fbb84e6ecbad3624b1857f4a",
+  "source_oracle_sha256": "518b15c0eed04f30221d6fe498ae0a90fa17104f8ce259cb2977b9b79adf882a",
   "cpp_generated_sha256": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a",
-  "hpp_generated_sha256": "89417d93cdbfc5eb6955bf328cba7f493ac44b721a3a2834207af1eb7e38172c",
+  "hpp_generated_sha256": "005e6ee7944a1fa03570f1c20437217a5289ab46d74f2122bee1fe9cacffbdf0",
   "generated_files": [
     {
       "path": "build/translator/lowering-generated/portable_generated.cpp",
@@ -506,11 +526,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.hpp",
-      "sha256": "89417d93cdbfc5eb6955bf328cba7f493ac44b721a3a2834207af1eb7e38172c"
+      "sha256": "005e6ee7944a1fa03570f1c20437217a5289ab46d74f2122bee1fe9cacffbdf0"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_forward.hpp",
-      "sha256": "615b9d9343f53ff7ce37db4de87a47142e414e3ba85adcf36e679150459b4ddb"
+      "sha256": "acd45145e7d41602e00f0488646134d11f638ecdf3b6e315810ab1d268044571"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_runtime.hpp",
@@ -518,7 +538,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.cpp",
-      "sha256": "82547329266f18b3136602031abbe56c85e5fc3b5d9058998c948a46b67f5b25"
+      "sha256": "1251d13e9583aba38b8846d37103c8550a9b6d7b6d57e79a858a8419637f9b33"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.hpp",
@@ -550,11 +570,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "8b3d6f52e46b2e4524d08cc844a06305f9c8206cadc2755dce08556b0b52566b"
+      "sha256": "0bc70a3d41873296feab07ea82306d8ef08b56098e249b15a9350ebfb23a000c"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
-      "sha256": "1ffbb46ce1523f801e665a9bad53c40ab137e3a8abe815b54ad63547ca036776"
+      "sha256": "145abb267fcfb1fb6a612098a1af8bb1395c5a270005afbd3066fe8737eb7238"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1bb228ee3b09f5bc.cpp",
@@ -582,7 +602,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_2f45f6bcaca3c019.cpp",
-      "sha256": "c5a413a9e6d3cb30de9511b8a4164c99737fcef4438ccb5ade0dbf24cb6670d1"
+      "sha256": "c8f3e62a0cc1c9f1a96a63d64e64a1e0a8c5a69ddb30a7d910f62295a6ac51b7"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_2f45f6bcaca3c019.hpp",
@@ -590,11 +610,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_3083ce12ebcde7e4.cpp",
-      "sha256": "e42b6d7d9c6b1084f86ab2983407e330b25bb7280031397f99a41fe4e860ddab"
+      "sha256": "fe8ee87209b2a2a282bcbcae2c7915763489278c92e4e6b1b3b4974da43e2b75"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_3083ce12ebcde7e4.hpp",
-      "sha256": "3cf038ee55764cc1678d95d71e47e38393aaeb0add306d2dfcc075ef0405f7cd"
+      "sha256": "7d355610d87c199c5f47ec7849ba19782525345b55802c3f8315e39f5283e362"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_34b829a73ac63e8a.cpp",
@@ -674,11 +694,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_5e9709f4da962042.cpp",
-      "sha256": "d9defca3aac8f1a3f6f2136f748c9727dc8171ca5f23c9dbbe4ff9df8ba9b45f"
+      "sha256": "daba921d4bd68c524fee719612d3b4e7808930ea951096a74c18e3c80bb46a57"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_5e9709f4da962042.hpp",
-      "sha256": "bb20b7b9a2cd06677859f63f859cb40277b49ddf2e2ac75a17bf3ab8e32fc29d"
+      "sha256": "fb60fe8cb7b9d7f99c6a3980f198b9912fdc228d108f90e1f41698f4da64fe2a"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_6ea5d19de363bb4e.cpp",
@@ -698,11 +718,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_88c2c92ab4ef80dd.cpp",
-      "sha256": "0bc39e05df700172a56b9339fdb98a4fcb7186bf7a3d0c56c57d20dbc19cd2cc"
+      "sha256": "9a58a925bbbc72b4f9b86f53b8ee72a4c68aa038bcab7cd6c98c1cbe3819af82"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_88c2c92ab4ef80dd.hpp",
-      "sha256": "7e650d879dec430a0fbae2d517fa920c7bd80cd4f85b993b86b8152303b2ff3c"
+      "sha256": "85e1a3203ea2dc161e228264b46e0a880554188ce9184d2758f85ef7dac5b738"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_89e66a83021f5a87.cpp",
@@ -714,11 +734,19 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.cpp",
-      "sha256": "073be8eaec4e692cb238691ad94de19e09e4ffdc293fa446a62e95cdfef6c600"
+      "sha256": "14b1ffcd37875f4fd69d562846e0bfccb1bf48ee09ff6d7afe66b159b04cc186"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.hpp",
-      "sha256": "16d771b9192bc1c97d98ff9c06ca6d21e557f43201f19760b08db0c82fc7d304"
+      "sha256": "c202ee455fd9cdc4e991f99a6942f6668db1a7582793051c079ba1694dc752a4"
+    },
+    {
+      "path": "build/translator/lowering-generated/portable_generated_type_9d991a2d6c73702f.cpp",
+      "sha256": "f8b5683dead355341f775a8dcc2b474bca24e331feaeb1639fa613f34c752c90"
+    },
+    {
+      "path": "build/translator/lowering-generated/portable_generated_type_9d991a2d6c73702f.hpp",
+      "sha256": "4759ada893c63ff241348921e62483a6dc2e1a5e0b7bd436311635fa04ea8079"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_ada74f2bd00cc29e.cpp",
@@ -729,12 +757,20 @@
       "sha256": "41d2008e91cc1adaef2d85b62de3936caf9af54e0d83a1cc3934ca2d6d911fb0"
     },
     {
+      "path": "build/translator/lowering-generated/portable_generated_type_af9db418c514344e.cpp",
+      "sha256": "00b6673a8739c54e9850ec3f35cf6b173fe4a86d24748585a79b68ad566843bd"
+    },
+    {
+      "path": "build/translator/lowering-generated/portable_generated_type_af9db418c514344e.hpp",
+      "sha256": "044330ae205e5d7be874ec2a179e8ea95837b23814abb037b7dc2f03e76cf04b"
+    },
+    {
       "path": "build/translator/lowering-generated/portable_generated_type_b52a5b677eb9c5ae.cpp",
-      "sha256": "d471ebf39b298ae9d746f9d0b3e78c65b04d3253fa098d4a27d121bee4b25229"
+      "sha256": "037aec126dc7ef812703f1d86476e2a8870f5a8d86171da0a1f4ff0ec04d2424"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_b52a5b677eb9c5ae.hpp",
-      "sha256": "10fad9e232e10b89e910a7641d38d44a4d430bccf2d05a5a21b19949b38c9181"
+      "sha256": "3b84c0577f5a5e49a6660029e36adca9bffdf9fd261b714951705c012ffb2bae"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_b7d2670b081e1f67.cpp",
@@ -746,7 +782,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.cpp",
-      "sha256": "519f0ef385604c7d111e354758831df64ff0fdcb26c3d493bc6605f1be3fee17"
+      "sha256": "65798c1ab32bf3ed9392f02b916f7671331b7836eca810c8bac62659046bde56"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.hpp",
@@ -762,7 +798,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_ce871dfb48f47754_templates.hpp",
-      "sha256": "6a9771359c0adb708a14da9e5db80b7145d8d95c8ec72c0dd5ca9b938675c307"
+      "sha256": "551cd7e003dc5f7f3d8d3f65e9777a07e383533bf63a65666581bb806cf63862"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_cf287e995e911ab3.cpp",
@@ -798,15 +834,15 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_f5822bf19fa643d9.cpp",
-      "sha256": "f29d4d21732601abd5ba157e9e4463f6d1e7ee8864efae7c1c5b250472104e68"
+      "sha256": "3920e072dca35e254c5e56946ccbb1c1900cbdf1dc51482499e56609e5a90502"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_f5822bf19fa643d9.hpp",
-      "sha256": "1683d7fcf1bca249a6725b7b90e8ae7d37216b53b3da0ff4b176dfa5719c0800"
+      "sha256": "2f3d62ded2f46aa77615e69eb76cc5ea5109a3a2b82f2128e12f687b33cea589"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.cpp",
-      "sha256": "a5075d47f7496ead804e7d5875d2c7a400e138c7bec430c00b52c9be607c46e6"
+      "sha256": "d037f5cd314e1b6f09ff12e01c2bb76ce60a207d6ce1233957cc8abda6a81e1e"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.hpp",
@@ -826,11 +862,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "c8f2727294e58759118597fe941ec0fd795fd2981e2d153960aebbc9c770fd42"
+    "sha256": "8f5f4d2b6ef27fc8bb6839f11a5b17ffb9d82f7e776b392be76311887ef86a14"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "1b716afecfadf27b2175164bd321c5b60c70f5abdb8e2c907e4288edd75847be"
+    "sha256": "0f70a227433c0da8fef903a41cf74a70207cbda0e7137d6afa265e8faf269423"
   },
   "differential_runner_sha256": "eb7897c054d3cb0cf32e51261b48ccf3fc81d371fb9a6984a9fd9e8758ea8368",
   "runtime_sources": [
@@ -848,7 +884,7 @@
     },
     {
       "path": "build/translator/lowering-differential/Harness.cpp",
-      "sha256": "1df3d53f21eb6d536c3832de1e050f6f89bb5bcdc7c19e203633fe61277b5ab5"
+      "sha256": "db6ccd6afb6e36a32ee4901491910ecc1e0cb81e08a31f107c07111e383f4f5c"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.cpp",
@@ -856,11 +892,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated.hpp",
-      "sha256": "89417d93cdbfc5eb6955bf328cba7f493ac44b721a3a2834207af1eb7e38172c"
+      "sha256": "005e6ee7944a1fa03570f1c20437217a5289ab46d74f2122bee1fe9cacffbdf0"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_forward.hpp",
-      "sha256": "615b9d9343f53ff7ce37db4de87a47142e414e3ba85adcf36e679150459b4ddb"
+      "sha256": "acd45145e7d41602e00f0488646134d11f638ecdf3b6e315810ab1d268044571"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_runtime.hpp",
@@ -868,7 +904,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.cpp",
-      "sha256": "82547329266f18b3136602031abbe56c85e5fc3b5d9058998c948a46b67f5b25"
+      "sha256": "1251d13e9583aba38b8846d37103c8550a9b6d7b6d57e79a858a8419637f9b33"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_0704e9eca604c513.hpp",
@@ -900,11 +936,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "8b3d6f52e46b2e4524d08cc844a06305f9c8206cadc2755dce08556b0b52566b"
+      "sha256": "0bc70a3d41873296feab07ea82306d8ef08b56098e249b15a9350ebfb23a000c"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
-      "sha256": "1ffbb46ce1523f801e665a9bad53c40ab137e3a8abe815b54ad63547ca036776"
+      "sha256": "145abb267fcfb1fb6a612098a1af8bb1395c5a270005afbd3066fe8737eb7238"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1bb228ee3b09f5bc.cpp",
@@ -932,7 +968,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_2f45f6bcaca3c019.cpp",
-      "sha256": "c5a413a9e6d3cb30de9511b8a4164c99737fcef4438ccb5ade0dbf24cb6670d1"
+      "sha256": "c8f3e62a0cc1c9f1a96a63d64e64a1e0a8c5a69ddb30a7d910f62295a6ac51b7"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_2f45f6bcaca3c019.hpp",
@@ -940,11 +976,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_3083ce12ebcde7e4.cpp",
-      "sha256": "e42b6d7d9c6b1084f86ab2983407e330b25bb7280031397f99a41fe4e860ddab"
+      "sha256": "fe8ee87209b2a2a282bcbcae2c7915763489278c92e4e6b1b3b4974da43e2b75"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_3083ce12ebcde7e4.hpp",
-      "sha256": "3cf038ee55764cc1678d95d71e47e38393aaeb0add306d2dfcc075ef0405f7cd"
+      "sha256": "7d355610d87c199c5f47ec7849ba19782525345b55802c3f8315e39f5283e362"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_34b829a73ac63e8a.cpp",
@@ -1024,11 +1060,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_5e9709f4da962042.cpp",
-      "sha256": "d9defca3aac8f1a3f6f2136f748c9727dc8171ca5f23c9dbbe4ff9df8ba9b45f"
+      "sha256": "daba921d4bd68c524fee719612d3b4e7808930ea951096a74c18e3c80bb46a57"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_5e9709f4da962042.hpp",
-      "sha256": "bb20b7b9a2cd06677859f63f859cb40277b49ddf2e2ac75a17bf3ab8e32fc29d"
+      "sha256": "fb60fe8cb7b9d7f99c6a3980f198b9912fdc228d108f90e1f41698f4da64fe2a"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_6ea5d19de363bb4e.cpp",
@@ -1048,11 +1084,11 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_88c2c92ab4ef80dd.cpp",
-      "sha256": "0bc39e05df700172a56b9339fdb98a4fcb7186bf7a3d0c56c57d20dbc19cd2cc"
+      "sha256": "9a58a925bbbc72b4f9b86f53b8ee72a4c68aa038bcab7cd6c98c1cbe3819af82"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_88c2c92ab4ef80dd.hpp",
-      "sha256": "7e650d879dec430a0fbae2d517fa920c7bd80cd4f85b993b86b8152303b2ff3c"
+      "sha256": "85e1a3203ea2dc161e228264b46e0a880554188ce9184d2758f85ef7dac5b738"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_89e66a83021f5a87.cpp",
@@ -1064,11 +1100,19 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.cpp",
-      "sha256": "073be8eaec4e692cb238691ad94de19e09e4ffdc293fa446a62e95cdfef6c600"
+      "sha256": "14b1ffcd37875f4fd69d562846e0bfccb1bf48ee09ff6d7afe66b159b04cc186"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_953be639bbbe77b1.hpp",
-      "sha256": "16d771b9192bc1c97d98ff9c06ca6d21e557f43201f19760b08db0c82fc7d304"
+      "sha256": "c202ee455fd9cdc4e991f99a6942f6668db1a7582793051c079ba1694dc752a4"
+    },
+    {
+      "path": "build/translator/lowering-generated/portable_generated_type_9d991a2d6c73702f.cpp",
+      "sha256": "f8b5683dead355341f775a8dcc2b474bca24e331feaeb1639fa613f34c752c90"
+    },
+    {
+      "path": "build/translator/lowering-generated/portable_generated_type_9d991a2d6c73702f.hpp",
+      "sha256": "4759ada893c63ff241348921e62483a6dc2e1a5e0b7bd436311635fa04ea8079"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_ada74f2bd00cc29e.cpp",
@@ -1079,12 +1123,20 @@
       "sha256": "41d2008e91cc1adaef2d85b62de3936caf9af54e0d83a1cc3934ca2d6d911fb0"
     },
     {
+      "path": "build/translator/lowering-generated/portable_generated_type_af9db418c514344e.cpp",
+      "sha256": "00b6673a8739c54e9850ec3f35cf6b173fe4a86d24748585a79b68ad566843bd"
+    },
+    {
+      "path": "build/translator/lowering-generated/portable_generated_type_af9db418c514344e.hpp",
+      "sha256": "044330ae205e5d7be874ec2a179e8ea95837b23814abb037b7dc2f03e76cf04b"
+    },
+    {
       "path": "build/translator/lowering-generated/portable_generated_type_b52a5b677eb9c5ae.cpp",
-      "sha256": "d471ebf39b298ae9d746f9d0b3e78c65b04d3253fa098d4a27d121bee4b25229"
+      "sha256": "037aec126dc7ef812703f1d86476e2a8870f5a8d86171da0a1f4ff0ec04d2424"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_b52a5b677eb9c5ae.hpp",
-      "sha256": "10fad9e232e10b89e910a7641d38d44a4d430bccf2d05a5a21b19949b38c9181"
+      "sha256": "3b84c0577f5a5e49a6660029e36adca9bffdf9fd261b714951705c012ffb2bae"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_b7d2670b081e1f67.cpp",
@@ -1096,7 +1148,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.cpp",
-      "sha256": "519f0ef385604c7d111e354758831df64ff0fdcb26c3d493bc6605f1be3fee17"
+      "sha256": "65798c1ab32bf3ed9392f02b916f7671331b7836eca810c8bac62659046bde56"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.hpp",
@@ -1112,7 +1164,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_ce871dfb48f47754_templates.hpp",
-      "sha256": "6a9771359c0adb708a14da9e5db80b7145d8d95c8ec72c0dd5ca9b938675c307"
+      "sha256": "551cd7e003dc5f7f3d8d3f65e9777a07e383533bf63a65666581bb806cf63862"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_cf287e995e911ab3.cpp",
@@ -1148,15 +1200,15 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_f5822bf19fa643d9.cpp",
-      "sha256": "f29d4d21732601abd5ba157e9e4463f6d1e7ee8864efae7c1c5b250472104e68"
+      "sha256": "3920e072dca35e254c5e56946ccbb1c1900cbdf1dc51482499e56609e5a90502"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_f5822bf19fa643d9.hpp",
-      "sha256": "1683d7fcf1bca249a6725b7b90e8ae7d37216b53b3da0ff4b176dfa5719c0800"
+      "sha256": "2f3d62ded2f46aa77615e69eb76cc5ea5109a3a2b82f2128e12f687b33cea589"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.cpp",
-      "sha256": "a5075d47f7496ead804e7d5875d2c7a400e138c7bec430c00b52c9be607c46e6"
+      "sha256": "d037f5cd314e1b6f09ff12e01c2bb76ce60a207d6ce1233957cc8abda6a81e1e"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_fca04e18870c723f.hpp",
@@ -1212,7 +1264,7 @@
     },
     {
       "path": "src/kairo/api/forms_execution.hpp",
-      "sha256": "59d1da67851c18ff079772f166b75311c577b08d312a345dbbb68a534ec738ba"
+      "sha256": "e30281793db087cd620b025d0f0a25fb19a30b2daff19d387b7c115cac1e3f4d"
     },
     {
       "path": "src/kairo/api/game_entry.hpp",
@@ -1264,7 +1316,7 @@
     },
     {
       "path": "src/kairo/api/system.hpp",
-      "sha256": "c57e8463e277ed47bd25bfb2e2e02d037e4356a8da102418153b090fe5a3f80b"
+      "sha256": "bb37f69f8698583ce232749451d26d84137ff359f9954bd20083d819e98aedcd"
     },
     {
       "path": "src/kairo/api/text_input.hpp",
@@ -1564,7 +1616,7 @@
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "d8e3201a2d0a97a09a1d207d1c7733a0c1d05067e39668e3a357adf067bf4b68"
+      "sha256": "dfda0326f26577190c474b819fb2c6e440398b59b9890a61e0c8c136db36286d"
     },
     {
       "path": "src/kairo/common/managed_encoding.cpp",
@@ -1762,9 +1814,9 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "aa8e82cfbf8a7df85361dfe5ee5afff7738f88c0a65a5eb205ba2e89f9985cab",
+    "translator_source_sha256": "e4ef4395d31a433c812d6f4fb392de67ebec2373404f4bb3d0155969803a7410",
     "emission_source_sha256": "f718015b120848a233a0f46b2a1a32fbf08e039bfd4b3f6b784b7c67138f00ef",
-    "driver_sha256": "9e57500b42e50079f6abd59254f026041bb4da506148e638d550d6c55faac041"
+    "driver_sha256": "e58dc8ceaf42f43be96dc1ae17b5b63e44470021823634a68bc6b258641585a5"
   },
   "negative_control": {
     "id": "M:LoweringFixtures.UnsupportedClosureGoto(System.Int32)",
@@ -1780,5 +1832,5 @@
     "expected_seen": 9,
     "factory_defined": false
   },
-  "fixture_source_sha256": "309cd757bfab40e6ddf4d615261d188538cfb31f8168cab3b44170670a36265d"
+  "fixture_source_sha256": "fe03cbef7ce6aef99c9399f04f0baf6a714a9a0652bbc03f3c9606156a45bec9"
 }

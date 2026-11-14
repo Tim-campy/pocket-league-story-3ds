@@ -9,6 +9,8 @@ void cs_90cdc908fbacdc4d::release_edges(){cs_8bf13b560e1e05e9::release_edges();}
 
 void cs_90cdc908fbacdc4d::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_8bc9aa25aebc3796(pls::cs::static_pointer_cast<cs_90cdc908fbacdc4d>(shared_from_this()),v_canvas,v_onFinishMethod);}
 
+pls::cs::String cs_90cdc908fbacdc4d::cs_virtual_75152158b8b3764c(pls::cs::Ref<pls::kairo::Canvas> v_canvas) {return cs_2a567fdcd523eb57(pls::cs::static_pointer_cast<cs_90cdc908fbacdc4d>(shared_from_this()),v_canvas);}
+
 void cs_init_90cdc908fbacdc4d(){static pls::cs::TypeInitState state;state.run("system.panel.InputPanel",[](){
 
 });}
@@ -47,6 +49,17 @@ void cs_8bc9aa25aebc3796(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::Ref<
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.panel.InputPanel.Show(kairo.unity.ui.Canvas,kfw.panel.MainPanel.OnFinishMethod)",game);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_8bf13b560e1e05e9>>(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this)); pls::cs::Ref<pls::kairo::Canvas> cs_arg0 = v_canvas; pls::cs::Delegate<void(pls::cs::String)> cs_arg1 = v_onFinishMethod; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_a3ffc1615f910b95(cs_receiver,cs_arg0,cs_arg1); }());
+}
+}
+}
+}
+
+// M:system.panel.InputPanel.Show(kairo.unity.ui.Canvas)
+pls::cs::String cs_2a567fdcd523eb57(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas) { cs_init_90cdc908fbacdc4d();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:system.panel.InputPanel.Show(kairo.unity.ui.Canvas)",game);
+{
+return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_8bf13b560e1e05e9>>(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this)); pls::cs::Ref<pls::kairo::Canvas> cs_arg0 = v_canvas; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_75152158b8b3764c(cs_receiver,cs_arg0); }());
 }
 }
 }

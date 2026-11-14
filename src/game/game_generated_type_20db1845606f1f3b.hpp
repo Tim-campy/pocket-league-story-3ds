@@ -30,4 +30,6 @@ pls::cs::Ref<cs_20db1845606f1f3b> cs_a669d4cd9c91bbb0(pls::cs::String v_label,pl
 void cs_a669d4cd9c91bbb0_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText);
 
 void cs_14c2613f2e6bc060(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod);
+
+pls::cs::String cs_4cfe4fee50427f3d(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas);
 }

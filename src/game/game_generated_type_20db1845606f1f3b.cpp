@@ -9,6 +9,8 @@ void cs_20db1845606f1f3b::release_edges(){cs_8bf13b560e1e05e9::release_edges();}
 
 void cs_20db1845606f1f3b::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::Canvas> v_canvas,pls::cs::Delegate<void(pls::cs::String)> v_onFinishMethod) {cs_14c2613f2e6bc060(pls::cs::static_pointer_cast<cs_20db1845606f1f3b>(shared_from_this()),v_canvas,v_onFinishMethod);}
 
+pls::cs::String cs_20db1845606f1f3b::cs_virtual_75152158b8b3764c(pls::cs::Ref<pls::kairo::Canvas> v_canvas) {return cs_4cfe4fee50427f3d(pls::cs::static_pointer_cast<cs_20db1845606f1f3b>(shared_from_this()),v_canvas);}
+
 void cs_init_20db1845606f1f3b(){static pls::cs::TypeInitState state;state.run("panel.MainPanel",[](){
 
 });}
@@ -61,6 +63,17 @@ void cs_14c2613f2e6bc060(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::Ref<
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:panel.MainPanel.Show(kairo.unity.ui.Canvas,kfw.panel.MainPanel.OnFinishMethod)",game);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_8bf13b560e1e05e9>>(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this)); pls::cs::Ref<pls::kairo::Canvas> cs_arg0 = v_canvas; pls::cs::Delegate<void(pls::cs::String)> cs_arg1 = v_onFinishMethod; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_a3ffc1615f910b95(cs_receiver,cs_arg0,cs_arg1); }());
+}
+}
+}
+}
+
+// M:panel.MainPanel.Show(kairo.unity.ui.Canvas)
+pls::cs::String cs_4cfe4fee50427f3d(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::Ref<pls::kairo::Canvas> v_canvas) { cs_init_20db1845606f1f3b();
+{ if(!cs_this)throw pls::cs::NullReferenceException();
+{PLS_METHOD_SCOPE("Assembly-CSharp","M:panel.MainPanel.Show(kairo.unity.ui.Canvas)",game);
+{
+return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_8bf13b560e1e05e9>>(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this)); pls::cs::Ref<pls::kairo::Canvas> cs_arg0 = v_canvas; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_75152158b8b3764c(cs_receiver,cs_arg0); }());
 }
 }
 }

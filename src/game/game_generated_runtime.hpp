@@ -35,6 +35,7 @@
 #include "storage.hpp"
 #include "input.hpp"
 #include "system.hpp"
+#include "forms_execution.hpp"
 #include "offline_http.hpp"
 #include "capture.hpp"
 #include "forms_callbacks.hpp"

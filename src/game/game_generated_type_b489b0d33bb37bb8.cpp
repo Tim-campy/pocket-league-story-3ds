@@ -499,7 +499,7 @@ pls::cs::Ref<cs_b6ad7779caeeb23c> cs_02e0ea6d486b4d3a(pls::cs::Ref<cs_b489b0d33b
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectGameData(System.String,kairo.unity.system.GameDataRecord)",kairo);
 {
-return ([&]() { auto cs_array = ([&]() -> pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); pls::cs::String cs_arg0 = v_tbname; pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_arg1 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.ConnectGameData(System.String,kairo.unity.system.GameDataRecord):20519",([&](){auto cs_initial_array_913=pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>::make(1);cs_initial_array_913.at(0)=v_gameData;return cs_initial_array_913;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6f2b3c43c8b42f52(cs_receiver,cs_arg0,cs_arg1); }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }());
+return ([&]() { auto cs_array = ([&]() -> pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); pls::cs::String cs_arg0 = v_tbname; pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_arg1 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.ConnectGameData(System.String,kairo.unity.system.GameDataRecord):20519",([&](){auto cs_initial_array_914=pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>::make(1);cs_initial_array_914.at(0)=v_gameData;return cs_initial_array_914;}())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_6f2b3c43c8b42f52(cs_receiver,cs_arg0,cs_arg1); }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }());
 }
 }
 }
@@ -1059,7 +1059,7 @@ pls::cs::String cs_f6e538100474f903(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pl
 if (([&]() { auto cs_left = pls::cs::box(v_where); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 return pls::cs::String{};
 }
-pls::cs::Array<pls::cs::String> v_array_31136 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.CorrectWhereGameData(System.String):31144",([&](){auto cs_initial_array_919=pls::cs::Array<pls::cs::String>::make(4);cs_initial_array_919.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003c" u"\x003d" u"\x003e" u"",3);return cs_literal;}());cs_initial_array_919.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003c" u"\x003e" u"",2);return cs_literal;}());cs_initial_array_919.at(2)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0021" u"\x003d" u"",2);return cs_literal;}());cs_initial_array_919.at(3)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003d" u"",1);return cs_literal;}());return cs_initial_array_919;}()));
+pls::cs::Array<pls::cs::String> v_array_31136 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.CorrectWhereGameData(System.String):31144",([&](){auto cs_initial_array_920=pls::cs::Array<pls::cs::String>::make(4);cs_initial_array_920.at(0)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003c" u"\x003d" u"\x003e" u"",3);return cs_literal;}());cs_initial_array_920.at(1)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003c" u"\x003e" u"",2);return cs_literal;}());cs_initial_array_920.at(2)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0021" u"\x003d" u"",2);return cs_literal;}());cs_initial_array_920.at(3)=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x003d" u"",1);return cs_literal;}());return cs_initial_array_920;}()));
 pls::cs::Array<pls::cs::String> v_array2_31198 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::String> { pls::cs::String cs_arg0 = v_where; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x002c" u"",1);return cs_literal;}()); return pls::generated::cs_aed90764bf1359a3(cs_arg0,cs_arg1); }());});
 ([&]() { auto cs_value = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}()); v_where = cs_value; return cs_value; }());
 for (std::int32_t v_i_31264 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_31264; auto cs_right = (v_array2_31198).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_31264; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_31264 = cs_new; return cs_old; }())) {
@@ -1149,8 +1149,8 @@ std::int32_t v_columnType_33173 = ([&]() -> std::int32_t { auto cs_receiver = st
 if (([&]() -> bool { auto cs_left = v_columnType_33173; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return (cs_left == cs_right); }())) {
 try {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = v_value; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5);return cs_literal;}()); return pls::generated::cs_0b9238a3df4985af(cs_arg0,cs_arg1); }());}); return pls::generated::cs_a8e45b955b78e04d(cs_arg0); }()); v_array_33151 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_918) {auto cs_exception_918=pls::cs::capture_exception(cs_caught_918);
-if(pls::cs::exception_is(cs_exception_918,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_919) {auto cs_exception_919=pls::cs::capture_exception(cs_caught_919);
+if(pls::cs::exception_is(cs_exception_919,"System.Exception")) {{
 
 }}
 else {throw;} }
@@ -1880,8 +1880,8 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref
 }
 try {
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = v_text_33864; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5);return cs_literal;}()); return cs_4b8369e9a5f65090(cs_arg0,cs_arg1); }());}); v_array_33761 = cs_value; return cs_value; }());
-} catch(const pls::cs::Exception& cs_caught_914) {auto cs_exception_914=pls::cs::capture_exception(cs_caught_914);
-if(pls::cs::exception_is(cs_exception_914,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_915) {auto cs_exception_915=pls::cs::capture_exception(cs_caught_915);
+if(pls::cs::exception_is(cs_exception_915,"System.Exception")) {{
 ([&]() { auto cs_value = ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = v_text_33864; return pls::generated::cs_a8e45b955b78e04d(cs_arg0); }()); v_array_33761 = cs_value; return cs_value; }());
 }}
 else {throw;} }
@@ -1892,8 +1892,8 @@ try {
 if (([&]() -> bool { auto cs_left = (v_array2_34471).length(); auto cs_right = (v_value).length(); return (cs_left >= cs_right); }())) {
 ([&]() { auto cs_value = pls::cs::Array<std::uint8_t>{}; v_array2_34471 = cs_value; return cs_value; }());
 }
-} catch(const pls::cs::Exception& cs_caught_915) {auto cs_exception_915=pls::cs::capture_exception(cs_caught_915);
-if(pls::cs::exception_is(cs_exception_915,"System.Exception")) {{
+} catch(const pls::cs::Exception& cs_caught_916) {auto cs_exception_916=pls::cs::capture_exception(cs_caught_916);
+if(pls::cs::exception_is(cs_exception_916,"System.Exception")) {{
 
 }}
 else {throw;} }

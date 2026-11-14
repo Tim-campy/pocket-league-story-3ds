@@ -89,6 +89,9 @@ def il_method_key(identifier):
 
 def emitted_method_key(row):
     name=row['name']
+    # Generic method arity is part of the IL name (Init``1 vs Init).
+    arity=re.search(r'``(\d+)(?:\(|$)',row['id'].split('(')[0]+'(')
+    if arity and not name.endswith('``'+arity.group(1)):name+='``'+arity.group(1)
     if row.get('is_constructor') or row.get('kind')=='Constructor':name='.ctor'
     elif row.get('kind')=='StaticConstructor':name='.cctor'
     parameters=[canonical_type(p['type']) for p in row['parameters']]
@@ -423,7 +426,14 @@ def classify_generated_members(rows,report):
     for m in report['emitted_methods']:emitted.setdefault(plain(m['id']),[]).append(m['id'])
     rejected={}
     for doc,value in report['rejected_methods'].items():rejected.setdefault(plain(doc),[]).append(value['reason'])
+    for doc in report.get('abstract_declarations',[]):rejected.setdefault(plain(doc),[]).append('abstract method has no emitted body')
     initializers={t['id'][2:] for t in report['type_initializers']}
+    # A type whose IL members are exactly the delegate quartet is a delegate type.
+    members={}
+    for row in rows:
+        match=re.fullmatch(r'Assembly-CSharp::(.+)::([^(:]+)\((.*)\)->(.+)',row['id'])
+        if match:members.setdefault(match[1],set()).add(match[2])
+    delegate_types={owner for owner,names in members.items() if {'Invoke','BeginInvoke','EndInvoke','.ctor'}<=names}
     classes={(c['id'] if isinstance(c,dict) else c)[2:] for c in report['generated_classes']}
     result={}
     for row in rows:
@@ -434,6 +444,15 @@ def classify_generated_members(rows,report):
         if source in rejected:
             if all(r=='abstract method has no emitted body' for r in rejected[source]):result[row['id']]=('no-body','abstract declaration; overrides carry the bodies')
             continue
+        # Delegate types: .ctor(object, native int), Invoke, BeginInvoke and EndInvoke are
+        # runtime-provided (no IL body); the translator represents the delegate as a callable.
+        if name in ('.ctor','Invoke','BeginInvoke','EndInvoke') and owner in delegate_types:
+            if name!='.ctor' or parameters=='System.Object,native-int':
+                result[row['id']]=('no-body','runtime-provided delegate member');continue
+        if owner=='<PrivateImplementationDetails>' and report.get('baked_array_ids'):
+            result[row['id']]=('embedded','compiler-generated array-initializer data holder; its data is baked into the emitted arrays (baked_array_ids)');continue
+        if name=='.cctor' and owner in {t[2:] for t in report.get('policy_removed_type_initializers',[])}:
+            result[row['id']]=('policy','type initializer only built the removed Android Java bridge; every member is an offline policy');continue
         if name=='.cctor':
             if owner in initializers:result[row['id']]=('embedded','static constructor emitted as type initializer T:'+owner)
             continue
@@ -481,6 +500,7 @@ def self_test_mapping():
     check('byref-marker',[row('M:fixture.Type.F(System.Int32@)','fixture.Type','F',['int'],'void')],ledger(prefix+'F(System.Int32&)->System.Void',prefix+'F(System.Int32)->System.Void'),1,0)
     item=row('M:fixture.Type.F(System.Int32)','fixture.Type','F',['int'],'void')
     check('duplicate-emitted-target',[item,dict(item,id='M:fixture.Type.Alias(System.Int32)')],ledger(prefix+'F(System.Int32)->System.Void'),0,2)
+    check('generic-method-arity',[row('M:fixture.Type.F(System.Int32)','fixture.Type','F',['int'],'void'),row('M:fixture.Type.F``1(System.Int32)','fixture.Type','F',['int'],'void')],ledger(prefix+'F(System.Int32)->System.Void',prefix+'F``1(System.Int32)->System.Void'),2,0)
     check('invalid-generic-arity',[row('M:fixture.Type.F(java.util.Vector{System.String})','fixture.Type','F',['java.util.Vector`2<string>'],'void')],ledger(prefix+'F(java.util.Vector`1<System.String>)->System.Void'),0,1)
     return dict(operation='strict-game-method-identity-self-test',cases=len(tests),passed=len(tests),arity_only_matching=False)
 

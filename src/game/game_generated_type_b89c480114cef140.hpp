@@ -1,7 +1,17 @@
 // GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
 #pragma once
 #include "game_generated_forward.hpp"
+#include "generated/portable_generated_type_e7d772862db62924.hpp"
 namespace pls::game {
+
+struct cs_b89c480114cef140 : pls::generated::cs_e7d772862db62924 {
+static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_b89c480114cef140)||target==typeid(pls::generated::cs_e7d772862db62924)||pls::generated::cs_e7d772862db62924::source_reference_assignable(target);}
+void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
+void release_edges()override;
+std::string managed_delegate_method_id(const std::string&slot)const override{return pls::generated::cs_e7d772862db62924::managed_delegate_method_id(slot);}
+static std::string source_managed_type_name(){return "cfg.MyConfig";}
+std::string managed_type_name()const override{return source_managed_type_name();}
+};
 
 void cs_init_b89c480114cef140();
 
@@ -66,4 +76,8 @@ pls::cs::String& cs_66cdbdd75ac1eff7();
 bool& cs_c81f69daa2faf6a7();
 
 bool& cs_2e0da33461dc09c9();
+
+pls::cs::Ref<cs_b89c480114cef140> cs_17b081440f10c655();
+
+void cs_17b081440f10c655_init(pls::cs::Ref<cs_b89c480114cef140> cs_this);
 }

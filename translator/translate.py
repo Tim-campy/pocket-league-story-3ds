@@ -231,7 +231,11 @@ def main():
         for name in ('GetClip','GetImageClip','ClearImageClip','SetImageClip(System.Single,System.Single,System.Single,System.Single)'):
             request['external_methods']['M:kairo.unity.ui.Graphics.'+name]='member:'+name.split('(')[0]
         request['external_complete_bases']+=['T:kairo.unity.form.FormBase','T:kairo.unity.form.FormManagerBase']
-        request['native_includes']+=['graphics.hpp','font.hpp','sound.hpp','forms.hpp','canvas.hpp','storage.hpp','input.hpp','system.hpp']
+        # A MonoBehaviour created with new (system.tapjoy.MyTapjoy) is never attached to a GameObject,
+        # so Unity sends it no messages: it behaves as a plain object (empty platform base).
+        request['external_types']['T:UnityEngine.MonoBehaviour']='pls::kairo::MonoBehaviour'
+        request['external_complete_bases'].append('T:UnityEngine.MonoBehaviour')
+        request['native_includes']+=['graphics.hpp','font.hpp','sound.hpp','forms.hpp','canvas.hpp','storage.hpp','input.hpp','system.hpp','forms_execution.hpp']
         allow={
             'IApplication':{'GetCurrentApp','SetViewport','GetViewport','GetWidth','GetHeight','GetWidth2','GetHeight2','GetScaleRatio','CheckUiThread','IsTermination','Visibe','Focus','HasWindowFocus','IsRendering','RunOnUiThread','RunOnUpdate'},
             'Graphics':{'GetColorOfRGB','GetAnchorPosition','GetRenderRect','SetColor','GetColor','SetFont','GetFont','PushFont','PopFont','SetAutoTextLayout','IsAutoTextLayout','StringWidth','DrawString','SetOrigin','GetOriginX','GetOriginY','PushOrigin','PopOrigin','Scale','GetScale','SetClip','ClipRect','PushClip','PopClip','ClearClip','SetRenderRect','ClearRenderRect','SetRenderMode','GetRenderModeOperator','GetRenderModeSrcRatio','GetRenderModeDstRatio','PushRenderMode','PopRenderMode','FillRect','DrawRect','DrawLine','DrawImage','DrawScaledImage','CopyArea','Dispose'},
@@ -265,6 +269,7 @@ def main():
             'M:native.AppPlugin.Init(System.Int32,System.Boolean,System.String)':'pls::kairo::native_plugin_init',
             'M:UnityEngine.Application.set_targetFrameRate(System.Int32)':'pls::kairo::UnityApplication::set_targetFrameRate',
             'M:UnityEngine.Application.get_platform':'pls::kairo::UnityApplication::get_platform',
+            'M:kairo.unity.ui.IApplication.Sleep(System.Int32)':'pls::kairo::source_app_sleep',
             'M:UnityEngine.QualitySettings.set_vSyncCount(System.Int32)':'pls::kairo::QualitySettings::set_vSyncCount'})
         request['external_types']['T:UnityEngine.WWW']='pls::kairo::OfflineWebRequest'
         request['native_includes'].append('offline_http.hpp')
@@ -538,6 +543,16 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         compiled_method_count=report['emitted_method_count'] if compiled else 0,
         game_translated_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_compiled_methods=report['emitted_method_count'] if args.assembly=='Assembly-CSharp' and compiled else 0,game_executed_methods=0,
         generated_files=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted(set(output.glob('*.?pp'))|set(output.glob('*.inc')))])
+    # Abstract declarations have no body to translate: listed apart, not as rejections.
+    abstract=sorted(k for k,v in report.get('rejected_methods',{}).items() if v.get('reason')=='abstract method has no emitted body')
+    if abstract:
+        report['abstract_declarations']=abstract
+        for k in abstract:report['rejected_methods'].pop(k)
+    # Members of platform-reimplemented types bound to a platform function are not translation gaps.
+    bound=sorted(k for k,v in report.get('rejected_methods',{}).items() if v.get('reason')=='native class/value member requires an exact external API binding' and k in request.get('external_methods',{}))
+    if bound:
+        report['platform_bound_methods']={k:request['external_methods'][k] for k in bound}
+        for k in bound:report['rejected_methods'].pop(k)
     report_target=output/'diagnostic-report.json'if args.diagnostic_defer_capture else ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
     report_target.write_text(json.dumps(report,indent=None if args.assembly=='Assembly-CSharp' else 2,ensure_ascii=True,separators=(',',':') if args.assembly=='Assembly-CSharp' else None)+'\n',encoding='utf-8',newline='\n')
     if args.diagnostic_defer_capture:

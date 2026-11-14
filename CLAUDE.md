@@ -29,7 +29,7 @@ Os números deste arquivo são um retrato do momento da troca de agente. Se dive
 | Critério do congelamento | Estado |
 |---|---|
 | 1. Tradução completa | 1.768 de 1.958 métodos do jogo compilam; 190 corpos e 22 slots virtuais pendentes; 26 das 53 políticas offline por integrar |
-| 2. Coletor e desempenho | **Critério alterado em 2026-11-13:** no New 3DS real, backend nulo, três execuções: (a) nenhum frame >50 ms em jogo estável (partida e menu parado, com coletas por volume); (b) pausas em trocas de tela principal e carregamentos até 150 ms; (c) partida com média <20 ms. Coletas classificadas por tipo no benchmark (v6); explícitas do fonte em `Finish` de janela (`SubForm.Finish` → `JSystem.Gc`) contam como transição. v5 no New 3DS XL, três execuções: menu com 3 coletas por janela, maior 105,6–107,7 ms (frame 113–115 ms); frames sem coleta ≤ 11 ms; partida média 8,9–12,6 ms, máx. 15,2–25,9 ms, sem coletas |
+| 2. Coletor e desempenho | **Cumprido em 2026-11-14** (v6 `68634525`, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida; transições (`JSystem.Gc` em `SubForm.Finish`) com pausa máx. 111,3 ms / frame 118,8 ms, limite 150 ms; partida média 10,5–11,8 ms. Ressalva: medição com vídeo refeita na Fase 4 |
 | 3. Percurso completo no PC | Título, saves, gestão, partida completa e retorno funcionam. Temporada e roteiro de cobertura pendentes; 776 métodos exercitados |
 | 4. Fidelidade | Regra de ponto flutuante confirmada em emulador Android ARM e adotada; confirmação em aparelho pendente. Comparação de telas com o original pendente |
 | 5. Código legível e aprovado | Não iniciado |
@@ -110,6 +110,8 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Roteiro de cobertura no PC (diagnóstico instrumentado) | `python tools/build_pc.py --apk APK --diagnostic-generated build/<snapshot> --configuration Release --run --run-seconds N --metrics --diagnostic-save-from-attempt K --virtual-clock 1767225600000,1000,50 --diagnostic-title-anchor 16 --diagnostic-select-frame F ... --diagnostic-key-frame F:TECLA ... [--diagnostic-dismiss-popups-until-frame F --diagnostic-unlabeled-popups-only]` | grava `build/pc-diagnostic-release/attempts/<N>/` (manter); depois `python tools/progress` e `python tools/verify_phase2.py --refresh-run-receipts`; saves: 31 (antes da 1ª partida), 50 (pós-partida) |
 | Roteiro com condições (PC diagnóstico) | `python tools/build_pc.py ... --diagnostic-route tests/routes/<nome>.route [--ui-trace]` | substitui as flags de frame; `PLS_UI_STATE`, `PLS_ROUTE_*` no stderr; formato em `docs/notes/route-runner-design.md` |
 | Verificação por grupos | `python tools/verify_phase2.py ...` (padrão) / `--full` | chave por grupo (`tools/verification_groups.py`); diferencial portátil só com `--full` (obrigatório antes de tags) |
+| Alcançabilidade (grafo de chamadas) | `python tools/callgraph/analyze.py` | ~30 s; `config/phase2-reachability.json` e `docs/coverage-never-reached.md` (quatro classes); critério 3 = executar os alcançáveis |
+| Roteiro rápido (sem ritmo real) | `build_pc.py ... --virtual-clock ... --fast` | só diagnóstico; o relógio virtual mantém o tempo do jogo |
 | Diagnóstico rápido da tradução | `python tools/translate --assembly Assembly-CSharp --bootstrap-main --diagnostics-only --original-managed MANAGED` | ~40 s; `config/phase2-game-diagnostics.json` |
 | Simbolizar pilha ARM | `arm-none-eabi-addr2line -f -C -i -e <elf> <endereços>` | em `C:/devkitPro/devkitARM/bin` |
 

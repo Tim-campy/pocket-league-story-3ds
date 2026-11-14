@@ -1948,7 +1948,7 @@
   "source_graphics_oracle_cases": 686,
   "game_boot": false,
   "receipts": {
-    "phase2-translation.json": "d7bddf5ff97c426ac25e3329bd4bdd4c868ffe26d366a04cdd30c661624f1a68",
+    "phase2-translation.json": "352e12c18dba27e824ed43bd25d967135f1b44ec36c373dd74f1862abe0bff7d",
     "phase2-portable-differential.json": "1aa956219cb5518d838c0befa07386f085ff998038b129326baa68fd1d670a9c",
     "phase2-assets.json": "6008f5229566e0d45d83c0c1d1ea6f1c44246fa66c8afaed8aab9863663bddd8",
     "phase2-image-tests.json": "efaf45924a8537c0f6e9ab3acf80ad2dbd42fab9e4e666d5c924e014e2ca4b52",

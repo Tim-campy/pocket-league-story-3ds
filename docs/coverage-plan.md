@@ -121,3 +121,10 @@ Gancho somente leitura e executor por condições no build de diagnóstico
 | 57 | `menu-explore` (6 itens × 5 subitens, 2 níveis, gerado) | sem lacuna de tradução; parou no passo 162 de 203 pelo limite de 480 s |
 
 Cobertura após 55–57: **809 métodos com execução comprovada** (era 806).
+| 59 | `menu-explore`, 600 s | sem lacuna; passo 192 de 203; a dispensa genérica se perde em sub-janelas aninhadas (profundidade até 8) e volta à gestão; nenhum método novo |
+
+**Conclusão:** o gancho e o executor funcionam; o explorador genérico
+"entrar/voltar" não basta. Os roteiros de segundo nível, de serviços offline
+(amigos, presentes, escalações, `MatchForm.Run`) e de temporada precisam ser
+escritos tela a tela (condições por profundidade/rótulo, com capturas), e a
+temporada exige segmentos encadeados pelo save. Pendente.

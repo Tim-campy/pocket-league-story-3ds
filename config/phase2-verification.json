@@ -2369,7 +2369,7 @@
     "phase2-ctr-texture-runtime.json": "3bf2a7ddac7550d8dbeb21af75172022ef27b848dd82778d83e3b34d2d18a08f",
     "phase2-debug-input-tests.json": "81693dc40f84434011f0f5c1c520849155e555ee21c7ae5f27d4763de16dbffe",
     "phase2-delegate-runtime-fixture.json": "40ee9439edd0316fb3a5c7278a514e2f0ead01f97de05950e5395895c967e995",
-    "phase2-diagnostic-attempts.json": "101cecf4ac3158e8ed107c243206476b70496600aaed8fa5f70266b1af43b930",
+    "phase2-diagnostic-attempts.json": "ab5c484463982ea753a3714b4fd016c37570cae72dff016d9ca028d367c3d753",
     "phase2-diagnostic-key-tests.json": "cd1bd26f0b68815bca4e65d3d5b7664f389e98b658016a4b18b0d9694ebd8471",
     "phase2-diagnostic-leaf-tests.json": "d0b173ffa3ca871038bda118286f67eebb6c24b8be4a9aca1c26e0a06d66c1f6",
     "phase2-diagnostic-runtime-tests.json": "271e87273b8936f9d96d9b6018f21b2bbc7cbabf5917c64f62a4b1a4591ed308",
@@ -2419,7 +2419,7 @@
     "phase2-pc-window.json": "ccb601e3b59639f6b83f53a6491237802e03f0749b1c470e6a4b61977bea2726",
     "phase2-portable-differential.json": "7ff25019fa14f517993e17f76e8428c832955e8a25446da57b24d04be82320ae",
     "phase2-profile-overhead.json": "637f885ec51ec61a1982f3d719d0a86718e57209d26b94606400384b37f334da",
-    "phase2-progress.json": "711ed62163fc807a82f3aee655992ba89d0146993b6eaea609adec4c55d90d71",
+    "phase2-progress.json": "d1fb10a1ce55904bd4bb1334dee465f25fd2eade508255904d3f00f5948ab0d5",
     "phase2-random-fixtures.json": "e16edee5c548c7cffa5c1d455ad40723b5ffb00155d875ad2f37691e01b622e7",
     "phase2-ref-lowering-fixtures.json": "fd70c490a7a85bb29867c166c0c9665f720559e70044bf24a79e0ecc6727e01f",
     "phase2-regex-fixtures.json": "88dd2099dd9e80fe2d80c468d38e20330298f26ec4c7649d2557262c362268a0",
@@ -2458,5 +2458,6 @@
     "phase2-unicode-regeneration.json": "ac25a9a8c255776b68139e72a150689d068780e14d8b2f839ce6461f2b6b7339",
     "phase2-vector-iterator-fixtures.json": "78d91aa3459eba702fd7aa371f4e9cd4807b7700a350f31d31bd73b3849ba335",
     "phase2-vector2-fixtures.json": "24ecefc45948a4cd26d2b72339d4ba097e3944a3cd3f994c65ba2f1912198856"
-  }
+  },
+  "replay_receipts_refreshed_without_source_change": true
 }

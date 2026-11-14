@@ -107,6 +107,8 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Diferencial de rebaixamento | `python translator/test_lowering.py` | fixtures em `tests/translator/LoweringFixtures.cs` contra o Mono |
 | Livro-razão e `PROGRESS.md` | `python tools/progress` | estados: `todo`, `translated`, `embedded`, `no-body`, `runs`, `verified` |
 | Pasta do cartão para hardware | `python tools/prepare_arm11_sd.py --apk APK --image build/<pasta>/null_game.3dsx --scenario suite --output build/<pasta-nova> --asset-root build/ctr-assets-native-v1` | recusa pasta existente |
+| Roteiro de cobertura no PC (diagnóstico instrumentado) | `python tools/build_pc.py --apk APK --diagnostic-generated build/<snapshot> --configuration Release --run --run-seconds N --metrics --diagnostic-save-from-attempt K --virtual-clock 1767225600000,1000,50 --diagnostic-title-anchor 16 --diagnostic-select-frame F ... --diagnostic-key-frame F:TECLA ... [--diagnostic-dismiss-popups-until-frame F --diagnostic-unlabeled-popups-only]` | grava `build/pc-diagnostic-release/attempts/<N>/` (manter); depois `python tools/progress` e `python tools/verify_phase2.py --refresh-run-receipts`; saves: 31 (antes da 1ª partida), 50 (pós-partida) |
+| Diagnóstico rápido da tradução | `python tools/translate --assembly Assembly-CSharp --bootstrap-main --diagnostics-only --original-managed MANAGED` | ~40 s; `config/phase2-game-diagnostics.json` |
 | Simbolizar pilha ARM | `arm-none-eabi-addr2line -f -C -i -e <elf> <endereços>` | em `C:/devkitPro/devkitARM/bin` |
 
 Nomes do C++ gerado são hashes (`cs_<hash>`); para achar o método original,

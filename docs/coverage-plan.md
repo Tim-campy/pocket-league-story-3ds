@@ -90,3 +90,19 @@ métodos `translated` sem um dos três estados: `runs`, `política`, `morto`.
 tentativa e erro com as capturas); sem avanço rápido (cada segmento ≤ 10 min,
 encadeados pelo save — roteiro 4 exige muitos segmentos); sem "esperar pelo
 formulário X"; estados `política` e `morto` ainda não existem no livro-razão.
+
+## Execução de 2026-11-13 (tentativas 50–54)
+
+| Tentativa | Roteiro | Resultado | `runs` |
+|---|---|---|---:|
+| 50 | Partida completa (parâmetros da 49) sobre a tradução nova | sem lacuna de tradução; 1.161 métodos concluídos (49: 1.160); save pós-partida gravado | 780 |
+| 51 | Menus a partir do save 31 | mensagens do assistente bloquearam o menu | 784 |
+| 52 | Idem, com dispensa de janelas sem rótulo | save 31 está antes de uma partida: "Menu" iniciou a partida | 791 |
+| 53 | Menus a partir do save 50 (pós-partida), 1 nível | menu principal e telas de cada item (ex.: Cup Match, Special Practice) | 803 |
+| 54 | Menus em 2 níveis | um SOFT2 a mais fechou o menu; navegação cega saiu do trilho | 806 |
+
+**Cobertura atual: 806 de 1.958 métodos com execução comprovada** (era
+780). Nenhuma tentativa encontrou lacuna de tradução. O roteiro 2 precisa de
+navegação que confira a tela (ou um roteiro escrito tela a tela com as
+capturas); o modelo "entrar/voltar/descer" às cegas atinge só o primeiro
+nível. Saves úteis: 31 (antes da 1ª partida), 50 (gestão após a partida).

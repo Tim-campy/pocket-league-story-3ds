@@ -93,6 +93,37 @@ extern "C" void* register_only_fixture(Heap* heap);
 #if defined(__3DS__)
 extern "C" void* register_vfp_only_fixture(Heap* heap);
 #endif
+void stress_and_poison() {
+    // Stress: a collection at the allocation safepoint after every adoption.
+    // An object kept only in unregistered native memory is reclaimed and its
+    // body poisoned; rooted and reachable objects keep their values.
+    Heap heap; Mutator mutator(heap);
+    heap.stress(1, true, 1u << 20);
+    std::vector<Node*> roots;
+    Roots provider(heap, [&](Edges edges) { for (auto p : roots) edges(p); });
+    static std::uintptr_t hidden = 0; // Obfuscated: neither a root nor a conservative word.
+    isolated(heap, [&] {
+        auto kept = make<Node>(heap, &Node::trace);
+        kept->edge = make<Node>(heap, &Node::trace);
+        roots.push_back(kept);
+        hidden = reinterpret_cast<std::uintptr_t>(make<Node>(heap, &Node::trace)) ^ UINT64_C(0x5a5a5a5a5a5a5a5a);
+        for (int i = 0; i < 8; ++i) (void)make<Node>(heap, &Node::trace); // Each allocation collects.
+    });
+    const auto stats = heap.stress_statistics();
+    check(stats.collections >= 8);
+    check(stats.poisoned_objects >= 1);
+    check(roots.size() == 1 && roots[0]->value == 37 && roots[0]->edge && roots[0]->edge->value == 37);
+    const auto* dead = reinterpret_cast<const unsigned char*>(hidden ^ UINT64_C(0x5a5a5a5a5a5a5a5a));
+    check(!heap.contains(dead));
+    bool poisoned = true;
+    for (std::size_t i = 0; i < sizeof(Node); ++i) poisoned = poisoned && dead[i] == stress_poison_byte;
+    check(poisoned); // A later use of the unrooted object reads the poison pattern.
+    heap.stress(0, false, 0);
+    roots.clear();
+    isolated(heap, [&] { heap.collect(); });
+    check(heap.statistics().objects == 0);
+    check(heap.stress_statistics().poisoned_objects == stats.poisoned_objects); // Off: no further poisoning.
+}
 void precise_and_cycles() {
     Heap heap; Mutator mutator(heap);
     std::vector<Node*> roots;
@@ -500,6 +531,7 @@ int main() {
         RUN_FIXTURE(immutable_buffer_accounting);
         RUN_FIXTURE(record_index_churn);
         RUN_FIXTURE(retained_memory_and_growth);
+        RUN_FIXTURE(stress_and_poison);
 #undef RUN_FIXTURE
 #if defined(__3DS__)
         std::printf("{\"assertions\":%d,\"status\":\"PASS\"}\n",assertions);

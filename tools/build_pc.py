@@ -232,6 +232,9 @@ def main():
     parser.add_argument('--diagnostic-unlabeled-popups-only',action='store_true',help='During popup replay, leave windows with a right soft label untouched')
     parser.add_argument('--diagnostic-route',type=Path,help='Diagnostic runs only: condition-driven route file (docs/notes/route-runner-design.md); excludes the frame-based input flags')
     parser.add_argument('--ui-trace',action='store_true',help='Diagnostic runs only: log PLS_UI_STATE on every UI state change')
+    parser.add_argument('--gc-stress-every',type=int,default=0,help='Diagnostic runs: full collection after every N managed allocations (0 = off)')
+    parser.add_argument('--gc-stress-poison',action='store_true',help='Diagnostic runs with --gc-stress-every: poison and quarantine dead object bodies')
+    parser.add_argument('--gc-stress-quarantine-mb',type=int,default=256,help='Poisoned bodies kept unreused up to this many MiB (8 GB host: keep small)')
     parser.add_argument('--trace-method',action='append',default=[],help='Diagnostic runs: print the method stack at the first call of this DocID (repeatable; reported apart from reachability alerts)')
     parser.add_argument('--fast',action='store_true',help='Diagnostic runs with --virtual-clock only: no real-time frame pacing')
     args=parser.parse_args()
@@ -279,7 +282,7 @@ def main():
     if args.diagnostic_unlabeled_popups_only:env['PLS_PC_DISMISS_UNLABELED_ONLY']='1'
     if args.diagnostic_dismiss_popups_until_frame is not None:env['PLS_PC_DISMISS_POPUPS_UNTIL']=str(args.diagnostic_dismiss_popups_until_frame)
     if args.diagnostic_key_frame:env['PLS_PC_KEY_FRAMES']=','.join(args.diagnostic_key_frame)
-    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None);env.pop('PLS_PC_FAST',None);env.pop('PLS_REACHABILITY_WATCH',None)
+    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None);env.pop('PLS_PC_FAST',None);env.pop('PLS_REACHABILITY_WATCH',None);[env.pop(k,None) for k in ('PLS_GC_STRESS_EVERY','PLS_GC_STRESS_POISON','PLS_GC_STRESS_QUARANTINE_MB')]
     if args.fast:env['PLS_PC_FAST']='1'
     if args.ui_trace:env['PLS_PC_UI_TRACE']='1'
     diagnostic_source=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
@@ -311,6 +314,12 @@ def main():
         attempt['scripted_key_frame']=args.diagnostic_key_frame
         attempt['virtual_clock']=args.virtual_clock
         attempt['title_anchor']=args.diagnostic_title_anchor
+        if args.gc_stress_every:
+            if not diagnostic_folder:raise ValueError('--gc-stress-every requires a diagnostic build')
+            if args.gc_stress_every<0:raise ValueError('--gc-stress-every must be positive')
+            env['PLS_GC_STRESS_EVERY']=str(args.gc_stress_every);env['PLS_GC_STRESS_POISON']='1'if args.gc_stress_poison else'0';env['PLS_GC_STRESS_QUARANTINE_MB']=str(args.gc_stress_quarantine_mb)
+            attempt['gc_stress']=dict(every=args.gc_stress_every,poison=args.gc_stress_poison,quarantine_mb=args.gc_stress_quarantine_mb)
+        elif args.gc_stress_poison:raise ValueError('--gc-stress-poison requires --gc-stress-every')
         # Reachability safeguard: watch every method the static analysis says
         # cannot run (unreachable in the original, debug-only, cut by policy).
         reach=ROOT/'config/phase2-reachability.json'
@@ -387,6 +396,9 @@ def main():
                     traced=set(attempt.get('traced_methods',[]))
                     attempt['reachability_alerts']=[dict(id=a['id'],stack=a['stack'][:12]) for a in alerts if a['id'] not in traced]
                     if traced:attempt['method_traces']=[dict(id=a['id'],stack=a['stack'][:24]) for a in alerts if a['id'] in traced]
+                if attempt.get('gc_stress'):
+                    stress=[l.split('=',1)[1] for l in (attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace').splitlines() if l.startswith('PLS_GC_STRESS=')]
+                    attempt['gc_stress']['summary']=json.loads(stress[-1])if stress else None
                 if args.diagnostic_route is not None:
                     text=(attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace')
                     done=re.findall(r'^PLS_ROUTE_DONE=(\d+)',text,re.M);timeout=re.findall(r'^PLS_ROUTE_TIMEOUT=(.*)$',text,re.M)

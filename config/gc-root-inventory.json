@@ -1,0 +1,321 @@
+{
+ "schema_version": 1,
+ "note": "Hand-written storage that can hold managed references outside traced managed fields (found by tools/gc_root_scan.py). Every finding must be listed with its rooting form; tests/repository/test_gc_root_inventory.py checks it. Audit: docs/notes/gc-root-inventory.md.",
+ "entries": [
+  {
+   "file": "src/kairo/api/application.hpp",
+   "name": "current_",
+   "storage": "class-static",
+   "type": "cs::SharedField<cs::Ref<IApplication>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/application.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/application.hpp",
+   "name": "platform_model_",
+   "storage": "class-static",
+   "type": "cs::SharedField<cs::String>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/application.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/application.hpp",
+   "name": "viewport_result_",
+   "storage": "class-static",
+   "type": "cs::Array<std::int32_t>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/application.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/canvas.hpp",
+   "name": "graphics_buffer_",
+   "storage": "class-static",
+   "type": "cs::Ref<Graphics>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/canvas.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/canvas.hpp",
+   "name": "instance_",
+   "storage": "class-static",
+   "type": "cs::Ref<Canvas>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/canvas.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/graphics.hpp",
+   "name": "anchor_result_",
+   "storage": "class-static",
+   "type": "cs::Array<std::int32_t>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/graphics.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/graphics.hpp",
+   "name": "current_",
+   "storage": "class-static",
+   "type": "cs::SharedField<cs::Ref<Graphics>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/graphics.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/graphics.hpp",
+   "name": "getAreaSize_result",
+   "storage": "class-static",
+   "type": "cs::Array<std::int32_t>",
+   "rooting": "provider-other-unit",
+   "root_unit": "src/kairo/common/image_lifetime.cpp",
+   "note": "image_roots in image_lifetime.cpp: inline static members allocated during static initialization; no collection exists before main (diagnostic stress also starts in main)."
+  },
+  {
+   "file": "src/kairo/api/graphics.hpp",
+   "name": "getOptimizeSeb_result",
+   "storage": "class-static",
+   "type": "cs::Array<std::int32_t>",
+   "rooting": "provider-other-unit",
+   "root_unit": "src/kairo/common/image_lifetime.cpp",
+   "note": "image_roots in image_lifetime.cpp: inline static members allocated during static initialization; no collection exists before main (diagnostic stress also starts in main)."
+  },
+  {
+   "file": "src/kairo/api/graphics.hpp",
+   "name": "getOptimize_result",
+   "storage": "class-static",
+   "type": "cs::Array<std::int32_t>",
+   "rooting": "provider-other-unit",
+   "root_unit": "src/kairo/common/image_lifetime.cpp",
+   "note": "image_roots in image_lifetime.cpp: inline static members allocated during static initialization; no collection exists before main (diagnostic stress also starts in main)."
+  },
+  {
+   "file": "src/kairo/api/graphics.hpp",
+   "name": "getPaletteInfo_result",
+   "storage": "class-static",
+   "type": "cs::Array<std::int32_t>",
+   "rooting": "provider-other-unit",
+   "root_unit": "src/kairo/common/image_lifetime.cpp",
+   "note": "image_roots in image_lifetime.cpp: inline static members allocated during static initialization; no collection exists before main (diagnostic stress also starts in main)."
+  },
+  {
+   "file": "src/kairo/api/sound.hpp",
+   "name": "instance_",
+   "storage": "class-static",
+   "type": "cs::Ref<SoundPlayer>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/sound.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/api/sound.hpp",
+   "name": "sound_list_",
+   "storage": "class-static",
+   "type": "std::vector<cs::Ref<SoundBase>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/api/sound.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/dialog_service.cpp",
+   "name": "presenter",
+   "storage": "namespace",
+   "type": "cs::Ref<DialogPresenter>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/dialog_service.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/font.cpp",
+   "name": "font_cache_accounting",
+   "storage": "namespace",
+   "type": "cs::Ref<FontCacheAccounting>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/font.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/font.cpp",
+   "name": "services",
+   "storage": "namespace",
+   "type": "TextServices",
+   "rooting": "uncaptured-functions",
+   "root_unit": null,
+   "note": "TextServices: std::function with managed types only in signatures; installers capture nothing (src/game/bootstrap_generated.cpp)."
+  },
+  {
+   "file": "src/kairo/common/forms_execution.cpp",
+   "name": "installed_form_runtime",
+   "storage": "namespace",
+   "type": "cs::Ref<FormRuntime>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/forms_execution.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/graphics.cpp",
+   "name": "graphics_runtime",
+   "storage": "namespace",
+   "type": "GraphicsRuntimeBindings",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/graphics.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/image_lifetime.cpp",
+   "name": "runtime",
+   "storage": "namespace",
+   "type": "ImageRuntimeBindings",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/image_lifetime.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/image_lifetime.cpp",
+   "name": "source_images",
+   "storage": "namespace",
+   "type": "std::vector<cs::Ref<Image>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/image_lifetime.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/managed_encoding.cpp",
+   "name": "value",
+   "storage": "function-static",
+   "type": "auto",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/managed_encoding.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/managed_reflection.hpp",
+   "name": "value",
+   "storage": "function-static",
+   "type": "auto",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/managed_reflection.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/managed_thread.cpp",
+   "name": "current_thread",
+   "storage": "thread_local",
+   "type": "Ref<Thread>",
+   "rooting": "provider-thread-local",
+   "root_unit": "src/kairo/common/managed_thread.cpp",
+   "note": "thread_local provider in get_CurrentThread captures slot=&current_thread."
+  },
+  {
+   "file": "src/kairo/common/managed_time.hpp",
+   "name": "local_timezone_provider",
+   "storage": "namespace",
+   "type": "std::function<Ref<TimeZoneInfo>()>",
+   "rooting": "not-installed",
+   "root_unit": null,
+   "note": "No host installs it; an installer capturing managed references must pin them (cs::pin)."
+  },
+  {
+   "file": "src/kairo/common/managed_time.hpp",
+   "name": "timezone_lookup_provider",
+   "storage": "namespace",
+   "type": "std::function<Ref<TimeZoneInfo>(const String&)>",
+   "rooting": "not-installed",
+   "root_unit": null,
+   "note": "Same as local_timezone_provider."
+  },
+  {
+   "file": "src/kairo/common/managed_time.hpp",
+   "name": "value",
+   "storage": "function-static",
+   "type": "auto",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/managed_time.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/offscreen.cpp",
+   "name": "surfaces",
+   "storage": "namespace",
+   "type": "std::vector<cs::Ref<Offscreen>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/offscreen.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/semantic_runtime.cpp",
+   "name": "literals",
+   "storage": "function-static",
+   "type": "std::unordered_map<std::u16string_view,Ref<Storage>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/semantic_runtime.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/semantic_runtime.hpp",
+   "name": "integer_number_format",
+   "storage": "namespace",
+   "type": "IntegerNumberFormat",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/semantic_runtime.hpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/sound.cpp",
+   "name": "sound_output",
+   "storage": "namespace",
+   "type": "cs::Ref<SoundOutput>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/sound.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/storage.cpp",
+   "name": "state",
+   "storage": "namespace",
+   "type": "State",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/storage.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/text_input.cpp",
+   "name": "language_presenter",
+   "storage": "namespace",
+   "type": "cs::Ref<LanguagePanelPresenter>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/text_input.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/common/text_input.cpp",
+   "name": "presenter",
+   "storage": "namespace",
+   "type": "cs::Ref<TextInputPresenter>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/common/text_input.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/platform/sdl/capture.cpp",
+   "name": "jobs",
+   "storage": "namespace",
+   "type": "std::vector<cs::Ref<Job>>",
+   "rooting": "provider",
+   "root_unit": "src/kairo/platform/sdl/capture.cpp",
+   "note": ""
+  },
+  {
+   "file": "src/kairo/platform/sdl/globalization.cpp",
+   "name": "provider",
+   "storage": "namespace",
+   "type": "GlobalizationProvider",
+   "rooting": "uncaptured-functions",
+   "root_unit": null,
+   "note": "Free functions without captures."
+  }
+ ]
+}

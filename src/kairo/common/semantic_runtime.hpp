@@ -251,6 +251,10 @@ void gc_safepoint();
 // Diagnosis for hosts without dialogs: type and message of the most recent
 // exception bound by a managed catch (capture_exception). Never game state.
 std::string last_captured_exception();
+// Diagnostic GC stress counters as JSON; empty when stress is off.
+std::string gc_stress_summary();
+// Diagnostic hosts: enable stress from PLS_GC_STRESS_* (or ARM build macros).
+void gc_stress_configure();
 void record_captured_exception(std::string value);
 void gc_collect(std::int32_t generation=2);
 // Why a collection ran. explicit_call: GC.Collect/JSystem.Gc from source;
@@ -761,10 +765,25 @@ struct IntegerNumberFormat {
     String negative_sign=String(u"-");
 };
 // Configure from the selected managed culture before workers start.
-inline IntegerNumberFormat integer_number_format;
+extern inline IntegerNumberFormat integer_number_format; // Declaration only.
 inline GcRootProvider integer_number_format_roots([](const EdgeVisitor&visitor){
     trace_value(integer_number_format.positive_sign,visitor);trace_value(integer_number_format.negative_sign,visitor);
 });
+// Defined after its root provider: the provider is registered before the
+// allocating initializer runs (inline variables initialize in declaration order).
+inline IntegerNumberFormat integer_number_format;
+// A managed reference kept in native memory (std::function captures, native
+// queues) and rooted for exactly the Pinned object's lifetime. Hold it through
+// std::shared_ptr so captures never move it.
+template<class T> class Pinned {
+    T value_;
+    GcRootProvider roots_;
+public:
+    explicit Pinned(T value):value_(std::move(value)),roots_([this](const EdgeVisitor& visitor){trace_value(value_,visitor);}){}
+    Pinned(const Pinned&)=delete;Pinned& operator=(const Pinned&)=delete;
+    const T& get()const noexcept{return value_;}
+};
+template<class T> std::shared_ptr<Pinned<T>> pin(T value){return std::make_shared<Pinned<T>>(std::move(value));}
 std::int32_t int32_parse(const String&value,bool hexadecimal=false);
 bool int32_try_parse(const String&value,std::int32_t& result);
 std::int64_t int64_parse(const String&value,bool hexadecimal=false);

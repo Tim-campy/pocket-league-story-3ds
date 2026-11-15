@@ -160,6 +160,8 @@ GcNativeBlockingScope::~GcNativeBlockingScope(){
     state.native_blocked.erase(thread);state.condition.notify_all();
 }
 GcCollectionStats gc_last_collection(){auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);return state.last;}
+std::string gc_stress_summary(){return {};} // Legacy collector: no stress mode.
+void gc_stress_configure(){}
 GcRegistryStats gc_registry_stats(){auto&state=collector_state();std::lock_guard<std::mutex>lock(state.mutex);GcRegistryStats result{state.objects.size(),0};for(const auto&entry:state.objects)if(entry.second.object.expired())++result.expired;return result;}
 void gc_collect(std::int32_t generation){
     if(generation<0)throw ArgumentOutOfRangeException();auto&state=collector_state();

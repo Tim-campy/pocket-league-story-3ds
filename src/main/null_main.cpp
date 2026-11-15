@@ -83,6 +83,7 @@ void memory_categories(const char*stage){
 #endif
 }
 void memory_report(){
+    {const auto stress=pls::cs::gc_stress_summary();if(!stress.empty()){std::fprintf(stderr,"PLS_GC_STRESS=%s%c",stress.c_str(),10);std::fflush(stderr);}}
     const auto registry=pls::cs::gc_registry_stats();
     std::fprintf(stderr,"PLS_NULL_GC_REGISTRY entries=%llu expired=%llu\n",static_cast<unsigned long long>(registry.entries),static_cast<unsigned long long>(registry.expired));std::fflush(stderr);
 #if defined(__3DS__)
@@ -174,7 +175,7 @@ int main(int argc,char**argv){
         const auto window_first=windows.front().first,window_last=windows.back().last;
         std::uint64_t window_frames=0;for(const auto& w:windows)window_frames+=w.last-w.first+1;
         memory_report();std::cerr<<"PLS_NULL_STAGE=runtime\n";std::cerr.flush();
-        pls::cs::GcMutatorScope mutator;pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture({1033,{9},"en",false});
+        pls::cs::GcMutatorScope mutator;pls::cs::gc_stress_configure();pls::cs::install_mono_collation_character_data();pls::cs::set_default_collation_culture({1033,{9},"en",false});
         pls::sdl::install_globalization_backend();
         std::cerr<<"PLS_NULL_STAGE=catalog\n";std::cerr.flush();
         auto validation=pls::assets::ReadValidation::EveryPayload;

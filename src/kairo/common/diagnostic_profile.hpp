@@ -14,6 +14,8 @@
 #include <ostream>
 #include <memory>
 #include <string>
+#include <sstream>
+#include <thread>
 #include <vector>
 namespace pls::diagnostic {
 enum class Area:unsigned {game,kairo,raster,composition};
@@ -44,8 +46,22 @@ inline Entry* register_method(const char*assembly,const char*id){
     for(auto& e:registry)if(e->assembly==assembly&&e->id==id)return e.get();
     auto e=std::make_unique<Entry>();e->assembly=assembly;e->id=id;e->watched=reachability_watch().count(e->id)!=0;auto*p=e.get();registry.push_back(std::move(e));return p;
 }
-struct ThreadState {Area area=Area::kairo;Entry*entry=nullptr;Clock::time_point last=Clock::now();std::array<std::uint64_t,4> ns{};bool frame=false;std::vector<Entry*> methods;};
+struct ThreadState;
+// Per-thread method stacks, readable by a diagnostic hook while the owner is
+// blocked (rendezvous timeout). Diagnostic builds only.
+inline std::mutex thread_states_mutex;
+inline std::vector<std::pair<std::thread::id,ThreadState*>> thread_states;
+struct ThreadState {Area area=Area::kairo;Entry*entry=nullptr;Clock::time_point last=Clock::now();std::array<std::uint64_t,4> ns{};bool frame=false;std::vector<Entry*> methods;
+    ThreadState(){std::lock_guard<std::mutex> lock(thread_states_mutex);thread_states.emplace_back(std::this_thread::get_id(),this);}
+    ~ThreadState(){std::lock_guard<std::mutex> lock(thread_states_mutex);for(auto it=thread_states.begin();it!=thread_states.end();++it)if(it->second==this){thread_states.erase(it);break;}}
+};
 inline thread_local ThreadState state;
+inline std::string stack_of(const ThreadState& s){std::string text;std::size_t n=0;for(std::size_t i=s.methods.size();i-->0&&n<16;++n)text+=std::string(n?",":"")+"\""+s.methods[i]->id+"\"";return "["+text+"]";}
+inline void print_stuck_threads(const std::vector<std::thread::id>& stuck,std::thread::id collector){
+    std::lock_guard<std::mutex> lock(thread_states_mutex);
+    auto describe=[&](std::thread::id id,const char* role){std::ostringstream key;key<<id;std::string stack="[]";for(auto& row:thread_states)if(row.first==id)stack=stack_of(*row.second);std::cerr<<"PLS_GC_RENDEZVOUS_THREAD={\"role\":\""<<role<<"\",\"thread\":\""<<key.str()<<"\",\"stack\":"<<stack<<"}"<<std::endl;};
+    describe(collector,"collector");for(auto id:stuck)describe(id,"not-parked");
+}
 inline void charge(Clock::time_point now){auto ns=std::chrono::duration_cast<std::chrono::nanoseconds>(now-state.last).count();if(ns>0){if(state.frame)state.ns[unsigned(state.area)]+=std::uint64_t(ns);if(state.entry)state.entry->exclusive.fetch_add(std::uint64_t(ns),std::memory_order_relaxed);}state.last=now;}
 class Scope {
     bool active_;Area previous_;Entry*previous_entry_;Entry*entry_;Clock::time_point start_;int exceptions_;

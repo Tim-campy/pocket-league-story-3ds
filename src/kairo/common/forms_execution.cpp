@@ -35,10 +35,14 @@ void source_app_sleep(std::int32_t ms){
 void install_form_runtime(cs::Ref<FormRuntime> runtime){
     installed_form_runtime=runtime;
     if(!runtime){form_construction_hook={};return;}
-    form_construction_hook=[runtime](FormManagerBase& manager){
+    // Captured references live in std::function storage (native memory): pin
+    // them so they stay roots for as long as a hook or a manager holds them.
+    auto pinned=cs::pin(runtime);
+    form_construction_hook=[pinned](FormManagerBase& manager){
+        const auto& runtime=pinned->get();
         manager.host_execution(cs::make_ref<SourceFormExecution>(runtime));
         manager.host_game_state(cs::make_ref<RuntimeGameState>(runtime));
-        manager.on_lifecycle_warning=[runtime](auto form,bool init){runtime->LifecycleWarning(std::move(form),init);};
+        manager.on_lifecycle_warning=[pinned](auto form,bool init){pinned->get()->LifecycleWarning(std::move(form),init);};
     };
 }
 cs::Ref<FormSurface> SourceFormExecution::surface(cs::Ref<Canvas> canvas){

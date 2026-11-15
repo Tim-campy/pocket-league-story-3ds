@@ -39,7 +39,7 @@ void capture_frame(const pls::cs::Ref<pls::kairo::Image>& display,std::uint64_t 
     if(!surface)throw pls::cs::IOException(SDL_GetError());
     const auto status=SDL_SaveBMP(surface,path.u8string().c_str());SDL_FreeSurface(surface);
     if(status!=0)throw pls::cs::IOException(SDL_GetError());
-    std::cerr<<"PLS_PC_CAPTURE_FRAME="<<frame<<'\n';
+    std::cerr<<"PLS_PC_CAPTURE_FRAME="<<frame<<'\n';{const auto stress=pls::cs::gc_stress_summary();if(!stress.empty())std::cerr<<"PLS_GC_STRESS="<<stress<<std::endl;}
 }
 struct TextInputCleanup {
     pls::cs::Ref<pls::sdl::SimpleTextInput> field;
@@ -55,7 +55,7 @@ struct FinalMetrics {
         metrics.finish(std::uncaught_exceptions()?"exception":reason);
     }
 };
-struct FinalProfile {~FinalProfile(){if(pls::diagnostic::enabled.load()){std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);pls::diagnostic::dump(std::cerr);}}};
+struct FinalProfile {~FinalProfile(){if(pls::diagnostic::enabled.load()){std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);pls::diagnostic::dump(std::cerr);const auto stress=pls::cs::gc_stress_summary();if(!stress.empty())std::cerr<<"PLS_GC_STRESS="<<stress<<std::endl;}}};
 }
 int main(int argc,char** argv){
     if(argc!=2){std::cerr<<"Provide the authenticated local asset directory.\n";return 2;}
@@ -63,6 +63,8 @@ int main(int argc,char** argv){
 #if defined(PLS_DIAGNOSTIC_BUILD)
     pls::diagnostic::enabled=true;
     pls::cs::exception_site_hook=&pls::diagnostic::method_stack_text;
+    pls::cs::gc_stress_configure();
+    pls::gc::rendezvous_timeout_hook=&pls::diagnostic::print_stuck_threads;
     FinalProfile final_profile;
 #endif
     try{

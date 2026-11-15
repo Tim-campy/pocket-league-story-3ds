@@ -69,6 +69,40 @@ GcNativeBlockingScope::~GcNativeBlockingScope(){tracing_heap().end_native_wait()
 namespace {std::mutex tracing_stats_mutex;GcCollectionStats tracing_last;std::atomic<bool> tracing_collection_pending{false};}
 GcCollectionStats gc_last_collection(){std::lock_guard<std::mutex>lock(tracing_stats_mutex);return tracing_last;}
 GcRegistryStats gc_registry_stats(){return {tracing_heap().statistics().objects,0};}
+void gc_stress_configure(){
+#if defined(PLS_DIAGNOSTIC_BUILD) || defined(PLS_GC_STRESS_EVERY_DEFAULT)
+    // Called by the diagnostic host at the start of main: no real collection
+    // trigger exists during static initialization, so stress starts there too.
+        // Diagnostic stress only (never a normal build): a full collection after
+        // every N managed allocations; optional poisoning of dead bodies.
+        {
+            auto number=[](const char* name,unsigned long long fallback){
+                const char* text=std::getenv(name);if(!text)return fallback;
+                for(const char* q=text;*q;++q)if(*q<'0'||*q>'9')throw std::logic_error(std::string("Invalid ")+name);
+                return *text?std::strtoull(text,nullptr,10):fallback;
+            };
+#ifndef PLS_GC_STRESS_EVERY_DEFAULT
+#define PLS_GC_STRESS_EVERY_DEFAULT 0
+#endif
+#ifndef PLS_GC_STRESS_POISON_DEFAULT
+#define PLS_GC_STRESS_POISON_DEFAULT 0
+#endif
+#ifndef PLS_GC_STRESS_QUARANTINE_MB_DEFAULT
+#define PLS_GC_STRESS_QUARANTINE_MB_DEFAULT 1024
+#endif
+            const auto every=number("PLS_GC_STRESS_EVERY",PLS_GC_STRESS_EVERY_DEFAULT);
+            const auto poison=number("PLS_GC_STRESS_POISON",PLS_GC_STRESS_POISON_DEFAULT);
+            const auto quarantine=number("PLS_GC_STRESS_QUARANTINE_MB",PLS_GC_STRESS_QUARANTINE_MB_DEFAULT);
+            if(every)tracing_heap().stress(static_cast<std::size_t>(every),poison!=0,static_cast<std::size_t>(quarantine)*1024u*1024u);
+        }
+#endif
+}
+std::string gc_stress_summary(){
+    const auto s=tracing_heap().stress_statistics();
+    if(!s.collections&&!s.poisoned_objects)return {};
+    return "{\"stress_collections\":"+std::to_string(s.collections)+",\"poisoned_objects\":"+std::to_string(s.poisoned_objects)
+        +",\"poisoned_bytes\":"+std::to_string(s.poisoned_bytes)+",\"quarantine_overflow\":"+std::to_string(s.quarantine_overflow)+"}";
+}
 #if defined(PLS_GC_TRACE)
 }
 // Diagnostic build only: written by the asset catalog, printed per collection.

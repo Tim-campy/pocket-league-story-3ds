@@ -6,10 +6,17 @@
 #include <cstdint>
 #include <functional>
 #include <memory>
+#include <thread>
+#include <vector>
+#include <atomic>
 #include <type_traits>
 #include <utility>
 
 namespace pls::gc {
+// Diagnostic hosts only: called (collector thread, heap lock held; must not
+// touch the heap) when a rendezvous times out, with the threads not parked.
+using RendezvousTimeoutHook=void(*)(const std::vector<std::thread::id>& stuck,std::thread::id collector);
+inline std::atomic<RendezvousTimeoutHook> rendezvous_timeout_hook{nullptr};
 struct Edges {
     void* context;
     void (*visit)(void*, const void*);
@@ -25,6 +32,9 @@ struct Descriptor {
     // Neither callback may allocate managed objects or enter a safepoint.
     void (*trace)(const void*, Edges) = nullptr;
     void (*destroy)(void*) noexcept = nullptr;
+    // Destructor only, without releasing the body (stress poisoning keeps the
+    // body quarantined so a later use reads the poison pattern).
+    void (*finalize)(void*) noexcept = nullptr;
     const char* name = nullptr;
     void (*ranges)(const void*,Ranges) = nullptr;
     void* (*managed_base)(void*) = nullptr;
@@ -89,7 +99,15 @@ public:
     bool alive(const void* pointer, std::uint64_t identity) const;
     bool collection_requested() const;
     void stop_timeout(std::chrono::milliseconds value);
+    // Diagnostic stress (off by default): a full collection at the allocation
+    // safepoint after every `every` adoptions; with `poison`, dead bodies are
+    // finalized, filled with stress_poison_byte and quarantined (never reused)
+    // up to `quarantine_bytes`, so any later use of an unrooted object fails.
+    void stress(std::size_t every, bool poison, std::size_t quarantine_bytes);
+    struct StressStatistics { std::size_t collections = 0, poisoned_objects = 0, poisoned_bytes = 0, quarantine_overflow = 0; };
+    StressStatistics stress_statistics() const;
 };
+inline constexpr unsigned char stress_poison_byte = 0xDB;
 class Mutator {
     Heap& heap_;
 public:
@@ -137,6 +155,7 @@ T* make_described(Heap& heap, Descriptor descriptor, A&&... arguments) {
     struct End { Heap& heap; ~End() { heap.end_construction(); } } end{heap};
     auto object = Allocation<T>::create(std::forward<A>(arguments)...);
     descriptor.destroy=[](void* p) noexcept { delete static_cast<T*>(p); };
+    descriptor.finalize=[](void* p) noexcept { static_cast<T*>(p)->~T(); };
     heap.adopt(object.get(), Allocation<T>::bytes(*object), descriptor);
     return object.release();
 }

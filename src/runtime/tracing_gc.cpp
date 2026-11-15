@@ -257,6 +257,9 @@ struct Heap::Impl {
     std::size_t stable_external_bytes=0,explicit_ranges=0;
     std::size_t limit = static_cast<std::size_t>(-1);
     bool requested = false;
+    std::size_t stress_every = 0, stress_count = 0, quarantine_limit = 0;
+    bool stress_poison = false;
+    Heap::StressStatistics stress_stats;
     std::thread::id collector;
     std::chrono::milliseconds timeout{5000};
     Statistics stats;
@@ -625,6 +628,12 @@ PLS_GC_NOINLINE void Heap::safepoint() {
     std::unique_lock<std::mutex> lock(s.mutex);
     auto& thread = s.current();
     if (thread.native) throw std::logic_error("Managed access inside native wait");
+    if (s.stress_every && s.stress_count >= s.stress_every && !s.requested) {
+        // Not the collector: collectors never reach a mutator safepoint (adopt
+        // and safepoint reject managed work while a collection is requested).
+        s.stress_count = 0; ++s.stress_stats.collections;
+        lock.unlock(); collect(); return;
+    }
     if (!s.requested) return;
     if (s.collector == std::this_thread::get_id()) throw std::logic_error("Managed allocation during GC");
     capture(thread.snapshot, thread.bottom, thread.top);
@@ -701,6 +710,7 @@ void Heap::adopt(void* object, std::size_t bytes, Descriptor descriptor) {
     s.stable_external_bytes+=stable_bytes;s.stats.external_bytes+=stable_bytes;
     s.stats.external_growth_bytes+=stable_bytes;
     ++s.stats.objects; ++s.stats.allocations;
+    if (s.stress_every) ++s.stress_count;
     s.stats.body_bytes += bytes;
     s.stats.bytes += bytes+stable_bytes; s.stats.allocated_bytes += bytes+stable_bytes; s.since_collection += bytes+stable_bytes;
     s.stats.peak_bytes=std::max(s.stats.peak_bytes,s.stats.bytes);
@@ -758,7 +768,14 @@ PLS_GC_NOINLINE std::uintptr_t Heap::Impl::collect_body() {
                 if (row.first != s.collector && !row.second.native && !row.second.parked) return false;
             return true;
         });
-        if (!stopped) throw std::runtime_error("GC cooperative rendezvous timed out; no objects swept");
+        if (!stopped) {
+            if (auto hook = rendezvous_timeout_hook.load()) {
+                std::vector<std::thread::id> stuck;
+                for (const auto& row : s.threads) if (row.first != s.collector && !row.second.native && !row.second.parked) stuck.push_back(row.first);
+                hook(stuck, s.collector);
+            }
+            throw std::runtime_error("GC cooperative rendezvous timed out; no objects swept");
+        }
         PLS_GC_PHASE(account_before);
         s.account_retained();
         const auto bytes_before = s.stats.bytes;
@@ -863,7 +880,16 @@ PLS_GC_NOINLINE std::uintptr_t Heap::Impl::collect_body() {
         // or root handles without recursively taking the heap lock.
         lock.unlock();
         PLS_GC_PHASE(destroy);
-        for (const auto& block : dead_list) if (block.descriptor.destroy) block.descriptor.destroy(block.pointer);
+        for (const auto& block : dead_list) {
+            if (s.stress_poison && block.descriptor.finalize && s.stress_stats.poisoned_bytes + block.bytes <= s.quarantine_limit) {
+                block.descriptor.finalize(block.pointer);
+                std::memset(block.pointer, stress_poison_byte, block.bytes);
+                ++s.stress_stats.poisoned_objects; s.stress_stats.poisoned_bytes += block.bytes;
+            } else {
+                if (s.stress_poison) ++s.stress_stats.quarantine_overflow;
+                if (block.descriptor.destroy) block.descriptor.destroy(block.pointer);
+            }
+        }
         dead_list.clear();
         lock.lock();
         ++s.stats.collections; s.since_collection = 0;
@@ -966,5 +992,10 @@ std::uint64_t Heap::identity(const void* p) const {
 bool Heap::alive(const void* p, std::uint64_t identity_value) const {
     return identity_value && identity(p) == identity_value;
 }
+void Heap::stress(std::size_t every, bool poison, std::size_t quarantine_bytes) {
+    std::lock_guard<std::mutex> lock(impl_->mutex);
+    impl_->stress_every = every; impl_->stress_count = 0; impl_->stress_poison = poison; impl_->quarantine_limit = quarantine_bytes;
+}
+Heap::StressStatistics Heap::stress_statistics() const { std::lock_guard<std::mutex> lock(impl_->mutex); return impl_->stress_stats; }
 void Heap::stop_timeout(std::chrono::milliseconds value) { std::lock_guard<std::mutex> lock(impl_->mutex); impl_->timeout = value; }
 }

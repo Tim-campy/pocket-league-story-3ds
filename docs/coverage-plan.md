@@ -213,3 +213,23 @@ quando a tela principal é `SoccerForm` sem diálogo (49 asserções). Rotas ger
 (`ChangeTraining`, `TrainingData`, comandos de treino), novo jogo (`NewGame`),
 fim de jogo no ano 7 (`SetClearPoint`, `SetContinueGameData`), toque em
 `GameView`/`GamePad`/`SoccerForm`, telas restantes de `SubForm`.
+
+### Tentativas 99–101 (2026-11-15)
+
+| Tentativa | Rota | Resultado | Novos |
+|---|---|---|---:|
+| 99 | `actions` + técnico (política de treino) + varredura do mapa (save 97) | o cursor do mapa anda, mas `SELECT` não abre a construção (lotes ocupados ou fora do cursor); bloco do técnico sem efeito | 0 |
+| 100 | `career` (save 99) | do ano 6, mês 6 ao ano 7, mês 7 | 0 |
+| 101 | `career` (save 100) | quase só partidas de liga nas capturas | 0 |
+| (102) | `career` (save 101) | encerrada pelo sistema por falta de memória | — |
+
+**Correção:** o fim de jogo não é no ano 7, mês 3 da tela. `GameForm` testa
+`save_.ints[1] == 7 && save_.ints[2] == 3` com contadores a partir de zero (a versão
+de avaliação usa `ints[1] + 1`): o fim é no **ano 8, mês 4** da tela
+(`SetContinueGameData`, `SubForm(19)`, depois `SetClearPoint`).
+
+Cada rodada de 600 s avança poucos meses: as partidas de liga ocupam quase todo
+o tempo. Construir/demolir instalação exige a câmera do mapa sobre um lote
+(`camera.subTenant_`) e `SELECT` na tela de gestão (`GameForm.cs:1827`);
+política de treino: Informações → Técnico (`SubForm` 50), mudar a seleção e
+confirmar (`ChangeTraining`).

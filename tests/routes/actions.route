@@ -164,6 +164,137 @@ wait frames=50
 key SELECT
 wait frames=50
 dismiss until form=GameForm label_right=* timeout=6000 optional
+# Info -> Coach: change the training policy (ChangeTraining)
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+# map scan 0
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key RIGHT
+wait frames=8
+key RIGHT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
 dismiss until form=GameForm label_right=* timeout=200 optional
 when form=SubForm label_right=* key SOFT2
 wait frames=10
@@ -206,8 +337,6 @@ dismiss until form=GameForm label_right=* timeout=6000 optional
 key SOFT2
 wait depth=2 timeout=120 optional
 wait frames=20
-key DOWN
-wait frames=10
 key DOWN
 wait frames=10
 key DOWN
@@ -352,6 +481,137 @@ key SELECT
 wait frames=40
 key SELECT
 wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+# Info -> Coach: change the training policy (ChangeTraining)
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+# map scan 1
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=8
+key DOWN
+wait frames=8
+key SELECT
+wait frames=40
 key SELECT
 wait frames=50
 key SELECT
@@ -409,8 +669,6 @@ key DOWN
 wait frames=10
 key DOWN
 wait frames=10
-key DOWN
-wait frames=10
 key SELECT
 wait frames=40
 key SELECT
@@ -547,6 +805,137 @@ key SELECT
 wait frames=40
 key SELECT
 wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+# Info -> Coach: change the training policy (ChangeTraining)
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key DOWN
+wait frames=10
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+# map scan 2
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=6000 optional
+key LEFT
+wait frames=8
+key LEFT
+wait frames=8
+key SELECT
+wait frames=40
 key SELECT
 wait frames=50
 key SELECT

@@ -62,6 +62,18 @@ class Generator:
         return f"# {name}\n" + self.open_menu(main_index, sub_index) + SELECTS * selects + BACK
 
 
+def map_scan(n):
+    """Move the map camera and press SELECT: on a free lot GameForm opens
+    SubForm 61 (build), then 62 confirms (cursor 0 = yes) -> Tenant.BuildTenant;
+    on a built lot it opens 65 (with demolish -> 66)."""
+    moves = ['RIGHT', 'DOWN', 'LEFT', 'UP'][n % 4]
+    text = f"# map scan {n}\n" + BACK
+    for step in range(8):
+        text += f"key {moves}\nwait frames=8\nkey {moves}\nwait frames=8\nkey SELECT\nwait frames=40\n"
+        text += SELECTS * 3 + BACK
+    return text
+
+
 def main(rounds=3):
     g = Generator()
     body = ''
@@ -73,9 +85,32 @@ def main(rounds=3):
         body += g.block('Manage -> Sponsors (first sponsor, negotiate)', 2, 3, 6)
         body += g.block('Special training (first entry)', 1, None, 5)
         body += g.block('Edit team (first player, swap)', 3, None, 4)
+        body += g.block('Info -> Coach: change the training policy (ChangeTraining)', 4, 1, 0)
+        body += DOWN + SELECTS * 4 + BACK
+        body += map_scan(n)
         body += WEEK * 4
     Path(__file__).with_name('actions.route').write_text(HEADER + body + 'end\n', encoding='utf-8', newline='\n')
 
 
+def touch_scan(columns=(30, 75, 120, 165, 210), rows=(60, 95, 130, 165, 200)):
+    """Tap a grid over the map (Camera.Collision moves the cursor to the tap);
+    SELECT then opens SubForm 61 on a free lot (build: first facility, confirm)
+    or 65 on a built lot (demolish option)."""
+    text = "# touch scan over the map\n" + BACK
+    for y in rows:
+        for x in columns:
+            text += f"tap {x} {y}\nwait frames=12\nkey SELECT\nwait frames=40\n" + SELECTS * 3 + BACK
+    return text
+
+
+def focused():
+    """tests/routes/lots.route: coach training policy, then the touch scan."""
+    g = Generator()
+    body = g.block('Info -> Coach: move the policy cursor and confirm (ChangeTraining)', 4, 1, 0)
+    body += DOWN + SELECTS * 4 + BACK + touch_scan()
+    Path(__file__).with_name('lots.route').write_text(HEADER.replace('management actions by menu position', 'coach policy and map lots') + body + 'end\n', encoding='utf-8', newline='\n')
+
+
 if __name__ == '__main__':
     main()
+    focused()

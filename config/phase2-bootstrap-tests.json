@@ -146,7 +146,7 @@
   ],
   "native_executable": {
     "path": "build/bootstrap-tests/bootstrap-fixtures.exe",
-    "sha256": "4a124a7303af6730f6ebb23373b51b43c1b451467d94851c9db086f1085b258f"
+    "sha256": "56fccc250b9cd248eb383abf663c4245480933e7cc388f8bdf1599b5fe10c46e"
   },
   "limits": [
     "Own collaborators with the exact original Awake body prove callback ordering, optional-resource exception behavior and ownership only.",

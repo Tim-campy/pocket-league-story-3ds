@@ -6,8 +6,8 @@ Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com 
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 809 |
-| Alcançáveis, ainda não executados | 439 |
+| Executados no diagnóstico (`runs`) | 828 |
+| Alcançáveis, ainda não executados | 420 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
 | Só depuração | 35 |
@@ -18,14 +18,14 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 
 | Classe | translated | embedded | todo | no-body | verified |
 |---|---:|---:|---:|---:|---:|
-| reachable-not-exercised | 383 | 54 | 0 | 1 | 0 |
+| reachable-not-exercised | 364 | 54 | 0 | 1 | 0 |
 | unreachable-by-policy | 85 | 4 | 0 | 0 | 0 |
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 809 de 1248 (64.8%). Métodos `runs` que a análise não alcançou: 0.
+Cobertura sobre o alcançável: 828 de 1248 (66.3%). Métodos `runs` que a análise não alcançou: 0.
 
-## Alcançáveis, ainda não executados (439)
+## Alcançáveis, ainda não executados (420)
 
 Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 
@@ -35,7 +35,7 @@ Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 - **data.FanBonusData** (2): `.cctor`, `NewGame`
 - **data.FormationData** (2): `ChangeState`, `NewGame`
 - **data.LeagueData** (8): `ChangeState`, `IsVictoryLeague`, `IsVictoryMatch`, `NewGame`, `RegistLeague`, `RemoveNew`, `SetGetTrophy`, `SetLeagueInfoExplain`
-- **data.PlayerData** (7): `.cctor`, `AddPhysicalParam`, `Dismissal`, `Employ`, `SetTrainingAddParam`, `Start_aura`
+- **data.PlayerData** (6): `.cctor`, `AddPhysicalParam`, `Employ`, `SetTrainingAddParam`, `Start_aura`
 - **data.QuestMatchData** (1): `NewGame`
 - **data.SponsorData** (4): `.cctor`, `GetIncome`, `NewGame`, `RemoveNew`
 - **data.SupervisorData** (5): `.cctor`, `ChangeState`, `ContractSupervisor`, `LvUp`, `NewGame`
@@ -51,7 +51,7 @@ Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 - **form.RankForm** (13): `.cctor`, `ChangeState`, `Draw`, `Finish`, `GetHashCode`, `GetTouchValue`, `Init`, `Resume`, `SetSoftLabel`, `SetTouchValue`, `ToString`, `Update`, `_draw`
 - **form.SoccerForm** (16): `.cctor`, `Draw_matchElse`, `Draw_newPlayerPopular`, `Draw_topBar`, `GetDrawTBAROff`, `GetFirstScript`, `GetHashCode`, `GetScaleRange`, `GetTouchValue`, `OnTouchCamera`, `OnTouchEvent`, `ResetOffscreen`, `Resume`, `SetScale`, `SetTouchValue`, `ToString`
 - **form.SpForm** (19): `.cctor`, `.ctor`, `AddCommand`, `ChangeState`, `Draw`, `Finish`, `GetHashCode`, `GetTouchValue`, `Init`, `MakeSendDataTask`, `Resume`, `Run`, `SetSoftLabel`, `SetTouchValue`, `ShowDialog`, `ToString`, `Update`, `_draw`
-- **form.SubForm** (28): `.cctor`, `.ctor`, `DrawConfig_jp`, `Draw_btmMsg`, `Draw_clearPoint`, `Draw_fanActBack`, `Draw_multiParam`, `Draw_tenantBuildIcon`, `Draw_trainingIcon`, `Draw_up`, `FinishMeterParam`, `GetHashCode`, `GetMeterParam`, `GetStringLength`, `IsSimpleChara`, `MakeTalkForm`, `OnTouchEvent`, `Resume`, `SetMeterParam`, `SetMeterParamDispAdd`, `SetMeterParamRank`, `SetTicketWindowBtmMsg`, `SetTouchValue`, `SetWinCharaTraining`, `ToString`, `UpdateMeterParam`, `Update_clearPoint`
+- **form.SubForm** (26): `.cctor`, `.ctor`, `DrawConfig_jp`, `Draw_btmMsg`, `Draw_clearPoint`, `Draw_fanActBack`, `Draw_multiParam`, `Draw_tenantBuildIcon`, `Draw_trainingIcon`, `Draw_up`, `FinishMeterParam`, `GetHashCode`, `GetMeterParam`, `GetStringLength`, `IsSimpleChara`, `MakeTalkForm`, `Resume`, `SetMeterParam`, `SetMeterParamDispAdd`, `SetMeterParamRank`, `SetTicketWindowBtmMsg`, `SetWinCharaTraining`, `ToString`, `UpdateMeterParam`, `Update_clearPoint`
 - **form.SubForm+<Update2>c__AnonStorey0** (3): `.ctor`, `<>m__0`, `<>m__1`
 - **form.TitleForm** (9): `.cctor`, `<_draw>m__2`, `GetHashCode`, `OnTouchEvent`, `Resume`, `SetTouchValue`, `ToString`, `UpdateKairoAdClickNum`
 - **game.Ball** (1): `.cctor`
@@ -72,13 +72,12 @@ Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 - **main.AppData** (22): `.cctor`, `Draw`, `DrawFukidashiBalloon`, `DrawFukidashiKimochi`, `DrawMoney2`, `DrawMoney3`, `DrawNumImageComma_en`, `DrawSeb`, `DrawTrophyEffect`, `GetHighScore`, `GetHttpErrorText`, `GetNetHighScore`, `GettMoneyNetHighScore`, `NewGame`, `Post`, `ResourceReDownload`, `SaveGame`, `SendSaveData`
 - **main.AppData+<DrawFukidashiKimochi>c__AnonStorey1** (2): `.ctor`, `<>m__3`
 - **main.Main** (2): `OnResume`, `OnSuspend`
-- **native.AppPlugin** (3): `.cctor`, `Finish`, `Init`
+- **native.AppPlugin** (1): `.cctor`
 - **panel.MainPanel** (2): `.ctor`, `Show`
-- **surface.GamePad** (9): `.cctor`, `AddTouch`, `DrawBattery`, `DrawSoftLabelImage`, `DrawWatch`, `GetSideSize`, `OnTouchEvent`, `SetLayoutMode`, `SetMode`
-- **surface.GameView** (29): `.cctor`, `AddDelayPaintBuffer`, `AddEffect`, `GetKey`, `OnReceiveTouchEvent`, `OnTouchCamera`, `OnTouchDlgCmd`, `OnTouchDlgPage`, `OnTouchDlgPage2`, `OnTouchDlgSel`, `OnTouchEvent`, `OnTouchKeyClick`, `OnTouchKeyDown`, `OnTouchKeyPress`, `OnTouchKeyUp`, `OnTouchList`, `OnTouchMainMenu`, `OnTouchRect`, `OnTouchScrollList`, `OnTouchSubMenu`, `OnTouchTitleMenu`, `OnTouchTrackBar`, `OnTouchUnMarker`, `OnTouchVScrollBar`, `OnTouchVScrollButton`, `Set`
+- **surface.GamePad** (8): `.cctor`, `AddTouch`, `DrawBattery`, `DrawSoftLabelImage`, `DrawWatch`, `GetSideSize`, `SetLayoutMode`, `SetMode`
+- **surface.GameView** (22): `.cctor`, `AddDelayPaintBuffer`, `AddEffect`, `OnTouchCamera`, `OnTouchDlgPage`, `OnTouchDlgPage2`, `OnTouchKeyClick`, `OnTouchKeyDown`, `OnTouchKeyPress`, `OnTouchKeyUp`, `OnTouchList`, `OnTouchMainMenu`, `OnTouchRect`, `OnTouchScrollList`, `OnTouchSubMenu`, `OnTouchTitleMenu`, `OnTouchTrackBar`, `OnTouchUnMarker`, `OnTouchVScrollBar`, `OnTouchVScrollButton`, `Set`
 - **surface.SurfaceManager** (1): `SetLayoutMode`
-- **surface.TouchEffect** (4): `.ctor`, `Draw`, `Frame`, `Init`
-- **surface.TouchEffectManager** (4): `Add`, `AddEffect`, `Clear`, `RemoveEffect`
+- **surface.TouchEffectManager** (2): `Clear`, `RemoveEffect`
 - **system.KairoService** (8): `.ctor`, `<Update>m__D`, `Connected`, `Finish`, `GetInstance`, `Save`, `SaveAll`, `Update`
 - **system.KairoText** (2): `.cctor`, `LT`
 - **system.billing.MyBilling** (3): `.ctor`, `CheckPlayingGame`, `GetInstance`

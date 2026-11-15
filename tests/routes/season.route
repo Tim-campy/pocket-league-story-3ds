@@ -1,6 +1,7 @@
 # Diagnostic route (no game data): season loop from the post-match save.
-# Each turn: clear dialogs back to management, advance with SELECT, and wait out
-# any match (SoccerForm) until management returns. Run with --fast.
+# Each turn: clear dialogs back to management; if a labeled sub-window is
+# still on top (e.g. the year-end player choice), pick the current item and
+# confirm with LEFT (Yes) + SELECT; advance with SELECT. Run with --fast.
 anchor timeout=2400
 wait frames=104
 key SELECT
@@ -9,1604 +10,4504 @@ key UP
 wait frames=24
 key SELECT
 wait form=GameForm label_right=* timeout=600
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
-dismiss until form=GameForm label_right=* timeout=900 optional
-key SELECT
-wait frames=120
-wait form=GameForm timeout=8000 optional
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
+dismiss until form=GameForm label_right=* timeout=300 optional
+when form=SubForm label_right=* key SELECT
+wait frames=20
+when form=SubForm label_right=* key LEFT
+wait frames=10
+when form=SubForm label_right=* key SELECT
+wait frames=20
+key SELECT
+wait frames=100
 end

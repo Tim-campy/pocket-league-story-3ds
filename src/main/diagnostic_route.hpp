@@ -38,7 +38,7 @@ inline std::string to_line(const UiState& s){
 // Same comparison as the change log: frame excluded.
 inline std::string signature(const UiState& s){auto copy=s;copy.frame=0;return to_line(copy);}
 
-enum class Op {anchor,key,wait_form,wait_not_loading,wait_not_dialog,wait_frames,expect_form,dismiss_until,end};
+enum class Op {anchor,key,wait_form,wait_not_loading,wait_not_dialog,wait_frames,expect_form,dismiss_until,when_key,end};
 struct Step {
     Op op{};std::string text;int line{};
     std::string key;int repeat{1},gap{1};
@@ -91,6 +91,13 @@ inline std::vector<Step> parse(std::istream& input){
                 if(step.op==Op::wait_form&&step.form.empty()&&step.id<0&&step.mode<0&&step.label_right<0&&step.depth<0)throw std::invalid_argument("route line "+std::to_string(line)+": wait needs form/id/mode/label_right or frames");}
         }
         else if(verb=="expect"){step.op=Op::expect_form;parse_conditions(step,words);}
+        else if(verb=="when"){
+            // when <conditions> key <KEY>: press only if the conditions hold now; never waits.
+            std::string word,rest;std::vector<std::string> conditions;
+            while(words>>word){if(word=="key"){words>>step.key;break;}conditions.push_back(word);}
+            if(!valid_key(step.key))throw std::invalid_argument("route line "+std::to_string(line)+": when needs key <KEY>");
+            for(const auto& c:conditions)rest+=c+" ";std::istringstream cond(rest);parse_conditions(step,cond);step.op=Op::when_key;
+        }
         else if(verb=="dismiss"){std::string until;words>>until;if(until!="until")throw std::invalid_argument("route line "+std::to_string(line)+": dismiss until <condition>");step.op=Op::dismiss_until;parse_conditions(step,words);}
         else throw std::invalid_argument("route line "+std::to_string(line)+": unknown verb "+verb);
         steps.push_back(step);
@@ -147,6 +154,9 @@ public:
             case Op::wait_not_dialog:
                 if(!state.dialog){if(++stable_>=s.stable){advance();continue;}}else stable_=0;
                 if(waited>s.timeout)return timeout();return action;
+            case Op::when_key:
+                if(matches(s,state)){action.key=s.key;advance();return action;}
+                advance();continue;
             case Op::expect_form:
                 if(matches(s,state)){advance();continue;}
                 action.timed_out=true;action.note="expect failed at line "+std::to_string(s.line)+": "+s.text;index_=steps_.size();return action;

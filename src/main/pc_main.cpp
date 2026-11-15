@@ -251,7 +251,12 @@ int main(int argc,char** argv){
 #if defined(PLS_DIAGNOSTIC_BUILD)
             if(presented_frames%60==0){std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);pls::diagnostic::dump(std::cerr);}
 #endif
-            if(presented_frames==1||(presented_frames<=pls::pc::max_scripted_key_frame&&presented_frames%60==0))capture_frame(display,presented_frames);
+            {bool capture_window=presented_frames<=pls::pc::max_scripted_key_frame;
+#if defined(PLS_DIAGNOSTIC_BUILD)
+            // Long condition-driven routes keep a sparser capture trail past the old limit.
+            if(route&&presented_frames%300==0)capture_window=true;
+#endif
+            if(presented_frames==1||(capture_window&&presented_frames%60==0))capture_frame(display,presented_frames);}
 #if defined(PLS_DIAGNOSTIC_BUILD)
             // Numeric-only late window, separate from the accumulator's first
             // 600 frames. A screenshot must establish what screen it measures.

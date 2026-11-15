@@ -63,6 +63,11 @@ int main(){
     a=depth.step(title(1));a=depth.step(title(4));check(!a.timed_out&&a.note.find("timeout")!=std::string::npos,"optional timeout advances with a note");
     a=depth.step(title(5));check(a.done,"depth=1 matched after optional step");
     check(parse_text("wait depth=3 optional\nend\n")[0].optional,"optional parsed");
+    // when: conditional key, never waits.
+    Runner when(parse_text("when depth=2 label_right=* key SELECT\nwhen depth=1 key SOFT2\nend\n"));
+    a=when.step(dialog);check(a.key=="SELECT","when fires on matching state");
+    a=when.step(dialog);check(a.key.empty()&&a.done,"when skips without waiting when not matching");
+    check(parse_fails("when depth=1\nend\n"),"when without key rejected");
     // State line is valid-looking JSON with escaped text.
     auto line=to_line(state(7,{{"form.SubForm",4,3,"a\"b","c\\d"}}));
     check(line.find("a\\\"b")!=std::string::npos&&line.find("c\\\\d")!=std::string::npos,"labels escaped in state line");

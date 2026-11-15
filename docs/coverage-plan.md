@@ -128,3 +128,30 @@ Cobertura após 55–57: **809 métodos com execução comprovada** (era 806).
 (amigos, presentes, escalações, `MatchForm.Run`) e de temporada precisam ser
 escritos tela a tela (condições por profundidade/rótulo, com capturas), e a
 temporada exige segmentos encadeados pelo save. Pendente.
+
+## Rodada de 2026-11-14: cobertura sobre os alcançáveis
+
+A análise estática (`tools/callgraph`, `config/phase2-reachability.json`)
+reduz o alvo do critério 3 aos **1.248 métodos alcançáveis no port**. Os
+demais estão justificados em `docs/coverage-never-reached.md` (89 por
+política, 35 só depuração, 586 inalcançáveis no original).
+
+| Tentativa | Roteiro | Resultado | Executados / alcançáveis |
+|---|---|---|---|
+| 60 | `season` (1ª versão, `--fast`) | 24.448 frames em 452 s (~54 fps); chegou ao fim do ano 1; o jogo encerrou por uma confirmação | 827 / 1.248 |
+| 61 | `season` (espera com dispensa) | 600 s; travou na escolha de fim de ano ("dispensar jogador"): "Back" devolvia à mensagem | 827 |
+| 63 | traço do fim de ano (save 62) | a confirmação "Dismiss Player? Yes/No" vem com "No" marcado | — |
+| 64 | `season` com `when ... key LEFT/SELECT` | passa da escolha; entra na sequência "Dismiss Player? N/30" (dispensas repetidas) | **828 / 1.248 (66,3%)** |
+
+Nenhuma tentativa teve lacuna de tradução, exceção não tratada ou tela presa
+fora do próprio laço de decisão do jogo. O executor ganhou o passo
+`when <condição> key <tecla>` (tecla condicional, sem espera; 41 asserções no
+teste isolado), e as capturas continuam a cada 300 frames além do frame
+12.000 quando há roteiro.
+
+**Pendente (próxima rodada):** completar a sequência de dispensas e a virada
+de ano; roteiros de loja/cobrança (~56 métodos alcançáveis), `SpForm` (19),
+`RankForm` (13), `LanguageForm` (11), `HttpForm`/`ConnectForm` (~30);
+serviços offline (amigos, presentes, escalações, `MatchForm.Run`, cobrança,
+registro) em execução; saves (criar, carregar, sobrescrever, autosave,
+carregar de sessão anterior).

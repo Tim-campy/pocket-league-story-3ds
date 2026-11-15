@@ -1,0 +1,22 @@
+# Layout of the readable emission mode (translator/readable.py). Formatting
+# only: clang-format never changes tokens other than whitespace and braces.
+BasedOnStyle: LLVM
+IndentWidth: 4
+ColumnLimit: 110
+NamespaceIndentation: None
+FixNamespaceComments: true
+SortIncludes: Never
+ReflowComments: false
+InsertBraces: true
+BreakBeforeBraces: Attach
+AllowShortFunctionsOnASingleLine: Inline
+AllowShortBlocksOnASingleLine: Never
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLoopsOnASingleLine: false
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortLambdasOnASingleLine: Inline
+SeparateDefinitionBlocks: Always
+MaxEmptyLinesToKeep: 1
+AccessModifierOffset: -4
+PointerAlignment: Left
+SpaceAfterTemplateKeyword: false

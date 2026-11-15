@@ -68,6 +68,13 @@ int main(){
     a=when.step(dialog);check(a.key=="SELECT","when fires on matching state");
     a=when.step(dialog);check(a.key.empty()&&a.done,"when skips without waiting when not matching");
     check(parse_fails("when depth=1\nend\n"),"when without key rejected");
+    // Touch and focus steps.
+    Runner touch(parse_text("tap 120 140\nfocus off\nfocus on\nend\n"));
+    a=touch.step(title(1));check(a.pointer_kind==0&&a.x==120&&a.y==140,"tap presses");
+    a=touch.step(title(2));check(a.pointer_kind==-1,"tap holds");
+    a=touch.step(title(3));check(a.pointer_kind==1&&a.x==120,"tap releases");
+    a=touch.step(title(4));check(a.focus==0,"focus off");a=touch.step(title(5));check(a.focus==1,"focus on");
+    check(parse_fails("tap 1\nend\n"),"tap needs X Y");
     // State line is valid-looking JSON with escaped text.
     auto line=to_line(state(7,{{"form.SubForm",4,3,"a\"b","c\\d"}}));
     check(line.find("a\\\"b")!=std::string::npos&&line.find("c\\\\d")!=std::string::npos,"labels escaped in state line");

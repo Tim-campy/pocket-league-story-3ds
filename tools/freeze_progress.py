@@ -16,6 +16,7 @@ def coverage_text(phase2):
     if not path.is_file():return f'{executed} métodos exercitados; alcançáveis ainda não medidos.'
     totals=json.loads(path.read_text(encoding='utf-8'))['totals']
     reachable=totals['reachable_total']
+    executed=totals.get('exercised',executed)  # runs plus embedded members credited through their owner/host
     return (f"{executed}/{reachable} alcançáveis exercitados ({100*executed/reachable:.1f}%); "
             f"fora do alcance: {totals['unreachable-by-policy']} por política, {totals['debug-only']} só depuração, "
             f"{totals['unreachable-in-original']} inalcançáveis no original (docs/coverage-never-reached.md).")
@@ -23,7 +24,8 @@ def criteria(phase2, game, floating=None):
     count=phase2.get('game_translated_methods',0)
     slots=len(game['missing_virtual_definitions']) if 'missing_virtual_definitions' in game else 'UNKNOWN'
     return [
-        ('Tradução completa','em andamento' if count else 'pendente',
+        # Criterion 1 approved by the user on 2026-11-14 (complete ledger, 0 rejected, 0 slots).
+        ('Tradução completa','cumprido' if count and slots==0 else 'em andamento' if count else 'pendente',
          f"{count}/1958 métodos compilados"+(f" (+{phase2['game_embedded_methods']} membros gerados pelo compilador dentro de unidades emitidas, {phase2.get('game_no_body_methods',0)} abstratos sem corpo)" if phase2.get('game_embedded_methods') else '')+f'; {slots} slots virtuais pendentes; '+policy_text(game)),
         ('Coletor e desempenho','cumprido',
          'Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4.'),

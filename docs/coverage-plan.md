@@ -142,6 +142,8 @@ política, 35 só depuração, 586 inalcançáveis no original).
 | 61 | `season` (espera com dispensa) | 600 s; travou na escolha de fim de ano ("dispensar jogador"): "Back" devolvia à mensagem | 827 |
 | 63 | traço do fim de ano (save 62) | a confirmação "Dismiss Player? Yes/No" vem com "No" marcado | — |
 | 64 | `season` com `when ... key LEFT/SELECT` | passa da escolha; entra na sequência "Dismiss Player? N/30" (dispensas repetidas) | **828 / 1.248 (66,3%)** |
+| 65 | salvaguarda (693 métodos vigiados) | 0 alertas | 828 + 39 creditados = 867 |
+| 66 | `season` respondendo "Não" (save 64, `--fast`, 600 s) | 32.400 frames; do ano 1, mês 12 ao ano 5, mês 1: 4 viradas de ano, 3 temporadas completas; `RecordReset`, `CustomerNumReset`, `SupervisorData.LvUp` executados | **835 + 39 = 874 / 1.248 (70,0%)**; 157 justificados; 217 restantes |
 
 Nenhuma tentativa teve lacuna de tradução, exceção não tratada ou tela presa
 fora do próprio laço de decisão do jogo. O executor ganhou o passo
@@ -155,3 +157,12 @@ de ano; roteiros de loja/cobrança (~56 métodos alcançáveis), `SpForm` (19),
 serviços offline (amigos, presentes, escalações, `MatchForm.Run`, cobrança,
 registro) em execução; saves (criar, carregar, sobrescrever, autosave,
 carregar de sessão anterior).
+
+**Correção da sequência de dispensas (2026-11-15).** O jogo não deixa o time
+ficar abaixo de 11 jogadores: no tipo 72 do `SubForm` (`form/SubForm.cs`),
+"Sim" só abre a lista de dispensa com mais de 11 membros; senão mostra o
+evento 121 e repete a pergunta. A rota antiga respondia "Sim" e ficava presa
+nesse laço (apontado pelo usuário). A rota agora responde "Não" (`RIGHT`,
+`SELECT`), que executa o evento 116 e fecha. Save do jogo: vaga única;
+autosave semanal em `GameForm.cs:1325` (`SaveGame(true)`), coberto pela
+temporada; save manual pela tecla esquerda (`SubForm(16)`), rota `saves.route`.

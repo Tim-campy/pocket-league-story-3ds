@@ -1,13 +1,13 @@
 # Métodos nunca alcançados
 
-Gerado em 2026-11-14 por `python tools/callgraph/analyze.py` a partir de `config/translation.csv` e do grafo de chamadas estático (Roslyn) do C# reconstruído; recibo em `config/phase2-reachability.json`. Só nomes de métodos do C# reconstruído; nenhum conteúdo do jogo. Regenerar após cada rodada de cobertura.
+Gerado em 2026-11-15 por `python tools/callgraph/analyze.py` a partir de `config/translation.csv` e do grafo de chamadas estático (Roslyn) do C# reconstruído; recibo em `config/phase2-reachability.json`. Só nomes de métodos do C# reconstruído; nenhum conteúdo do jogo. Regenerar após cada rodada de cobertura.
 
 Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com ele e o adaptador de plataforma gerado. Chamadas virtuais e de interface vão para as sobrescritas em tipos instanciados por código alcançável (análise rápida de tipos); delegados alcançam o método ou lambda no ponto de criação; construtores estáticos são alcançados pelo primeiro uso do tipo. Ramos guardados por flags de `Config`/`MyConfig` com valor de execução constante falso são cortados; os de depuração (`DEBUG` e flags derivadas) formam a classe "só depuração". O modelo do port corta os corpos substituídos por políticas offline (`config/service-overrides.json`) e por ligações de plataforma (`external_methods`/`external_types` do tradutor) e parte das entradas reais da plataforma (`Main`, adaptador gerado, slots virtuais).
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 828 |
-| Alcançáveis, ainda não executados | 420 |
+| Executados no diagnóstico (`runs`) | 835 |
+| Alcançáveis, ainda não executados | 217 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
 | Só depuração | 35 |
@@ -18,83 +18,58 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 
 | Classe | translated | embedded | todo | no-body | verified |
 |---|---:|---:|---:|---:|---:|
-| reachable-not-exercised | 364 | 54 | 0 | 1 | 0 |
+| reachable-not-exercised | 210 | 7 | 0 | 0 | 0 |
 | unreachable-by-policy | 85 | 4 | 0 | 0 | 0 |
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 828 de 1248 (66.3%). Métodos `runs` que a análise não alcançou: 0.
+Cobertura sobre o alcançável: 874 de 1248 (70.0%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 835; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 39; justificados individualmente (`config/coverage-justifications.json`): 157; restam sem execução nem justificativa: 217.
 
-## Alcançáveis, ainda não executados (420)
+
+**Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
+
+## Alcançáveis, ainda não executados (217)
 
 Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 
-- **analytics.AnalyticsTracker** (1): `DispatchPageView`
 - **cfg.MyConfig** (1): `.cctor`
-- **data.FanActData** (10): `.cctor`, `AddRankUpParam`, `ChangeState`, `GetAddEvaLimitOver`, `GetDispParamToEva`, `GetFanAddParamNum`, `IsNew`, `NewGame`, `RankUp`, `RemoveNew`
-- **data.FanBonusData** (2): `.cctor`, `NewGame`
-- **data.FormationData** (2): `ChangeState`, `NewGame`
+- **data.FanActData** (9): `AddRankUpParam`, `ChangeState`, `GetAddEvaLimitOver`, `GetDispParamToEva`, `GetFanAddParamNum`, `IsNew`, `NewGame`, `RankUp`, `RemoveNew`
+- **data.FanBonusData** (1): `NewGame`
+- **data.FormationData** (1): `NewGame`
 - **data.LeagueData** (8): `ChangeState`, `IsVictoryLeague`, `IsVictoryMatch`, `NewGame`, `RegistLeague`, `RemoveNew`, `SetGetTrophy`, `SetLeagueInfoExplain`
-- **data.PlayerData** (6): `.cctor`, `AddPhysicalParam`, `Employ`, `SetTrainingAddParam`, `Start_aura`
+- **data.PlayerData** (5): `AddPhysicalParam`, `Employ`, `SetTrainingAddParam`, `Start_aura`
 - **data.QuestMatchData** (1): `NewGame`
-- **data.SponsorData** (4): `.cctor`, `GetIncome`, `NewGame`, `RemoveNew`
-- **data.SupervisorData** (5): `.cctor`, `ChangeState`, `ContractSupervisor`, `LvUp`, `NewGame`
+- **data.SponsorData** (3): `GetIncome`, `NewGame`, `RemoveNew`
+- **data.SupervisorData** (2): `ChangeState`, `NewGame`
 - **data.TeamData** (2): `SetScore`, `SetScoreRanking`
-- **data.TenantData** (14): `.cctor`, `ChangeState`, `GetFanToEf`, `GetGoodsIncomeRate`, `GetLvUpAddParam`, `IsMaxLv`, `IsNew`, `IsStreangth`, `IsTAreaOrStadiumTenant`, `LvUp`, `NewGame`, `ProcStrenSpecialTenant`, `RemoveNew`, `StrengthTenant`
+- **data.TenantData** (13): `ChangeState`, `GetFanToEf`, `GetGoodsIncomeRate`, `GetLvUpAddParam`, `IsMaxLv`, `IsNew`, `IsStreangth`, `IsTAreaOrStadiumTenant`, `LvUp`, `NewGame`, `ProcStrenSpecialTenant`, `RemoveNew`, `StrengthTenant`
 - **data.TradeData** (2): `IsPlayerInMember`, `NewGame`
-- **data.TrainingData** (5): `.cctor`, `ChangeState`, `GetTrainingAddParamNum`, `NewGame`, `RemoveNew`
-- **form.BootForm** (6): `.cctor`, `GetHashCode`, `GetTouchValue`, `Resume`, `SetTouchValue`, `ToString`
-- **form.DebugForm** (1): `.cctor`
-- **form.FormManager** (2): `.cctor`, `Resume`
-- **form.GameForm** (14): `.cctor`, `GetHashCode`, `GetScaleRange`, `GetTouchValue`, `OnTouchCamera`, `OnTouchEvent`, `ResetOffscreen`, `Resume`, `SetBuildBtmMessage`, `SetCameraPosition`, `SetCursorPosition`, `SetScale`, `SetTouchValue`, `ToString`
-- **form.MyFormBase** (8): `.cctor`, `GetBoxFooterY`, `OnTouchEvent`, `Push`, `Resume`, `SetTouchValue`, `UNI`
-- **form.RankForm** (13): `.cctor`, `ChangeState`, `Draw`, `Finish`, `GetHashCode`, `GetTouchValue`, `Init`, `Resume`, `SetSoftLabel`, `SetTouchValue`, `ToString`, `Update`, `_draw`
-- **form.SoccerForm** (16): `.cctor`, `Draw_matchElse`, `Draw_newPlayerPopular`, `Draw_topBar`, `GetDrawTBAROff`, `GetFirstScript`, `GetHashCode`, `GetScaleRange`, `GetTouchValue`, `OnTouchCamera`, `OnTouchEvent`, `ResetOffscreen`, `Resume`, `SetScale`, `SetTouchValue`, `ToString`
-- **form.SpForm** (19): `.cctor`, `.ctor`, `AddCommand`, `ChangeState`, `Draw`, `Finish`, `GetHashCode`, `GetTouchValue`, `Init`, `MakeSendDataTask`, `Resume`, `Run`, `SetSoftLabel`, `SetTouchValue`, `ShowDialog`, `ToString`, `Update`, `_draw`
-- **form.SubForm** (26): `.cctor`, `.ctor`, `DrawConfig_jp`, `Draw_btmMsg`, `Draw_clearPoint`, `Draw_fanActBack`, `Draw_multiParam`, `Draw_tenantBuildIcon`, `Draw_trainingIcon`, `Draw_up`, `FinishMeterParam`, `GetHashCode`, `GetMeterParam`, `GetStringLength`, `IsSimpleChara`, `MakeTalkForm`, `Resume`, `SetMeterParam`, `SetMeterParamDispAdd`, `SetMeterParamRank`, `SetTicketWindowBtmMsg`, `SetWinCharaTraining`, `ToString`, `UpdateMeterParam`, `Update_clearPoint`
-- **form.SubForm+<Update2>c__AnonStorey0** (3): `.ctor`, `<>m__0`, `<>m__1`
-- **form.TitleForm** (9): `.cctor`, `<_draw>m__2`, `GetHashCode`, `OnTouchEvent`, `Resume`, `SetTouchValue`, `ToString`, `UpdateKairoAdClickNum`
-- **game.Ball** (1): `.cctor`
-- **game.Camera** (1): `.cctor`
+- **data.TrainingData** (4): `ChangeState`, `GetTrainingAddParamNum`, `NewGame`, `RemoveNew`
+- **form.BootForm** (3): `GetTouchValue`, `Resume`, `SetTouchValue`
+- **form.FormManager** (1): `Resume`
+- **form.GameForm** (10): `GetScaleRange`, `GetTouchValue`, `OnTouchCamera`, `OnTouchEvent`, `ResetOffscreen`, `Resume`, `SetCameraPosition`, `SetCursorPosition`, `SetScale`, `SetTouchValue`
+- **form.MyFormBase** (7): `GetBoxFooterY`, `OnTouchEvent`, `Push`, `Resume`, `SetTouchValue`, `UNI`
+- **form.RankForm** (10): `ChangeState`, `Draw`, `Finish`, `GetTouchValue`, `Init`, `Resume`, `SetSoftLabel`, `SetTouchValue`, `Update`, `_draw`
+- **form.SoccerForm** (10): `Draw_matchElse`, `GetFirstScript`, `GetScaleRange`, `GetTouchValue`, `OnTouchCamera`, `OnTouchEvent`, `ResetOffscreen`, `Resume`, `SetScale`, `SetTouchValue`
+- **form.SubForm** (23): `.ctor`, `DrawConfig_jp`, `Draw_btmMsg`, `Draw_clearPoint`, `Draw_fanActBack`, `Draw_multiParam`, `Draw_tenantBuildIcon`, `Draw_trainingIcon`, `Draw_up`, `FinishMeterParam`, `GetMeterParam`, `GetStringLength`, `IsSimpleChara`, `MakeTalkForm`, `Resume`, `SetMeterParam`, `SetMeterParamDispAdd`, `SetMeterParamRank`, `SetTicketWindowBtmMsg`, `SetWinCharaTraining`, `UpdateMeterParam`, `Update_clearPoint`
+- **form.TitleForm** (5): `OnTouchEvent`, `Resume`, `SetTouchValue`, `UpdateKairoAdClickNum`
 - **game.DelayEvent** (1): `Deserialize`
-- **game.GameManager** (1): `.cctor`
-- **game.GameUtil** (1): `.cctor`
-- **game.Map** (2): `.cctor`, `Draw_copyArea`
-- **game.MapMain** (3): `.cctor`, `Draw_copyArea`, `UpdateTrainingCoatNum`
-- **game.Player** (2): `.cctor`, `ChangeState`
-- **game.TArea** (1): `.cctor`
-- **game.TBall** (1): `.cctor`
-- **game.TGroupArea** (1): `.cctor`
-- **game.TPlayer** (4): `.cctor`, `AddCommandRunning`, `AddCommandRunningRegist`, `StopTraining`
-- **game.Team** (1): `.cctor`
-- **game.Tenant** (6): `.cctor`, `BuildTenant`, `ChangeState`, `DestructTenant`, `OutUserTPlayers`, `StrenghTenant`
-- **game.UserData** (25): `.cctor`, `ChangeTraining`, `CustomerNumReset`, `DrawGraph_menuElement`, `GetAddFeelPtEf`, `GetEvaWarPNameValue`, `GetFeelPtEf`, `GetFeelPtEfCommentParam`, `GetFeelPtEfRetStr`, `GetLeagueData`, `GetNextBattleLeagueIndex`, `GetTeamScore`, `League_finish`, `League_resetScore`, `League_setFightResult`, `NewGame`, `RecordReset`, `ReflectContinueGameData`, `RotateTestPlayParam`, `SetClearPoint`, `SetContinueGameData`, `SetMemberChangeList`, `SetNegotiateResult`, `SubResearchPoint`, `Update_league`
-- **main.AppData** (22): `.cctor`, `Draw`, `DrawFukidashiBalloon`, `DrawFukidashiKimochi`, `DrawMoney2`, `DrawMoney3`, `DrawNumImageComma_en`, `DrawSeb`, `DrawTrophyEffect`, `GetHighScore`, `GetHttpErrorText`, `GetNetHighScore`, `GettMoneyNetHighScore`, `NewGame`, `Post`, `ResourceReDownload`, `SaveGame`, `SendSaveData`
+- **game.Map** (1): `Draw_copyArea`
+- **game.MapMain** (2): `Draw_copyArea`, `UpdateTrainingCoatNum`
+- **game.Player** (1): `ChangeState`
+- **game.TPlayer** (3): `AddCommandRunning`, `AddCommandRunningRegist`, `StopTraining`
+- **game.Tenant** (5): `BuildTenant`, `ChangeState`, `DestructTenant`, `OutUserTPlayers`, `StrenghTenant`
+- **game.UserData** (20): `ChangeTraining`, `GetAddFeelPtEf`, `GetEvaWarPNameValue`, `GetFeelPtEf`, `GetFeelPtEfCommentParam`, `GetFeelPtEfRetStr`, `GetLeagueData`, `GetNextBattleLeagueIndex`, `GetTeamScore`, `League_finish`, `League_resetScore`, `League_setFightResult`, `NewGame`, `ReflectContinueGameData`, `SetClearPoint`, `SetContinueGameData`, `SetMemberChangeList`, `SetNegotiateResult`, `SubResearchPoint`, `Update_league`
+- **main.AppData** (16): `Draw`, `DrawFukidashiBalloon`, `DrawFukidashiKimochi`, `DrawMoney2`, `DrawMoney3`, `DrawNumImageComma_en`, `DrawSeb`, `DrawTrophyEffect`, `GetHighScore`, `GetHttpErrorText`, `GetNetHighScore`, `GettMoneyNetHighScore`, `NewGame`, `SaveGame`
 - **main.AppData+<DrawFukidashiKimochi>c__AnonStorey1** (2): `.ctor`, `<>m__3`
 - **main.Main** (2): `OnResume`, `OnSuspend`
-- **native.AppPlugin** (1): `.cctor`
 - **panel.MainPanel** (2): `.ctor`, `Show`
-- **surface.GamePad** (8): `.cctor`, `AddTouch`, `DrawBattery`, `DrawSoftLabelImage`, `DrawWatch`, `GetSideSize`, `SetLayoutMode`, `SetMode`
-- **surface.GameView** (22): `.cctor`, `AddDelayPaintBuffer`, `AddEffect`, `OnTouchCamera`, `OnTouchDlgPage`, `OnTouchDlgPage2`, `OnTouchKeyClick`, `OnTouchKeyDown`, `OnTouchKeyPress`, `OnTouchKeyUp`, `OnTouchList`, `OnTouchMainMenu`, `OnTouchRect`, `OnTouchScrollList`, `OnTouchSubMenu`, `OnTouchTitleMenu`, `OnTouchTrackBar`, `OnTouchUnMarker`, `OnTouchVScrollBar`, `OnTouchVScrollButton`, `Set`
+- **surface.GamePad** (7): `AddTouch`, `DrawBattery`, `DrawSoftLabelImage`, `DrawWatch`, `GetSideSize`, `SetLayoutMode`, `SetMode`
+- **surface.GameView** (21): `AddDelayPaintBuffer`, `AddEffect`, `OnTouchCamera`, `OnTouchDlgPage`, `OnTouchDlgPage2`, `OnTouchKeyClick`, `OnTouchKeyDown`, `OnTouchKeyPress`, `OnTouchKeyUp`, `OnTouchList`, `OnTouchMainMenu`, `OnTouchRect`, `OnTouchScrollList`, `OnTouchSubMenu`, `OnTouchTitleMenu`, `OnTouchTrackBar`, `OnTouchUnMarker`, `OnTouchVScrollBar`, `OnTouchVScrollButton`, `Set`
 - **surface.SurfaceManager** (1): `SetLayoutMode`
 - **surface.TouchEffectManager** (2): `Clear`, `RemoveEffect`
-- **system.KairoService** (8): `.ctor`, `<Update>m__D`, `Connected`, `Finish`, `GetInstance`, `Save`, `SaveAll`, `Update`
-- **system.KairoText** (2): `.cctor`, `LT`
-- **system.billing.MyBilling** (3): `.ctor`, `CheckPlayingGame`, `GetInstance`
-- **system.billing.ui.ApplyTask** (6): `.ctor`, `Enable`, `Equals`, `Init`, `IsGift`, `IsItem`
-- **system.billing.ui.BillingItem** (11): `Check`, `CheckTestProduct`, `GetId`, `GetName`, `GetProductId`, `GetProvisionType`, `GetProvisionValue`, `GetProvisionValueText`, `GetSeriesName`, `GetSeriesNumber`, `GetState`
-- **system.billing.ui.BillingManager** (17): `.cctor`, `.ctor`, `AddApplyTask`, `CheckNextConsume`, `CheckPlayingGame`, `CheckRegistApply`, `ConnectRegistMarketPurchase`, `Finish`, `GetInstance`, `GetItem`, `GetItems`, `GetSales`, `LaunchPurchaseFlow`, `RegistApplyTask`, `SearchApplyTask`, `UpdateApplyTask`, `UpdateBillingItems`
-- **system.billing.ui.StoreBase** (2): `.cctor`, `.ctor`
-- **system.form.BillingForm** (28): `.cctor`, `.ctor`, `CheckMainWindow`, `Draw`, `DrawCommand`, `DrawRect`, `FillRect`, `FillRect3`, `Finish`, `GetHashCode`, `GetTouchValue`, `Init`, `LoadResource`, `OnTouchEvent`, `Resume`, `Run`, `ScrollControl`, `ScrollUpdate`, `SetSoftlabel`, `SetTouchValue`, `ThreadStart`, `ToString`, `Update`, `UpdateSaleList`, `_draw`, `_update`
-- **system.form.ConnectForm** (11): `.cctor`, `.ctor`, `Draw`, `DrawConnect`, `Finish`, `GetHashCode`, `Init`, `Resume`, `ToString`, `Update`, `_draw`
-- **system.form.HttpForm** (12): `.cctor`, `.ctor`, `CheckMainWindow`, `Draw`, `DrawConnect`, `Finish`, `Init`, `Run`, `ToString`, `Update`, `get_ProcessError`, `set_ProcessError`
-- **system.form.HttpForm+HttpMethod** (1): `.ctor`
-- **system.form.HttpForm+ResultData** (7): `.ctor`, `System.Collections.IEnumerable.GetEnumerator`, `get_Error`, `get_Succeed`, `set_Error`, `set_Exception`, `set_Succeed`
-- **system.form.LanguageForm** (11): `.ctor`, `<Update>m__1D`, `<Update>m__1E`, `<Update>m__1F`, `<Update>m__20`, `CheckMainWindow`, `Finish`, `Init`, `OnTouchEvent`, `ToString`, `Update`
-- **system.friend.MyFriend** (2): `.ctor`, `GetInstance`
-- **system.friend.ui.FriendData** (2): `.cctor`, `.ctor`
-- **system.lineup.MyLineup** (2): `.ctor`, `GetInstance`
-- **system.surface.GameBanner** (2): `.cctor`, `OnTouchEvent`
+- **system.form.LanguageForm** (10): `.ctor`, `<Update>m__1D`, `<Update>m__1E`, `<Update>m__1F`, `<Update>m__20`, `CheckMainWindow`, `Finish`, `Init`, `OnTouchEvent`, `Update`
 
 ## Inalcançáveis por política offline ou plataforma (89)
 
@@ -220,6 +195,46 @@ Sem caminho a partir das entradas do original; quando o único caminho passa por
 - **system.surface.GameBanner** (1): `RotateClear` — sobrescrita nunca chamada
 - **system.tapjoy.MyTapjoy** (1): `GetInstance` — sem chamadores
 - **system.tapjoy.ui.Tapjoy** (9): `AddBalance`, `GetBalance`, `GetInstance`, `GetOfferState`, `Init`, `Quit`, `ShowOffers`, `SubBalance` — sem chamadores; `CallBalance` — sobrescrita nunca chamada
+
+## Alcançáveis justificados individualmente (157)
+
+Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
+
+### billing-offline (96)
+
+Offline port: these screens are only opened from paths removed by policy (GameBanner.Draw draws nothing, so its touch target never exists; SurfaceManager.UpdateAdMobView, the only creator of KairoService, is a policy; billing provisioning is disabled; friend/lineup need KairoService).
+
+`analytics.AnalyticsTracker::DispatchPageView`, `system.KairoService::.ctor`, `system.KairoService::<Update>m__D`, `system.KairoService::Connected`, `system.KairoService::Finish`, `system.KairoService::GetInstance`, `system.KairoService::Save`, `system.KairoService::SaveAll`, `system.KairoService::Update`, `system.KairoText::.cctor`, `system.KairoText::LT`, `system.billing.MyBilling::.ctor`, `system.billing.MyBilling::CheckPlayingGame`, `system.billing.MyBilling::GetInstance`, `system.billing.ui.ApplyTask::.ctor`, `system.billing.ui.ApplyTask::Enable`, `system.billing.ui.ApplyTask::Equals`, `system.billing.ui.ApplyTask::Init`, `system.billing.ui.ApplyTask::IsGift`, `system.billing.ui.ApplyTask::IsItem`, `system.billing.ui.BillingItem::Check`, `system.billing.ui.BillingItem::CheckTestProduct`, `system.billing.ui.BillingItem::GetId`, `system.billing.ui.BillingItem::GetName`, `system.billing.ui.BillingItem::GetProductId`, `system.billing.ui.BillingItem::GetProvisionType`, `system.billing.ui.BillingItem::GetProvisionValue`, `system.billing.ui.BillingItem::GetProvisionValueText`, `system.billing.ui.BillingItem::GetSeriesName`, `system.billing.ui.BillingItem::GetSeriesNumber`, `system.billing.ui.BillingItem::GetState`, `system.billing.ui.BillingManager::.cctor`, `system.billing.ui.BillingManager::.ctor`, `system.billing.ui.BillingManager::AddApplyTask`, `system.billing.ui.BillingManager::CheckNextConsume`, `system.billing.ui.BillingManager::CheckPlayingGame`, `system.billing.ui.BillingManager::CheckRegistApply`, `system.billing.ui.BillingManager::ConnectRegistMarketPurchase`, `system.billing.ui.BillingManager::Finish`, `system.billing.ui.BillingManager::GetInstance`, `system.billing.ui.BillingManager::GetItem`, `system.billing.ui.BillingManager::GetItems`, `system.billing.ui.BillingManager::GetSales`, `system.billing.ui.BillingManager::LaunchPurchaseFlow`, `system.billing.ui.BillingManager::RegistApplyTask`, `system.billing.ui.BillingManager::SearchApplyTask`, `system.billing.ui.BillingManager::UpdateApplyTask`, `system.billing.ui.BillingManager::UpdateBillingItems`, `system.billing.ui.StoreBase::.cctor`, `system.billing.ui.StoreBase::.ctor`, `system.form.BillingForm::.cctor`, `system.form.BillingForm::.ctor`, `system.form.BillingForm::CheckMainWindow`, `system.form.BillingForm::Draw`, `system.form.BillingForm::DrawCommand`, `system.form.BillingForm::DrawCommand`, `system.form.BillingForm::DrawRect`, `system.form.BillingForm::FillRect`, `system.form.BillingForm::FillRect3`, `system.form.BillingForm::Finish`, `system.form.BillingForm::GetHashCode`, `system.form.BillingForm::GetTouchValue`, `system.form.BillingForm::Init`, `system.form.BillingForm::LoadResource`, `system.form.BillingForm::OnTouchEvent`, `system.form.BillingForm::Resume`, `system.form.BillingForm::Run`, `system.form.BillingForm::ScrollControl`, `system.form.BillingForm::ScrollUpdate`, `system.form.BillingForm::ScrollUpdate`, `system.form.BillingForm::SetSoftlabel`, `system.form.BillingForm::SetTouchValue`, `system.form.BillingForm::ThreadStart`, `system.form.BillingForm::ToString`, `system.form.BillingForm::Update`, `system.form.BillingForm::UpdateSaleList`, `system.form.BillingForm::_draw`, `system.form.BillingForm::_update`, `system.form.ConnectForm::.cctor`, `system.form.ConnectForm::.ctor`, `system.form.ConnectForm::Draw`, `system.form.ConnectForm::DrawConnect`, `system.form.ConnectForm::Finish`, `system.form.ConnectForm::GetHashCode`, `system.form.ConnectForm::Init`, `system.form.ConnectForm::Resume`, `system.form.ConnectForm::ToString`, `system.form.ConnectForm::Update`, `system.form.ConnectForm::_draw`, `system.friend.MyFriend::.ctor`, `system.friend.MyFriend::GetInstance`, `system.friend.ui.FriendData::.cctor`, `system.friend.ui.FriendData::.ctor`, `system.lineup.MyLineup::.ctor`, `system.lineup.MyLineup::GetInstance`, `system.surface.GameBanner::OnTouchEvent`
+
+### dead-in-original (4)
+
+Dead in the original: SoccerForm states 1 and 15 are set only by debug code; GameForm.selectTenantData_ is never assigned.
+
+`form.GameForm::SetBuildBtmMessage`, `form.SoccerForm::Draw_newPlayerPopular`, `form.SoccerForm::Draw_topBar`, `form.SoccerForm::GetDrawTBAROff`
+
+### hidden-keypad (5)
+
+Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network.
+
+`main.AppData::Post`, `main.AppData::ResourceReDownload`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`
+
+### implicit-object-members (13)
+
+Static-analysis over-approximation: the analysis assumes the runtime may call ToString/GetHashCode/Equals on every instantiated type; no game path calls them on these types.
+
+`form.BootForm::GetHashCode`, `form.BootForm::ToString`, `form.GameForm::GetHashCode`, `form.GameForm::ToString`, `form.RankForm::GetHashCode`, `form.RankForm::ToString`, `form.SoccerForm::GetHashCode`, `form.SoccerForm::ToString`, `form.SubForm::GetHashCode`, `form.SubForm::ToString`, `form.TitleForm::GetHashCode`, `form.TitleForm::ToString`, `system.form.LanguageForm::ToString`
+
+### language-pack-download (20)
+
+HttpForm is created only when the language panel returns -1/-2 (download of an online language pack); the offline language presenter never returns those values.
+
+`system.form.HttpForm+HttpMethod::.ctor`, `system.form.HttpForm+ResultData::.ctor`, `system.form.HttpForm+ResultData::System.Collections.IEnumerable.GetEnumerator`, `system.form.HttpForm+ResultData::get_Error`, `system.form.HttpForm+ResultData::get_Succeed`, `system.form.HttpForm+ResultData::set_Error`, `system.form.HttpForm+ResultData::set_Exception`, `system.form.HttpForm+ResultData::set_Succeed`, `system.form.HttpForm::.cctor`, `system.form.HttpForm::.ctor`, `system.form.HttpForm::CheckMainWindow`, `system.form.HttpForm::Draw`, `system.form.HttpForm::DrawConnect`, `system.form.HttpForm::Finish`, `system.form.HttpForm::Init`, `system.form.HttpForm::Run`, `system.form.HttpForm::ToString`, `system.form.HttpForm::Update`, `system.form.HttpForm::get_ProcessError`, `system.form.HttpForm::set_ProcessError`
+
+### support-upload (19)
+
+SpForm (support/upload) opens only with key 0x800 held at a crash or boot error, or holding gamepad component 5 for 5 s in pad mode 0, which the port surface never uses; its Run uploads to the support server (network).
+
+`form.SpForm::.cctor`, `form.SpForm::.ctor`, `form.SpForm::.ctor`, `form.SpForm::AddCommand`, `form.SpForm::ChangeState`, `form.SpForm::Draw`, `form.SpForm::Finish`, `form.SpForm::GetHashCode`, `form.SpForm::GetTouchValue`, `form.SpForm::Init`, `form.SpForm::MakeSendDataTask`, `form.SpForm::Resume`, `form.SpForm::Run`, `form.SpForm::SetSoftLabel`, `form.SpForm::SetTouchValue`, `form.SpForm::ShowDialog`, `form.SpForm::ToString`, `form.SpForm::Update`, `form.SpForm::_draw`
 
 ## Limites da análise
 

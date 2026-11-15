@@ -38,13 +38,14 @@ def prepare():
     references=[framework/(name+'.dll') for name in libraries]+[compiler.parent/name for name in ['Microsoft.CodeAnalysis.dll','Microsoft.CodeAnalysis.CSharp.dll']]
     target=folder/'Translator.dll'
     args=['/nologo','/noconfig','/nostdlib+','/nullable:enable','/target:exe','/out:'+str(target)]
-    args+=['/r:'+str(p) for p in references]+[str(ROOT/'translator/Translator.cs'),str(ROOT/'translator/EmissionUnits.cs')]
+    args+=['/r:'+str(p) for p in references]+[str(ROOT/'translator'/name) for name in ('Translator.cs','EmissionUnits.cs','ReadableNames.cs','ReadableUnits.cs')]
     response=folder/'compile.rsp';response.write_text('\n'.join('"'+a+'"' for a in args if a!='/noconfig')+'\n',encoding='utf-8',newline='\n')
     run([compiler,'/noconfig','@'+str(response)],folder/'compiler.log')
     for p in references[-2:]:shutil.copy2(p,folder/p.name)
     (folder/'Translator.runtimeconfig.json').write_text(json.dumps({'runtimeOptions':{'tfm':'net10.0','framework':{'name':'Microsoft.NETCore.App','version':'10.0.10'}}})+'\n',encoding='utf-8',newline='\n')
     return folder,runtime,target,dict(compiler_sha256=digest(compiler),runtime_sha256=digest(runtime),
-        translator_source_sha256=digest(ROOT/'translator/Translator.cs'),emission_source_sha256=digest(ROOT/'translator/EmissionUnits.cs'),driver_sha256=digest(Path(__file__)))
+        translator_source_sha256=digest(ROOT/'translator/Translator.cs'),emission_source_sha256=digest(ROOT/'translator/EmissionUnits.cs'),
+        readable_source_sha256=[digest(ROOT/'translator/ReadableNames.cs'),digest(ROOT/'translator/ReadableUnits.cs')],driver_sha256=digest(Path(__file__)))
 
 
 def main():
@@ -56,7 +57,14 @@ def main():
     parser.add_argument('--output',type=Path)
     parser.add_argument('--bootstrap-main',action='store_true',help='Declare Main factory even when its body remains unsupported, without emitting a stub')
     parser.add_argument('--diagnostic-defer-capture',action='store_true',help='Private build-only variant: fatal guard at the missing Capture API, never normal coverage')
+    parser.add_argument('--readable',action='store_true',help='Readable emission (C# names, C++ namespaces) into a private --output below build/; writes no config/ receipt')
+    parser.add_argument('--readable-portable',type=Path,help='With --readable for Assembly-CSharp: the readable KairoLibrary output folder')
     args=parser.parse_args()
+    if args.readable:
+        if args.output is None or args.compile or args.diagnostics_only or args.diagnostic_defer_capture:parser.error('--readable requires --output and excludes --compile/--diagnostics-only/--diagnostic-defer-capture')
+        if not args.output.resolve().is_relative_to((ROOT/'build').resolve()):parser.error('Readable output must remain below ignored build/')
+        if args.assembly=='Assembly-CSharp' and args.readable_portable is None:parser.error('--readable for Assembly-CSharp requires --readable-portable')
+        args.output=args.output.resolve()
     if args.diagnostic_defer_capture:
         if args.assembly!='Assembly-CSharp'or args.compile or args.diagnostics_only or args.output is None:parser.error('Capture diagnostic requires Assembly-CSharp, an explicit private output and no compile/diagnostics-only')
         if not args.output.resolve().is_relative_to((ROOT/'build').resolve()):parser.error('Capture diagnostic output must remain below ignored build/')
@@ -97,6 +105,7 @@ def main():
         request['shared_fields']=[field['field']for field in concurrency['boot_field_classifications']if field['classification']in supported_classes]
         portable=json.loads((ROOT/'config/phase2-translation.json').read_text(encoding='utf-8'))
         manifest=ROOT/'src/kairo/common/generated/emission_units.json'
+        if args.readable:manifest=args.readable_portable.resolve()/'emission_units.json'
         if manifest.exists():request['external_unit_manifest']=str(manifest)
         request.update(select_all_source_methods=True,select_source_prefix="src/Assembly-CSharp/",
             external_types={c['id']:'pls::generated::'+c['cpp_name'].split('<')[0] for c in portable['generated_classes']},
@@ -469,8 +478,10 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
     if args.diagnostic_defer_capture:
         from diagnostic_leaves import CAPTURE,CPP_NAME
         request['external_methods'][CAPTURE]=CPP_NAME
-    input_path=output/'diagnostic-request.json'if args.diagnostic_defer_capture else folder/(args.assembly+'-input.json')
-    raw_path=output/'diagnostic-raw-report.json'if args.diagnostic_defer_capture else folder/(args.assembly+'-translation.json')
+    if args.readable:request['readable']=True
+    input_path=output/'diagnostic-request.json'if args.diagnostic_defer_capture else output/'readable-request.json'if args.readable else folder/(args.assembly+'-input.json')
+    raw_path=output/'diagnostic-raw-report.json'if args.diagnostic_defer_capture else output/'readable-raw-report.json'if args.readable else folder/(args.assembly+'-translation.json')
+    if args.readable:output.mkdir(parents=True,exist_ok=True)
     input_path.write_text(json.dumps(request,indent=2)+'\n',encoding='utf-8',newline='\n')
     run([runtime,target,input_path,raw_path],folder/(args.assembly+'-translator.log'))
     report=json.loads(raw_path.read_text(encoding='utf-8-sig'))
@@ -513,7 +524,7 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         # a duplicated source-oracle initializer or a C++ literal payload.
         oracle.unlink(missing_ok=True)
         (folder/'Assembly-CSharp-source-oracle.cs').unlink(missing_ok=True)
-    elif oracle.exists():shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
+    elif oracle.exists() and not args.readable:shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
     if bootstrap_adapter:report['bootstrap_bindings']=bootstrap_adapter.emit(output,report,portable)
     if args.diagnostic_defer_capture:
         from diagnostic_leaves import package,CAPTURE
@@ -553,10 +564,13 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
     if bound:
         report['platform_bound_methods']={k:request['external_methods'][k] for k in bound}
         for k in bound:report['rejected_methods'].pop(k)
-    report_target=output/'diagnostic-report.json'if args.diagnostic_defer_capture else ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
+    report_target=output/'diagnostic-report.json'if args.diagnostic_defer_capture else output/'readable-report.json'if args.readable else ROOT/'config'/('phase2-game-translation.json' if args.assembly=='Assembly-CSharp' else 'phase2-translation.json')
     report_target.write_text(json.dumps(report,indent=None if args.assembly=='Assembly-CSharp' else 2,ensure_ascii=True,separators=(',',':') if args.assembly=='Assembly-CSharp' else None)+'\n',encoding='utf-8',newline='\n')
     if args.diagnostic_defer_capture:
         print(json.dumps(dict(diagnostic_only=True,normal_coverage_promoted=0,emitted_candidates=report['emitted_method_count'],guarded_callers=callers)))
+        return
+    if args.readable:
+        print(json.dumps(dict(readable=True,emitted_method_count=report['emitted_method_count'],unresolved_tokens=len(report.get('readable_unresolved_tokens',[])),output=output.relative_to(ROOT).as_posix())))
         return
     measured=list(csv.DictReader((ROOT/'config/csharp-syntax.csv').open(encoding='utf-8')))
     covered=set(report['emitted_kind_occurrences'])

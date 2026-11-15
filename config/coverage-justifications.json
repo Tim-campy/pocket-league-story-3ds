@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "note": "Individual justifications for reachable methods that the offline port cannot execute. Each rule names types or methods (IL ledger ids, regex on 'type::method') and the reason. Applied by tools/callgraph/analyze.py; justified methods stay counted among the reachable and are listed apart with the reason. Source: docs/notes/coverage-situations.md.",
+  "rules": [
+    {
+      "group": "billing-offline",
+      "match": "^(system\\.billing\\.|system\\.form\\.BillingForm::|system\\.KairoService::|system\\.friend\\.|system\\.lineup\\.|system\\.form\\.ConnectForm::|system\\.KairoText::|system\\.surface\\.GameBanner::OnTouchEvent|analytics\\.AnalyticsTracker::)",
+      "reason": "Offline port: these screens are only opened from paths removed by policy (GameBanner.Draw draws nothing, so its touch target never exists; SurfaceManager.UpdateAdMobView, the only creator of KairoService, is a policy; billing provisioning is disabled; friend/lineup need KairoService)."
+    },
+    {
+      "group": "support-upload",
+      "match": "^form\\.SpForm::",
+      "reason": "SpForm (support/upload) opens only with key 0x800 held at a crash or boot error, or holding gamepad component 5 for 5 s in pad mode 0, which the port surface never uses; its Run uploads to the support server (network)."
+    },
+    {
+      "group": "language-pack-download",
+      "match": "^system\\.form\\.HttpForm(\\+ResultData|\\+HttpMethod)?::",
+      "reason": "HttpForm is created only when the language panel returns -1/-2 (download of an online language pack); the offline language presenter never returns those values."
+    },
+    {
+      "group": "hidden-keypad",
+      "match": "^main\\.AppData::(SendSaveData|Post|ResourceReDownload)\\(",
+      "reason": "Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network."
+    },
+    {
+      "group": "dead-in-original",
+      "match": "^form\\.SoccerForm::(Draw_topBar|GetDrawTBAROff|Draw_newPlayerPopular)\\(|^form\\.GameForm::SetBuildBtmMessage\\(",
+      "reason": "Dead in the original: SoccerForm states 1 and 15 are set only by debug code; GameForm.selectTenantData_ is never assigned."
+    },
+    {
+      "group": "implicit-object-members",
+      "match": "::(ToString|GetHashCode|Equals)\\(",
+      "reason": "Static-analysis over-approximation: the analysis assumes the runtime may call ToString/GetHashCode/Equals on every instantiated type; no game path calls them on these types."
+    }
+  ]
+}

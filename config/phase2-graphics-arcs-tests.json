@@ -49,7 +49,7 @@
     "src/kairo/common/bootstrap.cpp": "99e4d3dd1d177e6a5bff1a6375fa1ac7a3c3229b0e0c979594121823b4374419",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/ctr_texture.hpp": "1fee5b07af1f711b6d4ca560c79ede7a9fbf40f26ced31a10dabc4407becb59b",
-    "src/kairo/common/diagnostic_profile.hpp": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca",
+    "src/kairo/common/diagnostic_profile.hpp": "a9ae5e2d479e7cadc4e785f70266100ff0f18458a2602043f71eca7fa161ed1d",
     "src/kairo/common/dialog_service.cpp": "1906513d7fd7cfe5685be63dac90631bd09f8b7cfd31a806865479560a9397ff",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
     "src/kairo/common/forms.cpp": "10128d8e7ffb2ad26dc65c41d1c81054d747d5d83a21cd2c48695dcd18a93ab2",
@@ -249,7 +249,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "45cd3ec3684d2d9b7c201ef64209ae1e3fd8d91806f104c75b564706ec39be5b"
+    "sha256": "ce00526eaf09a0c9b9d0820dc40a011e8f0e38163b869a10a46ffdf55cb11031"
   },
   "verified_boundary_ids": [],
   "limitations": [

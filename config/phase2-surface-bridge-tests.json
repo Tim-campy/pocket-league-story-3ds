@@ -245,7 +245,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "b682fd667b2745594ec62fa5a831aa24eb1ecd27c6a35cd4278480a95e137944"
+    "sha256": "b0df2113a1cee26441d3694558476ef343b17b2a6cb6b5ee65e89b0fd4a95208"
   },
   "verified_boundary_ids": [],
   "ordering": {

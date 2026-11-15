@@ -2,6 +2,10 @@
 // Diagnostic-only counters and exclusive wall-clock attribution. Normal builds
 // compile the call sites out. Clock/registry overhead is not subtracted.
 #include <array>
+#include <cstdlib>
+#include <fstream>
+#include <iostream>
+#include <unordered_set>
 #include <atomic>
 #include <chrono>
 #include <cstdint>
@@ -14,25 +18,49 @@
 namespace pls::diagnostic {
 enum class Area:unsigned {game,kairo,raster,composition};
 using Clock=std::chrono::steady_clock;
-struct Entry {std::string assembly,id;std::atomic<std::uint64_t> calls{0},completed{0},thrown{0},inclusive{0},exclusive{0};};
+struct Entry {std::string assembly,id;std::atomic<std::uint64_t> calls{0},completed{0},thrown{0},inclusive{0},exclusive{0};bool watched{false};};
+// Reachability safeguard (diagnostic only): methods the static analysis
+// classifies as unreachable (original/policy/debug) are listed, one DocID per
+// line, in the file named by PLS_REACHABILITY_WATCH; the first execution of
+// one prints PLS_REACHABILITY_ALERT with the managed method stack.
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4996) // Standard getenv, read once.
+#endif
+inline const std::unordered_set<std::string>& reachability_watch(){
+    static const std::unordered_set<std::string> watch=[]{std::unordered_set<std::string> set;
+        if(const char* path=std::getenv("PLS_REACHABILITY_WATCH")){std::ifstream in(path);std::string line;while(std::getline(in,line)){if(!line.empty()&&line.back()=='\r')line.pop_back();if(!line.empty())set.insert(line);}}
+        return set;}();
+    return watch;
+}
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 inline std::mutex registry_mutex;
 inline std::vector<std::unique_ptr<Entry>> registry;
 inline std::atomic<bool> enabled{false};
 inline Entry* register_method(const char*assembly,const char*id){
     std::lock_guard<std::mutex> lock(registry_mutex);
     for(auto& e:registry)if(e->assembly==assembly&&e->id==id)return e.get();
-    auto e=std::make_unique<Entry>();e->assembly=assembly;e->id=id;auto*p=e.get();registry.push_back(std::move(e));return p;
+    auto e=std::make_unique<Entry>();e->assembly=assembly;e->id=id;e->watched=reachability_watch().count(e->id)!=0;auto*p=e.get();registry.push_back(std::move(e));return p;
 }
-struct ThreadState {Area area=Area::kairo;Entry*entry=nullptr;Clock::time_point last=Clock::now();std::array<std::uint64_t,4> ns{};bool frame=false;};
+struct ThreadState {Area area=Area::kairo;Entry*entry=nullptr;Clock::time_point last=Clock::now();std::array<std::uint64_t,4> ns{};bool frame=false;std::vector<Entry*> methods;};
 inline thread_local ThreadState state;
 inline void charge(Clock::time_point now){auto ns=std::chrono::duration_cast<std::chrono::nanoseconds>(now-state.last).count();if(ns>0){if(state.frame)state.ns[unsigned(state.area)]+=std::uint64_t(ns);if(state.entry)state.entry->exclusive.fetch_add(std::uint64_t(ns),std::memory_order_relaxed);}state.last=now;}
 class Scope {
     bool active_;Area previous_;Entry*previous_entry_;Entry*entry_;Clock::time_point start_;int exceptions_;
 public:
     Scope(Area area,Entry* entry=nullptr):active_(enabled.load(std::memory_order_relaxed)),previous_(state.area),previous_entry_(state.entry),entry_(entry),exceptions_(std::uncaught_exceptions()){
-        if(!active_)return;start_=Clock::now();charge(start_);state.area=area;state.entry=entry;if(entry_)entry_->calls.fetch_add(1,std::memory_order_relaxed);
+        if(!active_)return;start_=Clock::now();charge(start_);state.area=area;state.entry=entry;
+        if(entry_){
+            const auto previous_calls=entry_->calls.fetch_add(1,std::memory_order_relaxed);
+            state.methods.push_back(entry_);
+            if(entry_->watched&&previous_calls==0){std::string line="PLS_REACHABILITY_ALERT={\"id\":\""+entry_->id+"\",\"stack\":[";
+                for(std::size_t i=state.methods.size();i-->0;)line+=std::string(i+1==state.methods.size()?"":",")+"\""+state.methods[i]->id+"\"";
+                std::cerr<<line<<"]}\n";}
+        }
     }
-    ~Scope(){if(!active_)return;const auto now=Clock::now();charge(now);state.area=previous_;state.entry=previous_entry_;if(entry_){entry_->inclusive.fetch_add(std::chrono::duration_cast<std::chrono::nanoseconds>(now-start_).count(),std::memory_order_relaxed);(std::uncaught_exceptions()>exceptions_?entry_->thrown:entry_->completed).fetch_add(1,std::memory_order_relaxed);}}
+    ~Scope(){if(!active_)return;const auto now=Clock::now();charge(now);if(entry_&&!state.methods.empty())state.methods.pop_back();state.area=previous_;state.entry=previous_entry_;if(entry_){entry_->inclusive.fetch_add(std::chrono::duration_cast<std::chrono::nanoseconds>(now-start_).count(),std::memory_order_relaxed);(std::uncaught_exceptions()>exceptions_?entry_->thrown:entry_->completed).fetch_add(1,std::memory_order_relaxed);}}
 };
 template<class F>decltype(auto) api_call(F&&call){
 #if defined(PLS_DIAGNOSTIC_BUILD)

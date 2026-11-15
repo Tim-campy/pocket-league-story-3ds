@@ -186,6 +186,11 @@ int main(int argc,char** argv){
                     const auto code=k=="SELECT"?pls::kairo::Canvas::KEY_SELECT:k=="UP"?pls::kairo::Canvas::KEY_UP:k=="DOWN"?pls::kairo::Canvas::KEY_DOWN:k=="LEFT"?pls::kairo::Canvas::KEY_LEFT:k=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:k=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;
                     canvas->KeyClick(code);std::cerr<<"PLS_PC_SCRIPTED_KEY_FRAME="<<route_frame<<':'<<k<<'\n';
                 }
+                if(action.pointer_kind>=0){
+                    pls::platform::Input event{action.pointer_kind==0?pls::platform::Input::Kind::pointer_down:action.pointer_kind==1?pls::platform::Input::Kind::pointer_up:pls::platform::Input::Kind::pointer_move,action.x,action.y};
+                    canvas->host_event(event);std::cerr<<"PLS_PC_SCRIPTED_TOUCH="<<route_frame<<':'<<action.pointer_kind<<':'<<action.x<<','<<action.y<<'\n';
+                }
+                if(action.focus>=0){app->host_focus(action.focus==1);std::cerr<<"PLS_PC_SCRIPTED_FOCUS="<<route_frame<<':'<<action.focus<<'\n';}
                 if(action.step>=0)std::cerr<<"PLS_ROUTE_STEP={\"step\":"<<action.step<<",\"frame\":"<<presented_frames<<"}\n";
                 if(action.timed_out){std::cerr<<"PLS_ROUTE_TIMEOUT={\"frame\":"<<presented_frames<<",\"note\":\""<<pls::pc::route::json_escape(action.note)<<"\",\"state\":"<<pls::pc::route::to_line(ui_state)<<"}\n";pls::kairo::host_finish_requested=true;}
                 if(action.done){std::cerr<<"PLS_ROUTE_DONE="<<presented_frames<<'\n';pls::kairo::host_finish_requested=true;}

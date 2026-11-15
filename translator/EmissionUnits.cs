@@ -15,6 +15,10 @@ sealed partial class Lowerer {
         public StringBuilder Header=new(),Templates=new(),Cpp=new();
         public HashSet<string> Layout=new();
         public HashSet<string> BodyHeaders=new();
+        // Readable mode only: the same blocks, renamed, with their namespaces.
+        public INamedTypeSymbol? Type;public string? StructKey;
+        public (string wrap,string text)? RStruct;public List<string> RStructMembers=new();
+        public List<(string wrap,string text)> RHeader=new(),RTemplates=new(),RCpp=new();
     }
     static void WriteStableBytes(string path,byte[] data){
         if(!File.Exists(path)||!File.ReadAllBytes(path).SequenceEqual(data))File.WriteAllBytes(path,data);
@@ -49,7 +53,7 @@ sealed partial class Lowerer {
     }
     string[] WritePerTypeUnits(Request input,string basename,string ns,string oldHeader,string oldCpp,HashSet<string> usedClasses,HashSet<string> usedTypes,HashSet<string> usedFields,IMethodSymbol? bootstrap){
         var units=new SortedDictionary<string,TypeUnit>(StringComparer.Ordinal);
-        TypeUnit Unit(INamedTypeSymbol type){var id=Id(type.OriginalDefinition);if(!units.TryGetValue(id,out var unit))units[id]=unit=new TypeUnit{Id=id,Stem=basename+"_type_"+Hash(id)};return unit;}
+        TypeUnit Unit(INamedTypeSymbol type){var id=Id(type.OriginalDefinition);if(!units.TryGetValue(id,out var unit))units[id]=unit=new TypeUnit{Id=id,Stem=readable?registry!.TypeStems[id]:basename+"_type_"+Hash(id),Type=type.OriginalDefinition};return unit;}
         var owners=new Dictionary<string,TypeUnit>(StringComparer.Ordinal);
         foreach(var id in usedClasses){var type=classes[id];owners[Name(type)]=Unit(type);
             foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))owners[Name(field)]=Unit(type);
@@ -82,19 +86,27 @@ sealed partial class Lowerer {
         string Unwrap(string value,out string prefix){var marker="namespace "+ns+" {\n";int at=value.IndexOf(marker,StringComparison.Ordinal);if(at<0||!value.TrimEnd().EndsWith("}",StringComparison.Ordinal))throw new InvalidOperationException("Unexpected generated namespace envelope");prefix=value[..at];return value[(at+marker.Length)..value.LastIndexOf('}')];}
         var headerBody=Unwrap(oldHeader,out var runtimePrefix);var cppBody=Unwrap(oldCpp,out _);
         var forward=new StringBuilder();var common=new StringBuilder();
+        var readableForward=new List<(string wrap,string text)>();var readableCommon=new List<(string wrap,string text)>();
         foreach(var block in TopLevelDeclarations(headerBody)){
             var clean=WithoutComments(block);var owner=DeclarationOwner(block);
-            if(Regex.IsMatch(clean,@"^(?:template\s*<[^>]*>\s*)?struct\s+\w+\s*;\s*$")){forward.Append(block);continue;}
-            if(owner==null){common.Append(block);continue;}
+            if(Regex.IsMatch(clean,@"^(?:template\s*<[^>]*>\s*)?struct\s+\w+\s*;\s*$")){forward.Append(block);if(readable)readableForward.Add(ReadableBlock(block,null));continue;}
+            if(owner==null){common.Append(block);if(readable)readableCommon.Add(ReadableBlock(block,null));continue;}
             var isStructure=Regex.IsMatch(clean,@"^(?:template\s*<[^>]*>\s*)?struct\b");
             if(!isStructure&&clean.Contains('{')){
-                if(clean.StartsWith("template",StringComparison.Ordinal))owner.Templates.Append(block);
-                else owner.Cpp.Append(Regex.Replace(block,@"\binline\s+",""));
-            }else owner.Header.Append(block);
+                if(clean.StartsWith("template",StringComparison.Ordinal)){owner.Templates.Append(block);if(readable)owner.RTemplates.Add(ReadableBlock(block,owner.Type));}
+                else{var definition=Regex.Replace(block,@"\binline\s+","");owner.Cpp.Append(definition);if(readable)owner.RCpp.Add(ReadableBlock(definition,owner.Type));}
+            }else{
+                owner.Header.Append(block);
+                if(readable){
+                    if(isStructure&&StructOf(block) is INamedTypeSymbol structure&&Id(structure)==owner.Id){owner.RStruct=ReadableBlock(block,structure);owner.StructKey=registry!.Tokens[Name(structure)].ClassKey;}
+                    else if(owner.StructKey!=null&&IsMemberOf(block,owner.StructKey))owner.RStructMembers.Add(StaticDeclaration(ReadableBlock(block,owner.Type,true).text));
+                    else owner.RHeader.Add(ReadableBlock(block,owner.Type));
+                }
+            }
         }
         foreach(var block in TopLevelDeclarations(cppBody)){
             var owner=DeclarationOwner(block)??throw new InvalidOperationException("Generated definition has no declaring type: "+WithoutComments(block)[..Math.Min(150,WithoutComments(block).Length)]);
-            owner.Cpp.Append(block);
+            owner.Cpp.Append(block);if(readable)owner.RCpp.Add(ReadableBlock(block,owner.Type));
         }
         // Portable units are independent output. Consume only their public
         // symbol->header manifest, without including the portable umbrella.
@@ -157,15 +169,19 @@ sealed partial class Lowerer {
         string RuntimeIncludes(string value)=>(value.Contains("pls::cs::math_min_single",StringComparison.Ordinal)?"#include \"managed_math.hpp\"\n":"")+(value.Contains("pls::cs::floating_to_string",StringComparison.Ordinal)?"#include \"managed_float_format.hpp\"\n":"");
         string Wrap(string text)=>"namespace "+ns+" {\n"+text+"}\n";
         var banner="// GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.\n";
-        Write(basename+"_runtime.hpp",runtimePrefix+Wrap(common.ToString()));
-        Write(basename+"_forward.hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_runtime.hpp"})+Wrap(forward.ToString()));
+        if(readable)banner="// GENERATED (readable mode) by translator/Translator.cs from the reconstructed C#. Do not edit.\n";
+        Write(basename+"_runtime.hpp",runtimePrefix+Wrap(readable?Namespaced(readableCommon):common.ToString()));
+        Write(basename+"_forward.hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_runtime.hpp"})+Wrap(readable?Namespaced(readableForward):forward.ToString()));
         foreach(var unit in units.Values){
-            Write(unit.Stem+".hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_forward.hpp"}.Concat(unit.Layout))+Wrap(unit.Header.ToString()));
+            var readableHeader=new List<(string wrap,string text)>();
+            if(unit.RStruct is (string structWrap,string structText))readableHeader.Add((structWrap,InsertMembers(structText,unit.RStructMembers)));
+            readableHeader.AddRange(unit.RHeader);
+            Write(unit.Stem+".hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_forward.hpp"}.Concat(unit.Layout))+Wrap(readable?Namespaced(readableHeader):unit.Header.ToString()));
             var content=unit.Cpp.ToString();var headers=DependencyHeaders(content+unit.Header,unit).Concat(unit.BodyHeaders).Append(unit.Stem+".hpp").ToArray();
             var templates=DependencyTemplates(content+unit.Header,unit).Distinct().ToArray();
-            Write(unit.Stem+".cpp",banner+Includes(headers)+Includes(templates)+RuntimeIncludes(content)+Wrap(content));
+            Write(unit.Stem+".cpp",banner+Includes(headers)+Includes(templates)+RuntimeIncludes(content)+Wrap(readable?Namespaced(unit.RCpp):content));
             if(unit.Templates.Length!=0){var template=unit.Templates.ToString();
-                Write(unit.Stem+"_templates.hpp",banner+"#pragma once\n"+Includes(DependencyHeaders(template,unit).Concat(unit.BodyHeaders).Append(unit.Stem+".hpp"))+Includes(DependencyTemplates(template,unit).Where(name=>name!=unit.Stem+"_templates.hpp"))+RuntimeIncludes(template)+Wrap(template));
+                Write(unit.Stem+"_templates.hpp",banner+"#pragma once\n"+Includes(DependencyHeaders(template,unit).Concat(unit.BodyHeaders).Append(unit.Stem+".hpp"))+Includes(DependencyTemplates(template,unit).Where(name=>name!=unit.Stem+"_templates.hpp"))+RuntimeIncludes(template)+Wrap(readable?Namespaced(unit.RTemplates):template));
             }
         }
         Write(basename+".hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_forward.hpp"}.Concat(units.Values.Select(unit=>unit.Stem+".hpp")))+Includes(units.Values.Where(unit=>unit.Templates.Length!=0).Select(unit=>unit.Stem+"_templates.hpp")));
@@ -173,7 +189,7 @@ sealed partial class Lowerer {
         var manifest=new{format="declaring-type-units-v1",units=units.Values.Select(unit=>new{id=unit.Id,header=unit.Stem+".hpp",cpp=unit.Stem+".cpp",templates=unit.Templates.Length==0?null:unit.Stem+"_templates.hpp",layout_headers=unit.Layout.OrderBy(x=>x).ToArray()}).ToArray(),symbols=owners.OrderBy(pair=>pair.Key).ToDictionary(pair=>pair.Key,pair=>new{header=pair.Value.Stem+".hpp",templates=pair.Value.Templates.Length==0?null:pair.Value.Stem+"_templates.hpp"})};
         WriteStable(Path.Combine(input.output,"emission_units.json"),JsonSerializer.Serialize(manifest,new JsonSerializerOptions{WriteIndented=true})+"\n");
         // Only remove obsolete files with this producer's exact reserved stem.
-        foreach(var file in Directory.GetFiles(input.output,basename+"*"))if((Path.GetExtension(file) is ".cpp" or ".hpp" or ".inc")&&!generated.Contains(Path.GetFileName(file)))File.Delete(file);
+        foreach(var file in Directory.GetFiles(input.output,readable?"*":basename+"*"))if((Path.GetExtension(file) is ".cpp" or ".hpp" or ".inc")&&!generated.Contains(Path.GetFileName(file))&&!(readable&&Path.GetFileName(file).StartsWith("bootstrap_",StringComparison.Ordinal)))File.Delete(file);
         return generated.ToArray();
     }
 }

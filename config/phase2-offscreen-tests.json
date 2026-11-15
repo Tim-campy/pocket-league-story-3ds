@@ -6,12 +6,12 @@
     {
       "fixture": "offscreen_test",
       "assertions": 23,
-      "executable_sha256": "cc70a99ab1b268e883380c93d654eff59fd71c5d71e63cb830b8a12423f48c24"
+      "executable_sha256": "8c9a0ca2927ea6a60542eae8f33933a8b5dbe6e5115be156ebfbc26955656e70"
     },
     {
       "fixture": "mesh_test",
       "assertions": 15,
-      "executable_sha256": "04ee3cdd85689bdcd9093443433504b90f39c91f0058fa9b0ae14cef6ad7606d"
+      "executable_sha256": "d537985f58382c3d7b5b7b377d090a855a48553bb05a4bc4c3b22a19392a791d"
     }
   ],
   "inputs_sha256": {
@@ -59,7 +59,7 @@
     "src/kairo/common/bootstrap.cpp": "99e4d3dd1d177e6a5bff1a6375fa1ac7a3c3229b0e0c979594121823b4374419",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/ctr_texture.hpp": "1fee5b07af1f711b6d4ca560c79ede7a9fbf40f26ced31a10dabc4407becb59b",
-    "src/kairo/common/diagnostic_profile.hpp": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca",
+    "src/kairo/common/diagnostic_profile.hpp": "a9ae5e2d479e7cadc4e785f70266100ff0f18458a2602043f71eca7fa161ed1d",
     "src/kairo/common/dialog_service.cpp": "1906513d7fd7cfe5685be63dac90631bd09f8b7cfd31a806865479560a9397ff",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
     "src/kairo/common/forms.cpp": "10128d8e7ffb2ad26dc65c41d1c81054d747d5d83a21cd2c48695dcd18a93ab2",

@@ -439,7 +439,8 @@ def write_doc(path, receipt, rows_by_class, ledger_total, runs_total):
     for cls in CLASSES:
         lines.append('| '+cls+' | '+' | '.join(str(receipt['totals_by_estado'][cls].get(e, 0)) for e in ESTADOS)+' |')
     lines += ['',
-             'Cobertura sobre o alcançável: %d de %d (%.1f%%). Métodos `runs` que a análise não alcançou: %d.' % (t['runs_reached'], t['reachable_total'], 100.0*t['runs_reached']/max(1, t['reachable_total']), len(receipt['analysis_errors'])), '']
+             'Cobertura sobre o alcançável: %d de %d (%.1f%%). Métodos `runs` que a análise não alcançou: %d.' % (t['exercised'], t['reachable_total'], 100.0*t['exercised']/max(1, t['reachable_total']), len(receipt['analysis_errors'])), 'Executados `runs`: %d; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): %d; justificados individualmente (`config/coverage-justifications.json`): %d; restam sem execução nem justificativa: %d.' % (t['runs_reached'], t['credited'], t['justified'], t['reachable-not-exercised']), '']
+    lines += ['', '**Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.', '']
     titles = {'reachable-not-exercised': 'Alcançáveis, ainda não executados',
               'unreachable-by-policy': 'Inalcançáveis por política offline ou plataforma',
               'debug-only': 'Só depuração',
@@ -469,6 +470,16 @@ def write_doc(path, receipt, rows_by_class, ledger_total, runs_total):
                 parts.append(names+(' — '+reason if reason else ''))
             lines.append('- **%s** (%d): %s' % (tipo, len(items), '; '.join(parts)))
         lines.append('')
+    if receipt.get('justified'):
+        reasons = {r['group']: r['reason'] for r in receipt.get('justification_rules', [])}
+        groups = defaultdict(list)
+        for item in receipt['justified']:
+            groups[item['group']].append(item['id'].split('::', 1)[1])
+        lines += ['## Alcançáveis justificados individualmente (%d)' % len(receipt['justified']), '',
+                  'Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.', '']
+        for group in sorted(groups):
+            lines += ['### '+group+' (%d)' % len(groups[group]), '', reasons.get(group, ''), '',
+                      ', '.join('`'+m.split('(')[0]+'`' for m in sorted(groups[group])), '']
     lines += ['## Limites da análise', '']
     for item in receipt['limits_summary']:
         lines.append('- '+item)
@@ -602,6 +613,36 @@ def main():
 
     methods, analysis_errors, rows_by_class = [], [], {c: [] for c in CLASSES}
     totals = Counter()
+    # Credit rule (embedded members have no body of their own to execute): a type
+    # initializer or implicit constructor is exercised when a member of its type runs;
+    # a lambda/closure member when its host method runs.
+    import re as _re
+    ran_types = {r['tipo'] for r in ledger if r['estado'] == 'runs'}
+    ran_methods = {(r['tipo'], r['metodo']) for r in ledger if r['estado'] == 'runs'}
+    def credited_by(row):
+        tipo, metodo = row['tipo'], row['metodo']
+        closure = _re.search(r'\+<(\w+)>c__AnonStorey\d+$', tipo)
+        if closure:
+            host = (tipo[:closure.start()], closure.group(1))
+            return 'host '+host[0]+'.'+host[1] if host in ran_methods else None
+        lam = _re.match(r'<(\w+)>m__', metodo)
+        if lam:
+            return 'host '+tipo+'.'+lam.group(1) if (tipo, lam.group(1)) in ran_methods else None
+        if metodo in ('.cctor', '.ctor') and tipo in ran_types:
+            return 'owner '+tipo+' runs'
+        return None
+    credited = []
+    # Individual justifications (config/coverage-justifications.json): reachable
+    # methods the offline port cannot execute, each with its reason.
+    jpath = ROOT/'config/coverage-justifications.json'
+    jrules = [(_re.compile(r['match']), r['group'], r['reason']) for r in json.loads(jpath.read_text(encoding='utf-8'))['rules']] if jpath.is_file() else []
+    justified = []
+    def justification(row):
+        key = row['id'].split('::', 1)[1]
+        for rx, group, reason in jrules:
+            if rx.search(key):
+                return group, reason
+        return None
     by_estado = {c: Counter() for c in CLASSES}
     runs_reached = 0
     for row in ledger:
@@ -620,6 +661,13 @@ def main():
                 analysis_errors.append(dict(id=rid, doc_id=nid, static_class=cls))
             continue
         reason = ''
+        if cls == 'reachable-not-exercised' and estado in ('embedded', 'policy') and credited_by(row):
+            credited.append(dict(id=rid, by=credited_by(row)))
+            continue
+        if cls == 'reachable-not-exercised' and justification(row):
+            group, why = justification(row)
+            justified.append(dict(id=rid, group=group))
+            continue
         if ids is not None:
             if cls == 'reachable-not-exercised':
                 chain = P.chain(nid)
@@ -650,8 +698,11 @@ def main():
         entry['evidence'] = evidence
         methods.append(entry)
         rows_by_class[cls].append(dict(tipo=row['tipo'], metodo=row['metodo'], reason=reason))
-    totals['reachable_total'] = totals['reachable-not-exercised']+runs_reached
+    totals['credited'] = len(credited)
+    totals['justified'] = len(justified)
+    totals['reachable_total'] = totals['reachable-not-exercised']+runs_reached+len(credited)+len(justified)
     totals['runs_reached'] = runs_reached
+    totals['exercised'] = runs_reached+len(credited)
 
     limits = data['limits']
     for item in limits:
@@ -710,7 +761,7 @@ def main():
         reachability=dict(original=len(O.parent), original_with_debug=len(D.parent), original_all_branches=len(A.parent), port=len(P.parent),
                           types_instantiated_original=len(O.inst), types_instantiated_port=len(P.inst)),
         totals=dict(totals), totals_by_estado={c: dict(v) for c, v in by_estado.items()}, ledger_methods=len(ledger),
-        runs_summary=dict(runs=totals['runs'], reached_in_port_model=runs_reached, not_reached=len(analysis_errors)),
+        credited=credited, justified=justified, justification_rules=[dict(group=g, reason=w) for _, g, w in jrules], runs_summary=dict(runs=totals['runs'], reached_in_port_model=runs_reached, not_reached=len(analysis_errors)),
         analysis_errors=analysis_errors,
         unmapped=unmapped,
         limits=limits, limits_summary=limits_summary,

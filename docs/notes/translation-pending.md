@@ -208,3 +208,8 @@ com contrato de `ToString` (3).
 1.958** (1.051 traduzidos, 809 executados, 90 embutidos, 6 sem corpo, 2 por
 política). Políticas: 47 de 69 emitidas, 22 sem chamador traduzido, 0
 rejeitadas.
+
+**Decisão do usuário (2026-11-14):** `IEnumerator.Current` do enumerador de
+dicionário encaixotado permanece UNKNOWN e documentado; a exceção do port é
+aceita enquanto nenhum código do jogo enumerar esse objeto. Critério 1
+aprovado e marcado como cumprido; o estado `policy` do livro-razão foi aceito.

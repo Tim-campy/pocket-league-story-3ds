@@ -303,7 +303,7 @@ def main():
     cpp.append('std::string SnapshotState(){auto start=std::chrono::steady_clock::now();std::string result;')
     for field in fields:
         name=field['cpp_name']
-        cs.append('builder.Append("|state:").Append(F(SourceOracle.'+name+'));')
+        cs.append('builder.Append("|state:").Append(F(SourceOracle.'+field.get('oracle_name',name)+'));')
         cpp.append('result+="|state:"+F(pls::generated::'+field.get('cpp_accessor',name)+');')
     cs.append('var result=builder.ToString();long formatted=System.Diagnostics.Stopwatch.GetTimestamp();serializationTicks+=formatted-start;var raw=new byte[result.Length*2];for(int i=0;i<result.Length;i++){raw[i*2]=(byte)result[i];raw[i*2+1]=(byte)(result[i]>>8);}using(var hash=System.Security.Cryptography.SHA256.Create()){var digest=BitConverter.ToString(hash.ComputeHash(raw)).Replace("-","").ToLowerInvariant();hashTicks+=System.Diagnostics.Stopwatch.GetTimestamp()-formatted;return "|state-sha256:"+digest;}}')
     cpp.append('auto formatted=std::chrono::steady_clock::now();serialization_time+=formatted-start;pls::assets::Sha256 hash;auto units=pls::cs::String::from_utf8(result);std::vector<std::uint8_t>raw(std::size_t(units.length())*2);for(std::int32_t i=0;i<units.length();i++){auto value=units.at(i);raw[std::size_t(i)*2]=static_cast<std::uint8_t>(value);raw[std::size_t(i)*2+1]=static_cast<std::uint8_t>(value>>8);}hash.update(raw.data(),raw.size());auto digest=hash.finish();hash_time+=std::chrono::steady_clock::now()-formatted;return "|state-sha256:"+digest;}')
@@ -328,9 +328,9 @@ def main():
                     value=('pls::cs::String{}','null') if text is None else ('pls::cs::String(u'+json.dumps(text)+')',json.dumps(text))
                 if method['id']=='M:kairo.unity.util.Compressor.Expand(System.Byte[])' and parameter['type']=='byte[]' and case_index>=2:
                     raw=[[0],[0,1,2],[255,0,255],[1,2,3],[1]*7][case_index-2]
-                    compress=next(m for m in METHODS if m['id']=='M:kairo.unity.util.Compressor.Compress(System.Byte[])')['cpp_name']
+                    compressor=next(m for m in METHODS if m['id']=='M:kairo.unity.util.Compressor.Compress(System.Byte[])');compress=compressor['cpp_name']
                     contents=','.join(map(str,raw))
-                    value=(compress+'(pls::cs::Array<std::uint8_t>::from({'+contents+'}))','SourceOracle.'+compress+'(new byte[]{'+contents+'})')
+                    value=(compress+'(pls::cs::Array<std::uint8_t>::from({'+contents+'}))','SourceOracle.'+compressor.get('oracle_name',compress)+'(new byte[]{'+contents+'})')
                 if 'kairo.unity.util.JarInflater.#ctor' in method['id'] and parameter['type']=='byte[]':
                     data=[None,[],[0]*12,[0]*11,[0]*12,[0]*8+[255]*4,[0]*12][case_index%7]
                     value=('pls::cs::Array<std::uint8_t>{}','null') if data is None else ('pls::cs::Array<std::uint8_t>::from({'+','.join(map(str,data))+'})','new byte[]{'+','.join(map(str,data))+'}')
@@ -355,7 +355,7 @@ def main():
             elif method['kind']=='UserDefinedOperator':
                 token={'op_Equality':'==','op_Inequality':'!=','op_Addition':'+','op_Subtraction':'-','op_Multiply':'*','op_Division':'/'}[method['name']]
                 managed_invocation='('+args[0]+' '+token+' '+args[1]+')'
-            else:managed_invocation='SourceOracle.'+method['cpp_name']+('<'+','.join(method.get('concrete_cs_type_arguments',['int']*len(templates)))+'>' if templates else '')+'('+','.join(managed_args)+')'
+            else:managed_invocation='SourceOracle.'+method.get('oracle_name',method['cpp_name'])+('<'+','.join(method.get('concrete_cs_type_arguments',['int']*len(templates)))+'>' if templates else '')+'('+','.join(managed_args)+')'
             if method['is_constructor'] and abstract_fixture(method['containing_type']):
                 base='pls::generated::'+CLASSES[method['containing_type']]['cpp_name']
                 invocation='([&](){auto x=pls::cs::make_ref<HarnessAbstractSecureNumber>();auto base=pls::cs::static_pointer_cast<'+base+'>(x);'+native_callee+'_init('+','.join(['base']+args)+');return base;}())'

@@ -41,10 +41,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.24681440001586452,
-    "native-compile": 39.965989200019976,
-    "managed-output": 0.6517941000056453,
-    "native-output": 0.3328738999844063
+    "csharp-compile": 0.3190343000169378,
+    "native-compile": 32.900952199997846,
+    "managed-output": 0.5181221000093501,
+    "native-output": 0.32027470000321046
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -98,13 +98,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/shared-field-differential/Harness.exe",
-    "sha256": "8cde9aa0395e9d03e72b79aeb99ec935f60933306d3e3b333d3b0aab4e7c7b82"
+    "sha256": "03916f1a0e0a1dfe7a26f611e3340ed3c7678bbdf7174b6b50917466d2a293a7"
   },
   "source_oracle_executable": {
     "path": "build/translator/shared-field-differential/Harness-managed.exe",
-    "sha256": "e02a2ebe936abdf059889c4f49fc686197abcc2934d96779bf634b26971957a7"
+    "sha256": "05568b2c039804b7a2a01c9476067b20cabed329b8c4a8dfe6db331cfae265ed"
   },
-  "differential_runner_sha256": "eb7897c054d3cb0cf32e51261b48ccf3fc81d371fb9a6984a9fd9e8758ea8368",
+  "differential_runner_sha256": "d07b177da4530fa31b9cbab88c65bb046eedbf9b47295f17bb0d7e0af090d841",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -300,7 +300,7 @@
     },
     {
       "path": "src/kairo/common/diagnostic_profile.hpp",
-      "sha256": "b3dc1447d3c60c301708f6cf1877eb85a1673d2e2308f90314e095fa32ac56ca"
+      "sha256": "a9ae5e2d479e7cadc4e785f70266100ff0f18458a2602043f71eca7fa161ed1d"
     },
     {
       "path": "src/kairo/common/generated/portable_generated.hpp",
@@ -754,9 +754,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "e4ef4395d31a433c812d6f4fb392de67ebec2373404f4bb3d0155969803a7410",
-    "emission_source_sha256": "f718015b120848a233a0f46b2a1a32fbf08e039bfd4b3f6b784b7c67138f00ef",
-    "driver_sha256": "e58dc8ceaf42f43be96dc1ae17b5b63e44470021823634a68bc6b258641585a5"
+    "translator_source_sha256": "d277881d51a5a962a5e1781180da33e1a4b464ff074772b8fdadef99539c4ea2",
+    "emission_source_sha256": "11595614ee330d9d4f6a569d482bdc671024890f178af8ef4ab83faaca6eee2a",
+    "readable_source_sha256": [
+      "603b45451382b8e4c4977bd2ee48ac62941ef1326689124f40bacfad05c5be73",
+      "ba850cbc269b6b067f4e5d927f64d35078db9cf656e19760fef5806167ccf35c"
+    ],
+    "driver_sha256": "7a44d11ab7cc403c2f7b82cbdab70755a87f571c9c5b6b793b8c0b52b696ecdb"
   },
   "runner_sha256": "c6c0a388376f9e8f30b62bacc49436a4a0498da6a1a54c42113dae8c6a2a91c1",
   "fixture_sha256": "53bc4ecc24b1a55dabf8d68a42e62b0b04adea51e9caa052333b27f06f35dd29",

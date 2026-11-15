@@ -278,7 +278,7 @@ def main():
     if args.diagnostic_unlabeled_popups_only:env['PLS_PC_DISMISS_UNLABELED_ONLY']='1'
     if args.diagnostic_dismiss_popups_until_frame is not None:env['PLS_PC_DISMISS_POPUPS_UNTIL']=str(args.diagnostic_dismiss_popups_until_frame)
     if args.diagnostic_key_frame:env['PLS_PC_KEY_FRAMES']=','.join(args.diagnostic_key_frame)
-    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None);env.pop('PLS_PC_FAST',None)
+    env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None);env.pop('PLS_PC_FAST',None);env.pop('PLS_REACHABILITY_WATCH',None)
     if args.fast:env['PLS_PC_FAST']='1'
     if args.ui_trace:env['PLS_PC_UI_TRACE']='1'
     diagnostic_source=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
@@ -310,6 +310,15 @@ def main():
         attempt['scripted_key_frame']=args.diagnostic_key_frame
         attempt['virtual_clock']=args.virtual_clock
         attempt['title_anchor']=args.diagnostic_title_anchor
+        # Reachability safeguard: watch every method the static analysis says
+        # cannot run (unreachable in the original, debug-only, cut by policy).
+        reach=ROOT/'config/phase2-reachability.json'
+        if diagnostic_folder and reach.is_file():
+            rows=json.loads(reach.read_text(encoding='utf-8')).get('methods',[])
+            watched=sorted({r['doc_id'] for r in rows if r.get('doc_id') and r['cls'] in ('unreachable-in-original','unreachable-by-policy','debug-only')})
+            watch_file=attempt_folder/'reachability-watch.txt';watch_file.write_text('\n'.join(watched)+'\n',encoding='utf-8',newline='\n')
+            env['PLS_REACHABILITY_WATCH']=str(watch_file.resolve())
+            attempt['reachability_watch']=dict(methods=len(watched),receipt_sha256=hashlib.sha256(reach.read_bytes()).hexdigest())
         if args.diagnostic_route is not None:
             route_copy=attempt_folder/'route.txt';route_copy.write_bytes(args.diagnostic_route.read_bytes())
             env['PLS_PC_ROUTE']=str(route_copy.resolve())
@@ -371,6 +380,9 @@ def main():
                 attempt.update(run)
                 attempt['stopped_at_timeout']=run['stopped_reason']=='timeout'
                 exit_code=run['process_exit_code']
+                if attempt.get('reachability_watch'):
+                    alerts=[json.loads(line.split('=',1)[1]) for line in (attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace').splitlines() if line.startswith('PLS_REACHABILITY_ALERT=')]
+                    attempt['reachability_alerts']=[dict(id=a['id'],stack=a['stack'][:12]) for a in alerts]
                 if args.diagnostic_route is not None:
                     text=(attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace')
                     done=re.findall(r'^PLS_ROUTE_DONE=(\d+)',text,re.M);timeout=re.findall(r'^PLS_ROUTE_TIMEOUT=(.*)$',text,re.M)

@@ -38,12 +38,13 @@ inline std::string to_line(const UiState& s){
 // Same comparison as the change log: frame excluded.
 inline std::string signature(const UiState& s){auto copy=s;copy.frame=0;return to_line(copy);}
 
-enum class Op {anchor,key,wait_form,wait_not_loading,wait_not_dialog,wait_frames,expect_form,dismiss_until,when_key,end};
+enum class Op {anchor,key,wait_form,wait_not_loading,wait_not_dialog,wait_frames,expect_form,dismiss_until,when_key,pointer,focus,end};
 struct Step {
     Op op{};std::string text;int line{};
     std::string key;int repeat{1},gap{1};
     std::string form;std::int32_t id{-1},mode{-1};int label_right{-1};std::string label_text; // label_right: -1 any, 0 empty, 1 non-empty, 2 exact text
     int frames{0},stable{1},timeout{600},depth{-1};bool optional{false};
+    int pointer_kind{-1},x{0},y{0};bool focus_on{true}; // pointer_kind: 0 down, 1 up, 2 move
 };
 inline const char* key_names[]={"SELECT","UP","DOWN","LEFT","RIGHT","SOFT1","SOFT2"};
 inline bool valid_key(const std::string& k){for(auto* n:key_names)if(k==n)return true;return false;}
@@ -82,6 +83,20 @@ inline std::vector<Step> parse(std::istream& input){
         Step step;step.line=line;step.text=raw;
         if(verb=="anchor"){step.op=Op::anchor;parse_conditions(step,words);}
         else if(verb=="end")step.op=Op::end;
+        else if(verb=="press"||verb=="release"||verb=="move"){
+            // Touch on the logical 240x280 screen; tap X Y expands to press, wait, release.
+            step.op=Op::pointer;step.pointer_kind=verb=="press"?0:verb=="release"?1:2;
+            std::string xs,ys;if(!(words>>xs>>ys))throw std::invalid_argument("route line "+std::to_string(line)+": "+verb+" X Y");
+            step.x=parse_int(xs,line);step.y=parse_int(ys,line);
+        }
+        else if(verb=="tap"){
+            std::string xs,ys;if(!(words>>xs>>ys))throw std::invalid_argument("route line "+std::to_string(line)+": tap X Y");
+            Step down=step;down.op=Op::pointer;down.pointer_kind=0;down.x=parse_int(xs,line);down.y=parse_int(ys,line);
+            Step hold=step;hold.op=Op::wait_frames;hold.frames=1;
+            Step up=down;up.pointer_kind=1;
+            steps.push_back(down);steps.push_back(hold);steps.push_back(up);continue;
+        }
+        else if(verb=="focus"){std::string v;words>>v;if(v!="on"&&v!="off")throw std::invalid_argument("route line "+std::to_string(line)+": focus on|off");step.op=Op::focus;step.focus_on=v=="on";}
         else if(verb=="key"){step.op=Op::key;if(!(words>>step.key)||!valid_key(step.key))throw std::invalid_argument("route line "+std::to_string(line)+": unknown key");parse_conditions(step,words);}
         else if(verb=="wait"){
             std::string first;if(!(words>>first))throw std::invalid_argument("route line "+std::to_string(line)+": wait needs a condition");
@@ -118,7 +133,7 @@ inline bool matches(const Step& step,const UiState& state){
     if(step.label_right==2&&top->right!=step.label_text)return false;
     return true;
 }
-struct Action {std::string key;bool anchor{};bool done{};bool timed_out{};int step{-1};std::string note;};
+struct Action {std::string key;bool anchor{};bool done{};bool timed_out{};int step{-1};std::string note;int pointer_kind{-1},x{0},y{0};int focus{-1};};
 // One call per frame with the state captured at the end of the previous frame.
 // At most one key per frame. Waits keep the step until the predicate holds.
 class Runner {
@@ -154,6 +169,8 @@ public:
             case Op::wait_not_dialog:
                 if(!state.dialog){if(++stable_>=s.stable){advance();continue;}}else stable_=0;
                 if(waited>s.timeout)return timeout();return action;
+            case Op::pointer:action.pointer_kind=s.pointer_kind;action.x=s.x;action.y=s.y;advance();return action;
+            case Op::focus:action.focus=s.focus_on?1:0;advance();return action;
             case Op::when_key:
                 if(matches(s,state)){action.key=s.key;advance();return action;}
                 advance();continue;

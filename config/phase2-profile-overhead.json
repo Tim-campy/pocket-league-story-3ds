@@ -3,58 +3,58 @@
   "status": "PASS",
   "samples": [
     [
-      136800,
-      1094900,
-      6344700,
+      166800,
+      1276600,
+      6371900,
+      100000
+    ],
+    [
+      170800,
+      1161300,
+      6348700,
       100000
     ],
     [
       175700,
-      1116500,
-      6405700,
+      1123700,
+      6349500,
       100000
     ],
     [
-      176300,
-      1105600,
-      6261800,
-      100000
-    ],
-    [
-      175600,
-      1010200,
-      6385700,
-      100000
-    ],
-    [
-      177500,
-      1208300,
-      6274100,
+      175100,
+      1025100,
+      6289300,
       100000
     ],
     [
       175700,
       1070500,
-      6491800,
+      6282000,
       100000
     ],
     [
-      173100,
-      1185400,
-      6275500,
+      175700,
+      1085700,
+      6513100,
+      100000
+    ],
+    [
+      175800,
+      1073700,
+      6300700,
       100000
     ]
   ],
   "median_baseline_ns_per_call": 1.757,
-  "median_disabled_ns_per_call": 11.056,
-  "median_instrumented_ns_per_call": 63.447,
-  "median_increment_ns_per_call": 62.079,
+  "median_disabled_ns_per_call": 10.857,
+  "median_instrumented_ns_per_call": 63.487,
+  "median_increment_ns_per_call": 61.738,
   "inputs_sha256": {
     "tests/kairo/profile_overhead.cpp": "55c68f066fee193a1aea51b8eed84a0bad2740b20af7f47521533c6cdcf3a4ba",
     "tools/test_profile_overhead.py": "16d3e23d7470b6b6ecaa23a445fc7e006929adcc28bd2e11c8f6d02f42631c65",
-    "src/kairo/common/diagnostic_profile.hpp": "a9ae5e2d479e7cadc4e785f70266100ff0f18458a2602043f71eca7fa161ed1d"
+    "src/kairo/common/diagnostic_profile.hpp": "3ff39ea6e50b55b5cae08a2d879990f4e399a548a8e6a4da07f74835be7f31a7"
   },
-  "executable_sha256": "5f4f40a1338a446ddbcc354fa4f2d0e907918bcefd1bba726395d3f0d9ae4ffb",
+  "executable_sha256": "6a095d75aa0a05ac525df20b45b8dcaf74d9efd30c8bd1ce8af0d357c8a70a7e",
   "limitations": [
     "Own microbenchmark, not a correction factor for game timing.",
     "No benchmark overhead is subtracted from reported game samples."

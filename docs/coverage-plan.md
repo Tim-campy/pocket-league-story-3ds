@@ -166,3 +166,16 @@ nesse laço (apontado pelo usuário). A rota agora responde "Não" (`RIGHT`,
 `SELECT`), que executa o evento 116 e fecha. Save do jogo: vaga única;
 autosave semanal em `GameForm.cs:1325` (`SaveGame(true)`), coberto pela
 temporada; save manual pela tecla esquerda (`SubForm(16)`), rota `saves.route`.
+
+## Tentativas 67–76 (2026-11-15)
+
+| Tentativa | Roteiro | Resultado | Exercitados / alcançáveis |
+|---|---|---|---|
+| 67 | `saves` (save 66) | save manual (`SubForm(16)`, `AppData.SaveGame()`), três semanas, sobrescrita; fim no frame 630 | — |
+| 68 | `saves` (save 67, sessão nova) | carrega o save gravado na 67 (mesma data 5a 1M 3s); sobrescreve de novo | — |
+| 69–73 | `touch-title` (foco, toque no idioma, Hi Scores, mapa) | 69/71/72 param em `LanguageForm.Update` (NRE/IOOR), 73 completa: falha intermitente → estáticos sem raiz (`docs/notes/unrooted-cross-unit-statics.md`) | — |
+| 74–76 | `touch-title` após a correção do tradutor | 3/3 completas (frames 1125–1126), código de saída 0 | **867 + 43 = 910 / 1.248 (72,9%)**; 156 justificados; 182 restantes |
+
+Salvaguarda: 0 alertas nas tentativas 67–76 (o registro da 70 é o rastreio
+pedido com `--trace-method`). Pendente: travamento da 70 com `Dialog.Show`
+vigiado (`UNKNOWN`).

@@ -1767,6 +1767,14 @@ sealed partial class Lowerer {
             var roots=rootFields.Length==0?"":"static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){"+String.Concat(rootFields.Select(f=>"pls::cs::trace_value("+Name(f)+"_value,visitor);"))+"});";
             cpp.Append("void "+TypeInitName(type)+"(){"+roots+"static pls::cs::TypeInitState state;state.run(\""+type.ToDisplayString()+"\",[](){\n"+QualifyHelpers(typeInitializers[Id(type)],game)+"\n});}\n");
         }
+        // Static storage declared here for a type whose initializer (and root
+        // provider) belongs to another unit, e.g. KairoLibrary members first
+        // needed by the game: root it here, or the collector misses it.
+        var initializedHere=new HashSet<string>(usedTypes.Select(id=>Id(initializedTypes[id])));
+        foreach(var group in usedFields.Select(id=>fieldSymbols[id]).Where(f=>!initializedHere.Contains(Id(f.ContainingType))).GroupBy(f=>Id(f.ContainingType)).OrderBy(g=>g.Key)) {
+            var unitFields=group.OrderBy(f=>Id(f)).ToArray();
+            cpp.Append("static pls::cs::GcRootProvider "+TypeInitName(unitFields[0].ContainingType)+"_unit_roots=pls::cs::GcRootProvider([](const pls::cs::EdgeVisitor& visitor)->void{"+String.Concat(unitFields.Select(f=>"pls::cs::trace_value("+Name(f)+"_value,visitor);"))+"});\n");
+        }
         foreach(var id in usedFields.OrderBy(x=>x)){var field=fieldSymbols[id];cpp.Append(TypeName(field.Type)+"& "+Name(field)+"(){"+TypeInitFunction(field.ContainingType)+"();return "+Name(field)+"_value;}\n");}
 
         foreach(var pair in emitted.OrderBy(p=>p.Key)) {

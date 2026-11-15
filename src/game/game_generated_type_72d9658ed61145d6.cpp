@@ -32,6 +32,8 @@ static pls::cs::String cs_2fd3deed1e409352_value{};
 
 static pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_aefbaa4ea6f5261a_value{};
 
+static pls::cs::GcRootProvider cs_init_72d9658ed61145d6_unit_roots=pls::cs::GcRootProvider([](const pls::cs::EdgeVisitor& visitor)->void{pls::cs::trace_value(cs_885e46a8a2b95893_value,visitor);pls::cs::trace_value(cs_9d62cf693893d256_value,visitor);pls::cs::trace_value(cs_8da583a8425c5117_value,visitor);pls::cs::trace_value(cs_237ab1e79f07965b_value,visitor);pls::cs::trace_value(cs_2fd3deed1e409352_value,visitor);pls::cs::trace_value(cs_aefbaa4ea6f5261a_value,visitor);});
+
 pls::cs::String& cs_885e46a8a2b95893(){pls::generated::cs_init_72d9658ed61145d6();return cs_885e46a8a2b95893_value;}
 
 pls::cs::String& cs_9d62cf693893d256(){pls::generated::cs_init_72d9658ed61145d6();return cs_9d62cf693893d256_value;}

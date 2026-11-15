@@ -5,6 +5,8 @@ namespace pls::game {
 
 static pls::cs::Array<std::int64_t> cs_6e88f492355c58fb_value{};
 
+static pls::cs::GcRootProvider cs_init_edf182ae9bfd734d_unit_roots=pls::cs::GcRootProvider([](const pls::cs::EdgeVisitor& visitor)->void{pls::cs::trace_value(cs_6e88f492355c58fb_value,visitor);});
+
 pls::cs::Array<std::int64_t>& cs_6e88f492355c58fb(){pls::generated::cs_init_edf182ae9bfd734d();return cs_6e88f492355c58fb_value;}
 
 // M:kairo.unity.io.AssetReader.SetSecurity(System.Int64[],System.Boolean)

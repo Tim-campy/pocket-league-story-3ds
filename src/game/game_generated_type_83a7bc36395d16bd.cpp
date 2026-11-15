@@ -7,6 +7,8 @@ namespace pls::game {
 
 static pls::cs::Ref<cs_3da6da0799f0bdf8> cs_8a995ef2c270d901_value{};
 
+static pls::cs::GcRootProvider cs_init_83a7bc36395d16bd_unit_roots=pls::cs::GcRootProvider([](const pls::cs::EdgeVisitor& visitor)->void{pls::cs::trace_value(cs_8a995ef2c270d901_value,visitor);});
+
 pls::cs::Ref<cs_3da6da0799f0bdf8>& cs_8a995ef2c270d901(){pls::generated::cs_init_83a7bc36395d16bd();return cs_8a995ef2c270d901_value;}
 
 // M:kairo.unity.util.Log.Error(System.String,System.Exception)

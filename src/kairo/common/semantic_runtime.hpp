@@ -1,4 +1,5 @@
 #pragma once
+#include <atomic>
 #include "source_allocation_probe.hpp"
 #include "memory_ranges.hpp"
 #include "../../runtime/managed_reference.hpp"
@@ -30,9 +31,15 @@ static_assert(std::numeric_limits<float>::is_iec559 && std::numeric_limits<doubl
 
 struct Object;
 struct ExceptionIdentity {mutable std::mutex mutex;mutable Weak<Object> managed_view;};
+// Diagnostic hosts may install a hook that describes where an exception is
+// created (managed method stack); normal builds leave it null. Never game state.
+using ExceptionSiteHook=std::string(*)();
+inline std::atomic<ExceptionSiteHook> exception_site_hook{nullptr};
+inline std::string exception_site(){auto hook=exception_site_hook.load(std::memory_order_relaxed);return hook?hook():std::string{};}
 class Exception : public std::exception {
     std::string message_;
     bool default_message_{true};
+    std::string site_=exception_site();
     std::shared_ptr<ExceptionIdentity> identity_=std::make_shared<ExceptionIdentity>();
 public:
     Exception()=default;
@@ -40,6 +47,8 @@ public:
     const char* what() const noexcept override { return message_.c_str(); }
     virtual const char* type_name() const noexcept { return "System.Exception"; }
     bool uses_default_message()const noexcept{return default_message_;}
+    const std::string& site()const noexcept{return site_;}
+    void append_site(const std::string& text){site_+=text;}
     const std::shared_ptr<ExceptionIdentity>& identity_token()const noexcept{return identity_;}
 };
 #define PLS_CS_EXCEPTION(name, base, managed_name) \
@@ -73,6 +82,8 @@ PLS_CS_EXCEPTION(EndOfStreamException,IOException,"System.IO.EndOfStreamExceptio
 
 [[noreturn]] void throw_null_reference();
 [[noreturn]] void throw_array_bounds();
+// Same exception; diagnostic hosts (exception_site_hook set) add index/length to the site.
+[[noreturn]] void throw_array_bounds(std::int64_t index,std::int64_t length);
 [[noreturn]] void throw_array_type_mismatch();
 
 enum class RuntimeProfile { DotNet, UnityMono265 };
@@ -512,12 +523,12 @@ template<class T> class Array : private ArrayViewStorage<is_shared_ref<T>::value
             else return false;
         }
         Ref<Object> reference_item(std::int32_t index)const override{
-            if(index<0||index>=size)throw_array_bounds();
+            if(index<0||index>=size)throw_array_bounds(index,size);
             if constexpr(is_shared_ref<T>::value)return pls::cs::dynamic_pointer_cast<Object>(values()[static_cast<std::size_t>(index)]);
             else throw_array_type_mismatch();
         }
         void reference_item(std::int32_t index,const Ref<Object>& value)override{
-            if(index<0||index>=size)throw_array_bounds();
+            if(index<0||index>=size)throw_array_bounds(index,size);
             if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;auto typed=pls::cs::dynamic_pointer_cast<E>(value);if(value&&!typed)throw_array_type_mismatch();values()[static_cast<std::size_t>(index)]=std::move(typed);}
             else throw_array_type_mismatch();
         }
@@ -556,8 +567,8 @@ public:
     template<class U>static Array covariant_from(const Array<U>& source){static_assert(is_shared_ref<T>::value&&is_shared_ref<U>::value);return from_object(source.as_object());}
     std::int32_t length()const{if(covariance_view())return covariance_view()->get_Length();return require().size;}
     T& at(std::int32_t index)const {
-        if(covariance_view()){if(index<0||index>=covariance_view()->get_Length())throw_array_bounds();throw_array_type_mismatch();}
-        const auto& s=require();if(static_cast<std::uint32_t>(index)>=static_cast<std::uint32_t>(s.size))throw_array_bounds();
+        if(covariance_view()){if(index<0||index>=covariance_view()->get_Length())throw_array_bounds(index,covariance_view()->get_Length());throw_array_type_mismatch();}
+        const auto& s=require();if(static_cast<std::uint32_t>(index)>=static_cast<std::uint32_t>(s.size))throw_array_bounds(index,s.size);
         return s.values()[static_cast<std::size_t>(index)];
     }
     T& operator[](std::int32_t index)const{return at(index);}

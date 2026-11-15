@@ -232,6 +232,7 @@ def main():
     parser.add_argument('--diagnostic-unlabeled-popups-only',action='store_true',help='During popup replay, leave windows with a right soft label untouched')
     parser.add_argument('--diagnostic-route',type=Path,help='Diagnostic runs only: condition-driven route file (docs/notes/route-runner-design.md); excludes the frame-based input flags')
     parser.add_argument('--ui-trace',action='store_true',help='Diagnostic runs only: log PLS_UI_STATE on every UI state change')
+    parser.add_argument('--trace-method',action='append',default=[],help='Diagnostic runs: print the method stack at the first call of this DocID (repeatable; reported apart from reachability alerts)')
     parser.add_argument('--fast',action='store_true',help='Diagnostic runs with --virtual-clock only: no real-time frame pacing')
     args=parser.parse_args()
     if args.diagnostic_route is not None:
@@ -316,6 +317,7 @@ def main():
         if diagnostic_folder and reach.is_file():
             rows=json.loads(reach.read_text(encoding='utf-8')).get('methods',[])
             watched=sorted({r['doc_id'] for r in rows if r.get('doc_id') and r['cls'] in ('unreachable-in-original','unreachable-by-policy','debug-only')})
+            if args.trace_method:attempt['traced_methods']=sorted(set(args.trace_method));watched=sorted(set(watched)|set(args.trace_method))
             watch_file=attempt_folder/'reachability-watch.txt';watch_file.write_text('\n'.join(watched)+'\n',encoding='utf-8',newline='\n')
             env['PLS_REACHABILITY_WATCH']=str(watch_file.resolve())
             attempt['reachability_watch']=dict(methods=len(watched),receipt_sha256=hashlib.sha256(reach.read_bytes()).hexdigest())
@@ -382,7 +384,9 @@ def main():
                 exit_code=run['process_exit_code']
                 if attempt.get('reachability_watch'):
                     alerts=[json.loads(line.split('=',1)[1]) for line in (attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace').splitlines() if line.startswith('PLS_REACHABILITY_ALERT=')]
-                    attempt['reachability_alerts']=[dict(id=a['id'],stack=a['stack'][:12]) for a in alerts]
+                    traced=set(attempt.get('traced_methods',[]))
+                    attempt['reachability_alerts']=[dict(id=a['id'],stack=a['stack'][:12]) for a in alerts if a['id'] not in traced]
+                    if traced:attempt['method_traces']=[dict(id=a['id'],stack=a['stack'][:24]) for a in alerts if a['id'] in traced]
                 if args.diagnostic_route is not None:
                     text=(attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace')
                     done=re.findall(r'^PLS_ROUTE_DONE=(\d+)',text,re.M);timeout=re.findall(r'^PLS_ROUTE_TIMEOUT=(.*)$',text,re.M)

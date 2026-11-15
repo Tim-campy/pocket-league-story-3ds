@@ -758,12 +758,12 @@
   },
   "producer_sha256": "76fa757378fb6e139b5a6a0a49486d23e07c3cb81bc4c621406606b90561c575",
   "inputs_sha256": {
-    "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
+    "src/kairo/common/semantic_runtime.cpp": "f0703fc2ef45769bfe4e4bb2e0a347cf47b3036908ee0cb1cc7ad1802e495b99",
     "src/kairo/common/managed_collation.cpp": "a3ee79c835705e7eff562ef2267713fb0c585cccad1f2d7c3f1b5104ad9dcf90",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
     "tests/translator/mono_collation_fixtures.cpp": "28f32a9539bcfdca03319b3d60bd28db0cc96b50ad2d631cf59c8627e7b578f0",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
-    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
+    "src/kairo/common/semantic_runtime.hpp": "5e416cb8ade5b34713365a9faf0c64700d14a9c2be1b547dd9efc9eb907904b7",
     "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
     "src/kairo/common/mono_unicode_methods.inc": "d67f9c499dd7e50fd5287bed0414fc8bea8590c581b2e873e5e92a30c0bbf5f6",
     "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0",
@@ -778,15 +778,15 @@
   },
   "native_executable": {
     "path": "build/mono-collation-fixtures/mono-collation-fixtures.exe",
-    "sha256": "fb02003dce9ca403b43ca6b404f91031a72c12662c5d36ed13cc5f0a3412597b"
+    "sha256": "5fee0d6d3404d3906da1cb4e43d9372141b797ee649eddefe76c6846367ac68f"
   },
   "edge_native_executable": {
     "path": "build/mono-collation-fixtures/mono-collation-edge-fixtures.exe",
-    "sha256": "06bf74d823db8ff6f6dd34972dcd2a64984ed5d57f73db99e083fca46f8f51a0"
+    "sha256": "587502d01e7fc363fee1ba4c9874922d2dd263fc6e12b4a80b57d21f773858f0"
   },
   "bmp_native_executable": {
     "path": "build/mono-collation-fixtures/mono-bmp-fixtures.exe",
-    "sha256": "49fe9f6c6ab1dfdce5d30ef3491db38ff222f2e26d6077672ff6212dd5253970"
+    "sha256": "9a33fe92376402fc7520c4e97ea794aea64dbf46d65dabf3b641142bf47d128c"
   },
   "compiler": {
     "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",

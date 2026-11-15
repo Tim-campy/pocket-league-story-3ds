@@ -606,19 +606,19 @@
   ],
   "inputs_sha256": {
     "tests/kairo/application_orientation_fixtures.cpp": "46932946a9c464f4c4ddeceac7cf3f0821c82424bda2a044f60c463b4b92a5ea",
-    "src/kairo/common/semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
+    "src/kairo/common/semantic_runtime.cpp": "f0703fc2ef45769bfe4e4bb2e0a347cf47b3036908ee0cb1cc7ad1802e495b99",
     "tests/kairo/ApplicationOrientationOracle.cs": "85a9c1016610bbe4c389bba607ee2e147c05a7e7501067187baae3282f1b264e",
     "tests/kairo/UnityScreenMetadata.cs": "a662fea60d991e954ef51bd91947a669585d771df4ae68fab479efeb6fc56297",
     "tools/test_application_orientation.py": "2bdf80ef338a424e977099b34886cb8dd6db5e090169f7ff5b4ef3e220096cec",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
-    "src/kairo/common/semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
+    "src/kairo/common/semantic_runtime.hpp": "5e416cb8ade5b34713365a9faf0c64700d14a9c2be1b547dd9efc9eb907904b7",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
   },
   "native_executable": {
     "path": "build/application-orientation-tests/application-orientation-fixtures.exe",
-    "sha256": "c6eab2a145ac77f0c0f686c4b6da171a46269ed1456d3307103ab55572038b25"
+    "sha256": "84c0c8ac6652dde477915a361d2d3b2097242baafa3c8d82c8627b8a80a84804"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "external_unity_api_metadata": {

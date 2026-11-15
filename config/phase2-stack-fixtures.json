@@ -19,8 +19,8 @@
   "inputs": {
     "tests\\translator\\StackFixtures.cs": "df6cd6bea323490fe22b6134e1cf2bc2c0c9fe8acbb7710d89004e0f9ae5b484",
     "tests\\translator\\stack_fixtures.cpp": "09be6bd0e617fd708776bf9c3dcd214c50e6de1f1c6723199b2c74f8b307f58a",
-    "src\\kairo\\common\\semantic_runtime.cpp": "5837ba03700cc7211067a4597bbc1e832f65c85ef51e3bc43e61f05a1851f9dd",
-    "src\\kairo\\common\\semantic_runtime.hpp": "ab1c508cb27710235c9b6e7b35065d4bd7bbfefc7a8bdc3965ebe859f7d44364",
+    "src\\kairo\\common\\semantic_runtime.cpp": "f0703fc2ef45769bfe4e4bb2e0a347cf47b3036908ee0cb1cc7ad1802e495b99",
+    "src\\kairo\\common\\semantic_runtime.hpp": "5e416cb8ade5b34713365a9faf0c64700d14a9c2be1b547dd9efc9eb907904b7",
     "src\\kairo\\common\\managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
@@ -324,10 +324,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "499c584ca5409d3debee30436a384133ab30dd7efcac40248e80fda0fce8e510"
+    "sha256": "9ac0728e2db45a9e29613716e351110e693c1ba5d79641244f321c35208abc0b"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "fafd0e2a2d948ac478f819d84768ddcd42c981688934aa5c1c8bd08341369ec2"
+    "sha256": "84422567bc4cce53ad3263b2c6b15c7162c9327e5ffde877aa109e926975a7d2"
   }
 }

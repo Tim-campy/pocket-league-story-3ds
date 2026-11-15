@@ -17,6 +17,8 @@ static std::int32_t cs_3b6b8ce3637f0d5a_value{};
 
 static std::int32_t cs_5c6d8357da0c0aaf_value{};
 
+static pls::cs::GcRootProvider cs_init_e7d772862db62924_unit_roots=pls::cs::GcRootProvider([](const pls::cs::EdgeVisitor& visitor)->void{pls::cs::trace_value(cs_56b87a4889a075c1_value,visitor);pls::cs::trace_value(cs_ae88aadf0313d525_value,visitor);pls::cs::trace_value(cs_f970055179afa1e0_value,visitor);pls::cs::trace_value(cs_64c23caca1e41663_value,visitor);pls::cs::trace_value(cs_220e04776206e9cc_value,visitor);pls::cs::trace_value(cs_3b6b8ce3637f0d5a_value,visitor);pls::cs::trace_value(cs_5c6d8357da0c0aaf_value,visitor);});
+
 std::int32_t& cs_56b87a4889a075c1(){pls::generated::cs_init_e7d772862db62924();return cs_56b87a4889a075c1_value;}
 
 std::int32_t& cs_ae88aadf0313d525(){pls::generated::cs_init_e7d772862db62924();return cs_ae88aadf0313d525_value;}

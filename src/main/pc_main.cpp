@@ -62,6 +62,7 @@ int main(int argc,char** argv){
     pls::pc::RunMetrics metrics(pls::pc::metrics_enabled_from_environment(),std::cerr);
 #if defined(PLS_DIAGNOSTIC_BUILD)
     pls::diagnostic::enabled=true;
+    pls::cs::exception_site_hook=&pls::diagnostic::method_stack_text;
     FinalProfile final_profile;
 #endif
     try{

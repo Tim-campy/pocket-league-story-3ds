@@ -35,6 +35,7 @@ namespace pls::cs {
 #endif
 PLS_COLD_THROW void throw_null_reference(){throw NullReferenceException();}
 PLS_COLD_THROW void throw_array_bounds(){throw IndexOutOfRangeException();}
+PLS_COLD_THROW void throw_array_bounds(std::int64_t index,std::int64_t length){IndexOutOfRangeException exception;if(exception_site_hook.load(std::memory_order_relaxed))exception.append_site(" (index "+std::to_string(index)+", length "+std::to_string(length)+")");throw exception;}
 PLS_COLD_THROW void throw_array_type_mismatch(){throw ArrayTypeMismatchException();}
 #undef PLS_COLD_THROW
 namespace {

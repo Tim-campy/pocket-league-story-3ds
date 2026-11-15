@@ -62,6 +62,8 @@ public:
     }
     ~Scope(){if(!active_)return;const auto now=Clock::now();charge(now);if(entry_&&!state.methods.empty())state.methods.pop_back();state.area=previous_;state.entry=previous_entry_;if(entry_){entry_->inclusive.fetch_add(std::chrono::duration_cast<std::chrono::nanoseconds>(now-start_).count(),std::memory_order_relaxed);(std::uncaught_exceptions()>exceptions_?entry_->thrown:entry_->completed).fetch_add(1,std::memory_order_relaxed);}}
 };
+// Managed method stack of the current thread, innermost first (at most 12).
+inline std::string method_stack_text(){std::string text;std::size_t n=0;for(std::size_t i=state.methods.size();i-->0&&n<12;++n)text+=(n?" <- ":"")+state.methods[i]->id;return text;}
 template<class F>decltype(auto) api_call(F&&call){
 #if defined(PLS_DIAGNOSTIC_BUILD)
     Scope scope(Area::kairo);

@@ -19,13 +19,13 @@
   "inputs": {
     "tests\\translator\\StackFixtures.cs": "df6cd6bea323490fe22b6134e1cf2bc2c0c9fe8acbb7710d89004e0f9ae5b484",
     "tests\\translator\\stack_fixtures.cpp": "09be6bd0e617fd708776bf9c3dcd214c50e6de1f1c6723199b2c74f8b307f58a",
-    "src\\kairo\\common\\semantic_runtime.cpp": "cd3ee15a4ab6d5192d9987f77d05c03134f903381932c3d0e3e67c02657d48da",
-    "src\\kairo\\common\\semantic_runtime.hpp": "af8db4f942647ffe9b2aae26208a01f17e808ad9d21bba1d1c5a3c997ce20e0c",
+    "src\\kairo\\common\\semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
+    "src\\kairo\\common\\semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src\\kairo\\common\\managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
     "src\\kairo\\common\\managed_dictionary.hpp": "dfda0326f26577190c474b819fb2c6e440398b59b9890a61e0c8c136db36286d",
-    "src\\kairo\\common\\managed_time.hpp": "859306de1cce379c614d71b0f8318a0376669751167b541b320630c338430057",
+    "src\\kairo\\common\\managed_time.hpp": "35198681469fa6e30aad9f55cf0a7450673b97584089e49ac61cc1e656bebb94",
     "tests\\translator\\run_semantic_fixtures.py": "f71662c43e030551f186b344c985b218fd6c10353eeccdd23b96dd4e1f800988",
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
@@ -324,10 +324,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "bd9b89752ed79a85a2e8ad4ae7950883f671e85aa34db1819c6c94f42f315e19"
+    "sha256": "600687ef03aa2eb81ee7c29fc9438ab8b240bdd488a0932e9d52cb826ba25276"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "d2b3d7744e88c65619ae7d6471deb0921fdb86b10c2bbf8a0fbd6d2ec2c19e5e"
+    "sha256": "201eb7781c48bb2e4b115dd3d8db3e106c13b4ecbbba16558dc2e1a89d8f86ba"
   }
 }

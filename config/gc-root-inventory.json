@@ -184,18 +184,27 @@
   },
   {
    "file": "src/kairo/common/managed_encoding.cpp",
-   "name": "value",
+   "name": "once",
    "storage": "function-static",
-   "type": "auto",
-   "rooting": "provider",
+   "type": "RootedOnce<RuntimeEncoding>",
+   "rooting": "self-rooted",
    "root_unit": "src/kairo/common/managed_encoding.cpp",
-   "note": ""
+   "note": "Registers its own GcRootProvider (semantic_runtime.hpp); no allocation under the static guard."
+  },
+  {
+   "file": "src/kairo/common/managed_reflection.hpp",
+   "name": "once",
+   "storage": "function-static",
+   "type": "RootedOnce<RuntimeAssembly>",
+   "rooting": "self-rooted",
+   "root_unit": "src/kairo/common/managed_reflection.hpp",
+   "note": "Registers its own GcRootProvider (semantic_runtime.hpp); no allocation under the static guard."
   },
   {
    "file": "src/kairo/common/managed_reflection.hpp",
    "name": "value",
    "storage": "function-static",
-   "type": "auto",
+   "type": "RuntimeTypeRegistry",
    "rooting": "provider",
    "root_unit": "src/kairo/common/managed_reflection.hpp",
    "note": ""
@@ -220,21 +229,21 @@
   },
   {
    "file": "src/kairo/common/managed_time.hpp",
+   "name": "once",
+   "storage": "function-static",
+   "type": "RootedOnce<TimeZoneInfo>",
+   "rooting": "self-rooted",
+   "root_unit": "src/kairo/common/managed_time.hpp",
+   "note": "Registers its own GcRootProvider (semantic_runtime.hpp); no allocation under the static guard."
+  },
+  {
+   "file": "src/kairo/common/managed_time.hpp",
    "name": "timezone_lookup_provider",
    "storage": "namespace",
    "type": "std::function<Ref<TimeZoneInfo>(const String&)>",
    "rooting": "not-installed",
    "root_unit": null,
    "note": "Same as local_timezone_provider."
-  },
-  {
-   "file": "src/kairo/common/managed_time.hpp",
-   "name": "value",
-   "storage": "function-static",
-   "type": "auto",
-   "rooting": "provider",
-   "root_unit": "src/kairo/common/managed_time.hpp",
-   "note": ""
   },
   {
    "file": "src/kairo/common/offscreen.cpp",

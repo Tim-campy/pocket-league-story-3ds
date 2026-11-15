@@ -103,7 +103,7 @@ void cs_82519cef4853816c(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) { cs_init_15
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.DebugVerificationReceipt",game);
 {
-([&]() -> void { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0074" u"\x006f" u"\x006b" u"\x0065" u"\x006e" u"",5);return cs_literal;}()); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); cs_c3cd5afb73d8cc54(cs_arg0); }());
+([&]() -> void { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }()); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0074" u"\x006f" u"\x006b" u"\x0065" u"\x006e" u"",5);}()); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); cs_c3cd5afb73d8cc54(cs_arg0); }());
 }
 }
 }
@@ -162,7 +162,7 @@ return pls::cs::String{};
 pls::cs::String cs_9f1744905f403ec8(std::int32_t v_type) { cs_init_15f31d4f046b09a8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetItemType(UnityEngine.Purchasing.ProductType)",game);
 {
-return ((([&]() -> bool { auto cs_left = v_type; auto cs_right = static_cast<std::int32_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))); return (cs_left == cs_right); }())) ? ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0073" u"\x0075" u"\x0062" u"\x0073" u"",4);return cs_literal;}()) : ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5);return cs_literal;}()));
+return ((([&]() -> bool { auto cs_left = v_type; auto cs_right = static_cast<std::int32_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))); return (cs_left == cs_right); }())) ? ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0073" u"\x0075" u"\x0062" u"\x0073" u"",4);}()) : ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5);}()));
 }
 }
 }
@@ -194,7 +194,7 @@ pls::cs::String cs_e8fea88a1ccd74d6(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) {
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetOrderId",game);
 {
-return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x006f" u"\x0072" u"\x0064" u"\x0065" u"\x0072" u"\x0049" u"\x0064" u"",7);return cs_literal;}()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3401b30298b4eb96(cs_receiver,cs_arg0); }());
+return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x006f" u"\x0072" u"\x0064" u"\x0065" u"\x0072" u"\x0049" u"\x0064" u"",7);}()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_3401b30298b4eb96(cs_receiver,cs_arg0); }());
 }
 }
 }
@@ -228,7 +228,7 @@ pls::cs::Ref<cs_a42daea58251b089> cs_9766d64ee1bba541(pls::cs::Ref<cs_15f31d4f04
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.GetPurchase",game);
 {
 pls::cs::String v_json_1219 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_15f31d4f046b09a8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_f228db45ed90d23f(cs_receiver); }());
-return pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.GetPurchase:1247",([&]() -> pls::cs::Ref<cs_a42daea58251b089> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { std::int32_t cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_59d0e1ae203981e5; }()); return cs_9f1744905f403ec8(cs_arg0); }()); pls::cs::String cs_arg1 = v_json_1219; pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_json_1219; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0073" u"\x0069" u"\x0067" u"\x006e" u"\x0061" u"\x0074" u"\x0075" u"\x0072" u"\x0065" u"",9);return cs_literal;}()); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); return cs_f7abaa335be13394(cs_arg0,cs_arg1,cs_arg2); }()));
+return pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.GetPurchase:1247",([&]() -> pls::cs::Ref<cs_a42daea58251b089> { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { std::int32_t cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_59d0e1ae203981e5; }()); return cs_9f1744905f403ec8(cs_arg0); }()); pls::cs::String cs_arg1 = v_json_1219; pls::cs::String cs_arg2 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_json_1219; pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0073" u"\x0069" u"\x0067" u"\x006e" u"\x0061" u"\x0074" u"\x0075" u"\x0072" u"\x0065" u"",9);}()); return cs_14929f68cda1ed89(cs_arg0,cs_arg1); }()); return cs_f7abaa335be13394(cs_arg0,cs_arg1,cs_arg2); }()));
 }
 }
 }

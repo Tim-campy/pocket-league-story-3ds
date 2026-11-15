@@ -5,10 +5,10 @@ Ref<RuntimeEncoding> encoding(RuntimeEncoding::Kind kind){return make_ref<Runtim
 bool high(char16_t c){return c>=0xd800&&c<=0xdbff;}
 bool low(char16_t c){return c>=0xdc00&&c<=0xdfff;}
 }
-Ref<RuntimeEncoding> RuntimeEncoding::get_UTF8(){static auto value=encoding(Kind::Utf8);static GcRootProvider roots([](const EdgeVisitor&visitor){trace_value(value,visitor);});return value;}
-Ref<RuntimeEncoding> RuntimeEncoding::get_Unicode(){static auto value=encoding(Kind::Utf16LE);static GcRootProvider roots([](const EdgeVisitor&visitor){trace_value(value,visitor);});return value;}
-Ref<RuntimeEncoding> RuntimeEncoding::get_BigEndianUnicode(){static auto value=encoding(Kind::Utf16BE);static GcRootProvider roots([](const EdgeVisitor&visitor){trace_value(value,visitor);});return value;}
-Ref<RuntimeEncoding> RuntimeEncoding::get_ASCII(){static auto value=encoding(Kind::Ascii);static GcRootProvider roots([](const EdgeVisitor&visitor){trace_value(value,visitor);});return value;}
+Ref<RuntimeEncoding> RuntimeEncoding::get_UTF8(){static RootedOnce<RuntimeEncoding> once;return once.get([]{return encoding(Kind::Utf8);});}
+Ref<RuntimeEncoding> RuntimeEncoding::get_Unicode(){static RootedOnce<RuntimeEncoding> once;return once.get([]{return encoding(Kind::Utf16LE);});}
+Ref<RuntimeEncoding> RuntimeEncoding::get_BigEndianUnicode(){static RootedOnce<RuntimeEncoding> once;return once.get([]{return encoding(Kind::Utf16BE);});}
+Ref<RuntimeEncoding> RuntimeEncoding::get_ASCII(){static RootedOnce<RuntimeEncoding> once;return once.get([]{return encoding(Kind::Ascii);});}
 Ref<RuntimeEncoding> RuntimeEncoding::GetEncoding(const String& name){
     if(name.is_null())throw ArgumentNullException();
     auto value=name.code_units();for(auto& c:value)if(c>=u'A'&&c<=u'Z')c=char16_t(c+(u'a'-u'A'));

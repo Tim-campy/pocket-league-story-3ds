@@ -11,18 +11,18 @@
   "producer_sha256": "ff1ea124b8ea586569c8d6e3c21b41b5159998c8fad27a3d48719a51d350e80e",
   "inputs_sha256": {
     "tests/translator/shared_field_fixtures.cpp": "dfb0b520aedbf39c0bfab251ea0437cf4061972cb44cd6a69915a1f5dd193f52",
-    "src/kairo/common/semantic_runtime.cpp": "cd3ee15a4ab6d5192d9987f77d05c03134f903381932c3d0e3e67c02657d48da",
+    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
     "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "src/kairo/common/semantic_runtime.hpp": "af8db4f942647ffe9b2aae26208a01f17e808ad9d21bba1d1c5a3c997ce20e0c",
+    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431"
   },
   "native_executable": {
     "path": "build/shared-field-fixtures/shared-field-fixtures.exe",
-    "sha256": "7da8c377018df987217aee9dffcf51f6d79d6145e8b93209cecbc5baf6177594"
+    "sha256": "549040813657ecf5be60f2ef6d7b5842e7ae061f6ccbd1e3a1eb444552007df5"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

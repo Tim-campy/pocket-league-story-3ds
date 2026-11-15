@@ -182,7 +182,7 @@ int main(int argc,char** argv){
                 // (same line format the null/3DS replay builders read).
                 const auto route_frame=route_anchored?presented_frames-route_anchor:presented_frames;
                 auto action=route->step(ui_state);
-                std::lock_guard<std::mutex> lock(pls::kairo::debug_log_mutex);
+                std::unique_lock<std::mutex> lock(pls::kairo::debug_log_mutex);
                 if(action.anchor){route_anchored=true;route_anchor=presented_frames;pls::kairo::virtual_clock::rebase();std::cerr<<"PLS_PC_TITLE_ANCHOR="<<presented_frames<<'\n';}
                 if(!action.key.empty()){
                     const auto& k=action.key;
@@ -193,7 +193,7 @@ int main(int argc,char** argv){
                     pls::platform::Input event{action.pointer_kind==0?pls::platform::Input::Kind::pointer_down:action.pointer_kind==1?pls::platform::Input::Kind::pointer_up:pls::platform::Input::Kind::pointer_move,action.x,action.y};
                     canvas->host_event(event);std::cerr<<"PLS_PC_SCRIPTED_TOUCH="<<route_frame<<':'<<action.pointer_kind<<':'<<action.x<<','<<action.y<<'\n';
                 }
-                if(action.focus>=0){app->host_focus(action.focus==1);std::cerr<<"PLS_PC_SCRIPTED_FOCUS="<<route_frame<<':'<<action.focus<<'\n';}
+                if(action.focus>=0){std::cerr<<"PLS_PC_SCRIPTED_FOCUS="<<route_frame<<':'<<action.focus<<'\n';lock.unlock();app->host_focus(action.focus==1);lock.lock();}
                 if(action.step>=0)std::cerr<<"PLS_ROUTE_STEP={\"step\":"<<action.step<<",\"frame\":"<<presented_frames<<"}\n";
                 if(action.timed_out){std::cerr<<"PLS_ROUTE_TIMEOUT={\"frame\":"<<presented_frames<<",\"note\":\""<<pls::pc::route::json_escape(action.note)<<"\",\"state\":"<<pls::pc::route::to_line(ui_state)<<"}\n";pls::kairo::host_finish_requested=true;}
                 if(action.done){std::cerr<<"PLS_ROUTE_DONE="<<presented_frames<<'\n';pls::kairo::host_finish_requested=true;}

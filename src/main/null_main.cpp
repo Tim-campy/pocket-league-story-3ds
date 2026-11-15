@@ -284,6 +284,7 @@ int main(int argc,char**argv){
             if(completed+1<window_first&&completed%60==0){std::fprintf(stderr,"PLS_NULL_WARMUP_BEGIN=%llu\n",static_cast<unsigned long long>(completed+1));std::fflush(stderr);}
             if(completed+1==window_first)if(const auto*sync=std::getenv("PLS_NULL_PROFILE_SYNC")){
                 std::ofstream(std::string(sync)+".request")<<"ready\n";const auto deadline=Clock::now()+std::chrono::seconds(60);
+                pls::cs::GcNativeBlockingScope waiting; // Up to 60 s: never block a collection rendezvous.
                 while(!std::filesystem::exists(std::string(sync)+".ready")){if(Clock::now()>deadline)throw std::runtime_error("External sampling collector did not start");std::this_thread::sleep_for(std::chrono::milliseconds(20));}
             }
             pls::allocation_sites::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);

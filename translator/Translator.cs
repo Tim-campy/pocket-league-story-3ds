@@ -388,7 +388,7 @@ sealed partial class Lowerer {
         if(readable&&ReadableConstant(value,type,node) is string readableValue)return readableValue;
         if(type is INamedTypeSymbol{TypeKind:TypeKind.Enum} enumeration)return "static_cast<"+Type(type,node)+">("+Constant(value,enumeration.EnumUnderlyingType,node)+")";
         if(value is string text) {
-            return "([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u\""+String.Concat(text.Select(c=>"\\x"+((int)c).ToString("x4",CultureInfo.InvariantCulture)+"\" u\""))+"\","+text.Length+");return cs_literal;}())";
+            return "([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u\""+String.Concat(text.Select(c=>"\\x"+((int)c).ToString("x4",CultureInfo.InvariantCulture)+"\" u\""))+"\","+text.Length+");}())";
         }
         if(value is char ch)return "char16_t("+((int)ch).ToString(CultureInfo.InvariantCulture)+")";
         if(value is bool b)return b?"true":"false";

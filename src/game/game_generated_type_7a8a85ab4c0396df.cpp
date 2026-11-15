@@ -88,7 +88,7 @@ pls::cs::String cs_6d5017124c1ae7a5(pls::cs::Ref<cs_7a8a85ab4c0396df> cs_this) {
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.RestoreForm.ToString",game);
 {
-return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0052" u"\x0065" u"\x0073" u"\x0074" u"\x006f" u"\x0072" u"\x0065" u"\x0046" u"\x006f" u"\x0072" u"\x006d" u"",11);return cs_literal;}());
+return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0052" u"\x0065" u"\x0073" u"\x0074" u"\x006f" u"\x0072" u"\x0065" u"\x0046" u"\x006f" u"\x0072" u"\x006d" u"",11);}());
 }
 }
 }

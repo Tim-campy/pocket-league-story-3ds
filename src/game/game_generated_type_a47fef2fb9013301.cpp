@@ -19,7 +19,7 @@ pls::cs::Ref<cs_a47fef2fb9013301> cs_a4ea8d8a8cfcb812() { cs_init_a47fef2fb90133
 }
 
 void cs_a4ea8d8a8cfcb812_init(pls::cs::Ref<cs_a47fef2fb9013301> cs_this) {
-([&]() { pls::cs::String cs_arg0 = pls::cs::String(u""); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0047" u"\x0065" u"\x0074" u"\x0046" u"\x0072" u"\x0065" u"\x0065" u"\x0054" u"\x0069" u"\x0063" u"\x006b" u"\x0065" u"\x0074" u"",13);return cs_literal;}()); bool cs_arg2 = true; cs_5b5371f22489a240_init(pls::cs::static_pointer_cast<cs_15d0c6400449da70>(cs_this),cs_arg0,cs_arg1,cs_arg2); }());
+([&]() { pls::cs::String cs_arg0 = pls::cs::String(u""); pls::cs::String cs_arg1 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0047" u"\x0065" u"\x0074" u"\x0046" u"\x0072" u"\x0065" u"\x0065" u"\x0054" u"\x0069" u"\x0063" u"\x006b" u"\x0065" u"\x0074" u"",13);}()); bool cs_arg2 = true; cs_5b5371f22489a240_init(pls::cs::static_pointer_cast<cs_15d0c6400449da70>(cs_this),cs_arg0,cs_arg1,cs_arg2); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.tapjoy.MyTapjoy.#ctor",game);
 {
 

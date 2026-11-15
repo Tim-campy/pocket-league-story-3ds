@@ -316,6 +316,24 @@ public:
     MonitorScope(const MonitorScope&)=delete;
     MonitorScope&operator=(const MonitorScope&)=delete;
 };
+// Native mutex that a holder may keep across a managed allocation (a GC
+// safepoint): a contended acquisition waits inside a native wait, so the
+// collector's rendezvous never waits for a thread blocked here. Every
+// acquisition of such a mutex must use this guard (docs/notes/gc-lock-order-review.md).
+template<class M> class ManagedLockGuard {
+    M& mutex_;
+public:
+    explicit ManagedLockGuard(M& mutex):mutex_(mutex){
+        if(mutex_.try_lock())return;
+#if PLS_TRACING_GC
+        GcNativeBlockingScope parked;
+#endif
+        mutex_.lock();
+    }
+    ~ManagedLockGuard(){mutex_.unlock();}
+    ManagedLockGuard(const ManagedLockGuard&)=delete;
+    ManagedLockGuard&operator=(const ManagedLockGuard&)=delete;
+};
 #if PLS_TRACING_GC
 gc::Heap& tracing_heap();
 void ensure_gc_thread();
@@ -384,6 +402,17 @@ public:
     }
     explicit String(std::u16string text):data_(make_ref<Storage>(std::move(text))){}
     static String literal(const char16_t* text,std::size_t length);
+    // Translator literal sites: `static std::atomic<void*> site{}` is constant-
+    // initialized (no static guard held across the pool allocation). The pool
+    // roots the storage forever, so the published pointer stays valid.
+    static String literal_at(std::atomic<void*>& site,const char16_t* text,std::size_t length){
+#if PLS_TRACING_GC
+        if(void* cached=site.load(std::memory_order_acquire)){String value;value.data_=static_cast<Storage*>(cached);return value;}
+        String value=literal(text,length);site.store(static_cast<void*>(value.data_),std::memory_order_release);return value;
+#else
+        (void)site;return literal(text,length);
+#endif
+    }
     static String from_utf8(const std::string& text);
     std::string utf8()const;
     bool is_null()const noexcept{return !data_;}
@@ -784,6 +813,28 @@ public:
     const T& get()const noexcept{return value_;}
 };
 template<class T> std::shared_ptr<Pinned<T>> pin(T value){return std::make_shared<Pinned<T>>(std::move(value));}
+// Process-lifetime managed singleton: the root is registered at construction
+// (no managed allocation under the function-static guard); the value is created
+// outside any lock and published atomically (a racing loser becomes garbage).
+#if PLS_TRACING_GC
+template<class T> class RootedOnce {
+    std::atomic<T*> slot_{};
+    GcRootProvider roots_{[this](const EdgeVisitor& visitor){Ref<T> value=slot_.load(std::memory_order_acquire);trace_value(value,visitor);}};
+public:
+    template<class F> Ref<T> get(F&& factory){
+        if(T* value=slot_.load(std::memory_order_acquire))return value;
+        Ref<T> made=factory();T* expected=nullptr;
+        if(slot_.compare_exchange_strong(expected,made,std::memory_order_acq_rel))return made;
+        return expected;
+    }
+};
+#else
+template<class T> class RootedOnce {
+    std::once_flag once_;Ref<T> value_{};
+public:
+    template<class F> Ref<T> get(F&& factory){std::call_once(once_,[&]{value_=factory();});return value_;}
+};
+#endif
 std::int32_t int32_parse(const String&value,bool hexadecimal=false);
 bool int32_try_parse(const String&value,std::int32_t& result);
 std::int64_t int64_parse(const String&value,bool hexadecimal=false);

@@ -189,40 +189,40 @@ void crypt(Bytes bytes) {
 }
 }
 void configure_storage(std::filesystem::path root,const assets::Catalog* catalog,bool heap,int type) {
-    std::lock_guard<std::recursive_mutex> lock(gate);state=State{};state.root=std::move(root);state.catalog=catalog;state.heap_enabled=heap;state.application_type=type;
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);state=State{};state.root=std::move(root);state.catalog=catalog;state.heap_enabled=heap;state.application_type=type;
 }
-bool PlayerPrefs::HasKey(cs::String name){std::lock_guard<std::recursive_mutex> lock(gate);return bag(false).values.count(key(name))!=0;}
+bool PlayerPrefs::HasKey(cs::String name){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);return bag(false).values.count(key(name))!=0;}
 std::int32_t PlayerPrefs::GetInt(cs::String name,std::int32_t def) {
-    std::lock_guard<std::recursive_mutex> lock(gate);const auto& values=bag(false).values;const auto found=values.find(key(name));
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);const auto& values=bag(false).values;const auto found=values.find(key(name));
     if(found==values.end()||found->second.type!=1)return def;
     std::size_t p=0;return cs::cast_integral<std::int32_t>(get32(found->second.bytes,p));
 }
 float PlayerPrefs::GetFloat(cs::String name,float def) {
-    std::lock_guard<std::recursive_mutex> lock(gate);const auto& values=bag(false).values;const auto found=values.find(key(name));
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);const auto& values=bag(false).values;const auto found=values.find(key(name));
     if(found==values.end()||found->second.type!=2)return def;
     std::size_t p=0;return cs::bit_copy<float>(get32(found->second.bytes,p));
 }
 cs::String PlayerPrefs::GetString(cs::String name,cs::String def) {
-    std::lock_guard<std::recursive_mutex> lock(gate);const auto& values=bag(false).values;const auto found=values.find(key(name));
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);const auto& values=bag(false).values;const auto found=values.find(key(name));
     if(found==values.end()||found->second.type!=3)return def;
     if(found->second.bytes.size()%2)throw IllegalFileException("Invalid UTF16 preference");
     std::u16string text;const auto& bytes=found->second.bytes;
     for(std::size_t i=0;i<bytes.size();i+=2)text.push_back(static_cast<char16_t>(bytes[i]|(static_cast<std::uint32_t>(bytes[i+1])<<8)));
     return cs::String(std::move(text));
 }
-void PlayerPrefs::SetInt(cs::String name,std::int32_t value){std::lock_guard<std::recursive_mutex> lock(gate);Value entry{1,{}};put32(entry.bytes,static_cast<std::uint32_t>(value));bag(false).values[key(name)]=std::move(entry);}
-void PlayerPrefs::SetFloat(cs::String name,float value){std::lock_guard<std::recursive_mutex> lock(gate);Value entry{2,{}};put32(entry.bytes,cs::bit_copy<std::uint32_t>(value));bag(false).values[key(name)]=std::move(entry);}
-void PlayerPrefs::SetString(cs::String name,cs::String value){std::lock_guard<std::recursive_mutex> lock(gate);Value entry{3,{}};for(char16_t unit:key(value)){entry.bytes.push_back(static_cast<std::uint8_t>(unit));entry.bytes.push_back(static_cast<std::uint8_t>(unit>>8));}bag(false).values[key(name)]=std::move(entry);}
-void PlayerPrefs::DeleteKey(cs::String name){std::lock_guard<std::recursive_mutex> lock(gate);bag(false).values.erase(key(name));}
-void PlayerPrefs::DeleteAll(){std::lock_guard<std::recursive_mutex> lock(gate);bag(false).values.clear();}
-void PlayerPrefs::Save(){std::lock_guard<std::recursive_mutex> lock(gate);save_bag(false);}
-Bytes BytePreferences::GetPreference(cs::String name){std::lock_guard<std::recursive_mutex> lock(gate);const auto& values=bag(true).values;const auto found=values.find(key(name));return found==values.end()?Bytes{}:from(found->second.bytes);}
-void BytePreferences::PutPreference(cs::String name,Bytes bytes){std::lock_guard<std::recursive_mutex> lock(gate);bag(true).values[key(name)]=Value{4,bytes.is_null()?std::vector<std::uint8_t>{}:vector(bytes)};save_bag(true);}
-void BytePreferences::RemovePreference(cs::String name){std::lock_guard<std::recursive_mutex> lock(gate);bag(true).values.erase(key(name));save_bag(true);}
-cs::Array<cs::String> BytePreferences::GetPreferenceKeys(){std::lock_guard<std::recursive_mutex> lock(gate);const auto& values=bag(true).values;auto result=cs::Array<cs::String>::make(static_cast<std::int32_t>(values.size()));std::int32_t i=0;for(const auto& item:values)result.at(i++)=cs::String(item.first);return result;}
+void PlayerPrefs::SetInt(cs::String name,std::int32_t value){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);Value entry{1,{}};put32(entry.bytes,static_cast<std::uint32_t>(value));bag(false).values[key(name)]=std::move(entry);}
+void PlayerPrefs::SetFloat(cs::String name,float value){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);Value entry{2,{}};put32(entry.bytes,cs::bit_copy<std::uint32_t>(value));bag(false).values[key(name)]=std::move(entry);}
+void PlayerPrefs::SetString(cs::String name,cs::String value){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);Value entry{3,{}};for(char16_t unit:key(value)){entry.bytes.push_back(static_cast<std::uint8_t>(unit));entry.bytes.push_back(static_cast<std::uint8_t>(unit>>8));}bag(false).values[key(name)]=std::move(entry);}
+void PlayerPrefs::DeleteKey(cs::String name){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);bag(false).values.erase(key(name));}
+void PlayerPrefs::DeleteAll(){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);bag(false).values.clear();}
+void PlayerPrefs::Save(){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);save_bag(false);}
+Bytes BytePreferences::GetPreference(cs::String name){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);const auto& values=bag(true).values;const auto found=values.find(key(name));return found==values.end()?Bytes{}:from(found->second.bytes);}
+void BytePreferences::PutPreference(cs::String name,Bytes bytes){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);bag(true).values[key(name)]=Value{4,bytes.is_null()?std::vector<std::uint8_t>{}:vector(bytes)};save_bag(true);}
+void BytePreferences::RemovePreference(cs::String name){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);bag(true).values.erase(key(name));save_bag(true);}
+cs::Array<cs::String> BytePreferences::GetPreferenceKeys(){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);const auto& values=bag(true).values;auto result=cs::Array<cs::String>::make(static_cast<std::int32_t>(values.size()));std::int32_t i=0;for(const auto& item:values)result.at(i++)=cs::String(item.first);return result;}
 void Storage::Setup(std::int32_t,std::int32_t,cs::String root){if(root.is_null())throw cs::NullReferenceException(); /* Original root_ is never used by I/O. */}
 cs::Ref<Storage> Storage::Open(std::int32_t media,bool) {
-    std::lock_guard<std::recursive_mutex> lock(gate);configured();
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);configured();
     if(media==2&&!state.heap_enabled)throw cs::IOException("media not found");
     if(media==2||media==3)return cs::make_ref<Storage>(cs::String{},media);
     if(media==1||media==4)return cs::make_ref<Storage>(GetFolder(media),media);
@@ -231,37 +231,37 @@ cs::Ref<Storage> Storage::Open(std::int32_t media,bool) {
 cs::String Storage::GetFolder(std::int32_t media){configured();if(media!=1&&media!=4)return {};return cs::String((state.root/(media==1?"files":"rs")).u16string());}
 void Storage::Close(){folder_=nullptr;}
 Bytes Storage::Read(cs::String filename) {
-    std::lock_guard<std::recursive_mutex> lock(gate);filename=converted(filename);
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);filename=converted(filename);
     if(media_==2&&state.heap_enabled){const auto found=heap_file(filename);return found==state.heap.end()?Bytes{}:found->second;}
     if(media_==3){const auto* entry=resource_file(filename);return entry?from(state.catalog->read(*entry)):Bytes{};}
     if(media_==1||media_==4)return filesystem_call([&]{const auto path=file_path(folder_,filename);return std::filesystem::is_regular_file(recover_replaced(path))?from(read_file(path)):Bytes{};});
     return {};
 }
 void Storage::Write(cs::String filename,Bytes data) {
-    std::lock_guard<std::recursive_mutex> lock(gate);filename=converted(filename);
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);filename=converted(filename);
     if(media_==2&&state.heap_enabled){const auto found=heap_file(filename);if(found==state.heap.end())state.heap.emplace_back(key(filename),data);else found->second=data;return;}
     if(media_==1||media_==4)filesystem_call([&]{atomic_write(file_path(folder_,filename),data.is_null()?std::vector<std::uint8_t>{}:vector(data));});
 }
 void Storage::Delete(cs::String filename) {
-    std::lock_guard<std::recursive_mutex> lock(gate);filename=converted(filename);
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);filename=converted(filename);
     if(media_==2&&state.heap_enabled){const auto found=heap_file(filename);if(found!=state.heap.end())state.heap.erase(found);return;}
     if(media_==1||media_==4)filesystem_call([&]{std::filesystem::remove(file_path(folder_,filename));});
 }
 bool Storage::Exists(cs::String filename) {
-    std::lock_guard<std::recursive_mutex> lock(gate);filename=converted(filename);
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);filename=converted(filename);
     if(media_==2&&state.heap_enabled)return heap_file(filename)!=state.heap.end();
     if(media_==3)return resource_file(filename)!=nullptr;
     return (media_==1||media_==4)&&filesystem_call([&]{return std::filesystem::is_regular_file(recover_replaced(file_path(folder_,filename)));});
 }
 std::int32_t Storage::GetSize(cs::String filename){
-    std::lock_guard<std::recursive_mutex> lock(gate);
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);
     filename=converted(filename);
     if(media_==2&&state.heap_enabled){const auto found=heap_file(filename);return found==state.heap.end()?-1:found->second.length();}
     if(media_==1||media_==4)return filesystem_call([&]{const auto path=file_path(folder_,filename);return std::filesystem::is_regular_file(recover_replaced(path))?cs::cast_integral<std::int32_t>(std::filesystem::file_size(path)):-1;});
     auto bytes=Read(filename);return bytes.is_null()?-1:bytes.length();
 }
 cs::Array<cs::String> Storage::GetFiles() {
-    std::lock_guard<std::recursive_mutex> lock(gate);std::vector<cs::String> names;
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);std::vector<cs::String> names;
     cs::GcRootProvider roots([&](const cs::EdgeVisitor&v){for(const auto&name:names)cs::trace_value(name,v);});
     if(media_==2&&state.heap_enabled){for(const auto& item:state.heap)names.emplace_back(item.first);}
     else if(media_==1||media_==4)filesystem_call([&]{const auto folder=std::filesystem::path(folder_.is_null()?u"":folder_.code_units());if(std::filesystem::exists(folder))for(const auto& entry:std::filesystem::recursive_directory_iterator(folder))if(entry.is_regular_file()&&entry.path().filename().u16string().find(u".port-tmp-")!=0)names.emplace_back(entry.path().lexically_relative(folder).u16string());});
@@ -277,17 +277,17 @@ void RecordStore::CreateRecordStore(){Setup();}
 void RecordStore::SetResourceFiles(cs::Array<cs::String> files){state.resources=files;}
 void RecordStore::SetEncryptionKey(Bytes bytes){state.key=bytes;}
 void RecordStore::SetEncryptionKey(cs::Array<std::int8_t> bytes){auto result=Bytes::make(bytes.length());for(std::int32_t i=0;i<bytes.length();++i)result.at(i)=static_cast<std::uint8_t>(bytes.at(i));state.key=result;}
-std::int32_t RecordStore::AddRecord(std::int32_t){std::lock_guard<std::recursive_mutex> lock(gate);if(resources(rs_id_))return -1;store_ready();const auto record=GetNumRecords();raw_write(record_name(rs_id_,record),Bytes::make(0));return record;}
+std::int32_t RecordStore::AddRecord(std::int32_t){cs::ManagedLockGuard<std::recursive_mutex> lock(gate);if(resources(rs_id_))return -1;store_ready();const auto record=GetNumRecords();raw_write(record_name(rs_id_,record),Bytes::make(0));return record;}
 std::int32_t RecordStore::AddRecord(Bytes data){if(resources(rs_id_))return -1;const auto record=AddRecord(data.length());WriteRecord(record,data);return record;}
 void RecordStore::WriteRecord(std::int32_t record,Bytes bytes){WriteRecord(record,cs::Array<Bytes>::from({bytes}));}
 void RecordStore::WriteRecord(std::int32_t record,cs::Array<Bytes> data) {
-    std::lock_guard<std::recursive_mutex> lock(gate);if(resources(rs_id_))return;store_ready();const auto bytes=data.at(0);data.at(0)=nullptr;
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);if(resources(rs_id_))return;store_ready();const auto bytes=data.at(0);data.at(0)=nullptr;
     const auto size=bytes.length();auto payload=Bytes::make(cs::add_i32(size,8));const auto checksum=crc(bytes);
     for(int i=0;i<8;++i)payload.at(i)=static_cast<std::uint8_t>(checksum>>((7-i)*8));
     Bytes::copy(bytes,0,payload,8,size);crypt(payload);raw_write(record_name(rs_id_,record),payload);
 }
 Bytes RecordStore::ReadRecord(std::int32_t record) {
-    std::lock_guard<std::recursive_mutex> lock(gate);
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);
     if(resources(rs_id_)){auto name=state.resources.at(record);auto value=name.code_units();if(value.size()<4||value.substr(value.size()-4)!=u".dat")value+=u".dat";return Storage::Read(3,false,cs::String(std::move(value)));}
     store_ready();auto bytes=raw_read(record_name(rs_id_,record));if(bytes.is_null())bytes=Bytes::make(0);if(bytes.length()==0)return bytes;
     crypt(bytes);if(bytes.length()<8)throw cs::ArgumentException();std::uint64_t checksum=0;
@@ -297,7 +297,7 @@ Bytes RecordStore::ReadRecord(std::int32_t record) {
 bool RecordStore::ExistRecord(std::int32_t record){if(resources(rs_id_))return true;store_ready();const auto name=record_name(rs_id_,record);if(!state.preference_mode)return state.record_storage->Exists(name);const auto names=BytePreferences::GetPreferenceKeys();for(std::int32_t i=0;i<names.length();++i)if(names.at(i)==name)return true;return false;}
 std::int32_t RecordStore::GetRecordSize(std::int32_t record){if(resources(rs_id_))return 0;store_ready();if(!state.preference_mode)return state.record_storage->GetSize(record_name(rs_id_,record));const auto bytes=BytePreferences::GetPreference(record_name(rs_id_,record));return bytes.is_null()?-1:bytes.length();}
 std::int32_t RecordStore::GetNumRecords() {
-    std::lock_guard<std::recursive_mutex> lock(gate);if(resources(rs_id_))return 0;store_ready();std::int32_t count=0;const auto names=raw_names();
+    cs::ManagedLockGuard<std::recursive_mutex> lock(gate);if(resources(rs_id_))return 0;store_ready();std::int32_t count=0;const auto names=raw_names();
     for(std::int32_t i=0;i<names.length();++i){const auto name=names.at(i);if(name.is_null()||name.at(0)!=cs::add_i32(48,rs_id_))continue;
         const auto text=std::filesystem::path(name.code_units()).stem().u16string();const auto parsed=cs::int32_parse(cs::String(text));const auto record=cs::mod_i32(parsed,1000);if(count<=record)count=cs::add_i32(record,1);}
     return count;

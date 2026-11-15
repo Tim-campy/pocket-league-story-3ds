@@ -12,7 +12,8 @@ form, and the form is checked:
 - provider-thread-local: a thread_local provider captures its address;
 - uncaptured-functions: std::function storage whose installers capture nothing
   (managed types only in signatures);
-- not-installed: std::function storage that no source installs.
+- not-installed: std::function storage that no source installs;
+- self-rooted: cs::RootedOnce / cs::Pinned, which register their own root.
 
 A new storage location therefore fails until someone audits it.
 """
@@ -26,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools'))
 import gc_root_scan  # noqa: E402
 
-FORMS = {'provider', 'provider-other-unit', 'provider-thread-local', 'uncaptured-functions', 'not-installed'}
+FORMS = {'provider', 'provider-other-unit', 'provider-thread-local', 'uncaptured-functions', 'not-installed', 'self-rooted'}
 
 
 def inventory():
@@ -59,6 +60,9 @@ class GcRootInventoryTests(unittest.TestCase):
                     assigned = [p.relative_to(ROOT).as_posix() for folder in ('src', 'tests') for p in (ROOT / folder).rglob('*.[ch]pp')
                                 if re.search(r'\b' + re.escape(entry['name']) + r'\s*=(?!=)', p.read_text(encoding='utf-8', errors='replace'))]
                     self.assertEqual(assigned, [], 'Installed now: pin captured managed references and change the form')
+                elif form == 'self-rooted':
+                    # cs::RootedOnce / cs::Pinned register their own GcRootProvider.
+                    self.assertRegex(entry['type'], r'^(?:cs::)?(?:RootedOnce|Pinned)<')
                 else:
                     self.assertTrue(entry['note'])
 

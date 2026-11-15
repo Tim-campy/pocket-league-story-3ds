@@ -50,7 +50,7 @@ def main():
     gc_command[gc_command.index(sources[0])]=gc_source
     run(gc_command,'native-gc-compile',env)
     native_gc=json.loads(run([gc_binary],'native-gc',env))
-    if native_gc['status']!='PASS' or native_gc['assertions']!=20:raise ValueError('Incomplete native Thread GC fixtures')
+    if native_gc['status']!='PASS' or native_gc['assertions']!=23:raise ValueError('Incomplete native Thread GC fixtures')
     culture_source=ROOT/'tests/translator/ThreadCultureProbe.cs';culture_modern=folder/'ThreadCultureProbe.dll'
     culture_options=options.copy();culture_options[culture_options.index('/out:'+str(modern))]='/out:'+str(culture_modern);culture_options[-1]=str(culture_source)
     culture_rsp=folder/'culture.rsp';culture_rsp.write_text('\n'.join('"'+p+'"' for p in culture_options)+'\n',encoding='utf-8',newline='\n')
@@ -84,7 +84,7 @@ def main():
     report['inputs_sha256']['tests/translator/gc_test_support.hpp']=sha(ROOT/'tests/translator/gc_test_support.hpp')
     report['inputs_sha256'].update({p.relative_to(ROOT).as_posix():sha(p)for p in (ROOT/'src/runtime').glob('*')if p.suffix in {'.cpp','.hpp','.inc'}})
     (ROOT/'config/phase2-thread-tests.json').write_text(json.dumps(report,indent=2)+'\n',encoding='utf-8',newline='\n')
-    print(json.dumps(dict(status=report['status'],cases=report['cases'],passed=report['passed'],profile_differences=differences,culture_passed=culture_passed,native_gc_assertions=20)))
+    print(json.dumps(dict(status=report['status'],cases=report['cases'],passed=report['passed'],profile_differences=differences,culture_passed=culture_passed,native_gc_assertions=native_gc['assertions'])))
     if report['status']!='PASS':
         print(json.dumps({name:[r for r in data['results'] if not r['passed']] for name,data in profiles.items()},indent=2));raise SystemExit(1)
 

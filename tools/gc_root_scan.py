@@ -16,7 +16,7 @@ SCOPE = ('src/runtime', 'src/kairo', 'src/main')
 EXCLUDED = ('src/kairo/common/generated/',)
 MANAGED = re.compile(r'\b(?:Ref|Array|List|Stack|Dictionary|SharedField|ExceptionRef|Delegate|Weak)\s*<|\bString\b(?!_|\s*\()|\b(?:std::function)\s*<[^;]*\b(?:Ref|Array|String|Delegate)\b')
 # Aggregates (native structs) known to contain managed references.
-AGGREGATES = re.compile(r'\b(?:GraphicsRuntimeBindings|ImageRuntimeBindings|TextServices|KairoCallbacks|FormCallbacks|SurfaceCallbacks|BootstrapBindings|IntegerNumberFormat|RuntimeTypeRegistry|DialogRequest|TextPanelRequest|LanguagePanelRequest|GlobalizationProvider|State)\b')
+AGGREGATES = re.compile(r'\b(?:GraphicsRuntimeBindings|ImageRuntimeBindings|TextServices|KairoCallbacks|FormCallbacks|SurfaceCallbacks|BootstrapBindings|IntegerNumberFormat|RuntimeTypeRegistry|DialogRequest|TextPanelRequest|LanguagePanelRequest|GlobalizationProvider|State|RootedOnce|Pinned)\b')
 STORAGE = re.compile(r'(?:^|(?<=[;{}]))\s*((?:(?:inline|static|thread_local|const|constexpr|extern|mutable)\s+)+)?([A-Za-z_][\w:<>,\s\*&()]*?)(?:\s+|(?<=[>*&]))([A-Za-z_]\w*)\s*(\{[^;{}]*\}|=[^;]*)?\s*;', re.S)
 
 
@@ -113,7 +113,7 @@ def traced_names(path):
     """Names traced by a GcRootProvider/add_roots/trace function in this file."""
     text = strip(path.read_text(encoding='utf-8', errors='replace'))
     return set(re.findall(r'trace_value\(\s*(?:[\w:]+::)?(\w+)', text)) | set(re.findall(r'(\w+)\.trace_edges\(', text)) | set(re.findall(r'(\w+)\.\w+\.trace_edges\(', text)) \
-        | set(re.findall(r'for\s*\(\s*(?:const\s+)?auto\s*&?\s*\w+\s*:\s*(\w+)\s*\)', text))
+        | set(re.findall(r'for\s*\(\s*(?:const\s+)?auto\s*&?\s*\w+\s*:\s*(\w+)(?:\.\w+)?\s*\)', text))
 
 
 if __name__ == '__main__':

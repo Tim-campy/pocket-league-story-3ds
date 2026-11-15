@@ -1,4 +1,4 @@
-# Revisão de ordem de travas versus o coletor (rascunho)
+# Revisão de ordem de travas versus o coletor 
 
 Data: 2026-11-15. Auditoria somente leitura (nada compilado nem executado). Escopo: código
 escrito à mão em `src/runtime/**`, `src/kairo/**` (exceto `src/kairo/common/generated/**`) e
@@ -9,6 +9,28 @@ relacionadas).
 Motivação: a tentativa 78 (`docs/notes/gc-stress.md:33,50`), com estresse N=1, terminou o boot
 com `GC cooperative rendezvous timed out; no objects swept` (`tracing_gc.cpp:777`). Não se
 repetiu em 6 execuções.
+
+
+## Estado das correções (2026-11-15, sessão principal)
+
+Levantamento feito por um subagente; os achados C1 e B1 foram conferidos no fonte
+antes de corrigir. Todos os nove receberam correção.
+
+| Achado | Correção | Teste |
+|---|---|---|
+| C1 pool de `String::literal` | aloca fora do mutex e publica depois (`semantic_runtime.cpp`) | diferencial portável 2.617/2.618 |
+| C2 estáticos locais que alocam | tradutor: cada literal usa `static std::atomic<void*> cs_site{}` (inicialização constante, sem guarda) + `String::literal_at`; à mão: `cs::RootedOnce<T>` (raiz registrada antes de alocar, publicação atômica) em codificações, `RuntimeAssembly` e fuso UTC | inventário de raízes (`self-rooted`) |
+| B1 coordenador de inicialização de tipos | solta `guard` antes de sair da espera nativa (`managed_type_init.hpp`) | **T2** em `tests/translator/thread_gc_fixtures.cpp`: com o código antigo falha ("Type-initializer waiter held the coordinator across the rendezvous"), com a correção passa |
+| C3 `gate` do armazenamento (26 aquisições) | `cs::ManagedLockGuard` (espera ocupada dentro de espera nativa) | **T1** (coleta conclui com um `ManagedLockGuard` disputado) |
+| C4 registro de tipos (4) | `ManagedLockGuard` | T1 |
+| C5 `debug_log_mutex` no `pc_main` | `host_focus` fora da trava | — |
+| C6 identidade de exceção | `ManagedLockGuard` | T1 |
+| C7 painel de idioma | `ManagedLockGuard` | T1 |
+| B3 espera de 60 s no `null_main` | dentro de `GcNativeBlockingScope` | — |
+
+B1 era alcançável com os gatilhos reais (três threads), sem o modo de estresse.
+O diagnóstico de pilhas no estouro do encontro (`PLS_GC_RENDEZVOUS_THREAD`) continua
+ligado nos builds de diagnóstico.
 
 ## 0. Modelo usado
 

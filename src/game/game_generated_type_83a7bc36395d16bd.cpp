@@ -28,7 +28,7 @@ if (([&]() { auto cs_left = pls::cs::box(cs_8a995ef2c270d901_value); auto cs_rig
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3da6da0799f0bdf8>>(cs_8a995ef2c270d901_value); pls::cs::String cs_arg0 = v_text; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_c0c7948ad6c9b04a(cs_arg0); }());
 }
 if (([&]() { auto cs_left = pls::cs::box(v_text); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"",0);return cs_literal;}());
+return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}());
 }
 return v_text;
 }

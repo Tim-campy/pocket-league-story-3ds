@@ -652,7 +652,7 @@
   "native_gc_thread_policy": {
     "assertions": 9,
     "worker_snapshots": 2000,
-    "collections": 17,
+    "collections": 23,
     "sticky_after_end": true,
     "snapshot_survives_overwrite": true,
     "old_target_collected_after_overwrite": true,
@@ -668,7 +668,7 @@
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
     "src/kairo/platform/sdl/font.cpp": "d69e187f1ef6c30f6d19576a7576780c1d39516fd249978e5f4c682b4e9fe26d",
     "src/kairo/common/asset_catalog.cpp": "b245aa1bda0e91f87b4e454aa5c6e00ade4541fe12ba9c0b8e46a99adbace561",
-    "src/kairo/common/semantic_runtime.cpp": "cd3ee15a4ab6d5192d9987f77d05c03134f903381932c3d0e3e67c02657d48da",
+    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
     "tests/kairo/GraphicsCurrentOracle.cs": "23d86113f2c4586c3af280aadf8649e3901e09e2042151a254baf5a0260dddbe",
     "tools/test_graphics_current.py": "4a25e4bbd78091e96639178fb70ae8126fef6dfb464f9c7c629aa9e5801cc6eb",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
@@ -678,7 +678,7 @@
     "src/kairo/api/input.hpp": "0c3f2ab9a63f94359e6aace100913ab684dddfae5e453b9ea4ba8802b9d20fbf",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
-    "src/kairo/common/semantic_runtime.hpp": "af8db4f942647ffe9b2aae26208a01f17e808ad9d21bba1d1c5a3c997ce20e0c",
+    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -728,7 +728,7 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "964dea81aa9a20b2713d5d76905e4b3a81856241572a73d0d9a99046d6c0e902"
+    "sha256": "7d5898c654b4b2560a2b8f693b48752d33693c41ee6b4bf568a8ea3fafbfe82e"
   },
   "verified_boundary_ids": [],
   "limits": [

@@ -1,5 +1,8 @@
 #include "managed_thread.hpp"
 #include "gc_test_support.hpp"
+#include "managed_type_init.hpp"
+#include <mutex>
+#include <thread>
 #include <atomic>
 #include <chrono>
 #include <iostream>
@@ -80,6 +83,41 @@ int main(){
         }
         check(denied_collect && denied_entry && denied_safepoint && denied_allocation,"Native scope did not reject managed entry");
         {GcMutatorScope nested_managed;gc_safepoint();}gc_collect(0);check(trace_complete,"Managed execution did not resume after native scope");
+        // Lock order T1 (docs/notes/gc-lock-order-review.md): a holder keeps a
+        // native mutex across a collection while another mutator waits for it.
+        // ManagedLockGuard waits inside a native wait, so the rendezvous completes.
+        {
+            std::mutex gate;std::atomic<bool> held{false},trying{false},collected_ok{false};
+            auto holder=make_thread([&]{ManagedLockGuard<std::mutex> lock(gate);held=true;
+                while(!trying)std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                try{gc_collect(0);collected_ok=true;}catch(const Exception&){}});
+            auto waiter=make_thread([&]{while(!held)std::this_thread::sleep_for(std::chrono::milliseconds(1));trying=true;ManagedLockGuard<std::mutex> lock(gate);});
+            holder->Start();waiter->Start();holder->Join();waiter->Join();
+            check(collected_ok,"Collection with a contended ManagedLockGuard did not complete");
+        }
+        // Lock order T2: a type-initializer waiter woken during a collection must
+        // not keep the coordinator mutex while it waits for the collection to end,
+        // or a mutator entering any type initializer blocks outside a native wait.
+        {
+            static TypeInitState type_a,type_b;
+            std::atomic<bool> a_started{false},release_a{false},w1_waiting{false},go3{false},b_ran{false},collected_ok{false},collect_done{false};
+            std::thread owner([&]{type_a.run("FixtureA",[&]{a_started=true;while(!release_a)std::this_thread::sleep_for(std::chrono::milliseconds(1));});});
+            while(!a_started)std::this_thread::sleep_for(std::chrono::milliseconds(1));
+            auto w1=make_thread([&]{w1_waiting=true;type_a.run("FixtureA",[]{});});
+            auto w3=make_thread([&]{while(!go3){} type_b.run("FixtureB",[&]{b_ran=true;gc_safepoint();});});
+            auto t2_collector=make_thread([&]{try{gc_collect(0);collected_ok=true;}catch(const Exception&){}collect_done=true;});
+            {
+                w1->Start();while(!w1_waiting)std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                std::this_thread::sleep_for(std::chrono::milliseconds(50));
+                w3->Start();std::this_thread::sleep_for(std::chrono::milliseconds(20));
+                t2_collector->Start();std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                release_a=true;std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                go3=true;owner.join();t2_collector->Join();w1->Join();w3->Join();
+            }
+            check(collect_done && collected_ok,"Type-initializer waiter held the coordinator across the rendezvous");
+            check(b_ran,"Second type initializer did not run");
+        }
         std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<assertions<<"}\n";
     }catch(const Exception&e){std::cerr<<e.type_name()<<": "<<e.what()<<'\n';return 1;}
 }

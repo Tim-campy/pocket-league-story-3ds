@@ -237,12 +237,14 @@ String String::literal(const char16_t*text,std::size_t length){
     static std::mutex mutex;
     static std::unordered_map<std::u16string_view,Ref<Storage>> literals{};
     static GcRootProvider roots([](const EdgeVisitor&visitor){for(const auto&entry:literals)trace_value(entry.second,visitor);});
-    std::lock_guard<std::mutex> lock(mutex);
-    const std::u16string_view key(text,length);auto found=literals.find(key);
-    String result;
+    // Never allocate while holding the pool mutex: an allocation is a GC
+    // safepoint, and another mutator waiting here is not in a native wait.
+    const std::u16string_view key(text,length);String result;
+    {std::lock_guard<std::mutex> lock(mutex);auto found=literals.find(key);if(found!=literals.end()){result.data_=found->second;return result;}}
+    auto created=make_ref<Storage>(std::u16string(text,length));
+    std::lock_guard<std::mutex> lock(mutex);auto found=literals.find(key);
     if(found!=literals.end()){result.data_=found->second;return result;}
-    result.data_=make_ref<Storage>(std::u16string(text,length));
-    literals.emplace(std::u16string_view(result.data_->value),result.data_);return result;
+    result.data_=created;literals.emplace(std::u16string_view(result.data_->value),result.data_);return result;
 }
 String String::from_utf8(const std::string& text) {
     std::u16string units;

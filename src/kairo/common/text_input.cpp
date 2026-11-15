@@ -34,8 +34,8 @@ cs::Array<cs::String> show_text_panel(cs::String title,cs::String text,std::int3
 }
 namespace {std::mutex language_mutex;cs::Ref<LanguagePanelPresenter> language_presenter{};}
 namespace {cs::GcRootProvider language_roots([](const cs::EdgeVisitor&visitor){cs::trace_value(language_presenter,visitor);});}
-namespace {cs::Ref<LanguagePanelPresenter> current_language(){std::lock_guard<std::mutex> lock(language_mutex);if(!language_presenter)language_presenter=cs::make_ref<LanguagePanelPresenter>();return language_presenter;}}
-void install_language_panel(cs::Ref<LanguagePanelPresenter> value){std::lock_guard<std::mutex> lock(language_mutex);language_presenter=std::move(value);}
+namespace {cs::Ref<LanguagePanelPresenter> current_language(){cs::ManagedLockGuard<std::mutex> lock(language_mutex);if(!language_presenter)language_presenter=cs::make_ref<LanguagePanelPresenter>();return language_presenter;}}
+void install_language_panel(cs::Ref<LanguagePanelPresenter> value){cs::ManagedLockGuard<std::mutex> lock(language_mutex);language_presenter=std::move(value);}
 void start_language_panel(cs::Array<cs::String> languages,std::int32_t index,cs::String custom_pack_location,std::int32_t mode){current_language()->Begin({languages,index,custom_pack_location,mode});}
 bool language_panel_finished(){return current_language()->Finished();}
 cs::Array<cs::String> language_panel_result(){return current_language()->Result();}

@@ -424,7 +424,7 @@
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
     "src/kairo/common/asset_catalog.cpp": "b245aa1bda0e91f87b4e454aa5c6e00ade4541fe12ba9c0b8e46a99adbace561",
-    "src/kairo/common/semantic_runtime.cpp": "cd3ee15a4ab6d5192d9987f77d05c03134f903381932c3d0e3e67c02657d48da",
+    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
     "src/kairo/platform/sdl/font.cpp": "d69e187f1ef6c30f6d19576a7576780c1d39516fd249978e5f4c682b4e9fe26d",
     "tests/kairo/ImageLifetimeOracle.cs": "9eada50ef9d686e508f9c5a03f6e4100e6705e2a9c0566624964afdadd7b6cbb",
     "tools/test_image_lifetime.py": "2af8482e6fe5b237ab0637dd10b3fd8a0e711c41991b5eb5114774f2c1307513",
@@ -435,7 +435,7 @@
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
-    "src/kairo/common/semantic_runtime.hpp": "af8db4f942647ffe9b2aae26208a01f17e808ad9d21bba1d1c5a3c997ce20e0c",
+    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/platform/sdl/font.hpp": "285a3ffc32ed8c3290d1c2fee20129f4932bb872d0285b970327af972be43081"
@@ -466,7 +466,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "e7c2a733679d5b0edf1fa84f335c620211e28b2782799aad0f91d7c442a10e69"
+    "sha256": "44b43930e3d596ffb8792fb50d75d667e83ad3fa168d420ed5baba1ad52a2ab3"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

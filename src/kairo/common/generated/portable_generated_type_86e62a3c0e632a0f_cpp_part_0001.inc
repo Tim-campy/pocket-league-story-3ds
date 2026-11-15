@@ -50,7 +50,7 @@ return pls::cs::cast_integral<std::uint16_t>(pls::cs::cast_integral<std::int32_t
 pls::cs::String cs_0b9238a3df4985af(pls::cs::Array<std::uint8_t> v_bytes,pls::cs::String v_enc) { cs_init_86e62a3c0e632a0f();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JString.New(System.Byte[],System.String)",kairo);
 {
-if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=v_enc;auto cs_argument=([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9);return cs_literal;}());cs_receiver.length();return pls::cs::culture_equals_ignore_case(cs_receiver,cs_argument);}());})) {
+if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver=v_enc;auto cs_argument=([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9);}());cs_receiver.length();return pls::cs::culture_equals_ignore_case(cs_receiver,cs_argument);}());})) {
 return ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = v_bytes; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg2 = (v_bytes).length(); return cs_6e12fc217a0052c1(cs_arg0,cs_arg1,cs_arg2); }());
 }
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_receiver = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::cs::RuntimeEncoding> { auto cs_arg0 = v_enc; return pls::cs::RuntimeEncoding::GetEncoding(cs_arg0); }());}); auto cs_arg0 = v_bytes; return pls::generated::cs_require(cs_receiver)->GetString(cs_arg0); }());});
@@ -108,7 +108,7 @@ pls::cs::String cs_2ff893c603156d85(pls::cs::Ref<pls::cs::Object> v_obj) { cs_in
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JString.ValueOf(System.Object)",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(v_obj); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
-return ([]() -> pls::cs::String {static const auto cs_literal=pls::cs::String::literal(u"\x006e" u"\x0075" u"\x006c" u"\x006c" u"",4);return cs_literal;}());
+return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x006e" u"\x0075" u"\x006c" u"\x006c" u"",4);}());
 }
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&](){auto cs_receiver = v_obj;return pls::generated::cs_require(cs_receiver)->ToString();}());});
 }

@@ -179,3 +179,37 @@ temporada; save manual pela tecla esquerda (`SubForm(16)`), rota `saves.route`.
 Salvaguarda: 0 alertas nas tentativas 67–76 (o registro da 70 é o rastreio
 pedido com `--trace-method`). Pendente: travamento da 70 com `Dialog.Show`
 vigiado (`UNKNOWN`).
+
+## Tentativas 84–97 (2026-11-15): partidas, liga e ações de gestão
+
+**Diferença de $0,3K (67 → 68): não é divergência de save.** No quadro 540 da
+tentativa 67 (14 quadros antes da última gravação, no 554) o dinheiro era
+$500,9K; a 68 carrega o save com exatamente $500,9K. Os $501,2K do fim da 67
+são receita acumulada depois da gravação, nunca salva.
+
+**A rota `season` não jogava partidas.** O time só joga quando está inscrito em
+liga ou copa (`GameForm` estado 2, "bus gather"); a rota apenas passava semanas.
+A Liga aparece no submenu Partidas só com a flag de evento 1, ligada pelo comando
+de evento 19, que a tabela local de eventos (APK do usuário, fora do Git) associa a
+cadeias de eventos após resultados em copas. Daí a rota de carreira.
+
+| Tentativa | Rota | Resultado | Novos sobre os pendentes |
+|---|---|---|---:|
+| 86 | `actions` (1ª versão, save 68) | inscreveu numa copa; demais itens do menu não batiam | 1 |
+| 87 | `career` (save 68): copa + 6 semanas, 40 ciclos | Liga destravada; inscrição e partidas de liga | 18 |
+| 88–90 | `career` (save 87) | parou no início: save retoma direto num dia de jogo | 2–3 |
+| 91 | `career` (save 87, cabeçalho com espera de uma partida inteira) | troféu de liga, instalação liberada | 20 |
+| 93 | `career` (save 91) | saturou (mesmos 18) | 18 |
+| 94 | `actions` (save 93) | ações dentro da preparação da partida: o cursor saiu do "Kickoff" | 3 |
+| 95 | `actions` + `dismiss` que dá o pontapé inicial (SELECT na partida sem diálogo) | contratação, negociação, patrocínio, torcida, escalação | 39 |
+| 97 | `actions` com o cursor do menu principal acompanhado (ele persiste e dá a volta) | completa | 52 |
+
+Depois do registro: **926 executados + 45 creditados = 971 / 1.248 (77,8%)**;
+156 justificados; 121 restantes. Executor de rotas: `dismiss` agora aperta SELECT
+quando a tela principal é `SoccerForm` sem diálogo (49 asserções). Rotas geradas:
+`tests/routes/make_career_route.py`, `tests/routes/make_actions_route.py`.
+
+**Pendente:** construir instalação (`Tenant.BuildTenant`), treino
+(`ChangeTraining`, `TrainingData`, comandos de treino), novo jogo (`NewGame`),
+fim de jogo no ano 7 (`SetClearPoint`, `SetContinueGameData`), toque em
+`GameView`/`GamePad`/`SoccerForm`, telas restantes de `SubForm`.

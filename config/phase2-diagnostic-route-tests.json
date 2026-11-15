@@ -1,13 +1,13 @@
 {
   "status": "PASS",
-  "assertions": 47,
+  "assertions": 49,
   "operation": "own-PC-diagnostic-route-runner",
   "inputs": {
-    "src/main/diagnostic_route.hpp": "dd2fadf9210cb98f3d18d5cdb76a2070f7e34f2a85609725d381f082bb8152df",
-    "tests/kairo/diagnostic_route_fixtures.cpp": "d50f75e6212e0ad40006791ca71467bc54a67b472ab3ceaca2b8efce9e5692a2",
+    "src/main/diagnostic_route.hpp": "e98c5ebf507b4081725b51312e8a702ceaa86b9b71ad2b91cc64038334a8ba71",
+    "tests/kairo/diagnostic_route_fixtures.cpp": "5fab499c2464c0c86718f836abe81e5dc81c53028d0f06b728946fa7291e18eb",
     "tools/test_diagnostic_route.py": "9bddb3d40576c3a9d12f0df896163bcebd01f7d04615a4eac6da3a84f999a0e5"
   },
-  "native_executable_sha256": "0e815ac9e8b8e07ea1c6ddf38bd07f65037df99c4090e65a66ffa9315294377e",
+  "native_executable_sha256": "85d90198ffb186a763f19270fcb15424eb28d1a424a27904d72856bff0477d45",
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "game_executed": false,
   "verified_boundary_ids": []

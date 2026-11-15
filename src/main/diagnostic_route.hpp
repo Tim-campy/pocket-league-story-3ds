@@ -182,6 +182,9 @@ public:
                 if(waited>s.timeout)return timeout();
                 // Same rule as the frame-based dismissal: unlabeled SubForm -> SELECT, labeled -> SOFT2; every 18 frames.
                 if(state.dialog&&waited%18==0){const auto* top=state.top();action.key=top->right.empty()?"SELECT":"SOFT2";}
+                // A match screen (SoccerForm main, no dialog) waits for SELECT on its first
+                // item (kickoff) and on result pages; SELECT never moves its cursor.
+                else if(!state.dialog&&waited%18==0&&state.main_window.size()>=10&&state.main_window.compare(state.main_window.size()-10,10,"SoccerForm")==0)action.key="SELECT";
                 return action;
             }
         }

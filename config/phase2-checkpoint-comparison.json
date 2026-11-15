@@ -679,15 +679,15 @@
     },
     {
       "path": "config/phase2-translation.json",
-      "sha256": "f220239c34793512972be31a729db2f2a9bb5ffc2b9c4fc2995698d36b79b9fe"
+      "sha256": "8ed732d93c9cb5b903f0f9e88b8eb0f574d1b5804a65907f842cabdf94eca00d"
     },
     {
       "path": "config/phase2-portable-differential.json",
-      "sha256": "65d76e5f0c1c3e4bde5b8180433a8b5c6bbcb59c5f4fc3b7ace2196bacbccb19"
+      "sha256": "3da50efddaedda0df2b08edc7487258481f6918b4830f1439c37056bcc8084a0"
     },
     {
       "path": "config/phase2-game-translation.json",
-      "sha256": "d30ae738d5e87ab8d5ce10b1bba1b17ebcb7cb14df9e3d08ec562f6a32e5b1f0"
+      "sha256": "f9c3f496af93b74992b8bf48384e8cb9cb105bfd2e56fac21ab50708d442dcf5"
     }
   ]
 }

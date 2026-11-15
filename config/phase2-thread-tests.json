@@ -495,7 +495,7 @@
   },
   "native_executable": {
     "path": "build/thread-fixtures/thread-fixtures.exe",
-    "sha256": "5989055de58e451499a1a9b734f5ecb792647f21d80ed6083fc7a382bdab234e"
+    "sha256": "b6d1237634518ccf94af2995f904b3982344cd9cab1eeed85387bf80479042cd"
   },
   "production_methods_promoted": 0,
   "game_binary_loaded": false,

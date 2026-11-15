@@ -58,6 +58,9 @@ int main(){
     a=dismiss.step(state(0,{{"form.GameForm",9,3,"",""},{"form.SubForm",4,3,"",""}}));check(a.key=="SELECT","unlabeled dialog dismissed with SELECT");
     a=dismiss.step(state(18,{{"form.GameForm",9,3,"",""},{"form.SubForm",4,3,"","Back"}}));check(a.key=="SOFT2","labeled window dismissed with SOFT2");
     a=dismiss.step(state(20,{{"form.GameForm",9,3,"",""}}));check(a.done,"dismiss ends when the main form is on top");
+    Runner match(parse_text("dismiss until form=GameForm timeout=100\nend\n"));
+    a=match.step(state(0,{{"form.SoccerForm",2,1,"L","R"}}));check(a.key=="SELECT","match screen without dialog gets SELECT (kickoff)");
+    a=match.step(state(5,{{"form.SoccerForm",2,1,"L","R"}}));check(a.key.empty(),"match SELECT paced every 18 frames");
     // Depth condition and optional timeout.
     Runner depth(parse_text("wait depth=2 timeout=2 optional\nwait depth=1\nend\n"));
     a=depth.step(title(1));a=depth.step(title(4));check(!a.timed_out&&a.note.find("timeout")!=std::string::npos,"optional timeout advances with a note");

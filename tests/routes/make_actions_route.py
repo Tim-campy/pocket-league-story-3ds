@@ -92,22 +92,29 @@ def main(rounds=3):
     Path(__file__).with_name('actions.route').write_text(HEADER + body + 'end\n', encoding='utf-8', newline='\n')
 
 
-def touch_scan(columns=(30, 75, 120, 165, 210), rows=(60, 95, 130, 165, 200)):
+def touch_scan(columns=(20, 50, 80, 110, 140, 170, 200, 225), rows=(55, 85, 115, 145, 175, 205)):
     """Tap a grid over the map (Camera.Collision moves the cursor to the tap);
     SELECT then opens SubForm 61 on a free lot (build: first facility, confirm)
     or 65 on a built lot (demolish option)."""
-    text = "# touch scan over the map\n" + BACK
+    text = "# touch scan over the map\n" + SHORT_BACK
     for y in rows:
         for x in columns:
-            text += f"tap {x} {y}\nwait frames=12\nkey SELECT\nwait frames=40\n" + SELECTS * 3 + BACK
+            text += f"tap {x} {y}\nwait frames=12\nkey SELECT\nwait frames=40\n" + SELECTS * 3 + SHORT_BACK
     return text
+
+
+# Short dismissal for focused routes: only the header allows a whole match, so
+# the route ends long before the year-end question (whose default "Yes" would
+# open the dismissal list).
+SHORT_BACK = BACK.replace('timeout=6000', 'timeout=600')
 
 
 def focused():
     """tests/routes/lots.route: coach training policy, then the touch scan."""
     g = Generator()
-    body = g.block('Info -> Coach: move the policy cursor and confirm (ChangeTraining)', 4, 1, 0)
-    body += DOWN + SELECTS * 4 + BACK + touch_scan()
+    coach = g.block('Info -> Coach: move the policy cursor and confirm (ChangeTraining)', 4, 1, 0)
+    # SubForm 50 moves the policy with LEFT/RIGHT (Canvas KEY_LEFT/KEY_RIGHT), then SELECT confirms.
+    body = coach.replace(BACK, SHORT_BACK) + "key RIGHT\nwait frames=10\n" + SELECTS * 4 + SHORT_BACK + touch_scan()
     Path(__file__).with_name('lots.route').write_text(HEADER.replace('management actions by menu position', 'coach policy and map lots') + body + 'end\n', encoding='utf-8', newline='\n')
 
 

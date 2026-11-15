@@ -52,6 +52,6 @@
     "src/runtime/tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef"
   },
   "game_assets_used": false,
-  "executable_sha256": "504a8762bcb51fd8e557dffc4d5d56ef0b7574786fe37e1e13a3073b32e4ecdc",
+  "executable_sha256": "efe57f1576e68932492668d0bad696202a12d65692362dc5431668740ea3ec91",
   "log_sha256": "5b36650d5b59545d1c2d712cb817adaa7ccb4359b07d310adb2f7d5dd79a79b5"
 }

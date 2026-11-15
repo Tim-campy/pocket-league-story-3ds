@@ -13,7 +13,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 |---|---|---|
 | Tradução completa | cumprido | 1860/1958 métodos compilados (+90 membros gerados pelo compilador dentro de unidades emitidas, 6 abstratos sem corpo); 0 slots virtuais pendentes; políticas offline: 47 de 69 emitidas nos chamadores traduzidos, 22 sem chamador traduzido, 0 rejeitadas. |
 | Coletor e desempenho | cumprido | Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4. |
-| Percurso completo no PC | em andamento | 971/1248 alcançáveis exercitados (77.8%); fora do alcance: 89 por política, 35 só depuração, 586 inalcançáveis no original (docs/coverage-never-reached.md). |
+| Percurso completo no PC | em andamento | 1003/1248 alcançáveis exercitados (80.4%); fora do alcance: 89 por política, 35 só depuração, 586 inalcançáveis no original (docs/coverage-never-reached.md). |
 | Fidelidade resolvida | em andamento | Ponto flutuante confirmado em emulador ARM; confirmação em aparelho, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes. |
 | Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |
 
@@ -21,7 +21,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
-| Métodos a traduzir | 1958 | {'translated': 934, 'runs': 926, 'embedded': 90, 'policy': 2, 'no-body': 6} |
+| Métodos a traduzir | 1958 | {'translated': 902, 'runs': 958, 'embedded': 90, 'policy': 2, 'no-body': 6} |
 
 ## Fronteira da KairoLibrary
 
@@ -48,7 +48,7 @@ A conversão para rastreamento está integrada e em validação. Pico comparativ
 |---|---:|---|
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1860/1958 identidades originais com C++ compilado; 926 com retorno normal registrado em jogo; 0 verificadas.**
+**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1860/1958 identidades originais com C++ compilado; 958 com retorno normal registrado em jogo; 0 verificadas.**
 
 ## Preparação e medições da Fase 1 preservadas
 

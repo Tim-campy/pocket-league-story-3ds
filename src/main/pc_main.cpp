@@ -19,6 +19,22 @@
 #include "diagnostic_route.hpp"
 #endif
 #include "diagnostic_profile.hpp"
+#include "dialog_service.hpp"
+namespace {
+// Diagnostic runs only: no host installs the native dialog service yet (its
+// 3DS form is a Phase 3 design decision). Routes must not stop at a game
+// dialog: log the request and answer with its first declared button.
+class DiagnosticDialogPresenter final:public pls::kairo::DialogPresenter {
+public:
+    std::int32_t Present(const pls::kairo::DialogRequest& request)override{
+        const auto answer=request.buttons.empty()?-1:request.buttons.front().result;
+        std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);
+        std::cerr<<"PLS_PC_DIALOG={\"type\":"<<request.type<<",\"buttons\":"<<request.buttons.size()<<",\"answer\":"<<answer<<",\"message\":\""
+                 <<pls::pc::route::json_escape(request.message.is_null()?std::string():request.message.utf8())<<"\"}"<<std::endl;
+        return answer;
+    }
+};
+}
 #include "capture.hpp"
 #include "virtual_clock.hpp"
 #include "../kairo/platform/sdl/text_input.hpp"
@@ -64,6 +80,12 @@ int main(int argc,char** argv){
     pls::diagnostic::enabled=true;
     pls::cs::exception_site_hook=&pls::diagnostic::method_stack_text;
     pls::cs::gc_stress_configure();
+    // Neutral button labels (no game text): one OK, two (type 3) or three choices.
+    pls::kairo::install_dialog_service(pls::cs::make_ref<DiagnosticDialogPresenter>(),
+        pls::cs::Delegate<pls::cs::Array<pls::cs::String>(std::int32_t)>::from_static("diagnostic-dialog-labels",[](std::int32_t type){
+            return type<=2?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"1")})
+                :type==3?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"1"),pls::cs::String(u"2")})
+                :pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"1"),pls::cs::String(u"2"),pls::cs::String(u"3")});}));
     pls::gc::rendezvous_timeout_hook=&pls::diagnostic::print_stuck_threads;
     FinalProfile final_profile;
 #endif
@@ -193,6 +215,10 @@ int main(int argc,char** argv){
                     pls::platform::Input event{action.pointer_kind==0?pls::platform::Input::Kind::pointer_down:action.pointer_kind==1?pls::platform::Input::Kind::pointer_up:pls::platform::Input::Kind::pointer_move,action.x,action.y};
                     canvas->host_event(event);std::cerr<<"PLS_PC_SCRIPTED_TOUCH="<<route_frame<<':'<<action.pointer_kind<<':'<<action.x<<','<<action.y<<'\n';
                 }
+                // Host text panel (SimpleTextInput): route-typed text and Enter (SDLK_RETURN == 13).
+                if(!action.text.empty()){for(int erase=0;erase<256&&!text_input->Text().is_null()&&text_input->Text().length();++erase){pls::platform::Input back{pls::platform::Input::Kind::key_down};back.key=8;text_input->Handle(back);}
+                    pls::platform::Input typed{pls::platform::Input::Kind::text_input};typed.text=action.text;text_input->Handle(typed);std::cerr<<"PLS_PC_SCRIPTED_TEXT="<<route_frame<<'\n';}
+                if(action.accept){pls::platform::Input enter{pls::platform::Input::Kind::key_down};enter.key=13;text_input->Handle(enter);std::cerr<<"PLS_PC_SCRIPTED_ACCEPT="<<route_frame<<'\n';}
                 if(action.focus>=0){std::cerr<<"PLS_PC_SCRIPTED_FOCUS="<<route_frame<<':'<<action.focus<<'\n';lock.unlock();app->host_focus(action.focus==1);lock.lock();}
                 if(action.step>=0)std::cerr<<"PLS_ROUTE_STEP={\"step\":"<<action.step<<",\"frame\":"<<presented_frames<<"}\n";
                 if(action.timed_out){std::cerr<<"PLS_ROUTE_TIMEOUT={\"frame\":"<<presented_frames<<",\"note\":\""<<pls::pc::route::json_escape(action.note)<<"\",\"state\":"<<pls::pc::route::to_line(ui_state)<<"}\n";pls::kairo::host_finish_requested=true;}

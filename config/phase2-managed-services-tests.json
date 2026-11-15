@@ -19,7 +19,7 @@
   },
   "native_executable": {
     "path": "build/managed-services-tests/managed-services.exe",
-    "sha256": "536a9f6e8e6e5fc2eb636e51ecf1c2241789075ce534170d4d982809f5ac0c2b"
+    "sha256": "b9c9b88bc75c5b6543069e60b167b4ac1b78f35e028a48ad205c311ea37b347f"
   },
   "policy_sha256": "2767fa2c47ea68c3771448cc63ffd090ea912ccdf39cf25eb2371a1a7afc0e7d",
   "intended_symbol": "M:main.AppData.CgiRegist(System.String,System.String)",

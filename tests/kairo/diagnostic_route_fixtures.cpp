@@ -78,6 +78,10 @@ int main(){
     a=touch.step(title(3));check(a.pointer_kind==1&&a.x==120,"tap releases");
     a=touch.step(title(4));check(a.focus==0,"focus off");a=touch.step(title(5));check(a.focus==1,"focus on");
     check(parse_fails("tap 1\nend\n"),"tap needs X Y");
+    Runner text(parse_text("type Sunrays\naccept\nend\n"));
+    a=text.step(title(1));check(a.text=="Sunrays"&&!a.accept,"type sends text to the host panel");
+    a=text.step(title(2));check(a.accept&&a.text.empty(),"accept confirms the host panel");
+    check(parse_fails("type\nend\n"),"type needs text");
     // State line is valid-looking JSON with escaped text.
     auto line=to_line(state(7,{{"form.SubForm",4,3,"a\"b","c\\d"}}));
     check(line.find("a\\\"b")!=std::string::npos&&line.find("c\\\\d")!=std::string::npos,"labels escaped in state line");

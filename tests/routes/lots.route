@@ -12,7 +12,7 @@ wait not loading stable=20 timeout=900
 # A saved game can resume straight into a match day: allow a whole match.
 dismiss until form=GameForm label_right=* timeout=6000 optional
 # Info -> Coach: move the policy cursor and confirm (ChangeTraining)
-dismiss until form=GameForm label_right=* timeout=6000 optional
+dismiss until form=GameForm label_right=* timeout=600 optional
 key SOFT2
 wait depth=2 timeout=120 optional
 wait frames=20
@@ -30,8 +30,8 @@ key DOWN
 wait frames=10
 key SELECT
 wait frames=60
-dismiss until form=GameForm label_right=* timeout=6000 optional
-key DOWN
+dismiss until form=GameForm label_right=* timeout=600 optional
+key RIGHT
 wait frames=10
 key SELECT
 wait frames=50
@@ -41,10 +41,10 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
+dismiss until form=GameForm label_right=* timeout=600 optional
 # touch scan over the map
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 30 60
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 20 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -54,8 +54,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 75 60
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 50 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -65,8 +65,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 120 60
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 80 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -76,8 +76,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 165 60
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 110 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -87,8 +87,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 210 60
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 140 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -98,8 +98,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 30 95
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 170 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -109,8 +109,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 75 95
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 200 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -120,8 +120,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 120 95
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 225 55
 wait frames=12
 key SELECT
 wait frames=40
@@ -131,8 +131,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 165 95
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 20 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -142,8 +142,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 210 95
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 50 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -153,8 +153,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 30 130
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 80 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -164,8 +164,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 75 130
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 110 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -175,8 +175,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 120 130
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 140 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -186,8 +186,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 165 130
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 170 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -197,8 +197,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 210 130
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 200 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -208,8 +208,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 30 165
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 225 85
 wait frames=12
 key SELECT
 wait frames=40
@@ -219,8 +219,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 75 165
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 20 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -230,8 +230,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 120 165
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 50 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -241,8 +241,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 165 165
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 80 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -252,8 +252,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 210 165
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 110 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -263,8 +263,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 30 200
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 140 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -274,8 +274,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 75 200
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 170 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -285,8 +285,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 120 200
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 200 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -296,8 +296,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 165 200
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 225 115
 wait frames=12
 key SELECT
 wait frames=40
@@ -307,8 +307,8 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
-tap 210 200
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 20 145
 wait frames=12
 key SELECT
 wait frames=40
@@ -318,5 +318,258 @@ key SELECT
 wait frames=50
 key SELECT
 wait frames=50
-dismiss until form=GameForm label_right=* timeout=6000 optional
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 50 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 80 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 110 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 140 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 170 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 200 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 225 145
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 20 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 50 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 80 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 110 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 140 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 170 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 200 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 225 175
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 20 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 50 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 80 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 110 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 140 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 170 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 200 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
+tap 225 205
+wait frames=12
+key SELECT
+wait frames=40
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+key SELECT
+wait frames=50
+dismiss until form=GameForm label_right=* timeout=600 optional
 end

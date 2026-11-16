@@ -6,8 +6,8 @@ Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com 
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 964 |
-| Alcançáveis, ainda não executados | 83 |
+| Executados no diagnóstico (`runs`) | 982 |
+| Alcançáveis, ainda não executados | 19 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
 | Só depuração | 35 |
@@ -18,46 +18,31 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 
 | Classe | translated | embedded | todo | no-body | verified |
 |---|---:|---:|---:|---:|---:|
-| reachable-not-exercised | 82 | 1 | 0 | 0 | 0 |
+| reachable-not-exercised | 19 | 0 | 0 | 0 | 0 |
 | unreachable-by-policy | 85 | 4 | 0 | 0 | 0 |
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 1009 de 1248 (80.8%). Métodos `runs` que a análise não alcançou: 0.
-Executados `runs`: 964; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 156; restam sem execução nem justificativa: 83.
+Cobertura sobre o alcançável: 1027 de 1248 (82.3%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 982; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 202; restam sem execução nem justificativa: 19.
 
 
 **Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
 
-## Alcançáveis, ainda não executados (83)
+## Alcançáveis, ainda não executados (19)
 
 Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 
-- **cfg.MyConfig** (1): `.cctor`
-- **data.PlayerData** (3): `AddPhysicalParam`, `SetTrainingAddParam`
 - **data.TenantData** (2): `GetGoodsIncomeRate`, `ProcStrenSpecialTenant`
 - **data.TradeData** (1): `IsPlayerInMember`
-- **data.TrainingData** (2): `GetTrainingAddParamNum`, `RemoveNew`
-- **form.BootForm** (3): `GetTouchValue`, `Resume`, `SetTouchValue`
-- **form.FormManager** (1): `Resume`
-- **form.GameForm** (5): `GetScaleRange`, `GetTouchValue`, `ResetOffscreen`, `SetScale`, `SetTouchValue`
-- **form.MyFormBase** (3): `GetBoxFooterY`, `Push`, `SetTouchValue`
-- **form.RankForm** (2): `GetTouchValue`, `SetTouchValue`
-- **form.SoccerForm** (7): `GetFirstScript`, `GetScaleRange`, `GetTouchValue`, `ResetOffscreen`, `Resume`, `SetScale`, `SetTouchValue`
-- **form.SubForm** (8): `DrawConfig_jp`, `Draw_btmMsg`, `Draw_multiParam`, `Draw_trainingIcon`, `MakeTalkForm`, `SetTicketWindowBtmMsg`, `SetWinCharaTraining`
-- **form.TitleForm** (2): `UpdateKairoAdClickNum`
+- **form.BootForm** (1): `Resume`
+- **form.SoccerForm** (3): `GetTouchValue`, `Resume`, `SetTouchValue`
 - **game.DelayEvent** (1): `Deserialize`
-- **game.Map** (1): `Draw_copyArea`
-- **game.MapMain** (2): `Draw_copyArea`, `UpdateTrainingCoatNum`
-- **game.Player** (1): `ChangeState`
-- **game.TPlayer** (3): `AddCommandRunning`, `AddCommandRunningRegist`, `StopTraining`
+- **game.MapMain** (1): `UpdateTrainingCoatNum`
+- **game.TPlayer** (1): `StopTraining`
 - **game.Tenant** (3): `DestructTenant`, `OutUserTPlayers`, `StrenghTenant`
-- **game.UserData** (1): `ChangeTraining`
-- **main.AppData** (9): `Draw`, `DrawMoney2`, `DrawMoney3`, `DrawNumImageComma_en`, `DrawSeb`, `DrawTrophyEffect`, `GetHttpErrorText`
-- **surface.GamePad** (7): `AddTouch`, `DrawBattery`, `DrawSoftLabelImage`, `DrawWatch`, `GetSideSize`, `SetLayoutMode`, `SetMode`
-- **surface.GameView** (12): `AddEffect`, `OnTouchCamera`, `OnTouchDlgPage`, `OnTouchDlgPage2`, `OnTouchKeyDown`, `OnTouchKeyPress`, `OnTouchKeyUp`, `OnTouchList`, `OnTouchRect`, `OnTouchTrackBar`, `OnTouchVScrollButton`, `Set`
-- **surface.SurfaceManager** (1): `SetLayoutMode`
-- **surface.TouchEffectManager** (2): `Clear`, `RemoveEffect`
+- **main.AppData** (3): `DrawMoney2`, `DrawMoney3`, `DrawTrophyEffect`
+- **surface.GameView** (3): `OnTouchDlgPage2`, `OnTouchTrackBar`, `OnTouchVScrollButton`
 
 ## Inalcançáveis por política offline ou plataforma (89)
 
@@ -184,7 +169,7 @@ Sem caminho a partir das entradas do original; quando o único caminho passa por
 - **system.tapjoy.MyTapjoy** (1): `GetInstance` — sem chamadores
 - **system.tapjoy.ui.Tapjoy** (9): `AddBalance`, `GetBalance`, `GetInstance`, `GetOfferState`, `Init`, `Quit`, `ShowOffers`, `SubBalance` — sem chamadores; `CallBalance` — sobrescrita nunca chamada
 
-## Alcançáveis justificados individualmente (156)
+## Alcançáveis justificados individualmente (202)
 
 Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
 
@@ -200,11 +185,17 @@ Dead in the original: SoccerForm states 1 and 15 are set only by debug code; Gam
 
 `form.GameForm::SetBuildBtmMessage`, `form.SoccerForm::Draw_newPlayerPopular`, `form.SoccerForm::Draw_topBar`, `form.SoccerForm::GetDrawTBAROff`
 
-### hidden-keypad (5)
+### dead-in-original-render-and-scripts (5)
 
-Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network.
+Dead in the original: UpdateOffscreen forces num = 2 before the copy-area branch (GameForm.cs:1012, SoccerForm.cs:1698); script command 2 is enqueued only by AddCommandChangeState, which has no callers (Player.cs:2642); SoccerForm.script_ is filled only by DEBUG_CMD AddCommandCard (SoccerForm.cs:1176-1179); FormManagerBase.Resume() has no call site (FormManagerBase.cs:713).
 
-`main.AppData::Post`, `main.AppData::ResourceReDownload`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`
+`form.FormManager::Resume`, `form.SoccerForm::GetFirstScript`, `game.Map::Draw_copyArea`, `game.MapMain::Draw_copyArea`, `game.Player::ChangeState`
+
+### hidden-keypad (7)
+
+Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network; AppData.Draw(string[,bool]) is the SendSaveData screen (AppData.cs:5534-5736).
+
+`main.AppData::Draw`, `main.AppData::Draw`, `main.AppData::Post`, `main.AppData::ResourceReDownload`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`
 
 ### implicit-object-members (13)
 
@@ -212,17 +203,77 @@ Static-analysis over-approximation: the analysis assumes the runtime may call To
 
 `form.BootForm::GetHashCode`, `form.BootForm::ToString`, `form.GameForm::GetHashCode`, `form.GameForm::ToString`, `form.RankForm::GetHashCode`, `form.RankForm::ToString`, `form.SoccerForm::GetHashCode`, `form.SoccerForm::ToString`, `form.SubForm::GetHashCode`, `form.SubForm::ToString`, `form.TitleForm::GetHashCode`, `form.TitleForm::ToString`, `system.form.LanguageForm::ToString`
 
+### japanese-language (8)
+
+Japanese or non-English locale only; the port runs en-US and the offline language panel cannot switch: DrawConfig_jp (SubForm.cs:2329-2341), Draw_multiParam !En() (SoccerForm.cs:2561-2564), DrawNumImageComma_en Jp() (SubForm.cs:3402-3404), scaled DrawSeb Jp() menu (SubForm.cs:10324-10326), Kairo house ad and its touch id 27 drawn only when Jp() (TitleForm.cs:539-561, handled at 870-904).
+
+`form.SubForm::DrawConfig_jp`, `form.SubForm::Draw_multiParam`, `form.TitleForm::UpdateKairoAdClickNum`, `form.TitleForm::UpdateKairoAdClickNum`, `main.AppData::DrawNumImageComma_en`, `main.AppData::DrawSeb`, `main.AppData::DrawSeb`, `surface.GameView::OnTouchRect`
+
 ### language-pack-download (20)
 
 HttpForm is created only when the language panel returns -1/-2 (download of an online language pack); the offline language presenter never returns those values.
 
 `system.form.HttpForm+HttpMethod::.ctor`, `system.form.HttpForm+ResultData::.ctor`, `system.form.HttpForm+ResultData::System.Collections.IEnumerable.GetEnumerator`, `system.form.HttpForm+ResultData::get_Error`, `system.form.HttpForm+ResultData::get_Succeed`, `system.form.HttpForm+ResultData::set_Error`, `system.form.HttpForm+ResultData::set_Exception`, `system.form.HttpForm+ResultData::set_Succeed`, `system.form.HttpForm::.cctor`, `system.form.HttpForm::.ctor`, `system.form.HttpForm::CheckMainWindow`, `system.form.HttpForm::Draw`, `system.form.HttpForm::DrawConnect`, `system.form.HttpForm::Finish`, `system.form.HttpForm::Init`, `system.form.HttpForm::Run`, `system.form.HttpForm::ToString`, `system.form.HttpForm::Update`, `system.form.HttpForm::get_ProcessError`, `system.form.HttpForm::set_ProcessError`
 
+### network-error (1)
+
+Only in the catch of CgiRegist in BootForm.Run (BootForm.cs:415-430); the offline register_local policy returns the local response and never throws.
+
+`main.AppData::GetHttpErrorText`
+
+### pad-geometry (9)
+
+Port surface is 240x280: AdjustSurfaceLayout computes pad mode 1, equal to the initial mode (SurfaceManager.cs:126-139, GamePad.cs:348), so SetMode is never called; these members need pad mode 0 or 2, a screen with >=120 px under the view for pad component 21 (GamePad.cs:908-912), the never-registered pad components 17/18 (GamePad.cs:701-713), or DEBUG (false at run time via Config.Create(MyConfig)).
+
+`surface.GamePad::AddTouch`, `surface.GamePad::DrawBattery`, `surface.GamePad::DrawSoftLabelImage`, `surface.GamePad::DrawWatch`, `surface.GamePad::GetSideSize`, `surface.GamePad::SetLayoutMode`, `surface.GamePad::SetMode`, `surface.SurfaceManager::SetLayoutMode`, `surface.TouchEffectManager::Clear`
+
+### pinch-gesture (6)
+
+SetScale (which calls GetScaleRange and ResetOffscreen) runs only on TYPE_PINCH (OnTouchCamera case 12: GameForm.cs:1730-1741, SoccerForm.cs:3437-3448), which needs two pointers (SurfaceBase.cs:931-959), or from the Draw clamp (GameForm.cs:1093-1097, SoccerForm.cs:1779-1783), which never fires: scale_ starts at 100 and only SetScale changes it (range 60..240 at width 240).
+
+`form.GameForm::GetScaleRange`, `form.GameForm::ResetOffscreen`, `form.GameForm::SetScale`, `form.SoccerForm::GetScaleRange`, `form.SoccerForm::ResetOffscreen`, `form.SoccerForm::SetScale`
+
+### script-commands-unused-by-data (1)
+
+Only event-script commands 28-32 call it (AppData.cs:4801-4841). No script table of the shipped data (events, fan actions, leagues, quest matches, sponsors, trades) uses those commands: checked against the user's local APK assets, which are not committed.
+
+`data.PlayerData::AddPhysicalParam`
+
 ### support-upload (19)
 
 SpForm (support/upload) opens only with key 0x800 held at a crash or boot error, or holding gamepad component 5 for 5 s in pad mode 0, which the port surface never uses; its Run uploads to the support server (network).
 
 `form.SpForm::.cctor`, `form.SpForm::.ctor`, `form.SpForm::.ctor`, `form.SpForm::AddCommand`, `form.SpForm::ChangeState`, `form.SpForm::Draw`, `form.SpForm::Finish`, `form.SpForm::GetHashCode`, `form.SpForm::GetTouchValue`, `form.SpForm::Init`, `form.SpForm::MakeSendDataTask`, `form.SpForm::Resume`, `form.SpForm::Run`, `form.SpForm::SetSoftLabel`, `form.SpForm::SetTouchValue`, `form.SpForm::ShowDialog`, `form.SpForm::ToString`, `form.SpForm::Update`, `form.SpForm::_draw`
+
+### support-upload-helpers (2)
+
+Only caller is SpForm (SpForm.cs:665, SpForm.cs:743); SubForm has its own GetBoxFooterY.
+
+`form.MyFormBase::GetBoxFooterY`, `form.MyFormBase::Push`
+
+### touch-accessor-unused (6)
+
+GameView.Get/Set address only the top form (GameView.cs:1248-1251). BootForm registers no touch component; RankForm only page arrows id 1, whose handler emits KeyDown/KeyUp (GameView.cs:1351-1378); GameForm only id 17 (consumed) and id 4 value 22, which OnTouchKeyClick turns into KeyClick, not Set (GameView.cs:1462-1482).
+
+`form.BootForm::GetTouchValue`, `form.BootForm::SetTouchValue`, `form.GameForm::GetTouchValue`, `form.GameForm::SetTouchValue`, `form.RankForm::GetTouchValue`, `form.RankForm::SetTouchValue`
+
+### touch-component-never-created (4)
+
+Dead in the original: no GameView.AddTouch in Assembly-CSharp creates component ids 5, 7 or 10; id 17 is registered only while GameForm/SoccerForm is top (GameView.cs:862-869), and their OnTouchEvent consumes it with return false (GameForm.cs:1617-1624, SoccerForm.cs:3404-3411), so the empty GameView.OnTouchCamera is not reached.
+
+`surface.GameView::OnTouchCamera`, `surface.GameView::OnTouchKeyPress`, `surface.GameView::OnTouchKeyUp`, `surface.GameView::OnTouchList`
+
+### trial-or-billing (1)
+
+Callers are TRIAL_VERSION branches (GameForm.cs:1355-1358, SubForm.cs:7845-7852), MyBilling (MyBilling.cs:102, billing disabled) and DebugForm.
+
+`form.SubForm::MakeTalkForm`
+
+### type-initializer-runs-uncredited (1)
+
+MyConfig has only static fields and no methods; its type initializer runs on the first static field read, e.g. TitleForm.cs:184 (executed on every title screen, MyConfig.SMART_PASS), as the generated accessor calls the type initializer. The credit rule needs an executed method of the same type, which this type does not have.
+
+`cfg.MyConfig::.cctor`
 
 ## Limites da análise
 

@@ -19,8 +19,8 @@
     },
     {
       "group": "hidden-keypad",
-      "match": "^main\\.AppData::(SendSaveData|Post|ResourceReDownload)\\(",
-      "reason": "Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network."
+      "match": "^main\\.AppData::(SendSaveData|Post|ResourceReDownload|Draw)\\(",
+      "reason": "Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network; AppData.Draw(string[,bool]) is the SendSaveData screen (AppData.cs:5534-5736)."
     },
     {
       "group": "dead-in-original",
@@ -31,6 +31,61 @@
       "group": "implicit-object-members",
       "match": "::(ToString|GetHashCode|Equals)\\(",
       "reason": "Static-analysis over-approximation: the analysis assumes the runtime may call ToString/GetHashCode/Equals on every instantiated type; no game path calls them on these types."
+    },
+    {
+      "group": "pinch-gesture",
+      "match": "^form\\.(GameForm|SoccerForm)::(SetScale|GetScaleRange|ResetOffscreen)\\(",
+      "reason": "SetScale (which calls GetScaleRange and ResetOffscreen) runs only on TYPE_PINCH (OnTouchCamera case 12: GameForm.cs:1730-1741, SoccerForm.cs:3437-3448), which needs two pointers (SurfaceBase.cs:931-959), or from the Draw clamp (GameForm.cs:1093-1097, SoccerForm.cs:1779-1783), which never fires: scale_ starts at 100 and only SetScale changes it (range 60..240 at width 240)."
+    },
+    {
+      "group": "japanese-language",
+      "match": "^(form\\.SubForm::(DrawConfig_jp|Draw_multiParam)\\(|main\\.AppData::DrawSeb\\(kairo\\.unity\\.ui\\.Graphics,System\\.Int32,System\\.Int32,kairo\\.unity\\.ui\\.Seb,kairo\\.unity\\.ui\\.Image\\[\\],System\\.Int32,System\\.Int32,System\\.Int32(,System\\.Int32,System\\.Int32)?\\)|main\\.AppData::DrawNumImageComma_en\\(|form\\.TitleForm::UpdateKairoAdClickNum\\(|surface\\.GameView::OnTouchRect\\()",
+      "reason": "Japanese or non-English locale only; the port runs en-US and the offline language panel cannot switch: DrawConfig_jp (SubForm.cs:2329-2341), Draw_multiParam !En() (SoccerForm.cs:2561-2564), DrawNumImageComma_en Jp() (SubForm.cs:3402-3404), scaled DrawSeb Jp() menu (SubForm.cs:10324-10326), Kairo house ad and its touch id 27 drawn only when Jp() (TitleForm.cs:539-561, handled at 870-904)."
+    },
+    {
+      "group": "pad-geometry",
+      "match": "^(surface\\.GamePad::(SetMode|SetLayoutMode|DrawWatch|DrawBattery|DrawSoftLabelImage|GetSideSize)\\(|surface\\.GamePad::AddTouch\\(kairo\\.unity\\.ui\\.Graphics,System\\.Single,System\\.Single,System\\.Int32\\)|surface\\.SurfaceManager::SetLayoutMode\\(|surface\\.TouchEffectManager::Clear\\()",
+      "reason": "Port surface is 240x280: AdjustSurfaceLayout computes pad mode 1, equal to the initial mode (SurfaceManager.cs:126-139, GamePad.cs:348), so SetMode is never called; these members need pad mode 0 or 2, a screen with >=120 px under the view for pad component 21 (GamePad.cs:908-912), the never-registered pad components 17/18 (GamePad.cs:701-713), or DEBUG (false at run time via Config.Create(MyConfig))."
+    },
+    {
+      "group": "touch-component-never-created",
+      "match": "^surface\\.GameView::(OnTouchKeyPress|OnTouchKeyUp|OnTouchList|OnTouchCamera)\\(",
+      "reason": "Dead in the original: no GameView.AddTouch in Assembly-CSharp creates component ids 5, 7 or 10; id 17 is registered only while GameForm/SoccerForm is top (GameView.cs:862-869), and their OnTouchEvent consumes it with return false (GameForm.cs:1617-1624, SoccerForm.cs:3404-3411), so the empty GameView.OnTouchCamera is not reached."
+    },
+    {
+      "group": "touch-accessor-unused",
+      "match": "^form\\.(BootForm|RankForm|GameForm)::(GetTouchValue|SetTouchValue)\\(",
+      "reason": "GameView.Get/Set address only the top form (GameView.cs:1248-1251). BootForm registers no touch component; RankForm only page arrows id 1, whose handler emits KeyDown/KeyUp (GameView.cs:1351-1378); GameForm only id 17 (consumed) and id 4 value 22, which OnTouchKeyClick turns into KeyClick, not Set (GameView.cs:1462-1482)."
+    },
+    {
+      "group": "dead-in-original-render-and-scripts",
+      "match": "^game\\.(Map|MapMain)::Draw_copyArea\\(|^game\\.Player::ChangeState\\(|^form\\.SoccerForm::GetFirstScript\\(|^form\\.FormManager::Resume\\(",
+      "reason": "Dead in the original: UpdateOffscreen forces num = 2 before the copy-area branch (GameForm.cs:1012, SoccerForm.cs:1698); script command 2 is enqueued only by AddCommandChangeState, which has no callers (Player.cs:2642); SoccerForm.script_ is filled only by DEBUG_CMD AddCommandCard (SoccerForm.cs:1176-1179); FormManagerBase.Resume() has no call site (FormManagerBase.cs:713)."
+    },
+    {
+      "group": "support-upload-helpers",
+      "match": "^form\\.MyFormBase::(GetBoxFooterY|Push\\(System\\.String,System\\.String\\))",
+      "reason": "Only caller is SpForm (SpForm.cs:665, SpForm.cs:743); SubForm has its own GetBoxFooterY."
+    },
+    {
+      "group": "trial-or-billing",
+      "match": "^form\\.SubForm::MakeTalkForm\\(System\\.Int32,System\\.String,System\\.String\\)",
+      "reason": "Callers are TRIAL_VERSION branches (GameForm.cs:1355-1358, SubForm.cs:7845-7852), MyBilling (MyBilling.cs:102, billing disabled) and DebugForm."
+    },
+    {
+      "group": "network-error",
+      "match": "^main\\.AppData::GetHttpErrorText\\(",
+      "reason": "Only in the catch of CgiRegist in BootForm.Run (BootForm.cs:415-430); the offline register_local policy returns the local response and never throws."
+    },
+    {
+      "group": "script-commands-unused-by-data",
+      "match": "^data\\.PlayerData::AddPhysicalParam\\(System\\.Int32,System\\.Int32\\)",
+      "reason": "Only event-script commands 28-32 call it (AppData.cs:4801-4841). No script table of the shipped data (events, fan actions, leagues, quest matches, sponsors, trades) uses those commands: checked against the user's local APK assets, which are not committed."
+    },
+    {
+      "group": "type-initializer-runs-uncredited",
+      "match": "^cfg\\.MyConfig::\\.cctor\\(",
+      "reason": "MyConfig has only static fields and no methods; its type initializer runs on the first static field read, e.g. TitleForm.cs:184 (executed on every title screen, MyConfig.SMART_PASS), as the generated accessor calls the type initializer. The credit rule needs an executed method of the same type, which this type does not have."
     }
   ]
 }

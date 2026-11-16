@@ -233,3 +233,25 @@ o tempo. Construir/demolir instalação exige a câmera do mapa sobre um lote
 (`camera.subTenant_`) e `SELECT` na tela de gestão (`GameForm.cs:1827`);
 política de treino: Informações → Técnico (`SubForm` 50), mudar a seleção e
 confirmar (`ChangeTraining`).
+
+## Rodada de fechamento do critério 3 (2026-11-15/16)
+
+| Tentativa | Rota | Resultado | Novos |
+|---|---|---|---:|
+| 104 | estresse N=1 no boot (repetição da 78) | 513.909 coletas, sem estouro do encontro | — |
+| 105–107 | `lots` (técnico, varredura por toque) | 107 chegou ao fim de jogo: `SetContinueGameData`, `SetClearPoint`, tela de pontuação | 9 |
+| 108–111 | `newgame` (perfil vazio, painel de texto com `type`/`accept`) | todos os `NewGame`, `BuildTenant`, `ReflectContinueGameData` | 21 |
+| 113–114 | `screens` (foco em cada tela, placar p.2) | depois da correção do `host_focus`: `Resume` de 5 formulários | 6 |
+| 115–119 | `remaining` (receitas A de `docs/notes/coverage-remaining-83.md`) | treino especial completo, política do técnico, corrida no campo, preço do ingresso, toques de configuração e menu | 30 |
+
+Justificativas individuais: 46 novas (pinça, japonês, geometria do pad,
+componentes de toque inexistentes, mortos no original, comandos de script sem
+uso nos dados distribuídos, inicializador de tipo sem crédito), com evidência no
+fonte em `config/coverage-justifications.json` e `docs/notes/coverage-remaining-83.md`.
+
+Depois do registro: **982 executados + 45 creditados = 1.027 / 1.248 (82,3%)**;
+**202 justificados**; **19 restantes**, todos com receita (A) documentada:
+demolir/reforçar instalação construída, estádio e área de treino, loja de produtos,
+foco e toque na partida (`SoccerForm.Resume/Get/SetTouchValue`), foco no boot,
+save com evento adiado, novo jogo após o fim com troca oferecida, troféu no título,
+salários na edição do time, seta da edição do time, barra de volume, rolagem de lista.

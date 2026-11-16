@@ -23,10 +23,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.18783460001577623,
-    "native-compile": 29.105173800024204,
-    "managed-output": 0.4076151000044774,
-    "native-output": 0.23695689998567104
+    "csharp-compile": 0.1843374999880325,
+    "native-compile": 28.28503970001475,
+    "managed-output": 0.4002074000018183,
+    "native-output": 0.20850009997957386
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -72,11 +72,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/matrix-point-differential/Harness.exe",
-    "sha256": "14bba0c34fa6abab20cf6ccd4887b2961682e781179ff9fc7e7918b392486800"
+    "sha256": "e08e6e74992fd5158270f727f36bd699876be7f0b81579258faabb460ead0ac9"
   },
   "source_oracle_executable": {
     "path": "build/translator/matrix-point-differential/Harness-managed.exe",
-    "sha256": "efe6446576754044e3069a9c294a3051f8c3eb1a5662a598bb0b040468cfe112"
+    "sha256": "b398f3b55a613b5d09b546f3b3cfb0b650c024decb0d07309c47351b84ad0077"
   },
   "differential_runner_sha256": "d07b177da4530fa31b9cbab88c65bb046eedbf9b47295f17bb0d7e0af090d841",
   "runtime_sources": [

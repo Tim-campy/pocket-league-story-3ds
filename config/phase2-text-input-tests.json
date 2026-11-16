@@ -9,7 +9,7 @@
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
     "CMakeLists.txt": "8075d3bcdb8256a24fbdef5cb44b64d2afa7d2a1b9bcda9c7993c2b558164df6",
-    "src/kairo/api/application.hpp": "9a156c1bbbaeda32ee6502d6c4fc07cc4fffb3f835ae3d2b26c2238df35aa6ac",
+    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
     "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
     "src/kairo/api/bootstrap.hpp": "e7df9bd7690df80d014a71d2d98d3f718524a60d27897a742408b66bb23633bc",
     "src/kairo/api/canvas.hpp": "4217a5cf57365e6f3fb285064eacd73d69cc4b89ce6a73f2c00816c18d8d51fc",
@@ -52,7 +52,7 @@
     "src/kairo/common/diagnostic_profile.hpp": "49b08cdf04c808d4df42ba5419eb08fa9b6193e9a54367d0b393b8e4c04f3a0c",
     "src/kairo/common/dialog_service.cpp": "1906513d7fd7cfe5685be63dac90631bd09f8b7cfd31a806865479560a9397ff",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
-    "src/kairo/common/forms.cpp": "10128d8e7ffb2ad26dc65c41d1c81054d747d5d83a21cd2c48695dcd18a93ab2",
+    "src/kairo/common/forms.cpp": "db8fa2f180f139297aed2532641afc27f642bdec112cdae3453e241bff55082c",
     "src/kairo/common/forms_execution.cpp": "d85965ef840b2689c5e30086a82891c0b72452fa2f4e2abd6dc2e2ef2f7cae43",
     "src/kairo/common/generated/portable_generated.cpp": "16e8dba69521b887f701d833cbd94da8e7952b96162eba1762346b5e354dc54a",
     "src/kairo/common/generated/portable_generated.hpp": "71bdfcd5e6a6d6009836b3fa0ae5c4d1682b4b87c2b82cfe1d08ebbd5e266d5a",
@@ -249,7 +249,7 @@
   },
   "native_executable": {
     "path": "build/pc/text_input_test.exe",
-    "sha256": "58b09da7f6c0f9a9680252ebaf45f64f356516a3b845fda8ea190dcfed5da716"
+    "sha256": "d933a6b18a7b1c86dc83fb0daafcd3bcc92c52bc9037c9fb858f0e4998107c0d"
   },
   "verified_boundary_ids": [],
   "original_binaries_executed": false,

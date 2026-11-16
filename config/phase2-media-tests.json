@@ -10,7 +10,7 @@
   "mixer_ring_bytes": 262144,
   "mixer_scratch_bytes": 131072,
   "resampler_peak_available_bytes": 85448,
-  "mixer_played_frames": 122880,
+  "mixer_played_frames": 121856,
   "completed_loops": 6,
   "assertions": 18157180,
   "mixer_underrun_frames": 0,
@@ -37,8 +37,8 @@
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "be6c6f169df15d4b1d55157efd35cf0ca50602163df857e28e4632d12ba9d0ed",
-  "native_stdout_sha256": "094678f5eaf59041269a49d4d1fba2c8dbf38c5b38e478dffe4f840efa6bac29",
+  "native_executable_sha256": "7a1d7e42544589306caf0126067e4a2fc547ee41782e879aef46e0fb4aedac69",
+  "native_stdout_sha256": "07ea8fe87556838cf43e695a5325616f4321eef2385656dc2f5eb3f9a932ef33",
   "ffmpeg_comparisons": [
     {
       "sample_rate": 44100,

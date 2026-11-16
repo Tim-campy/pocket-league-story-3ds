@@ -72,3 +72,21 @@ void FormManagerBase::ProcessBackKey(){for(auto i=static_cast<std::int32_t>(stac
 void FormManagerBase::trace_edges(const cs::EdgeVisitor& v)const{for(const auto& f:stack_)cs::trace_value(f,v);for(const auto& state:game_states_)cs::trace_value(state.first,v);cs::trace_value(current_,v);cs::trace_value(loading_,v);cs::trace_value(print_,v);cs::trace_value(game_state_,v);cs::trace_value(execution_,v);}
 void FormManagerBase::release_edges(){stack_.clear();game_states_.clear();pls::cs::clear_ref(current_);pls::cs::clear_ref(loading_);pls::cs::clear_ref(print_);pls::cs::clear_ref(game_state_);pls::cs::clear_ref(execution_);on_lifecycle_warning={};}
 }
+
+namespace pls::kairo {
+// KairoLibrary IApplication.OnApplicationPause (IApplication.cs:435-477): the
+// app event, then Suspend/Resume of every form from the top of the stack (a
+// form's exception is swallowed, as in the source), then OnSuspend/OnResume.
+// NotifyManager.DoNotify/DoCancel and kairo AnalyticsTracker.DispatchPageView
+// of the same sequence have no platform binding yet (docs/coverage-plan.md);
+// KairoPlugin.SetNotificationBackground is an offline no-op policy.
+void IApplication::host_focus(bool focus){
+    if(focused_==focus)return;focused_=focus;
+    FormManagerBase::ProcessEvent(focus?AppEventType::Resume:AppEventType::Hidden);
+    if(auto manager=GetFormManager())
+        for(std::int32_t i=manager->GetFormsNum()-1;i>=0;--i){
+            try{auto form=manager->GetForm(i);if(focus)form->Resume();else form->Suspend();}catch(const cs::Exception&){}
+        }
+    if(focus)OnResume();else OnSuspend();
+}
+}

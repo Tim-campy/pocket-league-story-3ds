@@ -778,15 +778,15 @@
   },
   "native_executable": {
     "path": "build/mono-collation-fixtures/mono-collation-fixtures.exe",
-    "sha256": "6983354872a69706f06b3c80f71fff5b5fe86a6c51f3d5aadcd493ae58cc6db0"
+    "sha256": "b22bd3891d2147ef55ec1984685ef40eb9c6ba577c9e9dd9b794abe49f84d2db"
   },
   "edge_native_executable": {
     "path": "build/mono-collation-fixtures/mono-collation-edge-fixtures.exe",
-    "sha256": "eed7acdb00f8b87703c20bdb72854c9e2a5b35cb828e1dd8a5717c2fb41fafdf"
+    "sha256": "f00743172f10afad5057d1af55565c0f1930f4f6ac7bcb7349f00af9cf82b3ff"
   },
   "bmp_native_executable": {
     "path": "build/mono-collation-fixtures/mono-bmp-fixtures.exe",
-    "sha256": "529b085afe5c87f6adf241ab528845514f5b4b841d1238af739c6798c06235b4"
+    "sha256": "a4d648184dbf3fdfcc1c11843a76b87c54edaa121154e2caefe3ffab48fec8c1"
   },
   "compiler": {
     "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",

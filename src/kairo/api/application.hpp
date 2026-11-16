@@ -180,7 +180,8 @@ public:
         update_ms_=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-begin).count();drain(ui_tasks_);
     }
     void host_draw(){if(!created_||termination_)return;auto begin=std::chrono::steady_clock::now();rendering_=true;cs::run_finally([&]{OnDraw();OnRender();},[&]{rendering_=false;});render_ms_=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-begin).count();}
-    void host_focus(bool focus){if(focused_==focus)return;focused_=focus;if(focus)OnResume();else OnSuspend();}
+    // IApplication.OnApplicationPause: event, every form (top to bottom), then the app (forms.cpp).
+    void host_focus(bool focus);
     void host_stop(){if(!created_)return;OnStop();OnDestroy();visible_=false;created_=false;current_.store(nullptr);}
 };
 inline cs::GcRootProvider application_roots([](const cs::EdgeVisitor& visitor){IApplication::trace_static_roots(visitor);});

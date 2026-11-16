@@ -11,7 +11,7 @@
     "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e"
   },
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
-  "executable_sha256": "db85274a79b811f4c49f4a7b88215e92ac90d3a251542077a9942c84b4f72038",
+  "executable_sha256": "7a7214386e8d8f487b80e9e205c086f2ec526a86b247c3eb5915956820576221",
   "original_source_methods": [
     "main.Main.OnCreate",
     "main.Main.OnUpdate",

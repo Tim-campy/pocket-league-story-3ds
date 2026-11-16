@@ -6,8 +6,8 @@ Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com 
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 958 |
-| Alcançáveis, ainda não executados | 89 |
+| Executados no diagnóstico (`runs`) | 964 |
+| Alcançáveis, ainda não executados | 83 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
 | Só depuração | 35 |
@@ -18,18 +18,18 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 
 | Classe | translated | embedded | todo | no-body | verified |
 |---|---:|---:|---:|---:|---:|
-| reachable-not-exercised | 88 | 1 | 0 | 0 | 0 |
+| reachable-not-exercised | 82 | 1 | 0 | 0 | 0 |
 | unreachable-by-policy | 85 | 4 | 0 | 0 | 0 |
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 1003 de 1248 (80.4%). Métodos `runs` que a análise não alcançou: 0.
-Executados `runs`: 958; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 156; restam sem execução nem justificativa: 89.
+Cobertura sobre o alcançável: 1009 de 1248 (80.8%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 964; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 156; restam sem execução nem justificativa: 83.
 
 
 **Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
 
-## Alcançáveis, ainda não executados (89)
+## Alcançáveis, ainda não executados (83)
 
 Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 
@@ -40,12 +40,12 @@ Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 - **data.TrainingData** (2): `GetTrainingAddParamNum`, `RemoveNew`
 - **form.BootForm** (3): `GetTouchValue`, `Resume`, `SetTouchValue`
 - **form.FormManager** (1): `Resume`
-- **form.GameForm** (6): `GetScaleRange`, `GetTouchValue`, `ResetOffscreen`, `Resume`, `SetScale`, `SetTouchValue`
-- **form.MyFormBase** (4): `GetBoxFooterY`, `Push`, `Resume`, `SetTouchValue`
-- **form.RankForm** (3): `GetTouchValue`, `Resume`, `SetTouchValue`
+- **form.GameForm** (5): `GetScaleRange`, `GetTouchValue`, `ResetOffscreen`, `SetScale`, `SetTouchValue`
+- **form.MyFormBase** (3): `GetBoxFooterY`, `Push`, `SetTouchValue`
+- **form.RankForm** (2): `GetTouchValue`, `SetTouchValue`
 - **form.SoccerForm** (7): `GetFirstScript`, `GetScaleRange`, `GetTouchValue`, `ResetOffscreen`, `Resume`, `SetScale`, `SetTouchValue`
-- **form.SubForm** (9): `DrawConfig_jp`, `Draw_btmMsg`, `Draw_multiParam`, `Draw_trainingIcon`, `MakeTalkForm`, `Resume`, `SetTicketWindowBtmMsg`, `SetWinCharaTraining`
-- **form.TitleForm** (3): `Resume`, `UpdateKairoAdClickNum`
+- **form.SubForm** (8): `DrawConfig_jp`, `Draw_btmMsg`, `Draw_multiParam`, `Draw_trainingIcon`, `MakeTalkForm`, `SetTicketWindowBtmMsg`, `SetWinCharaTraining`
+- **form.TitleForm** (2): `UpdateKairoAdClickNum`
 - **game.DelayEvent** (1): `Deserialize`
 - **game.Map** (1): `Draw_copyArea`
 - **game.MapMain** (2): `Draw_copyArea`, `UpdateTrainingCoatNum`
@@ -53,7 +53,7 @@ Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 - **game.TPlayer** (3): `AddCommandRunning`, `AddCommandRunningRegist`, `StopTraining`
 - **game.Tenant** (3): `DestructTenant`, `OutUserTPlayers`, `StrenghTenant`
 - **game.UserData** (1): `ChangeTraining`
-- **main.AppData** (10): `Draw`, `DrawMoney2`, `DrawMoney3`, `DrawNumImageComma_en`, `DrawSeb`, `DrawTrophyEffect`, `GetHttpErrorText`, `GettMoneyNetHighScore`
+- **main.AppData** (9): `Draw`, `DrawMoney2`, `DrawMoney3`, `DrawNumImageComma_en`, `DrawSeb`, `DrawTrophyEffect`, `GetHttpErrorText`
 - **surface.GamePad** (7): `AddTouch`, `DrawBattery`, `DrawSoftLabelImage`, `DrawWatch`, `GetSideSize`, `SetLayoutMode`, `SetMode`
 - **surface.GameView** (12): `AddEffect`, `OnTouchCamera`, `OnTouchDlgPage`, `OnTouchDlgPage2`, `OnTouchKeyDown`, `OnTouchKeyPress`, `OnTouchKeyUp`, `OnTouchList`, `OnTouchRect`, `OnTouchTrackBar`, `OnTouchVScrollButton`, `Set`
 - **surface.SurfaceManager** (1): `SetLayoutMode`

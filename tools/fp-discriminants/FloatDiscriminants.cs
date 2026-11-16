@@ -37,6 +37,21 @@ public static class FloatDiscriminants {
     static void Row(TextWriter writer, string name, float a, float b, double value) {
         writer.WriteLine(name + "\t" + a.ToString("R", CultureInfo.InvariantCulture) + "\t" + b.ToString("R", CultureInfo.InvariantCulture) + "\t" + value.ToString("R", CultureInfo.InvariantCulture) + "\t" + BitConverter.DoubleToInt64Bits(value).ToString("X16"));
     }
+    // Criterion 4a extras (not counted among the 36 discriminants):
+    // sign of Math.Sin(-0.0) (JMath.Sin only forwards to it) and the exception
+    // order when a field of a null receiver is passed by ref (RefFixtures.cs,
+    // NullFieldOrder: 2 = argument evaluated before the NullReferenceException).
+    class Holder { public int field; }
+    static int trace;
+    static int Rhs() { trace = trace * 10 + 2; return 3; }
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    static int SetWithArgument(ref int target, int ignored) { target = 51; return target; }
+    [MethodImpl(MethodImplOptions.NoInlining)]
+    public static int NullFieldOrder() { trace = 0; Holder holder = null; try { return SetWithArgument(ref holder.field, Rhs()); } catch (NullReferenceException) { return trace; } }
+    public static void Extras(TextWriter writer) {
+        Row(writer, "extra_sin_negative_zero", -0f, 0f, Math.Sin(-0.0));
+        Row(writer, "extra_ref_null_field_order", 0f, 0f, NullFieldOrder());
+    }
     public static void Run(TextWriter writer) {
         writer.WriteLine("case\ta\tb\tresult\tbinary64_bits");
         foreach (float a in new float[] { 16777216f, -16777216f, 9007199254740992f, -9007199254740992f }) {
@@ -51,6 +66,7 @@ public static class FloatDiscriminants {
             Row(writer,"loop",a,b,Loop(a,b));
             Row(writer,"explicit_conversion",a,b,ExplicitConversion(a,b));
         }
+        Extras(writer);
     }
     public static void Main(string[] args) {
         using (TextWriter writer = new StreamWriter(args[0])) Run(writer);

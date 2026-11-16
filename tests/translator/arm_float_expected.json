@@ -1,7 +1,7 @@
 {
   "origin": "Own synthetic FloatDiscriminants.cs, official Unity Mono ARM/VFP under Android ARM emulator; no game inputs",
   "status": "CONFIRMED_EMULATOR_PENDING_DEVICE",
-  "source_sha256": "43cb53c892aa6c35dc0e31a02c0489800ebfc3b14d9bd522456b52073dcccba4",
+  "source_sha256": "466039c59972c6a148eeb75716faf9341914f25c7fef811550b875b070b19c4e",
   "oracle_receipt_sha256": "949262140c34b9e9a51297b9265fe230cb344e44c1ab9dfe3ee8c9abbe944484",
   "jit_receipt_sha256": "07a5ae298205f680c5cff4f90dd1b8c8f7af342f0ec7c050e4d6c61c37738700",
   "rows": [
@@ -329,5 +329,6 @@
         "binary64_bits": "0000000000000000"
       }
     }
-  ]
+  ],
+  "source_revision_note": "2026-11-16: FloatDiscriminants.cs gained two criterion-4a extras (not part of the 36 rows); the 36 observations were re-measured on the ARM emulator with this source (build/fp-emulator-4a-1-results, identical bits)."
 }

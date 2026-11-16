@@ -1,0 +1,67 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 107.
+# Camera from the save (bins[13]) pos (762,-230): a slow 100 px drag with a hold moves it to (762,-130); lots from test.gmap (Tenant.address_), tap = (120 + sx - pos.x, 140 + pos.y - sy) with the lot centre (30(a0+a1)+30, 15(a1-a0)-15). Builds a Gift Shop on lot 6 (Tenant.BuildTenant). Its save (attempt 200) is the base of facilities-demolish and facilities-goods.
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+# camera: pos.y -230 -> -130
+press 120 100
+wait frames=2
+move 120 110
+wait frames=2
+move 120 120
+wait frames=2
+move 120 130
+wait frames=2
+move 120 140
+wait frames=2
+move 120 150
+wait frames=2
+move 120 160
+wait frames=2
+move 120 170
+wait frames=2
+move 120 180
+wait frames=2
+move 120 190
+wait frames=2
+move 120 200
+wait frames=2
+wait frames=10
+release 120 200
+wait frames=30
+# lot 6 (138,70): two first-time messages, build list, Gift Shop (3rd), OK
+tap 138 70
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key SELECT
+wait frames=90
+dismiss until form=GameForm label_right=* timeout=600 optional
+# lot 5 (198,40): Parking Lot (1st), OK
+tap 198 40
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=90
+dismiss until form=GameForm label_right=* timeout=600 optional
+# let the builds finish
+wait frames=2400
+dismiss until form=GameForm label_right=* timeout=600 optional
+end

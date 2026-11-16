@@ -32,9 +32,9 @@ def criteria(phase2, game, floating=None):
         ('Percurso completo no PC','em andamento' if phase2.get('game_executed_methods',0) else 'pendente',
          coverage_text(phase2)),
         ('Fidelidade resolvida','em andamento',
-         ('Ponto flutuante confirmado em emulador ARM; confirmação em aparelho, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes.'
+         ('4a: ponto flutuante confirmado em emulador ARM; confirmação em aparelho e decisão sobre ref/out e Sin(-0) pendentes (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4.'
           if floating and floating.get('status')=='PASS' and floating.get('emulator_confirmed') and floating.get('matched')==floating.get('cases')==36
-          else 'Ponto flutuante Android, diferenças ref/out/trigonometria e comparação integral de telas ainda pendentes.')),
+          else '4a: ponto flutuante Android e decisão sobre ref/out e Sin(-0) pendentes. 4b (telas) movido para a Fase 4.')),
         ('Código legível e aprovado','pendente',
          'Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados.'),
     ]

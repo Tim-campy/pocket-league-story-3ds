@@ -6,8 +6,8 @@ Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com 
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 993 |
-| Alcançáveis, ainda não executados | 8 |
+| Executados no diagnóstico (`runs`) | 998 |
+| Alcançáveis, ainda não executados | 2 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
 | Só depuração | 35 |
@@ -18,25 +18,23 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 
 | Classe | translated | embedded | todo | no-body | verified |
 |---|---:|---:|---:|---:|---:|
-| reachable-not-exercised | 8 | 0 | 0 | 0 | 0 |
+| reachable-not-exercised | 2 | 0 | 0 | 0 | 0 |
 | unreachable-by-policy | 85 | 4 | 0 | 0 | 0 |
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 1038 de 1248 (83.2%). Métodos `runs` que a análise não alcançou: 0.
-Executados `runs`: 993; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 202; restam sem execução nem justificativa: 8.
+Cobertura sobre o alcançável: 1043 de 1248 (83.6%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 998; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 203; restam sem execução nem justificativa: 2.
 
 
 **Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
 
-## Alcançáveis, ainda não executados (8)
+## Alcançáveis, ainda não executados (2)
 
 Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 
-- **data.TenantData** (2): `GetGoodsIncomeRate`, `ProcStrenSpecialTenant`
 - **game.MapMain** (1): `UpdateTrainingCoatNum`
-- **game.Tenant** (3): `DestructTenant`, `OutUserTPlayers`, `StrenghTenant`
-- **main.AppData** (2): `DrawMoney2`, `DrawMoney3`
+- **main.AppData** (1): `DrawMoney2`
 
 ## Inalcançáveis por política offline ou plataforma (89)
 
@@ -163,7 +161,7 @@ Sem caminho a partir das entradas do original; quando o único caminho passa por
 - **system.tapjoy.MyTapjoy** (1): `GetInstance` — sem chamadores
 - **system.tapjoy.ui.Tapjoy** (9): `AddBalance`, `GetBalance`, `GetInstance`, `GetOfferState`, `Init`, `Quit`, `ShowOffers`, `SubBalance` — sem chamadores; `CallBalance` — sobrescrita nunca chamada
 
-## Alcançáveis justificados individualmente (202)
+## Alcançáveis justificados individualmente (203)
 
 Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
 
@@ -172,6 +170,12 @@ Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
 Offline port: these screens are only opened from paths removed by policy (GameBanner.Draw draws nothing, so its touch target never exists; SurfaceManager.UpdateAdMobView, the only creator of KairoService, is a policy; billing provisioning is disabled; friend/lineup need KairoService).
 
 `system.KairoService::.ctor`, `system.KairoService::<Update>m__D`, `system.KairoService::Connected`, `system.KairoService::Finish`, `system.KairoService::GetInstance`, `system.KairoService::Save`, `system.KairoService::SaveAll`, `system.KairoService::Update`, `system.KairoText::.cctor`, `system.KairoText::LT`, `system.billing.MyBilling::.ctor`, `system.billing.MyBilling::CheckPlayingGame`, `system.billing.MyBilling::GetInstance`, `system.billing.ui.ApplyTask::.ctor`, `system.billing.ui.ApplyTask::Enable`, `system.billing.ui.ApplyTask::Equals`, `system.billing.ui.ApplyTask::Init`, `system.billing.ui.ApplyTask::IsGift`, `system.billing.ui.ApplyTask::IsItem`, `system.billing.ui.BillingItem::Check`, `system.billing.ui.BillingItem::CheckTestProduct`, `system.billing.ui.BillingItem::GetId`, `system.billing.ui.BillingItem::GetName`, `system.billing.ui.BillingItem::GetProductId`, `system.billing.ui.BillingItem::GetProvisionType`, `system.billing.ui.BillingItem::GetProvisionValue`, `system.billing.ui.BillingItem::GetProvisionValueText`, `system.billing.ui.BillingItem::GetSeriesName`, `system.billing.ui.BillingItem::GetSeriesNumber`, `system.billing.ui.BillingItem::GetState`, `system.billing.ui.BillingManager::.cctor`, `system.billing.ui.BillingManager::.ctor`, `system.billing.ui.BillingManager::AddApplyTask`, `system.billing.ui.BillingManager::CheckNextConsume`, `system.billing.ui.BillingManager::CheckPlayingGame`, `system.billing.ui.BillingManager::CheckRegistApply`, `system.billing.ui.BillingManager::ConnectRegistMarketPurchase`, `system.billing.ui.BillingManager::Finish`, `system.billing.ui.BillingManager::GetInstance`, `system.billing.ui.BillingManager::GetItem`, `system.billing.ui.BillingManager::GetItems`, `system.billing.ui.BillingManager::GetSales`, `system.billing.ui.BillingManager::LaunchPurchaseFlow`, `system.billing.ui.BillingManager::RegistApplyTask`, `system.billing.ui.BillingManager::SearchApplyTask`, `system.billing.ui.BillingManager::UpdateApplyTask`, `system.billing.ui.BillingManager::UpdateBillingItems`, `system.billing.ui.StoreBase::.cctor`, `system.billing.ui.StoreBase::.ctor`, `system.form.BillingForm::.cctor`, `system.form.BillingForm::.ctor`, `system.form.BillingForm::CheckMainWindow`, `system.form.BillingForm::Draw`, `system.form.BillingForm::DrawCommand`, `system.form.BillingForm::DrawCommand`, `system.form.BillingForm::DrawRect`, `system.form.BillingForm::FillRect`, `system.form.BillingForm::FillRect3`, `system.form.BillingForm::Finish`, `system.form.BillingForm::GetHashCode`, `system.form.BillingForm::GetTouchValue`, `system.form.BillingForm::Init`, `system.form.BillingForm::LoadResource`, `system.form.BillingForm::OnTouchEvent`, `system.form.BillingForm::Resume`, `system.form.BillingForm::Run`, `system.form.BillingForm::ScrollControl`, `system.form.BillingForm::ScrollUpdate`, `system.form.BillingForm::ScrollUpdate`, `system.form.BillingForm::SetSoftlabel`, `system.form.BillingForm::SetTouchValue`, `system.form.BillingForm::ThreadStart`, `system.form.BillingForm::ToString`, `system.form.BillingForm::Update`, `system.form.BillingForm::UpdateSaleList`, `system.form.BillingForm::_draw`, `system.form.BillingForm::_update`, `system.form.ConnectForm::.cctor`, `system.form.ConnectForm::.ctor`, `system.form.ConnectForm::Draw`, `system.form.ConnectForm::DrawConnect`, `system.form.ConnectForm::Finish`, `system.form.ConnectForm::GetHashCode`, `system.form.ConnectForm::Init`, `system.form.ConnectForm::Resume`, `system.form.ConnectForm::ToString`, `system.form.ConnectForm::Update`, `system.form.ConnectForm::_draw`, `system.friend.MyFriend::.ctor`, `system.friend.MyFriend::GetInstance`, `system.friend.ui.FriendData::.cctor`, `system.friend.ui.FriendData::.ctor`, `system.lineup.MyLineup::.ctor`, `system.lineup.MyLineup::GetInstance`, `system.surface.GameBanner::OnTouchEvent`
+
+### data-gated-salary (1)
+
+Only caller: UserData edit member grid in salary mode (UserData.cs:3664-3674), English path, sallay >= 1000 and sysSave ints[14] != 1. sallay = PlayerData.GetSallay = RateConvert(matchNum_, 0, 150, salary_[0], salary_[1]) (PlayerData.cs:972-979). In player.txt the starting squad has salary_ 5..90 (team shows 19..37 in every recorded career save, attempts 157/218 in both currencies); only hired star players with salary_[1] >= 1000 (30 rows) reach it after enough matches, and the 22 rows with 1000/1000 are generic background players. No recorded save has such a member; reaching it needs a long career with trades.
+
+`main.AppData::DrawMoney3`
 
 ### dead-in-original (4)
 

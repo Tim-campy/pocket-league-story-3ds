@@ -1,0 +1,46 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 107.
+# Upgrade list 60 -> Re-Sod (training area, 6th entry) -> TenantData.ProcStrenSpecialTenant. Expand Field (MapMain.UpdateTrainingCoatNum) is locked in this save: unlocked by script command 21 of event 345.
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+# Manage -> Upgrade Facil. (60), entry 6, 63, yes
+key SOFT2
+wait depth=2 timeout=120 optional
+wait frames=20
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=40
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key DOWN
+wait frames=10
+key SELECT
+wait frames=60
+key SELECT
+wait frames=90
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=300
+end

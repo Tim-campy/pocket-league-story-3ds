@@ -1,0 +1,26 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 200.
+# Gift Shop under construction at (138,92): wait for state 1, tap -> SubForm 65 (demolish label, flag bit 2) -> SOFT1 -> 66 -> SELECT: Tenant.DestructTenant, Tenant.OutUserTPlayers.
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=30
+# wait for the build to finish (state 2 -> 1)
+wait frames=900
+dismiss until form=GameForm label_right=* timeout=600 optional
+# Gift Shop (tenant 6, state 1) at (138,92): 65 -> SOFT1 (demolish) -> 66 -> SELECT (yes)
+tap 138 92
+wait frames=60
+key SOFT1
+wait frames=60
+key SELECT
+wait frames=90
+dismiss until form=GameForm label_right=* timeout=600 optional
+wait frames=60
+end

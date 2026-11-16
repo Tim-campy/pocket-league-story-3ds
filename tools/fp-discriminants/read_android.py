@@ -54,8 +54,13 @@ def main():
     if 'Completed: FloatDiscriminants' not in status or 'Completed: HotMethodsMono' not in status:
         raise ValueError('Device probe is incomplete: '+status)
     observations = {}
+    # Criterion 4a extras: Math.Sin(-0.0) sign and ref-of-null-field order.
+    extras = {}
     for line in payloads[prefix+'discriminants.tsv'].decode().splitlines()[1:]:
         name, a, b, value, binary = line.split('\t')
+        if name.startswith('extra_'):
+            extras[name] = dict(value=float(value), binary64_bits=binary)
+            continue
         key = (name, single(float(a)), single(float(b)))
         if key in observations:
             raise ValueError('Duplicate discriminant')
@@ -94,11 +99,13 @@ def main():
     (output/'logcat.txt').write_bytes(log)
     report = dict(status='MEASURED_ANDROID_REQUIRES_REVIEW', serial=args.serial,
                   apk_sha256=installed_hash,
-                  rows=rows, kernels=kernels, captures=sum(counts), cal_captures=counts[1],
+                  rows=rows, kernels=kernels, captures=sum(counts), cal_captures=counts[1], extras=extras,
+                  extras_reading={'extra_sin_negative_zero': 'binary64_bits 8000000000000000 = -0 (port C++), 0000000000000000 = +0 (Mono Windows)',
+                                  'extra_ref_null_field_order': '2 = argument evaluated before the NullReferenceException (Mono Windows default), 0 = exception first (port C++)'},
                   limitation='Standalone official Mono embedding; game JIT startup options not proven identical. No emission rule adopted.',
                   result_hashes={name:hashlib.sha256(data).hexdigest() for name,data in payloads.items()})
     (output/'report.json').write_text(json.dumps(report, indent=2)+'\n')
-    print(json.dumps(dict(status=report['status'], discriminants=len(rows), kernels=len(kernels), output=str(output))))
+    print(json.dumps(dict(status=report['status'], discriminants=len(rows), kernels=len(kernels), extras=extras, output=str(output))))
 
 
 if __name__ == '__main__':

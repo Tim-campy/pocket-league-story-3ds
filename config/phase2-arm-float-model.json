@@ -21,8 +21,8 @@
         ],
         "driver_sha256": "7a44d11ab7cc403c2f7b82cbdab70755a87f571c9c5b6b793b8c0b52b696ecdb"
       },
-      "receipt_path": "build\\fp-emission-regression\\1794846084744775800\\binary32\\receipt.json",
-      "receipt_sha256": "a65c754ce7f55cda233b5f3fe39e4b8f096145132d344d33425f35d9d4690df8"
+      "receipt_path": "build\\fp-emission-regression\\1794862486722057500\\binary32\\receipt.json",
+      "receipt_sha256": "363a3d6614cb292bf2dcf34cdf0745a51b3113990d4b3e03012fc8ef7de029c4"
     },
     {
       "model": "mono-arm-vfp",
@@ -39,14 +39,14 @@
         ],
         "driver_sha256": "7a44d11ab7cc403c2f7b82cbdab70755a87f571c9c5b6b793b8c0b52b696ecdb"
       },
-      "receipt_path": "build\\fp-emission-regression\\1794846084744775800\\mono-arm-vfp\\receipt.json",
-      "receipt_sha256": "deea4267ed369c4abe04f5f9d4b3c68a1da9d841e9e60529e42e209ccfe78b17"
+      "receipt_path": "build\\fp-emission-regression\\1794862486722057500\\mono-arm-vfp\\receipt.json",
+      "receipt_sha256": "862a1c886e663fcbddad98935be10fbfbd3d9925e5a1b67bb6f337b838379c0a"
     }
   ],
   "inputs": {
     "tools/test_arm_float_model.py": "61dee9677137b59c0d0eb0043bd00982da72801d66527aebdf22fb0cbf8047c7",
     "tools/fp-discriminants/test_emission.py": "6831121ba92777220218ec5a14868dcb1a8d68f753988b7ff9afa2f8b93ec47d",
-    "tools/fp-discriminants/FloatDiscriminants.cs": "43cb53c892aa6c35dc0e31a02c0489800ebfc3b14d9bd522456b52073dcccba4",
-    "tests/translator/arm_float_expected.json": "b066face3bcdc1fe20bd337190c2bbf829fe4f2f3156e8df3b66a76e9f947039"
+    "tools/fp-discriminants/FloatDiscriminants.cs": "466039c59972c6a148eeb75716faf9341914f25c7fef811550b875b070b19c4e",
+    "tests/translator/arm_float_expected.json": "d33b40ceb05c3e7290e4243d33e279483582866752f24bfbad6a7707d47afa34"
   }
 }

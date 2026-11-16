@@ -284,3 +284,50 @@ Depois do registro: **992 executados + 45 creditados = 1.037 / 1.248 (83,1%)**;
   aplicou 4-5-1 na escalação da partida, mas não entrou na grade depois.
 - `TPlayer.StopTraining`: `ChangeTraining` com jogadores em grupos de treino no
   campo (`TGroupArea.cs:379-386`); não verificado nesta rodada.
+
+## Critério 3 aprovado (2026-11-16, condicionado) e tentativa dirigida das instalações
+
+Decisão do usuário: critério 3 aprovado como cumprido, condicionado à tentativa
+dirigida das janelas de instalações e à justificativa de `DrawMoney2/3`.
+
+**Geometria lida do fonte e dos dados locais** (subagente, conferida em execução):
+lotes fixos em `test.gmap` (`MapMain.LoadMap`, 15 lotes), câmera salva em
+`bins[13]` (`Camera.pos`, float32 big-endian), instalações em `bins[15]`
+(`Tenant.Serialize`). Toque = (120 + sx − pos.x, 140 + pos.y − sy), centro do
+lote (30(a0+a1)+30, 15(a1−a0)−15); o clique (menos de 4 px de movimento) abre a
+janela sozinho (`GameForm.cs:1690-1718` → `OepnWindowFromMainDisp`). Decodificador
+local de saves (só leitura, fora do Git).
+
+**Achado:** o save 107 tem uma única instalação construída, o escritório
+(tipo 0, `flag_` 0, não removível), e a câmera salva o deixa em y = 0, fora da
+área de toque; os outros 14 lotes estão vagos. As varreduras anteriores não
+podiam abrir a janela 65. **Não há defeito no toque do port**: com a coordenada
+calculada, o escritório abriu a 65 e o lote vago abriu a 61 na primeira tentativa
+(tentativa 199).
+
+| Tentativa | Rota (save) | Resultado |
+|---|---|---|
+| 199 | geometria (107) | 65 no escritório, 61 no lote 6 |
+| 200 | `facilities-build` (107) | Gift Shop construída no lote 6 (`BuildTenant`) |
+| 202 | `facilities-upgrade` (200) | `Tenant.StrenghTenant`, `OutUserTPlayers` |
+| 206 | `facilities-demolish` (200) | 65 com "撤去" → 66 → `Tenant.DestructTenant` |
+| 207 | `facilities-goods` (200) | partida com a loja: `TenantData.GetGoodsIncomeRate` |
+| 208–209 | `facilities-special` (107) | Re-Sod e estádio: `TenantData.ProcStrenSpecialTenant` |
+| 212–217 | Re-Sod até o nível 3 | "Expand Field" não aparece: liberada pelo comando de script 21 do evento 345 (dados), não disparado na carreira gravada |
+
+Também corrigido nos roteiros: carregar um slot manual já gravado abre um
+submenu (Continue/New Game/Delete) e exige um SELECT a mais; e roteiros que
+deixam semanas correr perto de dezembro caem na pergunta de dispensa de fim de
+ano (o usuário observou duas vezes).
+
+**`DrawMoney3`:** justificado por dados (`data-gated-salary`): exige no time um
+jogador com salário interno ≥ 1000; o elenco inicial tem 5–90 e os saves
+gravados mostram 19–37 nas duas moedas (tentativas 157 e 218); só 30
+contratáveis com `salary_[1]` ≥ 1000 chegam lá depois de partidas suficientes.
+
+**`DrawMoney2`:** alcançável (formações 4-5-1 A, 3-5-2 A e 5-3-2 têm 5 numa
+linha, `UserData.cs:2336`, `2402-2407`); a troca para 4-5-1 funciona, mas o
+roteiro não reabriu a grade de membros depois dela (o menu principal reposiciona
+o cursor). Continua com receita.
+
+**`MapMain.UpdateTrainingCoatNum`:** alcançável só depois do evento 345; com receita.

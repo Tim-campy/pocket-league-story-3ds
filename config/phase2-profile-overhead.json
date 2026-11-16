@@ -3,58 +3,58 @@
   "status": "PASS",
   "samples": [
     [
-      153000,
-      1248700,
-      6328100,
-      100000
-    ],
-    [
-      175700,
-      1232400,
-      6286800,
-      100000
-    ],
-    [
       175500,
-      1140700,
-      6263500,
+      2096000,
+      6953600,
       100000
     ],
     [
-      175500,
-      1161600,
-      6339400,
+      174600,
+      1193800,
+      6240700,
       100000
     ],
     [
-      175700,
-      1164100,
-      6425000,
+      187900,
+      1155900,
+      6279400,
       100000
     ],
     [
-      136700,
-      1164500,
-      6284600,
+      174600,
+      1166800,
+      6255700,
       100000
     ],
     [
-      175500,
-      1164700,
-      6386700,
+      169900,
+      1163500,
+      6310900,
+      100000
+    ],
+    [
+      138600,
+      1167300,
+      6222600,
+      100000
+    ],
+    [
+      170900,
+      1173900,
+      6280400,
       100000
     ]
   ],
-  "median_baseline_ns_per_call": 1.755,
-  "median_disabled_ns_per_call": 11.645,
-  "median_instrumented_ns_per_call": 63.281,
-  "median_increment_ns_per_call": 61.639,
+  "median_baseline_ns_per_call": 1.746,
+  "median_disabled_ns_per_call": 11.673,
+  "median_instrumented_ns_per_call": 62.794,
+  "median_increment_ns_per_call": 60.915,
   "inputs_sha256": {
     "tests/kairo/profile_overhead.cpp": "55c68f066fee193a1aea51b8eed84a0bad2740b20af7f47521533c6cdcf3a4ba",
     "tools/test_profile_overhead.py": "16d3e23d7470b6b6ecaa23a445fc7e006929adcc28bd2e11c8f6d02f42631c65",
     "src/kairo/common/diagnostic_profile.hpp": "49b08cdf04c808d4df42ba5419eb08fa9b6193e9a54367d0b393b8e4c04f3a0c"
   },
-  "executable_sha256": "bc031a42ebc3adf6ef568696df9ae48bf951cefd0dbc2271de61a9802d61fd87",
+  "executable_sha256": "ee90a8c5dd5eaa9ad40971fa05c7442d49182f64d4bfabfbbb5348fc032d48dc",
   "limitations": [
     "Own microbenchmark, not a correction factor for game timing.",
     "No benchmark overhead is subtracted from reported game samples."

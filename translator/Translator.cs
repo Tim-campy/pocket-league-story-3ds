@@ -203,6 +203,15 @@ sealed partial class Lowerer {
         return source;
     }
     static string Name(ISymbol symbol)=>"cs_"+Hash(Id(symbol));
+    // Readable pass 2 (C5a): trace/release only fields that can hold a managed
+    // reference (reference types, type parameters, structs containing such
+    // fields); primitives and enums have nothing for the collector to see.
+    static bool MayHoldReference(ITypeSymbol type,HashSet<ITypeSymbol>? seen=null){
+        if(type.IsReferenceType||type is ITypeParameterSymbol||type is IPointerTypeSymbol)return true;
+        if(type.TypeKind==TypeKind.Enum||type.SpecialType!=SpecialType.None)return false;
+        seen??=new(SymbolEqualityComparer.Default);if(!seen.Add(type))return false;
+        return type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst).Any(f=>MayHoldReference(f.Type,seen));
+    }
     static string ParameterType(IParameterSymbol parameter)=>TypeName(parameter.Type)+(parameter.RefKind is RefKind.Ref or RefKind.Out?"&":"");
     static string SwitchSectionLabel(SwitchStatementSyntax owner,SwitchSectionSyntax section)=>"cs_switch_"+owner.SpanStart+"_section_"+owner.Sections.IndexOf(section);
     static string SwitchConstantKey(object value)=>value is char character?((int)character).ToString(CultureInfo.InvariantCulture):Convert.ToString(value,CultureInfo.InvariantCulture)!;
@@ -598,6 +607,7 @@ sealed partial class Lowerer {
         }
         Used(n);
         var constant=model.GetConstantValue(n);
+        if(constant.HasValue&&readable&&ReadableConstantReference(n) is string named)return named;
         if(constant.HasValue)return readable?Constant(constant.Value,model.GetTypeInfo(n).Type??model.GetTypeInfo(n).ConvertedType,n)+ConstantNameComment(n):Constant(constant.Value,model.GetTypeInfo(n).Type??model.GetTypeInfo(n).ConvertedType,n);
         switch(n) {
             case InterpolatedStringExpressionSyntax interpolation:
@@ -1745,9 +1755,9 @@ sealed partial class Lowerer {
         foreach(var id in usedClasses.OrderBy(x=>x)) {
             var type=classes[id];if(type.TypeKind==TypeKind.Interface)continue;var baseType=type.BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
             header.Append(Template(type.TypeParameters)+"inline void "+ClassName(type)+"::trace_edges(const pls::cs::EdgeVisitor&visitor)const {"+(RecordStruct(type)?"":baseName+"::trace_edges(visitor);"));
-            foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append("pls::cs::trace_value("+Name(field)+",visitor);");
+            foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&(!readable||MayHoldReference(f.Type))))header.Append("pls::cs::trace_value("+Name(field)+",visitor);");
             header.Append("}\n"+Template(type.TypeParameters)+"inline void "+ClassName(type)+"::release_edges(){"+(RecordStruct(type)?"":baseName+"::release_edges();"));
-            foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append("pls::cs::release_value("+Name(field)+");");
+            foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&(!readable||MayHoldReference(f.Type))))header.Append("pls::cs::release_value("+Name(field)+");");
             header.Append("}\n");
         }
         foreach(var m in emitted.Keys.Select(k=>methods[k]).Where(m=>MethodSlots(m).Any()))foreach(var slot in MethodSlots(m)) {

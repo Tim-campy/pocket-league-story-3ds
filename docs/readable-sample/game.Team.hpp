@@ -67,7 +67,73 @@ struct Team : pls::cs::Object {
     bool ternCharge{};
     float w_disBoal{};
     float w_formation{};
-
+    static constexpr std::int32_t F_X = 0;
+    static constexpr std::int32_t F_Y = 1;
+    static constexpr std::int32_t F_W = 2;
+    static constexpr std::int32_t F_H = 3;
+    static constexpr std::int32_t F_END = 4;
+    static constexpr std::int32_t ROLE_GK = 0;
+    static constexpr std::int32_t ROLE_DF = 1;
+    static constexpr std::int32_t ROLE_MF = 2;
+    static constexpr std::int32_t ROLE_FW = 3;
+    static constexpr std::int32_t ROLE_END = 4;
+    static constexpr float TEAM_FRECT_X_MIN = 0.0f;
+    static constexpr float TEAM_FRECT_X_MAX = 0.0f;
+    static constexpr float TEAM_FRECT_Y_MIN = -1530.0f;
+    static constexpr float TEAM_FRECT_Y_MAX = 360.0f;
+    static constexpr float TEAM_FRECT_W_MIN = 450.0f;
+    static constexpr float TEAM_FRECT_W_MAX = 450.0f;
+    static constexpr float TEAM_FRECT_H_MIN = 720.0f;
+    static constexpr float TEAM_FRECT_H_MAX = 1260.0f;
+    static constexpr float TEAM_FRECT_Y_ADD_CHARGE_MIN = 90.0f;
+    static constexpr float TEAM_FRECT_Y_ADD_CHARGE_MAX = 90.0f;
+    static constexpr float TEAM_FRECT_Y_ADD_DEFFENCE_MIN = -270.0f;
+    static constexpr float TEAM_FRECT_Y_ADD_DEFFENCE_MAX = -270.0f;
+    static constexpr float FRECT_FRONT_START_H = 450.0f;
+    static constexpr float FRECT_BACK_START_H = 540.0f;
+    static constexpr float FRECT_BACK_DEFENCE_H = 450.0f;
+    static constexpr std::int32_t AMEFTO_ONECHARGETIME_MIN = 50;
+    static constexpr std::int32_t AMEFTO_ONECHARGETIME_MAX = 10;
+    static constexpr std::int32_t AMEFTO_PZID_NORMAL = 0;
+    static constexpr std::int32_t AMEFTO_PZID_DRIBBLE = 1;
+    static constexpr std::int32_t AMEFTO_PZID_LONGPASS = 2;
+    static constexpr std::int32_t AMEFTO_PZID_END = 3;
+    static constexpr std::int32_t RECIVERPIDBOX_MAX = 5;
+    static constexpr float CPM1 = 0.2f;
+    static constexpr float CPM2 = 0.4f;
+    static constexpr float CPM3 = 0.7f;
+    static constexpr std::int32_t COATEVA_ROOT_NUM = 9;
+    static constexpr std::int32_t COATEVA_PASSER_BASE = 30;
+    static constexpr std::int32_t DEF1 = 100;
+    static constexpr std::int32_t DEF2 = 80;
+    static constexpr std::int32_t DEF3 = 60;
+    static constexpr std::int32_t DEF4 = 40;
+    static constexpr std::int32_t DEF5 = 20;
+    static constexpr std::int32_t DEF6 = 0;
+    static constexpr std::int32_t CALMODE_PYRAMID = 0;
+    static constexpr std::int32_t CALMODE_RECT = 1;
+    static constexpr std::int32_t CH_CEVA_PASSER_DEFAULT = 0;
+    static constexpr std::int32_t CH_CEVA_PASSER_FRINDADD = 1;
+    static constexpr std::int32_t CH_CEVA_PASSER_ENDDIV = 2;
+    static constexpr std::int32_t CH_CEVA_FREERUN_DEFAULT = 3;
+    static constexpr std::int32_t CH_CEVA_FREERUN_ENDDIV = 4;
+    static constexpr std::int32_t CH_CEVA_FREERUN_PASSSUPORT = 5;
+    static constexpr std::int32_t CH_CEVA_DEFENCE_DEFAULT = 6;
+    static constexpr std::int32_t CH_CEVA_DEFENCE_PASSER = 7;
+    static constexpr std::int32_t CH_CEVA_DEFENCE_ALLYDIV = 8;
+    static constexpr std::int32_t CH_CEVA_LOOSEBALL_DEFAULT = 9;
+    static constexpr std::int32_t CH_CEVA_LOOSEBALL_BALLPOS = 10;
+    static constexpr std::int32_t CH_CEVA_LOOSEBALL_ALLYDIV = 11;
+    static constexpr std::int32_t CH_CEVA_END = 12;
+    static constexpr std::int32_t CH_DATA_POSEVA = 0;
+    static constexpr std::int32_t CH_DATA_RECEIVEEVA = 1;
+    static constexpr std::int32_t CH_DATA_ADDRESS = 2;
+    static constexpr std::int32_t CH_DATA_POS = 3;
+    static constexpr std::int32_t CH_DATA_FLAG = 4;
+    static constexpr std::int32_t CH_DATA_COLISTATE = 5;
+    static constexpr std::int32_t CH_DATA_END = 6;
+    static constexpr float w_coatEvaSum = 0.7f;
+    static constexpr float w_ballLine = 0.3f;
     static void ensure_initialized();
 
     static pls::cs::Array<std::int32_t>& AMEFTO_FRECT_GOALZ();
@@ -136,37 +202,62 @@ struct Team : pls::cs::Object {
 
     static pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>& team_formationCenterPos();
 
-    static pls::cs::Ref<Team> create();
-
     static void create_init(pls::cs::Ref<Team> self);
 
-    static void Amefto(pls::cs::Ref<Team> self);
+    static pls::cs::Ref<Team> create();
 
-    static void Amefto_start(pls::cs::Ref<Team> self);
+    static void Init(pls::cs::Ref<Team> self, bool isUserTeam, std::int32_t team_id, std::int32_t tDataId);
 
-    static void Cal_evaCoatAdd(pls::cs::Ref<Team> self, std::int32_t mode,
-                               pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                               std::int32_t cy, pls::cs::Array<std::int32_t> add_param);
-
-    static void Cal_evaCoatAdd9block(pls::cs::Ref<Team> self,
-                                     pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                                     std::int32_t cy, pls::cs::Array<std::int32_t> add_param);
-
-    static void Cal_evaCoatMulti(pls::cs::Ref<Team> self, std::int32_t mode,
-                                 pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                                 std::int32_t cy, pls::cs::Array<float> muliti_param);
-
-    static void Cal_evaCoatMulti9block(pls::cs::Ref<Team> self,
-                                       pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                                       std::int32_t cy, pls::cs::Array<float> muliti_param);
-
-    static bool ChPAreaLineOver(pls::cs::Ref<Team> self);
-
-    static bool ChWhichChargeTern(pls::cs::Ref<Team> self);
+    static void Update(pls::cs::Ref<Team> self);
 
     static void Collision(pls::cs::Ref<Team> self);
 
     static void Draw(pls::cs::Ref<Team> self, pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen);
+
+    static void SetPosFPos(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
+                           pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> var_out);
+
+    static void SetFormationParam(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player);
+
+    static void SetFormationRectParam(pls::cs::Ref<Team> self);
+
+    static void SetSortGroundBallNear(pls::cs::Ref<Team> self);
+
+    static void SetSortJampBallNear(pls::cs::Ref<Team> self);
+
+    static void Init_coatEva(pls::cs::Ref<Team> self);
+
+    static void Update_coatEva(pls::cs::Ref<Team> self);
+
+    static void Update_coatEvaNewOffence(pls::cs::Ref<Team> self);
+
+    static void Update_coatEvaNewDeffence(pls::cs::Ref<Team> self);
+
+    static void Update_coatEvaPasser(pls::cs::Ref<Team> self);
+
+    static void Update_coatEvaFreeRun(pls::cs::Ref<Team> self);
+
+    static void Update_coatEvaDefence(pls::cs::Ref<Team> self);
+
+    static void Update_coatEvaLooseBall(pls::cs::Ref<Team> self);
+
+    static pls::cs::Ref<Player> GetPasser(pls::cs::Ref<Team> self);
+
+    static pls::cs::Ref<Player> GetLastKicker(pls::cs::Ref<Team> self);
+
+    static std::int32_t GetSum(pls::cs::Ref<Team> self, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
+                               std::int32_t cx, std::int32_t cy, bool div);
+
+    static pls::cs::Array<std::int32_t> GetMostEvaAddress(pls::cs::Ref<Team> self,
+                                                          pls::cs::Array<pls::cs::Array<std::int32_t>> data,
+                                                          std::int32_t cx, std::int32_t cy, std::int32_t num);
+
+    static void SetMostEvaAddressFromMoveArea(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
+                                              pls::cs::Array<std::int32_t> var_out, bool isThroughPass);
+
+    static void SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
+                                                         pls::cs::Array<std::int32_t> var_out,
+                                                         bool isThroughPass);
 
     static std::int32_t Get_playerPosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
                                          std::int32_t xi, std::int32_t yi, bool div);
@@ -177,66 +268,41 @@ struct Team : pls::cs::Object {
     static std::int32_t Get_playerReceivePosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
                                                 std::int32_t xi, std::int32_t yi);
 
-    static pls::cs::Ref<Player> GetLastKicker(pls::cs::Ref<Team> self);
+    static void Cal_evaCoatMulti(pls::cs::Ref<Team> self, std::int32_t mode,
+                                 pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
+                                 std::int32_t cy, pls::cs::Array<float> muliti_param);
 
-    static pls::cs::Array<std::int32_t> GetMostEvaAddress(pls::cs::Ref<Team> self,
-                                                          pls::cs::Array<pls::cs::Array<std::int32_t>> data,
-                                                          std::int32_t cx, std::int32_t cy, std::int32_t num);
+    static void Cal_evaCoatMulti9block(pls::cs::Ref<Team> self,
+                                       pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
+                                       std::int32_t cy, pls::cs::Array<float> muliti_param);
 
-    static pls::cs::Ref<Player> GetPasser(pls::cs::Ref<Team> self);
+    static void Cal_evaCoatAdd(pls::cs::Ref<Team> self, std::int32_t mode,
+                               pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
+                               std::int32_t cy, pls::cs::Array<std::int32_t> add_param);
 
-    static std::int32_t GetSum(pls::cs::Ref<Team> self, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
-                               std::int32_t cx, std::int32_t cy, bool div);
+    static void Cal_evaCoatAdd9block(pls::cs::Ref<Team> self,
+                                     pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
+                                     std::int32_t cy, pls::cs::Array<std::int32_t> add_param);
 
-    static void Init_coatEva(pls::cs::Ref<Team> self);
+    static void Amefto(pls::cs::Ref<Team> self);
 
-    static void Init(pls::cs::Ref<Team> self, bool isUserTeam, std::int32_t team_id, std::int32_t tDataId);
+    static void Amefto_start(pls::cs::Ref<Team> self);
 
-    static void SetFormationParam(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player);
-
-    static void SetFormationRectParam(pls::cs::Ref<Team> self);
-
-    static void SetGoalState(pls::cs::Ref<Team> self);
-
-    static void SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                                         pls::cs::Array<std::int32_t> var_out,
-                                                         bool isThroughPass);
-
-    static void SetMostEvaAddressFromMoveArea(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                              pls::cs::Array<std::int32_t> var_out, bool isThroughPass);
-
-    static void SetPosFPos(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                           pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> var_out);
-
-    static void SetPositionConnerKick(pls::cs::Ref<Team> self);
-
-    static void SetPositionGoalKick(pls::cs::Ref<Team> self);
+    static void Update_formationRect2(pls::cs::Ref<Team> self);
 
     static void SetPositionKickOff(pls::cs::Ref<Team> self);
 
     static void SetPositionThrowIn(pls::cs::Ref<Team> self);
 
-    static void SetSortGroundBallNear(pls::cs::Ref<Team> self);
+    static void SetPositionGoalKick(pls::cs::Ref<Team> self);
 
-    static void SetSortJampBallNear(pls::cs::Ref<Team> self);
+    static void SetPositionConnerKick(pls::cs::Ref<Team> self);
 
-    static void Update(pls::cs::Ref<Team> self);
+    static void SetGoalState(pls::cs::Ref<Team> self);
 
-    static void Update_coatEva(pls::cs::Ref<Team> self);
+    static bool ChWhichChargeTern(pls::cs::Ref<Team> self);
 
-    static void Update_coatEvaDefence(pls::cs::Ref<Team> self);
-
-    static void Update_coatEvaFreeRun(pls::cs::Ref<Team> self);
-
-    static void Update_coatEvaLooseBall(pls::cs::Ref<Team> self);
-
-    static void Update_coatEvaNewDeffence(pls::cs::Ref<Team> self);
-
-    static void Update_coatEvaNewOffence(pls::cs::Ref<Team> self);
-
-    static void Update_coatEvaPasser(pls::cs::Ref<Team> self);
-
-    static void Update_formationRect2(pls::cs::Ref<Team> self);
+    static bool ChPAreaLineOver(pls::cs::Ref<Team> self);
 };
 } // namespace game
 } // namespace pls::game

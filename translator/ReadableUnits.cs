@@ -155,6 +155,10 @@ sealed partial class Lowerer {
                 taken.Add((name,arity));if(constructor)taken.Add((name+"_init",arity+1));return name;
             }
             if(usedTypes.Contains(Id(t)))r.Tokens[TypeInitName(t)]=Make(Assign("ensure_initialized",0,false));
+            if(!free&&t.TypeParameters.Length==0&&SymbolEqualityComparer.Default.Equals(t.ContainingAssembly,compilation.Assembly))
+                foreach(var f in t.GetMembers().OfType<IFieldSymbol>().Where(ReadableConstantField).OrderBy(Position)){
+                    var name=Assign(CppIdentifier(f.Name),0,false);r.Tokens[ConstName(f)]=Make(name);readableConstDecls.Add((t,f,name));
+                }
             foreach(var f in usedFields.Select(id=>fieldSymbols[id]).Where(f=>SymbolEqualityComparer.Default.Equals(f.ContainingType.OriginalDefinition,t)).OrderBy(TreeOf,StringComparer.Ordinal).ThenBy(Position).ThenBy(f=>Id(f),StringComparer.Ordinal)){
                 var accessor=Assign(CppIdentifier(f.Name),0,false);r.Tokens[Name(f)]=Make(accessor);
                 var storage=classMode||free?flat+"_"+accessor+"_storage":accessor+"_storage";var storagePath=classMode||free?ns:path;
@@ -247,7 +251,7 @@ sealed partial class Lowerer {
     }
 
     // ---------------------------------------------------------------- rewriting
-    static readonly Regex HashToken=new(@"^cs_(?:(?:init|virtual|closure)_)?[0-9a-f]{16}(?:_init|_value)?$",RegexOptions.Compiled);
+    static readonly Regex HashToken=new(@"^cs_(?:(?:init|virtual|closure|const)_)?[0-9a-f]{16}(?:_init|_value)?$",RegexOptions.Compiled);
     // Lookup of `first` from the site must find exactly the intended entity
     // (scope `scope` holding a member `first`, or that class's injected name).
     bool Resolves(string first,bool scopeOnly,RSite site,string[] scope,string entityKey){
@@ -378,7 +382,10 @@ sealed partial class Lowerer {
     }
     string RenderToken(string token,string? qualifier,int start,int end,string block,BlockPlan plan,StringBuilder output){
         var r=registry!;
-        if(!r.Tokens.TryGetValue(token,out var name)){r.Unresolved.Add(token);return (qualifier==null?"":qualifier+"::")+token;}
+        if(!r.Tokens.TryGetValue(token,out var name)){
+            if(readableConstFallback.TryGetValue(token,out var fallback))return fallback.text;
+            r.Unresolved.Add(token);return (qualifier==null?"":qualifier+"::")+token;
+        }
         if(start==plan.DeclIndex&&token==plan.DeclToken&&plan.OwnStruct==null)return RenderDeclarator(name,plan);
         if(token==plan.OwnStruct)return name.Leaf;
         int b=output.Length-1;while(b>=0&&char.IsWhiteSpace(output[b]))b--;

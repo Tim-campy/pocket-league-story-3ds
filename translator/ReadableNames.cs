@@ -29,6 +29,32 @@ sealed partial class Lowerer {
     static CSharpCompilation? readableCompilation;
     static readonly Dictionary<ISymbol,string> readableLocalNames=new(SymbolEqualityComparer.Default);
     static readonly Dictionary<string,string> readableClosures=new(StringComparer.Ordinal);
+    // Readable pass 2 (C4): named C# constants re-emitted as constexpr.
+    static readonly HashSet<string> readableConstTypes=new(StringComparer.Ordinal);
+    static readonly Dictionary<string,(string text,string owner)> readableConstFallback=new(StringComparer.Ordinal);
+    readonly List<(INamedTypeSymbol type,IFieldSymbol field,string name)> readableConstDecls=new();
+    static string ConstName(IFieldSymbol field)=>"cs_const_"+Hash(Id(field));
+    static bool ReadableConstantField(IFieldSymbol field)=>field.HasConstantValue&&field.ConstantValue!=null&&field.Type.TypeKind!=TypeKind.Enum&&
+        field.Type.SpecialType is SpecialType.System_Boolean or SpecialType.System_Char or SpecialType.System_SByte or SpecialType.System_Byte or SpecialType.System_Int16 or SpecialType.System_UInt16
+            or SpecialType.System_Int32 or SpecialType.System_UInt32 or SpecialType.System_Int64 or SpecialType.System_UInt64 or SpecialType.System_Single or SpecialType.System_Double;
+    static string ConstantCppType(ITypeSymbol type)=>type.SpecialType switch{SpecialType.System_Boolean=>"bool",SpecialType.System_Char=>"char16_t",SpecialType.System_SByte=>"std::int8_t",
+        SpecialType.System_Byte=>"std::uint8_t",SpecialType.System_Int16=>"std::int16_t",SpecialType.System_UInt16=>"std::uint16_t",SpecialType.System_Int32=>"std::int32_t",
+        SpecialType.System_UInt32=>"std::uint32_t",SpecialType.System_Int64=>"std::int64_t",SpecialType.System_UInt64=>"std::uint64_t",SpecialType.System_Single=>"float",_=>"double"};
+    // A source reference to a named constant of this assembly: Type::Name (resolved by the renamer).
+    string? ReadableConstantReference(ExpressionSyntax n){
+        if(n is not (IdentifierNameSyntax or MemberAccessExpressionSyntax))return null;
+        if(model.GetSymbolInfo(n).Symbol is not IFieldSymbol field||!ReadableConstantField(field))return null;
+        if(!SymbolEqualityComparer.Default.Equals(field.ContainingAssembly,compilation.Assembly)||field.ContainingType.TypeParameters.Length!=0)return null;
+        readableConstTypes.Add(Id(field.ContainingType.OriginalDefinition));
+        var marker=ConstName(field);
+        readableConstFallback[marker]=(Constant(field.ConstantValue,field.Type,n)+ConstantNameComment(n),Id(field.ContainingType.OriginalDefinition));
+        return marker;
+    }
+    string ReadableConstantValue(IFieldSymbol field){
+        if(field.ConstantValue is bool b)return b?"true":"false";
+        var node=field.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is Microsoft.CodeAnalysis.CSharp.Syntax.VariableDeclaratorSyntax declarator&&declarator.Initializer!=null?declarator.Initializer.Value:(SyntaxNode?)null;
+        return ReadableConstant(field.ConstantValue!,field.Type,node!)??Convert.ToString(field.ConstantValue,System.Globalization.CultureInfo.InvariantCulture)!;
+    }
 
     // ---------------------------------------------------------------- identifiers
     // Helper names emitted unqualified in readable output (assembly namespace).
@@ -120,6 +146,15 @@ sealed partial class Lowerer {
         }
         if(!Integral(type)||value is bool)return null;
         var bits=value is ulong u?u:unchecked((ulong)Convert.ToInt64(value,CultureInfo.InvariantCulture));
+        // Readable pass 2 (C4): a hexadecimal literal of the C# source stays hexadecimal.
+        if(node is LiteralExpressionSyntax literalNode&&literalNode.Token.Text.StartsWith("0x",StringComparison.OrdinalIgnoreCase)){
+            switch(type!.SpecialType){
+                case SpecialType.System_Int32:{var v=unchecked((int)bits);if(v>=0)return "0x"+v.ToString("X",CultureInfo.InvariantCulture);break;}
+                case SpecialType.System_UInt32:return "0x"+unchecked((uint)bits).ToString("X",CultureInfo.InvariantCulture)+"u";
+                case SpecialType.System_Int64:{var v=unchecked((long)bits);if(v>=0)return "0x"+v.ToString("X",CultureInfo.InvariantCulture)+"ll";break;}
+                case SpecialType.System_UInt64:return "0x"+bits.ToString("X",CultureInfo.InvariantCulture)+"ull";
+            }
+        }
         switch(type!.SpecialType){
             case SpecialType.System_Int32:{var v=unchecked((int)bits);return v==int.MinValue?"(-2147483647 - 1)":v.ToString(CultureInfo.InvariantCulture);}
             case SpecialType.System_UInt32:return unchecked((uint)bits).ToString(CultureInfo.InvariantCulture)+"u";

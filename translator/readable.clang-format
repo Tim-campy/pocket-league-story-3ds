@@ -20,3 +20,5 @@ MaxEmptyLinesToKeep: 1
 AccessModifierOffset: -4
 PointerAlignment: Left
 SpaceAfterTemplateKeyword: false
+# Literal text is never split (readable pass 2, C4).
+BreakStringLiterals: false

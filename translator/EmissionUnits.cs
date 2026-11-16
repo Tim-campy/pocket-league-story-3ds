@@ -172,12 +172,42 @@ sealed partial class Lowerer {
         if(readable)banner="// GENERATED (readable mode) by translator/Translator.cs from the reconstructed C#. Do not edit.\n";
         Write(basename+"_runtime.hpp",runtimePrefix+Wrap(readable?Namespaced(readableCommon):common.ToString()));
         Write(basename+"_forward.hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_runtime.hpp"})+Wrap(readable?Namespaced(readableForward):forward.ToString()));
+        // Readable pass 2 (C4): members in C# source order. A block carries its
+        // method DocID in a "// M:..." comment; blocks without one (storage,
+        // type initializer, trace/release) keep their place before the methods.
+        int SourceKey(string text){
+            var m=Regex.Match(text,@"//\s*(M:[^\s]+)");
+            if(!m.Success||!methods.TryGetValue(m.Groups[1].Value,out var symbol))return -1;
+            var location=symbol.Locations.FirstOrDefault(l=>l.IsInSource);return location==null?-1:location.SourceSpan.Start;
+        }
+        if(readable)foreach(var group in readableConstDecls.GroupBy(d=>Id(d.type),StringComparer.Ordinal)){
+            if(!units.TryGetValue(group.Key,out var constUnit))continue;
+            var structMembers=new List<string>();var headerBlocks=new List<(string wrap,string text)>();
+            foreach(var (_,field,constName) in group){
+                var value=ReadableConstantValue(field);var type=ConstantCppType(field.Type);
+                if(constUnit.RStruct!=null)structMembers.Add("static constexpr "+type+" "+constName+" = "+value+";");
+                else headerBlocks.Add((Key(registry!.Tokens[ConstName(field)].Wrap),"inline constexpr "+type+" "+constName+" = "+value+";\n"));
+            }
+            constUnit.RStructMembers.InsertRange(0,structMembers);constUnit.RHeader.InsertRange(0,headerBlocks);
+        }
+        if(readable)foreach(var unit in units.Values){
+            var ordered=unit.RCpp.Select((block,index)=>(block,index,key:SourceKey(block.text))).OrderBy(x=>x.key<0?-1:0).ThenBy(x=>x.key<0?x.index:x.key).ThenBy(x=>x.index).Select(x=>x.block).ToList();
+            unit.RCpp.Clear();unit.RCpp.AddRange(ordered);
+            var rank=new Dictionary<string,int>(StringComparer.Ordinal);int position=0;
+            foreach(var block in ordered){var name=Regex.Match(block.text,@"::(\w+)\s*\(");if(name.Success&&!rank.ContainsKey(name.Groups[1].Value))rank[name.Groups[1].Value]=position++;}
+            int MemberRank(string declaration){var name=Regex.Match(declaration,@"(\w+)\s*\(");return name.Success&&rank.TryGetValue(name.Groups[1].Value,out var value)?value:-1;}
+            var members=unit.RStructMembers.Select((text,index)=>(text,index,key:MemberRank(text))).OrderBy(x=>x.key<0?-1:0).ThenBy(x=>x.key<0?x.index:x.key).ThenBy(x=>x.index).Select(x=>x.text).ToList();
+            unit.RStructMembers.Clear();unit.RStructMembers.AddRange(members);
+        }
         foreach(var unit in units.Values){
             var readableHeader=new List<(string wrap,string text)>();
             if(unit.RStruct is (string structWrap,string structText))readableHeader.Add((structWrap,InsertMembers(structText,unit.RStructMembers)));
             readableHeader.AddRange(unit.RHeader);
             Write(unit.Stem+".hpp",banner+"#pragma once\n"+Includes(new[]{basename+"_forward.hpp"}.Concat(unit.Layout))+Wrap(readable?Namespaced(readableHeader):unit.Header.ToString()));
             var content=unit.Cpp.ToString();var headers=DependencyHeaders(content+unit.Header,unit).Concat(unit.BodyHeaders).Append(unit.Stem+".hpp").ToArray();
+            if(readable)headers=headers.Concat(Regex.Matches(content,@"\bcs_const_[0-9a-f]{16}\b").Select(m=>m.Value).Distinct()
+                .Where(marker=>registry!.Tokens.ContainsKey(marker)&&readableConstFallback.TryGetValue(marker,out var info)&&units.ContainsKey(info.owner))
+                .Select(marker=>units[readableConstFallback[marker].owner].Stem+".hpp")).ToArray();
             var templates=DependencyTemplates(content+unit.Header,unit).Distinct().ToArray();
             Write(unit.Stem+".cpp",banner+Includes(headers)+Includes(templates)+RuntimeIncludes(content)+Wrap(readable?Namespaced(unit.RCpp):content));
             if(unit.Templates.Length!=0){var template=unit.Templates.ToString();

@@ -9,7 +9,7 @@
   "account_override_absent": true,
   "invalid_identity_rejected_without_replacement": true,
   "synthetic_save_unchanged": true,
-  "native_binary_sha256": "5bab0de2e592d1fe37d4f846e341c25a9ed86d89761f02d11ea740aacaa56397",
+  "native_binary_sha256": "0e4418bd991bdc80186e17bc1c3eb47c742af29c1ade58d6798822ea6a7e430b",
   "policy_sha256": "2767fa2c47ea68c3771448cc63ffd090ea912ccdf39cf25eb2371a1a7afc0e7d",
   "sources": {
     "src/kairo/common/services.cpp": "62ab4911f93cc8af666196088b869b441d709fd28e50d632d6e8171cb48ee16f",

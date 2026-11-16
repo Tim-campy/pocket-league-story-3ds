@@ -83,6 +83,45 @@ struct TitleForm : MyFormBase {
     virtual void SetTouchValue(std::int32_t type, std::int32_t value);
     virtual bool OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e);
     virtual std::int32_t GetHashCode();
+    static constexpr std::int32_t RESTITLE_IMG_TITLE00 = 0;
+    static constexpr std::int32_t RESTITLE_IMG_WINDOW = 1;
+    static constexpr std::int32_t RESTITLE_IMG_LOGO = 2;
+    static constexpr std::int32_t RESTITLE_IMG_KAIROAD = 3;
+    static constexpr std::int32_t RESTITLE_IMG_KAIROAD_CANCEL = 4;
+    static constexpr std::int32_t STATE_MENU = 0;
+    static constexpr std::int32_t STATE_SAVESLOT = 1;
+    static constexpr std::int32_t MENU_START = 0;
+    static constexpr std::int32_t MENU_RANKING = 1;
+    static constexpr std::int32_t MENU_RELEASE = 1;
+    static constexpr std::int32_t MENU_END = 2;
+    static constexpr std::int32_t HOBJ_MAX = 20;
+    static constexpr std::int32_t HOBJP_EXIST = 0;
+    static constexpr std::int32_t HOBJP_PDATAID = 1;
+    static constexpr std::int32_t HOBJP_PX = 2;
+    static constexpr std::int32_t HOBJP_PY = 3;
+    static constexpr std::int32_t HOBJP_DIRECT = 4;
+    static constexpr std::int32_t HOBJP_FRAME = 5;
+    static constexpr std::int32_t HOBJP_END = 6;
+    static constexpr std::int32_t TITLE_INIT_PY_MIN = 228;
+    static constexpr std::int32_t TITLE_INIT_PY_MAX = 238;
+    static constexpr std::int32_t TITLE_MOVE_V = 1;
+    static void Draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
+
+    static bool Finish(pls::cs::Ref<TitleForm> self);
+
+    static std::int32_t GetHashCode(pls::cs::Ref<TitleForm> self);
+
+    static bool Init(pls::cs::Ref<TitleForm> self);
+
+    static bool OnTouchEvent(pls::cs::Ref<TitleForm> self, pls::cs::Ref<kairo::unity::surface::TouchEvent> e);
+
+    static bool Resume(pls::cs::Ref<TitleForm> self);
+
+    static void SetTouchValue(pls::cs::Ref<TitleForm> self, std::int32_t type, std::int32_t value);
+
+    static pls::cs::String ToString(pls::cs::Ref<TitleForm> self);
+
+    static bool Update(pls::cs::Ref<TitleForm> self);
 
     static void ensure_initialized();
 
@@ -96,47 +135,29 @@ struct TitleForm : MyFormBase {
 
     static pls::cs::Array<std::int32_t>& TITLE_GUEST();
 
-    static void _draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
+    static void create_init(pls::cs::Ref<TitleForm> self);
 
     static pls::cs::Ref<TitleForm> create();
 
-    static void create_init(pls::cs::Ref<TitleForm> self);
-
-    static void ChangeState(pls::cs::Ref<TitleForm> self, std::int32_t state);
-
     static void ContinueGame(pls::cs::Ref<TitleForm> self);
-
-    static void Draw_titleAnime(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
-
-    static void Draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
-
-    static bool Finish(pls::cs::Ref<TitleForm> self);
-
-    static std::int32_t GetHashCode(pls::cs::Ref<TitleForm> self);
-
-    static bool Init(pls::cs::Ref<TitleForm> self);
-
-    static void LoadKiaroAdClickNum(pls::cs::Ref<TitleForm> self);
 
     static void NewGame(pls::cs::Ref<TitleForm> self);
 
-    static bool OnTouchEvent(pls::cs::Ref<TitleForm> self, pls::cs::Ref<kairo::unity::surface::TouchEvent> e);
+    static void SmartBeginPaint(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static void ResetHobjExist(pls::cs::Ref<TitleForm> self, std::int32_t index);
+    static void _draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static bool Resume(pls::cs::Ref<TitleForm> self);
+    static void ChangeState(pls::cs::Ref<TitleForm> self, std::int32_t state);
+
+    static void Update_titleAnime(pls::cs::Ref<TitleForm> self);
 
     static void SetAppearCnt(pls::cs::Ref<TitleForm> self);
 
-    static void SetTouchValue(pls::cs::Ref<TitleForm> self, std::int32_t type, std::int32_t value);
+    static void ResetHobjExist(pls::cs::Ref<TitleForm> self, std::int32_t index);
 
-    static void SmartBeginPaint(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
+    static void Draw_titleAnime(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static pls::cs::String ToString(pls::cs::Ref<TitleForm> self);
-
-    static bool Update(pls::cs::Ref<TitleForm> self);
-
-    static void Update_titleAnime(pls::cs::Ref<TitleForm> self);
+    static void LoadKiaroAdClickNum(pls::cs::Ref<TitleForm> self);
 
     static void UpdateKairoAdClickNum(pls::cs::Ref<TitleForm> self);
 

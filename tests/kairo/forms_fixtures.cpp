@@ -1,4 +1,5 @@
 #include "forms.hpp"
+#include "application.hpp"
 #include "../translator/gc_test_support.hpp"
 #include <iostream>
 #include <atomic>
@@ -24,6 +25,20 @@ struct TouchProbe:FormBase {
  void SetTouchValue(std::int32_t type,std::int32_t value)override{received_type=type;received_value=value;}
 };
 struct ModeProbe:FormBase {ModeProbe():FormBase(71){}bool Init()override{SetProcessMode(4);return true;}bool Finish()override{SetProcessMode(1);return true;}};
+struct FocusForm:FormBase {
+ inline static std::string trace;explicit FocusForm(int id):FormBase(id){}
+ bool ProcessEvent(pls::cs::Ref<AppEvent> e)override{trace+="E"+std::to_string(GetId())+":"+std::to_string(static_cast<int>(e->Type))+",";return false;}
+ void Suspend()override{trace+="S"+std::to_string(GetId())+",";if(GetId()==6)throw pls::cs::InvalidOperationException("suspend");}
+ bool Resume()override{trace+="R"+std::to_string(GetId())+",";if(GetId()==6)throw pls::cs::InvalidOperationException("resume");return true;}
+};
+struct FocusApp:IApplication {
+ pls::cs::Ref<FormManagerBase> manager;
+ pls::cs::Ref<FormManagerBase> GetFormManager()override{return manager;}
+ void OnSuspend()override{FocusForm::trace+="AS,";}void OnResume()override{FocusForm::trace+="AR,";}
+ void OnUpdate()override{}void OnDraw()override{}
+ void trace_edges(const pls::cs::EdgeVisitor& v)const override{IApplication::trace_edges(v);pls::cs::trace_value(manager,v);}
+ void release_edges()override{IApplication::release_edges();pls::cs::release_value(manager);}
+};
 int concurrent_policy(){
  pls::cs::GcMutatorScope mutator;unsigned int checks=0;auto require=[&](bool v){if(!v)throw std::runtime_error("Native UI shared field policy failed");++checks;};
  auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<FormBase>(13);manager->Push(form);form->SetProcessMode(1);auto canvas=Canvas::GetInstance();
@@ -120,4 +135,5 @@ int main(int argc,char**argv){
  P("touch-object-identity",[]{auto p=pls::cs::make_ref<TouchProbe>();pls::cs::Ref<TouchValueAccessor> touch=p;auto boxed=pls::cs::dynamic_pointer_cast<pls::cs::Object>(touch);return std::string(T(boxed==pls::cs::static_pointer_cast<pls::cs::Object>(p)))+":"+T(pls::cs::dynamic_pointer_cast<TouchValueAccessor>(pls::cs::dynamic_pointer_cast<TouchProbe>(boxed))==touch);});
  P("init-mode-reread",[]{auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<ModeProbe>();manager->Push(form);manager->source_ExecuteInitAndFinish();return std::to_string(manager->GetFormsNum())+":"+std::to_string(form->GetProcessMode());});
  P("finish-mode-reread",[]{auto manager=pls::cs::make_ref<FormManagerBase>();manager->source_construct();auto form=pls::cs::make_ref<ModeProbe>();manager->Push(form);manager->source_ExecuteInitAndFinish();manager->source_ExecuteInitAndFinish();return std::to_string(manager->GetFormsNum())+":"+std::to_string(form->GetProcessMode());});
+ P("host-focus",[&]{auto fm=pls::cs::make_ref<FormManagerBase>();fm->source_construct();fm->host_game_state(nullptr);fm->Push(pls::cs::make_ref<FocusForm>(5));fm->Push(pls::cs::make_ref<FocusForm>(6));fm->Push(pls::cs::make_ref<FocusForm>(7));fm->source_ExecuteInitAndFinish();FocusForm::trace="";auto app=pls::cs::make_ref<FocusApp>();app->manager=fm;app->source_Init(app);pls::cs::run_finally([&]{app->host_focus(false);FocusForm::trace+="|";app->host_focus(true);},[&]{app->source_Init({});});return FocusForm::trace;});
 }

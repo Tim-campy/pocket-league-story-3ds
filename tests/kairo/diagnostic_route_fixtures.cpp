@@ -82,6 +82,10 @@ int main(){
     a=text.step(title(1));check(a.text=="Sunrays"&&!a.accept,"type sends text to the host panel");
     a=text.step(title(2));check(a.accept&&a.text.empty(),"accept confirms the host panel");
     check(parse_fails("type\nend\n"),"type needs text");
+    Runner raw(parse_text("keydown HASH\nwait frames=2\nkeyup HASH\nend\n"));
+    a=raw.step(title(1));check(a.raw=="HASH"&&a.raw_down,"keydown sends a physical key down");
+    raw.step(title(2));raw.step(title(3));a=raw.step(title(4));check(a.raw=="HASH"&&!a.raw_down,"keyup sends the key up after the wait");
+    check(parse_fails("keydown F1\nend\n"),"keydown rejects unknown physical keys");
     // State line is valid-looking JSON with escaped text.
     auto line=to_line(state(7,{{"form.SubForm",4,3,"a\"b","c\\d"}}));
     check(line.find("a\\\"b")!=std::string::npos&&line.find("c\\\\d")!=std::string::npos,"labels escaped in state line");

@@ -8,7 +8,7 @@
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
-  "executable_sha256": "2b37014c6f5fc0018705b2793e8133dfe846edba9f765ff71032f9014cbea056",
+  "executable_sha256": "69e9594ed689c7de6682edcf6db3842e99f97e152a865a934851cb80a2a49d90",
   "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
   "sources": [
     {
@@ -21,7 +21,7 @@
     },
     {
       "path": "src/kairo/platform/sdl/backend.cpp",
-      "sha256": "432bc993e2a184f19b0a5ac5b37021c8c240c74cbb87437b634b6dbb05bc2b12"
+      "sha256": "5cbac599ff20d991d701259fc038203e80c38c506e82387421a0421fc26c518c"
     },
     {
       "path": "src/kairo/platform/sdl/backend.hpp",
@@ -29,7 +29,7 @@
     },
     {
       "path": "src/kairo/api/platform.hpp",
-      "sha256": "a8aa73dcc40333a6a528be69fd1374cae4d841aeb364cb6e6605dfdb06140add"
+      "sha256": "83284432e1edd67e76cb450f371dc57f4fc2fa1ebcff3ae33c54c2a82a802c3f"
     },
     {
       "path": "src/kairo/platform/sdl/debug_input.cpp",

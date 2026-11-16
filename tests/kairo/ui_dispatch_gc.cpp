@@ -7,6 +7,10 @@ class App:public kairo::IApplication {
     void OnUpdate()override{}void OnDraw()override{}
 public:cs::Ref<kairo::FormManagerBase>GetFormManager()override{return {};}
 };
+// TerminateCheck lives in forms.cpp (needs the form manager), not linked here.
+// This fixture measures UI dispatch under collection; its app has no forms, so
+// the faithful check would terminate it on the first update.
+bool kairo::IApplication::terminate_check(){return false;}
 int main(){
     cs::GcMutatorScope host;auto app=cs::make_ref<App>();app->source_Init(app);
     app->host_initialization({[]{},[]{}});app->host_start();

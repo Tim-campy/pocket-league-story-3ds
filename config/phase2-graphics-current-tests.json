@@ -652,7 +652,7 @@
   "native_gc_thread_policy": {
     "assertions": 9,
     "worker_snapshots": 2000,
-    "collections": 17,
+    "collections": 7,
     "sticky_after_end": true,
     "snapshot_survives_overwrite": true,
     "old_target_collected_after_overwrite": true,
@@ -674,10 +674,10 @@
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
-    "src/kairo/api/canvas.hpp": "4217a5cf57365e6f3fb285064eacd73d69cc4b89ce6a73f2c00816c18d8d51fc",
+    "src/kairo/api/canvas.hpp": "b6b2b0433ab6af501e18e572b6551dcd02fa36443d0159c8732bc673a927fd6b",
     "src/kairo/api/input.hpp": "0c3f2ab9a63f94359e6aace100913ab684dddfae5e453b9ea4ba8802b9d20fbf",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
-    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
+    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
@@ -728,7 +728,7 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "b9d9b4bce3946fb6c0b54b73c2f84f9fee3ffdd4e08f47a95515670e28ddd47d"
+    "sha256": "3746f2e85406cc28f36e0ad0c0ed50fb4d52ada7858d2e45f201de7aa90500c3"
   },
   "verified_boundary_ids": [],
   "limits": [

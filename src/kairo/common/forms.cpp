@@ -77,9 +77,10 @@ namespace pls::kairo {
 // KairoLibrary IApplication.OnApplicationPause (IApplication.cs:435-477): the
 // app event, then Suspend/Resume of every form from the top of the stack (a
 // form's exception is swallowed, as in the source), then OnSuspend/OnResume.
-// NotifyManager.DoNotify/DoCancel and kairo AnalyticsTracker.DispatchPageView
-// of the same sequence have no platform binding yet (docs/coverage-plan.md);
-// KairoPlugin.SetNotificationBackground is an offline no-op policy.
+// NotifyManager.DoNotify/DoCancel, KairoPlugin.SetNotificationBackground and
+// kairo AnalyticsTracker.DispatchPageView of the same sequence are removed
+// services: they do not change game state (docs/design/focus.md).
+bool IApplication::terminate_check(){auto manager=GetFormManager();if(!manager||manager->GetFormsNum()==0){Terminate();return true;}return false;}
 void IApplication::host_focus(bool focus){
     if(focused_==focus)return;focused_=focus;
     FormManagerBase::ProcessEvent(focus?AppEventType::Resume:AppEventType::Hidden);

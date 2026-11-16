@@ -434,7 +434,7 @@
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
-    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
+    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -466,7 +466,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "09486a64e3325cf6527702299be1fa408fe5c0d83f0b586114886628d3a421d9"
+    "sha256": "cf63c70e15380f892c71d30c2e86a6f19e64c9d5ff2f586391c22fa02fe969c4"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

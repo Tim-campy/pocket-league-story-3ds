@@ -1,4 +1,5 @@
 // Measurement host only. No screen/control design for the eventual 3DS port.
+#include "canvas_back.hpp"
 #include "game_entry.hpp"
 #include "asset_catalog.hpp"
 #include "graphics.hpp"
@@ -208,7 +209,7 @@ int main(int argc,char**argv){
         pls::kairo::configure_storage(preferences,&assets);pls::kairo::configure_capture(preferences/"captures");
         auto sound=pls::cs::make_ref<pls::null_backend::Sound>();pls::kairo::configure_sound(&assets,sound);
         pls::kairo::install_text_input(pls::cs::make_ref<Text>());
-        auto display=pls::kairo::Image::FromRgba(240,280,std::vector<std::uint8_t>(240*280*4));auto canvas=pls::kairo::Canvas::GetInstance();canvas->host_display(display,pls::cs::make_ref<pls::kairo::Font>());
+        auto display=pls::kairo::Image::FromRgba(240,280,std::vector<std::uint8_t>(240*280*4));auto canvas=pls::kairo::Canvas::GetInstance();pls::kairo::install_canvas_back_key();canvas->host_display(display,pls::cs::make_ref<pls::kairo::Font>());
         auto app=pls::game::create_application();app->host_configure(240,280,pls::cs::String::from_utf8(preferences.u8string()),{});
         pls::kairo::WindowOrientation orientation=pls::kairo::WindowOrientation::portrait;
         app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::portrait;});app->host_orientation_reader([&]{return orientation;});app->host_orientation_writer([&](auto v){orientation=v;});app->host_fullscreen_writer([](bool){});

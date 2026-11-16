@@ -1,4 +1,5 @@
 #include "dialog_service.hpp"
+#include "port_dialog.hpp"
 #include "application.hpp"
 #include "../../src/kairo/platform/sdl/dialog.hpp"
 #include <iostream>
@@ -17,5 +18,19 @@ int main(){
  presenter->answer=77;rejected=false;try{show_dialog(0,{},{});}catch(const pls::cs::InvalidOperationException&){rejected=true;}check(rejected);
  auto native=pls::sdl::make_dialog_presenter(nullptr,{});install_dialog_service(native,labels);rejected=false;try{show_dialog(0,{},{});}catch(const pls::cs::InvalidOperationException&){rejected=true;}check(rejected);
  install_dialog_service({},{});rejected=false;try{show_dialog(0,{},{});}catch(const pls::cs::InvalidOperationException&){rejected=true;}check(rejected);
+ // Port dialog (decision 2026-11-16): original button order and results, keys and touch.
+ {
+  using C=PortDialog::Command;
+  DialogRequest yesno{3,{},{},{{4,pls::cs::String(u"Yes")},{8,pls::cs::String(u"No")}}};
+  PortDialog a(yesno);check(a.Selected()==0&&!a.Done());a.Handle(C::confirm);check(a.Result()==4);
+  PortDialog b(yesno);b.Handle(C::right);b.Handle(C::confirm);check(b.Result()==8);
+  PortDialog c(yesno);c.Handle(C::left);check(c.Selected()==1);c.Handle(C::right);check(c.Selected()==0);c.Handle(C::cancel);check(c.Done()&&c.Result()==-1);
+  DialogRequest three{4,{},{},{{4,pls::cs::String(u"Yes")},{8,pls::cs::String(u"No")},{2,pls::cs::String(u"Cancel")}}};
+  PortDialog d(three);d.Handle(C::right);d.Handle(C::right);d.Handle(C::confirm);check(d.Result()==2);
+  PortDialog e(three);const auto box=e.ButtonBox(1,240,280);e.PointerDown(box.x+2,box.y+2);check(!e.Done()&&e.Selected()==1);e.PointerUp(box.x+3,box.y+3);check(e.Result()==8);
+  PortDialog f(three);const auto first=f.ButtonBox(0,240,280),second=f.ButtonBox(1,240,280);f.PointerDown(first.x+2,first.y+2);f.PointerUp(second.x+2,second.y+2);check(!f.Done());
+  DialogRequest ok{0,{},{},{{1,pls::cs::String(u"OK")}}};PortDialog g(ok);g.Handle(C::right);g.Handle(C::confirm);check(g.Result()==1);
+  bool rejected_empty=false;try{PortDialog empty(DialogRequest{0,{},{},{}});}catch(const pls::cs::ArgumentException&){rejected_empty=true;}check(rejected_empty);
+ }
  std::cout<<"{\"assertions\":"<<assertions<<",\"types_tested\":5,\"automatic_positive_choice\":false,\"sdl_backend_compiled\":true,\"interactive_SDL_dialog_exercised\":false,\"game_boot\":false}\n";
 }

@@ -20,20 +20,77 @@
 #endif
 #include "diagnostic_profile.hpp"
 #include "dialog_service.hpp"
+#include "port_dialog.hpp"
+#include "canvas_back.hpp"
+#include <SDL.h>
+#include <thread>
+#include <chrono>
+#include <map>
 namespace {
-// Diagnostic runs only: no host installs the native dialog service yet (its
-// 3DS form is a Phase 3 design decision). Routes must not stop at a game
-// dialog: log the request and answer with its first declared button.
-class DiagnosticDialogPresenter final:public pls::kairo::DialogPresenter {
+// Port dialog service (user decision 2026-11-16): KairoPlugin.ShowDialog is a
+// modal dialog drawn by the common PortDialog over the current frame. In
+// interactive runs this presenter pumps the host until a button is chosen
+// (keys: LEFT/RIGHT move, Enter/Space/Z confirm, Esc/Backspace/X cancel; a
+// tap on a button chooses it). Diagnostic route runs cannot type into a
+// blocking dialog, so they drive the same PortDialog with commands; each
+// distinct dialog cycles its buttons from the last one, so repeating it
+// exercises every button (log line PLS_PC_DIALOG).
+std::string dialog_json(const std::string& text){std::string out;for(const char c:text){if(c=='"'||c=='\\')out+='\\';if(static_cast<unsigned char>(c)<0x20){out+=' ';continue;}out+=c;}return out;}
+class PcDialogPresenter final:public pls::kairo::DialogPresenter {
+    pls::sdl::Backend& backend_;pls::cs::Ref<pls::kairo::Image> display_;bool scripted_;std::uint64_t dialogs_{0};std::map<std::u16string,std::uint64_t> seen_;
 public:
+    void trace_edges(const pls::cs::EdgeVisitor& visitor)const override{pls::cs::trace_value(display_,visitor);}
+    void release_edges()override{pls::cs::release_value(display_);}
+    PcDialogPresenter(pls::sdl::Backend& backend,pls::cs::Ref<pls::kairo::Image> display,bool scripted):backend_(backend),display_(std::move(display)),scripted_(scripted){}
     std::int32_t Present(const pls::kairo::DialogRequest& request)override{
-        const auto answer=request.buttons.empty()?-1:request.buttons.front().result;
+        using Command=pls::kairo::PortDialog::Command;
+        pls::kairo::PortDialog dialog(request);const auto index=dialogs_++;
+        if(scripted_){
+            // Per distinct dialog (type, title, message): the n-th occurrence
+            // chooses button count-1-(n mod count), so the first answer is the
+            // last button (No/Cancel/OK) and later ones reach Yes.
+            std::u16string key=std::u16string(1,char16_t(request.type))+(request.title.is_null()?std::u16string():request.title.code_units())+std::u16string(1,char16_t(0x1f))+(request.message.is_null()?std::u16string():request.message.code_units());
+            const auto occurrence=seen_[key]++;const auto count=request.buttons.size();
+            const auto target=count-1-occurrence%count;
+            for(std::size_t i=0;i<target;++i)dialog.Handle(Command::right);
+            dialog.Draw(display_);dialog.Handle(Command::confirm);
+        }else{
+            const auto background=pls::kairo::Image::FromRgba(240,280,display_->pixels());
+            while(!dialog.Done()){
+                for(const auto& event:backend_.events()){
+                    using Kind=pls::platform::Input::Kind;
+                    if(event.kind==Kind::quit){dialog.Handle(Command::cancel);break;}
+                    if(event.kind==Kind::key_down){
+                        if(event.key==SDLK_LEFT||event.key==SDLK_UP)dialog.Handle(Command::left);
+                        else if(event.key==SDLK_RIGHT||event.key==SDLK_DOWN)dialog.Handle(Command::right);
+                        else if(event.key==SDLK_RETURN||event.key==SDLK_KP_ENTER||event.key==SDLK_SPACE||event.key==SDLK_z)dialog.Handle(Command::confirm);
+                        else if(event.key==SDLK_ESCAPE||event.key==SDLK_BACKSPACE||event.key==SDLK_x)dialog.Handle(Command::cancel);
+                    }
+                    else if(event.kind==Kind::pointer_down)dialog.PointerDown(event.x,event.y);
+                    else if(event.kind==Kind::pointer_up)dialog.PointerUp(event.x,event.y);
+                }
+                {auto g=pls::cs::make_ref<pls::kairo::Graphics>(display_,true);g->ResetRender();g->DrawImage(background,0.0f,0.0f);}
+                dialog.Draw(display_);
+                auto* texture=backend_.upload_rgba8(240,280,display_->pixels());
+                pls::cs::run_finally([&]{backend_.draw(texture,{0,0,240,280},{0,0,240,280},false);backend_.present();},[&]{backend_.release(texture);});
+                pls::cs::GcNativeBlockingScope idle;std::this_thread::sleep_for(std::chrono::milliseconds(16));
+            }
+            {auto g=pls::cs::make_ref<pls::kairo::Graphics>(display_,true);g->ResetRender();g->DrawImage(background,0.0f,0.0f);}
+        }
+        const auto answer=dialog.Result();
         std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);
-        std::cerr<<"PLS_PC_DIALOG={\"type\":"<<request.type<<",\"buttons\":"<<request.buttons.size()<<",\"answer\":"<<answer<<",\"message\":\""
-                 <<pls::pc::route::json_escape(request.message.is_null()?std::string():request.message.utf8())<<"\"}"<<std::endl;
+        std::cerr<<"PLS_PC_DIALOG={\"type\":"<<request.type<<",\"buttons\":"<<request.buttons.size()<<",\"answer\":"<<answer<<",\"index\":"<<index<<",\"title\":\""<<dialog_json(request.title.is_null()?std::string():request.title.utf8())<<"\",\"message\":\""<<dialog_json(request.message.is_null()?std::string():request.message.utf8())<<"\"}"<<std::endl;
         return answer;
     }
 };
+// Provisional platform labels (the Android system dialog used OS strings, not
+// game text). Final wording and language handling: Phase 3 (docs/design/dialogs.md).
+pls::cs::Delegate<pls::cs::Array<pls::cs::String>(std::int32_t)> port_dialog_labels(){
+    return pls::cs::Delegate<pls::cs::Array<pls::cs::String>(std::int32_t)>::from_static("port-dialog-labels",[](std::int32_t type){
+        return type<=2?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"OK")})
+            :type==3?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"Yes"),pls::cs::String(u"No")})
+            :pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"Yes"),pls::cs::String(u"No"),pls::cs::String(u"Cancel")});});
+}
 }
 #include "capture.hpp"
 #include "virtual_clock.hpp"
@@ -78,14 +135,11 @@ int main(int argc,char** argv){
     pls::pc::RunMetrics metrics(pls::pc::metrics_enabled_from_environment(),std::cerr);
 #if defined(PLS_DIAGNOSTIC_BUILD)
     pls::diagnostic::enabled=true;
-    pls::cs::exception_site_hook=&pls::diagnostic::method_stack_text;
+    // PLS_PC_PRINT_EXCEPTIONS=1: also log every managed exception's creation site
+    // (diagnostic only; for exceptions the game catches and only reports by dialog).
+    if(std::getenv("PLS_PC_PRINT_EXCEPTIONS"))pls::cs::exception_site_hook=+[]()->std::string{auto site=pls::diagnostic::method_stack_text();std::cerr<<"PLS_EXCEPTION_SITE="<<site<<std::endl;return site;};
+    else pls::cs::exception_site_hook=&pls::diagnostic::method_stack_text;
     pls::cs::gc_stress_configure();
-    // Neutral button labels (no game text): one OK, two (type 3) or three choices.
-    pls::kairo::install_dialog_service(pls::cs::make_ref<DiagnosticDialogPresenter>(),
-        pls::cs::Delegate<pls::cs::Array<pls::cs::String>(std::int32_t)>::from_static("diagnostic-dialog-labels",[](std::int32_t type){
-            return type<=2?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"1")})
-                :type==3?pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"1"),pls::cs::String(u"2")})
-                :pls::cs::Array<pls::cs::String>::from({pls::cs::String(u"1"),pls::cs::String(u"2"),pls::cs::String(u"3")});}));
     pls::gc::rendezvous_timeout_hook=&pls::diagnostic::print_stuck_threads;
     FinalProfile final_profile;
 #endif
@@ -119,7 +173,15 @@ int main(int argc,char** argv){
         // it must not enter the game's reloadable/generated image cache.
         auto display=pls::kairo::Image::FromRgba(240,280,std::vector<std::uint8_t>(240*280*4));
         auto canvas=pls::kairo::Canvas::GetInstance();
+        pls::kairo::install_canvas_back_key();
         canvas->host_display(display,pls::cs::make_ref<pls::kairo::Font>());
+#if defined(PLS_DIAGNOSTIC_BUILD)
+        const bool scripted_dialogs=true;
+#else
+        const bool scripted_dialogs=false;
+#endif
+        pls::kairo::install_dialog_service(pls::cs::make_ref<PcDialogPresenter>(backend,display,scripted_dialogs),port_dialog_labels());
+        struct DialogServiceCleanup{~DialogServiceCleanup(){try{pls::kairo::install_dialog_service({},{});}catch(...){}}} dialog_service_cleanup;
         const auto payload=[&]{
             pls::pc::PayloadSnapshot value;
             try{if(display->native_resident()){const auto& pixels=display->pixels();value.display_rgba_bytes=pixels.size();value.display_rgba_capacity_bytes=pixels.capacity();}}catch(...){}
@@ -217,7 +279,10 @@ int main(int argc,char** argv){
                 }
                 // Host text panel (SimpleTextInput): route-typed text and Enter (SDLK_RETURN == 13).
                 if(!action.text.empty()){for(int erase=0;erase<256&&!text_input->Text().is_null()&&text_input->Text().length();++erase){pls::platform::Input back{pls::platform::Input::Kind::key_down};back.key=8;text_input->Handle(back);}
-                    pls::platform::Input typed{pls::platform::Input::Kind::text_input};typed.text=action.text;text_input->Handle(typed);std::cerr<<"PLS_PC_SCRIPTED_TEXT="<<route_frame<<'\n';}
+                    if(action.text!="~"){pls::platform::Input typed{pls::platform::Input::Kind::text_input};typed.text=action.text;text_input->Handle(typed);}std::cerr<<"PLS_PC_SCRIPTED_TEXT="<<route_frame<<'\n';}
+                // Physical host keys (route keydown/keyup), through the same SDL key path as a keyboard.
+                if(!action.raw.empty()){const auto& r=action.raw;pls::platform::Input raw{action.raw_down?pls::platform::Input::Kind::key_down:pls::platform::Input::Kind::key_up};
+                    raw.key=r=="HASH"?SDLK_HASH:r=="STAR"?SDLK_ASTERISK:r=="KP1"?SDLK_KP_1:SDLK_ESCAPE;canvas->host_event(raw);std::cerr<<"PLS_PC_SCRIPTED_RAW_KEY="<<route_frame<<':'<<r<<':'<<(action.raw_down?"down":"up")<<'\n';}
                 if(action.accept){pls::platform::Input enter{pls::platform::Input::Kind::key_down};enter.key=13;text_input->Handle(enter);std::cerr<<"PLS_PC_SCRIPTED_ACCEPT="<<route_frame<<'\n';}
                 if(action.focus>=0){std::cerr<<"PLS_PC_SCRIPTED_FOCUS="<<route_frame<<':'<<action.focus<<'\n';lock.unlock();app->host_focus(action.focus==1);lock.lock();}
                 if(action.step>=0)std::cerr<<"PLS_ROUTE_STEP={\"step\":"<<action.step<<",\"frame\":"<<presented_frames<<"}\n";
@@ -239,6 +304,12 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::gc);
             for(const auto& event:backend.events()){
                 if(event.kind==pls::platform::Input::Kind::quit){exit_reason="window_quit";app->host_stop();return 0;}
+                if(event.kind==pls::platform::Input::Kind::focus_gained||event.kind==pls::platform::Input::Kind::focus_lost){
+#if defined(PLS_DIAGNOSTIC_BUILD)
+                    continue; // Diagnostic runs: only routes drive focus (`focus on|off`); desktop focus would make runs nondeterministic.
+#endif
+                    app->host_focus(event.kind==pls::platform::Input::Kind::focus_gained);continue;
+                }
                 if(text_input->Handle(event))continue;
                 canvas->host_event(event);
             }

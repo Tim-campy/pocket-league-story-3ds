@@ -1,0 +1,15 @@
+# Diagnostic route (no game data): FormManagerBase.DoTerminationDialog with
+# both buttons (FormManagerBase.cs:702-711). Escape on the title (only main
+# windows, no back soft label): the first dialog is answered No (game
+# continues), the second Yes (Exit event, termination; the run ends there).
+anchor timeout=2400
+wait frames=104
+keydown ESCAPE
+wait frames=2
+keyup ESCAPE
+wait frames=40
+keydown ESCAPE
+wait frames=2
+keyup ESCAPE
+wait frames=60
+end

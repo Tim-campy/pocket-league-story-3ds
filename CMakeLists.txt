@@ -100,7 +100,7 @@ if(PLS_BUILD_SDL)
   target_link_libraries(pls_media PUBLIC SDL2::SDL2 Freetype::Freetype Vorbis::vorbisfile)
   target_link_libraries(pls_graphics PUBLIC pls_media)
   add_library(pls_ui src/kairo/platform/sdl/input.cpp src/kairo/common/canvas.cpp src/kairo/common/forms.cpp src/kairo/common/forms_execution.cpp
-    src/kairo/common/dialog_service.cpp src/kairo/platform/sdl/dialog.cpp src/kairo/common/bootstrap.cpp
+    src/kairo/common/dialog_service.cpp src/kairo/common/port_dialog.cpp src/kairo/common/canvas_back.cpp src/kairo/common/port_dialog_draw.cpp src/kairo/platform/sdl/dialog.cpp src/kairo/common/bootstrap.cpp
     src/kairo/common/text_input.cpp src/kairo/platform/sdl/text_input.cpp src/kairo/common/offscreen.cpp)
   target_sources(pls_ui PRIVATE src/kairo/platform/sdl/capture.cpp)
   add_executable(capture_test tests/kairo/capture_fixtures.cpp)

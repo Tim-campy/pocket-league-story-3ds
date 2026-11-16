@@ -1,0 +1,74 @@
+# Diagnostic route (no game data): every reachable Dialog.Show of the game,
+# each button at least once, through the port dialog service (decision
+# 2026-11-16). Run without --diagnostic-save-from-attempt (empty profile).
+# The diagnostic presenter answers each distinct dialog starting from its last
+# button (No/Cancel/OK); repeating a dialog reaches Yes.
+#
+# Title debug keys of the original (TitleForm.Update): Keypad1 pulse with
+# Config.DEBUG_CMD_DEV -> HTTP save download -> offline failure "エラー" (TitleForm.cs:336);
+# '#' held > 40 frames -> STAR; STAR + '*' -> "データの再ダウンロード" yes/no (TitleForm.cs:431);
+# STAR + Keypad1 -> AppData.SendSaveData (not driven, see below);
+# Escape with only main windows -> FormManagerBase.DoTerminationDialog yes/no (FormManagerBase.cs:704).
+# New game naming (kfw.panel.MainPanel.ComponentAction): empty, prohibited
+# character and too-long names -> warnings (MainPanel.cs:228, 214, 209).
+anchor timeout=2400
+wait frames=104
+# TitleForm.cs:336 (OK)
+keydown KP1
+wait frames=2
+keyup KP1
+wait frames=20
+# Termination dialog, first answer No (game continues)
+keydown ESCAPE
+wait frames=2
+keyup ESCAPE
+wait frames=20
+# STAR: '#' held 45 frames (a release under 20 frames would clear system flags)
+keydown HASH
+wait frames=45
+keyup HASH
+wait frames=10
+# TitleForm.cs:431, first No
+keydown STAR
+wait frames=2
+keyup STAR
+wait frames=20
+# AppData.cs:5745/5782 (STAR + Keypad1 -> SendSaveData) are not driven: the
+# send screen polls keys in its own loop inside Update and never returns to the
+# host, so the port freezes there (attempt 127); see docs/design/dialogs.md.
+# TitleForm.cs:431 again: Yes -> ResourceReDownload, back to BootForm and title
+keydown STAR
+wait frames=2
+keyup STAR
+wait frames=20
+wait form=TitleForm timeout=2400
+wait not loading stable=20 timeout=2400
+wait frames=104
+# New game naming warnings
+key SELECT
+wait frames=60
+key SELECT
+wait frames=60
+key SELECT
+wait frames=40
+# MainPanel.cs:228 empty name; the panel stays open after each warning.
+type ~
+wait frames=5
+accept
+wait frames=40
+# MainPanel.cs:214 prohibited character
+type a/b
+wait frames=5
+accept
+wait frames=40
+# MainPanel.cs:209 too long (width over maxWidth for a non-Japanese language)
+type WWWWWWWWWWWWWWWWWWWWWWWWWWWWWW
+wait frames=5
+accept
+wait frames=40
+# Valid name closes the panel.
+type Sunrays
+wait frames=5
+accept
+wait frames=40
+end

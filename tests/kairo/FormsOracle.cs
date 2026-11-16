@@ -24,6 +24,17 @@ class TouchProbe:FormBase {
 class ModeProbe:FormBase {
  public ModeProbe():base(71){}public override bool Init(){SetProcessMode(4);return true;}public override bool Finish(){SetProcessMode(1);return true;}
 }
+class FocusForm:FormBase {
+ public static string trace="";public FocusForm(int id):base(id){}
+ public override bool ProcessEvent(AppEvent e){trace+="E"+GetId()+":"+((int)e.Type)+",";return false;}
+ public override void Suspend(){trace+="S"+GetId()+",";if(GetId()==6)throw new InvalidOperationException("suspend");}
+ public override bool Resume(){trace+="R"+GetId()+",";if(GetId()==6)throw new InvalidOperationException("resume");return true;}
+}
+class FocusApp:IApplication {
+ FormManagerBase manager;public FocusApp(FormManagerBase m){manager=m;}
+ public override FormManagerBase GetFormManager(){return manager;}
+ protected override void OnSuspend(){FocusForm.trace+="AS,";}protected override void OnResume(){FocusForm.trace+="AR,";}
+}
 class FormsOracle {
  static FormManagerBase m=new FormManagerBase();
  static string S(){string s="";for(int i=0;i<m.GetFormsNum();i++){var f=m.GetForm(i);s+=f.GetId()+":"+f.GetProcessMode()+",";}return s;}
@@ -65,6 +76,7 @@ class FormsOracle {
  P("touch-object-identity",delegate{var p=new TouchProbe();kairo.unity.surface.TouchValueAccessor touch=p;object boxed=touch;return T(Object.ReferenceEquals(boxed,p))+":"+T(Object.ReferenceEquals((TouchProbe)boxed,touch));});
  P("init-mode-reread",delegate{var manager=new FormManagerBase();var form=new ModeProbe();manager.Push(form);manager.ExecuteInitAndFinish();return manager.GetFormsNum()+":"+form.GetProcessMode();});
  P("finish-mode-reread",delegate{var manager=new FormManagerBase();var form=new ModeProbe();manager.Push(form);manager.ExecuteInitAndFinish();manager.ExecuteInitAndFinish();return manager.GetFormsNum()+":"+form.GetProcessMode();});
+ P("host-focus",delegate{var fm=new FormManagerBase();fm.Push(new FocusForm(5));fm.Push(new FocusForm(6));fm.Push(new FocusForm(7));fm.ExecuteInitAndFinish();FocusForm.trace="";var app=new FocusApp(fm);IApplication.SetCurrentForTest(app);try{app.OnApplicationPause(true);FocusForm.trace+="|";app.OnApplicationPause(false);}finally{IApplication.SetCurrentForTest(null);}return FocusForm.trace;});
  return 0;
  }
 }

@@ -281,6 +281,9 @@ def direct_kairo_adapter(invoke):
     return ''.join(text)
 
 
+DIALOG='M:kairo.unity.ui.Dialog.'
+
+
 def emit(output,report,portable):
     methods={m['id']:m for m in report['emitted_methods']+report.get('emitted_kairo_dependencies',[])}
     gaps=set()
@@ -339,7 +342,20 @@ namespace cs=pls::cs;namespace k=pls::kairo;
         gaps.add(PREFIX+'GetFep');text.append('forms.fep=cs::Delegate<cs::Ref<k::FormFep>()>::from_static("Bootstrap.Fep",[]()->cs::Ref<k::FormFep>{PLS_BOOTSTRAP_GAP('+json.dumps(PREFIX+'GetFep')+');});\n')
     text.append('forms.millis='+bind('std::int64_t()','Millis')+';forms.sleep='+bind('void(std::int64_t)','Pause',['value'],'std::int64_t value','(System.Int64)')+';forms.yield='+bind('void()','Yield')+';forms.collect='+bind('void()','Collect')+';\n')
     text.append('forms.begin_draw_counters='+bind('void()','DrawCounters')+';forms.close_jar_cache='+bind('void()','CloseJarCache')+';forms.release_expired_images=cs::Delegate<void()>::from_static("Image.UnuseExpirationImages",[](){k::Image::UnuseExpirationImages();});\n')
-    for field,signature,parameters,target in [('termination_dialog','bool()','','M:kairo.unity.form.FormManagerBase.DoTerminationDialog'),('resume_warning','void(cs::Ref<k::FormBase>)','cs::Ref<k::FormBase>','FormManager.ResumeWarning'),('lifecycle_warning','void(cs::Ref<k::FormBase>,bool)','cs::Ref<k::FormBase>,bool','FormManager.LifecycleWarning')]:
+    # FormManagerBase.DoTerminationDialog (FormManagerBase.cs:702-711), body
+    # emitted from the original statements over the translated Dialog:
+    # new Dialog(3, "\u78ba\u8a8d"); SetText("\u30b2\u30fc\u30e0\u3092\u7d42\u4e86\u3057\u307e\u3059"); Show() == 4.
+    # The dialog itself is the port dialog service (decision 2026-11-16).
+    termination='M:kairo.unity.form.FormManagerBase.DoTerminationDialog'
+    dialog=[DIALOG+name for name in ('#ctor(System.Int32,System.String)','SetText(System.String)','Show')]
+    if all(key in methods for key in dialog):
+        ctor,set_text,show=(methods[key]['cpp_name'] for key in dialog)
+        def u16(value):return 'cs::String(u"'+''.join('\\x%04x'%ord(c) for c in value)+'")'
+        text.append('forms.termination_dialog=cs::Delegate<bool()>::from_static('+json.dumps(termination)+',[]()->bool{auto dialog='+ctor+'(3,'+u16('\u78ba\u8a8d')+');'
+                    +set_text+'(dialog,'+u16('\u30b2\u30fc\u30e0\u3092\u7d42\u4e86\u3057\u307e\u3059')+');return '+show+'(dialog)==4;});\n')
+    else:
+        gaps.add(termination);text.append('forms.termination_dialog=cs::Delegate<bool()>::from_static('+json.dumps(termination)+',[]()->bool{PLS_BOOTSTRAP_GAP('+json.dumps(termination)+');});\n')
+    for field,signature,parameters,target in [('resume_warning','void(cs::Ref<k::FormBase>)','cs::Ref<k::FormBase>','FormManager.ResumeWarning'),('lifecycle_warning','void(cs::Ref<k::FormBase>,bool)','cs::Ref<k::FormBase>,bool','FormManager.LifecycleWarning')]:
         gaps.add(target);text.append('forms.'+field+'=cs::Delegate<'+signature+'>::from_static('+json.dumps(target)+',[]('+parameters+')'+('->bool'if signature.startswith('bool')else '')+'{PLS_BOOTSTRAP_GAP('+json.dumps(target)+');});\n')
     text.append('k::BootstrapBindings bindings;bindings.forms=cs::make_ref<k::CallbackFormRuntime>(std::move(forms));\n')
     init={r['id']:'pls::generated::'+r['cpp_name']for r in portable.get('type_initializers',[])}

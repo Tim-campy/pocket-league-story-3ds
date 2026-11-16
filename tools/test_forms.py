@@ -27,6 +27,7 @@ MANAGER=[
  'public bool CheckUsable(FormBase form)','public void Draw(kairo.unity.ui.Graphics g)',
  'public void ShowTerminationDialog()','public bool CheckShowTerminationDialog()',
  'internal void ProcessBackKey()','internal void ProcessEvent(AppEvent evt)',
+ 'internal static void ProcessEvent(AppEventType type, params object[] args)',
 ]
 CANVAS=[
  'public void SetSoftLabel(string sk1, string sk2, string sk3 = null, string sk4 = null)',
@@ -40,22 +41,28 @@ def main():
  csc,dotnet,framework=compiler_paths()
  original=ROOT/'reference/src/KairoLibrary'
  manager=original/'kairo/unity/form/FormManagerBase.cs';canvas=original/'kairo/unity/ui/Canvas.cs'
- m=manager.read_text(encoding='utf-8-sig');c=canvas.read_text(encoding='utf-8-sig')
+ application=original/'kairo/unity/ui/IApplication.cs'
+ m=manager.read_text(encoding='utf-8-sig');c=canvas.read_text(encoding='utf-8-sig');i=application.read_text(encoding='utf-8-sig')
  fragments='\n'.join(span(m,s).replace('private void ExecuteInitAndFinish()','public void ExecuteInitAndFinish()') for s in MANAGER)
- facade='''using System;using System.Collections.Generic;using java.util;using java.lang;using kairo.unity.ui;using kairo.unity.surface;using kairo.unity.system;using kairo.unity.native;using kairo.common.cfg;using kairo.unity.util;
+ facade='''using kairo.unity.analytics;using kairo.unity.system.notification.ui;using kairo.unity.form;using System;using System.Collections.Generic;using java.util;using java.lang;using kairo.unity.ui;using kairo.unity.surface;using kairo.unity.system;using kairo.unity.native;using kairo.common.cfg;using kairo.unity.util;
 namespace java.lang {public static class JThread {public static bool IsCurrentThread(object t){return true;}}}
 namespace java.util {
  public class Vector {List<object> l=new List<object>();public int Size(){return l.Count;}public object ElementAt(int i){return l[i];}public int IndexOf(object o){return l.IndexOf(o);}public void AddElement(object o){l.Add(o);}public void InsertElementAt(object o,int i){l.Insert(i,o);}public void RemoveElementAt(int i){l.RemoveAt(i);}public void RemoveElement(object o){l.Remove(o);}public object FirstElement(){return l[0];}public object LastElement(){return l[l.Count-1];}}
  public class Vector<T> {public int Size(){return 0;}public T ElementAt(int i){throw new Exception();}}
 }
 namespace kairo.common.cfg {public static class Config {public static bool PRINT=false;}}
-namespace kairo.unity.native {public static class KairoPlugin {public static void ShowToast(string s,int n){throw new NotSupportedException();}}}
+namespace kairo.unity.native {public static class KairoPlugin {public static void ShowToast(string s,int n){throw new NotSupportedException();}public static void SetNotificationBackground(bool v){}}}
+namespace kairo.unity.system.notification.ui {public class NotifyManager {public static NotifyManager GetInstance(){return null;}public void DoNotify(){}public void DoCancel(){}}}
+namespace kairo.unity.analytics {public static class AnalyticsTracker {public static void DispatchPageView(){}}}
 namespace kairo.unity.system {public class KairoBase {public static KairoBase GetInstance(){return null;}public bool IsGamePlaying(){return false;}public void SetGameState(bool v){throw new Exception();}}}
 namespace kairo.unity.surface {public class SurfaceBase {public bool IsGameSurface(){return true;}public void ClearTouchComponent(){}}public class SurfaceManagerBase {public Vector<SurfaceBase> GetSurfaceList(){return new Vector<SurfaceBase>();}public static bool IsAutoGLRender(){return false;}}}
 namespace kairo.unity.util {public static class Log {public static void Info(object o){}}}
 namespace kairo.unity.ui {
  public class Graphics {public void BeginGLRender(){}public void EndGLRender(){}}
- public class IApplication {public static IApplication GetCurrentApp(){return null;}}
+ public class IApplication {static IApplication current_;bool isPause_;public static IApplication GetCurrentApp(){return current_;}public static void SetCurrentForTest(IApplication app){current_=app;}
+ public virtual kairo.unity.form.FormManagerBase GetFormManager(){return null;}protected virtual void OnSuspend(){}protected virtual void OnResume(){}
+'''+span(i,'private void OnApplicationPause(bool pauseStatus)').replace('private void OnApplicationPause','public void OnApplicationPause')+'''
+ }
  public class Canvas {static Canvas value=new Canvas();public static Canvas GetInstance(){return value;}string[] softLabel_=new string[]{"","",null,null},showSoftLabel_=new string[]{"","",null,null};public SurfaceManagerBase GetSurfaceManager(){return null;}public void ClearKeyBuffer(){}
 '''+ '\n'.join(span(c,s) for s in CANVAS)+'''
  }
@@ -99,8 +106,8 @@ namespace kairo.unity.form {
  inputs=native_sources+[source,ROOT/'tools/test_forms.py',ROOT/'tools/native_api_proof.py',ROOT/'tools/test_input.py']+[ROOT/'src/kairo/api'/p for p in ['canvas.hpp','forms.hpp','touch_value_accessor.hpp','input.hpp','graphics.hpp','font.hpp','application.hpp']]+[ROOT/'src/kairo/common/semantic_runtime.hpp',ROOT/'src/kairo/common/managed_shared_field.hpp',ROOT/'src/kairo/common/asset_catalog.hpp',ROOT/'src/kairo/platform/sdl/font.hpp']
  inputs += [ROOT/'tests/translator/gc_test_support.hpp']
  report=dict(verified_boundary_ids=forms_ids(),operation='original-source-FormBase-stack-Canvas-label-differential',status='PASS' if passed else 'FAIL',fixture_cases=len(cases),passed=sum(x['passed'] for x in cases),cases=cases,native_platform_policy=policy,native_concurrent_fields=concurrency,
-  inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},source_manifest=[dict(path=p.relative_to(ROOT/'reference').as_posix(),sha256=sha(p)) for p in [manager,canvas,*originals]],
-  original_methods={'FormManagerBase':MANAGER,'Canvas':CANVAS,'FormBase':'entire original class'},
+  inputs={p.relative_to(ROOT).as_posix():sha(p) for p in inputs},source_manifest=[dict(path=p.relative_to(ROOT/'reference').as_posix(),sha256=sha(p)) for p in [manager,canvas,application,*originals]],
+  original_methods={'FormManagerBase':MANAGER,'Canvas':CANVAS,'IApplication':['private void OnApplicationPause(bool pauseStatus)'],'FormBase':'entire original class'},
   native_executable=dict(path=native.relative_to(ROOT).as_posix(),sha256=sha(native)),
   limits=['KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.',
           'No game boot, no SurfaceManager render routing, no capture/loading thread, no Android warning toast.',

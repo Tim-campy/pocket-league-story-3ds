@@ -1,12 +1,12 @@
 # Métodos nunca alcançados
 
-Gerado em 2026-11-15 por `python tools/callgraph/analyze.py` a partir de `config/translation.csv` e do grafo de chamadas estático (Roslyn) do C# reconstruído; recibo em `config/phase2-reachability.json`. Só nomes de métodos do C# reconstruído; nenhum conteúdo do jogo. Regenerar após cada rodada de cobertura.
+Gerado em 2026-11-16 por `python tools/callgraph/analyze.py` a partir de `config/translation.csv` e do grafo de chamadas estático (Roslyn) do C# reconstruído; recibo em `config/phase2-reachability.json`. Só nomes de métodos do C# reconstruído; nenhum conteúdo do jogo. Regenerar após cada rodada de cobertura.
 
 Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com ele e o adaptador de plataforma gerado. Chamadas virtuais e de interface vão para as sobrescritas em tipos instanciados por código alcançável (análise rápida de tipos); delegados alcançam o método ou lambda no ponto de criação; construtores estáticos são alcançados pelo primeiro uso do tipo. Ramos guardados por flags de `Config`/`MyConfig` com valor de execução constante falso são cortados; os de depuração (`DEBUG` e flags derivadas) formam a classe "só depuração". O modelo do port corta os corpos substituídos por políticas offline (`config/service-overrides.json`) e por ligações de plataforma (`external_methods`/`external_types` do tradutor) e parte das entradas reais da plataforma (`Main`, adaptador gerado, slots virtuais).
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 982 |
+| Executados no diagnóstico (`runs`) | 983 |
 | Alcançáveis, ainda não executados | 19 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
@@ -23,8 +23,8 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 1027 de 1248 (82.3%). Métodos `runs` que a análise não alcançou: 0.
-Executados `runs`: 982; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 202; restam sem execução nem justificativa: 19.
+Cobertura sobre o alcançável: 1028 de 1248 (82.4%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 983; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 201; restam sem execução nem justificativa: 19.
 
 
 **Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
@@ -169,7 +169,7 @@ Sem caminho a partir das entradas do original; quando o único caminho passa por
 - **system.tapjoy.MyTapjoy** (1): `GetInstance` — sem chamadores
 - **system.tapjoy.ui.Tapjoy** (9): `AddBalance`, `GetBalance`, `GetInstance`, `GetOfferState`, `Init`, `Quit`, `ShowOffers`, `SubBalance` — sem chamadores; `CallBalance` — sobrescrita nunca chamada
 
-## Alcançáveis justificados individualmente (202)
+## Alcançáveis justificados individualmente (201)
 
 Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
 
@@ -191,11 +191,11 @@ Dead in the original: UpdateOffscreen forces num = 2 before the copy-area branch
 
 `form.FormManager::Resume`, `form.SoccerForm::GetFirstScript`, `game.Map::Draw_copyArea`, `game.MapMain::Draw_copyArea`, `game.Player::ChangeState`
 
-### hidden-keypad (7)
+### hidden-keypad (6)
 
 Hidden title commands need keys 2/1024/2048 (STAR), which no Android touch device produces, and they send data to the network; AppData.Draw(string[,bool]) is the SendSaveData screen (AppData.cs:5534-5736).
 
-`main.AppData::Draw`, `main.AppData::Draw`, `main.AppData::Post`, `main.AppData::ResourceReDownload`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`
+`main.AppData::Draw`, `main.AppData::Draw`, `main.AppData::Post`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`, `main.AppData::SendSaveData`
 
 ### implicit-object-members (13)
 

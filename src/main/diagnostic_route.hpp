@@ -38,7 +38,7 @@ inline std::string to_line(const UiState& s){
 // Same comparison as the change log: frame excluded.
 inline std::string signature(const UiState& s){auto copy=s;copy.frame=0;return to_line(copy);}
 
-enum class Op {anchor,key,wait_form,wait_not_loading,wait_not_dialog,wait_frames,expect_form,dismiss_until,when_key,pointer,focus,type_text,accept_text,end};
+enum class Op {anchor,key,wait_form,wait_not_loading,wait_not_dialog,wait_frames,expect_form,dismiss_until,when_key,pointer,focus,type_text,accept_text,raw_key,end};
 struct Step {
     Op op{};std::string text;int line{};
     std::string key;int repeat{1},gap{1};
@@ -46,6 +46,7 @@ struct Step {
     int frames{0},stable{1},timeout{600},depth{-1};bool optional{false};
     int pointer_kind{-1},x{0},y{0};bool focus_on{true}; // pointer_kind: 0 down, 1 up, 2 move
     std::string typed; // type: text for the host text panel (one token, no spaces)
+    std::string raw; bool raw_down{true}; // keydown/keyup: physical host key (HASH, STAR, KP1, ESCAPE)
 };
 inline const char* key_names[]={"SELECT","UP","DOWN","LEFT","RIGHT","SOFT1","SOFT2"};
 inline bool valid_key(const std::string& k){for(auto* n:key_names)if(k==n)return true;return false;}
@@ -99,6 +100,7 @@ inline std::vector<Step> parse(std::istream& input){
         }
         else if(verb=="type"){words>>step.typed;if(step.typed.empty())throw std::invalid_argument("route line "+std::to_string(line)+": type <text>");step.op=Op::type_text;}
         else if(verb=="accept"){step.op=Op::accept_text;}
+        else if(verb=="keydown"||verb=="keyup"){words>>step.raw;if(step.raw!="HASH"&&step.raw!="STAR"&&step.raw!="KP1"&&step.raw!="ESCAPE")throw std::invalid_argument("route line "+std::to_string(line)+": keydown|keyup HASH|STAR|KP1|ESCAPE");step.op=Op::raw_key;step.raw_down=verb=="keydown";}
         else if(verb=="focus"){std::string v;words>>v;if(v!="on"&&v!="off")throw std::invalid_argument("route line "+std::to_string(line)+": focus on|off");step.op=Op::focus;step.focus_on=v=="on";}
         else if(verb=="key"){step.op=Op::key;if(!(words>>step.key)||!valid_key(step.key))throw std::invalid_argument("route line "+std::to_string(line)+": unknown key");parse_conditions(step,words);}
         else if(verb=="wait"){
@@ -136,7 +138,7 @@ inline bool matches(const Step& step,const UiState& state){
     if(step.label_right==2&&top->right!=step.label_text)return false;
     return true;
 }
-struct Action {std::string key;bool anchor{};bool done{};bool timed_out{};int step{-1};std::string note;int pointer_kind{-1},x{0},y{0};int focus{-1};std::string text;bool accept{};};
+struct Action {std::string key;bool anchor{};bool done{};bool timed_out{};int step{-1};std::string note;int pointer_kind{-1},x{0},y{0};int focus{-1};std::string text;bool accept{};std::string raw;bool raw_down{};};
 // One call per frame with the state captured at the end of the previous frame.
 // At most one key per frame. Waits keep the step until the predicate holds.
 class Runner {
@@ -176,6 +178,7 @@ public:
             case Op::focus:action.focus=s.focus_on?1:0;advance();return action;
             case Op::type_text:action.text=s.typed;advance();return action;
             case Op::accept_text:action.accept=true;advance();return action;
+            case Op::raw_key:action.raw=s.raw;action.raw_down=s.raw_down;advance();return action;
             case Op::when_key:
                 if(matches(s,state)){action.key=s.key;advance();return action;}
                 advance();continue;

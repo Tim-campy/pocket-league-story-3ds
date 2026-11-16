@@ -101,7 +101,7 @@
     "tests/kairo/bootstrap_fixtures.cpp": "92d4b5739c128005371e1609c2d2efe875d95db2019c8872c5b6883f00d5a731",
     "src/kairo/common/bootstrap.cpp": "99e4d3dd1d177e6a5bff1a6375fa1ac7a3c3229b0e0c979594121823b4374419",
     "src/kairo/common/forms_execution.cpp": "d85965ef840b2689c5e30086a82891c0b72452fa2f4e2abd6dc2e2ef2f7cae43",
-    "src/kairo/common/forms.cpp": "db8fa2f180f139297aed2532641afc27f642bdec112cdae3453e241bff55082c",
+    "src/kairo/common/forms.cpp": "26a5f3752994ae1f2906cbb98fb17d452b7c51753f07cd6c4421fd4022981436",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -122,8 +122,8 @@
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
     "src/kairo/api/forms.hpp": "2881ae09ce7fa7a8515b32c52bc56da6a11231c16df511bd2fe755cbf532aee4",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
-    "src/kairo/api/canvas.hpp": "4217a5cf57365e6f3fb285064eacd73d69cc4b89ce6a73f2c00816c18d8d51fc",
-    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
+    "src/kairo/api/canvas.hpp": "b6b2b0433ab6af501e18e572b6551dcd02fa36443d0159c8732bc673a927fd6b",
+    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/sound.hpp": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78",
@@ -146,7 +146,7 @@
   ],
   "native_executable": {
     "path": "build/bootstrap-tests/bootstrap-fixtures.exe",
-    "sha256": "7af153c4a6a27300ff24daf352e2bd14001720a4bb59734e0304dc931dd829fd"
+    "sha256": "0e2355405c510d0b2f9e1cdf7ee5402befc3f93a1b8c49e81af222ce85f32eba"
   },
   "limits": [
     "Own collaborators with the exact original Awake body prove callback ordering, optional-resource exception behavior and ownership only.",

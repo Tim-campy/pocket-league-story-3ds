@@ -87,8 +87,8 @@ public:
     void KeyDown(std::int32_t k,bool p=true){keys_.KeyDown(k,p);}void KeyUp(std::int32_t k){keys_.KeyUp(k);}void KeyClick(std::int32_t k){keys_.KeyClick(k);}
     bool OnKeyDown(std::int32_t,cs::Ref<KeyEvent>);bool OnKeyUp(std::int32_t,cs::Ref<KeyEvent>);
     bool OnTouchEvent(cs::Ref<MotionEvent>);
-    // Escape handling requires Language/soft-key/back-label comparison. The host
-    // cannot claim this route until that source-derived bridge is installed.
+    // Escape/back-label handling (Canvas.cs:1169-1226), installed by hosts with
+    // install_canvas_back_key (canvas_back.cpp); unset in component fixtures.
     std::function<void()> on_back;
     std::int32_t GetSyncMillSecound(std::int32_t){return 0;} // Original spelling/body.
     void trace_edges(const cs::EdgeVisitor&)const override;

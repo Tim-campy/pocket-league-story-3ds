@@ -93,6 +93,8 @@ std::vector<platform::Input> Backend::events() {
         debug_input_event(event);
         using Kind=platform::Input::Kind;
         if(event.type==SDL_QUIT) result.push_back({Kind::quit});
+        // Window focus follows IApplication.OnApplicationPause via host_focus (decision 2026-11-16).
+        else if(event.type==SDL_WINDOWEVENT&&(event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED||event.window.event==SDL_WINDOWEVENT_FOCUS_LOST)) result.push_back({event.window.event==SDL_WINDOWEVENT_FOCUS_GAINED?Kind::focus_gained:Kind::focus_lost});
         else if(event.type==SDL_TEXTINPUT) result.push_back({Kind::text_input,0,0,0,event.text.text});
         else if(event.type==SDL_MOUSEMOTION) result.push_back({Kind::pointer_move,event.motion.x,event.motion.y});
         else if(event.type==SDL_MOUSEBUTTONDOWN||event.type==SDL_MOUSEBUTTONUP) result.push_back({event.type==SDL_MOUSEBUTTONDOWN?Kind::pointer_down:Kind::pointer_up,event.button.x,event.button.y,event.button.button});

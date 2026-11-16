@@ -968,7 +968,7 @@
     "tools/test_application_properties.py": "4bd26a88ef8d3c9fdf0d1499bc016d01ded0a9c99726dd811a4bc62774bfd3ee",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
-    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
+    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
     "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
@@ -977,7 +977,7 @@
   },
   "native_executable": {
     "path": "build/application-properties-tests/application-properties-fixtures.exe",
-    "sha256": "b3b73f6b6cda3d6b2ec4ca93c2aa50b8375c539af65bb51b559ea8caea2a392a"
+    "sha256": "0076c9796f6e2a3898227fa272a403f1c6e9aefdde4bb6445889ee23b77f9314"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "source_only_jsystem": [

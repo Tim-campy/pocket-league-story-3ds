@@ -43,3 +43,17 @@ Tempo esgotado: `PLS_ROUTE_TIMEOUT`, encerramento normal com dumps finais.
 compatível com `--virtual-clock` e `--diagnostic-save-from-attempt`), grava
 `route.txt` na tentativa e `route={name,sha256,steps}` + `route_result` na
 linha da tentativa; `--ui-trace` registra `PLS_UI_STATE=` a cada mudança.
+
+## Acréscimos de 2026-11-16 (diálogos)
+
+- `keydown|keyup HASH|STAR|KP1|ESCAPE`: tecla física do host pelo mesmo caminho
+  SDL do teclado (`Canvas::host_event`), para as teclas que o original lê por
+  estado ou pulso (`#` mantido, `*`, Keypad1, Escape). Registro
+  `PLS_PC_SCRIPTED_RAW_KEY=quadro:TECLA:down|up`. Não é reproduzido pelo
+  replay nulo/3DS.
+- `type ~`: apaga o painel de texto sem digitar nada (nome vazio).
+- Diálogos do jogo: o apresentador de diagnóstico responde cada diálogo
+  distinto a partir do último botão (docs/design/dialogs.md).
+- `PLS_PC_PRINT_EXCEPTIONS=1` (ambiente): registra o local de criação de cada
+  exceção gerenciada (`PLS_EXCEPTION_SITE=`), útil quando o jogo captura e só
+  mostra o diálogo genérico de erro.

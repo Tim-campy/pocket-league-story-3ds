@@ -28,8 +28,8 @@
   ],
   "operation": "original-source-FormBase-stack-Canvas-label-differential",
   "status": "PASS",
-  "fixture_cases": 68,
-  "passed": 68,
+  "fixture_cases": 70,
+  "passed": 70,
   "cases": [
     {
       "profile": "dotnet",
@@ -270,6 +270,13 @@
       "passed": true
     },
     {
+      "profile": "dotnet",
+      "case": "host-focus",
+      "expected": "host-focus=E7:0,E6:0,E5:0,S7,S6,S5,AS,|E7:4,E6:4,E5:4,R7,R6,R5,AR,",
+      "actual": "host-focus=E7:0,E6:0,E5:0,S7,S6,S5,AS,|E7:4,E6:4,E5:4,R7,R6,R5,AR,",
+      "passed": true
+    },
+    {
       "profile": "mono",
       "case": "empty",
       "expected": "empty=0:True:False:False:True",
@@ -506,6 +513,13 @@
       "expected": "finish-mode-reread=1:1",
       "actual": "finish-mode-reread=1:1",
       "passed": true
+    },
+    {
+      "profile": "mono",
+      "case": "host-focus",
+      "expected": "host-focus=E7:0,E6:0,E5:0,S7,S6,S5,AS,|E7:4,E6:4,E5:4,R7,R6,R5,AR,",
+      "actual": "host-focus=E7:0,E6:0,E5:0,S7,S6,S5,AS,|E7:4,E6:4,E5:4,R7,R6,R5,AR,",
+      "passed": true
     }
   ],
   "native_platform_policy": {
@@ -516,16 +530,16 @@
   },
   "native_concurrent_fields": {
     "status": "PASS",
-    "assertions": 489,
+    "assertions": 510,
     "writer_iterations": 2000,
-    "collections_while_writer_registered": 70,
+    "collections_while_writer_registered": 73,
     "whole_method_lock": false,
     "game_boot": false
   },
   "inputs": {
-    "tests/kairo/forms_fixtures.cpp": "33af23c3fbdd1dc7539fd64fe19cefaddb71c7c22bf7c0bfa36b5b65369e8989",
+    "tests/kairo/forms_fixtures.cpp": "a86a42fae76bff31dcae19ce11b8e4270eff06694ce09862e1ec5b0bcc58958c",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
-    "src/kairo/common/forms.cpp": "db8fa2f180f139297aed2532641afc27f642bdec112cdae3453e241bff55082c",
+    "src/kairo/common/forms.cpp": "26a5f3752994ae1f2906cbb98fb17d452b7c51753f07cd6c4421fd4022981436",
     "src/kairo/platform/sdl/input.cpp": "98895936ed7906c7cf71c5edfcfe3fe54001d0bdd0dcd75e1f092059528ca139",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -534,17 +548,17 @@
     "src/kairo/platform/sdl/font.cpp": "d69e187f1ef6c30f6d19576a7576780c1d39516fd249978e5f4c682b4e9fe26d",
     "src/kairo/common/asset_catalog.cpp": "b245aa1bda0e91f87b4e454aa5c6e00ade4541fe12ba9c0b8e46a99adbace561",
     "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
-    "tests/kairo/FormsOracle.cs": "704d67129441ac52cd0a29ba5e14159a201835e06b7e78dbffa9e4543c3139b3",
-    "tools/test_forms.py": "5fe3d4056c75e9581c828ea666754a6be64ac07a3793aee437b7954a87f253ce",
+    "tests/kairo/FormsOracle.cs": "691c508f655fac719772f2ab8588ee684ca68f8f23edda60b4a18044b50e0e95",
+    "tools/test_forms.py": "bbdba406a336571ca4f189cd7315227c529fa00ee7c7fbd6bcd4f14449d3c97c",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/canvas.hpp": "4217a5cf57365e6f3fb285064eacd73d69cc4b89ce6a73f2c00816c18d8d51fc",
+    "src/kairo/api/canvas.hpp": "b6b2b0433ab6af501e18e572b6551dcd02fa36443d0159c8732bc673a927fd6b",
     "src/kairo/api/forms.hpp": "2881ae09ce7fa7a8515b32c52bc56da6a11231c16df511bd2fe755cbf532aee4",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/input.hpp": "0c3f2ab9a63f94359e6aace100913ab684dddfae5e453b9ea4ba8802b9d20fbf",
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
-    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
+    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
     "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
@@ -559,6 +573,10 @@
     {
       "path": "src/KairoLibrary/kairo/unity/ui/Canvas.cs",
       "sha256": "c658562b9e0335d3206529286c330dfc797ec72c3fb14b5aa819e21472cbe0b9"
+    },
+    {
+      "path": "src/KairoLibrary/kairo/unity/ui/IApplication.cs",
+      "sha256": "3e9fd412628d295c4132ae08fa09c8bcfa19c923e08e0deb904073e857b8d2c0"
     },
     {
       "path": "src/KairoLibrary/kairo/unity/form/FormBase.cs",
@@ -603,7 +621,8 @@
       "public void ShowTerminationDialog()",
       "public bool CheckShowTerminationDialog()",
       "internal void ProcessBackKey()",
-      "internal void ProcessEvent(AppEvent evt)"
+      "internal void ProcessEvent(AppEvent evt)",
+      "internal static void ProcessEvent(AppEventType type, params object[] args)"
     ],
     "Canvas": [
       "public void SetSoftLabel(string sk1, string sk2, string sk3 = null, string sk4 = null)",
@@ -613,11 +632,14 @@
       "public string GetSoftLabel(int id)",
       "public void UpdateSoftLabel()"
     ],
+    "IApplication": [
+      "private void OnApplicationPause(bool pauseStatus)"
+    ],
     "FormBase": "entire original class"
   },
   "native_executable": {
     "path": "build/forms-tests/forms-fixtures.exe",
-    "sha256": "9404b10d0437f02ddd588cf7f2a06ff391810daec7f275fab2fd71bf94f6576a"
+    "sha256": "065de9b6c0b04922d10cabfbf7998a467ce6785b8201a7edf9204d32be3c61c6"
   },
   "limits": [
     "KairoBase and SurfaceManager null, same-thread source fixtures; Execute and OnDraw require explicit execution bridge.",

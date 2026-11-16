@@ -175,11 +175,16 @@ public:
         ui_thread_=std::this_thread::get_id();initialization_.before_create();created_=true;OnCreate();initialization_.after_create();OnStart();visible_=true;
     }
     void host_update(){
-        if(!created_||termination_)return;frames_=cs::add_i32(frames_,1);auto begin=std::chrono::steady_clock::now();updating_=true;
+        if(!created_||termination_)return;if(terminate_check())return;frames_=cs::add_i32(frames_,1);auto begin=std::chrono::steady_clock::now();updating_=true;
         cs::run_finally([&]{drain(ui_tasks_);drain(update_tasks_);OnUpdate();},[&]{updating_=false;});
-        update_ms_=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-begin).count();drain(ui_tasks_);
+        update_ms_=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-begin).count();drain(ui_tasks_);terminate_check();
     }
     void host_draw(){if(!created_||termination_)return;auto begin=std::chrono::steady_clock::now();rendering_=true;cs::run_finally([&]{OnDraw();OnRender();},[&]{rendering_=false;});render_ms_=std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::steady_clock::now()-begin).count();}
+    // IApplication.TerminateCheck (IApplication.cs:511-535), before and after
+    // OnUpdate in Update: no form manager or no forms -> Terminate(); the host
+    // loop ends on IsTermination() (Application.Quit). The 3-frame quit delay
+    // after Canvas.OpenBrowser is not reproduced (forms.cpp).
+    bool terminate_check();
     // IApplication.OnApplicationPause: event, every form (top to bottom), then the app (forms.cpp).
     void host_focus(bool focus);
     void host_stop(){if(!created_)return;OnStop();OnDestroy();visible_=false;created_=false;current_.store(nullptr);}

@@ -375,7 +375,7 @@
   "inputs": {
     "tests/kairo/forms_execution_fixtures.cpp": "7b64d6d8f9860dea06bf6a6ad2e3039fe892e585126ac28d253ab10a98ea6f0e",
     "src/kairo/common/forms_execution.cpp": "d85965ef840b2689c5e30086a82891c0b72452fa2f4e2abd6dc2e2ef2f7cae43",
-    "src/kairo/common/forms.cpp": "db8fa2f180f139297aed2532641afc27f642bdec112cdae3453e241bff55082c",
+    "src/kairo/common/forms.cpp": "26a5f3752994ae1f2906cbb98fb17d452b7c51753f07cd6c4421fd4022981436",
     "src/kairo/common/canvas.cpp": "5a5ba42413ed95005b717490161104dcc32f0a1285318b9a4eefd6f088d3a5fb",
     "src/kairo/common/graphics.cpp": "7474c6d89ed11e5d01cd174fdf4c60c8befccb53a48c034f7d27a98241040bc5",
     "src/kairo/common/mesh.cpp": "67e99b63f41ab1fa279f9af1608eb2f7e94862fc1e8fbc1b8c881c38481f21e5",
@@ -390,15 +390,15 @@
     "tests/kairo/FormExecutionOracle.cs": "c980b862851872f0f8f3dc50c7a80250b3f77270170e728364adbc51d29e4287",
     "tools/test_forms_execution.py": "5f875f1535faeb17095941424ffff782d606974ae22f0e4930927fb0d0835366",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "tools/test_forms.py": "5fe3d4056c75e9581c828ea666754a6be64ac07a3793aee437b7954a87f253ce",
+    "tools/test_forms.py": "bbdba406a336571ca4f189cd7315227c529fa00ee7c7fbd6bcd4f14449d3c97c",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
     "src/kairo/api/forms_execution.hpp": "e30281793db087cd620b025d0f0a25fb19a30b2daff19d387b7c115cac1e3f4d",
     "src/kairo/api/forms_callbacks.hpp": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd",
     "src/kairo/api/forms.hpp": "2881ae09ce7fa7a8515b32c52bc56da6a11231c16df511bd2fe755cbf532aee4",
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
-    "src/kairo/api/canvas.hpp": "4217a5cf57365e6f3fb285064eacd73d69cc4b89ce6a73f2c00816c18d8d51fc",
-    "src/kairo/api/application.hpp": "f4755b1fb8122e56cc1330776f40dfecf06d576c1a67580fe1320d4995e452d2",
+    "src/kairo/api/canvas.hpp": "b6b2b0433ab6af501e18e572b6551dcd02fa36443d0159c8732bc673a927fd6b",
+    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/api/graphics.hpp": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/sound.hpp": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78",
@@ -458,6 +458,7 @@
     "public bool CheckShowTerminationDialog()",
     "internal void ProcessBackKey()",
     "internal void ProcessEvent(AppEvent evt)",
+    "internal static void ProcessEvent(AppEventType type, params object[] args)",
     "protected FormManagerBase()",
     "public bool Execute()",
     "private bool _execute()",
@@ -476,12 +477,11 @@
     "public bool IsPause()",
     "public void SurfaceChanged()",
     "private void BeginSynchronize()",
-    "private void EndSynchronize()",
-    "internal static void ProcessEvent(AppEventType type, params object[] args)"
+    "private void EndSynchronize()"
   ],
   "native_executable": {
     "path": "build/forms-execution-tests/forms-execution-fixtures.exe",
-    "sha256": "75b7a2c3ef421ff2db529435f8eaced0e455eec04ee85df947db0f0ba7455f5a"
+    "sha256": "8e3d1dde2b3eb7e72493ddf416e48d166a85881c8c241dc281e16e1ddd20fa21"
   },
   "limits": [
     "Synthetic services prove call order, states, forced save unlock, retries/finally and rendering through SurfaceManager; not a game boot.",

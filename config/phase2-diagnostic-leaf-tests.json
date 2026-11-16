@@ -25,5 +25,5 @@
     "translator/diagnostic_leaves.py": "d90c740de66f13176e7c9c141ed3ee15c2ddb9c74598cee58d5e2421c991c99a",
     "tools/run_native_process.py": "8aed14384b8c889cf2345228442371093faaf35294bbb0100d40cd55a3436e78"
   },
-  "native_executable_sha256": "8bce4da134e3f3924504c47a8153b77f90468e960dedd1471bca552389d093a8"
+  "native_executable_sha256": "c7edf5516f3eac6c99cfb7ce3954804cdf3af945efc989438f5647379967501a"
 }

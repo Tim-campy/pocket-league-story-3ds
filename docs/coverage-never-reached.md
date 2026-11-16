@@ -6,8 +6,8 @@ Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com 
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 983 |
-| Alcançáveis, ainda não executados | 19 |
+| Executados no diagnóstico (`runs`) | 993 |
+| Alcançáveis, ainda não executados | 8 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
 | Só depuração | 35 |
@@ -18,31 +18,25 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 
 | Classe | translated | embedded | todo | no-body | verified |
 |---|---:|---:|---:|---:|---:|
-| reachable-not-exercised | 19 | 0 | 0 | 0 | 0 |
+| reachable-not-exercised | 8 | 0 | 0 | 0 | 0 |
 | unreachable-by-policy | 85 | 4 | 0 | 0 | 0 |
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 1028 de 1248 (82.4%). Métodos `runs` que a análise não alcançou: 0.
-Executados `runs`: 983; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 201; restam sem execução nem justificativa: 19.
+Cobertura sobre o alcançável: 1038 de 1248 (83.2%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 993; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 202; restam sem execução nem justificativa: 8.
 
 
 **Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
 
-## Alcançáveis, ainda não executados (19)
+## Alcançáveis, ainda não executados (8)
 
 Alvos do roteiro de cobertura. Entre parênteses, o número de métodos do tipo.
 
 - **data.TenantData** (2): `GetGoodsIncomeRate`, `ProcStrenSpecialTenant`
-- **data.TradeData** (1): `IsPlayerInMember`
-- **form.BootForm** (1): `Resume`
-- **form.SoccerForm** (3): `GetTouchValue`, `Resume`, `SetTouchValue`
-- **game.DelayEvent** (1): `Deserialize`
 - **game.MapMain** (1): `UpdateTrainingCoatNum`
-- **game.TPlayer** (1): `StopTraining`
 - **game.Tenant** (3): `DestructTenant`, `OutUserTPlayers`, `StrenghTenant`
-- **main.AppData** (3): `DrawMoney2`, `DrawMoney3`, `DrawTrophyEffect`
-- **surface.GameView** (3): `OnTouchDlgPage2`, `OnTouchTrackBar`, `OnTouchVScrollButton`
+- **main.AppData** (2): `DrawMoney2`, `DrawMoney3`
 
 ## Inalcançáveis por política offline ou plataforma (89)
 
@@ -169,7 +163,7 @@ Sem caminho a partir das entradas do original; quando o único caminho passa por
 - **system.tapjoy.MyTapjoy** (1): `GetInstance` — sem chamadores
 - **system.tapjoy.ui.Tapjoy** (9): `AddBalance`, `GetBalance`, `GetInstance`, `GetOfferState`, `Init`, `Quit`, `ShowOffers`, `SubBalance` — sem chamadores; `CallBalance` — sobrescrita nunca chamada
 
-## Alcançáveis justificados individualmente (201)
+## Alcançáveis justificados individualmente (202)
 
 Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
 
@@ -185,11 +179,11 @@ Dead in the original: SoccerForm states 1 and 15 are set only by debug code; Gam
 
 `form.GameForm::SetBuildBtmMessage`, `form.SoccerForm::Draw_newPlayerPopular`, `form.SoccerForm::Draw_topBar`, `form.SoccerForm::GetDrawTBAROff`
 
-### dead-in-original-render-and-scripts (5)
+### dead-in-original-render-and-scripts (6)
 
-Dead in the original: UpdateOffscreen forces num = 2 before the copy-area branch (GameForm.cs:1012, SoccerForm.cs:1698); script command 2 is enqueued only by AddCommandChangeState, which has no callers (Player.cs:2642); SoccerForm.script_ is filled only by DEBUG_CMD AddCommandCard (SoccerForm.cs:1176-1179); FormManagerBase.Resume() has no call site (FormManagerBase.cs:713).
+The only reader is GameView.OnTouchVScrollBar case 8 (GameView.cs:1660-1662), raised as TYPE_GRID_DRAG only for components whose TouchOption has dragGridW/H (SurfaceBase.cs:821-840). The match edit scroll bar id 22 (UserData.cs:3457 -> AppData.DrawVerticalScroll3, AppData.cs:2959-2965) gets only args; GameView.AddTouch builds dragCell/dragGrid only when DrawVerticalScroll returns a layout, i.e. ids 12/14 (GameView.cs:779-845). No other SoccerForm component calls Get. Probed in attempt 149: drags on the bar raise no GetTouchValue.
 
-`form.FormManager::Resume`, `form.SoccerForm::GetFirstScript`, `game.Map::Draw_copyArea`, `game.MapMain::Draw_copyArea`, `game.Player::ChangeState`
+`form.FormManager::Resume`, `form.SoccerForm::GetFirstScript`, `form.SoccerForm::GetTouchValue`, `game.Map::Draw_copyArea`, `game.MapMain::Draw_copyArea`, `game.Player::ChangeState`
 
 ### hidden-keypad (6)
 

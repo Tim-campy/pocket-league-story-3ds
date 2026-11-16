@@ -86,6 +86,11 @@
       "group": "type-initializer-runs-uncredited",
       "match": "^cfg\\.MyConfig::\\.cctor\\(",
       "reason": "MyConfig has only static fields and no methods; its type initializer runs on the first static field read, e.g. TitleForm.cs:184 (executed on every title screen, MyConfig.SMART_PASS), as the generated accessor calls the type initializer. The credit rule needs an executed method of the same type, which this type does not have."
+    },
+    {
+      "group": "dead-in-original-render-and-scripts",
+      "match": "^form\\.SoccerForm::GetTouchValue\\(",
+      "reason": "The only reader is GameView.OnTouchVScrollBar case 8 (GameView.cs:1660-1662), raised as TYPE_GRID_DRAG only for components whose TouchOption has dragGridW/H (SurfaceBase.cs:821-840). The match edit scroll bar id 22 (UserData.cs:3457 -> AppData.DrawVerticalScroll3, AppData.cs:2959-2965) gets only args; GameView.AddTouch builds dragCell/dragGrid only when DrawVerticalScroll returns a layout, i.e. ids 12/14 (GameView.cs:779-845). No other SoccerForm component calls Get. Probed in attempt 149: drags on the bar raise no GetTouchValue."
     }
   ]
 }

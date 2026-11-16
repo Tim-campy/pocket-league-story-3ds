@@ -255,3 +255,32 @@ demolir/reforçar instalação construída, estádio e área de treino, loja de 
 foco e toque na partida (`SoccerForm.Resume/Get/SetTouchValue`), foco no boot,
 save com evento adiado, novo jogo após o fim com troca oferecida, troféu no título,
 salários na edição do time, seta da edição do time, barra de volume, rolagem de lista.
+
+## Rodada de 2026-11-16: diálogos e receitas restantes
+
+| Tentativa | Rota (save) | Resultado | Novos |
+|---|---|---|---:|
+| 122–131 | `dialogs`, `dialogs-exit` (perfil vazio) | 6 pontos de `Dialog.Show` com todos os botões; achados: lacuna do `DoTerminationDialog`, ponte `on_back` ausente, `TerminateCheck` ausente (corrigidos, `docs/design/dialogs.md`) | 1 |
+| 133 | `after-end` (107) | foco no boot → `BootForm.Resume`; troféu no título → `AppData.DrawTrophyEffect` | 2 |
+| 134–142 | carregar slots de saves longos | só o automático do save 46 tinha evento adiado pendente → `DelayEvent.Deserialize` | 1 |
+| 143 | `after-end` (107): novo jogo na página 2 depois do fim | `UserData.ReflectContinueGameData` → `TradeData.IsPlayerInMember` | 1 |
+| 145–149 | `match-touch` (31) | foco na partida → `SoccerForm.Resume`; retângulo de status → `SoccerForm.SetTouchValue`; barra de formação não chama `GetTouchValue` (justificado) | 2 |
+| 150–155 | varreduras do mapa (107) | toques caem em jogadores do campo de treino; a câmera chega à borda sem instalação visível; janela 65 não abriu | 0 |
+| 156–158 | `ui-touch` (107) | barras de som em y 99/122 → `OnTouchTrackBar`; rolagem segurando a última linha dos patrocinadores → `OnTouchVScrollButton` | 2 |
+| 159–170 | salário e seta da edição (107, 31) | seta id 26 da linha do nome na escalação da partida → `OnTouchDlgPage2`; modo salário alcançado, mas `DrawMoney3` exige salário ≥ 1000 unidades (os do save: 19–37); `DrawMoney2` exige linha com 5 jogadores: a formação 4-5-1 foi aplicada, mas a grade de membros não abriu depois dela | 1 |
+
+Depois do registro: **992 executados + 45 creditados = 1.037 / 1.248 (83,1%)**;
+**202 justificados**; **9 restantes** (8 depois da reexecução: `TPlayer.StopTraining` rodou na rota `remaining` a partir do save 107, tentativas 186/187; total 993 + 45 = 1.038 / 1.248, 83,2%):
+- Instalações (6): `Tenant.DestructTenant`, `Tenant.OutUserTPlayers`,
+  `Tenant.StrenghTenant`, `TenantData.ProcStrenSpecialTenant`,
+  `MapMain.UpdateTrainingCoatNum`, `TenantData.GetGoodsIncomeRate`. Bloqueio:
+  posição das instalações no mapa e bits de `flag_` (2 = removível, 4 = loja,
+  16 = expansão da área de treino) vêm de `tenantData.txt` do APK; a reforma
+  pela lista 60 inicia uma "pesquisa" e fecha a janela (`StrengthTenant` de
+  dados roda; o de instância só para tipos construídos).
+- `AppData.DrawMoney3`: salário ≥ 1000 (`UserData.cs:3664-3674`); o máximo de
+  salário vem dos dados (`PlayerData.salary_[1]`): `UNKNOWN`.
+- `AppData.DrawMoney2`: grade de membros com uma linha de 5 jogadores; a rota
+  aplicou 4-5-1 na escalação da partida, mas não entrou na grade depois.
+- `TPlayer.StopTraining`: `ChangeTraining` com jogadores em grupos de treino no
+  campo (`TGroupArea.cs:379-386`); não verificado nesta rodada.

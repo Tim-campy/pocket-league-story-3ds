@@ -1,0 +1,114 @@
+# Diagnostic route (no game data), run with --diagnostic-save-from-attempt 31
+# (management save before the first match). Covers SoccerForm.Resume (focus
+# in the match), GameView.OnTouchDlgPage2 (team-name row arrow, id 26, cursor
+# off the kickoff row; UserData.cs:3221-3228) and SoccerForm.SetTouchValue
+# (status rectangle x 120..239, y 0..59 during play, SoccerForm.cs:1831-1834).
+# The formation scroll-bar drags document that SoccerForm.GetTouchValue is not
+# raised (justified). The 4-5-1 + salary steps did not reach the member grid.
+anchor timeout=2400
+wait frames=110
+key SELECT
+wait frames=70
+key UP
+wait frames=20
+key SELECT
+wait frames=60
+wait not loading stable=20 timeout=900
+dismiss until form=SoccerForm timeout=9000
+wait frames=400
+focus off
+wait frames=10
+focus on
+wait frames=30
+tap 48 90
+wait frames=40
+press 222 40
+wait frames=4
+move 222 55
+wait frames=4
+move 222 70
+wait frames=4
+release 222 70
+wait frames=20
+press 222 55
+wait frames=4
+move 222 70
+wait frames=4
+move 222 85
+wait frames=4
+release 222 85
+wait frames=20
+press 222 70
+wait frames=4
+move 222 85
+wait frames=4
+move 222 100
+wait frames=4
+release 222 100
+wait frames=20
+wait frames=20
+wait frames=20
+wait frames=20
+key SOFT2
+wait frames=40
+# team-name row arrow (id 26 when the cursor is off the kickoff row): OnTouchDlgPage2
+key UP
+wait frames=10
+tap 217 63
+wait frames=30
+tap 219 63
+wait frames=30
+# formation 4-5-1 A (5 MF: a line over 4 players), confirm
+tap 48 90
+wait frames=40
+tap 55 65
+wait frames=30
+key SOFT1
+wait frames=40
+key SELECT
+wait frames=60
+# Players, member grid, SOFT1 x4 -> salary mode (DrawMoney2 with 5 rows)
+wait frames=220
+tap 115 91
+wait frames=15
+key SELECT
+wait frames=80
+key SOFT1
+wait frames=25
+key SOFT1
+wait frames=25
+key SOFT1
+wait frames=25
+key SOFT1
+wait frames=25
+wait frames=60
+key SOFT2
+wait frames=40
+key SOFT2
+wait frames=40
+# kickoff
+tap 120 64
+wait frames=10
+key SELECT
+wait frames=200
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+tap 180 30
+wait frames=60
+key SOFT2
+wait frames=100
+end

@@ -65,33 +65,32 @@ struct SponsorData : BaseData {
 
     static pls::cs::Ref<SponsorData> create(pls::cs::String src);
 
-    static void Init(pls::cs::Ref<SponsorData> self);
+    void Init();
 
-    static void Load(pls::cs::Ref<SponsorData> self, pls::cs::String src);
+    void Load(pls::cs::String src);
 
-    static void NewGame(pls::cs::Ref<SponsorData> self);
+    void NewGame();
 
-    static void Serialize(pls::cs::Ref<SponsorData> self, pls::cs::Ref<generated::java::io::OutputStream> os);
+    void Serialize(pls::cs::Ref<generated::java::io::OutputStream> os);
 
-    static void Deserialize(pls::cs::Ref<SponsorData> self,
-                            pls::cs::Ref<generated::java::io::InputStream> stream);
+    void Deserialize(pls::cs::Ref<generated::java::io::InputStream> stream);
 
-    static void ChangeState(pls::cs::Ref<SponsorData> self, pls::cs::Int32 state);
+    void ChangeState(pls::cs::Int32 state);
 
     static void Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 charaId,
                                   pls::cs::Int32 dx, pls::cs::Int32 dy);
 
-    static std::int32_t GetIncome(pls::cs::Ref<SponsorData> self);
+    std::int32_t GetIncome();
 
     static void UpdateSatisFactPoint();
 
-    static pls::cs::String GetDifficultStr(pls::cs::Ref<SponsorData> self);
+    pls::cs::String GetDifficultStr();
 
     static bool IsExistNew();
 
     static void RemoveNew();
 
-    static bool IsNew(pls::cs::Ref<SponsorData> self);
+    bool IsNew();
 };
 } // namespace data
 } // namespace pls::game

@@ -99,7 +99,7 @@ sealed partial class Lowerer {
                 owner.Header.Append(block);
                 if(readable){
                     if(isStructure&&StructOf(block) is INamedTypeSymbol structure&&Id(structure)==owner.Id){owner.RStruct=ReadableBlock(block,structure);owner.StructKey=registry!.Tokens[Name(structure)].ClassKey;}
-                    else if(owner.StructKey!=null&&IsMemberOf(block,owner.StructKey))owner.RStructMembers.Add(StaticDeclaration(ReadableBlock(block,owner.Type,true).text));
+                    else if(owner.StructKey!=null&&IsMemberOf(block,owner.StructKey))owner.RStructMembers.Add(MemberDeclaration(block,ReadableBlock(block,owner.Type,true).text));
                     else owner.RHeader.Add(ReadableBlock(block,owner.Type));
                 }
             }

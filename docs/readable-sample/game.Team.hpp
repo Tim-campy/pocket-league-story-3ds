@@ -206,105 +206,95 @@ struct Team : pls::cs::Object {
 
     static pls::cs::Ref<Team> create();
 
-    static void Init(pls::cs::Ref<Team> self, bool isUserTeam, pls::cs::Int32 team_id,
-                     pls::cs::Int32 tDataId);
+    void Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId);
 
-    static void Update(pls::cs::Ref<Team> self);
+    void Update();
 
-    static void Collision(pls::cs::Ref<Team> self);
+    void Collision();
 
-    static void Draw(pls::cs::Ref<Team> self, pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen);
+    void Draw(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen);
 
-    static void SetPosFPos(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                           pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> var_out);
+    void SetPosFPos(pls::cs::Ref<Player> player,
+                    pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> var_out);
 
-    static void SetFormationParam(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player);
+    void SetFormationParam(pls::cs::Ref<Player> player);
 
-    static void SetFormationRectParam(pls::cs::Ref<Team> self);
+    void SetFormationRectParam();
 
-    static void SetSortGroundBallNear(pls::cs::Ref<Team> self);
+    void SetSortGroundBallNear();
 
-    static void SetSortJampBallNear(pls::cs::Ref<Team> self);
+    void SetSortJampBallNear();
 
-    static void Init_coatEva(pls::cs::Ref<Team> self);
+    void Init_coatEva();
 
-    static void Update_coatEva(pls::cs::Ref<Team> self);
+    void Update_coatEva();
 
-    static void Update_coatEvaNewOffence(pls::cs::Ref<Team> self);
+    void Update_coatEvaNewOffence();
 
-    static void Update_coatEvaNewDeffence(pls::cs::Ref<Team> self);
+    void Update_coatEvaNewDeffence();
 
-    static void Update_coatEvaPasser(pls::cs::Ref<Team> self);
+    void Update_coatEvaPasser();
 
-    static void Update_coatEvaFreeRun(pls::cs::Ref<Team> self);
+    void Update_coatEvaFreeRun();
 
-    static void Update_coatEvaDefence(pls::cs::Ref<Team> self);
+    void Update_coatEvaDefence();
 
-    static void Update_coatEvaLooseBall(pls::cs::Ref<Team> self);
+    void Update_coatEvaLooseBall();
 
-    static pls::cs::Ref<Player> GetPasser(pls::cs::Ref<Team> self);
+    pls::cs::Ref<Player> GetPasser();
 
-    static pls::cs::Ref<Player> GetLastKicker(pls::cs::Ref<Team> self);
+    pls::cs::Ref<Player> GetLastKicker();
 
-    static std::int32_t GetSum(pls::cs::Ref<Team> self, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
-                               pls::cs::Int32 cx, pls::cs::Int32 cy, bool div);
+    std::int32_t GetSum(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                        pls::cs::Int32 cy, bool div);
 
-    static pls::cs::Array<std::int32_t> GetMostEvaAddress(pls::cs::Ref<Team> self,
-                                                          pls::cs::Array<pls::cs::Array<std::int32_t>> data,
-                                                          pls::cs::Int32 cx, pls::cs::Int32 cy,
-                                                          pls::cs::Int32 num);
+    pls::cs::Array<std::int32_t> GetMostEvaAddress(pls::cs::Array<pls::cs::Array<std::int32_t>> data,
+                                                   pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Int32 num);
 
-    static void SetMostEvaAddressFromMoveArea(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                              pls::cs::Array<std::int32_t> var_out, bool isThroughPass);
+    void SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::Array<std::int32_t> var_out,
+                                       bool isThroughPass);
 
-    static void SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                                         pls::cs::Array<std::int32_t> var_out,
-                                                         bool isThroughPass);
+    void SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Player> player,
+                                                  pls::cs::Array<std::int32_t> var_out, bool isThroughPass);
 
-    static std::int32_t Get_playerPosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                         pls::cs::Int32 xi, pls::cs::Int32 yi, bool div);
+    std::int32_t Get_playerPosEva(pls::cs::Ref<Player> player, pls::cs::Int32 xi, pls::cs::Int32 yi,
+                                  bool div);
 
-    static std::int32_t Get_playerPosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                         pls::cs::Int32 xi, pls::cs::Int32 yi);
+    std::int32_t Get_playerPosEva(pls::cs::Ref<Player> player, pls::cs::Int32 xi, pls::cs::Int32 yi);
 
-    static std::int32_t Get_playerReceivePosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                                pls::cs::Int32 xi, pls::cs::Int32 yi);
+    std::int32_t Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs::Int32 xi, pls::cs::Int32 yi);
 
-    static void Cal_evaCoatMulti(pls::cs::Ref<Team> self, pls::cs::Int32 mode,
-                                 pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
-                                 pls::cs::Int32 cy, pls::cs::Array<float> muliti_param);
+    void Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
+                          pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<float> muliti_param);
 
-    static void Cal_evaCoatMulti9block(pls::cs::Ref<Team> self,
-                                       pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
-                                       pls::cs::Int32 cy, pls::cs::Array<float> muliti_param);
+    void Cal_evaCoatMulti9block(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                                pls::cs::Int32 cy, pls::cs::Array<float> muliti_param);
 
-    static void Cal_evaCoatAdd(pls::cs::Ref<Team> self, pls::cs::Int32 mode,
-                               pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
-                               pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param);
+    void Cal_evaCoatAdd(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
+                        pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param);
 
-    static void Cal_evaCoatAdd9block(pls::cs::Ref<Team> self,
-                                     pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
-                                     pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param);
+    void Cal_evaCoatAdd9block(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                              pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param);
 
-    static void Amefto(pls::cs::Ref<Team> self);
+    void Amefto();
 
-    static void Amefto_start(pls::cs::Ref<Team> self);
+    void Amefto_start();
 
-    static void Update_formationRect2(pls::cs::Ref<Team> self);
+    void Update_formationRect2();
 
-    static void SetPositionKickOff(pls::cs::Ref<Team> self);
+    void SetPositionKickOff();
 
-    static void SetPositionThrowIn(pls::cs::Ref<Team> self);
+    void SetPositionThrowIn();
 
-    static void SetPositionGoalKick(pls::cs::Ref<Team> self);
+    void SetPositionGoalKick();
 
-    static void SetPositionConnerKick(pls::cs::Ref<Team> self);
+    void SetPositionConnerKick();
 
-    static void SetGoalState(pls::cs::Ref<Team> self);
+    void SetGoalState();
 
-    static bool ChWhichChargeTern(pls::cs::Ref<Team> self);
+    bool ChWhichChargeTern();
 
-    static bool ChPAreaLineOver(pls::cs::Ref<Team> self);
+    bool ChPAreaLineOver();
 };
 } // namespace game
 } // namespace pls::game

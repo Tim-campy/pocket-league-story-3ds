@@ -167,7 +167,7 @@ sealed partial class Lowerer {
             }
             foreach(var m in emitted.Keys.Select(id=>methods[id]).Where(m=>SymbolEqualityComparer.Default.Equals(m.ContainingType.OriginalDefinition,t)).OrderBy(m=>m.MethodKind==MethodKind.Constructor?0:1).ThenBy(TreeOf,StringComparer.Ordinal).ThenBy(Position).ThenBy(m=>Id(m),StringComparer.Ordinal)){
                 var constructor=m.MethodKind==MethodKind.Constructor;
-                var arity=m.Parameters.Length+(!m.IsStatic&&!constructor?1:0);
+                var arity=m.Parameters.Length+(!m.IsStatic&&!constructor&&!MemberMethod(m)?1:0);if(MemberMethod(m))memberTokens.Add(Name(m));
                 var name=Assign(constructor?"create":CppIdentifier(m.Name),arity,constructor);
                 r.Tokens[Name(m)]=Make(name);
                 if(constructor)r.Tokens[Name(m)+"_init"]=Make(name+"_init");
@@ -368,7 +368,8 @@ sealed partial class Lowerer {
                         qualifier="pls::"+m.Groups[1].Value;i=k+m.Groups[0].Length-m.Groups[2].Length;k=i+m.Groups[2].Length;word=m.Groups[2].Value;
                     }
                 }
-                if(word=="cs_this"){output.Append("self");i=k;continue;}
+                if(word=="cs_outer"){output.Append("self");i=k;continue;}
+                if(word=="cs_this"){output.Append(plan.DeclToken!=null&&memberTokens.Contains(plan.DeclToken)?"this":"self");i=k;continue;}
                 if(ReadableHelperNames.TryGetValue(word,out var helper)){output.Append(helper);i=k;continue;}
                 if(HashToken.IsMatch(word)){
                     output.Append(RenderToken(word,qualifier,start,k,block,plan,output));i=k;continue;
@@ -411,6 +412,9 @@ sealed partial class Lowerer {
     }
     readonly Dictionary<string,INamedTypeSymbol> typesByKey=new(StringComparer.Ordinal);
     INamedTypeSymbol? TypeOfKey(RName name)=>typesByKey.GetValueOrDefault(Key(name.Path));
+    // Tokens of instance methods emitted as member functions (C2): no `static`.
+    readonly HashSet<string> memberTokens=new(StringComparer.Ordinal);
+    string MemberDeclaration(string block,string rewritten){var (_,token,_,_,_)=FindDeclarator(block);return memberTokens.Contains(token)?rewritten:StaticDeclaration(rewritten);}
     static string StaticDeclaration(string text){
         int i=0;
         while(i<text.Length){

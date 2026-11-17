@@ -106,10 +106,16 @@ def main():
         portable=json.loads((ROOT/'config/phase2-translation.json').read_text(encoding='utf-8'))
         manifest=ROOT/'src/kairo/common/generated/emission_units.json'
         if args.readable:manifest=args.readable_portable.resolve()/'emission_units.json'
+        portable_members=set()
+        if args.readable:
+            readable_portable=json.loads((args.readable_portable.resolve()/'readable-report.json').read_text(encoding='utf-8'))
+            portable_members={m['id'] for m in readable_portable['emitted_methods'] if m.get('member_function')}
         if manifest.exists():request['external_unit_manifest']=str(manifest)
         request.update(select_all_source_methods=True,select_source_prefix="src/Assembly-CSharp/",
             external_types={c['id']:'pls::generated::'+c['cpp_name'].split('<')[0] for c in portable['generated_classes']},
-            external_methods={m['id']:'pls::generated::'+m['cpp_name'] for m in portable['emitted_methods']},
+            # Readable C2: KairoLibrary instance methods emitted as member functions are
+            # called as members (receiver->name) from the game, like native members.
+            external_methods={m['id']:('member:'+m['cpp_name'].rsplit('::',1)[-1] if m['id'] in portable_members else 'pls::generated::'+m['cpp_name']) for m in portable['emitted_methods']},
             external_fields={**{f['id']:f['cpp_name'] for c in portable['generated_classes'] for f in c['fields'] if 'id' in f},**{f['id']:'pls::generated::'+f.get('cpp_accessor',f['cpp_name']) for f in portable['static_fields']}},
             external_type_initializers={row['id']:'pls::generated::'+row['cpp_name'] for row in portable.get('type_initializers',[])},
             bootstrap_method='M:main.Main.#ctor' if args.bootstrap_main else '')

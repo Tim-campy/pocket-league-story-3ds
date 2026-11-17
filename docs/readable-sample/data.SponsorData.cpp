@@ -90,8 +90,8 @@ void SponsorData::create_init(pls::cs::Ref<SponsorData> self, pls::cs::String sr
 
     SponsorData::apdat_() = main::AppData::GetInstance();
     SponsorData::udat_() = game::UserData::GetInstance();
-    SponsorData::Init(self);
-    SponsorData::Load(self, src);
+    self->Init();
+    self->Load(src);
 }
 
 // M:data.SponsorData.#ctor
@@ -111,108 +111,94 @@ pls::cs::Ref<SponsorData> SponsorData::create(pls::cs::String src) {
 }
 
 // M:data.SponsorData.Init
-void SponsorData::Init(pls::cs::Ref<SponsorData> self) {
+void SponsorData::Init() {
     SponsorData::ensure_initialized();
 
-    require(self);
-
-    self->state_ = 0;
-    self->satisfactPoint_ = 0;
-    self->feelPt_ = 0;
-    self->new_ = false;
+    this->state_ = 0;
+    this->satisfactPoint_ = 0;
+    this->feelPt_ = 0;
+    this->new_ = false;
 }
 
 // M:data.SponsorData.Load(System.String)
-void SponsorData::Load(pls::cs::Ref<SponsorData> self, pls::cs::String src) {
+void SponsorData::Load(pls::cs::String src) {
     SponsorData::ensure_initialized();
-
-    require(self);
 
     pls::cs::Int32 num = 0;
     pls::cs::Array<pls::cs::String> array =
         generated::kairo::unity::util::StringUtil::Split(src, literal(u"\t"));
-    self->id_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->name_ = array.get_Item(num++);
-    self->charaIndex_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->privilegeType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->privilegeValue_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->costType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->cost_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->id_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->name_ = array.get_Item(num++);
+    this->charaIndex_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->privilegeType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->privilegeValue_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->costType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->cost_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
     ([&]() {
-        auto cs_target = self->income_;
+        auto cs_target = this->income_;
         auto cs_index = 0;
         auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
         cs_target.set_Item(cs_index, cs_value);
         return cs_value;
     }());
     ([&]() {
-        auto cs_target = self->income_;
+        auto cs_target = this->income_;
         auto cs_index = 1;
         auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
         cs_target.set_Item(cs_index, cs_value);
         return cs_value;
     }());
-    self->satisfactDifficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->difficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->feelPtInt_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->explain_ = array.get_Item(num++);
-    self->execsScript_ = EventData::ReadScript(array.get_Item(num++));
-    self->flag_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    self->feelPt_ = self->feelPtInt_;
+    this->satisfactDifficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->difficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->feelPtInt_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->explain_ = array.get_Item(num++);
+    this->execsScript_ = EventData::ReadScript(array.get_Item(num++));
+    this->flag_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    this->feelPt_ = this->feelPtInt_;
 }
 
 // M:data.SponsorData.NewGame
-void SponsorData::NewGame(pls::cs::Ref<SponsorData> self) {
+void SponsorData::NewGame() {
     SponsorData::ensure_initialized();
 
-    require(self);
-
-    self->state_ = 0;
-    if (generated::kairo::unity::util::BitUtil::Check(self->flag_, 1)) {
-        SponsorData::ChangeState(self, 1);
+    this->state_ = 0;
+    if (generated::kairo::unity::util::BitUtil::Check(this->flag_, 1)) {
+        SponsorData::ChangeState(1);
     }
 }
 
 // M:data.SponsorData.Serialize(java.io.OutputStream)
-void SponsorData::Serialize(pls::cs::Ref<SponsorData> self,
-                            pls::cs::Ref<generated::java::io::OutputStream> os) {
+void SponsorData::Serialize(pls::cs::Ref<generated::java::io::OutputStream> os) {
     SponsorData::ensure_initialized();
 
-    require(self);
-
     generated::kairo::unity::util::StreamUtil::WriteShort(os,
-                                                          pls::cs::cast_integral<std::int16_t>(self->state_));
-    generated::kairo::unity::util::StreamUtil::WriteInt(os, self->satisfactPoint_);
+                                                          pls::cs::cast_integral<std::int16_t>(this->state_));
+    generated::kairo::unity::util::StreamUtil::WriteInt(os, this->satisfactPoint_);
     generated::kairo::unity::util::StreamUtil::WriteShort(
-        os, pls::cs::cast_integral<std::int16_t>(self->feelPt_));
-    generated::kairo::unity::util::StreamUtil::WriteBoolean(os, self->new_);
+        os, pls::cs::cast_integral<std::int16_t>(this->feelPt_));
+    generated::kairo::unity::util::StreamUtil::WriteBoolean(os, this->new_);
 }
 
 // M:data.SponsorData.Deserialize(java.io.InputStream)
-void SponsorData::Deserialize(pls::cs::Ref<SponsorData> self,
-                              pls::cs::Ref<generated::java::io::InputStream> stream) {
+void SponsorData::Deserialize(pls::cs::Ref<generated::java::io::InputStream> stream) {
     SponsorData::ensure_initialized();
 
-    require(self);
-
-    self->state_ =
+    this->state_ =
         pls::cs::cast_integral<std::int32_t>(generated::kairo::unity::util::StreamUtil::ReadShort(stream));
-    self->satisfactPoint_ = generated::kairo::unity::util::StreamUtil::ReadInt(stream);
-    self->feelPt_ =
+    this->satisfactPoint_ = generated::kairo::unity::util::StreamUtil::ReadInt(stream);
+    this->feelPt_ =
         pls::cs::cast_integral<std::int32_t>(generated::kairo::unity::util::StreamUtil::ReadShort(stream));
-    self->new_ = generated::kairo::unity::util::StreamUtil::ReadBoolean(stream);
+    this->new_ = generated::kairo::unity::util::StreamUtil::ReadBoolean(stream);
 }
 
 // M:data.SponsorData.ChangeState(System.Int32)
-void SponsorData::ChangeState(pls::cs::Ref<SponsorData> self, pls::cs::Int32 state) {
+void SponsorData::ChangeState(pls::cs::Int32 state) {
     SponsorData::ensure_initialized();
 
-    require(self);
-
-    if ((self->state_ == 0) && (state == 1)) {
-        self->new_ = true;
+    if ((this->state_ == 0) && (state == 1)) {
+        this->new_ = true;
     }
-    self->state_ = state;
+    this->state_ = state;
 }
 
 // M:data.SponsorData.Draw_sponsorChara(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32)
@@ -238,17 +224,15 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
 }
 
 // M:data.SponsorData.GetIncome
-std::int32_t SponsorData::GetIncome(pls::cs::Ref<SponsorData> self) {
+std::int32_t SponsorData::GetIncome() {
     SponsorData::ensure_initialized();
 
-    require(self);
-
     return ([&]() -> std::int32_t {
-        std::int32_t cs_arg0 = self->satisfactPoint_;
+        std::int32_t cs_arg0 = this->satisfactPoint_;
         std::int32_t cs_arg1 = 0;
         std::int32_t cs_arg2 = 100;
-        std::int32_t cs_arg3 = self->income_.get_Item(0);
-        std::int32_t cs_arg4 = self->income_.get_Item(1);
+        std::int32_t cs_arg3 = this->income_.get_Item(0);
+        std::int32_t cs_arg4 = this->income_.get_Item(1);
         bool cs_arg5 = true;
         return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
     }());
@@ -311,15 +295,13 @@ void SponsorData::UpdateSatisFactPoint() {
 }
 
 // M:data.SponsorData.GetDifficultStr
-pls::cs::String SponsorData::GetDifficultStr(pls::cs::Ref<SponsorData> self) {
+pls::cs::String SponsorData::GetDifficultStr() {
     SponsorData::ensure_initialized();
 
-    require(self);
-
-    if (self->difficult_ < 50) {
+    if (this->difficult_ < 50) {
         return SponsorData::difficultStr().get_Item(0);
     }
-    if (self->difficult_ < 100) {
+    if (this->difficult_ < 100) {
         return SponsorData::difficultStr().get_Item(1);
     }
     return SponsorData::difficultStr().get_Item(2);
@@ -329,12 +311,12 @@ pls::cs::String SponsorData::GetDifficultStr(pls::cs::Ref<SponsorData> self) {
 bool SponsorData::IsExistNew() {
     SponsorData::ensure_initialized();
 
-    if (!(game::UserData::ChEventFlg(require(game::UserData::GetInstance()), 32))) {
+    if (!(require(game::UserData::GetInstance())->ChEventFlg(32))) {
         return false;
     }
     pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
     for (pls::cs::Int32 i = 0; i < (require(instance)->sponsorData_).length(); ++i) {
-        if (SponsorData::IsNew(require(require(instance)->sponsorData_.get_Item(i)))) {
+        if (require(require(instance)->sponsorData_.get_Item(i))->IsNew()) {
             return true;
         }
     }
@@ -352,12 +334,10 @@ void SponsorData::RemoveNew() {
 }
 
 // M:data.SponsorData.IsNew
-bool SponsorData::IsNew(pls::cs::Ref<SponsorData> self) {
+bool SponsorData::IsNew() {
     SponsorData::ensure_initialized();
 
-    require(self);
-
-    if (self->new_) {
+    if (this->new_) {
         return true;
     }
     return false;

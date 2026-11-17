@@ -9,13 +9,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "b073adc3c38d806a63bff09f0feb002f1d47453300737da8b4c846f9f60267c4",
-    "emission_source_sha256": "fc24da4e0b4a1a9e323b30555ff1a2d8f1352de78368af46a19b7fa36dfdfbd8",
+    "translator_source_sha256": "12c12f63189def1a7206176544749870b038e69d020db8f49ad5f96ea6349004",
+    "emission_source_sha256": "92d1032c51db6f7bce49def48c70f260f01616701caf07208453008f55288577",
     "readable_source_sha256": [
-      "aa2f08e6d674955e466827477c5d39ad18f54c420b4e82562ae4d6af903f67cf",
-      "eca3a70f3e4c706ad6644ec30c7863c65e7b3a313c3a7c7c6732a3463fe37ac2"
+      "c824daad5c4dc553d3e0244158f181a901a367a7eff0b092b6921a8bc2192dc8",
+      "5c68a38030036a8b092335529068f8d206ea7a4a91c5ee3645c02260cd44b5a6"
     ],
-    "driver_sha256": "7a44d11ab7cc403c2f7b82cbdab70755a87f571c9c5b6b793b8c0b52b696ecdb"
+    "driver_sha256": "5c3705cf873216cd5df961363a02c8b02d32745619b52038f3c8a3c74c1e7916"
   },
   "inputs": [
     {
@@ -255,10 +255,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "7c5b2fba1625b1f3eb9fef0d32aecc5931e257b87ecce90bfd18a36ec7db46fe"
+    "sha256": "f59ad9d0eaf6d31e5f78a746015d5d083aba68cfd47b20e512e3cb75e4b4e21f"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "9a2184e4e1c5fafa17e54ee40c7bae5c9d26e2f9aaa1c0f5d92163726afd8576"
+    "sha256": "b9a51747d4eceedfca5393c9fed86a4ddedf2d3d8c9ab36c794d803f4a744115"
   }
 }

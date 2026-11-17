@@ -348,6 +348,8 @@ def main():
             if method['is_constructor']:managed_invocation='new '+method['containing_type']+'('+','.join(managed_args)+')'
             elif not method['is_static']:
                 invocation=native_callee+'('+','.join([('&' if CLASSES.get(method['containing_type'],{}).get('is_value_type') else '')+'self']+args)+')'
+                # Readable C2: member function; the C# null receiver check at the call.
+                if method.get('member_function'):invocation='pls::cs::nonnull(self)->'+native_callee.rsplit('::',1)[-1]+'('+','.join(args)+')'
                 if method['kind']=='PropertyGet':managed_invocation='self['+','.join(args)+']' if method.get('is_indexer') else 'self.'+method['name'][4:]
                 elif method['kind']=='PropertySet':managed_invocation=('self['+','.join(args[:-1])+']' if method.get('is_indexer') else 'self.'+method['name'][4:])+'='+args[-1]
                 else:managed_invocation='self.'+method['name']+('<'+','.join(method['concrete_cs_method_type_arguments'])+'>' if method.get('concrete_cs_method_type_arguments') else '')+'('+','.join(managed_args)+')'

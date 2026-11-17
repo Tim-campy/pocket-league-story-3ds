@@ -451,7 +451,7 @@
   },
   "native_executable": {
     "path": "build/input-tests/input-fixtures.exe",
-    "sha256": "6f1867f66f5c3f4beaa464de3db3a924d03cbd21747590b1f3492baeef9fdf9e"
+    "sha256": "dc2d137a887e6304631fc63f2a8ecaa7a0631ff019574bf6f14e5de8b2b4901b"
   },
   "inputs": {
     "tests/kairo/input_fixtures.cpp": "82b775ad2e65c4bb37253f5bf75337d1ec53e622fba2db61e04a6ea0b68b4728",

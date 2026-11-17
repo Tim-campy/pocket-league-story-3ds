@@ -384,6 +384,19 @@ sealed partial class Lowerer {
         var target=cast?"static_cast<"+Type(method.ContainingType,site)+">("+receiver+")":receiver;
         if(!thisReceiver)target="cs_require("+target+")";
         if(virtualCall)return Postfix(target)+"->"+Slot(method)+"("+String.Join(", ",values)+")";
+        if(nativeCallee==null&&VirtualMember(method)){
+            var qualified=QualifiedSlot(method);
+            if(thisReceiver)return (closureDepth>0||!methods.TryGetValue(current,out var owner)||!InstanceMember(owner)?"cs_this->"+qualified:qualified)+"("+String.Join(", ",values)+")";
+            return Postfix(target)+"->"+qualified+"("+String.Join(", ",values)+")";
+        }
+        if(nativeCallee==null&&MemberMethod(method)){
+            // Member function: on this, the qualified name (exact C# target, also for base.M());
+            // on another receiver, the null check is part of the call after the arguments.
+            // Qualified member call only from a member function (not inside a closure, not
+            // from a method that still has the explicit receiver `self`).
+            if(thisReceiver)return (closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller)?"cs_this->"+Leaf(callee):callee)+"("+String.Join(", ",values)+")";
+            return Postfix(target)+"->"+Leaf(callee)+"("+String.Join(", ",values)+")";
+        }
         if(nativeMember)return Postfix(target)+"->"+nativeCallee!.Substring("member:".Length)+"("+String.Join(", ",values)+")";
         values.Insert(0,target);
         return callee+"("+String.Join(", ",values)+")";

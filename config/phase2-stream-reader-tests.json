@@ -30,7 +30,7 @@
   },
   "native_executable": {
     "path": "build/stream-reader-fixtures/stream-reader-fixtures.exe",
-    "sha256": "14caa3d9c9dbfc0371985741695c3853ffe2cf88d449c898f6811def868d9584"
+    "sha256": "69897acd32c1c6d22a50bdaedeb8dcdd1e87d2d5edcdf2e4b2253795e5c672e1"
   },
   "production_methods_promoted": 0,
   "original_game_binary_loaded": false

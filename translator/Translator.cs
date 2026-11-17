@@ -150,7 +150,24 @@ sealed partial class Lowerer {
         }
         referenceUses[symbol]=used;return used;
     }
-    bool ReadableParameter(IParameterSymbol p)=>ReadableScalar(p.Type)!=null&&p.RefKind==RefKind.None&&p.ContainingSymbol is IMethodSymbol{MethodKind:MethodKind.Ordinary or MethodKind.Constructor} m&&!m.IsGenericMethod&&!m.ContainingType.IsGenericType&&m.DeclaringSyntaxReferences.Length!=0&&!UsedByReference(p);
+    bool ReadableParameter(IParameterSymbol p)=>ReadableScalar(p.Type)!=null&&p.RefKind==RefKind.None&&p.ContainingSymbol is IMethodSymbol{MethodKind:MethodKind.Ordinary or MethodKind.Constructor} m&&!MethodSlots(m).Any()&&!m.IsGenericMethod&&!m.ContainingType.IsGenericType&&m.DeclaringSyntaxReferences.Length!=0&&!UsedByReference(p);
+    // Readable C2: instance methods of plain non-generic classes without a virtual
+    // slot are C++ member functions; the receiver is `this`, checked at the call site
+    // after the arguments (C# order), so the body carries no null check of its own.
+    bool MemberMethod(IMethodSymbol m)=>MemberCandidate(m)&&!MethodSlots(m).Any();
+    // C2, virtual methods: the body is the C++ virtual member (the slot) itself;
+    // non-virtual calls (base.M()) name it qualified, Class::Slot(...).
+    bool VirtualMember(IMethodSymbol m)=>MemberCandidate(m)&&!m.IsAbstract&&MethodSlots(m).Count()==1&&!(m.Name=="Equals"&&m.Parameters.Length==1);
+    bool InstanceMember(IMethodSymbol m)=>MemberMethod(m)||VirtualMember(m);
+    string QualifiedSlot(IMethodSymbol m)=>ClassName(m.ContainingType)+"::"+MethodSlots(m).Single();
+    bool MemberCandidate(IMethodSymbol m){
+        if(!readable||m.IsStatic||m.MethodKind!=MethodKind.Ordinary||m.IsGenericMethod||m.DeclaringSyntaxReferences.Length==0)return false;
+        if(!PlainClass(m.ContainingType)||externalTypes.ContainsKey(Id(m.ContainingType))||!SymbolEqualityComparer.Default.Equals(m.ContainingAssembly,compilation.Assembly))return false;
+        for(var t=m.ContainingType;t!=null;t=t.ContainingType)if(t.TypeParameters.Length!=0)return false;
+        return true;
+    }
+    int closureDepth;
+    static string Leaf(string name){var i=name.LastIndexOf("::",StringComparison.Ordinal);return i<0?name:name[(i+2)..];}
     string ParameterDeclaration(IParameterSymbol p)=>ReadableParameter(p)?ReadableScalar(p.Type)!:ParameterType(p);
     bool TypedScalar(ExpressionSyntax e){
         if(!readable)return false;
@@ -552,17 +569,22 @@ sealed partial class Lowerer {
         if(captureThis&&methods[current].IsStatic)throw new Unsupported(node,"anonymous implicit receiver analysis is incomplete");
         var name="cs_closure_"+Hash(current+":"+node.SpanStart);if(readable)RegisterClosure(name,node);var result=Type(symbol.ReturnType,node);var builder=new StringBuilder("([&](){struct "+name+" : pls::cs::Object{");
         foreach(var capture in captures)builder.Append(CellType(capture,node)+" "+Local(capture)+"_cell;");
-        if(captureThis)builder.Append(Type(methods[current].ContainingType,node)+" cs_this;");
+        // Readable C2: in a member function `this` is the receiver; the closure keeps it
+        // in its own field cs_outer (rendered `self`), so the two never meet.
+        var outer=captureThis&&InstanceMember(methods[current])?"cs_outer":"cs_this";
+        if(captureThis)builder.Append(Type(methods[current].ContainingType,node)+" "+outer+";");
         builder.Append("void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);");
         foreach(var capture in captures)builder.Append("pls::cs::trace_value("+Local(capture)+"_cell,v);");
-        if(captureThis)builder.Append("pls::cs::trace_value(cs_this,v);");
+        if(captureThis)builder.Append("pls::cs::trace_value("+outer+",v);");
         builder.Append("}void release_edges()override{pls::cs::Object::release_edges();");
-        foreach(var capture in captures)builder.Append("pls::cs::clear_ref("+Local(capture)+"_cell);");if(captureThis)builder.Append("pls::cs::clear_ref(cs_this);");
+        foreach(var capture in captures)builder.Append("pls::cs::clear_ref("+Local(capture)+"_cell);");if(captureThis)builder.Append("pls::cs::clear_ref("+outer+");");
         builder.Append("}"+result+" Invoke("+String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)))+")");
-        var body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";
+        closureDepth++;string body;
+        try{body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;}
+        if(outer=="cs_outer")body=System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this\b","cs_outer");
         var parameterCells=String.Concat(symbol.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,node)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),node)+";"));
         builder.Append("{"+parameterCells+body+"}};auto cs_closure=pls::cs::make_ref<"+name+">();");
-        foreach(var capture in captures)builder.Append("cs_closure->"+Local(capture)+"_cell="+Local(capture)+"_cell;");if(captureThis)builder.Append("cs_closure->cs_this=cs_this;");
+        foreach(var capture in captures)builder.Append("cs_closure->"+Local(capture)+"_cell="+Local(capture)+"_cell;");if(captureThis)builder.Append("cs_closure->"+outer+"=cs_this;");
         var key="std::string(\""+current+":"+node.SpanStart+"\")"+String.Concat(captures.Skip(1).Select(c=>"+std::to_string(reinterpret_cast<std::uintptr_t>(pls::cs::raw("+Local(c)+"_cell)))"));
         var identity=captures.Length!=0?"pls::cs::raw("+Local(captures[0])+"_cell)":captureThis?"pls::cs::raw(cs_this)":"nullptr";
         var parameters=String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)));var arguments=String.Join(",",symbol.Parameters.Select(Local));
@@ -594,6 +616,8 @@ sealed partial class Lowerer {
             var baseCall=site is MemberAccessExpressionSyntax{Expression:BaseExpressionSyntax};
             if(native?.StartsWith("member:",StringComparison.Ordinal)??false)call="cs_receiver->"+native.Substring(7)+"("+String.Join(",",arguments)+")";
             else if(!baseCall&&(target.IsVirtual||target.IsOverride||target.IsAbstract))call="cs_receiver->"+Slot(target)+"("+String.Join(",",arguments)+")";
+            else if(native==null&&VirtualMember(target))call="cs_receiver->"+QualifiedSlot(target)+"("+String.Join(",",arguments)+")";
+            else if(native==null&&MemberMethod(target))call="cs_receiver->"+Leaf(Name(target))+"("+String.Join(",",arguments)+")";
             else{arguments.Insert(0,"cs_receiver");call=(native??Name(target))+"("+String.Join(",",arguments)+")";}
         }
         var lambda=capture+"("+parameters+")->"+result+"{"+(target.IsStatic?"":"auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();")+(result=="void"?"": "return ")+call+";}";
@@ -1264,6 +1288,8 @@ sealed partial class Lowerer {
         if(native==null){RequireClass(method.ContainingType,site);if(!methods.ContainsKey(id))throw new Unsupported(site,"surface callback target has no source body: "+id);if(!method.IsAbstract)dependencies[current].Add(id);}
         if(native?.StartsWith("member:",StringComparison.Ordinal)??false)return "cs_require("+receiver+")->"+native.Substring(7)+"("+String.Join(",",arguments)+")";
         if(!method.IsStatic&&(method.IsVirtual||method.IsOverride||method.IsAbstract))return "cs_require("+receiver+")->"+Slot(method)+"("+String.Join(",",arguments)+")";
+        if(native==null&&VirtualMember(method))return "cs_require("+receiver+")->"+QualifiedSlot(method)+"("+String.Join(",",arguments)+")";
+        if(native==null&&MemberMethod(method))return "cs_require("+receiver+")->"+Leaf(Name(method))+"("+String.Join(",",arguments)+")";
         return (native??Name(method))+"("+String.Join(",",method.IsStatic?arguments:new[]{receiver}.Concat(arguments))+")";
     }
     string CanvasSourceBridge(IMethodSymbol method,List<ExpressionSyntax> args,InvocationExpressionSyntax site,string operation) {
@@ -1346,11 +1372,13 @@ sealed partial class Lowerer {
             foreach(var (parameter,argument) in method.TypeParameters.Zip(method.TypeArguments))if(parameter.HasConstructorConstraint)RequireNewInstance(argument,site);
         }
         var virtualCall=dispatch&&!nativeMember&&receiver!=null&&(method.IsVirtual||method.IsOverride||method.IsAbstract)&&!DirectGenericVirtual(method);
-        var values=Enumerable.Range(0,method.Parameters.Length).Select(i=>"cs_arg"+i).ToList();if(receiver!=null&&!virtualCall&&!nativeMember)values.Insert(0,"cs_receiver");
+        var values=Enumerable.Range(0,method.Parameters.Length).Select(i=>"cs_arg"+i).ToList();if(receiver!=null&&!virtualCall&&!nativeMember&&!(nativeCallee==null&&InstanceMember(method)))values.Insert(0,"cs_receiver");
         var callee=nativeCallee??Name(method);if(method.IsGenericMethod&&!nativeMember)callee+="<"+String.Join(",",(nativeCallee==null?method.ContainingType.TypeArguments.Concat(method.TypeArguments):method.TypeArguments).Select(t=>Type(t,site)))+">";if(method.MethodKind==MethodKind.Constructor&&method.ContainingType.TypeArguments.Length!=0)callee+="<"+String.Join(",",method.ContainingType.TypeArguments.Select(t=>Type(t,site)))+">";
         if(nativeMember)callee="cs_receiver->"+nativeCallee!.Substring("member:".Length);
         if(virtualCall)callee="cs_receiver->"+Slot(method);
         if(readable&&!expanded&&argTexts.Count==method.Parameters.Length&&ReadableCall(method,args.Take(fixedCount).ToList(),argTexts,site,receiver,receiverNode,nativeCallee,nativeMember,virtualCall,callee) is string direct)return direct;
+        if(!virtualCall&&receiver!=null&&!nativeMember&&nativeCallee==null&&MemberMethod(method))callee="cs_receiver->"+Leaf(callee);
+        if(!virtualCall&&receiver!=null&&!nativeMember&&nativeCallee==null&&VirtualMember(method))callee="cs_receiver->"+QualifiedSlot(method);
         b.Append(result=="void"?"":"return ");b.Append(callee+"("+String.Join(",",values)+"); }())");return b.ToString();
     }
     static SyntaxNode? BranchTarget(StatementSyntax branch)=>branch.Ancestors().FirstOrDefault(node=>node is WhileStatementSyntax or DoStatementSyntax or ForStatementSyntax or ForEachStatementSyntax||branch is BreakStatementSyntax&&node is SwitchStatementSyntax);
@@ -1635,7 +1663,7 @@ sealed partial class Lowerer {
             var result=constructor?Type(method.ContainingType,declaration):Type(method.ReturnType,declaration);
             foreach(var p in method.Parameters)Type(p.Type,declaration);
             var parameterList=method.Parameters.Select(p=>(readable?ParameterDeclaration(p):ParameterType(p))+" "+Local(p)).ToList();
-            if(!method.IsStatic&&!constructor)parameterList.Insert(0,Type(method.ContainingType,declaration)+(RecordStruct(method.ContainingType)?"*":"")+" cs_this");
+            if(!method.IsStatic&&!constructor&&!InstanceMember(method))parameterList.Insert(0,Type(method.ContainingType,declaration)+(RecordStruct(method.ContainingType)?"*":"")+" cs_this");
             var parameters=String.Join(",",parameterList);
             string template=Template(TypeParameters(method));
             var autoStorage=autoBacking==null?null:autoBacking.IsStatic?StaticField(autoBacking,declaration):"cs_this->"+Name(autoBacking);
@@ -1689,9 +1717,15 @@ sealed partial class Lowerer {
                 body=method.ContainingType.TypeParameters.Length==0?(readable?Splice(TypeInitFunction(method.ContainingType)+"();",factory):"{ "+TypeInitFunction(method.ContainingType)+"();\n"+factory+"\n}"):factory;
                 body+="\n"+template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
                 if(method.ContainingType.IsAbstract)body=template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
-            } else if(!method.IsStatic) body=readable?Splice("cs_require(cs_this);",body):"{ if(!cs_this)throw pls::cs::NullReferenceException();\n"+body+"\n}";
+            } else if(!method.IsStatic&&!InstanceMember(method)) body=readable?Splice("cs_require(cs_this);",body):"{ if(!cs_this)throw pls::cs::NullReferenceException();\n"+body+"\n}";
             if(!constructor&&!removedJavaBridge&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))body=readable?Splice(TypeInitFunction(method.ContainingType)+"();",body):"{ "+TypeInitFunction(method.ContainingType)+"();\n"+body+"\n}";
             var source=QualifyHelpers(constructor&&method.ContainingType.IsAbstract?body:template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
+            if(VirtualMember(method)){
+                // Body in the virtual member; `this` is the receiver (closures hold cs_outer).
+                source=QualifyHelpers(result+" "+QualifiedSlot(method)+"("+parameters+") "+System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this\b","this"),compilation.AssemblyName=="Assembly-CSharp");
+                // Outside the game, a static entry keeps cross-assembly non-virtual calls.
+                if(compilation.AssemblyName!="Assembly-CSharp")source+="\n"+result+" "+Name(method)+"("+String.Join(",",new[]{Type(method.ContainingType,declaration)+" cs_this"}.Concat(method.Parameters.Select(p=>ParameterType(p)+" "+Local(p))))+") { "+(method.ReturnsVoid?"":"return ")+"cs_require(cs_this)->"+QualifiedSlot(method)+"("+String.Join(",",method.Parameters.Select(Local))+"); }";
+            }
             foreach(var dependency in dependencies[id].ToArray())if(!Emit(dependency))throw new Unsupported(declaration,"dependency not lowered: "+dependency);
             emitted[id]=source;return true;
         } catch(Unsupported e) {
@@ -1795,7 +1829,8 @@ sealed partial class Lowerer {
             foreach(var field in classes[id].GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append(FieldStorage(field)+" "+Name(field)+"{};\n");
             foreach(var m in methods.Values.Where(m=>MethodSlots(m).Any()&&SymbolEqualityComparer.Default.Equals(m.ContainingType,classes[id]))) {
                 var ps=m.Parameters.Select(p=>ParameterType(p)+(SlotRoot(m).ContainingType.SpecialType==SpecialType.System_Object&&m.Name=="Equals"?" const& ":" ")+Local(p));
-                foreach(var slot in MethodSlots(m))header.Append("virtual "+TypeName(m.ReturnType)+" "+slot+"("+String.Join(",",ps)+")"+(m.IsAbstract?"=0;":";")+"\n");
+                // Readable: a redefinition of an inherited or interface slot says `override`.
+                foreach(var slot in MethodSlots(m))header.Append(readable&&!m.IsAbstract&&(m.IsOverride||!m.IsVirtual)?TypeName(m.ReturnType)+" "+slot+"("+String.Join(",",ps)+") override;\n":"virtual "+TypeName(m.ReturnType)+" "+slot+"("+String.Join(",",ps)+")"+(m.IsAbstract?"=0;":";")+"\n");
             }
             header.Append("};\n");
         }
@@ -1804,7 +1839,8 @@ sealed partial class Lowerer {
         foreach(var pair in emitted.OrderBy(p=>p.Key)) {
             var method=methods[pair.Key];
             var ctor=method.MethodKind==MethodKind.Constructor;var parameters=method.Parameters.Select(p=>(readable?ParameterDeclaration(p):ParameterType(p))+" "+Local(p)).ToList();
-            if(!method.IsStatic&&!ctor)parameters.Insert(0,TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"*":"")+" cs_this");
+            if(VirtualMember(method)&&game)continue;
+            if(!method.IsStatic&&!ctor&&!MemberMethod(method))parameters.Insert(0,TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"*":"")+" cs_this");
             header.Append(Template(TypeParameters(method))+TypeName(ctor?method.ContainingType:method.ReturnType)+" "+Name(method)+"("+String.Join(",",parameters)+");\n");
             if(ctor)header.Append(Template(TypeParameters(method))+"void "+Name(method)+"_init("+TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"* cs_this":" cs_this")+(parameters.Count==0?"":","+String.Join(",",parameters))+");\n");
         }
@@ -1821,7 +1857,7 @@ sealed partial class Lowerer {
             foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&(!readable||MayHoldReference(f.Type))))header.Append("pls::cs::release_value("+Name(field)+");");
             header.Append("}\n");
         }
-        foreach(var m in emitted.Keys.Select(k=>methods[k]).Where(m=>MethodSlots(m).Any()))foreach(var slot in MethodSlots(m)) {
+        foreach(var m in emitted.Keys.Select(k=>methods[k]).Where(m=>MethodSlots(m).Any()&&!VirtualMember(m)))foreach(var slot in MethodSlots(m)) {
             var ps=m.Parameters.Select(p=>ParameterType(p)+(SlotRoot(m).ContainingType.SpecialType==SpecialType.System_Object&&m.Name=="Equals"?" const& ":" ")+Local(p));
             header.Append(Template(m.ContainingType.TypeParameters)+"inline "+TypeName(m.ReturnType)+" "+ClassName(m.ContainingType)+"::"+slot+"("+String.Join(",",ps)+") {");
             header.Append(m.ReturnsVoid?"":"return ");header.Append(Name(m)+"(pls::cs::static_pointer_cast<"+ClassName(m.ContainingType)+">(shared_from_this())"+(m.Parameters.Length==0?"":","+String.Join(",",m.Parameters.Select(Local)))+");}\n");
@@ -1965,7 +2001,7 @@ sealed partial class Lowerer {
         }}
         var usedKinds=new Dictionary<string,int>();
         foreach(var id in emitted.Keys)foreach(var pair in methodKinds[id])usedKinds[pair.Key]=usedKinds.GetValueOrDefault(pair.Key)+pair.Value;
-        var emittedMetadata=emitted.Keys.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(methods[id]),name=methods[id].Name,is_abstract_type=methods[id].ContainingType.IsAbstract,constructor_factory_defined=methods[id].MethodKind!=MethodKind.Constructor||!methods[id].ContainingType.IsAbstract,body_origin=input.service_overrides.ContainsKey(id)?"authorized_service_policy":"source",identity_hash_result=IdentityHash(methods[id]),kind=methods[id].MethodKind.ToString(),root=selectedMethods.Contains(id),source=syntax[id].SyntaxTree.FilePath,line=syntax[id].GetLocation().GetLineSpan().StartLinePosition.Line+1,return_type=Concrete((methods[id].MethodKind==MethodKind.Constructor?methods[id].ContainingType:methods[id].ReturnType).ToDisplayString(),TypeParameters(methods[id])),is_static=methods[id].IsStatic,is_constructor=methods[id].MethodKind==MethodKind.Constructor,is_indexer=(methods[id].AssociatedSymbol as IPropertySymbol)?.IsIndexer??false,containing_type=Concrete(methods[id].ContainingType.ToDisplayString(),TypeParameters(methods[id])),concrete_cpp_type_arguments=TypeParameters(methods[id]).Select(ConcreteCpp).ToArray(),concrete_cs_type_arguments=TypeParameters(methods[id]).Select(ConcreteCs).ToArray(),concrete_cs_method_type_arguments=methods[id].TypeParameters.Select(ConcreteCs).ToArray(),parameters=methods[id].Parameters.Select(p=>new{name=p.Name,ref_kind=p.RefKind.ToString(),type=Concrete(p.Type.ToDisplayString(),TypeParameters(methods[id]))}).ToArray()}).ToArray();
+        var emittedMetadata=emitted.Keys.OrderBy(x=>x).Select(id=>new{id,cpp_name=Name(methods[id]),member_function=MemberMethod(methods[id]),name=methods[id].Name,is_abstract_type=methods[id].ContainingType.IsAbstract,constructor_factory_defined=methods[id].MethodKind!=MethodKind.Constructor||!methods[id].ContainingType.IsAbstract,body_origin=input.service_overrides.ContainsKey(id)?"authorized_service_policy":"source",identity_hash_result=IdentityHash(methods[id]),kind=methods[id].MethodKind.ToString(),root=selectedMethods.Contains(id),source=syntax[id].SyntaxTree.FilePath,line=syntax[id].GetLocation().GetLineSpan().StartLinePosition.Line+1,return_type=Concrete((methods[id].MethodKind==MethodKind.Constructor?methods[id].ContainingType:methods[id].ReturnType).ToDisplayString(),TypeParameters(methods[id])),is_static=methods[id].IsStatic,is_constructor=methods[id].MethodKind==MethodKind.Constructor,is_indexer=(methods[id].AssociatedSymbol as IPropertySymbol)?.IsIndexer??false,containing_type=Concrete(methods[id].ContainingType.ToDisplayString(),TypeParameters(methods[id])),concrete_cpp_type_arguments=TypeParameters(methods[id]).Select(ConcreteCpp).ToArray(),concrete_cs_type_arguments=TypeParameters(methods[id]).Select(ConcreteCs).ToArray(),concrete_cs_method_type_arguments=methods[id].TypeParameters.Select(ConcreteCs).ToArray(),parameters=methods[id].Parameters.Select(p=>new{name=p.Name,ref_kind=p.RefKind.ToString(),type=Concrete(p.Type.ToDisplayString(),TypeParameters(methods[id]))}).ToArray()}).ToArray();
         var reportedMethods=game?emittedMetadata.Where(m=>Path.GetRelativePath(input.source_root,m.source).Replace(Path.DirectorySeparatorChar,'/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)).ToArray():emittedMetadata;
         var gameForeachCaptures=new List<object>();
         foreach(var method in methods.Values.Where(m=>m.DeclaringSyntaxReferences.Length!=0)){

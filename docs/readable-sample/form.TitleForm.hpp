@@ -74,15 +74,15 @@ struct TitleForm : MyFormBase {
     std::int32_t apeear_cnt{};
     pls::cs::Array<pls::cs::Array<std::int32_t>> zsort_mhobj{};
     std::int32_t kairoAdClickNum_{};
-    virtual pls::cs::String ToString();
-    virtual bool Init();
-    virtual bool Update();
-    virtual void Draw(pls::cs::Ref<pls::kairo::Graphics> g);
-    virtual bool Resume();
-    virtual bool Finish();
-    virtual void SetTouchValue(std::int32_t type, std::int32_t value);
-    virtual bool OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e);
-    virtual std::int32_t GetHashCode();
+    pls::cs::String ToString() override;
+    bool Init() override;
+    bool Update() override;
+    void Draw(pls::cs::Ref<pls::kairo::Graphics> g) override;
+    bool Resume() override;
+    bool Finish() override;
+    void SetTouchValue(std::int32_t type, std::int32_t value) override;
+    bool OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) override;
+    std::int32_t GetHashCode() override;
     static constexpr std::int32_t RESTITLE_IMG_TITLE00 = 0;
     static constexpr std::int32_t RESTITLE_IMG_WINDOW = 1;
     static constexpr std::int32_t RESTITLE_IMG_LOGO = 2;
@@ -105,24 +105,6 @@ struct TitleForm : MyFormBase {
     static constexpr std::int32_t TITLE_INIT_PY_MIN = 228;
     static constexpr std::int32_t TITLE_INIT_PY_MAX = 238;
     static constexpr std::int32_t TITLE_MOVE_V = 1;
-    static void Draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
-
-    static bool Finish(pls::cs::Ref<TitleForm> self);
-
-    static std::int32_t GetHashCode(pls::cs::Ref<TitleForm> self);
-
-    static bool Init(pls::cs::Ref<TitleForm> self);
-
-    static bool OnTouchEvent(pls::cs::Ref<TitleForm> self, pls::cs::Ref<kairo::unity::surface::TouchEvent> e);
-
-    static bool Resume(pls::cs::Ref<TitleForm> self);
-
-    static void SetTouchValue(pls::cs::Ref<TitleForm> self, pls::cs::Int32 type, pls::cs::Int32 value);
-
-    static pls::cs::String ToString(pls::cs::Ref<TitleForm> self);
-
-    static bool Update(pls::cs::Ref<TitleForm> self);
-
     static void ensure_initialized();
 
     static pls::cs::Array<pls::cs::Array<std::int32_t>>& IMG_SL();
@@ -139,29 +121,29 @@ struct TitleForm : MyFormBase {
 
     static pls::cs::Ref<TitleForm> create();
 
-    static void ContinueGame(pls::cs::Ref<TitleForm> self);
+    void ContinueGame();
 
-    static void NewGame(pls::cs::Ref<TitleForm> self);
+    void NewGame();
 
-    static void SmartBeginPaint(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
+    void SmartBeginPaint(pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static void _draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
+    void _draw(pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static void ChangeState(pls::cs::Ref<TitleForm> self, pls::cs::Int32 state);
+    void ChangeState(pls::cs::Int32 state);
 
-    static void Update_titleAnime(pls::cs::Ref<TitleForm> self);
+    void Update_titleAnime();
 
-    static void SetAppearCnt(pls::cs::Ref<TitleForm> self);
+    void SetAppearCnt();
 
-    static void ResetHobjExist(pls::cs::Ref<TitleForm> self, pls::cs::Int32 index);
+    void ResetHobjExist(pls::cs::Int32 index);
 
-    static void Draw_titleAnime(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
+    void Draw_titleAnime(pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static void LoadKiaroAdClickNum(pls::cs::Ref<TitleForm> self);
+    void LoadKiaroAdClickNum();
 
-    static void UpdateKairoAdClickNum(pls::cs::Ref<TitleForm> self);
+    void UpdateKairoAdClickNum();
 
-    static void UpdateKairoAdClickNum(pls::cs::Ref<TitleForm> self, pls::cs::Int32 addClickNum);
+    void UpdateKairoAdClickNum(pls::cs::Int32 addClickNum);
 };
 } // namespace form
 } // namespace pls::game

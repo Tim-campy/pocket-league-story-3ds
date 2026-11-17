@@ -254,7 +254,7 @@
   },
   "native_executable": {
     "path": "build/pc/text_input_test.exe",
-    "sha256": "67d937940cb77c71ec177a7ee704d7f29257051456fc630867d5cafd6f0d10ad"
+    "sha256": "ec0c659de1d7ffb726e000ed43e4cba5dfae742e0dbf12c5b84dbf19064536b6"
   },
   "verified_boundary_ids": [],
   "original_binaries_executed": false,

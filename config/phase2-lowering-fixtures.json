@@ -250,6 +250,7 @@
     "M:Synthetic.VirtualDerived.#ctor",
     "M:Synthetic.VirtualDerived.Read"
   ],
+  "arm_reference_overrides": [],
   "known_platform_differences": [],
   "unexpected_failures": [],
   "executed_method_ids": [
@@ -509,10 +510,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.6421596999862231,
-    "native-compile": 178.34426520002307,
-    "managed-output": 0.7873358000069857,
-    "native-output": 0.4245674000121653
+    "csharp-compile": 0.6811867000069469,
+    "native-compile": 185.8849682,
+    "managed-output": 0.7117666999693029,
+    "native-output": 0.6078944000182673
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -570,7 +571,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "9fcaa1af07010254e3a8dd2fd9c1f5354adb89427d47efb0184bb1ede2fd6b5b"
+      "sha256": "bbcc62319650481ee93393f1763dbdeeedcb3880386bfdddba048dec8d8c0a2b"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
@@ -862,13 +863,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "409adff9d6aa75373aa5cdf3a882f1e4270733789723a5a8ce016522f6f8c729"
+    "sha256": "170831d6a99fc5a76a0610e12b9df6d99bce63600c523e6365dff49c7bc4d61a"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "51de0f5e9be5b3b2e8c95d5144f85f475468732ce908218f2c57ea5454a3d1cd"
+    "sha256": "f2ce919635ee87f56bb0a42082d02a83e34c30e5428daa64d7bae441fa82058b"
   },
-  "differential_runner_sha256": "d07b177da4530fa31b9cbab88c65bb046eedbf9b47295f17bb0d7e0af090d841",
+  "differential_runner_sha256": "67369a4addf8ef353af8bf2d6ebdf3fed2debdf9048bc78f6b101ce5b4a514f0",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -936,7 +937,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "9fcaa1af07010254e3a8dd2fd9c1f5354adb89427d47efb0184bb1ede2fd6b5b"
+      "sha256": "bbcc62319650481ee93393f1763dbdeeedcb3880386bfdddba048dec8d8c0a2b"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
@@ -1822,7 +1823,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "71cdaac4fdb335f17e26fbd16f03326564a0810191217b661ab2ac2bce8f92e9",
+    "translator_source_sha256": "c8124cb074c6875f31f76771847dff8c95c7f063218c70aef1b9548a01587842",
     "emission_source_sha256": "fc24da4e0b4a1a9e323b30555ff1a2d8f1352de78368af46a19b7fa36dfdfbd8",
     "readable_source_sha256": [
       "c4bd9b7c8bb664b91ff7e26a7603035729efae7608067de35455a733b08e0d09",

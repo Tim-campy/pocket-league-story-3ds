@@ -1440,7 +1440,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::
 }
 if (([&]() { auto cs_left = pls::cs::box(v_array_56539); auto cs_right = pls::cs::box(pls::cs::Array<std::uint8_t>{}); return cs_left != cs_right; }())) {
 std::int32_t v_date_56827 = std::int32_t{};
-pls::cs::Array<cs_c87dc3d2d0f9440a> v_array2_56851 = ([&]() -> pls::cs::Array<cs_c87dc3d2d0f9440a> { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); pls::cs::Array<std::uint8_t> cs_arg0 = v_array_56539; auto& cs_arg1 = v_date_56827; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_bf2fb5b5178771c9(cs_receiver,cs_arg0,cs_arg1); }());
+pls::cs::Array<cs_c87dc3d2d0f9440a> v_array2_56851 = ([&]() -> pls::cs::Array<cs_c87dc3d2d0f9440a> { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); pls::cs::Array<std::uint8_t> cs_arg0 = v_array_56539; if(!cs_receiver)throw pls::cs::NullReferenceException(); auto& cs_arg1 = v_date_56827; return cs_bf2fb5b5178771c9(cs_receiver,cs_arg0,cs_arg1); }());
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_241b6f9cd68962e5; }()); auto cs_right = v_date_56827; return (cs_left < cs_right); }())) {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_date_56827; pls::game::cs_require(cs_target)->cs_241b6f9cd68962e5 = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = v_array2_56851; pls::game::cs_require(cs_target)->cs_3f3b83b6a44bdc33 = cs_value; return cs_value; }());

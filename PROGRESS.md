@@ -13,8 +13,8 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 |---|---|---|
 | Tradução completa | cumprido | 1860/1958 métodos compilados (+90 membros gerados pelo compilador dentro de unidades emitidas, 6 abstratos sem corpo); 0 slots virtuais pendentes; políticas offline: 47 de 69 emitidas nos chamadores traduzidos, 22 sem chamador traduzido, 0 rejeitadas. |
 | Coletor e desempenho | cumprido | Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4. |
-| Percurso completo no PC | em andamento | 1043/1248 alcançáveis exercitados (83.6%); fora do alcance: 89 por política, 35 só depuração, 586 inalcançáveis no original (docs/coverage-never-reached.md). |
-| Fidelidade resolvida | em andamento | 4a: ponto flutuante confirmado em emulador ARM; confirmação em aparelho e decisão sobre ref/out e Sin(-0) pendentes (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4. |
+| Percurso completo no PC | cumprido | 1043/1248 alcançáveis exercitados (83.6%); fora do alcance: 89 por política, 35 só depuração, 586 inalcançáveis no original (docs/coverage-never-reached.md). Aprovado pelo usuário em 2026-11-16; pendências não bloqueantes: AppData.DrawMoney2 e MapMain.UpdateTrainingCoatNum (docs/coverage-plan.md). |
+| Fidelidade resolvida | em andamento | 4a: ponto flutuante confirmado em emulador ARM; ref de campo nulo e Sin(-0) decididos e iguais ao Mono ARM; resta a repetição em aparelho Android (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4. |
 | Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |
 
 ## Tradução
@@ -27,7 +27,7 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
-| Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 522, 'verified': 252, 'implemented': 1} |
+| Fronteira KairoLibrary | 775 símbolos / 98 tipos | {'todo': 522, 'verified': 253} |
 
 ## Desempenho
 
@@ -48,7 +48,7 @@ A conversão para rastreamento está integrada e em validação. Pico comparativ
 |---|---:|---|
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 252 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1860/1958 identidades originais com C++ compilado; 998 com retorno normal registrado em jogo; 0 verificadas.**
+**Fase 2 parcial:** 253 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1860/1958 identidades originais com C++ compilado; 998 com retorno normal registrado em jogo; 0 verificadas.**
 
 ## Preparação e medições da Fase 1 preservadas
 
@@ -71,8 +71,8 @@ Documentos: [fronteira](docs/boundary.md), [C#](docs/csharp-subset.md), [assets]
 
 ## Evidência atual da Fase 2
 
-- Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 172 raízes + 202 dependências emitidas/compiladas; 374 métodos exercitados e 373 verificados. 2617/2618 observações diferenciais aprovadas; 1 diferenças de plataforma explicitamente retidas, sem promoção a verified.
-- Fronteira: 252/775 símbolos verificados: 171 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend grafico CTR ainda nao implementado; o benchmark ARM11 usa backend nulo.
+- Portáveis: 254 símbolos requisitados correspondem a 172 raízes de método. 172 raízes + 202 dependências emitidas/compiladas; 374 métodos exercitados e 374 verificados. 2618/2618 observações diferenciais aprovadas; 0 diferenças de plataforma explicitamente retidas, sem promoção a verified.
+- Fronteira: 253/775 símbolos verificados: 172 portáveis e 81 de plataforma com oráculo próprio. Não contar dependências fora da fronteira como novas raízes nem promover os 254 em bloco. Backend grafico CTR ainda nao implementado; o benchmark ARM11 usa backend nulo.
 - Assembly-CSharp: 1860 corpos emitidos, 1860 compilados em objeto C++; 1860/1958 (94.99%) associados unicamente à assinatura IL original. 0 DocIDs sem vínculo único ficam UNKNOWN. O diagnóstico do fonte registrou 4844 identidades declaradas; o pedido atual inclui 1917 identidades, inclusive expansões/símbolos sintetizados do emissor. Nenhuma dessas contagens substitui o denominador IL de 1958.
 - Sintaxe: 69/123 SyntaxKinds na união dos corpos emitidos (63 Kairo, 69 Game); observação não comprova cobertura semântica integral de cada construção.
 - Serviços: 69 contratos explícitos e 49 assertions nativas; essas fixtures não qualificam a integração de todos os chamadores nem promovem símbolos da fronteira.

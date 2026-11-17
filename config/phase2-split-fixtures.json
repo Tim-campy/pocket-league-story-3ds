@@ -1,7 +1,7 @@
 {
   "operation": "forced-chunking-of-real-generated-portable-methods",
   "cases": 2618,
-  "passed": 2617,
+  "passed": 2618,
   "methods": 374,
   "verified_method_ids": [
     "M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",
@@ -66,6 +66,7 @@
     "M:java.lang.JMath.Abs(System.Int64)",
     "M:java.lang.JMath.Abs(System.Single)",
     "M:java.lang.JMath.Cos(System.Double)",
+    "M:java.lang.JMath.Sin(System.Double)",
     "M:java.lang.JMath.Sqrt(System.Double)",
     "M:java.lang.JMath.ToRadians(System.Double)",
     "M:java.lang.JRuntime.#ctor",
@@ -378,13 +379,16 @@
     "M:kairo.unity.util.StringUtil.Split(System.String,System.String)",
     "M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)"
   ],
-  "known_platform_differences": [
+  "arm_reference_overrides": [
     {
       "method": "M:java.lang.JMath.Sin(System.Double)",
       "case": "62:1",
-      "note": "Windows Unity Mono Math.Sin(-0) returns +0 while std::sin returns -0; Android runtime sign UNKNOWN, original Android Mono imports sin. Production call is unchanged."
+      "mono_windows": "d:0000000000000000",
+      "mono_arm": "d:8000000000000000",
+      "evidence": "build/fp-emulator-4a-1-results (private); docs/notes/criterion4a-status.md"
     }
   ],
+  "known_platform_differences": [],
   "unexpected_failures": [],
   "executed_method_ids": [
     "M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",
@@ -763,12 +767,7 @@
     "M:kairo.unity.util.StringUtil.SplitIntegers(System.String,System.String)"
   ],
   "unexercised_abstract_owner_methods": [],
-  "failures": [
-    {
-      "method": "M:java.lang.JMath.Sin(System.Double)",
-      "case": "62:1"
-    }
-  ],
+  "failures": [],
   "scalar_float_comparison": "exact IEEE bits",
   "identity_hash_comparison": "For exact return base.GetHashCode bodies only: repeated calls must be stable; allocation-dependent raw values are recorded privately and are not compared across runtimes.",
   "identity_hash_method_ids": [
@@ -781,10 +780,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.2166354999644682,
-    "native-compile": 328.4366141000064,
-    "managed-output": 41.2867394000059,
-    "native-output": 64.42905330000212
+    "csharp-compile": 1.3081749000120908,
+    "native-compile": 329.56005490000825,
+    "managed-output": 41.22740849998081,
+    "native-output": 64.69136120000621
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1522,13 +1521,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "5a3bce2a84ab18b78ce4bf891889a9cb8be5a22035a5b2dd3ee4cd4dbed91b41"
+    "sha256": "8206b8179bc85a8d1577b9f3e86d1fb7d8a16a837294fd7608ce0c2d661f6e65"
   },
   "source_oracle_executable": {
     "path": "build/translator/split-differential/Harness-managed.exe",
-    "sha256": "f1e8db7b2799c5ded4eeb3cffd2ffb55b0e552041936d80f9f31f9c23916e449"
+    "sha256": "42c89a22840c5db7513768bd4c981e85ec6b5bea8e3823bf2b0dbad25cb1e59d"
   },
-  "differential_runner_sha256": "d07b177da4530fa31b9cbab88c65bb046eedbf9b47295f17bb0d7e0af090d841",
+  "differential_runner_sha256": "67369a4addf8ef353af8bf2d6ebdf3fed2debdf9048bc78f6b101ce5b4a514f0",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -2886,7 +2885,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "71cdaac4fdb335f17e26fbd16f03326564a0810191217b661ab2ac2bce8f92e9",
+    "translator_source_sha256": "c8124cb074c6875f31f76771847dff8c95c7f063218c70aef1b9548a01587842",
     "emission_source_sha256": "fc24da4e0b4a1a9e323b30555ff1a2d8f1352de78368af46a19b7fa36dfdfbd8",
     "readable_source_sha256": [
       "c4bd9b7c8bb664b91ff7e26a7603035729efae7608067de35455a733b08e0d09",

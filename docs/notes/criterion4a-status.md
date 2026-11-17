@@ -4,7 +4,24 @@ Divisão decidida pelo usuário em 2026-11-16: o critério 4 do congelamento pas
 a ser só o que afeta o código gerado (4a). A comparação de telas com o original
 e a medição com vídeo real (4b) foram para a Fase 4.
 
-## Estado de cada item
+## Decisões do usuário (2026-11-16, segunda rodada)
+
+- **`ref` de campo de receptor nulo: seguir o Android (opção b).** O emissor
+  (`Translator.ValueStorage(..., deferOwner)`) passou a ler o dono do campo na
+  posição do argumento, avaliar os argumentos seguintes, verificar o receptor da
+  chamada e só então verificar o dono e formar a referência. Fixture
+  `RefFixtures.NullFieldOrder`: 7/7 iguais ao Mono (`translator/test_ref.py`,
+  189/189); oráculo numérico: extra `extra_ref_null_field_order` (Mono ARM = 2).
+  Nenhuma referência C++ para objeto nulo é formada: a exceção sai antes da
+  chamada, depois dos argumentos (no Mono ARM ela sai dentro do método chamado,
+  ao desreferenciar; a diferença só aparece se o método chamado tiver efeitos
+  antes de usar a referência — nenhum caminho exercitado do jogo passa por aqui).
+- **`JMath.Sin(-0)`: fiel ao Android.** O diferencial portável usa o resultado do
+  Mono ARM como referência nesse caso (`arm_reference_overrides` no recibo);
+  resultado 2.618/2.618, sem divergência conhecida.
+- **O que resta do 4a:** a repetição da sonda num aparelho Android, pelo usuário.
+
+## Estado de cada item (antes das decisões)
 
 | Item | Estado | Evidência | O que falta |
 |---|---|---|---|

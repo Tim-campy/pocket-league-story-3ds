@@ -1,0 +1,10 @@
+# graphify (knowledge graph of the code, local AST only; output in graphify-out/, not in Git).
+# Translator output with hashed names (cs_<hash>): regenerated, never edited, noise in the graph.
+src/game/
+src/kairo/common/generated/
+# Local-only content (already ignored by .gitignore; repeated for --no-gitignore runs).
+build/
+original/
+assets/
+data/
+graphify-out/

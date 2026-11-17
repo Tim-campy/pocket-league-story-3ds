@@ -1,3 +1,7 @@
+> **Atualização 2026-11-16:** os dois itens abaixo foram medidos no emulador ARM e
+> decididos pelo usuário: `Sin(-0)` é fiel ao Android (−0) e a ordem do `ref` de
+> campo nulo segue o Android. Ver [criterion4a-status.md](criterion4a-status.md).
+
 # Diferenças semânticas ainda UNKNOWN no Android
 
 Decisão do usuário nesta continuidade: documentar e seguir o boot, sem alterar

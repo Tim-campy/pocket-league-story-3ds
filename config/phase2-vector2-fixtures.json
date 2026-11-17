@@ -26,6 +26,7 @@
     "M:SyntheticVectors.VectorValueHolder.#ctor(System.Single,System.Single)",
     "M:SyntheticVectors.VectorValueHolder.get_Value"
   ],
+  "arm_reference_overrides": [],
   "known_platform_differences": [],
   "unexpected_failures": [],
   "executed_method_ids": [
@@ -59,10 +60,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.2240305999876,
-    "native-compile": 32.63487230002647,
-    "managed-output": 0.8064388000057079,
-    "native-output": 0.2350942000048235
+    "csharp-compile": 0.29583509999793023,
+    "native-compile": 34.772323600016534,
+    "managed-output": 0.852695900015533,
+    "native-output": 0.24743589997524396
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -116,13 +117,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/vector-value-differential/Harness.exe",
-    "sha256": "a9770c4b7af70e8d07620757e4874e03b936650d7373e9a5e1d4f8ffe058f4c3"
+    "sha256": "c5f69ce1b0b656e01498c0601aae109efeee56845a667506248c756bdb662f8b"
   },
   "source_oracle_executable": {
     "path": "build/translator/vector-value-differential/Harness-managed.exe",
-    "sha256": "250ad4c313c184771da98b9558276c4f5a3e33dc35abd8800e7b7938f5d75586"
+    "sha256": "c814d6425e7827da8e400a66ec0d6a721cdfde72d500a09e29c09e1daa2960bd"
   },
-  "differential_runner_sha256": "d07b177da4530fa31b9cbab88c65bb046eedbf9b47295f17bb0d7e0af090d841",
+  "differential_runner_sha256": "67369a4addf8ef353af8bf2d6ebdf3fed2debdf9048bc78f6b101ce5b4a514f0",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -780,7 +781,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "71cdaac4fdb335f17e26fbd16f03326564a0810191217b661ab2ac2bce8f92e9",
+    "translator_source_sha256": "c8124cb074c6875f31f76771847dff8c95c7f063218c70aef1b9548a01587842",
     "emission_source_sha256": "fc24da4e0b4a1a9e323b30555ff1a2d8f1352de78368af46a19b7fa36dfdfbd8",
     "readable_source_sha256": [
       "c4bd9b7c8bb664b91ff7e26a7603035729efae7608067de35455a733b08e0d09",

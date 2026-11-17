@@ -1,5 +1,7 @@
 # Fase 3 — proposta 1 e 2: divisão das telas e legibilidade (para escolha do usuário)
 
+
+> **Substituído** pela decisão do usuário de 2026-11-16: [phase3-decision.md](phase3-decision.md). Mantido como histórico.
 Estado: **proposta, não implementada**. Esboços em texto; capturas recortadas
 nas resoluções-alvo, se forem feitas, ficam fora do Git (`build/`), porque
 contêm imagens do jogo.

@@ -7,7 +7,7 @@
     "tests/kairo/diagnostic_route_fixtures.cpp": "d14f135f44aabbab2bcdacee90b2406584edefde029ffe030954d5a9c3374325",
     "tools/test_diagnostic_route.py": "9bddb3d40576c3a9d12f0df896163bcebd01f7d04615a4eac6da3a84f999a0e5"
   },
-  "native_executable_sha256": "c9b483b4bde9afbf44260ad8c3cd28e82ac3b483425ca3107882c0b32c8d7ded",
+  "native_executable_sha256": "f266dfbe3c6dda13b544ff07f48f1c02016a79e95cfbe8765d3715a84625d2c5",
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "game_executed": false,
   "verified_boundary_ids": []

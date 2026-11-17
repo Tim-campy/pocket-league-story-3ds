@@ -324,10 +324,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "2de523f3fadac41dde315b09c269495eb47766d16eff7248e48b99db371fa495"
+    "sha256": "9da73b7b9bf06ec9fba1f9e3025a525426382ff2fa1a382394a18f6fe54d46dc"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "f5b6ec666381c4b751350a2620cf0c330f9ac4bd6c64ff93becd0469abf779f7"
+    "sha256": "5bc407339748d0c51e1c97b1617f7dc2f0a452bda526443c785c275b5bdf1f11"
   }
 }

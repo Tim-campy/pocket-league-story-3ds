@@ -15,11 +15,15 @@ class FreezeProgressTests(unittest.TestCase):
         # a complete translation or execution count never approves the others.
         # Criteria 1 (approved 2026-11-14, complete ledger with 0 slots) and 2
         # (v6 hardware) are met; execution counts never approve 3, 4 or 5.
-        self.assertEqual([row[1]for row in rows].count('cumprido'),2)
+        # Criterion 3 is met by the user's approval of 2026-11-16 (with non-blocking
+        # pendencies), not by the counts; 4 and 5 are never approved by counts.
+        self.assertEqual([row[1]for row in rows].count('cumprido'),3)
         self.assertEqual(rows[0][1],'cumprido')
         self.assertEqual(rows[1][1],'cumprido')
+        self.assertEqual(rows[2][1],'cumprido')
+        self.assertIn('Aprovado pelo usuário em 2026-11-16',rows[2][2])
         self.assertIn('v6',rows[1][2])
-        self.assertNotIn('cumprido',[row[1]for row in rows[2:]])
+        self.assertNotIn('cumprido',[row[1]for row in rows[3:]])
         self.assertIn('0 slots',rows[0][2])
     def test_pending_counts_are_measured(self):
         text='\n'.join(markdown({'game_translated_methods':1768,'game_executed_methods':751},{'missing_virtual_definitions':['a','b']}))

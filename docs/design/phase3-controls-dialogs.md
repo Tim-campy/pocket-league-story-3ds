@@ -1,5 +1,7 @@
 # Fase 3 — propostas 3 e 4: controles, diálogos, teclado e idioma (para escolha do usuário)
 
+
+> **Substituído** pela decisão do usuário de 2026-11-16: [phase3-decision.md](phase3-decision.md). Mantido como histórico.
 Estado: **proposta, não implementada**.
 
 ## O que o jogo original já aceita por teclas (fatos do fonte)

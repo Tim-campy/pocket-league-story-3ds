@@ -31,7 +31,7 @@ Os números deste arquivo são um retrato do momento da troca de agente. Se dive
 | 1. Tradução completa | 1.768 de 1.958 métodos do jogo compilam; 190 corpos e 22 slots virtuais pendentes; 26 das 53 políticas offline por integrar |
 | 2. Coletor e desempenho | **Cumprido em 2026-11-14** (v6 `68634525`, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida; transições (`JSystem.Gc` em `SubForm.Finish`) com pausa máx. 111,3 ms / frame 118,8 ms, limite 150 ms; partida média 10,5–11,8 ms. Ressalva: medição com vídeo refeita na Fase 4 |
 | 3. Percurso completo no PC | Título, saves, gestão, partida completa e retorno funcionam. Temporada e roteiro de cobertura pendentes; 776 métodos exercitados |
-| 4a. Fidelidade do código gerado | Regra de ponto flutuante confirmada em emulador Android ARM e adotada; confirmação em aparelho pendente (usuário); `ref`/`out` e `JMath.Sin(-0)` aguardam decisão (docs/notes/criterion4a-status.md) |
+| 4a. Fidelidade do código gerado | Regra de ponto flutuante confirmada em emulador Android ARM e adotada; `ref` de campo nulo e `JMath.Sin(-0)` decididos (iguais ao Mono ARM); resta a repetição em aparelho (usuário) |
 | 4b. Telas (Fase 4) | Comparação de telas com o original e medição com vídeo real, na Fase 4 (decisão de 2026-11-16) |
 | 5. Código legível e aprovado | Não iniciado |
 
@@ -97,7 +97,7 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Finalidade | Comando | Observação |
 |---|---|---|
 | Verificação completa (122 checks) | `python tools/verify_phase2.py --apk APK --original-managed MANAGED --jobs 1` | ~0,7 h com `--jobs 1`; **retomável**: recibo por check em `build/phase2-verification/receipts/`, vinculado ao estado do código; relançar pula checks válidos; `--full` força tudo; registra pico de memória por check (maior: `game-partial-compile`, ~1,2 GiB) |
-| Diferencial portável | `python translator/test_portable.py` | ~7 min; 2.617/2.618 (divergência registrada `JMath.Sin(-0)`) |
+| Diferencial portável | `python translator/test_portable.py` | ~7 min; 2.618/2.618 (`JMath.Sin(-0)` com o Mono ARM como referência, decisão de 2026-11-16) |
 | Fixtures semânticas por componente | `python tests/translator/run_semantic_fixtures.py --fixture GcFixtures` | outros: `CollectionFixtures`, `EncodingFixtures`, etc. |
 | Motor do coletor isolado | `python tools/test_tracing_gc.py` | 401 asserções |
 | Dependências CMake/Ninja | `python tools/test_cmake_dependencies.py` | sensível ao código de página |
@@ -132,3 +132,26 @@ Detalhes em `docs/notes/claude-session-1.md`.
 
 **Memória da máquina:** comandos em segundo plano podem ser encerrados por
 pressão de memória. Um item pesado por vez (compilação, emulador ou benchmark).
+
+## graphify (grafo de conhecimento do código)
+
+Instalado em 2026-11-16 a pedido do usuário: `uv tool install graphifyy` (0.9.111,
+Apache-2.0/MIT; ferramenta do usuário, fora de `build/deps/`). Integração do
+projeto: `graphify install --project --platform claude` (hooks em
+`.claude/settings.json`, skill em `.claude/skills/graphify/`).
+
+- **Só código, local:** `GRAPHIFY_BACKEND=none graphify extract . --code-only` e
+  depois `graphify cluster-only . --no-label` (análise sintática local, nenhuma API,
+  nada sai da máquina). Não usar o passe semântico de documentos com API externa
+  sem pergunta.
+- **Fora do Git:** `graphify-out/` está no `.gitignore` (derivado, ~40 MB).
+  `.graphifyignore` exclui `src/game/` e `src/kairo/common/generated/` (saída do
+  tradutor com nomes `cs_<hash>`) e as pastas locais. O C# reconstruído em
+  `reference/` entra no grafo.
+- **Uso:** antes de explorar código, `graphify query "<pergunta>"`; relações com
+  `graphify path "<A>" "<B>"`; um símbolo com `graphify explain "<nome>"` (use o
+  rótulo exato, ex.: `Camera.SetCameraRect()`); seção de Markdown com
+  `graphify section "<título>"`. Leia arquivos crus só nas linhas que o grafo
+  localizou. `graphify-out/GRAPH_REPORT.md` só para visão geral.
+- **Depois de mudar código:** `graphify update .` (sem custo de API).
+- Remover: `graphify uninstall` (com `--purge` apaga `graphify-out/`).

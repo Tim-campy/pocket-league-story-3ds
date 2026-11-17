@@ -331,3 +331,9 @@ roteiro não reabriu a grade de membros depois dela (o menu principal reposicion
 o cursor). Continua com receita.
 
 **`MapMain.UpdateTrainingCoatNum`:** alcançável só depois do evento 345; com receita.
+
+**Decisão do usuário (2026-11-16, segunda rodada):** critério 3 cumprido;
+`AppData.DrawMoney2` e `MapMain.UpdateTrainingCoatNum` ficam como pendências
+documentadas e não bloqueantes, a tentar de novo quando existir o log textual de
+navegação (aprovado para depois do código legível: só no build de diagnóstico,
+somente leitura, sem alterar a lógica).

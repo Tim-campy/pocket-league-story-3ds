@@ -29,10 +29,12 @@ def criteria(phase2, game, floating=None):
          f"{count}/1958 métodos compilados"+(f" (+{phase2['game_embedded_methods']} membros gerados pelo compilador dentro de unidades emitidas, {phase2.get('game_no_body_methods',0)} abstratos sem corpo)" if phase2.get('game_embedded_methods') else '')+f'; {slots} slots virtuais pendentes; '+policy_text(game)),
         ('Coletor e desempenho','cumprido',
          'Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4.'),
-        ('Percurso completo no PC','em andamento' if phase2.get('game_executed_methods',0) else 'pendente',
-         coverage_text(phase2)),
+        # Approved by the user on 2026-11-16; DrawMoney2 and UpdateTrainingCoatNum stay as
+        # documented, non-blocking pendencies (retried once the text navigation log exists).
+        ('Percurso completo no PC','cumprido' if phase2.get('game_executed_methods',0) else 'pendente',
+         coverage_text(phase2)+' Aprovado pelo usuário em 2026-11-16; pendências não bloqueantes: AppData.DrawMoney2 e MapMain.UpdateTrainingCoatNum (docs/coverage-plan.md).'),
         ('Fidelidade resolvida','em andamento',
-         ('4a: ponto flutuante confirmado em emulador ARM; confirmação em aparelho e decisão sobre ref/out e Sin(-0) pendentes (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4.'
+         ('4a: ponto flutuante confirmado em emulador ARM; ref de campo nulo e Sin(-0) decididos e iguais ao Mono ARM; resta a repetição em aparelho Android (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4.'
           if floating and floating.get('status')=='PASS' and floating.get('emulator_confirmed') and floating.get('matched')==floating.get('cases')==36
           else '4a: ponto flutuante Android e decisão sobre ref/out e Sin(-0) pendentes. 4b (telas) movido para a Fase 4.')),
         ('Código legível e aprovado','pendente',

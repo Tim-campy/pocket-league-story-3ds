@@ -452,8 +452,11 @@ sealed partial class Lowerer {
            SymbolEqualityComparer.Default.Equals(caller.ContainingType,field.ContainingType))return Name(field)+"_value";
         return Name(field)+"()";
     }
-    (string setup,string target) ValueStorage(ExpressionSyntax expression,bool assignment=false){
-        if(expression is ParenthesizedExpressionSyntax parenthesized)return ValueStorage(parenthesized.Expression,assignment);
+    // deferOwner: for an instance field of a class, the setup only reads the owner; the
+    // returned target performs the null check (criterion 4a decision, 2026-11-16: the
+    // Mono ARM JIT evaluates later arguments before the NullReferenceException).
+    (string setup,string target) ValueStorage(ExpressionSyntax expression,bool assignment=false,bool deferOwner=false){
+        if(expression is ParenthesizedExpressionSyntax parenthesized)return ValueStorage(parenthesized.Expression,assignment,deferOwner);
         if(expression is ThisExpressionSyntax&&RecordStruct(methods[current].ContainingType))return ("","*cs_this");
         var name="cs_value_storage_"+temporary++;var symbol=model.GetSymbolInfo(expression).Symbol;
         if(symbol is ILocalSymbol||symbol is IParameterSymbol)return ("",ReadLocal(symbol));
@@ -477,6 +480,7 @@ sealed partial class Lowerer {
             }
             if(externalTypes.ContainsKey(Id(field.ContainingType))&&!externalFields.ContainsKey(Id(field)))throw new Unsupported(expression,"native class field requires an exact storage binding");
             RequireClass(field.ContainingType,expression);
+            if(deferOwner)return ("auto "+name+"_owner="+(receiver==null?"cs_this":Expr(receiver))+";","cs_require("+name+"_owner)->"+member);
             return ("auto "+name+"_owner="+(receiver==null?"cs_this":Expr(receiver))+";auto& "+name+"=cs_require("+name+"_owner)->"+member+";",name);
         }
         if(assignment)throw new Unsupported(expression,"value expression is not addressable storage");
@@ -1003,11 +1007,12 @@ sealed partial class Lowerer {
         if(symbol.MethodKind==MethodKind.DelegateInvoke){
             if(args.Count!=symbol.Parameters.Length||symbol.Parameters.Any(p=>p.RefKind is not (RefKind.None or RefKind.Ref or RefKind.Out)))throw new Unsupported(n,"delegate invocation signature differs");
             var receiver=n.Expression is MemberAccessExpressionSyntax{ Name.Identifier.ValueText:"Invoke"} explicitInvoke?Expr(explicitInvoke.Expression):Expr(n.Expression);
-            var call=new StringBuilder("([&](){auto cs_delegate="+receiver+";");
+            var call=new StringBuilder("([&](){auto cs_delegate="+receiver+";");var delegateBinds=new StringBuilder();
             for(int index=0;index<args.Count;index++){
-                if(symbol.Parameters[index].RefKind is RefKind.Ref or RefKind.Out){var storage=ValueStorage(args[index],true);call.Append(storage.setup+"auto& cs_arg"+index+"="+storage.target+";");}
+                if(symbol.Parameters[index].RefKind is RefKind.Ref or RefKind.Out){var storage=ValueStorage(args[index],true,true);call.Append(storage.setup);delegateBinds.Append("auto& cs_arg"+index+"="+storage.target+";");}
                 else call.Append("auto cs_arg"+index+"="+Converted(args[index],symbol.Parameters[index].Type)+";");
             }
+            call.Append(delegateBinds);
             return call+(symbol.ReturnsVoid?"":"return ")+"cs_delegate("+String.Join(",",Enumerable.Range(0,args.Count).Select(index=>"cs_arg"+index))+");}())";
         }
         if(n.ArgumentList.Arguments.Any(a=>a.RefKindKeyword!=default)){
@@ -1271,9 +1276,9 @@ sealed partial class Lowerer {
         var result=method.MethodKind==MethodKind.Constructor?Type(method.ContainingType,site):Type(method.ReturnType,site);
         var b=new StringBuilder("([&]() -> "+result+" { ");
         if(receiver!=null)b.Append("auto cs_receiver = static_cast<"+Type(method.ContainingType,site)+">("+receiver+"); ");
-        var argTexts=new List<string>();
+        var argTexts=new List<string>();var refBinds=new StringBuilder();
         for(int i=0;i<fixedCount;i++){
-            if(method.Parameters[i].RefKind is RefKind.Ref or RefKind.Out){var storage=ValueStorage(args[i],true);b.Append(storage.setup+"auto& cs_arg"+i+" = "+storage.target+"; ");argTexts.Add("");}
+            if(method.Parameters[i].RefKind is RefKind.Ref or RefKind.Out){var storage=ValueStorage(args[i],true,true);b.Append(storage.setup);refBinds.Append("auto& cs_arg"+i+" = "+storage.target+"; ");argTexts.Add("");}
             else {var typeText=Type(method.Parameters[i].Type,site);var argText=Converted(args[i],method.Parameters[i].Type);argTexts.Add(argText);b.Append(typeText+" cs_arg"+i+" = "+argText+"; ");}
         }
         for(int i=fixedCount;i<(expanded?paramsIndex:method.Parameters.Length);i++){var defaultText=Constant(method.Parameters[i].ExplicitDefaultValue,method.Parameters[i].Type,site);argTexts.Add(defaultText);b.Append("auto cs_arg"+i+" = "+defaultText+"; ");}
@@ -1282,6 +1287,7 @@ sealed partial class Lowerer {
             for(int i=paramsIndex;i<args.Count;i++)b.Append("cs_arg"+paramsIndex+".at("+(i-paramsIndex)+") = "+Converted(args[i],paramsArray!.ElementType)+"; ");
         }
         if(receiver!=null)b.Append("if(!cs_receiver)throw pls::cs::NullReferenceException(); ");
+        b.Append(refBinds);
         var nativeMember=nativeCallee?.StartsWith("member:",StringComparison.Ordinal)??false;
         if(method.IsGenericMethod&&nativeCallee==null){
             if(dispatch&&receiver!=null&&UnloweredGenericVirtual(method))throw new Unsupported(site,"overridden generic virtual method not lowered");

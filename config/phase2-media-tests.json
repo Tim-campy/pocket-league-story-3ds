@@ -10,8 +10,8 @@
   "mixer_ring_bytes": 262144,
   "mixer_scratch_bytes": 131072,
   "resampler_peak_available_bytes": 85448,
-  "mixer_played_frames": 126976,
-  "completed_loops": 7,
+  "mixer_played_frames": 122880,
+  "completed_loops": 6,
   "assertions": 18157180,
   "mixer_underrun_frames": 0,
   "game_boot": false,
@@ -37,8 +37,8 @@
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "19e341080090da3fff588569eefd591ad0eac375abeb74e73786812c1714618d",
-  "native_stdout_sha256": "c1c16dae161c244f95ba297f9854c96750dbeba38409bd6eccf3bd7b981cd5e3",
+  "native_executable_sha256": "c3197fc7d5c21189b4133dc96641ecd117ef1c79408d4b5d0470cd04e2d03074",
+  "native_stdout_sha256": "094678f5eaf59041269a49d4d1fba2c8dbf38c5b38e478dffe4f840efa6bac29",
   "ffmpeg_comparisons": [
     {
       "sample_rate": 44100,

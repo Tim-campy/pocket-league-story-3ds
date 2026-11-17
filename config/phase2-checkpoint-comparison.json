@@ -664,7 +664,7 @@
     "previous_cases": 2618,
     "previous_passed": 2617,
     "current_cases": 2618,
-    "current_passed": 2617,
+    "current_passed": 2618,
     "previous_judge": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
     "current_judge": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
     "same_judge": true,
@@ -679,15 +679,15 @@
     },
     {
       "path": "config/phase2-translation.json",
-      "sha256": "5e854460c414f2d27a65be80bf2a20d66675057aaadc039a6c2a2d8fc7b0dbef"
+      "sha256": "1cf1cf0447be1132d77b4f32c26c79747519168bba707186eacc90a18279e7e5"
     },
     {
       "path": "config/phase2-portable-differential.json",
-      "sha256": "f9c5c91773c3895803cd527817c29ed10d1ee7e07f4a5da9ec06f1aaef821d0f"
+      "sha256": "f4027ae755d9dc77a1abcb7a31671602ae4d6113f8e51015fad6f9fbc7651fef"
     },
     {
       "path": "config/phase2-game-translation.json",
-      "sha256": "d36f2d7d7f80b8b4434274555e975f9764ad55f7c21af0d575af672d9852b08d"
+      "sha256": "fffa7bb2f997528909c79fd704587f7227893550467a3d253d02c9058ef31cd9"
     }
   ]
 }

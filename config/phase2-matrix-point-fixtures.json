@@ -24,10 +24,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.19622500002151355,
-    "native-compile": 30.600398399983533,
-    "managed-output": 0.3818404000485316,
-    "native-output": 0.2699445000034757
+    "csharp-compile": 0.19038220000220463,
+    "native-compile": 30.326531899976544,
+    "managed-output": 0.38479479996021837,
+    "native-output": 0.21193400002084672
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -73,11 +73,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/matrix-point-differential/Harness.exe",
-    "sha256": "6dd09d0ea2dc2f9b5bdd7e6fc44ec222a32e199fe56f942406020554660b7509"
+    "sha256": "26a4461525cfbf54fe7bb04d6afec19a5bd7bda9796e76f85258bb30bd6114a2"
   },
   "source_oracle_executable": {
     "path": "build/translator/matrix-point-differential/Harness-managed.exe",
-    "sha256": "7edd4ec365b24020aea39c965002f6436fa401fe577f7526bc86cb575871be00"
+    "sha256": "1528614598a68b7d883a52b4d46cdf2f0be3bb493c486663eb14e6de239eb15f"
   },
   "differential_runner_sha256": "f820bad10247e598c6093be785b20681f6f98251b4ece4bff60011d956dcf133",
   "runtime_sources": [
@@ -733,7 +733,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "98d4c2c13dcd8e9f77f6873a4691e96751e42406a2e8385040e74c7c6e445ab1",
+    "translator_source_sha256": "b4dac3a21612694874aec95ccf1b640f749326e2b3d8958fb94c83539d41d647",
     "emission_source_sha256": "92d1032c51db6f7bce49def48c70f260f01616701caf07208453008f55288577",
     "readable_source_sha256": [
       "2332e645939be40d5fe8f3e6ba5e63f6586ec8dbacfd12afdd514381d9d9dc7c",

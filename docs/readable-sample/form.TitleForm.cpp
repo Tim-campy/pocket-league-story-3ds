@@ -1096,12 +1096,12 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::Ref<pls::kairo::Image> cs_arg0 =
                         require(require(apdat_)->resCom2_)->img.get_Item(193);
-                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL().get_Item(1)[0]));
-                    float cs_arg2 = static_cast<float>(((num25 + 15) + TitleForm::IMG_SL().get_Item(1)[1]));
-                    std::int32_t cs_arg3 = TitleForm::IMG_SL().get_Item(1)[2];
-                    std::int32_t cs_arg4 = TitleForm::IMG_SL().get_Item(1)[3];
-                    std::int32_t cs_arg5 = TitleForm::IMG_SL().get_Item(1)[4];
-                    std::int32_t cs_arg6 = TitleForm::IMG_SL().get_Item(1)[5];
+                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL()[1][0]));
+                    float cs_arg2 = static_cast<float>(((num25 + 15) + TitleForm::IMG_SL()[1][1]));
+                    std::int32_t cs_arg3 = TitleForm::IMG_SL()[1][2];
+                    std::int32_t cs_arg4 = TitleForm::IMG_SL()[1][3];
+                    std::int32_t cs_arg5 = TitleForm::IMG_SL()[1][4];
+                    std::int32_t cs_arg6 = TitleForm::IMG_SL()[1][5];
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
                     }
@@ -1157,12 +1157,12 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::Ref<pls::kairo::Image> cs_arg0 =
                         require(require(apdat_)->resCom2_)->img.get_Item(193);
-                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL().get_Item(0)[0]));
-                    float cs_arg2 = static_cast<float>(((num25 + 15) + TitleForm::IMG_SL().get_Item(0)[1]));
-                    std::int32_t cs_arg3 = TitleForm::IMG_SL().get_Item(0)[2];
-                    std::int32_t cs_arg4 = TitleForm::IMG_SL().get_Item(0)[3];
-                    std::int32_t cs_arg5 = TitleForm::IMG_SL().get_Item(0)[4];
-                    std::int32_t cs_arg6 = TitleForm::IMG_SL().get_Item(0)[5];
+                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL()[0][0]));
+                    float cs_arg2 = static_cast<float>(((num25 + 15) + TitleForm::IMG_SL()[0][1]));
+                    std::int32_t cs_arg3 = TitleForm::IMG_SL()[0][2];
+                    std::int32_t cs_arg4 = TitleForm::IMG_SL()[0][3];
+                    std::int32_t cs_arg5 = TitleForm::IMG_SL()[0][4];
+                    std::int32_t cs_arg6 = TitleForm::IMG_SL()[0][5];
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
                     }
@@ -1214,14 +1214,12 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::Ref<pls::kairo::Image> cs_arg0 =
                         require(require(apdat_)->resCom2_)->img.get_Item(193);
-                    float cs_arg1 =
-                        static_cast<float>(((num27 + 10) + TitleForm::IMG_SL().get_Item(num31)[0]));
-                    float cs_arg2 =
-                        static_cast<float>(((num25 + 6) + TitleForm::IMG_SL().get_Item(num31)[1]));
-                    std::int32_t cs_arg3 = TitleForm::IMG_SL().get_Item(num31)[2];
-                    std::int32_t cs_arg4 = TitleForm::IMG_SL().get_Item(num31)[3];
-                    std::int32_t cs_arg5 = TitleForm::IMG_SL().get_Item(num31)[4];
-                    std::int32_t cs_arg6 = TitleForm::IMG_SL().get_Item(num31)[5];
+                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL()[num31][0]));
+                    float cs_arg2 = static_cast<float>(((num25 + 6) + TitleForm::IMG_SL()[num31][1]));
+                    std::int32_t cs_arg3 = TitleForm::IMG_SL()[num31][2];
+                    std::int32_t cs_arg4 = TitleForm::IMG_SL()[num31][3];
+                    std::int32_t cs_arg5 = TitleForm::IMG_SL()[num31][4];
+                    std::int32_t cs_arg6 = TitleForm::IMG_SL()[num31][5];
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
                     }
@@ -1421,7 +1419,7 @@ bool TitleForm::Finish() {
 void TitleForm::ChangeState(pls::cs::Int32 state) {
     TitleForm::ensure_initialized();
 
-    pls::cs::Array<std::int32_t> array = TitleForm::softLabels_().get_Item(state);
+    pls::cs::Array<std::int32_t> array = TitleForm::softLabels_()[state];
     if ([&]() {
             auto cs_left = pls::cs::box(array);
             auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{});
@@ -1447,20 +1445,20 @@ void TitleForm::Update_titleAnime() {
     TitleForm::ensure_initialized();
 
     for (pls::cs::Int32 i = 0; i < (ta_data).length(); ++i) {
-        if (ta_data.get_Item(i)[0] == 0) {
+        if (ta_data[i][0] == 0) {
             continue;
         }
-        ta_data.get_Item(i)[5] =
-            pls::cs::mod_i32((pls::cs::add_i32(ta_data.get_Item(i)[5], 1)), 2147483647 /* Int32.MaxValue */);
+        ta_data[i][5] =
+            pls::cs::mod_i32((pls::cs::add_i32(ta_data[i][5], 1)), 2147483647 /* Int32.MaxValue */);
         {
-            auto cs_target = ta_data.get_Item(i);
+            auto cs_target = ta_data[i];
             auto cs_index = 2;
             auto cs_old = cs_target.at(cs_index);
-            auto cs_rhs = pls::cs::add_i32(-1, pls::cs::mul_i32(2, ta_data.get_Item(i)[4]));
+            auto cs_rhs = pls::cs::add_i32(-1, pls::cs::mul_i32(2, ta_data[i][4]));
             auto cs_value = pls::cs::add_i32(cs_old, cs_rhs);
             cs_target.at(cs_index) = cs_value;
         }
-        if ((ta_data.get_Item(i)[2] < -10) || (ta_data.get_Item(i)[2] > 250)) {
+        if ((ta_data[i][2] < -10) || (ta_data[i][2] > 250)) {
             TitleForm::ResetHobjExist(i);
         }
     }
@@ -1470,15 +1468,15 @@ void TitleForm::Update_titleAnime() {
         TitleForm::SetAppearCnt();
         pls::cs::Int32 num = -1;
         for (pls::cs::Int32 j = 0; j < (ta_data).length(); ++j) {
-            if (ta_data.get_Item(j)[0] == 0) {
+            if (ta_data[j][0] == 0) {
                 num = j;
                 break;
             }
         }
         if (num != -1) {
-            ta_data.get_Item(num)[0] = 1;
+            ta_data[num][0] = 1;
             ([&]() {
-                auto cs_target = ta_data.get_Item(num);
+                auto cs_target = ta_data[num];
                 auto cs_index = 1;
                 auto cs_value = ([&]() {
                     auto cs_array = TitleForm::TITLE_GUEST();
@@ -1489,24 +1487,24 @@ void TitleForm::Update_titleAnime() {
                 return cs_value;
             }());
             {
-                auto cs_target = ta_data.get_Item(num);
+                auto cs_target = ta_data[num];
                 auto cs_index = 4;
                 auto cs_value = game::GameUtil::Random(2);
                 cs_target.set_Item(cs_index, cs_value);
             }
-            if (ta_data.get_Item(num)[4] == 1) {
-                ta_data.get_Item(num)[2] = 0;
+            if (ta_data[num][4] == 1) {
+                ta_data[num][2] = 0;
                 {
-                    auto cs_target = ta_data.get_Item(num);
+                    auto cs_target = ta_data[num];
                     auto cs_index = 3;
                     auto cs_value =
                         game::GameUtil::RateConvert(game::GameUtil::Random(100), 0, 99, 228, 238, true);
                     cs_target.set_Item(cs_index, cs_value);
                 }
             } else {
-                ta_data.get_Item(num)[2] = 240;
+                ta_data[num][2] = 240;
                 {
-                    auto cs_target = ta_data.get_Item(num);
+                    auto cs_target = ta_data[num];
                     auto cs_index = 3;
                     auto cs_value =
                         game::GameUtil::RateConvert(game::GameUtil::Random(100), 0, 99, 228, 238, true);
@@ -1528,7 +1526,7 @@ void TitleForm::SetAppearCnt() {
 void TitleForm::ResetHobjExist(pls::cs::Int32 index) {
     TitleForm::ensure_initialized();
 
-    ta_data.get_Item(index)[0] = 0;
+    ta_data[index][0] = 0;
 }
 
 // M:form.TitleForm.Draw_titleAnime(kairo.unity.ui.Graphics)
@@ -1536,44 +1534,43 @@ void TitleForm::Draw_titleAnime(pls::cs::Ref<pls::kairo::Graphics> g) {
     TitleForm::ensure_initialized();
 
     for (pls::cs::Int32 i = 0; i < (ta_data).length(); ++i) {
-        zsort_mhobj.get_Item(i)[0] = i;
-        zsort_mhobj.get_Item(i)[1] = ta_data.get_Item(i)[3];
+        zsort_mhobj[i][0] = i;
+        zsort_mhobj[i][1] = ta_data[i][3];
     }
     for (pls::cs::Int32 j = 0; j < pls::cs::sub_i32((zsort_mhobj).length(), 1); ++j) {
         for (pls::cs::Int32 num = pls::cs::sub_i32((zsort_mhobj).length(), 1); num > j; --num) {
             if ([&]() -> bool {
-                    auto cs_left = zsort_mhobj.get_Item(j)[1];
-                    auto cs_right = zsort_mhobj.get_Item(num)[1];
+                    auto cs_left = zsort_mhobj[j][1];
+                    auto cs_right = zsort_mhobj[num][1];
                     return (cs_left > cs_right);
                 }()) {
-                pls::cs::Int32 num2 = zsort_mhobj.get_Item(num)[1];
-                zsort_mhobj.get_Item(num)[1] = zsort_mhobj.get_Item(j)[1];
-                zsort_mhobj.get_Item(j)[1] = num2;
-                num2 = zsort_mhobj.get_Item(num)[0];
-                zsort_mhobj.get_Item(num)[0] = zsort_mhobj.get_Item(j)[0];
-                zsort_mhobj.get_Item(j)[0] = num2;
+                pls::cs::Int32 num2 = zsort_mhobj[num][1];
+                zsort_mhobj[num][1] = zsort_mhobj[j][1];
+                zsort_mhobj[j][1] = num2;
+                num2 = zsort_mhobj[num][0];
+                zsort_mhobj[num][0] = zsort_mhobj[j][0];
+                zsort_mhobj[j][0] = num2;
             }
         }
     }
     pls::cs::Int32 num3 = pls::cs::sub_i32(require(view_)->GetGameHeight(), 240);
     for (pls::cs::Int32 k = 0; k < (zsort_mhobj).length(); ++k) {
-        pls::cs::Int32 num4 = zsort_mhobj.get_Item(k)[0];
-        if (ta_data.get_Item(num4)[0] == 0) {
+        pls::cs::Int32 num4 = zsort_mhobj[k][0];
+        if (ta_data[num4][0] == 0) {
             continue;
         }
         pls::cs::Int32 seb = 0;
-        pls::cs::Int32 frame = pls::cs::div_i32(pls::cs::mod_i32(ta_data.get_Item(num4)[5], 20), 5);
+        pls::cs::Int32 frame = pls::cs::div_i32(pls::cs::mod_i32(ta_data[num4][5], 20), 5);
         pls::cs::Int32 direct = 2;
-        if (ta_data.get_Item(num4)[4] == 1) {
+        if (ta_data[num4][4] == 1) {
             direct = 1;
         }
-        pls::cs::Ref<data::PlayerData> playerData =
-            require(apdat_)->pData_.get_Item(ta_data.get_Item(num4)[1]);
+        pls::cs::Ref<data::PlayerData> playerData = require(apdat_)->pData_.get_Item(ta_data[num4][1]);
         {
             auto cs_receiver = static_cast<pls::cs::Ref<main::AppData>>(apdat_);
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
-            std::int32_t cs_arg1 = pls::cs::sub_i32(ta_data.get_Item(num4)[2], 1);
-            std::int32_t cs_arg2 = (pls::cs::add_i32(ta_data.get_Item(num4)[3], 1) + num3);
+            std::int32_t cs_arg1 = pls::cs::sub_i32(ta_data[num4][2], 1);
+            std::int32_t cs_arg2 = (pls::cs::add_i32(ta_data[num4][3], 1) + num3);
             pls::cs::Ref<kairo::unity::ui::Seb> cs_arg3 = require(require(apdat_)->resCom2_)->seb.get_Item(0);
             pls::cs::Ref<pls::kairo::Image> cs_arg4 = require(require(apdat_)->resCom2_)->img.get_Item(2);
             std::int32_t cs_arg5 = 4;
@@ -1587,8 +1584,8 @@ void TitleForm::Draw_titleAnime(pls::cs::Ref<pls::kairo::Graphics> g) {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<game::UserData>>(udat_);
             pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
-            std::int32_t cs_arg1 = ta_data.get_Item(num4)[2];
-            std::int32_t cs_arg2 = (ta_data.get_Item(num4)[3] + num3);
+            std::int32_t cs_arg1 = ta_data[num4][2];
+            std::int32_t cs_arg2 = (ta_data[num4][3] + num3);
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
@@ -1678,14 +1675,14 @@ void TitleForm::LoadKiaroAdClickNum() {
             throw pls::cs::ReturnFlow<void>{};
         }
         kairoAdClickNum_ = 0;
-        if ((require(require(apdat_)->sysSave_)->bins.get_Item(5)).length() > 0) {
+        if ((require(require(apdat_)->sysSave_)->bins[5]).length() > 0) {
             pls::cs::Ref<generated::java::io::ByteArrayInputStream> byteArrayInputStream =
                 pls::cs::Ref<generated::java::io::ByteArrayInputStream>{};
             pls::cs::run_finally(
                 [&]() {
                     {
                         byteArrayInputStream = generated::java::io::ByteArrayInputStream::create(
-                            require(require(apdat_)->sysSave_)->bins.get_Item(5));
+                            require(require(apdat_)->sysSave_)->bins[5]);
                         kairoAdClickNum_ = pls::cs::cast_integral<std::int32_t>(
                             generated::kairo::unity::util::StreamUtil::ReadShort(
                                 static_cast<pls::cs::Ref<generated::java::io::InputStream>>(

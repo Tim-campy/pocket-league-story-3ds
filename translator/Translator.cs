@@ -190,7 +190,7 @@ sealed partial class Lowerer {
     }
     // Readable: a[i] for arrays whose static element type admits no array covariance
     // (value types, sealed classes): operator[] is the same bounds-checked at().
-    static bool PlainIndexArray(ITypeSymbol? t)=>t is IArrayTypeSymbol{Rank:1} a&&(a.ElementType.IsValueType&&a.ElementType.TypeKind!=TypeKind.TypeParameter||a.ElementType.IsSealed&&a.ElementType.TypeKind==TypeKind.Class);
+    static bool PlainIndexArray(ITypeSymbol? t)=>t is IArrayTypeSymbol{Rank:1} a&&(a.ElementType.IsValueType&&a.ElementType.TypeKind!=TypeKind.TypeParameter||a.ElementType.IsSealed&&a.ElementType.TypeKind==TypeKind.Class||a.ElementType.TypeKind==TypeKind.Array);
     // Readable: a float-typed expression whose C++ value is already binary32 storage
     // (literal, variable, field, element, call result) needs no narrowing cast.
     bool StoredFloat(ExpressionSyntax e){
@@ -956,6 +956,13 @@ sealed partial class Lowerer {
             }
         }
         var op=model.GetOperation(b) as IBinaryOperation;
+        // Readable: comparing two float values already stored in binary32 is the same
+        // in float as in double; no widening casts.
+        if(readable&&ArmFloat&&b.Kind() is SyntaxKind.EqualsExpression or SyntaxKind.NotEqualsExpression or SyntaxKind.LessThanExpression or SyntaxKind.LessThanOrEqualExpression or SyntaxKind.GreaterThanExpression or SyntaxKind.GreaterThanOrEqualExpression
+            &&op?.LeftOperand.Type?.SpecialType==SpecialType.System_Single&&op?.RightOperand.Type?.SpecialType==SpecialType.System_Single
+            &&model.GetTypeInfo(b.Left).Type?.SpecialType==SpecialType.System_Single&&model.GetTypeInfo(b.Right).Type?.SpecialType==SpecialType.System_Single
+            &&StoredFloat(b.Left)&&StoredFloat(b.Right)&&OrderFree(b))
+            return "("+Expr(b.Left)+" "+b.OperatorToken.Text+" "+Expr(b.Right)+")";
         var left=EvaluationOperand(b.Left,op?.LeftOperand.Type??model.GetTypeInfo(b.Left).ConvertedType);
         var right=EvaluationOperand(b.Right,op?.RightOperand.Type??model.GetTypeInfo(b.Right).ConvertedType);
         var type=model.GetTypeInfo(b).Type;string result;

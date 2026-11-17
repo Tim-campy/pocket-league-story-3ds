@@ -125,7 +125,7 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     }
                     return cs_receiver->StringWidthF(cs_arg0);
                 }()));
-                if (static_cast<double>(num4) < static_cast<double>(num5)) {
+                if (num4 < num5) {
                     num4 = num5;
                 }
             }

@@ -510,10 +510,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.6722120000049472,
-    "native-compile": 186.40594179998152,
-    "managed-output": 0.6085114000015892,
-    "native-output": 0.7048736000433564
+    "csharp-compile": 0.6251308000064455,
+    "native-compile": 185.34862039994914,
+    "managed-output": 0.6318612999748439,
+    "native-output": 0.7573683999944478
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -863,11 +863,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "b5974ab42a82e7f4efe0b5afd5412e32a68b2adf298a700685e3ad5cdc433efa"
+    "sha256": "e4d0ee9d74ded8f14a6742fb1deaf2f92bd8dce9d0895fb9187df3bb0078f854"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "e1414e76000cd1236f31ac81ee1d5311ac74d2e8d7803d36d1d3d64f683a7507"
+    "sha256": "0fabc78d9969e8122c9c59192be9be5a1144681616009df053983e2fa6ec46a6"
   },
   "differential_runner_sha256": "f820bad10247e598c6093be785b20681f6f98251b4ece4bff60011d956dcf133",
   "runtime_sources": [
@@ -1827,10 +1827,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "12c12f63189def1a7206176544749870b038e69d020db8f49ad5f96ea6349004",
+    "translator_source_sha256": "04f61d0c344bec78ff2bcc19cad3a233cd501bcf41ddb2282f04eb62839f49f0",
     "emission_source_sha256": "92d1032c51db6f7bce49def48c70f260f01616701caf07208453008f55288577",
     "readable_source_sha256": [
-      "c824daad5c4dc553d3e0244158f181a901a367a7eff0b092b6921a8bc2192dc8",
+      "2332e645939be40d5fe8f3e6ba5e63f6586ec8dbacfd12afdd514381d9d9dc7c",
       "5c68a38030036a8b092335529068f8d206ea7a4a91c5ee3645c02260cd44b5a6"
     ],
     "driver_sha256": "5c3705cf873216cd5df961363a02c8b02d32745619b52038f3c8a3c74c1e7916"

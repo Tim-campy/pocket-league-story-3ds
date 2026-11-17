@@ -167,6 +167,41 @@ sealed partial class Lowerer {
         return true;
     }
     int closureDepth;
+    // Readable: in a member function a field of this is written bare unless a local
+    // or parameter of the method (any nesting) has the same C# name.
+    static HashSet<string> DeclaredNames(SyntaxNode declaration){
+        var names=new HashSet<string>(StringComparer.Ordinal);
+        foreach(var node in declaration.DescendantNodesAndSelf()){
+            switch(node){
+                case VariableDeclaratorSyntax v:names.Add(v.Identifier.ValueText);break;
+                case ParameterSyntax parameter:names.Add(parameter.Identifier.ValueText);break;
+                case ForEachStatementSyntax each:names.Add(each.Identifier.ValueText);break;
+                case CatchDeclarationSyntax c:names.Add(c.Identifier.ValueText);break;
+                case SingleVariableDesignationSyntax d:names.Add(d.Identifier.ValueText);break;
+            }
+        }
+        return names;
+    }
+    string BareFields(string body,SyntaxNode declaration,INamedTypeSymbol owner){
+        var fieldsByToken=new Dictionary<string,IFieldSymbol>(StringComparer.Ordinal);
+        for(var type=owner;type!=null;type=type.BaseType)foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))fieldsByToken.TryAdd(Name(field),field);
+        var shadow=DeclaredNames(declaration);
+        return System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this->(cs_[0-9a-f]{16})\b",m=>fieldsByToken.TryGetValue(m.Groups[1].Value,out var f)&&!f.IsStatic&&!shadow.Contains(f.Name)&&!shadow.Contains(f.Name+"_")?m.Groups[1].Value:m.Value);
+    }
+    // Readable: a[i] for arrays whose static element type admits no array covariance
+    // (value types, sealed classes): operator[] is the same bounds-checked at().
+    static bool PlainIndexArray(ITypeSymbol? t)=>t is IArrayTypeSymbol{Rank:1} a&&(a.ElementType.IsValueType&&a.ElementType.TypeKind!=TypeKind.TypeParameter||a.ElementType.IsSealed&&a.ElementType.TypeKind==TypeKind.Class);
+    // Readable: a float-typed expression whose C++ value is already binary32 storage
+    // (literal, variable, field, element, call result) needs no narrowing cast.
+    bool StoredFloat(ExpressionSyntax e){
+        while(e is ParenthesizedExpressionSyntax p)e=p.Expression;
+        if(e is LiteralExpressionSyntax)return true;
+        if(e is ElementAccessExpressionSyntax element)return model.GetTypeInfo(element.Expression).Type is IArrayTypeSymbol;
+        var s=model.GetSymbolInfo(e).Symbol;
+        if(s is ILocalSymbol or IParameterSymbol)return !(s is IParameterSymbol{RefKind:not RefKind.None});
+        if(s is IFieldSymbol f)return !sharedFields.Contains(Id(f));
+        return false;
+    }
     static string Leaf(string name){var i=name.LastIndexOf("::",StringComparison.Ordinal);return i<0?name:name[(i+2)..];}
     string ParameterDeclaration(IParameterSymbol p)=>ReadableParameter(p)?ReadableScalar(p.Type)!:ParameterType(p);
     bool TypedScalar(ExpressionSyntax e){
@@ -543,6 +578,7 @@ sealed partial class Lowerer {
         return ("auto "+name+"="+Expr(expression)+";",name);
     }
     string Converted(ExpressionSyntax node,ITypeSymbol? to) {
+        if(readable&&ArmFloat&&to?.SpecialType==SpecialType.System_Single&&model.GetTypeInfo(node).Type?.SpecialType==SpecialType.System_Single&&model.GetConversion(node).IsIdentity&&StoredFloat(node))return Expr(node);
         if(node.IsKind(SyntaxKind.NullLiteralExpression)&&to?.IsReferenceType==true)return Type(to,node)+"{}";
         if(node is AnonymousFunctionExpressionSyntax anonymous&&to is INamedTypeSymbol{TypeKind:TypeKind.Delegate} anonymousType)return Anonymous(anonymous,anonymousType);
         if(node is IdentifierNameSyntax or MemberAccessExpressionSyntax&&to is INamedTypeSymbol{TypeKind:TypeKind.Delegate} delegateType&&model.GetSymbolInfo(node).Symbol is IMethodSymbol target&&target.MethodKind!=MethodKind.AnonymousFunction)return MethodGroup(node,target,delegateType);
@@ -819,6 +855,7 @@ sealed partial class Lowerer {
                 if(access.ArgumentList.Arguments.Count!=1)throw new Unsupported(access,"multi-index access not lowered");
                 if(model.GetTypeInfo(access.Expression).Type?.ToDisplayString() is "System.Text.RegularExpressions.MatchCollection" or "System.Text.RegularExpressions.GroupCollection")return "([&](){auto cs_receiver="+Expr(access.Expression)+";auto cs_index="+Expr(access.ArgumentList.Arguments[0].Expression)+";return cs_require(cs_receiver)->get_Item(cs_index);}())";
                 if(model.GetTypeInfo(access.Expression).Type?.ToDisplayString()=="System.Text.StringBuilder")return "([&]() { auto cs_receiver = "+Expr(access.Expression)+"; auto cs_index = "+Expr(access.ArgumentList.Arguments[0].Expression)+"; return cs_require(cs_receiver)->get_Chars(cs_index); }())";
+                if(readable&&PlainIndexArray(model.GetTypeInfo(access.Expression).Type)&&IndexOrderFree(access.Expression,access.ArgumentList.Arguments[0].Expression))return Postfix(Expr(access.Expression))+"["+Expr(access.ArgumentList.Arguments[0].Expression)+"]";
                 if(readable&&IndexOrderFree(access.Expression,access.ArgumentList.Arguments[0].Expression))return Postfix(Expr(access.Expression))+"."+(SystemList(model.GetTypeInfo(access.Expression).Type)||SystemDictionary(model.GetTypeInfo(access.Expression).Type)||model.GetTypeInfo(access.Expression).Type is IArrayTypeSymbol?"get_Item":"at")+"("+Expr(access.ArgumentList.Arguments[0].Expression)+")";
                 return "([&]() { auto cs_array = "+Expr(access.Expression)+"; auto cs_index = "+Expr(access.ArgumentList.Arguments[0].Expression)+"; return cs_array."+(SystemList(model.GetTypeInfo(access.Expression).Type)||SystemDictionary(model.GetTypeInfo(access.Expression).Type)||model.GetTypeInfo(access.Expression).Type is IArrayTypeSymbol?"get_Item":"at")+"(cs_index); }())";
             case TypeOfExpressionSyntax typeOf:return "pls::cs::runtime_type_of<"+Type(model.GetTypeInfo(typeOf.Type).Type,typeOf)+">()";
@@ -1397,7 +1434,11 @@ sealed partial class Lowerer {
             case ReturnStatementSyntax r:
                 if(returnFlowMethods.Contains(Id(method)))return "throw pls::cs::ReturnFlow<"+Type(method.ReturnType,r)+">{"+(r.Expression==null?"":Converted(r.Expression,method.ReturnType))+"};";
                 return r.Expression==null?"return;":"return "+Converted(r.Expression,method.ReturnType)+";";
-            case ExpressionStatementSyntax e:return ((readable?ReadableEffect(e.Expression):null)??Expr(e.Expression))+";";
+            case ExpressionStatementSyntax e:{
+                var statementText=(readable?ReadableEffect(e.Expression):null)??Expr(e.Expression);
+                if(readable&&FlattenStatementLambda(statementText) is string block)return block;
+                return statementText+";";
+            }
             case LocalDeclarationStatementSyntax l:return Declare(l.Declaration)+";";
             case UsingStatementSyntax resource:
                 var resourceFlow=model.AnalyzeControlFlow(resource.Statement);
@@ -1495,6 +1536,14 @@ sealed partial class Lowerer {
                     var text=Statement(tr.Block,method);
                     if(tr.Catches.Count==0)return text;
                     var catchIndex=temporary++;var caught="cs_caught_"+catchIndex;var managed="cs_exception_"+catchIndex;
+                    // Readable C3d: a single catch (Exception [e]) takes every managed exception;
+                    // no type test and no rethrow branch (capture still records it).
+                    if(readable&&tr.Catches.Count==1&&tr.Catches[0].Filter==null&&(tr.Catches[0].Declaration==null||model.GetTypeInfo(tr.Catches[0].Declaration!.Type).Type?.ToDisplayString()=="System.Exception")){
+                        var only=tr.Catches[0];Used(only);
+                        var onlySymbol=only.Declaration==null?null:model.GetDeclaredSymbol(only.Declaration) as ILocalSymbol;
+                        var capture="pls::cs::capture_exception("+caught+")";
+                        return "try "+text+" catch(const pls::cs::Exception& "+caught+") {"+(onlySymbol==null?capture+";":"auto "+Local(onlySymbol)+"="+capture+";")+"\n"+Statement(only.Block,method)+"}";
+                    }
                     var b=new StringBuilder("try "+text+" catch(const pls::cs::Exception& "+caught+") {auto "+managed+"=pls::cs::capture_exception("+caught+");\n");
                     for(int index=0;index<tr.Catches.Count;index++){
                         var clause=tr.Catches[index];Used(clause);if(clause.Filter!=null)throw new Unsupported(clause,"catch filters require first-pass CLR filter dispatch");
@@ -1720,6 +1769,8 @@ sealed partial class Lowerer {
             } else if(!method.IsStatic&&!InstanceMember(method)) body=readable?Splice("cs_require(cs_this);",body):"{ if(!cs_this)throw pls::cs::NullReferenceException();\n"+body+"\n}";
             if(!constructor&&!removedJavaBridge&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))body=readable?Splice(TypeInitFunction(method.ContainingType)+"();",body):"{ "+TypeInitFunction(method.ContainingType)+"();\n"+body+"\n}";
             var source=QualifyHelpers(constructor&&method.ContainingType.IsAbstract?body:template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
+            if(InstanceMember(method)&&!hasServicePolicy)body=BareFields(body,declaration,method.ContainingType);
+            if(MemberMethod(method)&&!hasServicePolicy)source=QualifyHelpers(template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
             if(VirtualMember(method)){
                 // Body in the virtual member; `this` is the receiver (closures hold cs_outer).
                 source=QualifyHelpers(result+" "+QualifiedSlot(method)+"("+parameters+") "+System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this\b","this"),compilation.AssemblyName=="Assembly-CSharp");

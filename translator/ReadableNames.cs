@@ -407,6 +407,41 @@ sealed partial class Lowerer {
         return receiverType.TypeKind==TypeKind.Interface||method.ContainingType.TypeKind==TypeKind.Interface;
     }
 
+    // Readable C3b: an ordering lambda used as a statement, ([&]() { ...; return v; }());,
+    // becomes the block { ...; } with the same temporaries in the same order. Only
+    // when the lambda has a single return, as its last statement (no other exit).
+    static string? FlattenStatementLambda(string text){
+        text=text.Trim();
+        if(!text.StartsWith("([&]()",StringComparison.Ordinal)||!text.EndsWith("}())",StringComparison.Ordinal))return null;
+        var open=text.IndexOf('{');if(open<0)return null;
+        var header=text[6..open];if(header.Trim().Length!=0&&!header.TrimStart().StartsWith("->",StringComparison.Ordinal))return null;
+        var body=text[(open+1)..^4];
+        // The outer braces must enclose the whole body.
+        int depth=0;bool inString=false,inChar=false,escape=false;var returns=new List<int>();
+        for(int i=0;i<body.Length;i++){
+            var c=body[i];
+            if(escape){escape=false;continue;}
+            if(inString||inChar){if(c=='\\')escape=true;else if(inString&&c=='"')inString=false;else if(inChar&&c=='\'')inChar=false;continue;}
+            if(c=='"'){inString=true;continue;}
+            if(c=='\''){inChar=true;continue;}
+            if(c=='{')depth++;
+            else if(c=='}'){if(--depth<0)return null;}
+            else if(c=='r'&&String.CompareOrdinal(body,i,"return",0,6)==0&&(i==0||!(char.IsLetterOrDigit(body[i-1])||body[i-1]=='_'))&&(i+6>=body.Length||!(char.IsLetterOrDigit(body[i+6])||body[i+6]=='_')))returns.Add(i);
+        }
+        if(depth!=0||inString||inChar||returns.Count>1)return null;
+        if(returns.Count==1){
+            var at=returns[0];var tail=body[at..].TrimEnd();
+            if(!tail.EndsWith(";",StringComparison.Ordinal))return null;
+            var value=tail[6..^1].Trim();
+            // The return must be the last statement, at the top level of the body.
+            if(value.IndexOf(';')>=0||value.IndexOf('{')>=0)return null;
+            int top=0;for(int i=0;i<at;i++){if(body[i]=='{')top++;else if(body[i]=='}')top--;}
+            if(top!=0)return null;
+            var simple=System.Text.RegularExpressions.Regex.IsMatch(value,"^[A-Za-z_][A-Za-z0-9_]*$");
+            body=body[..at]+(simple||value.Length==0?"":value+";");
+        }
+        return "{"+body+"}";
+    }
     // Expression statements whose value is discarded: assignment, ++ and --.
     string? ReadableEffect(ExpressionSyntax e){
         string? result=e switch{
@@ -490,6 +525,7 @@ sealed partial class Lowerer {
             var stable=Classify(index)!=Order.Effectful&&Classify(a.Right)!=Order.Effectful||arrayNode is InvocationExpressionSyntax or ObjectCreationExpressionSyntax||
                 arrayNode is IdentifierNameSyntax&&model.GetSymbolInfo(arrayNode).Symbol is ILocalSymbol or IParameterSymbol{RefKind:RefKind.None}&&!capturedVariables.Contains(model.GetSymbolInfo(arrayNode).Symbol!)&&!Writes(index).Contains(model.GetSymbolInfo(arrayNode).Symbol!)&&!Writes(a.Right).Contains(model.GetSymbolInfo(arrayNode).Symbol!);
             if(!stable)return null;
+            if(PlainIndexArray(model.GetTypeInfo(element.Expression).Type))return Postfix(Expr(element.Expression))+"["+Expr(index)+"] = "+Converted(a.Right,type);
             return Postfix(Expr(element.Expression))+".set_Item("+Expr(index)+", "+Converted(a.Right,type)+")";
         }else return null;
         if(simple)return storage+" = "+(symbol is ILocalSymbol or IParameterSymbol?ScalarValue(a.Right,type):Converted(a.Right,type));

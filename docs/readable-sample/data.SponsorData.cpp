@@ -114,10 +114,10 @@ pls::cs::Ref<SponsorData> SponsorData::create(pls::cs::String src) {
 void SponsorData::Init() {
     SponsorData::ensure_initialized();
 
-    this->state_ = 0;
-    this->satisfactPoint_ = 0;
-    this->feelPt_ = 0;
-    this->new_ = false;
+    state_ = 0;
+    satisfactPoint_ = 0;
+    feelPt_ = 0;
+    new_ = false;
 }
 
 // M:data.SponsorData.Load(System.String)
@@ -127,42 +127,40 @@ void SponsorData::Load(pls::cs::String src) {
     pls::cs::Int32 num = 0;
     pls::cs::Array<pls::cs::String> array =
         generated::kairo::unity::util::StringUtil::Split(src, literal(u"\t"));
-    this->id_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->name_ = array.get_Item(num++);
-    this->charaIndex_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->privilegeType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->privilegeValue_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->costType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->cost_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    ([&]() {
-        auto cs_target = this->income_;
+    id_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    name_ = array[num++];
+    charaIndex_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    privilegeType_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    privilegeValue_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    costType_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    cost_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    {
+        auto cs_target = income_;
         auto cs_index = 0;
-        auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+        auto cs_value = generated::java::lang::JInteger::ParseInt(array[num++]);
         cs_target.set_Item(cs_index, cs_value);
-        return cs_value;
-    }());
-    ([&]() {
-        auto cs_target = this->income_;
+    }
+    {
+        auto cs_target = income_;
         auto cs_index = 1;
-        auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+        auto cs_value = generated::java::lang::JInteger::ParseInt(array[num++]);
         cs_target.set_Item(cs_index, cs_value);
-        return cs_value;
-    }());
-    this->satisfactDifficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->difficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->feelPtInt_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->explain_ = array.get_Item(num++);
-    this->execsScript_ = EventData::ReadScript(array.get_Item(num++));
-    this->flag_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
-    this->feelPt_ = this->feelPtInt_;
+    }
+    satisfactDifficult_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    difficult_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    feelPtInt_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    explain_ = array[num++];
+    execsScript_ = EventData::ReadScript(array[num++]);
+    flag_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    feelPt_ = feelPtInt_;
 }
 
 // M:data.SponsorData.NewGame
 void SponsorData::NewGame() {
     SponsorData::ensure_initialized();
 
-    this->state_ = 0;
-    if (generated::kairo::unity::util::BitUtil::Check(this->flag_, 1)) {
+    state_ = 0;
+    if (generated::kairo::unity::util::BitUtil::Check(flag_, 1)) {
         SponsorData::ChangeState(1);
     }
 }
@@ -171,34 +169,32 @@ void SponsorData::NewGame() {
 void SponsorData::Serialize(pls::cs::Ref<generated::java::io::OutputStream> os) {
     SponsorData::ensure_initialized();
 
-    generated::kairo::unity::util::StreamUtil::WriteShort(os,
-                                                          pls::cs::cast_integral<std::int16_t>(this->state_));
-    generated::kairo::unity::util::StreamUtil::WriteInt(os, this->satisfactPoint_);
-    generated::kairo::unity::util::StreamUtil::WriteShort(
-        os, pls::cs::cast_integral<std::int16_t>(this->feelPt_));
-    generated::kairo::unity::util::StreamUtil::WriteBoolean(os, this->new_);
+    generated::kairo::unity::util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
+    generated::kairo::unity::util::StreamUtil::WriteInt(os, satisfactPoint_);
+    generated::kairo::unity::util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_));
+    generated::kairo::unity::util::StreamUtil::WriteBoolean(os, new_);
 }
 
 // M:data.SponsorData.Deserialize(java.io.InputStream)
 void SponsorData::Deserialize(pls::cs::Ref<generated::java::io::InputStream> stream) {
     SponsorData::ensure_initialized();
 
-    this->state_ =
+    state_ =
         pls::cs::cast_integral<std::int32_t>(generated::kairo::unity::util::StreamUtil::ReadShort(stream));
-    this->satisfactPoint_ = generated::kairo::unity::util::StreamUtil::ReadInt(stream);
-    this->feelPt_ =
+    satisfactPoint_ = generated::kairo::unity::util::StreamUtil::ReadInt(stream);
+    feelPt_ =
         pls::cs::cast_integral<std::int32_t>(generated::kairo::unity::util::StreamUtil::ReadShort(stream));
-    this->new_ = generated::kairo::unity::util::StreamUtil::ReadBoolean(stream);
+    new_ = generated::kairo::unity::util::StreamUtil::ReadBoolean(stream);
 }
 
 // M:data.SponsorData.ChangeState(System.Int32)
 void SponsorData::ChangeState(pls::cs::Int32 state) {
     SponsorData::ensure_initialized();
 
-    if ((this->state_ == 0) && (state == 1)) {
-        this->new_ = true;
+    if ((state_ == 0) && (state == 1)) {
+        new_ = true;
     }
-    this->state_ = state;
+    state_ = state;
 }
 
 // M:data.SponsorData.Draw_sponsorChara(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32)
@@ -206,7 +202,7 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
                                     pls::cs::Int32 dx, pls::cs::Int32 dy) {
     SponsorData::ensure_initialized();
 
-    ([&]() -> void {
+    {
         auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
         pls::cs::Ref<pls::kairo::Image> cs_arg0 =
             require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
@@ -220,7 +216,7 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
             throw pls::cs::NullReferenceException();
         }
         cs_receiver->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
-    }());
+    }
 }
 
 // M:data.SponsorData.GetIncome
@@ -228,11 +224,11 @@ std::int32_t SponsorData::GetIncome() {
     SponsorData::ensure_initialized();
 
     return ([&]() -> std::int32_t {
-        std::int32_t cs_arg0 = this->satisfactPoint_;
+        std::int32_t cs_arg0 = satisfactPoint_;
         std::int32_t cs_arg1 = 0;
         std::int32_t cs_arg2 = 100;
-        std::int32_t cs_arg3 = this->income_.get_Item(0);
-        std::int32_t cs_arg4 = this->income_.get_Item(1);
+        std::int32_t cs_arg3 = income_[0];
+        std::int32_t cs_arg4 = income_[1];
         bool cs_arg5 = true;
         return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
     }());
@@ -244,22 +240,22 @@ void SponsorData::UpdateSatisFactPoint() {
 
     pls::cs::Ref<TeamData> teamData =
         require(SponsorData::apdat_())
-            ->tData_.get_Item(require(require(SponsorData::udat_())->gm_)->teamId_.get_Item(0));
+            ->tData_.get_Item(require(require(SponsorData::udat_())->gm_)->teamId_[0]);
     pls::cs::Ref<TeamData> teamData2 =
         require(SponsorData::apdat_())
-            ->tData_.get_Item(require(require(SponsorData::udat_())->gm_)->teamId_.get_Item(1));
+            ->tData_.get_Item(require(require(SponsorData::udat_())->gm_)->teamId_[1]);
     bool flag = false;
     bool flag2 = false;
     bool flag3 = false;
     if ([&]() -> bool {
-            auto cs_left = require(require(SponsorData::udat_())->gm_)->score_.get_Item(0);
-            auto cs_right = require(require(SponsorData::udat_())->gm_)->score_.get_Item(1);
+            auto cs_left = require(require(SponsorData::udat_())->gm_)->score_[0];
+            auto cs_right = require(require(SponsorData::udat_())->gm_)->score_[1];
             return (cs_left > cs_right);
         }()) {
         flag = true;
     } else if ([&]() -> bool {
-                   auto cs_left = require(require(SponsorData::udat_())->gm_)->score_.get_Item(0);
-                   auto cs_right = require(require(SponsorData::udat_())->gm_)->score_.get_Item(1);
+                   auto cs_left = require(require(SponsorData::udat_())->gm_)->score_[0];
+                   auto cs_right = require(require(SponsorData::udat_())->gm_)->score_[1];
                    return (cs_left == cs_right);
                }()) {
         flag2 = true;
@@ -285,12 +281,11 @@ void SponsorData::UpdateSatisFactPoint() {
         pls::cs::Int32 c2min = game::GameUtil::RateConvert(x3, 0, 1000, 5, 1, true);
         pls::cs::Int32 c2max = game::GameUtil::RateConvert(x3, 0, 1000, 20, 3, true);
         pls::cs::Int32 num = game::GameUtil::RateConvert(x2, 0, 1000, c2min, c2max, true);
-        ([&]() {
+        {
             auto cs_target = sponsorData;
             auto cs_value = main::AppData::Clamp((require(sponsorData)->satisfactPoint_ + num), 0, 100);
             require(cs_target)->satisfactPoint_ = cs_value;
-            return cs_value;
-        }());
+        }
     }
 }
 
@@ -298,13 +293,13 @@ void SponsorData::UpdateSatisFactPoint() {
 pls::cs::String SponsorData::GetDifficultStr() {
     SponsorData::ensure_initialized();
 
-    if (this->difficult_ < 50) {
-        return SponsorData::difficultStr().get_Item(0);
+    if (difficult_ < 50) {
+        return SponsorData::difficultStr()[0];
     }
-    if (this->difficult_ < 100) {
-        return SponsorData::difficultStr().get_Item(1);
+    if (difficult_ < 100) {
+        return SponsorData::difficultStr()[1];
     }
-    return SponsorData::difficultStr().get_Item(2);
+    return SponsorData::difficultStr()[2];
 }
 
 // M:data.SponsorData.IsExistNew
@@ -337,7 +332,7 @@ void SponsorData::RemoveNew() {
 bool SponsorData::IsNew() {
     SponsorData::ensure_initialized();
 
-    if (this->new_) {
+    if (new_) {
         return true;
     }
     return false;

@@ -119,6 +119,7 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Diagnóstico rápido da tradução | `python tools/translate --assembly Assembly-CSharp --bootstrap-main --diagnostics-only --original-managed MANAGED` | ~40 s; `config/phase2-game-diagnostics.json` |
 | Amostra do modo legível (critério 5) | `python translator/readable.py sample --original-managed MANAGED` | ~8 min; grava em `build/readable-sample/` e copia as três classes para `docs/readable-sample/`; nada em `config/` nem `src/` |
 | Diferencial do modo legível | `python translator/readable.py lowering` | ~4 min; fixtures de rebaixamento emitidas legíveis contra o Mono (1.715) |
+| Tipos numéricos legíveis (C1) | `python tools/test_readable_numeric.py` | segundos; `Int32`/`Single`/`FloatEval` (wrap, exceções, estreitamento); a regressão ARM de ponto flutuante (`tools/test_arm_float_model.py`) também roda em modo legível |
 | Simbolizar pilha ARM | `arm-none-eabi-addr2line -f -C -i -e <elf> <endereços>` | em `C:/devkitPro/devkitARM/bin` |
 
 Nomes do C++ gerado são hashes (`cs_<hash>`); para achar o método original,

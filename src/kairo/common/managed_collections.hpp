@@ -1,5 +1,6 @@
 #pragma once
 #include "semantic_runtime.hpp"
+#include "numeric_types.hpp"
 
 namespace pls::cs {
 template<class T,class=void>struct has_equal_operator : std::false_type {};
@@ -46,6 +47,11 @@ template<class T>struct Box : Object {
     }
 };
 
+// Readable numeric types box as the CLR primitive they stand for.
+template<class T>Ref<Object> box(T value);
+inline Ref<Object> box(Int32 value);
+inline Ref<Object> box(Single value);
+inline Ref<Object> box(FloatEval value);
 template<class T>Ref<Object> box(T value) {
     if constexpr(is_shared_ref<T>::value) {
         auto object=pls::cs::dynamic_pointer_cast<Object>(value);
@@ -54,6 +60,9 @@ template<class T>Ref<Object> box(T value) {
     else if constexpr(has_managed_object<T>::value)return value.as_object();
     else return make_ref<Box<T>>(std::move(value));
 }
+inline Ref<Object> box(Int32 value) { return box(value.value); }
+inline Ref<Object> box(Single value) { return box(value.value); }
+inline Ref<Object> box(FloatEval value) { return box(static_cast<float>(value)); }
 inline Ref<Object>box(std::nullptr_t){return nullptr;}
 template<class T>T unbox(const Ref<Object>&value) {
     if constexpr(is_shared_ref<T>::value) {

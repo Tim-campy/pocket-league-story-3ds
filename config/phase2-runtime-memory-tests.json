@@ -14,12 +14,12 @@
     "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
     "src/kairo/api/runtime_memory.hpp": "f7259db3b1b33cf116351b6c91091f813e2e31040cffb2f3b603c177d620076c",
     "src/kairo/platform/sdl/runtime_memory.hpp": "7569bdc728888006763d32a2b8e10596205354529e819f7f0b745f6b6a7ae549",
-    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
+    "src/kairo/common/semantic_runtime.hpp": "a0b7fb62b62878e85dd554be07d3ed6d3f30353177232fc6d2258f8c9a34f14b",
     "tools/test_runtime_memory.py": "a9dd6eb8b7a4171ab585de4b0009b90ecb9ecebfb8d76bce87bfa9716b40b18d"
   },
   "native_executable": {
     "path": "build/runtime-memory-fixtures/heap-fixtures.exe",
-    "sha256": "6cc5d21449c35b8cad1a30e2867bcf83ac588c01a0f72e933593015c38236c1c"
+    "sha256": "723702655878da8c200da2934d2de05761a3ff870b205e80caf57b419067f80c"
   },
   "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "verified_boundary_ids": [],

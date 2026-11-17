@@ -30,10 +30,10 @@
     "tests/kairo/graphics_api_test.cpp": "f7e65b44fe8bbd806a51a4bdf095f07e6a80b670bf769ac2dc0ab3117b2c74ce",
     "tests/kairo/asset_catalog_test.cpp": "b8655c27a68999031124fd3fa6232669e05fee5d42f60338a0dde9c97179b866",
     "tests/kairo/asset_path_test.cpp": "9c9f2a46d2a1f6480fe2d9956728d9745698b17620ad9a2c455239dc61ea4987",
-    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
+    "src/kairo/common/semantic_runtime.hpp": "a0b7fb62b62878e85dd554be07d3ed6d3f30353177232fc6d2258f8c9a34f14b",
     "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
-    "src/kairo/common/managed_collections.hpp": "ebf5e1096fa5e59eb75287b6a787fb0cbe13ab0417057ca32d3cb87e6ed8034a",
+    "src/kairo/common/managed_collections.hpp": "89b085f02f2a28c9febe055c76d1ada453b3db1ef27472517039e2e911753512",
     "src/kairo/common/managed_dictionary.hpp": "dfda0326f26577190c474b819fb2c6e440398b59b9890a61e0c8c136db36286d",
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66",
     "src/kairo/common/managed_exceptions.hpp": "02d9bfd7def6843ee9034473bbc7f5e3ccf1cf2b1df81b3a645005e7ec1585be",
@@ -63,10 +63,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "ec18bff7c4ec0bb029f3c313e10c05f3b21a80192e504f5e53de2ec8f1890252",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "7e4f8ee0f203a49d1a9fbf44229fed2c7c80af5418de291ff733fae1705ce40b"
+    "build/graphics-tests/GraphicsOracle.dll": "c533eef4e425ef78dae2c9bb06fff5b6cb61339be3f5624cbd7d51f656797a78",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "c961131d25bde3990e4717d9ddab374c8208ea675eaf055319011e7b9c7f41f5"
   },
-  "executable_sha256": "c7992dd7fe9b5799cb221d401e28d06a4857b831e670752dbcb7f186fb1b170b",
+  "executable_sha256": "0ca44c258e64c9a2e35b730d78e71e06d35b125aa9f32299811c56c5f58fe0ce",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

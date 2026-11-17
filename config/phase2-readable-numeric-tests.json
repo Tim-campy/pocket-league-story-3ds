@@ -1,0 +1,18 @@
+{
+  "operation": "readable-numeric-types",
+  "status": "PASS",
+  "checks": 23,
+  "failures": 0,
+  "inputs": {
+    "tests/kairo/numeric_types_fixtures.cpp": "6af26ca3eb602636a3fa14255f9707c9fcb433fad1e542a87c12b4af0cfddbde",
+    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
+    "src/kairo/common/managed_exceptions.cpp": "8b3dee34e87d20c13d5ebadac7765f85035896eb6795afacdc48e31db3d4ab07",
+    "src/kairo/common/numeric_types.hpp": "7fb57f189ffd47de1595043d77074c80877a7d68e2e72cae6a7073f69eb88e18"
+  },
+  "native_executable": {
+    "path": "build/readable-numeric-tests/numeric-fixtures.exe",
+    "sha256": "34531fd0516756f84a4d8b47833d1fb702244fc8426d78a4d0e6f531755a011f"
+  },
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

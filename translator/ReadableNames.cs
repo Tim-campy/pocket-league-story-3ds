@@ -423,6 +423,7 @@ sealed partial class Lowerer {
         var suffix=NumericSuffix(type);var narrow=suffix=="";if(narrow&&!Integral(type))return null;if(narrow)suffix="i32";
         string Calculation(string value){var c="pls::cs::"+(add?"add_":"sub_")+suffix+"("+value+", 1)";return narrow?"pls::cs::cast_integral<"+Type(type,target)+">("+c+")":c;}
         string storage;
+        if(TypedScalar(target))return (add?"++":"--")+ReadLocal(symbol!);
         if(symbol is ILocalSymbol or IParameterSymbol)storage=ReadLocal(symbol);
         else if(symbol is IFieldSymbol staticField&&SourceStatic(staticField))storage=StaticField(staticField,target);
         else if(symbol is IFieldSymbol field&&PlainField(field)&&PureReceiver(target) is string receiver){RequireClass(field.ContainingType,target);storage=receiver+"->"+NativeFieldMember(field,target);}
@@ -478,7 +479,14 @@ sealed partial class Lowerer {
             if(!stable)return null;
             return Postfix(Expr(element.Expression))+".set_Item("+Expr(index)+", "+Converted(a.Right,type)+")";
         }else return null;
-        if(simple)return storage+" = "+Converted(a.Right,type);
+        if(simple)return storage+" = "+(symbol is ILocalSymbol or IParameterSymbol?ScalarValue(a.Right,type):Converted(a.Right,type));
+        // Typed scalar: C# compound operator kept (wrap/narrowing in the operator).
+        if(symbol is ILocalSymbol or IParameterSymbol&&TypedScalar(a.Left)){
+            var rightType=model.GetTypeInfo(a.Right).Type;var integer=type?.SpecialType==SpecialType.System_Int32;
+            var arithmetic=a.Kind() is SyntaxKind.AddAssignmentExpression or SyntaxKind.SubtractAssignmentExpression or SyntaxKind.MultiplyAssignmentExpression or SyntaxKind.DivideAssignmentExpression||integer&&a.Kind() is SyntaxKind.ModuloAssignmentExpression;
+            var operand=integer?rightType?.SpecialType==SpecialType.System_Int32||Integral(rightType)&&rightType?.SpecialType is SpecialType.System_Byte or SpecialType.System_SByte or SpecialType.System_Int16 or SpecialType.System_UInt16 or SpecialType.System_Char:rightType?.SpecialType is SpecialType.System_Single or SpecialType.System_Int32;
+            if(arithmetic&&operand)return storage+" "+a.OperatorToken.Text+" "+(integer?Converted(a.Right,type):rightType?.SpecialType==SpecialType.System_Single?Expr(a.Right):Converted(a.Right,type));
+        }
         return storage+" = "+Cast(CompoundOperation(a,type,storage,Expr(a.Right)),type,type,a);
     }
     // Readable-only helpers, emitted next to the FrameworkHelpers of each assembly.

@@ -490,7 +490,7 @@
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/sound.hpp": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78",
     "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
-    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e",
+    "src/kairo/common/semantic_runtime.hpp": "a0b7fb62b62878e85dd554be07d3ed6d3f30353177232fc6d2258f8c9a34f14b",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/platform/sdl/audio.hpp": "48f5a2e458820594abcc6653538034e43e4c3d87184dba64ce0083d7dfd0ac9e"
@@ -511,16 +511,16 @@
   ],
   "native_executable": {
     "path": "build/sound-tests/sound-fixtures.exe",
-    "sha256": "482c68648b5461e3aa5a2dd187312235403a5ceda2d41b8ebf30554d4f8cc883"
+    "sha256": "af5b09c0ee12172b0cbf5a84ff17f79ce731e7470d9e0589bd8b69e55b6079d2"
   },
   "oracle_binaries": [
     {
       "path": "build/sound-tests/SoundOracle.dll",
-      "sha256": "6ccdd3767eb439fe81407b9a8e2af201a02f360719cd463731be3b6c026ecd9c"
+      "sha256": "b4555dbd1be4cd9a0449fae242f38fa5aadea11059fd9755be7c3b2246765172"
     },
     {
       "path": "build/sound-tests/SoundOracle-mono.exe",
-      "sha256": "d0cb3f6eab5e43eb2fbc9d25a3520f734ee3069920d70454ca2ea564d0640b1f"
+      "sha256": "f1f973a4e6b24b682ce5d1836bc1b38b91d7e402f17680ab70ff8bcaf6fd651a"
     }
   ],
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",

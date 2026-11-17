@@ -861,4 +861,10 @@ template<class T>void release_value(T&value){
     else if constexpr(has_managed_object<T>::value)value=T{};
     else if constexpr(has_release_edges<T>::value)value.release_edges();
 }
+[[noreturn]] inline void throw_divide_by_zero() { throw DivideByZeroException(); }
 } // namespace pls::cs
+#include "numeric_types.hpp"
+namespace pls::cs {
+// Readable numeric types in deduced-source helpers: convert from the plain value.
+template<class To> To cast_integral(Int32 value) noexcept { return cast_integral<To,std::int32_t>(value.value); }
+}

@@ -117,7 +117,7 @@ struct TitleForm : MyFormBase {
 
     static bool Resume(pls::cs::Ref<TitleForm> self);
 
-    static void SetTouchValue(pls::cs::Ref<TitleForm> self, std::int32_t type, std::int32_t value);
+    static void SetTouchValue(pls::cs::Ref<TitleForm> self, pls::cs::Int32 type, pls::cs::Int32 value);
 
     static pls::cs::String ToString(pls::cs::Ref<TitleForm> self);
 
@@ -147,13 +147,13 @@ struct TitleForm : MyFormBase {
 
     static void _draw(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
 
-    static void ChangeState(pls::cs::Ref<TitleForm> self, std::int32_t state);
+    static void ChangeState(pls::cs::Ref<TitleForm> self, pls::cs::Int32 state);
 
     static void Update_titleAnime(pls::cs::Ref<TitleForm> self);
 
     static void SetAppearCnt(pls::cs::Ref<TitleForm> self);
 
-    static void ResetHobjExist(pls::cs::Ref<TitleForm> self, std::int32_t index);
+    static void ResetHobjExist(pls::cs::Ref<TitleForm> self, pls::cs::Int32 index);
 
     static void Draw_titleAnime(pls::cs::Ref<TitleForm> self, pls::cs::Ref<pls::kairo::Graphics> g);
 
@@ -161,7 +161,7 @@ struct TitleForm : MyFormBase {
 
     static void UpdateKairoAdClickNum(pls::cs::Ref<TitleForm> self);
 
-    static void UpdateKairoAdClickNum(pls::cs::Ref<TitleForm> self, std::int32_t addClickNum);
+    static void UpdateKairoAdClickNum(pls::cs::Ref<TitleForm> self, pls::cs::Int32 addClickNum);
 };
 } // namespace form
 } // namespace pls::game

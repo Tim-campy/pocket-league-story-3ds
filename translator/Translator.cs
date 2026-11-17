@@ -127,6 +127,45 @@ sealed partial class Lowerer {
     SemanticModel model=null!;
     string current="";
     HashSet<ISymbol> capturedVariables=new(SymbolEqualityComparer.Default);
+    // Readable numeric types (criterion 5, C1): locals and by-value parameters of type
+    // int/float are declared pls::cs::Int32/Single, and arithmetic with at least one
+    // such operand is written with operators (src/kairo/common/numeric_types.hpp).
+    readonly HashSet<ISymbol> typedLocals=new(SymbolEqualityComparer.Default);
+    readonly HashSet<SyntaxNode> typedExpressions=new();
+    readonly Dictionary<ISymbol,bool> referenceUses=new(SymbolEqualityComparer.Default);
+    string? ReadableScalar(ITypeSymbol? t)=>!readable?null:t?.SpecialType==SpecialType.System_Int32?"pls::cs::Int32":ArmFloat&&t?.SpecialType==SpecialType.System_Single?"pls::cs::Single":null;
+    // A variable passed by ref/out (or bound by ref) keeps the plain C++ type, so that
+    // it can bind to int&/float& parameters of any callee.
+    bool UsedByReference(ISymbol symbol){
+        if(referenceUses.TryGetValue(symbol,out var known))return known;
+        var used=false;
+        foreach(var reference in symbol.ContainingSymbol.DeclaringSyntaxReferences){
+            var root=reference.GetSyntax();var semantic=compilation.GetSemanticModel(root.SyntaxTree);
+            foreach(var node in root.DescendantNodes()){
+                ExpressionSyntax? target=node is ArgumentSyntax argument&&argument.RefKindKeyword!=default?argument.Expression:node is RefExpressionSyntax refExpression?refExpression.Expression:null;
+                while(target is ParenthesizedExpressionSyntax parenthesized)target=parenthesized.Expression;
+                if(target is IdentifierNameSyntax identifier&&identifier.Identifier.ValueText==symbol.Name&&SymbolEqualityComparer.Default.Equals(semantic.GetSymbolInfo(identifier).Symbol,symbol)){used=true;break;}
+            }
+            if(used)break;
+        }
+        referenceUses[symbol]=used;return used;
+    }
+    bool ReadableParameter(IParameterSymbol p)=>ReadableScalar(p.Type)!=null&&p.RefKind==RefKind.None&&p.ContainingSymbol is IMethodSymbol{MethodKind:MethodKind.Ordinary or MethodKind.Constructor} m&&!m.IsGenericMethod&&!m.ContainingType.IsGenericType&&m.DeclaringSyntaxReferences.Length!=0&&!UsedByReference(p);
+    string ParameterDeclaration(IParameterSymbol p)=>ReadableParameter(p)?ReadableScalar(p.Type)!:ParameterType(p);
+    bool TypedScalar(ExpressionSyntax e){
+        if(!readable)return false;
+        while(e is ParenthesizedExpressionSyntax parenthesized)e=parenthesized.Expression;
+        if(typedExpressions.Contains(e))return true;
+        var s=model.GetSymbolInfo(e).Symbol;
+        if(s is ILocalSymbol)return typedLocals.Contains(s)&&!capturedVariables.Contains(s);
+        if(s is IParameterSymbol p)return ReadableParameter(p)&&!capturedVariables.Contains(p)&&methods.TryGetValue(current,out var owner)&&SymbolEqualityComparer.Default.Equals(p.ContainingSymbol,owner);
+        return false;
+    }
+    // Same-typed scalar value without the narrowing cast when it is already typed.
+    string ScalarValue(ExpressionSyntax e,ITypeSymbol? to){
+        if(readable&&ReadableScalar(to)!=null&&SymbolEqualityComparer.Default.Equals(model.GetTypeInfo(e).Type,to)){var text=Expr(e);if(TypedScalar(e))return text;}
+        return Converted(e,to);
+    }
     string ReadLocal(ISymbol symbol)=>capturedVariables.Contains(symbol)?Local(symbol)+"_cell->value":Local(symbol);
     static ITypeSymbol VariableType(ISymbol symbol)=>symbol is ILocalSymbol local?local.Type:((IParameterSymbol)symbol).Type;
     string CellType(ISymbol symbol,SyntaxNode site)=>"pls::cs::Ref<pls::cs::Cell<"+Type(VariableType(symbol),site)+">>";
@@ -677,7 +716,9 @@ sealed partial class Lowerer {
                 return Increment(post.Operand,post.IsKind(SyntaxKind.PostIncrementExpression),false);
             case ConditionalExpressionSyntax c:
                 var ct=model.GetTypeInfo(c).Type;
-                return "("+Expr(c.Condition)+" ? "+EvaluationOperand(c.WhenTrue,ct)+" : "+EvaluationOperand(c.WhenFalse,ct)+")";
+                {var whenTrue=EvaluationOperand(c.WhenTrue,ct);var whenFalse=EvaluationOperand(c.WhenFalse,ct);
+                if(ReadableScalar(ct)=="pls::cs::Int32"&&TypedScalar(c.WhenTrue)!=TypedScalar(c.WhenFalse)){if(TypedScalar(c.WhenTrue))whenFalse="pls::cs::Int32("+whenFalse+")";else whenTrue="pls::cs::Int32("+whenTrue+")";}
+                return "("+Expr(c.Condition)+" ? "+whenTrue+" : "+whenFalse+")";}
             case AssignmentExpressionSyntax assignment:return Assignment(assignment);
             case InvocationExpressionSyntax invocation:return Invoke(invocation);
             case ConditionalAccessExpressionSyntax conditional:
@@ -864,6 +905,16 @@ sealed partial class Lowerer {
             return "("+l+" "+token+" "+r+")";
         }
         result=Operation("cs_left","cs_right");
+        if(readable&&OrderFree(b)&&ReadableScalar(type) is string scalarType&&(TypedScalar(b.Left)||TypedScalar(b.Right))){
+            var integer=scalarType=="pls::cs::Int32";
+            var typedOperator=integer?b.Kind() is SyntaxKind.AddExpression or SyntaxKind.SubtractExpression or SyntaxKind.MultiplyExpression or SyntaxKind.DivideExpression or SyntaxKind.ModuloExpression or SyntaxKind.LeftShiftExpression or SyntaxKind.RightShiftExpression or SyntaxKind.BitwiseAndExpression or SyntaxKind.BitwiseOrExpression or SyntaxKind.ExclusiveOrExpression
+                :b.Kind() is SyntaxKind.AddExpression or SyntaxKind.SubtractExpression or SyntaxKind.MultiplyExpression or SyntaxKind.DivideExpression;
+            if(typedOperator){
+                string Operand(ExpressionSyntax operand,string evaluated)=>integer?evaluated:SymbolEqualityComparer.Default.Equals(model.GetTypeInfo(operand).Type,type)?Expr(operand):Converted(operand,type);
+                typedExpressions.Add(b);
+                return "("+Operand(b.Left,left)+" "+b.OperatorToken.Text+" "+Operand(b.Right,right)+")";
+            }
+        }
         // Readable: both operands inline when their evaluation order cannot be observed.
         // A bool &, |, ^ would promote to int in C++, so it keeps the typed lambda.
         if(readable&&OrderFree(b)&&!(type?.SpecialType==SpecialType.System_Boolean&&b.Kind() is SyntaxKind.BitwiseAndExpression or SyntaxKind.BitwiseOrExpression or SyntaxKind.ExclusiveOrExpression))return Operation(left,right);
@@ -871,6 +922,7 @@ sealed partial class Lowerer {
     }
     string Increment(ExpressionSyntax n,bool add,bool prefix) {
         var symbol=model.GetSymbolInfo(n).Symbol;var type=model.GetTypeInfo(n).Type;
+        if(TypedScalar(n))return prefix?(add?"++":"--")+ReadLocal(symbol!):ReadLocal(symbol!)+(add?"++":"--");
         if(readable&&(symbol is ILocalSymbol||symbol is IParameterSymbol)&&!capturedVariables.Contains(symbol)&&NumericSuffix(type)!="")return (prefix?"pre_":"post_")+(add?"increment":"decrement")+"("+ReadLocal(symbol)+")";
         if(symbol is IFieldSymbol writeField&&(externalFields.GetValueOrDefault(Id(writeField))?.StartsWith("readonly:",StringComparison.Ordinal)??false))throw new Unsupported(n,"native field has no write binding");
         string setup="",target;bool shared=false;
@@ -1495,9 +1547,12 @@ sealed partial class Lowerer {
         foreach(var d in n.Variables) {
             var symbol=model.GetDeclaredSymbol(d) as ILocalSymbol;
             if(symbol==null)throw new Unsupported(d,"local declaration symbol not found");
-            var captured=capturedVariables.Contains(symbol);var t=captured?CellType(symbol,d):Type(symbol.Type,d);if(type!=null&&type!=t)throw new Unsupported(n,"mixed declaration types");
+            var captured=capturedVariables.Contains(symbol);
+            var scalar=!captured&&!hoistLocals?ReadableScalar(symbol.Type):null;if(scalar!=null&&UsedByReference(symbol))scalar=null;
+            var t=captured?CellType(symbol,d):scalar??Type(symbol.Type,d);if(type!=null&&type!=t)throw new Unsupported(n,"mixed declaration types");
+            if(scalar!=null)typedLocals.Add(symbol);
             builder.Append(type==null?(hoistLocals?"":t+" "):", ");type=t;
-            var value=d.Initializer==null?Type(symbol.Type,d)+"{}":Converted(d.Initializer.Value,symbol.Type);
+            var value=d.Initializer==null?(scalar??Type(symbol.Type,d))+"{}":scalar!=null?ScalarValue(d.Initializer.Value,symbol.Type):Converted(d.Initializer.Value,symbol.Type);
             builder.Append(Local(symbol)+(captured?"_cell":"")+" = "+(captured?CellAllocation(symbol,value,d):value));
         }
         return builder.ToString();
@@ -1579,7 +1634,7 @@ sealed partial class Lowerer {
             var constructor=method.MethodKind==MethodKind.Constructor;
             var result=constructor?Type(method.ContainingType,declaration):Type(method.ReturnType,declaration);
             foreach(var p in method.Parameters)Type(p.Type,declaration);
-            var parameterList=method.Parameters.Select(p=>ParameterType(p)+" "+Local(p)).ToList();
+            var parameterList=method.Parameters.Select(p=>(readable?ParameterDeclaration(p):ParameterType(p))+" "+Local(p)).ToList();
             if(!method.IsStatic&&!constructor)parameterList.Insert(0,Type(method.ContainingType,declaration)+(RecordStruct(method.ContainingType)?"*":"")+" cs_this");
             var parameters=String.Join(",",parameterList);
             string template=Template(TypeParameters(method));
@@ -1748,7 +1803,7 @@ sealed partial class Lowerer {
         foreach(var id in usedFields.OrderBy(x=>x))header.Append(TypeName(fieldSymbols[id].Type)+"& "+Name(fieldSymbols[id])+"();\n");
         foreach(var pair in emitted.OrderBy(p=>p.Key)) {
             var method=methods[pair.Key];
-            var ctor=method.MethodKind==MethodKind.Constructor;var parameters=method.Parameters.Select(p=>ParameterType(p)+" "+Local(p)).ToList();
+            var ctor=method.MethodKind==MethodKind.Constructor;var parameters=method.Parameters.Select(p=>(readable?ParameterDeclaration(p):ParameterType(p))+" "+Local(p)).ToList();
             if(!method.IsStatic&&!ctor)parameters.Insert(0,TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"*":"")+" cs_this");
             header.Append(Template(TypeParameters(method))+TypeName(ctor?method.ContainingType:method.ReturnType)+" "+Name(method)+"("+String.Join(",",parameters)+");\n");
             if(ctor)header.Append(Template(TypeParameters(method))+"void "+Name(method)+"_init("+TypeName(method.ContainingType)+(RecordStruct(method.ContainingType)?"* cs_this":" cs_this")+(parameters.Count==0?"":","+String.Join(",",parameters))+");\n");

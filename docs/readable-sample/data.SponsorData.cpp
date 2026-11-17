@@ -128,37 +128,36 @@ void SponsorData::Load(pls::cs::Ref<SponsorData> self, pls::cs::String src) {
 
     require(self);
 
-    std::int32_t num = 0;
+    pls::cs::Int32 num = 0;
     pls::cs::Array<pls::cs::String> array =
         generated::kairo::unity::util::StringUtil::Split(src, literal(u"\t"));
-    self->id_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->name_ = array.get_Item(post_increment(num));
-    self->charaIndex_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->privilegeType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->privilegeValue_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->costType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->cost_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
+    self->id_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->name_ = array.get_Item(num++);
+    self->charaIndex_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->privilegeType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->privilegeValue_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->costType_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->cost_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
     ([&]() {
         auto cs_target = self->income_;
         auto cs_index = 0;
-        auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
+        auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
         cs_target.set_Item(cs_index, cs_value);
         return cs_value;
     }());
     ([&]() {
         auto cs_target = self->income_;
         auto cs_index = 1;
-        auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
+        auto cs_value = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
         cs_target.set_Item(cs_index, cs_value);
         return cs_value;
     }());
-    self->satisfactDifficult_ =
-        generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->difficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->feelPtInt_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
-    self->explain_ = array.get_Item(post_increment(num));
-    self->execsScript_ = EventData::ReadScript(array.get_Item(post_increment(num)));
-    self->flag_ = generated::java::lang::JInteger::ParseInt(array.get_Item(post_increment(num)));
+    self->satisfactDifficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->difficult_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->feelPtInt_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
+    self->explain_ = array.get_Item(num++);
+    self->execsScript_ = EventData::ReadScript(array.get_Item(num++));
+    self->flag_ = generated::java::lang::JInteger::ParseInt(array.get_Item(num++));
     self->feelPt_ = self->feelPtInt_;
 }
 
@@ -205,7 +204,7 @@ void SponsorData::Deserialize(pls::cs::Ref<SponsorData> self,
 }
 
 // M:data.SponsorData.ChangeState(System.Int32)
-void SponsorData::ChangeState(pls::cs::Ref<SponsorData> self, std::int32_t state) {
+void SponsorData::ChangeState(pls::cs::Ref<SponsorData> self, pls::cs::Int32 state) {
     SponsorData::ensure_initialized();
 
     require(self);
@@ -217,18 +216,18 @@ void SponsorData::ChangeState(pls::cs::Ref<SponsorData> self, std::int32_t state
 }
 
 // M:data.SponsorData.Draw_sponsorChara(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32)
-void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, std::int32_t charaId,
-                                    std::int32_t dx, std::int32_t dy) {
+void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 charaId,
+                                    pls::cs::Int32 dx, pls::cs::Int32 dy) {
     SponsorData::ensure_initialized();
 
     ([&]() -> void {
         auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
         pls::cs::Ref<pls::kairo::Image> cs_arg0 =
             require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
-        float cs_arg1 = static_cast<float>(pls::cs::sub_i32(dx, 10));
-        float cs_arg2 = static_cast<float>(pls::cs::sub_i32(dy, 30));
-        std::int32_t cs_arg3 = pls::cs::mul_i32(20, (pls::cs::mod_i32(charaId, 12)));
-        std::int32_t cs_arg4 = pls::cs::mul_i32(30, (pls::cs::div_i32(charaId, 12)));
+        float cs_arg1 = static_cast<float>((dx - 10));
+        float cs_arg2 = static_cast<float>((dy - 30));
+        std::int32_t cs_arg3 = (20 * ((charaId % 12)));
+        std::int32_t cs_arg4 = (30 * ((charaId / 12)));
         std::int32_t cs_arg5 = 20;
         std::int32_t cs_arg6 = 30;
         if (!cs_receiver) {
@@ -286,27 +285,25 @@ void SponsorData::UpdateSatisFactPoint() {
     if (flag3) {
         return;
     }
-    std::int32_t x = pls::cs::sub_i32(require(teamData)->warPotential_, require(teamData2)->warPotential_);
-    std::int32_t x2 = 0;
+    pls::cs::Int32 x = pls::cs::sub_i32(require(teamData)->warPotential_, require(teamData2)->warPotential_);
+    pls::cs::Int32 x2 = 0;
     if (flag) {
         x2 = game::GameUtil::RateConvert(x, -50, 50, 1000, 333, true);
     } else if (flag2) {
         x2 = game::GameUtil::RateConvert(x, -50, 50, 333, 0, true);
     }
-    for (std::int32_t i = 0; i < (require(SponsorData::apdat_())->sponsorData_).length();
-         i = pls::cs::add_i32(i, 1)) {
+    for (pls::cs::Int32 i = 0; i < (require(SponsorData::apdat_())->sponsorData_).length(); ++i) {
         pls::cs::Ref<SponsorData> sponsorData = require(SponsorData::apdat_())->sponsorData_.get_Item(i);
         if (require(sponsorData)->state_ != 2) {
             continue;
         }
-        std::int32_t x3 = require(sponsorData)->satisfactDifficult_;
-        std::int32_t c2min = game::GameUtil::RateConvert(x3, 0, 1000, 5, 1, true);
-        std::int32_t c2max = game::GameUtil::RateConvert(x3, 0, 1000, 20, 3, true);
-        std::int32_t num = game::GameUtil::RateConvert(x2, 0, 1000, c2min, c2max, true);
+        pls::cs::Int32 x3 = require(sponsorData)->satisfactDifficult_;
+        pls::cs::Int32 c2min = game::GameUtil::RateConvert(x3, 0, 1000, 5, 1, true);
+        pls::cs::Int32 c2max = game::GameUtil::RateConvert(x3, 0, 1000, 20, 3, true);
+        pls::cs::Int32 num = game::GameUtil::RateConvert(x2, 0, 1000, c2min, c2max, true);
         ([&]() {
             auto cs_target = sponsorData;
-            auto cs_value =
-                main::AppData::Clamp(pls::cs::add_i32(require(sponsorData)->satisfactPoint_, num), 0, 100);
+            auto cs_value = main::AppData::Clamp((require(sponsorData)->satisfactPoint_ + num), 0, 100);
             require(cs_target)->satisfactPoint_ = cs_value;
             return cs_value;
         }());
@@ -336,7 +333,7 @@ bool SponsorData::IsExistNew() {
         return false;
     }
     pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
-    for (std::int32_t i = 0; i < (require(instance)->sponsorData_).length(); i = pls::cs::add_i32(i, 1)) {
+    for (pls::cs::Int32 i = 0; i < (require(instance)->sponsorData_).length(); ++i) {
         if (SponsorData::IsNew(require(require(instance)->sponsorData_.get_Item(i)))) {
             return true;
         }
@@ -349,7 +346,7 @@ void SponsorData::RemoveNew() {
     SponsorData::ensure_initialized();
 
     pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
-    for (std::int32_t i = 0; i < (require(instance)->sponsorData_).length(); i = pls::cs::add_i32(i, 1)) {
+    for (pls::cs::Int32 i = 0; i < (require(instance)->sponsorData_).length(); ++i) {
         require(require(instance)->sponsorData_.get_Item(i))->new_ = false;
     }
 }

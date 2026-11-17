@@ -21,6 +21,7 @@ def main():
     p.add_argument('--output',type=Path,required=True)
     p.add_argument('--model',choices=['binary32','mono-arm-vfp'],required=True)
     p.add_argument('--variant',type=Path)
+    p.add_argument('--readable',action='store_true',help='Emit in readable mode (criterion 5: Int32/Single numeric types)')
     a=p.parse_args();folder=a.output.resolve()
     if not folder.is_relative_to(ROOT/'build') or folder.exists():raise ValueError('Fresh private output required')
     oracle_file=a.oracle if a.oracle else a.results/'report.json'
@@ -47,7 +48,7 @@ def main():
     request=dict(assembly='FloatDiscriminants',sources=[str(source)],
                  references=[str(framework/(n+'.dll')) for n in ['mscorlib','System','System.Core']],
                  selected=['M:FloatDiscriminants.'+n+'(System.Single,System.Single)' for n in names],
-                 output=str(generated),numeric_model=a.model)
+                 output=str(generated),numeric_model=a.model,readable=a.readable)
     request_path=folder/'input.json';report_path=folder/'translation.json'
     request_path.write_text(json.dumps(request,indent=2)+'\n')
     run([runtime,tool,request_path,report_path],folder/'translate.log')
@@ -73,7 +74,7 @@ def main():
     actual=[line.split()[1] for line in output.splitlines()]
     if len(actual)!=36:raise ValueError('Incomplete generated result set')
     rows=[dict(case=row['case'],a=row['a'],expected=row['observed']['binary64_bits'],actual=bits,matched=bits==row['observed']['binary64_bits']) for row,bits in zip(oracle['rows'],actual)]
-    receipt=dict(model=a.model,matched=sum(r['matched'] for r in rows),cases=len(rows),rows=rows,producer=producer,
+    receipt=dict(model=a.model,readable=a.readable,matched=sum(r['matched'] for r in rows),cases=len(rows),rows=rows,producer=producer,
                  source_sha256=hashlib.sha256(source.read_bytes()).hexdigest(),
                  executable_sha256=hashlib.sha256(exe.read_bytes()).hexdigest(),
                  oracle_sha256=hashlib.sha256(oracle_file.read_bytes()).hexdigest())

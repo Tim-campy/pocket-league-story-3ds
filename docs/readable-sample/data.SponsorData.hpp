@@ -76,10 +76,10 @@ struct SponsorData : BaseData {
     static void Deserialize(pls::cs::Ref<SponsorData> self,
                             pls::cs::Ref<generated::java::io::InputStream> stream);
 
-    static void ChangeState(pls::cs::Ref<SponsorData> self, std::int32_t state);
+    static void ChangeState(pls::cs::Ref<SponsorData> self, pls::cs::Int32 state);
 
-    static void Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, std::int32_t charaId, std::int32_t dx,
-                                  std::int32_t dy);
+    static void Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::cs::Int32 charaId,
+                                  pls::cs::Int32 dx, pls::cs::Int32 dy);
 
     static std::int32_t GetIncome(pls::cs::Ref<SponsorData> self);
 

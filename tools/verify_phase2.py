@@ -109,6 +109,7 @@ def main():
         ('tracing-native-roots',['tools/test_tracing_runtime.py']),
         ('float-discriminants-x86',['tools/fp-discriminants/run_x86.py']),
         ('float-arm-emission-regression',['tools/test_arm_float_model.py']),
+        ('readable-numeric-types',['tools/test_readable_numeric.py']),
         ('float-cal-models',['tools/fp-discriminants/cal_models.py']),
         ('tracing-ui-dispatch',['tools/test_ui_dispatch_gc.py','--tracing']),
         ('resource-yield-control-model',['tests/kairo/resource_yield_model.py']),

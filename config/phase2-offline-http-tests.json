@@ -48,7 +48,7 @@
     "tools/test_offline_http.py": "64c55fcce30fd8fbd4756719867758d6f1f7c6d2cda8d95f9fec7a95149fb0ac",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "src/kairo/api/offline_http.hpp": "c39eed01b83d05b14a8156903cb76fdc504b5ace449cc02341653bb1757b714d",
-    "src/kairo/common/semantic_runtime.hpp": "98420ce531fe4d437615f6a932b5bfe36c1c87e4b675733e7e045e6de804598e"
+    "src/kairo/common/semantic_runtime.hpp": "a0b7fb62b62878e85dd554be07d3ed6d3f30353177232fc6d2258f8c9a34f14b"
   },
   "source_manifest": [
     {
@@ -58,7 +58,7 @@
   ],
   "native_executable": {
     "path": "build/offline-http-tests/offline-http-fixtures.exe",
-    "sha256": "be178370155aa80d2d35c2178f5a97a6635ffe4aad03d8f22319c351deb21df0"
+    "sha256": "f890e2e58753f7794a2e24724a73ac03e6a7a29b034eee4694389b85e761a20c"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

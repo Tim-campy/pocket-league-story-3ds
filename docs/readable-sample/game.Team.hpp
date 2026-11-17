@@ -206,7 +206,8 @@ struct Team : pls::cs::Object {
 
     static pls::cs::Ref<Team> create();
 
-    static void Init(pls::cs::Ref<Team> self, bool isUserTeam, std::int32_t team_id, std::int32_t tDataId);
+    static void Init(pls::cs::Ref<Team> self, bool isUserTeam, pls::cs::Int32 team_id,
+                     pls::cs::Int32 tDataId);
 
     static void Update(pls::cs::Ref<Team> self);
 
@@ -246,11 +247,12 @@ struct Team : pls::cs::Object {
     static pls::cs::Ref<Player> GetLastKicker(pls::cs::Ref<Team> self);
 
     static std::int32_t GetSum(pls::cs::Ref<Team> self, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
-                               std::int32_t cx, std::int32_t cy, bool div);
+                               pls::cs::Int32 cx, pls::cs::Int32 cy, bool div);
 
     static pls::cs::Array<std::int32_t> GetMostEvaAddress(pls::cs::Ref<Team> self,
                                                           pls::cs::Array<pls::cs::Array<std::int32_t>> data,
-                                                          std::int32_t cx, std::int32_t cy, std::int32_t num);
+                                                          pls::cs::Int32 cx, pls::cs::Int32 cy,
+                                                          pls::cs::Int32 num);
 
     static void SetMostEvaAddressFromMoveArea(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
                                               pls::cs::Array<std::int32_t> var_out, bool isThroughPass);
@@ -260,29 +262,29 @@ struct Team : pls::cs::Object {
                                                          bool isThroughPass);
 
     static std::int32_t Get_playerPosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                         std::int32_t xi, std::int32_t yi, bool div);
+                                         pls::cs::Int32 xi, pls::cs::Int32 yi, bool div);
 
     static std::int32_t Get_playerPosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                         std::int32_t xi, std::int32_t yi);
+                                         pls::cs::Int32 xi, pls::cs::Int32 yi);
 
     static std::int32_t Get_playerReceivePosEva(pls::cs::Ref<Team> self, pls::cs::Ref<Player> player,
-                                                std::int32_t xi, std::int32_t yi);
+                                                pls::cs::Int32 xi, pls::cs::Int32 yi);
 
-    static void Cal_evaCoatMulti(pls::cs::Ref<Team> self, std::int32_t mode,
-                                 pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                                 std::int32_t cy, pls::cs::Array<float> muliti_param);
+    static void Cal_evaCoatMulti(pls::cs::Ref<Team> self, pls::cs::Int32 mode,
+                                 pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                                 pls::cs::Int32 cy, pls::cs::Array<float> muliti_param);
 
     static void Cal_evaCoatMulti9block(pls::cs::Ref<Team> self,
-                                       pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                                       std::int32_t cy, pls::cs::Array<float> muliti_param);
+                                       pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                                       pls::cs::Int32 cy, pls::cs::Array<float> muliti_param);
 
-    static void Cal_evaCoatAdd(pls::cs::Ref<Team> self, std::int32_t mode,
-                               pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                               std::int32_t cy, pls::cs::Array<std::int32_t> add_param);
+    static void Cal_evaCoatAdd(pls::cs::Ref<Team> self, pls::cs::Int32 mode,
+                               pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                               pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param);
 
     static void Cal_evaCoatAdd9block(pls::cs::Ref<Team> self,
-                                     pls::cs::Array<pls::cs::Array<std::int32_t>> data, std::int32_t cx,
-                                     std::int32_t cy, pls::cs::Array<std::int32_t> add_param);
+                                     pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
+                                     pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param);
 
     static void Amefto(pls::cs::Ref<Team> self);
 

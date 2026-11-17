@@ -237,6 +237,8 @@ def main():
     parser.add_argument('--gc-stress-quarantine-mb',type=int,default=256,help='Poisoned bodies kept unreused up to this many MiB (8 GB host: keep small)')
     parser.add_argument('--trace-method',action='append',default=[],help='Diagnostic runs: print the method stack at the first call of this DocID (repeatable; reported apart from reachability alerts)')
     parser.add_argument('--fast',action='store_true',help='Diagnostic runs with --virtual-clock only: no real-time frame pacing')
+    parser.add_argument('--dual-screen',type=int,metavar='SCALE',help='Phase 3 prototype: 400x240 top + 320x240 bottom windows at this integer scale (1..6)')
+    parser.add_argument('--dual-capture',metavar='DIR:EVERY',help='With --dual-screen: write both screens as BMP every N frames to DIR (keep under build/, never in Git)')
     args=parser.parse_args()
     if args.diagnostic_route is not None:
         if not args.diagnostic_generated or not args.run:parser.error('--diagnostic-route requires a diagnostic run')
@@ -284,6 +286,16 @@ def main():
     if args.diagnostic_key_frame:env['PLS_PC_KEY_FRAMES']=','.join(args.diagnostic_key_frame)
     env.pop('PLS_PC_ROUTE',None);env.pop('PLS_PC_UI_TRACE',None);env.pop('PLS_PC_FAST',None);env.pop('PLS_REACHABILITY_WATCH',None);[env.pop(k,None) for k in ('PLS_GC_STRESS_EVERY','PLS_GC_STRESS_POISON','PLS_GC_STRESS_QUARANTINE_MB')]
     if args.fast:env['PLS_PC_FAST']='1'
+    env.pop('PLS_PC_DUAL_SCREEN',None);env.pop('PLS_PC_DUAL_CAPTURE',None)
+    if args.dual_screen is not None:
+        if not 1<=args.dual_screen<=6:parser.error('--dual-screen scale must be 1..6')
+        env['PLS_PC_DUAL_SCREEN']=str(args.dual_screen)
+    if args.dual_capture:
+        if args.dual_screen is None:parser.error('--dual-capture requires --dual-screen')
+        folder,_,every=args.dual_capture.rpartition(':')
+        target=Path(folder).resolve()
+        if not target.is_relative_to(ROOT/'build') or not every.isdigit() or int(every)<1:parser.error('--dual-capture needs DIR under build/ and EVERY>=1')
+        env['PLS_PC_DUAL_CAPTURE']=str(target)+':'+every
     if args.ui_trace:env['PLS_PC_UI_TRACE']='1'
     diagnostic_source=args.diagnostic_generated.resolve(strict=True)if args.diagnostic_generated else None
     diagnostic_manifest=validate_diagnostic_manifest(diagnostic_source)if diagnostic_source else None

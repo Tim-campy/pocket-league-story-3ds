@@ -8,7 +8,7 @@
     "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
-    "CMakeLists.txt": "8e952294e98214d7dabd3f1d6c1c23f0988a1a13cd845e8d52094b51fc0a8216",
+    "CMakeLists.txt": "8ca01a2d9bbb0471572f0815c0e93738798676a311b502ddd7992b1723590e71",
     "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
     "src/kairo/api/asset_reader.hpp": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3",
     "src/kairo/api/bootstrap.hpp": "e7df9bd7690df80d014a71d2d98d3f718524a60d27897a742408b66bb23633bc",
@@ -231,8 +231,8 @@
     "src/kairo/platform/null/sound.hpp": "64d3c6fc9dd6f75f62a93f56cd5c820e504662f5f0f96ef5b062429be6e9a053",
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
     "src/kairo/platform/sdl/audio.hpp": "48f5a2e458820594abcc6653538034e43e4c3d87184dba64ce0083d7dfd0ac9e",
-    "src/kairo/platform/sdl/backend.cpp": "5cbac599ff20d991d701259fc038203e80c38c506e82387421a0421fc26c518c",
-    "src/kairo/platform/sdl/backend.hpp": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df",
+    "src/kairo/platform/sdl/backend.cpp": "02d4cc8cd86a815072c683f8b457c5535069567cbc47cb71a027119abf405a6c",
+    "src/kairo/platform/sdl/backend.hpp": "2b8ebe0fd1b45e7d042eb71d682075059ce13d4e1dfa29ab33db144683670959",
     "src/kairo/platform/sdl/capture.cpp": "c45f709a18583b2fea7a8548bb6b7ea8f7393b3de049162c7005a7a425d65f5c",
     "src/kairo/platform/sdl/capture.hpp": "cbfc3301bea5853a5cfd6d6596f14f7251f2440da8475c07b78d40ea982416b4",
     "src/kairo/platform/sdl/debug_input.cpp": "2f8b1f59a88d07ddfc4730e785d7188bac7af5ff19799cd385e5e61b4313e577",
@@ -255,7 +255,7 @@
   },
   "native_executable": {
     "path": "build/pc/graphics_arcs_test.exe",
-    "sha256": "0e713538410d1e5de0f572f1fe01ac1806d083e19de1d40614eb68b221aedbca"
+    "sha256": "e0b241ad28abead297bda413d4858bec6a332e98956d8be576535ce57a327ca7"
   },
   "verified_boundary_ids": [],
   "limitations": [

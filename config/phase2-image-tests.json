@@ -8,12 +8,12 @@
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
-  "executable_sha256": "36b3ecf9bae7e20ee14c8097d27cc19d0faac689abeafc66c4e78e86dbc95532",
+  "executable_sha256": "a679da58674ca3dc93fdae5525fecd5fe57e085ee62b663f77884ade51dea752",
   "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
   "sources": [
     {
       "path": "tools/build_pc.py",
-      "sha256": "5002ef11f711d01551b30408e0dc7c3fd71c30b277036aef6d9ccdf45f67a15b"
+      "sha256": "cbc2452afa80e5de73aa8abb592a96c943384a7bc4ca0808dd98fe081a4942e6"
     },
     {
       "path": "tests/kairo/asset_roundtrip.cpp",
@@ -21,11 +21,11 @@
     },
     {
       "path": "src/kairo/platform/sdl/backend.cpp",
-      "sha256": "5cbac599ff20d991d701259fc038203e80c38c506e82387421a0421fc26c518c"
+      "sha256": "02d4cc8cd86a815072c683f8b457c5535069567cbc47cb71a027119abf405a6c"
     },
     {
       "path": "src/kairo/platform/sdl/backend.hpp",
-      "sha256": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df"
+      "sha256": "2b8ebe0fd1b45e7d042eb71d682075059ce13d4e1dfa29ab33db144683670959"
     },
     {
       "path": "src/kairo/api/platform.hpp",

@@ -18,7 +18,8 @@ static void check(int result) { if(result<0) throw std::runtime_error(SDL_GetErr
 static SDL_Rect rect(platform::Rect r) { return {r.x,r.y,r.w,r.h}; }
 static float screen_dpi(SDL_Window* window){float dpi=0;const auto display=window?SDL_GetWindowDisplayIndex(window):-1;if(display<0||SDL_GetDisplayDPI(display,&dpi,nullptr,nullptr)!=0||!std::isfinite(dpi)||dpi<=0)return 0;return dpi;}
 static bool fullscreen(SDL_Window* window){return window&&(SDL_GetWindowFlags(window)&SDL_WINDOW_FULLSCREEN)!=0;}
-Backend::Backend(int width,int height,bool headless):width_(width),height_(height) {
+Backend::Backend(int width,int height,bool headless,int window_scale):width_(width),height_(height) {
+    if(window_scale<1) throw std::invalid_argument("invalid window scale");
     if(width<=0||height<=0) throw std::invalid_argument("invalid surface dimensions");
     SDL_SetMainReady();
     if(headless) SDL_SetHint(SDL_HINT_VIDEODRIVER,"dummy");
@@ -27,7 +28,7 @@ Backend::Backend(int width,int height,bool headless):width_(width),height_(heigh
         surface_=SDL_CreateRGBSurfaceWithFormat(0,width,height,32,SDL_PIXELFORMAT_RGBA32);
         if(surface_) renderer_=SDL_CreateSoftwareRenderer(surface_);
     } else {
-        window_=SDL_CreateWindow("Unofficial port development host",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,0);
+        window_=SDL_CreateWindow("Unofficial port development host",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width*window_scale,height*window_scale,0);
         if(window_) renderer_=SDL_CreateRenderer(window_,-1,SDL_RENDERER_ACCELERATED);
         if(!renderer_&&window_) renderer_=SDL_CreateRenderer(window_,-1,SDL_RENDERER_SOFTWARE);
     }
@@ -37,6 +38,7 @@ Backend::Backend(int width,int height,bool headless):width_(width),height_(heigh
         if(window_) SDL_DestroyWindow(window_);
         SDL_Quit();throw std::runtime_error(error);
     }
+    if(window_&&window_scale>1){SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY,"nearest");check(SDL_RenderSetLogicalSize(renderer_,width,height));check(SDL_RenderSetIntegerScale(renderer_,SDL_TRUE));}
     check(SDL_SetRenderDrawBlendMode(renderer_,SDL_BLENDMODE_NONE));
     debug_input_initialize(height_,screen_dpi(window_),fullscreen(window_));
 }
@@ -90,6 +92,7 @@ std::vector<platform::Input> Backend::events() {
     debug_input_begin_frame(height_);
     debug_input_screen(screen_dpi(window_),fullscreen(window_));
     while(SDL_PollEvent(&event)) {
+        if(filter_&&filter_(event))continue;
         debug_input_event(event);
         using Kind=platform::Input::Kind;
         if(event.type==SDL_QUIT) result.push_back({Kind::quit});

@@ -20,12 +20,12 @@
     "tests/kairo/media_fixtures.cpp": "84049934c4626036039477b1235b4a6bc6454d5e305080aad4c5d80adafde2cf",
     "src/kairo/platform/sdl/font.cpp": "d69e187f1ef6c30f6d19576a7576780c1d39516fd249978e5f4c682b4e9fe26d",
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
-    "src/kairo/platform/sdl/backend.cpp": "5cbac599ff20d991d701259fc038203e80c38c506e82387421a0421fc26c518c",
+    "src/kairo/platform/sdl/backend.cpp": "02d4cc8cd86a815072c683f8b457c5535069567cbc47cb71a027119abf405a6c",
     "src/kairo/platform/sdl/debug_input.cpp": "2f8b1f59a88d07ddfc4730e785d7188bac7af5ff19799cd385e5e61b4313e577",
     "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
     "src/kairo/platform/sdl/font.hpp": "285a3ffc32ed8c3290d1c2fee20129f4932bb872d0285b970327af972be43081",
     "src/kairo/platform/sdl/audio.hpp": "48f5a2e458820594abcc6653538034e43e4c3d87184dba64ce0083d7dfd0ac9e",
-    "src/kairo/platform/sdl/backend.hpp": "1008dd9df3facbba828d25bc31dd87d41f942b13c64dc67ead2051757fba25df",
+    "src/kairo/platform/sdl/backend.hpp": "2b8ebe0fd1b45e7d042eb71d682075059ce13d4e1dfa29ab33db144683670959",
     "src/kairo/platform/sdl/debug_input.hpp": "2fb4d8352d8b783efbc41bf81bc4b9eae974bdd560266307b6d53bdc216cbefb",
     "src/kairo/api/platform.hpp": "83284432e1edd67e76cb450f371dc57f4fc2fa1ebcff3ae33c54c2a82a802c3f",
     "src/kairo/api/debug_input.hpp": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918",
@@ -37,7 +37,7 @@
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "f4a185396b39e3ad2d2151840a5784c3457019504fd95f411069458afd65e7be",
+  "native_executable_sha256": "84c0fda8414de7057dc81c0216f2019808a9623c0e9e2ad58d42e1bae4a44a6f",
   "native_stdout_sha256": "094678f5eaf59041269a49d4d1fba2c8dbf38c5b38e478dffe4f840efa6bac29",
   "ffmpeg_comparisons": [
     {

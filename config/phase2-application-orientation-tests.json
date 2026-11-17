@@ -618,7 +618,7 @@
   },
   "native_executable": {
     "path": "build/application-orientation-tests/application-orientation-fixtures.exe",
-    "sha256": "0efc78133a351fca4d69e0bd23fa20bf2a8921dcc99b0e382444fac011c06e2a"
+    "sha256": "bc34a0be9055d00f9aea43e1368de44add258d565900b8130c6e4dc848ab7bcc"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "external_unity_api_metadata": {

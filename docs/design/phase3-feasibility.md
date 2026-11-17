@@ -20,7 +20,7 @@ Tipos de toque (`KL/kairo/unity/surface/TouchEvent.cs`): 0 DOWN, 1 UP, 5 CLICK,
 | b. Menus na inferior | etapa 2 | cada janela é um formulário próprio, mas todos desenham numa única superfície de 240×240 lógicos; ~3–5 dias de plataforma + ajustes nos menus |
 | c. Registro | etapa 2 | três pontos de gancho cobrem tudo; textos já vêm dos assets; só na sessão (sem mudar o save) |
 | d. Painel da partida | etapa 2 (leitura) | placar, tempo, tática, fôlego, aura, ações por jogador já existem; posse e chutes do time precisam ser somados |
-| e. 400×240 | sim | o jogo já suporta largura > 240; janelas de 240 centradas com faixas de 80; altura 240 sem folga mas cabe |
+| e. 400×240 | sim, com ressalva | o jogo roda em 400×240 sem mudança, mas o **protótipo mostrou** que a área do jogo continua com 240 de largura (faixas de 80 px), inclusive no mapa; a barra `GamePad` toma ~48 px de altura em cima ([phase3-prototype.md](phase3-prototype.md)) |
 
 ## a. Controles
 
@@ -184,7 +184,8 @@ mas precisa do código do jogo legível (etapa 2).
 
 - Escala: `GetScaleRatio(240,240)` → área lógica 400×240 na superior e 320×240
   na inferior, ambas na escala 1.
-- **Aproveitam a largura:** mapa (`VIEW_W = W − VIEW_X`, `VIEW_Y = 23`: vista
+- **Correção pelo protótipo (2026-11-17):** nas capturas, o mapa e a partida também ficam num quadro de 240 de largura, centralizado. O `SurfaceManager` dimensiona a `GameView` em 240 × escala, e o `VIEW_W` abaixo se refere a essa vista, não à tela. O parágrafo seguinte (leitura do fonte) fica como registro da hipótese refutada.
+- **Aproveitam a largura (hipótese, refutada):** mapa (`VIEW_W = W − VIEW_X`, `VIEW_Y = 23`: vista
   400×217), partida (vista de câmera na largura toda). Com largura > 240 o jogo
   já soma +30 nos deslocamentos da barra superior e usa escala mínima 75.
 - **Faixas laterais (janela de 240 centrada, 80 px de cada lado):** `SubForm`

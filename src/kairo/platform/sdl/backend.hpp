@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <memory>
 #include <atomic>
+#include <functional>
 namespace pls::kairo {enum class WindowOrientation:std::int32_t;}
 
 namespace pls::sdl {
@@ -14,8 +15,11 @@ class Backend final : public platform::Drawing {
     std::unordered_map<SDL_Texture*,std::uint64_t> textures_;
     int width_,height_;
     std::atomic<std::int32_t> orientation_mode_{};
+    std::function<bool(const SDL_Event&)> filter_;
 public:
-    Backend(int width,int height,bool headless);
+    Backend(int width,int height,bool headless,int window_scale=1);
+    // Host-side consumer of SDL events (Phase 3 prototype: buttons, second window).
+    void set_event_filter(std::function<bool(const SDL_Event&)> filter){filter_=std::move(filter);}
     ~Backend() override;
     Backend(const Backend&)=delete;
     Backend& operator=(const Backend&)=delete;

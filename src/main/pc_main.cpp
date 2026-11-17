@@ -22,6 +22,8 @@
 #include "dialog_service.hpp"
 #include "port_dialog.hpp"
 #include "canvas_back.hpp"
+#include "pc_dual_screen.hpp"
+#include <optional>
 #include <SDL.h>
 #include <thread>
 #include <chrono>
@@ -37,6 +39,9 @@ namespace {
 // exercises every button (log line PLS_PC_DIALOG).
 std::string dialog_json(const std::string& text){std::string out;for(const char c:text){if(c=='"'||c=='\\')out+='\\';if(static_cast<unsigned char>(c)<0x20){out+=' ';continue;}out+=c;}return out;}
 class PcDialogPresenter final:public pls::kairo::DialogPresenter {
+public:
+    pls::pc::dual::Host* dual_=nullptr;
+private:
     pls::sdl::Backend& backend_;pls::cs::Ref<pls::kairo::Image> display_;bool scripted_;std::uint64_t dialogs_{0};std::map<std::u16string,std::uint64_t> seen_;
 public:
     void trace_edges(const pls::cs::EdgeVisitor& visitor)const override{pls::cs::trace_value(display_,visitor);}
@@ -55,7 +60,13 @@ public:
             for(std::size_t i=0;i<target;++i)dialog.Handle(Command::right);
             dialog.Draw(display_);dialog.Handle(Command::confirm);
         }else{
-            const auto background=pls::kairo::Image::FromRgba(240,280,display_->pixels());
+            if(dual_){
+                // Phase 3 prototype: the dialog is shown and answered on the bottom screen.
+                dual_->set_dialog(&dialog);
+                pls::cs::run_finally([&]{while(!dialog.Done()){for(const auto& event:backend_.events())if(event.kind==pls::platform::Input::Kind::quit)dialog.Handle(Command::cancel);
+                    dual_->draw_dialog();pls::cs::GcNativeBlockingScope idle;std::this_thread::sleep_for(std::chrono::milliseconds(16));}},[&]{dual_->set_dialog(nullptr);});
+            }else{
+            const auto background=pls::kairo::Image::FromRgba(display_->GetWidth(),display_->GetHeight(),display_->pixels());
             while(!dialog.Done()){
                 for(const auto& event:backend_.events()){
                     using Kind=pls::platform::Input::Kind;
@@ -71,11 +82,12 @@ public:
                 }
                 {auto g=pls::cs::make_ref<pls::kairo::Graphics>(display_,true);g->ResetRender();g->DrawImage(background,0.0f,0.0f);}
                 dialog.Draw(display_);
-                auto* texture=backend_.upload_rgba8(240,280,display_->pixels());
-                pls::cs::run_finally([&]{backend_.draw(texture,{0,0,240,280},{0,0,240,280},false);backend_.present();},[&]{backend_.release(texture);});
+                const auto w=display_->GetWidth(),h=display_->GetHeight();auto* texture=backend_.upload_rgba8(w,h,display_->pixels());
+                pls::cs::run_finally([&]{backend_.draw(texture,{0,0,w,h},{0,0,w,h},false);backend_.present();},[&]{backend_.release(texture);});
                 pls::cs::GcNativeBlockingScope idle;std::this_thread::sleep_for(std::chrono::milliseconds(16));
             }
             {auto g=pls::cs::make_ref<pls::kairo::Graphics>(display_,true);g->ResetRender();g->DrawImage(background,0.0f,0.0f);}
+            }
         }
         const auto answer=dialog.Result();
         std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);
@@ -151,7 +163,12 @@ int main(int argc,char** argv){
         pls::cs::set_default_collation_culture({1033,{9},"en",false});
         pls::sdl::install_globalization_backend();
         pls::assets::Catalog assets(std::filesystem::u8path(argv[1]));pls::kairo::install_asset_catalog(&assets);
-        pls::sdl::Backend backend(240,280,false);
+        // Phase 3 prototype (platform only): PLS_PC_DUAL_SCREEN=<integer scale> gives the
+        // 3DS layout, game on a 400x240 top window and a 320x240 bottom window.
+        const int dual_scale=std::getenv("PLS_PC_DUAL_SCREEN")?std::atoi(std::getenv("PLS_PC_DUAL_SCREEN")):0;
+        if(std::getenv("PLS_PC_DUAL_SCREEN")&&(dual_scale<1||dual_scale>6))throw pls::cs::ArgumentOutOfRangeException();
+        const std::int32_t screen_w=dual_scale?pls::pc::dual::top_width:240,screen_h=dual_scale?pls::pc::dual::top_height:280;
+        pls::sdl::Backend backend(screen_w,screen_h,false,dual_scale?dual_scale:1);
         auto text_input=pls::cs::make_ref<pls::sdl::SimpleTextInput>();
         pls::kairo::install_text_input(text_input);
         TextInputCleanup text_input_cleanup{text_input};
@@ -171,7 +188,7 @@ int main(int argc,char** argv){
         pls::kairo::configure_capture(std::filesystem::u8path(preferences)/"captures");
         // Host framebuffer corresponds to an already-owned display texture;
         // it must not enter the game's reloadable/generated image cache.
-        auto display=pls::kairo::Image::FromRgba(240,280,std::vector<std::uint8_t>(240*280*4));
+        auto display=pls::kairo::Image::FromRgba(screen_w,screen_h,std::vector<std::uint8_t>(std::size_t(screen_w)*screen_h*4));
         auto canvas=pls::kairo::Canvas::GetInstance();
         pls::kairo::install_canvas_back_key();
         canvas->host_display(display,pls::cs::make_ref<pls::kairo::Font>());
@@ -180,7 +197,13 @@ int main(int argc,char** argv){
 #else
         const bool scripted_dialogs=false;
 #endif
-        pls::kairo::install_dialog_service(pls::cs::make_ref<PcDialogPresenter>(backend,display,scripted_dialogs),port_dialog_labels());
+        // Stack object: its image reference is seen by the conservative stack scan.
+        std::optional<pls::pc::dual::Host> dual;
+        if(dual_scale){dual.emplace(dual_scale);backend.set_event_filter([&](const SDL_Event& event){return dual->handle(event,*canvas,backend.native_window_id());});}
+        auto dialog_presenter=pls::cs::make_ref<PcDialogPresenter>(backend,display,scripted_dialogs);if(dual)dialog_presenter->dual_=&*dual;
+        pls::kairo::install_dialog_service(dialog_presenter,port_dialog_labels());
+        std::filesystem::path dual_capture_folder;std::uint64_t dual_capture_every=0;
+        if(const auto* value=std::getenv("PLS_PC_DUAL_CAPTURE")){std::string spec(value);const auto colon=spec.rfind(':');if(!dual||colon==std::string::npos)throw pls::cs::ArgumentException();dual_capture_folder=std::filesystem::u8path(spec.substr(0,colon));dual_capture_every=std::stoull(spec.substr(colon+1));}
         struct DialogServiceCleanup{~DialogServiceCleanup(){try{pls::kairo::install_dialog_service({},{});}catch(...){}}} dialog_service_cleanup;
         const auto payload=[&]{
             pls::pc::PayloadSnapshot value;
@@ -201,7 +224,7 @@ int main(int argc,char** argv){
         auto app=pls::game::create_application();
         if(!app)throw pls::cs::InvalidOperationException("Generated Main factory returned null");
         // Termination must be connected to the translated event/finish handlers.
-        app->host_configure(240,280,pls::cs::String::from_utf8(preferences),{});
+        app->host_configure(screen_w,screen_h,pls::cs::String::from_utf8(preferences),{});
         app->host_orientation_reset([&backend]{backend.reset_default_orientation();});
         app->host_orientation_reader([&backend]{return backend.orientation();});
         app->host_orientation_writer([&backend](auto value){backend.set_orientation(value);});
@@ -314,6 +337,7 @@ int main(int argc,char** argv){
                 canvas->host_event(event);
             }
             timing.mark(pls::pc::FrameStage::input);
+            if(dual){auto manager=app->GetFormManager();dual->update(*canvas,manager);}
             app->host_update();
             pls::kairo::Offscreen::RenderAll();
 #if defined(PLS_DIAGNOSTIC_BUILD)
@@ -334,11 +358,13 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::game_draw);
             {
             PLS_PROFILE_AREA(composition);
-            auto* texture=backend.upload_rgba8(240,280,display->pixels());
+            auto* texture=backend.upload_rgba8(screen_w,screen_h,display->pixels());
             if(metrics.enabled())metrics.observe_texture_payload(backend.memory().texture_payload_bytes);
             timing.mark(pls::pc::FrameStage::upload);
-            pls::cs::run_finally([&]{backend.draw(texture,{0,0,240,280},{0,0,240,280},false);timing.mark(pls::pc::FrameStage::render);backend.present();timing.mark(pls::pc::FrameStage::present);},[&]{backend.release(texture);timing.mark(pls::pc::FrameStage::release);});
+            pls::cs::run_finally([&]{backend.draw(texture,{0,0,screen_w,screen_h},{0,0,screen_w,screen_h},false);timing.mark(pls::pc::FrameStage::render);backend.present();timing.mark(pls::pc::FrameStage::present);},[&]{backend.release(texture);timing.mark(pls::pc::FrameStage::release);});
             }
+            if(dual){auto manager=app->GetFormManager();dual->draw(*canvas,manager);
+                if(dual_capture_every&&(presented_frames+1)%dual_capture_every==0)dual->capture(dual_capture_folder,presented_frames+1,display->pixels());}
 #if defined(PLS_DIAGNOSTIC_BUILD)
             {auto profile=pls::diagnostic::end_frame();std::lock_guard<std::mutex>lock(pls::kairo::debug_log_mutex);std::cerr<<"PLS_FRAME_PROFILE={\"frame\":"<<(presented_frames+1)<<",\"ns\":["<<profile[0]<<','<<profile[1]<<','<<profile[2]<<','<<profile[3]<<"]}\n";}
 #endif

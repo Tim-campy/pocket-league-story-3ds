@@ -131,7 +131,7 @@ if(PLS_BUILD_SDL)
     set(PLS_GAME_INCLUDE_DIR "${PLS_DIAGNOSTIC_GAME_DIR}")
   endif()
   file(GLOB_RECURSE PLS_GAME_GENERATED CONFIGURE_DEPENDS "${PLS_GAME_INCLUDE_DIR}/*.cpp")
-  add_executable(pc_game EXCLUDE_FROM_ALL src/main/pc_main.cpp src/main/pc_memory.cpp src/main/pc_metrics.cpp ${PLS_GAME_GENERATED})
+  add_executable(pc_game EXCLUDE_FROM_ALL src/main/pc_main.cpp src/main/pc_dual_screen.cpp src/main/pc_memory.cpp src/main/pc_metrics.cpp ${PLS_GAME_GENERATED})
   if(MSVC)
     # Generated C# bodies exceed the standard COFF section limit in Debug.
     target_compile_options(pc_game PRIVATE /bigobj /we4715)

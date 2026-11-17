@@ -3,58 +3,58 @@
   "status": "PASS",
   "samples": [
     [
-      175000,
-      1244700,
-      6249500,
+      174200,
+      1258100,
+      6783700,
+      100000
+    ],
+    [
+      184000,
+      1216400,
+      6240100,
+      100000
+    ],
+    [
+      172500,
+      1138900,
+      6307400,
+      100000
+    ],
+    [
+      136700,
+      1205600,
+      6253200,
+      100000
+    ],
+    [
+      174400,
+      1220700,
+      6256900,
       100000
     ],
     [
       175700,
-      1206200,
-      6307100,
+      1161600,
+      6222200,
       100000
     ],
     [
-      174800,
-      1156200,
-      6199900,
-      100000
-    ],
-    [
-      175600,
-      1141700,
-      6354400,
-      100000
-    ],
-    [
-      172100,
-      1195100,
-      6306700,
-      100000
-    ],
-    [
-      173300,
-      1205700,
-      6284800,
-      100000
-    ],
-    [
-      174700,
-      1214300,
-      6235200,
+      175400,
+      1138800,
+      6232000,
       100000
     ]
   ],
-  "median_baseline_ns_per_call": 1.748,
-  "median_disabled_ns_per_call": 12.057,
-  "median_instrumented_ns_per_call": 62.848,
-  "median_increment_ns_per_call": 61.115,
+  "median_baseline_ns_per_call": 1.744,
+  "median_disabled_ns_per_call": 12.056,
+  "median_instrumented_ns_per_call": 62.532,
+  "median_increment_ns_per_call": 60.825,
   "inputs_sha256": {
     "tests/kairo/profile_overhead.cpp": "55c68f066fee193a1aea51b8eed84a0bad2740b20af7f47521533c6cdcf3a4ba",
     "tools/test_profile_overhead.py": "16d3e23d7470b6b6ecaa23a445fc7e006929adcc28bd2e11c8f6d02f42631c65",
     "src/kairo/common/diagnostic_profile.hpp": "49b08cdf04c808d4df42ba5419eb08fa9b6193e9a54367d0b393b8e4c04f3a0c"
   },
-  "executable_sha256": "0f97f7b156ab2ab4dfb10da8220116424d1b697b4d8960e8862c3f80843fc331",
+  "executable_sha256": "7e20ecc8724b4921f19acb27a67df82622efd7e6d8571d3655593bec5f9eb58d",
   "limitations": [
     "Own microbenchmark, not a correction factor for game timing.",
     "No benchmark overhead is subtracted from reported game samples."

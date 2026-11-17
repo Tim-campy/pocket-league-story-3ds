@@ -698,7 +698,10 @@ sealed partial class Lowerer {
         return expression;
     }
     string ExprCore(ExpressionSyntax n) {
-        if(compilation.AssemblyName=="Assembly-CSharp"&&Path.GetRelativePath(request.source_root,n.SyntaxTree.FilePath).Replace('\\','/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)) {
+        // Readable mode: constant array initializers of the reconstructed C# are written
+        // as literals (AGENTS.md section 2, rule 7; user decision of 2026-11-16), not
+        // read from the APK payload at run time.
+        if(!readable&&compilation.AssemblyName=="Assembly-CSharp"&&Path.GetRelativePath(request.source_root,n.SyntaxTree.FilePath).Replace('\\','/').StartsWith("src/Assembly-CSharp/",StringComparison.Ordinal)) {
             var initializer=n is ArrayCreationExpressionSyntax creation?creation.Initializer:n is ImplicitArrayCreationExpressionSyntax implicitArray?implicitArray.Initializer:null;
             if(initializer!=null&&initializer.Expressions.Count>0&&initializer.Expressions.All(element=>model.GetConstantValue(element).HasValue)&&model.GetTypeInfo(n).Type is IArrayTypeSymbol arrayType&&BakedScalar(arrayType.ElementType)) {
                 var source=Path.GetRelativePath(request.source_root,n.SyntaxTree.FilePath).Replace('\\','/');

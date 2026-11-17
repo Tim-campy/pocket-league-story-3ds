@@ -29,6 +29,22 @@ from pc_compiler import environment  # noqa: E402
 CLANG_FORMAT=Path('C:/Program Files/Microsoft Visual Studio/18/Community/VC/Tools/Llvm/x64/bin/clang-format.exe')
 STYLE=ROOT/'translator/readable.clang-format'
 SAMPLE_CLASSES=('data.SponsorData','game.Team','form.TitleForm')
+# Excerpt of SubForm (per-screen dispatch on type_): Draw and the start of _draw.
+# The whole unit is compiled; only the excerpt is copied to docs/readable-sample.
+EXCERPT_UNIT='form.SubForm'
+EXCERPT_METHODS=('M:form.SubForm.Draw(kairo.unity.ui.Graphics)','M:form.SubForm._draw(kairo.unity.ui.Graphics)')
+EXCERPT_MAX_LINES=160
+
+def excerpt(cpp_text):
+    lines=cpp_text.splitlines();out=['// Excerpt of form.SubForm.cpp (readable mode, generated): the per-screen',
+        '// dispatch on type_. Whole unit: build/readable-sample/game/form.SubForm.cpp.','']
+    for method in EXCERPT_METHODS:
+        start=lines.index('// '+method)
+        end=next((i for i in range(start+1,len(lines)) if lines[i].startswith('// M:')),len(lines))
+        body=lines[start:end]
+        if len(body)>EXCERPT_MAX_LINES:body=body[:EXCERPT_MAX_LINES]+['    // ... ('+str(end-start-EXCERPT_MAX_LINES)+' more lines in the full unit)','}']
+        out+=body+['']
+    return '\n'.join(out)
 
 
 def digest(path):return hashlib.sha256(Path(path).read_bytes()).hexdigest()
@@ -87,11 +103,13 @@ def sample(args):
             source=game/(name+suffix)
             if not source.exists():raise FileNotFoundError(source)
             shutil.copy2(source,docs/source.name);copied.append(docs/source.name)
+    target=docs/(EXCERPT_UNIT+'.excerpt.cpp')
+    target.write_text(excerpt((game/(EXCERPT_UNIT+'.cpp')).read_text(encoding='utf-8')),encoding='utf-8',newline='\n');copied.append(target)
     compile_results=[]
     if not args.no_compile:
         env=environment();cl=shutil.which('cl.exe',path=env['PATH'])
         objects=out/'objects';objects.mkdir(exist_ok=True)
-        for name in SAMPLE_CLASSES:
+        for name in SAMPLE_CLASSES+(EXCERPT_UNIT,):
             cpp=game/(name+'.cpp')
             command=[cl,'/nologo','/c','/std:c++17','/permissive-','/EHsc','/W4','/fp:strict','/utf-8','/bigobj','/Od',
                      '/I'+str(game),'/I'+str(out/'include'),'/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src'),

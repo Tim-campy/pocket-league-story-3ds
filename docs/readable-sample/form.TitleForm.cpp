@@ -89,28 +89,21 @@ void TitleForm::ensure_initialized() {
     state.run("form.TitleForm", []() {
         TitleForm_title_anime_storage =
             pls::cs::evaluate_type_initializer_field("F:form.TitleForm.title_anime", [&]() {
-                return pls::assets::baked_array<std::int32_t>(
-                    "cf56a59247f419c588a25431a42a85b144ae6cf64fd8e8395eec1827f90533c9");
+                return pls::cs::Array<std::int32_t>::from({10, 53, 78});
             });
         TitleForm_softLabels__storage =
             pls::cs::evaluate_type_initializer_field("F:form.TitleForm.softLabels_", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "c662065fee5a5475251bd8b1ba442ff76653f7f5e3271db538de097ae72d1d17"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "da643cad8c8c3e65f84a7dbae09241c6a8bbae05e77b6078fa11ae95119a407a")});
+                    {pls::cs::Array<std::int32_t>::from({5, 1}), pls::cs::Array<std::int32_t>::from({0, 2})});
             });
         TitleForm_IMG_SL_storage = pls::cs::evaluate_type_initializer_field("F:form.TitleForm.IMG_SL", [&]() {
             return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                {pls::assets::baked_array<std::int32_t>(
-                     "13ddfb915f9b2321e37976a00843a6279c2f817d4b6c28bfd2b7889d79885543"),
-                 pls::assets::baked_array<std::int32_t>(
-                     "e7bc1f3da378084f602729691642c9848a95009f08ce04681f68d259668fc4ae")});
+                {pls::cs::Array<std::int32_t>::from({0, 0, 6, 3, 16, 16}),
+                 pls::cs::Array<std::int32_t>::from({-4, -2, 2, 23, 25, 20})});
         });
         TitleForm_TITLE_GUEST_storage =
             pls::cs::evaluate_type_initializer_field("F:form.TitleForm.TITLE_GUEST", [&]() {
-                return pls::assets::baked_array<std::int32_t>(
-                    "dc17851231e2e3745ddae750e14f07c0e5b510387b124af7c71b91a81e8750eb");
+                return pls::cs::Array<std::int32_t>::from({22, 23, 24, 25, 26, 27, 28, 29, 30, 31});
             });
         TitleForm_kairoAdUrl_jp_storage =
             pls::cs::evaluate_type_initializer_field("F:form.TitleForm.kairoAdUrl_jp", [&]() {
@@ -149,11 +142,9 @@ void TitleForm::create_init(pls::cs::Ref<TitleForm> self) {
     self->x_ = 60;
     self->y_ = 60;
     self->ta_data = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "59c4c80f6eaa92e857040fa91fa7e8adb436ca9e20cb9bc29053c5bbfb398d92"));
+        pls::cs::Array<std::int32_t>::from({20, 6}));
     self->zsort_mhobj = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "5b4798d0302196c0d4e3de595bca4d9f7a575d6fa3207c703c1cd79575503f1b"));
+        pls::cs::Array<std::int32_t>::from({20, 2}));
     ([&]() {
         std::int32_t cs_arg0 = 1;
         MyFormBase::create_init(pls::cs::static_pointer_cast<MyFormBase>(self), cs_arg0);

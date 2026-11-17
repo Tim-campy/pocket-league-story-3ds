@@ -212,19 +212,15 @@ void Team::ensure_initialized() {
             });
         Team_AMEFTO_ONECHARGETIME_PLAYER_storage = pls::cs::evaluate_type_initializer_field(
             "F:game.Team.AMEFTO_ONECHARGETIME_PLAYER", [&]() { return 40; });
-        Team_AMEFTO_PZ_storage = pls::cs::evaluate_type_initializer_field("F:game.Team.AMEFTO_PZ", [&]() {
-            return pls::assets::baked_array<std::int32_t>(
-                "b638ee62493160d4d2426e250eb82c06c2513ead3e798e33f0a1f3b7d506fe77");
-        });
+        Team_AMEFTO_PZ_storage = pls::cs::evaluate_type_initializer_field(
+            "F:game.Team.AMEFTO_PZ", [&]() { return pls::cs::Array<std::int32_t>::from({180, 90, 360}); });
         Team_AMEFTO_PASSER_COATEVA_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.AMEFTO_PASSER_COATEVA", [&]() {
-                return pls::assets::baked_array<std::int32_t>(
-                    "423b032211237979c4b8d216f115b2bafb47e24079da815d1f817990501910e7");
+                return pls::cs::Array<std::int32_t>::from({10, 25, 50, 100});
             });
         Team_AMEFTO_FRECT_GOALZ_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.AMEFTO_FRECT_GOALZ", [&]() {
-                return pls::assets::baked_array<std::int32_t>(
-                    "ad57282dcb2db69a48b86ca8eece0a3ffb6b1198964ac6ce4141f023bf1adab6");
+                return pls::cs::Array<std::int32_t>::from({60, 50, 40, 30});
             });
         Team_PANEL_DIRECT_1_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_1", [&]() {
@@ -234,142 +230,68 @@ void Team::ensure_initialized() {
         Team_PANEL_DIRECT_2_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_2", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "5fd533b6016ccfef31344f05917183a2bc9a48e739ab2c72d5a875ca90cbc7ef"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "026539e1bea6a9ba99fb4971ffe3330e21b8228da7ec6da6ca7943c6b2c4db81"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "9a77eab84e2a0e5b7ecc0367a71e3a6c3a8c2e9e7c96cad76913bfe7bf449bfb"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "5144c14ab6590fe46a07fbcca00514867bce21ec3a89bd0c3ae447eeaf040f0a")});
+                    {pls::cs::Array<std::int32_t>::from({0, -1}), pls::cs::Array<std::int32_t>::from({-1, 0}),
+                     pls::cs::Array<std::int32_t>::from({1, 0}), pls::cs::Array<std::int32_t>::from({0, 1})});
             });
         Team_PANEL_DIRECT_3_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_3", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "331fcfac5b1747ae999369a5539a1beac63920f721fabd568d10e68254263174"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "41d0b0e07d3f655a501dc28ef99584bce077765c8f67a6c06e2175200441e468"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "1eec84e5f1b454f4508e9aa53081a2fa9fd665300b6151c7f767e86e3f11d615"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "daf5198bdcd9c6fb0ac8c7f36bb1dd368788c4ada06ea36ea891a8270b1f1153"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "4f6109ffd6eadd8e0f2ddfc982db193f3eb497367459e572a20a2f06020de110"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "728e98af39ab82dab5ebfb11c84d7d3f646596208e38c9e6ba775f808310d497"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "8607465118872a5fd049bc342e491963edd15fca03705a3c3761af0a31b91788"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "d1d0aa6faf4d80e4c08e7ff85988ec3839fc905a8d672e5a9a81d1db4dc98861")});
+                    {pls::cs::Array<std::int32_t>::from({0, -2}),
+                     pls::cs::Array<std::int32_t>::from({-1, -1}),
+                     pls::cs::Array<std::int32_t>::from({1, -1}), pls::cs::Array<std::int32_t>::from({-2, 0}),
+                     pls::cs::Array<std::int32_t>::from({2, 0}), pls::cs::Array<std::int32_t>::from({-1, 1}),
+                     pls::cs::Array<std::int32_t>::from({1, 1}), pls::cs::Array<std::int32_t>::from({0, 2})});
             });
         Team_PANEL_DIRECT_4_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_4", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "15b153f920703318ce11ddec1f1273e41ec80953265494236f5b0998e0247004"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "f257fea1c7c8c24b264aeaf8e3e4826bbab4e4a2f579f97aa34bcb4414d8cbb8"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "fe9c14c185915616f3d3c235edac4a4d6df799c0f246691bfdaf10ccfb67a494"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "90c61110db9700f36e7c8ac678388e80171b13d80855bc98566cd1a378be04c8"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "786abf99cf07c295d929e3a2cf7bb8ee60355d53aef1ccdbbdd1fb06fb8443fa"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "9a6ccf67eda8e6de8bb0c55e0e414489e29c13431318c8c35af156a7b1b1183d"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "970e87b469f4b807b120061c8df5f2e7b2106ae43dae610c8dc90078a33022bd"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "ec3e97b4d422e2b6e8b786a645723bfa48d8584e4fe6b92e64a32a25cc5e84dd"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "add01bfd837693dda437550def1ad4845a021f91e0f5a891a121371bb24ed2d7"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "1046aa44f055d839200f6728c4ce93e6a60fb45d06ccba6e7c5d93ca1ff8cf92"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "a67370b57c7cfaf6e3d9d4e2b2df94dc7ad9c874f744777fdeaacf4cef471a36"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "60b5d6af0bffe1498a922b10cee71765f1b1628a747d71833d3c9c7a54898d98")});
+                    {pls::cs::Array<std::int32_t>::from({0, -3}),
+                     pls::cs::Array<std::int32_t>::from({-1, -2}),
+                     pls::cs::Array<std::int32_t>::from({1, -2}),
+                     pls::cs::Array<std::int32_t>::from({-2, -1}),
+                     pls::cs::Array<std::int32_t>::from({2, -1}), pls::cs::Array<std::int32_t>::from({-3, 0}),
+                     pls::cs::Array<std::int32_t>::from({3, 0}), pls::cs::Array<std::int32_t>::from({-2, 1}),
+                     pls::cs::Array<std::int32_t>::from({2, 1}), pls::cs::Array<std::int32_t>::from({-1, 2}),
+                     pls::cs::Array<std::int32_t>::from({1, 2}), pls::cs::Array<std::int32_t>::from({0, 3})});
             });
         Team_PANEL_DIRECT_5_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_5", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "a6adeb6a7d0772373e31e4aed220c3283fee0a53a7524a430ce79e0dbc8d0799"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c0850aee062f8d0f4d7256d83c3e89f5975c88e0974b4b7aa9f0acba69fd88bc"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "e03447e5be660bc631f1ac3b1b086954532da7c04b3e59550e35504ad02fec45"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "6ec60a5fac7e2ffbc54a0ea52635819bf1248581bcc47772daf7b56176ddc66a"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "4725ca26887289e5626181407baa3d2aded4acf5578fe841501e54944380083e"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "cd01b7ab7f0e3b820f27c2e9ef2416997d6ad05539901bdfa51f8742b188c600"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "bee662c666a9601b2476682060b1a6bc8545e3eb191af069abc17331e5aeede2"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "5a43059061dfb926db64cb9890efc97318e740be8ae7ee7ad068bd90ee5017a0"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "a044a793b02e7fb4bf217f030b5227e30c3431301892d7a6e4e5986d573d3eac"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "896e6964dbc9d0feb02d441da09d82f075b31ad78e10df26d1781f02fe4d4dc3"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "1dedb9573f885425c48da34c81a1340d245e99ac5fd1f606b2a806ae02642f8b"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "9709bc0e957ecbee68ac21e60e342518728ee50d578447078a1a5e4b99e4cb6e"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "0d55502b1c7f7fcb78ad3f38cbe2b5063c009a17f688883271cc876dc4b243be"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "1a8a99dc0839953624d160d491e816b0ba39311f26d8acd4385e6dfab84b333f"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "e6d479572e1a81885e3105127ac86d608fb681b794e2947db00870485ed7493e"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "ad629c746e9918071613eed3fdf0f3e5469db82c10c08a66e47426218c81e054")});
+                    {pls::cs::Array<std::int32_t>::from({0, -4}),
+                     pls::cs::Array<std::int32_t>::from({-1, -3}),
+                     pls::cs::Array<std::int32_t>::from({1, -3}),
+                     pls::cs::Array<std::int32_t>::from({-2, -2}),
+                     pls::cs::Array<std::int32_t>::from({2, -2}),
+                     pls::cs::Array<std::int32_t>::from({-3, -1}),
+                     pls::cs::Array<std::int32_t>::from({3, -1}), pls::cs::Array<std::int32_t>::from({-4, 0}),
+                     pls::cs::Array<std::int32_t>::from({4, 0}), pls::cs::Array<std::int32_t>::from({-3, 1}),
+                     pls::cs::Array<std::int32_t>::from({3, 1}), pls::cs::Array<std::int32_t>::from({-2, 2}),
+                     pls::cs::Array<std::int32_t>::from({2, 2}), pls::cs::Array<std::int32_t>::from({-1, 3}),
+                     pls::cs::Array<std::int32_t>::from({1, 3}), pls::cs::Array<std::int32_t>::from({0, 4})});
             });
         Team_PANEL_DIRECT_6_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_6", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "a936ef6044689bccc2584c5f801af740ec2d5082e0bb07768a9e78e0b6240e12"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "ccb50b1346212dda26fa30be9fbb5061115905416c421e4fcf4cee344168cb3c"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "ea4b6a211601a8c43fd40268b8dbcd6309236d01dc7a4d5165241c27d6a708b9"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "a381db6b43b7f9502a438a460198e2a659af51e4512cfa592f4b29c3af3074fd"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "e3fd2e9ff15a2ecbb1b9da7aee02c2df0440336020ee9b87c35d9aa638f48d1e"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "22b37d8ea8287117ef3d2014de9f3bdeb14eacebb3f574314446487610a37923"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "078ed30c1731b0427d3796a67c1571abd2880cbc65762dd84811482ecdb77e87"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c9f45cd7e9bf22f04067ca45afb5978e732f6e72017c376c041861c7ceea7f31"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "9cdba814ad59fee147961d5304132f6bccd0b91eb5681a8952d57f33269e503d"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c64ebb27457d424e97fb67c41cc456e1721c6ca3aad30a5e57c88df8f32989e1"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "878e70f07bbee642a537476847a3e8ee2230158cbd89d0eb88ae5502e17fd428"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "36b9fab15eaa35758c70fdb1017128489171100378cecbcab59a815f3fa5e2b9"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "88d9699307a07705c02cf1688f85906ece323a4e50455956a5ee8dd9ce07015a"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "472967b45b6bdb8d7eeb8224aa5697c67ae98a9249ad37c08ad1f99425604d40"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "b194b9334a011d86f8cceb1053f30d54bde998b4bd74b5b425c742efe82917b5"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "3d94530432ebac71b2a50bf437c383088b7d2d827619b86545d5716bd2c158c1"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "7b189fc70e4a86c9f21891444238704ae7f331218212944fedc5a6c969d56ae9"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "abadd8341e052ea344ca8c4e9ba1a6c7794b27b6b73494c72c53272c02140a63"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "0f0a447bee049b91b4fdfe09b7ae2c08235ee45ee408ceb3003a30d57776fc6f"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "d0d65ceb0ec6f8d40db7dd92904031157fb3cb5b30cbfdd5362c0e2f5c7eef4a")});
+                    {pls::cs::Array<std::int32_t>::from({0, -5}),
+                     pls::cs::Array<std::int32_t>::from({-1, -4}),
+                     pls::cs::Array<std::int32_t>::from({1, -4}),
+                     pls::cs::Array<std::int32_t>::from({-2, -3}),
+                     pls::cs::Array<std::int32_t>::from({2, -3}),
+                     pls::cs::Array<std::int32_t>::from({-3, -2}),
+                     pls::cs::Array<std::int32_t>::from({3, -2}),
+                     pls::cs::Array<std::int32_t>::from({-4, -1}),
+                     pls::cs::Array<std::int32_t>::from({4, -1}),
+                     pls::cs::Array<std::int32_t>::from({-5, 0}),
+                     pls::cs::Array<std::int32_t>::from({5, 0}),
+                     pls::cs::Array<std::int32_t>::from({-4, 1}),
+                     pls::cs::Array<std::int32_t>::from({4, 1}),
+                     pls::cs::Array<std::int32_t>::from({-3, 2}),
+                     pls::cs::Array<std::int32_t>::from({3, 2}),
+                     pls::cs::Array<std::int32_t>::from({-2, 3}),
+                     pls::cs::Array<std::int32_t>::from({2, 3}),
+                     pls::cs::Array<std::int32_t>::from({-1, 4}),
+                     pls::cs::Array<std::int32_t>::from({1, 4}),
+                     pls::cs::Array<std::int32_t>::from({0, 5})});
             });
         Team_PANEL_DIRECT_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT", [&]() {
@@ -385,110 +307,53 @@ void Team::ensure_initialized() {
         Team_PANEL_DIRECT_R_2_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_R_2", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "9ba457a6ef14f42d2ffe7b310049086d8ca7386a37c6cf6e4a1df7699dee6187"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "a2d8254d0a676a6432f2be6c7c8766f0e1c2a99f59ee32d7dcb5471c6e54c17b"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "e18109b635a0ab5869a188f30b294610f6c8f3f3a70fa7c2dd7e3934ad3277d8"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "4ea8dc9a2a4cbb785682d0842249bc2a0b775a7d9de57783b17b260a6e7d0add"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "b7469cec9c3bb42e2fd393e23806332dd7ebeb624fde9bd99571ae6fb626326a"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "b6a8196a575dc66b510af5785e34149c03416905633aa1b5e1dd8deede0e35a3"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "53b48a0d8b45cbb7bb55b8c1d701cdf5accafffca1b3f200184587fd224b1eb1"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c90e017767cbce6df5e5cf9c81507089203f5001b058a1f05badf70abcc24c97")});
+                    {pls::cs::Array<std::int32_t>::from({-1, -1}),
+                     pls::cs::Array<std::int32_t>::from({0, -1}), pls::cs::Array<std::int32_t>::from({1, -1}),
+                     pls::cs::Array<std::int32_t>::from({-1, 0}), pls::cs::Array<std::int32_t>::from({1, 0}),
+                     pls::cs::Array<std::int32_t>::from({-1, 1}), pls::cs::Array<std::int32_t>::from({0, 1}),
+                     pls::cs::Array<std::int32_t>::from({1, 1})});
             });
         Team_PANEL_DIRECT_R_3_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_R_3", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "ae3c6517105750e012eb226a40dc8b8e67fbc7a65b798be0cbcb06ce27df2583"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "056bcf2319229572595f109277cbc622fec8d4402ed7dfd868e7d37af9f6ad29"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "ac6d61ed199de26eeac0ea60d187dacb2395832c7e33c1c77dbba88fd64580c9"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "b022085301c00dba34f45bcd22497b16773a3d7f4ae2d6b60bbf86f5a940fcbd"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "5953f1b29e3e1939c790b5c32752d62b519655aac78b5828ef7482c7cf6860ab"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "6bd84c70b545b69c12e6ef156fa9d2163f42ee78414799c285ef2184847b1dd7"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c1929404994155c8add349ec21ade14956478d3a8b9b2dd45393444f9e8e44bf"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c16373c863e2d6c02f7e53ce53040599778615cc82be3531f052f5a47fb56e87"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "d70ffde1b6c8f250af8667f33cac384fa13dd92af107f5085f714cd9b6640168"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "2561bc909f7faa8231dc3b40f16ccbe468be317df8cf47437602838392e395c0"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "7845f35d5a0a598551a3f995b81873b2800f930108aaed4f3d7750aeac79e234"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "d6cebd5ed2056e6fc0d69dfa19e55349e7401e840f9c353c2bad8fe30af82356"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "0b30215e3156603d7b1d841d450122f786e62bb683bd91d777178d8bde8b9a31"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "90a2d4e41f2721ba1008b5fa5432feefba2e617238066ec56306b696c575f2db"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "4f48b70749520e4d5fb1c594f90a2effa7d562d27defab78a37f65b2d6fafe17"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "4cd125e4d09d9d3af4e8678b3c93a129e0a69d0621fcde6876ff3232dbd05c59")});
+                    {pls::cs::Array<std::int32_t>::from({-2, -2}),
+                     pls::cs::Array<std::int32_t>::from({-1, -2}),
+                     pls::cs::Array<std::int32_t>::from({0, -2}), pls::cs::Array<std::int32_t>::from({1, -2}),
+                     pls::cs::Array<std::int32_t>::from({2, -2}),
+                     pls::cs::Array<std::int32_t>::from({-2, -1}),
+                     pls::cs::Array<std::int32_t>::from({2, -1}), pls::cs::Array<std::int32_t>::from({-2, 0}),
+                     pls::cs::Array<std::int32_t>::from({2, 0}), pls::cs::Array<std::int32_t>::from({-2, 1}),
+                     pls::cs::Array<std::int32_t>::from({2, 1}), pls::cs::Array<std::int32_t>::from({-2, 2}),
+                     pls::cs::Array<std::int32_t>::from({-1, 2}), pls::cs::Array<std::int32_t>::from({0, 2}),
+                     pls::cs::Array<std::int32_t>::from({1, 2}), pls::cs::Array<std::int32_t>::from({2, 2})});
             });
         Team_PANEL_DIRECT_R_4_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_R_4", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "c99897d52ea8ad4cd5eb9beabc514e7f94023a02726d740526061285cf676a1a"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "72e98d6cc2503dd3d83822b75ee9569e906ba7e2db8c971db4a229ad8ef61ee9"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "d893f268d94167867605b9700115d23026a81da17ec1fcb66b50168fb2be8936"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "2ec25a335202e8291d903a1d0e2edc743bb60149ec9017678b60f56071b8c49b"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "2c443a8b4b4397f797edde402be61a93b6c8a2e127e16beb693fd607c0da8c97"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "589ed654df6648be9f65b7ac922571d783ac70829159e2d836fae39ecec50a25"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "0a1631daf85c5445af26c4364f72067c728c84bc7e6c40b59191424e7992e0af"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "37ac0e57cdf452bffcad5e706c73f4b5695ae24cf50293788abbe67c91554ae6"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "79e990952fc7391923c0d7d3683f4d17e7aa4942c5a47a8aa057bcead54ce5b6"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "76a818157ec1e9bcc14972068c476508deb5c6570e74368f08abc16582a95d67"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "77426c14f301cf41de3830dbd315ce2112889241823af7fba59bafa53f01b799"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "3c7ab2530802f61f11b186cf631b1963a0b0801dc872f3b0752932b1b25f655d"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "0a2eab20f976f7022a52760ae78795db3c45a14ea1c09b5e11bd4bae14588c28"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "3f6cbc3026bad3adbdbd0f5b927a974491a2ea1def9762693b776d2213bc3f6a"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "3ba0e9077913d31f55dde90dd57b73a9564d14c104af10daa1653b46bd212df1"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "66c3a7b5ed16536f12dc95bd3ac2b392c13b376d41c966095c211a3d6709ba05"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "6ceb7ba09603e9aab6fd47a116be69467a95f72e25c2e7450809aaee59d058b4"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "17ba50180f489c7b22231b1c4317b25a1276709e97c7e17eb431e9171e4d44c6"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "c030e692f7868400e94659dfa3f33d47083f5575570e330ce24bdd8af1092d0e"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "5cb172b33ae2f3c4fcdc29daba4e31ea56b6bc30ace7be1c6a77ba6f2cf3c557"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "79f28ee875068ba3b770dd60a566f27c1b26a7cd5b4ea035d7d41945ff2a45f4"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "772ab668c1465bb0a4574c1c6033fbcdb8066d110b07507251e33b475f125ed1"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "cbafce87b941e2fd763f3014d033571fcd06d524c34c89a4d3de890773e88fe2"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "511481bf60325703268b51a2b4f2a65f1397f8c2bf598e44887a6b598b32c824")});
+                    {pls::cs::Array<std::int32_t>::from({-3, -3}),
+                     pls::cs::Array<std::int32_t>::from({-2, -3}),
+                     pls::cs::Array<std::int32_t>::from({-1, -3}),
+                     pls::cs::Array<std::int32_t>::from({0, -3}),
+                     pls::cs::Array<std::int32_t>::from({1, -3}),
+                     pls::cs::Array<std::int32_t>::from({2, -3}),
+                     pls::cs::Array<std::int32_t>::from({3, -3}),
+                     pls::cs::Array<std::int32_t>::from({-3, -2}),
+                     pls::cs::Array<std::int32_t>::from({3, -2}),
+                     pls::cs::Array<std::int32_t>::from({-3, -1}),
+                     pls::cs::Array<std::int32_t>::from({3, -1}),
+                     pls::cs::Array<std::int32_t>::from({-3, 0}),
+                     pls::cs::Array<std::int32_t>::from({3, 0}),
+                     pls::cs::Array<std::int32_t>::from({-3, 1}),
+                     pls::cs::Array<std::int32_t>::from({3, 1}),
+                     pls::cs::Array<std::int32_t>::from({-3, 2}),
+                     pls::cs::Array<std::int32_t>::from({3, 2}),
+                     pls::cs::Array<std::int32_t>::from({-3, 3}),
+                     pls::cs::Array<std::int32_t>::from({-2, 3}),
+                     pls::cs::Array<std::int32_t>::from({-1, 3}),
+                     pls::cs::Array<std::int32_t>::from({0, 3}),
+                     pls::cs::Array<std::int32_t>::from({1, 3}),
+                     pls::cs::Array<std::int32_t>::from({2, 3}),
+                     pls::cs::Array<std::int32_t>::from({3, 3})});
             });
         Team_PANEL_DIRECT_R_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_R", [&]() {
@@ -499,28 +364,15 @@ void Team::ensure_initialized() {
         Team_PANEL_DIRECT_R_9BLOCK_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PANEL_DIRECT_R_9BLOCK", [&]() {
                 return pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                    {pls::assets::baked_array<std::int32_t>(
-                         "a8b35c23becb3aeb22210f5ed487874aff468e1ebdca323a84176356ac64c789"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "4e7547c0f902607f1a8ac696daeaf224a11c3031d995d13ceb7069b722dc3dca"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "879009862bdb7c0e07004116abf35d0d42da2e4a445c310a5909c248f004f4c2"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "95ca8c82b2919ff5e8a10ec8861566c0861e77fbe2239485de433a49be4884b8"),
-                     pls::cs::Array<std::int32_t>::make(2),
-                     pls::assets::baked_array<std::int32_t>(
-                         "eca7424e979f87c9b16bdf1ce30967f4e63abb2b259e4a97acc2fc31ede48dcc"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "16b7b7d47e670d9ce3dad03dcf45e5e46c727f79af092f10219632a607a7c06d"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "1e085b1c941d946824abb252e1cbe41131b6287a3f724d1917f2c3fa49e00a3c"),
-                     pls::assets::baked_array<std::int32_t>(
-                         "e13e968313097089d7370c56db870bf1e2f5f5e067aaa5dffa1cfb300dee50f3")});
+                    {pls::cs::Array<std::int32_t>::from({-1, -1}),
+                     pls::cs::Array<std::int32_t>::from({0, -1}), pls::cs::Array<std::int32_t>::from({1, -1}),
+                     pls::cs::Array<std::int32_t>::from({-1, 0}), pls::cs::Array<std::int32_t>::make(2),
+                     pls::cs::Array<std::int32_t>::from({1, 0}), pls::cs::Array<std::int32_t>::from({-1, 1}),
+                     pls::cs::Array<std::int32_t>::from({0, 1}), pls::cs::Array<std::int32_t>::from({1, 1})});
             });
         Team_FORMATION_TYPE_RATE_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.FORMATION_TYPE_RATE", [&]() {
-                return pls::assets::baked_array<std::int32_t>(
-                    "92900c2d2a21fe10df838efc8cb4c0c6aac736f2bb0f7194d5064dcf83703d86");
+                return pls::cs::Array<std::int32_t>::from({0, 50, -50});
             });
         Team_FORMATION_RATE_DEFFECNE_storage = pls::cs::evaluate_type_initializer_field(
             "F:game.Team.FORMATION_RATE_DEFFECNE", [&]() { return -70; });
@@ -550,27 +402,17 @@ void Team::ensure_initialized() {
             pls::cs::evaluate_type_initializer_field("F:game.Team.GOAL_GLAD_AROUND_POS", [&]() {
                 return pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::from(
                     {pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                         {pls::assets::baked_array<std::int32_t>(
-                              "230134a72e0fbc8aea90db683bde68c3ddd7c8cecc2d54879b8dadae49a56ffc"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "0d4202f73c5ea755eb93c1e0f49a56ec1d3366fe165d6d00562464089d36ce24"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "d042ed766e0b4e5f91fb3eecfd5f2a9dcda9963a10ad14f56e9b73f5815b2813"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "4ffe8cbc56a14403c002a162a6b901f42051ad1b1ff0ac51bb2254dbf290890d"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "3da5364dfc52f6de4f73833722d5aef2909368a5d65f2f29914304374e04c43b")}),
+                         {pls::cs::Array<std::int32_t>::from({-60, 60, 60, 60}),
+                          pls::cs::Array<std::int32_t>::from({-30, 70, 70, 70}),
+                          pls::cs::Array<std::int32_t>::from({-70, 30, 70, 70}),
+                          pls::cs::Array<std::int32_t>::from({-30, 70, 30, -70}),
+                          pls::cs::Array<std::int32_t>::from({-70, 30, 30, -70})}),
                      pls::cs::Array<pls::cs::Array<std::int32_t>>::from(
-                         {pls::assets::baked_array<std::int32_t>(
-                              "36896af661f35da7f445b85790612b67be45d437a7f370057cd01ed3a71f4637"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "7fe547a38494041074a412acae77f69af5555da8582580c81c68471ae7b39079"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "65b377a0c705a23ce5aa5e06b9d2fb0ea40ac4361ea92fb094927807cff70650"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "a2d06f95bb672ec5fbce2215fe94383c591f0ea28ce06344127ffdc432c1fcfa"),
-                          pls::assets::baked_array<std::int32_t>(
-                              "84789919764a21388d8f5e4e69fd4eb9bc238e693530804960f45b614554b7a0")})});
+                         {pls::cs::Array<std::int32_t>::from({-60, 60, 60, 60}),
+                          pls::cs::Array<std::int32_t>::from({-30, 70, 70, 70}),
+                          pls::cs::Array<std::int32_t>::from({-70, 30, 70, 70}),
+                          pls::cs::Array<std::int32_t>::from({-30, 70, 70, -30}),
+                          pls::cs::Array<std::int32_t>::from({-70, 30, 70, -30})})});
             });
     });
 }
@@ -742,15 +584,13 @@ pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>& Team::team_format
 
 void Team::create_init(pls::cs::Ref<Team> self) {
     self->CEVA_PASSER_MP2 =
-        pls::assets::baked_array<float>("cb486e136a46c7f4a054496a91ea561422587b6f352d766a21ee4598437ca3c5");
-    self->CEVA_PASSER_MP2_DIV =
-        pls::assets::baked_array<float>("d145fd7253c59faad7cf92636fc230f5cd62c3ac8c3f0cbe2ebdd390dad6bc38");
+        pls::cs::Array<float>::from({0.7f, 0.4f, 0.7f, 0.4f, 0.2f, 0.4f, 0.7f, 0.4f, 0.7f});
+    self->CEVA_PASSER_MP2_DIV = pls::cs::Array<float>::from(
+        {2.857143f, 5.0f, 2.857143f, 5.0f, 10.0f, 5.0f, 2.857143f, 5.0f, 2.857143f});
     self->CEVA_PASSER_MP3 =
-        pls::assets::baked_array<float>("b86ff9f1b096316cc90c60ce6b6ef3fe3935526087a21435353c083a672fa949");
-    self->CEVA_PASSER_AP = pls::assets::baked_array<std::int32_t>(
-        "fdc3ef37e1317cd37f796633c8ca08f9532d0cce18669a144789524f696a299f");
-    self->CEVA_PASSER_ENEAP = pls::assets::baked_array<std::int32_t>(
-        "2694fbddb72fe4ad6f85152d6ed30de989e8fa32ff040e4e1be46b21221cdad4");
+        pls::cs::Array<float>::from({1.0f, 0.99f, 1.0f, 0.99f, 0.95f, 0.99f, 1.0f, 0.99f, 1.0f});
+    self->CEVA_PASSER_AP = pls::cs::Array<std::int32_t>::from({50, 20, 0, 0, 0, 0});
+    self->CEVA_PASSER_ENEAP = pls::cs::Array<std::int32_t>::from({-50, -20, 0, 0, 0, 0});
     self->ballNearPlayer_ = generated::java::util::Vector::create();
     self->players_receive_ = generated::java::util::Vector::create();
     self->w_disBoal = 0.5f;
@@ -844,11 +684,9 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
     NOW_LINE = pls::cs::Array<std::int32_t>::make(4);
     team_policyEva = pls::cs::Array<std::int32_t>::make(4);
     team_eva = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "6bc58bb0843caadfd49db5043a5ae4b731b139a15272eb22142bdf2c2317c0fe"));
+        pls::cs::Array<std::int32_t>::from({4, 2}));
     team_frect = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<float>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "55adb322349394279005b78d685207ec21ea4a3dfa30cfb38179fccd01ccb330"));
+        pls::cs::Array<std::int32_t>::from({4, 2}));
     frect_pos = pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>::make(4);
     for (pls::cs::Int32 m = 0; m < (frect_pos).length(); ++m) {
         {
@@ -864,8 +702,7 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
         }
     }
     frect_cpos = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "15cd0a23d71224e5bf6a4bfb4995df289d1eef229e9eede78f12a21a366626cf"));
+        pls::cs::Array<std::int32_t>::from({4, 2}));
     amefto_goalPos_ = pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>::make(2);
     for (pls::cs::Int32 n = 0; n < (amefto_goalPos_).length(); ++n) {
         {
@@ -878,11 +715,9 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
     require(amefto_goalPos_.get_Item(0))->x_ = static_cast<float>(-450.0f);
     require(amefto_goalPos_.get_Item(1))->x_ = 450.0f;
     amefto_cameraPos_ = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "00e6225fe7c3a740e806a673158540725de6105568402adc366c616e750edd03"));
+        pls::cs::Array<std::int32_t>::from({2, 2}));
     amefto_address_ = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-        pls::assets::baked_array<std::int32_t>(
-            "a90f84dde44929f7f1c68bcd15ec74ee0f19536b9e1fea5dae089918066318a0"));
+        pls::cs::Array<std::int32_t>::from({2, 2}));
     receiverPIdBox_ = pls::cs::Array<std::int32_t>::make(5);
     if (isUserTeam) {
         amefto_pz = Team::AMEFTO_PZ()[0];
@@ -2218,8 +2053,7 @@ void Team::Update_coatEvaLooseBall() {
         }
     }
     if (Team::ch_ceva()[10] == 1) {
-        pls::cs::Array<std::int32_t> add_param = pls::assets::baked_array<std::int32_t>(
-            "5814af5d02befcd7bce042d6e7fa365008313f18d5a5d4d06eba6ec44cee0e19");
+        pls::cs::Array<std::int32_t> add_param = pls::cs::Array<std::int32_t>::from({50, 50, 50, 0, 0, 0});
         {
             auto cs_receiver = static_cast<pls::cs::Ref<Team>>(this);
             std::int32_t cs_arg0 = 0;

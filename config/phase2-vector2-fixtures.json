@@ -60,10 +60,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.24131070001749322,
-    "native-compile": 34.95654350001132,
-    "managed-output": 0.7848789999843575,
-    "native-output": 0.32433540001511574
+    "csharp-compile": 0.23672459996305406,
+    "native-compile": 35.36904510000022,
+    "managed-output": 0.7147802000399679,
+    "native-output": 0.296845700009726
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -117,11 +117,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/vector-value-differential/Harness.exe",
-    "sha256": "df60882619dbe12851a0faf68efbf57ea01544f594b4ff33af11dfef4dce0e45"
+    "sha256": "983ca967874883df81780f0f7c0a92d265d6e221fa06ec69f90e31c7b4597761"
   },
   "source_oracle_executable": {
     "path": "build/translator/vector-value-differential/Harness-managed.exe",
-    "sha256": "d0251fe6ada468551505219dbfc06bd153e40ff612c037a081b2af43c6ab584b"
+    "sha256": "9bf6d836cdaa6d28760647b8d804d71f533e05055a9a9fb43e74fa208e316c2d"
   },
   "differential_runner_sha256": "f820bad10247e598c6093be785b20681f6f98251b4ece4bff60011d956dcf133",
   "runtime_sources": [
@@ -785,7 +785,7 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "04f61d0c344bec78ff2bcc19cad3a233cd501bcf41ddb2282f04eb62839f49f0",
+    "translator_source_sha256": "98d4c2c13dcd8e9f77f6873a4691e96751e42406a2e8385040e74c7c6e445ab1",
     "emission_source_sha256": "92d1032c51db6f7bce49def48c70f260f01616701caf07208453008f55288577",
     "readable_source_sha256": [
       "2332e645939be40d5fe8f3e6ba5e63f6586ec8dbacfd12afdd514381d9d9dc7c",

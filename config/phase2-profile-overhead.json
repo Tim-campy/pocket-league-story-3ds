@@ -3,58 +3,58 @@
   "status": "PASS",
   "samples": [
     [
-      258000,
-      1930200,
-      9718000,
-      100000
-    ],
-    [
-      228900,
-      1192300,
-      6346700,
-      100000
-    ],
-    [
-      172100,
-      1175900,
-      6362500,
-      100000
-    ],
-    [
-      175100,
-      1159000,
-      6291200,
-      100000
-    ],
-    [
-      177500,
-      1161700,
-      6387600,
-      100000
-    ],
-    [
-      175800,
-      1245000,
-      6421100,
+      175000,
+      1244700,
+      6249500,
       100000
     ],
     [
       175700,
-      1153300,
-      6331400,
+      1206200,
+      6307100,
+      100000
+    ],
+    [
+      174800,
+      1156200,
+      6199900,
+      100000
+    ],
+    [
+      175600,
+      1141700,
+      6354400,
+      100000
+    ],
+    [
+      172100,
+      1195100,
+      6306700,
+      100000
+    ],
+    [
+      173300,
+      1205700,
+      6284800,
+      100000
+    ],
+    [
+      174700,
+      1214300,
+      6235200,
       100000
     ]
   ],
-  "median_baseline_ns_per_call": 1.758,
-  "median_disabled_ns_per_call": 11.759,
-  "median_instrumented_ns_per_call": 63.625,
-  "median_increment_ns_per_call": 61.904,
+  "median_baseline_ns_per_call": 1.748,
+  "median_disabled_ns_per_call": 12.057,
+  "median_instrumented_ns_per_call": 62.848,
+  "median_increment_ns_per_call": 61.115,
   "inputs_sha256": {
     "tests/kairo/profile_overhead.cpp": "55c68f066fee193a1aea51b8eed84a0bad2740b20af7f47521533c6cdcf3a4ba",
     "tools/test_profile_overhead.py": "16d3e23d7470b6b6ecaa23a445fc7e006929adcc28bd2e11c8f6d02f42631c65",
     "src/kairo/common/diagnostic_profile.hpp": "49b08cdf04c808d4df42ba5419eb08fa9b6193e9a54367d0b393b8e4c04f3a0c"
   },
-  "executable_sha256": "a6cb2634c131ef464e7bf8bca292c2fce6718a23dd0e7364f5e7e55aeb60cf10",
+  "executable_sha256": "0f97f7b156ab2ab4dfb10da8220116424d1b697b4d8960e8862c3f80843fc331",
   "limitations": [
     "Own microbenchmark, not a correction factor for game timing.",
     "No benchmark overhead is subtracted from reported game samples."

@@ -63,10 +63,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "3c03181352b99dcb1b8141c7fff0d129426d99979f0d0ba8cb329b6d649bf794",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "75096600a97d23e6b7f7e19cf0d6eb7d6efe515ee5d92a379d8cceae29f3673c"
+    "build/graphics-tests/GraphicsOracle.dll": "e69ba043f3b3d8a9013b753263b0f2b097a84a61d09952f2877a9d7350025831",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "492bf6380e96e2b8a30754bfd4feca4229a97a2453083379335f855b231ba57b"
   },
-  "executable_sha256": "6ecd61dcb7e98f9efc717c79be3b5b07d12b9a90f99d30422f18ac65fc0196f0",
+  "executable_sha256": "d63102c913268253e8f38b837d4aa7c31a9454f1f385768db21561d9e51f7577",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

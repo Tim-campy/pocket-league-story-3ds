@@ -19,7 +19,7 @@ O projeto tem duas metades, separadas por um marco chamado **congelamento** (se�
 4. **Nenhum binário do jogo original ou do Unity** entra no repositório ou no build. DLLs usadas como oráculo de teste ficam locais e não são incorporadas.
 5. **Nada de marca.** Ícone e banner do homebrew são originais e dizem que o port é não oficial.
 6. **O distribuível é um binário sem assets** (`.3dsx`/`.cia`) que lê os assets de um diretório do SD gerado pelo pipeline do usuário.
-7. **Textos:** os literais presentes no C# reconstruído fazem parte do código de engenharia reversa e permanecem no C++. Os textos que estão nos assets (pacotes de idioma, dados) continuam vindo dos assets.
+7. **Textos e arrays constantes:** os literais presentes no C# reconstruído — textos e inicializadores de arrays constantes (`new int[] { 4, 2 }`) — fazem parte do código de engenharia reversa e permanecem no C++ (decisão do usuário de 2026-11-16; no modo legível já saem como literais; o maior array tem 224 bytes, total de cerca de 13 KB). Os textos e dados que estão nos assets (pacotes de idioma, arquivos de dados) continuam vindo dos assets.
 8. **README e releases** declaram: port não oficial, não afiliado à Kairosoft, requer que o usuário possua o jogo e forneça o próprio APK, não distribui assets nem binários originais.
 9. O CI recusa formatos proibidos e arquivos acima de 2 MB. Não existe exceção "só para teste".
 

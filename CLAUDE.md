@@ -58,7 +58,7 @@ O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): 50 ms 
 - Liberações explícitas de recursos (`Image.Unuse/Dispose`, `ResourceManager`, `SoundBase.Dispose`, `Offscreen.Dispose/OnDestroy`) são imediatas e independentes da coleta.
 - Serviços Android removidos, com políticas offline: registro local, cobrança indisponível sem conceder itens pagos e sem remover estado do save, anúncios removidos.
 - Áudio em streaming; texturas sem perda; fontes rasterizadas do TTF do APK; imagens pré-convertidas pelo pipeline.
-- Textos literais do C# reconstruído ficam no C++; textos dos assets vêm dos assets.
+- Textos literais e arrays constantes do C# reconstruído ficam no C++ (arrays como literais no modo legível, decisão de 2026-11-16); textos e dados dos assets vêm dos assets.
 - A parte LGPL v2 da colação do Mono (tabelas auxiliares) fica separada e documentada.
 - A lógica do jogo não muda antes do congelamento. Melhorias pedidas vão para `docs/backlog.md`.
 

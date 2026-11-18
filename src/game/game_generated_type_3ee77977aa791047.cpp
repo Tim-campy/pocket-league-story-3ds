@@ -113,6 +113,7 @@ pls::cs::Ref<cs_3ee77977aa791047> cs_03172f7ba0b3ea2e() { cs_init_3ee77977aa7910
 }
 
 void cs_03172f7ba0b3ea2e_init(pls::cs::Ref<cs_3ee77977aa791047> cs_this) {
+cs_init_3ee77977aa791047();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.BootForm.#ctor",game);
 {

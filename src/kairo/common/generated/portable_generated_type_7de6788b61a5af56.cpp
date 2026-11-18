@@ -22,6 +22,7 @@ pls::cs::Ref<cs_7de6788b61a5af56> cs_6ebf505bf86af890(std::int32_t v_value) { cs
 }
 
 void cs_6ebf505bf86af890_init(pls::cs::Ref<cs_7de6788b61a5af56> cs_this,std::int32_t v_value) {
+cs_init_7de6788b61a5af56();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JInteger.#ctor(System.Int32)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_value; pls::generated::cs_require(cs_target)->cs_159529d7b41663da = cs_value; return cs_value; }());

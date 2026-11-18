@@ -333,6 +333,7 @@ pls::cs::Ref<cs_9cade6927d6e0bf3> cs_1c59e79631d1b59d(pls::cs::Ref<cs_9cade6927d
 }
 
 void cs_1c59e79631d1b59d_init(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this,pls::cs::Ref<cs_9cade6927d6e0bf3> v_seb) {
+cs_init_9cade6927d6e0bf3();
 cs_this->cs_019432077efbdc74 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}());
 cs_this->cs_9cace278fd260831 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.#ctor(kairo.unity.ui.Seb):2367",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_0b80b02d4903483a = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.#ctor(kairo.unity.ui.Seb):2529",([&]() -> pls::cs::Ref<cs_5ac9304f9db0671e> { return cs_77ef879cc829cd6c(); }()));
@@ -358,6 +359,7 @@ pls::cs::Ref<cs_9cade6927d6e0bf3> cs_4a08f30608a5776b(pls::cs::Array<std::uint8_
 }
 
 void cs_4a08f30608a5776b_init(pls::cs::Ref<cs_9cade6927d6e0bf3> cs_this,pls::cs::Array<std::uint8_t> v_data) {
+cs_init_9cade6927d6e0bf3();
 cs_this->cs_019432077efbdc74 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}());
 cs_this->cs_9cace278fd260831 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.#ctor(System.Byte[]):2367",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_0b80b02d4903483a = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.#ctor(System.Byte[]):2529",([&]() -> pls::cs::Ref<cs_5ac9304f9db0671e> { return cs_77ef879cc829cd6c(); }()));

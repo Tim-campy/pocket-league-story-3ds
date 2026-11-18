@@ -57,6 +57,7 @@ pls::cs::Ref<cs_832d81e198eeeec2> cs_62c87c20be2abf48() { cs_init_832d81e198eeee
 }
 
 void cs_62c87c20be2abf48_init(pls::cs::Ref<cs_832d81e198eeeec2> cs_this) {
+cs_init_832d81e198eeeec2();
 ([&]() { cs_60f0f6dd217b8877_init(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.ByteListOutputStream.#ctor",kairo);
 {

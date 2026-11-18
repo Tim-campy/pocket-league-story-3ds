@@ -17,6 +17,7 @@ pls::cs::Ref<cs_2e79f4f38b707be7> cs_7b06faa19a93d0a8() { cs_init_2e79f4f38b707b
 }
 
 void cs_7b06faa19a93d0a8_init(pls::cs::Ref<cs_2e79f4f38b707be7> cs_this) {
+cs_init_2e79f4f38b707be7();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:analytics.AnalyticsTracker.#ctor",game);
 {}
 }

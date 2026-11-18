@@ -363,6 +363,7 @@ pls::cs::Ref<cs_2ffa6f51468590ea> cs_2f5492a9dea0a4ac() { cs_init_2ffa6f51468590
 }
 
 void cs_2f5492a9dea0a4ac_init(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this) {
+cs_init_2ffa6f51468590ea();
 cs_this->cs_d2755abb70d3cbb1 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.#ctor:37888",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));
 cs_this->cs_92421d82e73ceb9b = pls::source_allocations::completed("new_object","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.#ctor:38241",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));
 cs_this->cs_785744431b3607a3 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.#ctor:39251",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
@@ -4422,4 +4423,4 @@ void cs_b708460eea6c6df0(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,std::int32_t 
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_cf8366a706eb588f; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_72da38f2b646e254; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull)); auto cs_value = v_slot;cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ffa6f51468590ea>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_38f421ed8909306b(cs_receiver); }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.NewGame(System.Int32,System.String):50040",([&]() -> pls::cs::Ref<pls::generated::cs_8c57b816bbc8fd6e> { pls::cs::Array<pls::cs::Ref<pls::generated::cs_8c57b816bbc8fd6e>> cs_arg0 = cs_4cfb7d4f52307756_value; pls::cs::Array<std::int32_t> cs_arg1 = cs_b3c4355d79ad4a53_value; pls::cs::Array<std::int64_t> cs_arg2 = cs_24baaac10d948736_value; pls::cs::Array<pls::cs::String> cs_arg3 = cs_37df3dc1c8f8fe67_value; pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_arg4 = cs_237ef7bad1a6bbb9_value; return pls::generated::cs_e34104df98d3719c(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }())); pls::game::cs_require(cs_target)->cs_9e66073c32cd8559 = cs_value; return cs_value; }());
-([&]() { auto cs_target = ([&]() {
+([&]() {

@@ -39,6 +39,7 @@ pls::cs::Ref<cs_5beb6285da308d06> cs_1dcab3be6c5f03f1() { cs_init_5beb6285da308d
 }
 
 void cs_1dcab3be6c5f03f1_init(pls::cs::Ref<cs_5beb6285da308d06> cs_this) {
+cs_init_5beb6285da308d06();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FormationData.#ctor",game);
 {
@@ -54,6 +55,7 @@ pls::cs::Ref<cs_5beb6285da308d06> cs_87d76be08d9385f5(pls::cs::String v_src) { c
 }
 
 void cs_87d76be08d9385f5_init(pls::cs::Ref<cs_5beb6285da308d06> cs_this,pls::cs::String v_src) {
+cs_init_5beb6285da308d06();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FormationData.#ctor(System.String)",game);
 {

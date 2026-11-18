@@ -201,7 +201,9 @@ sealed partial class Lowerer {
     // Quiet: reads managed state; can only throw NullReferenceException.
     // Thrower: no side effect, but may throw something else.
     // Effectful: anything that may write state or run arbitrary code.
-    enum Order {Pure,Quiet,Thrower,Effectful}
+    // Inert: reads shared mutable state, never throws, never writes (a static field of
+    // an initialized type). Its order matters only next to an operand with effects.
+    enum Order {Pure,Inert,Quiet,Thrower,Effectful}
     static Order Max(Order a,Order b)=>a>b?a:b;
     static ExpressionSyntax Unparen(ExpressionSyntax e){while(e is ParenthesizedExpressionSyntax p)e=p.Expression;return e;}
     Order Classify(ExpressionSyntax e){
@@ -262,11 +264,43 @@ sealed partial class Lowerer {
     Order StaticRead(IFieldSymbol field){
         if(field.HasConstantValue)return Order.Pure;
         if(externalFields.ContainsKey(Id(field)))return Order.Effectful;
+        if(readable&&InitializedAtRead(field))return Order.Inert;
         // Same conditions as the normal-mode storage fast path: the owner's
         // initializer already ran at this method's entry, so the read is inert.
         var caller=methods.GetValueOrDefault(current);
         if(caller==null||initializingTypes.Count!=0||caller.MethodKind==MethodKind.Constructor||TypeParameters(caller).Length!=0||externalTypes.ContainsKey(Id(caller.ContainingType)))return Order.Effectful;
         return SymbolEqualityComparer.Default.Equals(field.ContainingType,caller.ContainingType)?Order.Quiet:Order.Effectful;
+    }
+    // A3: the read cannot run the type initializer with observable effects: the type's
+    // initializer only assigns constants, or the type is proven initialized here (an
+    // instance method of the type or a subtype -- the instance exists, its constructor
+    // initialized the chain --, a constructor of the type itself, or a static method of
+    // the type, which enters through its guard).
+    bool InitializedAtRead(IFieldSymbol field){
+        var owner=field.ContainingType;
+        if(sharedFields.Contains(Id(field))||owner.TypeParameters.Length!=0||owner.DeclaringSyntaxReferences.Length==0||externalTypes.ContainsKey(Id(owner)))return false;
+        if(ConstantTypeInitializer(owner))return true;
+        var caller=methods.GetValueOrDefault(current);
+        if(caller==null||initializingTypes.Count!=0||TypeParameters(caller).Length!=0)return false;
+        if(caller.MethodKind==MethodKind.Constructor||caller.IsStatic)return SymbolEqualityComparer.Default.Equals(caller.ContainingType,owner);
+        for(var type=caller.ContainingType;type!=null;type=type.BaseType)if(SymbolEqualityComparer.Default.Equals(type,owner))return true;
+        return false;
+    }
+    readonly Dictionary<string,bool> constantInitializers=new(StringComparer.Ordinal);
+    bool ConstantTypeInitializer(INamedTypeSymbol type){
+        if(constantInitializers.TryGetValue(Id(type),out var known))return known;
+        bool Constant(ExpressionSyntax e,SemanticModel m){
+            if(m.GetConstantValue(e).HasValue||e.IsKind(SyntaxKind.NullLiteralExpression))return true;
+            if(e is ArrayCreationExpressionSyntax creation)return (creation.Initializer==null?creation.Type.RankSpecifiers.SelectMany(r=>r.Sizes).All(s=>s is OmittedArraySizeExpressionSyntax||m.GetConstantValue(s).HasValue&&Convert.ToInt64(m.GetConstantValue(s).Value)>=0):creation.Initializer.Expressions.All(x=>Constant(x,m)));
+            if(e is ImplicitArrayCreationExpressionSyntax implicitArray)return implicitArray.Initializer.Expressions.All(x=>Constant(x,m));
+            if(e is InitializerExpressionSyntax nested)return nested.Expressions.All(x=>Constant(x,m));
+            return false;
+        }
+        var result=!type.GetMembers().OfType<IMethodSymbol>().Any(m=>m.MethodKind==MethodKind.StaticConstructor&&!m.IsImplicitlyDeclared)
+            &&type.GetMembers().OfType<IFieldSymbol>().Where(f=>f.IsStatic&&!f.IsConst&&f.DeclaringSyntaxReferences.Length!=0).All(f=>{
+                var d=(VariableDeclaratorSyntax)f.DeclaringSyntaxReferences[0].GetSyntax();
+                return d.Initializer==null||Constant(d.Initializer.Value,compilation.GetSemanticModel(d.SyntaxTree));});
+        constantInitializers[Id(type)]=result;return result;
     }
     Order ClassifyAs(ExpressionSyntax e,ITypeSymbol? to)=>to!=null&&model.ClassifyConversion(e,to).IsUserDefined?Order.Effectful:Classify(e);
     HashSet<ISymbol> Writes(ExpressionSyntax e){
@@ -282,6 +316,13 @@ sealed partial class Lowerer {
     // or exactly one is not pure and no pure operand reads a local it writes.
     bool OrderFree(IReadOnlyList<(Order order,ExpressionSyntax? node)> operands){
         if(operands.All(o=>o.order<=Order.Quiet))return true;
+        // One operand that may throw (and writes nothing) among reads that cannot throw.
+        if(operands.Count(o=>o.order==Order.Thrower)==1&&operands.All(o=>o.order<=Order.Inert||o.order==Order.Thrower))return true;
+        // Element reads of one and the same array (plain storage, pure indices): a null
+        // array throws NullReferenceException for each, a non-null one only
+        // IndexOutOfRangeException; the first exception is the same either way.
+        var throwers=operands.Where(o=>o.order==Order.Thrower).ToArray();
+        if(throwers.Length>1&&operands.All(o=>o.order<=Order.Inert||o.order==Order.Thrower)&&throwers[0].node is ExpressionSyntax firstThrower&&PlainArrayOf(firstThrower) is ISymbol array&&throwers.All(o=>o.node!=null&&SameArrayOnly(o.node!,array)))return true;
         var impure=operands.Where(o=>o.order!=Order.Pure).ToArray();
         if(impure.Length>1)return false;
         if(impure[0].node==null)return true;
@@ -290,6 +331,47 @@ sealed partial class Lowerer {
             foreach(var identifier in operand.node!.DescendantNodesAndSelf().OfType<IdentifierNameSyntax>())
                 if(model.GetSymbolInfo(identifier).Symbol is ISymbol read&&written.Contains(read))return false;
         return true;
+    }
+    // The plain array (local, parameter or field of this) of the first element read in e.
+    ISymbol? PlainArrayOf(ExpressionSyntax e){
+        foreach(var element in e.DescendantNodesAndSelf().OfType<ElementAccessExpressionSyntax>()){
+            var array=Unparen(element.Expression);
+            if(!(array is IdentifierNameSyntax||array is MemberAccessExpressionSyntax{Expression:ThisExpressionSyntax}))return null;
+            var symbol=model.GetSymbolInfo(array).Symbol;
+            return symbol is ILocalSymbol or IParameterSymbol{RefKind:RefKind.None} or IFieldSymbol{IsStatic:false}&&!capturedVariables.Contains(symbol)&&model.GetTypeInfo(array).Type is IArrayTypeSymbol?symbol:null;
+        }
+        return null;
+    }
+    // e reads only that array (pure indices), constants and plain locals, combined by
+    // arithmetic that cannot throw: its only possible exception is that array's.
+    bool SameArrayOnly(ExpressionSyntax e,ISymbol array){
+        e=Unparen(e);
+        if(model.GetConstantValue(e).HasValue)return true;
+        switch(e){
+            case ElementAccessExpressionSyntax element:
+                return element.ArgumentList.Arguments.Count==1&&Classify(element.ArgumentList.Arguments[0].Expression)==Order.Pure&&SymbolEqualityComparer.Default.Equals(model.GetSymbolInfo(Unparen(element.Expression)).Symbol,array)
+                    &&(Unparen(element.Expression) is IdentifierNameSyntax||Unparen(element.Expression) is MemberAccessExpressionSyntax{Expression:ThisExpressionSyntax});
+            case IdentifierNameSyntax:return Classify(e)==Order.Pure;
+            case CastExpressionSyntax cast:{var to=model.GetTypeInfo(cast).Type;var from=model.GetTypeInfo(cast.Expression).Type;
+                return to!=null&&from!=null&&compilation.ClassifyConversion(from,to) is {IsNumeric:true} or {IsIdentity:true}&&SameArrayOnly(cast.Expression,array);}
+            case BinaryExpressionSyntax binary when binary.Kind() is SyntaxKind.AddExpression or SyntaxKind.SubtractExpression or SyntaxKind.MultiplyExpression or SyntaxKind.DivideExpression:{
+                if(model.GetOperation(binary) is IBinaryOperation{OperatorMethod:not null})return false;
+                var type=model.GetTypeInfo(binary).Type;
+                if(binary.IsKind(SyntaxKind.DivideExpression)&&Integral(type))return false;
+                if(type?.SpecialType==SpecialType.System_String)return false;
+                return SameArrayOnly(binary.Left,array)&&SameArrayOnly(binary.Right,array);}
+            default:return false;
+        }
+    }
+    bool SameArrayElement(ExpressionSyntax e,ExpressionSyntax first){
+        if(Unparen(e) is not ElementAccessExpressionSyntax a||Unparen(first) is not ElementAccessExpressionSyntax b)return false;
+        if(a.ArgumentList.Arguments.Count!=1||b.ArgumentList.Arguments.Count!=1||model.GetTypeInfo(a.Expression).Type is not IArrayTypeSymbol)return false;
+        if(Classify(a.ArgumentList.Arguments[0].Expression)!=Order.Pure)return false;
+        var array=Unparen(a.Expression);
+        var plain=array is IdentifierNameSyntax||array is MemberAccessExpressionSyntax{Expression:ThisExpressionSyntax};
+        var symbol=model.GetSymbolInfo(array).Symbol;
+        return plain&&symbol is ILocalSymbol or IParameterSymbol{RefKind:RefKind.None} or IFieldSymbol{IsStatic:false}&&!(symbol is ILocalSymbol or IParameterSymbol&&capturedVariables.Contains(symbol))
+            &&SymbolEqualityComparer.Default.Equals(symbol,model.GetSymbolInfo(Unparen(b.Expression)).Symbol);
     }
     bool OrderFree(BinaryExpressionSyntax binary){
         var operation=model.GetOperation(binary) as IBinaryOperation;
@@ -442,6 +524,25 @@ sealed partial class Lowerer {
         }
         return "{"+body+"}";
     }
+    // Readable C3b/A3: ([&]() -> T { auto cs_left = A; ...; return E; }()) used as the whole
+    // value of a statement is split into the temporaries (made unique) followed by E.
+    int hoistCounter;
+    (string prefix,string value)? HoistLambda(string text){
+        text=text.Trim();
+        if(!text.StartsWith("([&]()",StringComparison.Ordinal)||!text.EndsWith("}())",StringComparison.Ordinal))return null;
+        var flat=FlattenStatementLambda(text);if(flat==null)return null;
+        var open=text.IndexOf('{');var body=text[(open+1)..^4];
+        var at=-1;
+        for(int i=body.Length-1;i>=0;i--)if(String.CompareOrdinal(body,i,"return",0,6)==0&&(i==0||!(char.IsLetterOrDigit(body[i-1])||body[i-1]=='_'))){at=i;break;}
+        if(at<0)return null;
+        var tail=body[at..].TrimEnd();if(!tail.EndsWith(";",StringComparison.Ordinal))return null;
+        var value=tail[6..^1].Trim();var prefix=body[..at];
+        if(value.Length==0||prefix.Trim().Length==0)return null;
+        var suffix="_"+(++hoistCounter);
+        var declaredNames=System.Text.RegularExpressions.Regex.Matches(prefix,@"(?<![>.:]\s*)\b(cs_\w+)\s*=(?!=)").Select(m=>m.Groups[1].Value).Where(n=>n!="cs_this"&&!System.Text.RegularExpressions.Regex.IsMatch(n,"^cs_[0-9a-f]{16}")).Distinct().ToList();
+        string Rename(string s){foreach(var n in declaredNames)s=System.Text.RegularExpressions.Regex.Replace(s,@"\b"+n+@"\b",n+suffix);return s;}
+        return (Rename(prefix).Trim()+"\n",Rename(value));
+    }
     // Expression statements whose value is discarded: assignment, ++ and --.
     string? ReadableEffect(ExpressionSyntax e){
         string? result=e switch{
@@ -451,6 +552,17 @@ sealed partial class Lowerer {
             _=>null};
         if(result!=null)Used(e);
         return result;
+    }
+    string ChainTargetText(ExpressionSyntax target){
+        var symbol=model.GetSymbolInfo(target).Symbol;
+        if(symbol is IFieldSymbol field){RequireClass(field.ContainingType,target);return "cs_this->"+NativeFieldMember(field,target);}
+        return ReadLocal(symbol!);
+    }
+    bool PlainChainTarget(ExpressionSyntax target){
+        var symbol=model.GetSymbolInfo(target).Symbol;
+        if(symbol is ILocalSymbol local)return !capturedVariables.Contains(local);
+        if(symbol is IParameterSymbol{RefKind:RefKind.None} parameter)return !capturedVariables.Contains(parameter);
+        return symbol is IFieldSymbol{IsStatic:false} field&&PlainField(field)&&(target is IdentifierNameSyntax||target is MemberAccessExpressionSyntax{Expression:ThisExpressionSyntax});
     }
     // Plain field storage (no shared/native/value-type binding), receiver kept.
     bool PlainField(IFieldSymbol field)=>!field.IsStatic&&!sharedFields.Contains(Id(field))&&!field.ContainingType.IsValueType&&(!externalTypes.ContainsKey(Id(field.ContainingType))||externalFields.ContainsKey(Id(field)))&&!externalValueTypes.ContainsKey(Id(field.ContainingType))&&!NativeFieldBinding(field);
@@ -479,6 +591,13 @@ sealed partial class Lowerer {
         return storage+" = "+Calculation(storage);
     }
     string? AssignStatement(AssignmentExpressionSyntax a){
+        // A3: a = b = c = v as a statement is v stored to c, then c to b, then b to a
+        // (C# order; the assigned value is the stored one). Only plain targets.
+        if(a.IsKind(SyntaxKind.SimpleAssignmentExpression)&&Unparen(a.Right) is AssignmentExpressionSyntax chained&&chained.IsKind(SyntaxKind.SimpleAssignmentExpression)&&PlainChainTarget(a.Left)&&PlainChainTarget(chained.Left)){
+            var first=AssignStatement(chained);
+            var outer=ChainTargetText(a.Left)+" = "+Converted(chained.Left,model.GetTypeInfo(a.Left).Type);
+            if(first!=null)return first+";\n"+outer;
+        }
         var symbol=model.GetSymbolInfo(a.Left).Symbol;var type=model.GetTypeInfo(a.Left).Type;var simple=a.IsKind(SyntaxKind.SimpleAssignmentExpression);
         if(symbol is IPropertySymbol property){
             // Setter call: receiver, value, then the call (null check at the call).

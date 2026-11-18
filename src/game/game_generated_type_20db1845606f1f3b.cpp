@@ -21,6 +21,7 @@ pls::cs::Ref<cs_20db1845606f1f3b> cs_edc2000ae353f18e() { cs_init_20db1845606f1f
 }
 
 void cs_edc2000ae353f18e_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this) {
+cs_init_20db1845606f1f3b();
 ([&]() { cs_3afc5298ce4a3e84_init(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:panel.MainPanel.#ctor",game);
 {
@@ -35,6 +36,7 @@ pls::cs::Ref<cs_20db1845606f1f3b> cs_8947b9476c4f17f7(pls::cs::String v_label,pl
 }
 
 void cs_8947b9476c4f17f7_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength) {
+cs_init_20db1845606f1f3b();
 ([&]() { pls::cs::String cs_arg0 = v_label; pls::cs::String cs_arg1 = v_defaultText; std::int32_t cs_arg2 = v_maxLength; std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); pls::cs::String cs_arg4 = pls::cs::String{}; cs_6b53a5cdc402f43c_init(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this),cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:panel.MainPanel.#ctor(System.String,System.String,System.Int32)",game);
 {
@@ -49,6 +51,7 @@ pls::cs::Ref<cs_20db1845606f1f3b> cs_a669d4cd9c91bbb0(pls::cs::String v_label,pl
 }
 
 void cs_a669d4cd9c91bbb0_init(pls::cs::Ref<cs_20db1845606f1f3b> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText) {
+cs_init_20db1845606f1f3b();
 ([&]() { pls::cs::String cs_arg0 = v_label; pls::cs::String cs_arg1 = v_defaultText; std::int32_t cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xeull)); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); pls::cs::String cs_arg4 = pls::cs::String{}; cs_6b53a5cdc402f43c_init(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this),cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:panel.MainPanel.#ctor(System.String,System.String)",game);
 {

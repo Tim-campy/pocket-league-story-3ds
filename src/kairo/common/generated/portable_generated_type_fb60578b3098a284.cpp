@@ -21,6 +21,7 @@ pls::cs::Ref<cs_fb60578b3098a284> cs_10f86e0fa81e1b57() { cs_init_fb60578b3098a2
 }
 
 void cs_10f86e0fa81e1b57_init(pls::cs::Ref<cs_fb60578b3098a284> cs_this) {
+cs_init_fb60578b3098a284();
 ([&]() { cs_60f0f6dd217b8877_init(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayOutputStream.#ctor",kairo);
 {

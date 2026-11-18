@@ -18,6 +18,7 @@ pls::cs::Ref<cs_f65ba01749ba9d34> cs_e166ffa7af3293c0(pls::cs::String v_name,pls
 }
 
 void cs_e166ffa7af3293c0_init(pls::cs::Ref<cs_f65ba01749ba9d34> cs_this,pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_value,bool v_toset) {
+cs_init_f65ba01749ba9d34();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.GameDataRecord.Data.#ctor(System.String,System.Byte[],System.Boolean)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = v_name; return pls::generated::cs_376859ff51e2fc37(cs_arg0); }());}); pls::game::cs_require(cs_target)->cs_ac47dab08454a832 = cs_value; return cs_value; }());

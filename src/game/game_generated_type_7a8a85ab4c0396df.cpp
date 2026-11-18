@@ -32,6 +32,7 @@ pls::cs::Ref<cs_7a8a85ab4c0396df> cs_972efb29b2f26070(pls::cs::Ref<pls::kairo::F
 }
 
 void cs_972efb29b2f26070_init(pls::cs::Ref<cs_7a8a85ab4c0396df> cs_this,pls::cs::Ref<pls::kairo::FormBase> v_next) {
+cs_init_7a8a85ab4c0396df();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x38aull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.RestoreForm.#ctor(kairo.unity.form.FormBase)",game);
 {

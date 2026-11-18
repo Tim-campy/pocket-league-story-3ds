@@ -37,6 +37,7 @@ pls::cs::Ref<cs_3e5b0d35ae6be8e7> cs_a056d04434609023() { cs_init_3e5b0d35ae6be8
 }
 
 void cs_a056d04434609023_init(pls::cs::Ref<cs_3e5b0d35ae6be8e7> cs_this) {
+cs_init_3e5b0d35ae6be8e7();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.QuestMatchData.#ctor",game);
 {
@@ -52,6 +53,7 @@ pls::cs::Ref<cs_3e5b0d35ae6be8e7> cs_7b161ff63c119bd9(pls::cs::String v_src) { c
 }
 
 void cs_7b161ff63c119bd9_init(pls::cs::Ref<cs_3e5b0d35ae6be8e7> cs_this,pls::cs::String v_src) {
+cs_init_3e5b0d35ae6be8e7();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.QuestMatchData.#ctor(System.String)",game);
 {

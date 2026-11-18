@@ -275,6 +275,7 @@ pls::cs::Ref<cs_77de402a688eeb9d> cs_e751bd24448f57f3(bool v_retryEnable) { cs_i
 }
 
 void cs_e751bd24448f57f3_init(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,bool v_retryEnable) {
+cs_init_77de402a688eeb9d();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.HttpObject.#ctor(System.Boolean)",kairo);
 {
 ([&]() { auto cs_receiver = cs_this; auto cs_rhs = v_retryEnable; auto cs_value = cs_rhs; cs_2756d68ee4aaa074(static_cast<pls::cs::Ref<cs_77de402a688eeb9d>>(cs_receiver),cs_value); return cs_value; }());

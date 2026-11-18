@@ -16,6 +16,7 @@ pls::cs::Ref<cs_922b87749168eb15> cs_25fc81be857429d9() { cs_init_922b87749168eb
 }
 
 void cs_25fc81be857429d9_init(pls::cs::Ref<cs_922b87749168eb15> cs_this) {
+cs_init_922b87749168eb15();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Compressor.Node.#ctor",kairo);
 {
 
@@ -29,6 +30,7 @@ pls::cs::Ref<cs_922b87749168eb15> cs_87ec71db506764c9(pls::cs::Ref<cs_922b877491
 }
 
 void cs_87ec71db506764c9_init(pls::cs::Ref<cs_922b87749168eb15> cs_this,pls::cs::Ref<cs_922b87749168eb15> v_parent,pls::cs::Ref<cs_922b87749168eb15> v_left,pls::cs::Ref<cs_922b87749168eb15> v_right,std::int32_t v_weight,std::int32_t v_value) {
+cs_init_922b87749168eb15();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Compressor.Node.#ctor(kairo.unity.util.Compressor.Node,kairo.unity.util.Compressor.Node,kairo.unity.util.Compressor.Node,System.Int32,System.Int32)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_parent; pls::generated::cs_require(cs_target)->cs_51d08ca6eed04eda = cs_value; return cs_value; }());

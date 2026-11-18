@@ -41,7 +41,7 @@
     "src/kairo/common/port_dialog.hpp": "80a731351b0786b56cbef086e4cb2fdf0d721f1dcf7a364bd965e2438462bd2d",
     "src/kairo/common/render_mode.hpp": "a3bba2c29b1817c48bdd079e44df8f1a028e5d3db89605ce8ea366c96ac850b0",
     "src/kairo/common/resource_load_trace.hpp": "6b57effe86199bffef76f71de3555dce06f09d424d2bafd2bf4691cd2b10377f",
-    "src/kairo/common/semantic_runtime.hpp": "a0b7fb62b62878e85dd554be07d3ed6d3f30353177232fc6d2258f8c9a34f14b",
+    "src/kairo/common/semantic_runtime.hpp": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10",
     "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/common/source_allocation_probe.hpp": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83",
@@ -55,6 +55,6 @@
     "src/runtime/tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef"
   },
   "game_assets_used": false,
-  "executable_sha256": "fe564827d626d69fa634841b1c950bf454c0f879e88faeb651dc496c9c601e3f",
+  "executable_sha256": "0724a8e4bf881059d6a882ce5b02713866dc8385e03e4f97672762221288fdec",
   "log_sha256": "5b36650d5b59545d1c2d712cb817adaa7ccb4359b07d310adb2f7d5dd79a79b5"
 }

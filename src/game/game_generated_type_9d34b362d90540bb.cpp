@@ -16,6 +16,7 @@ pls::cs::Ref<cs_9d34b362d90540bb> cs_d1b85d888761ab9c() { cs_init_9d34b362d90540
 }
 
 void cs_d1b85d888761ab9c_init(pls::cs::Ref<cs_9d34b362d90540bb> cs_this) {
+cs_init_9d34b362d90540bb();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.AppData.stringErrorCode.#ctor",game);
 {}
 }

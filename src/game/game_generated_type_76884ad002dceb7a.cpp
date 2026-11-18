@@ -77,6 +77,7 @@ pls::cs::Ref<cs_76884ad002dceb7a> cs_1d908e097aacd7a3() { cs_init_76884ad002dceb
 }
 
 void cs_1d908e097aacd7a3_init(pls::cs::Ref<cs_76884ad002dceb7a> cs_this) {
+cs_init_76884ad002dceb7a();
 cs_this->cs_f10ce629003f16df = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor:1460",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_83b5e84b3a9b557b = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor:1619",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 cs_this->cs_ab9750e834b7453a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor:2327",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
@@ -95,6 +96,7 @@ pls::cs::Ref<cs_76884ad002dceb7a> cs_e955e975f6db7535(pls::cs::String v_src) { c
 }
 
 void cs_e955e975f6db7535_init(pls::cs::Ref<cs_76884ad002dceb7a> cs_this,pls::cs::String v_src) {
+cs_init_76884ad002dceb7a();
 cs_this->cs_f10ce629003f16df = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor(System.String):1460",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_83b5e84b3a9b557b = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor(System.String):1619",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 cs_this->cs_ab9750e834b7453a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TenantData.cs:M:data.TenantData.#ctor(System.String):2327",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));

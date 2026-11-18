@@ -661,6 +661,41 @@ template<class T>struct ReturnFlow {
 };
 template<>struct ReturnFlow<void> {};
 struct BranchFlow {enum class Kind{break_,continue_};std::int32_t target;Kind kind;};
+// Readable mode (C3a): outcome of a protected region (try/finally, using) without
+// control exceptions. The protected body returns a Flow; after run_finally the
+// caller turns it into an ordinary return, break or continue. A cleanup that
+// throws still replaces the pending exception (run_finally), as in C#.
+template<class T>struct FlowReturn {T value;};
+struct FlowReturnVoid {};
+struct FlowBranch {std::int32_t target;bool continue_;};
+template<class T>FlowReturn<std::decay_t<T>> flow_return(T&& value){return {std::forward<T>(value)};}
+inline FlowReturnVoid flow_return(){return {};}
+inline FlowBranch flow_break(std::int32_t target){return {target,false};}
+inline FlowBranch flow_continue(std::int32_t target){return {target,true};}
+template<class R>struct Flow {
+    enum class Kind:std::uint8_t{normal,returned,break_,continue_};
+    Kind kind=Kind::normal;std::int32_t target=0;std::optional<R> result;
+    Flow()=default;
+    template<class T>Flow(FlowReturn<T> r):kind(Kind::returned){result.emplace(std::move(r.value));}
+    Flow(FlowBranch b):kind(b.continue_?Kind::continue_:Kind::break_),target(b.target){}
+    bool returned()const{return kind==Kind::returned;}
+    bool branched()const{return kind==Kind::break_||kind==Kind::continue_;}
+    bool is_break(std::int32_t t)const{return kind==Kind::break_&&target==t;}
+    bool is_continue(std::int32_t t)const{return kind==Kind::continue_&&target==t;}
+    R value(){return std::move(*result);}
+};
+template<>struct Flow<void> {
+    enum class Kind:std::uint8_t{normal,returned,break_,continue_};
+    Kind kind=Kind::normal;std::int32_t target=0;
+    Flow()=default;
+    Flow(FlowReturnVoid):kind(Kind::returned){}
+    Flow(FlowBranch b):kind(b.continue_?Kind::continue_:Kind::break_),target(b.target){}
+    bool returned()const{return kind==Kind::returned;}
+    bool branched()const{return kind==Kind::break_||kind==Kind::continue_;}
+    bool is_break(std::int32_t t)const{return kind==Kind::break_&&target==t;}
+    bool is_continue(std::int32_t t)const{return kind==Kind::continue_&&target==t;}
+    void value(){}
+};
 template<class T>[[noreturn]] T invalid_return_flow(){throw std::logic_error("Generated protected return reached an invalid fallthrough");}
 template<class F,class G>auto run_finally(F&&body,G&&cleanup)->std::invoke_result_t<F> {
     using R=std::invoke_result_t<F>;
@@ -752,6 +787,13 @@ public:
             auto closure=capture.lock();if(!closure)throw NullReferenceException();
             return closure->function(std::forward<Args>(args)...);
         });
+    }
+    // Readable mode (C3c): a C# lambda as one call. The captures (variable cells and
+    // the receiver) are kept and traced by the closure object; identity and method key
+    // reproduce C# delegate equality (same lambda site and same captures).
+    template<class F,class...Captured>static Delegate from_closure(const void*identity,std::string method,F&&function,Captured...values){
+        auto result=from_native(std::move(method),std::forward<F>(function),std::move(values)...);
+        result.list_->bindings[0].identity=identity;return result;
     }
     bool is_null()const noexcept{return count()==0;}
     explicit operator bool()const noexcept{return !is_null();}

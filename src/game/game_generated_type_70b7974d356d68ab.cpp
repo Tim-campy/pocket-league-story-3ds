@@ -18,6 +18,7 @@ pls::cs::Ref<cs_70b7974d356d68ab> cs_939028c47866c657() { cs_init_70b7974d356d68
 }
 
 void cs_939028c47866c657_init(pls::cs::Ref<cs_70b7974d356d68ab> cs_this) {
+cs_init_70b7974d356d68ab();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.TouchPoint.#ctor",kairo);
 {}
 }

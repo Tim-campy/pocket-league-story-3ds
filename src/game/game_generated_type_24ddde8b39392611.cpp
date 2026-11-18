@@ -21,6 +21,7 @@ pls::cs::Ref<cs_24ddde8b39392611> cs_67a7684996012e79(pls::cs::String v_title) {
 }
 
 void cs_67a7684996012e79_init(pls::cs::Ref<cs_24ddde8b39392611> cs_this,pls::cs::String v_title) {
+cs_init_24ddde8b39392611();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.PurchaseLogView.#ctor(System.String)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_title; pls::game::cs_require(cs_target)->cs_86cc8a271e68cde9 = cs_value; return cs_value; }());

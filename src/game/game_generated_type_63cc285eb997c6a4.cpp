@@ -71,6 +71,7 @@ pls::cs::Ref<cs_63cc285eb997c6a4> cs_f821daa388fc62e4(std::int32_t v_obj_type) {
 }
 
 void cs_f821daa388fc62e4_init(pls::cs::Ref<cs_63cc285eb997c6a4> cs_this,std::int32_t v_obj_type) {
+cs_init_63cc285eb997c6a4();
 ([&]() { std::int32_t cs_arg0 = v_obj_type; cs_05e7da3c85f41cc3_init(pls::cs::static_pointer_cast<cs_2ef6641b828546ac>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.TPlayer.#ctor(System.Int32)",game);
 {

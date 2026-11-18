@@ -13,6 +13,7 @@ pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> cs_e4e1e97aa25d4dd2(pls::cs::S
 }
 
 void cs_e4e1e97aa25d4dd2_init(pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> cs_this,pls::cs::String v_directory) {
+pls::generated::cs_init_52158c8b20364c2b();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.JarInflater.#ctor(System.String)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_directory; pls::game::cs_require(cs_target)->cs_578ed5fb729c9567 = cs_value; return cs_value; }());

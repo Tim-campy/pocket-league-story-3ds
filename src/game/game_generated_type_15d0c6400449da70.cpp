@@ -21,6 +21,7 @@ pls::cs::Ref<cs_15d0c6400449da70>& cs_11c677d992410d89(){cs_init_15d0c6400449da7
 
 // M:system.tapjoy.ui.Tapjoy.#ctor(System.String,System.String,System.Boolean)
 void cs_5b5371f22489a240_init(pls::cs::Ref<cs_15d0c6400449da70> cs_this,pls::cs::String v_key,pls::cs::String v_offerwallName,bool v_log) {
+cs_init_15d0c6400449da70();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.tapjoy.ui.Tapjoy.#ctor(System.String,System.String,System.Boolean)",game);
 {
 ([&]() { auto cs_value = cs_this; cs_11c677d992410d89() = cs_value; return cs_value; }());

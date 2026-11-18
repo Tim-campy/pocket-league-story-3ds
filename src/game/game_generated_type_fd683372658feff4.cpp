@@ -24,6 +24,7 @@ pls::cs::Ref<cs_fd683372658feff4> cs_2d5c5c827d878352() { cs_init_fd683372658fef
 }
 
 void cs_2d5c5c827d878352_init(pls::cs::Ref<cs_fd683372658feff4> cs_this) {
+cs_init_fd683372658feff4();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.lineup.ui.LineupData.#ctor",kairo);
 {}
 }

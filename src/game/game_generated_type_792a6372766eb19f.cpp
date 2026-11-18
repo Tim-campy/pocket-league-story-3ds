@@ -118,6 +118,7 @@ pls::cs::Ref<cs_792a6372766eb19f> cs_cf8ab3fc66fb56cb() { cs_init_792a6372766eb1
 }
 
 void cs_cf8ab3fc66fb56cb_init(pls::cs::Ref<cs_792a6372766eb19f> cs_this) {
+cs_init_792a6372766eb19f();
 cs_this->cs_ffeb6ba8f27f04da = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));
 cs_this->cs_e9c361e061762844 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GamePad.cs:M:surface.GamePad.#ctor:8170",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull))));
 ([&]() { cs_a1b466bc14363691_init(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());

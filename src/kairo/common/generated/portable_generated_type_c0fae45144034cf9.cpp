@@ -134,6 +134,7 @@ pls::cs::Ref<cs_c0fae45144034cf9> cs_a6b35afeab568a11(pls::cs::String v_language
 }
 
 void cs_a6b35afeab568a11_init(pls::cs::Ref<cs_c0fae45144034cf9> cs_this,pls::cs::String v_language,pls::cs::String v_country) {
+cs_init_c0fae45144034cf9();
 cs_this->cs_c8e01a4bd3e5d216 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}());
 cs_this->cs_c7b2df62ecfb4014 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JLocale.#ctor(System.String,System.String)",kairo);

@@ -21,6 +21,7 @@ pls::cs::Ref<cs_7fd3b635ed6929d0> cs_26fc017eba499603() { cs_init_7fd3b635ed6929
 }
 
 void cs_26fc017eba499603_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this) {
+cs_init_7fd3b635ed6929d0();
 ([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureInt.#ctor",kairo);
 {
@@ -35,6 +36,7 @@ pls::cs::Ref<cs_7fd3b635ed6929d0> cs_112e7bd8029af781(pls::cs::Ref<cs_7fd3b635ed
 }
 
 void cs_112e7bd8029af781_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,pls::cs::Ref<cs_7fd3b635ed6929d0> v_src) {
+cs_init_7fd3b635ed6929d0();
 ([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureInt.#ctor(kairo.unity.util.SecureInt)",kairo);
 {
@@ -49,6 +51,7 @@ pls::cs::Ref<cs_7fd3b635ed6929d0> cs_891849d99054b970(std::int32_t v_value) { cs
 }
 
 void cs_891849d99054b970_init(pls::cs::Ref<cs_7fd3b635ed6929d0> cs_this,std::int32_t v_value) {
+cs_init_7fd3b635ed6929d0();
 ([&]() { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(v_value); cs_6a8c2e7be2327b6f_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureInt.#ctor(System.Int32)",kairo);
 {

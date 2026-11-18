@@ -29,6 +29,7 @@ pls::cs::Ref<cs_f991feb74054b6df> cs_dfca31a9f728d5e0() { cs_init_f991feb74054b6
 }
 
 void cs_dfca31a9f728d5e0_init(pls::cs::Ref<cs_f991feb74054b6df> cs_this) {
+cs_init_f991feb74054b6df();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.MapchipMatch.#ctor",game);
 {
@@ -44,6 +45,7 @@ pls::cs::Ref<cs_f991feb74054b6df> cs_578ba3d559a84892(pls::cs::String v_src) { c
 }
 
 void cs_578ba3d559a84892_init(pls::cs::Ref<cs_f991feb74054b6df> cs_this,pls::cs::String v_src) {
+cs_init_f991feb74054b6df();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.MapchipMatch.#ctor(System.String)",game);
 {

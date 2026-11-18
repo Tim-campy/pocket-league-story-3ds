@@ -21,6 +21,7 @@ pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_b5d75502f0a9aa7e() { cs_init_f8b20a4d1d9d69
 }
 
 void cs_b5d75502f0a9aa7e_init(pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_this) {
+cs_init_f8b20a4d1d9d695f();
 ([&]() { cs_946b70ecd88b233a_init(pls::cs::static_pointer_cast<cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.Vector.#ctor",kairo);
 {

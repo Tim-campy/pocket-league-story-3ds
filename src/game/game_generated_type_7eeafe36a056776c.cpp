@@ -1152,6 +1152,7 @@ pls::cs::Ref<cs_7eeafe36a056776c> cs_7ed3e1be6e3844e2() { cs_init_7eeafe36a05677
 }
 
 void cs_7ed3e1be6e3844e2_init(pls::cs::Ref<cs_7eeafe36a056776c> cs_this) {
+cs_init_7eeafe36a056776c();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x385ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.FriendForm.#ctor",game);
 {
@@ -1166,6 +1167,7 @@ pls::cs::Ref<cs_7eeafe36a056776c> cs_933732b97e1e3022(std::int32_t v_type) { cs_
 }
 
 void cs_933732b97e1e3022_init(pls::cs::Ref<cs_7eeafe36a056776c> cs_this,std::int32_t v_type) {
+cs_init_7eeafe36a056776c();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x385ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.FriendForm.#ctor(System.Int32)",game);
 {

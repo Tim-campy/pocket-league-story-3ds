@@ -19,6 +19,7 @@ pls::cs::Ref<cs_91b71e223c6a5085> cs_541b6d91fef6dae9(pls::cs::Array<std::uint8_
 }
 
 void cs_541b6d91fef6dae9_init(pls::cs::Ref<cs_91b71e223c6a5085> cs_this,pls::cs::Array<std::uint8_t> v_ary) {
+cs_init_91b71e223c6a5085();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureByteArray.#ctor(System.Byte[])",kairo);
 {
 ([&]() -> pls::cs::Ref<cs_91b71e223c6a5085> { auto cs_receiver = static_cast<pls::cs::Ref<cs_91b71e223c6a5085>>(cs_this); pls::cs::Array<std::uint8_t> cs_arg0 = v_ary; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_c9412b840f7da0bf(cs_receiver,cs_arg0); }());

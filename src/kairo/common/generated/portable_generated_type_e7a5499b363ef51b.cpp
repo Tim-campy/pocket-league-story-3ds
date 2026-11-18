@@ -36,6 +36,7 @@ pls::cs::Ref<cs_e7a5499b363ef51b> cs_7c187221d1d7c346() { cs_init_e7a5499b363ef5
 }
 
 void cs_7c187221d1d7c346_init(pls::cs::Ref<cs_e7a5499b363ef51b> cs_this) {
+cs_init_e7a5499b363ef51b();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.InputStream.#ctor",kairo);
 {}
 }

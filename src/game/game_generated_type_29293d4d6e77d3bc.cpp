@@ -26,6 +26,7 @@ pls::cs::Ref<cs_29293d4d6e77d3bc> cs_cdf4fc1f77c254d3() { cs_init_29293d4d6e77d3
 }
 
 void cs_cdf4fc1f77c254d3_init(pls::cs::Ref<cs_29293d4d6e77d3bc> cs_this) {
+cs_init_29293d4d6e77d3bc();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.MapObject.#ctor",game);
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); cs_d3541fa57bc06660() = cs_value; return cs_value; }());

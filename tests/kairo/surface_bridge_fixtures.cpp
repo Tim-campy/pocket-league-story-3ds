@@ -48,8 +48,9 @@ cs::Ref<kairo::FormSurface> install(cs::Ref<kairo::Canvas> canvas,cs::Ref<Source
  b.draw_components=cs::Delegate<void(cs::Ref<kairo::Graphics>)>::bind(source,"components",[target](auto g){target->DrawComponents(g);});
  auto adapter=cs::make_ref<kairo::CallbackFormSurface>(std::move(b));canvas->host_source_surface(source,adapter);return adapter;
 }
+int policy_checks=0;
 int policy(){
- cs::GcMutatorScope mutator;int checks=0;auto require=[&](bool v){if(!v)throw cs::InvalidOperationException("Surface bridge GC/identity contract failed");++checks;};
+ cs::GcMutatorScope mutator;int& checks=policy_checks;auto require=[&](bool v){if(!v)throw cs::InvalidOperationException("Surface bridge GC/identity contract failed");++checks;};
  cs::Ref<kairo::Canvas> canvas{};cs::Ref<TaggedSource> retained{};
  cs::Weak<Source> weak_source;cs::Weak<kairo::FormSurface> weak_adapter;
  isolated_gc_mutator([&]{canvas=cs::make_ref<kairo::Canvas>();auto source=cs::make_ref<TaggedSource>(7);auto adapter=install(canvas,source);
@@ -62,12 +63,18 @@ int policy(){
  require(!canvas->GetSourceSurfaceManager()&&!canvas->GetSurfaceManager());
  pls::cs::Weak<kairo::Canvas> weak_canvas;
  isolated_gc_mutator([&]{auto cycle_canvas=cs::make_ref<kairo::Canvas>();auto cycle_source=cs::make_ref<TaggedSource>(11);cycle_source->cycle=cycle_canvas;auto cycle_adapter=install(cycle_canvas,cycle_source);weak_canvas=cycle_canvas;weak_source=cycle_source;weak_adapter=cycle_adapter;});
- cs::gc_collect();require(weak_canvas.expired()&&weak_source.expired()&&weak_adapter.expired());
+ // Conservative stack scan: clear stale frames before checking the unrooted cycle.
+ // A stale copy in a register or a dead frame may survive one collection (conservative
+ // scan); the unrooted cycle must be freed once no such copy remains.
+ // Each expired() check materializes a pointer, so it runs in its own isolated frame.
+ bool cycle_gone=false;
+ for(int attempt=0;attempt<4&&!cycle_gone;++attempt){scrub_stack();isolated_gc_collect();isolated_gc_mutator([&]{cycle_gone=weak_canvas.expired()&&weak_source.expired()&&weak_adapter.expired();});}
+ require(cycle_gone);
  std::cout<<"{\"assertions\":"<<checks<<",\"source_and_adapter_identity_separate\":true,\"retained_snapshot_survives_clear\":true,\"unrooted_cycle_collected\":true,\"game_boot\":false}\n";return 0;
 }
 }
 int main(int argc,char**){
- if(argc==2)return policy();
+ if(argc==2){try{return policy();}catch(const cs::Exception& e){std::cerr<<"policy failed: "<<e.what()<<" after "<<policy_checks<<" checks"<<std::endl;return 3;}}
  auto canvas=cs::make_ref<kairo::Canvas>();auto source=cs::make_ref<TaggedSource>(7);auto adapter=install(canvas,source);
  std::cout<<"source-identity="<<B(source==canvas->GetSourceSurfaceManager())<<":"<<B(pls::cs::dynamic_pointer_cast<TaggedSource>(canvas->GetSourceSurfaceManager())->tag==7)<<'\n';
  expected_touch=cs::make_ref<kairo::MotionEvent>(0,cs::Array<std::int32_t>::from({0}),cs::Array<float>::from({0,0}),cs::Array<float>{});canvas->OnTouchEvent(expected_touch);print("empty-at-install");

@@ -16,6 +16,7 @@ pls::cs::Ref<cs_758f7068d68847ba> cs_99bb7da72af44971() { cs_init_758f7068d68847
 }
 
 void cs_99bb7da72af44971_init(pls::cs::Ref<cs_758f7068d68847ba> cs_this) {
+cs_init_758f7068d68847ba();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.IabHelper.#ctor",game);
 {}
 }

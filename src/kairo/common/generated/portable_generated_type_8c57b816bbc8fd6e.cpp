@@ -24,6 +24,7 @@ pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_7a9ac0812c6bac9b() { cs_init_8c57b816bbc8fd
 }
 
 void cs_7a9ac0812c6bac9b_init(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this) {
+cs_init_8c57b816bbc8fd6e();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Property.#ctor",kairo);
 {
 
@@ -37,6 +38,7 @@ pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_908c27d4c8b0dafd(pls::cs::Ref<cs_8c57b816bb
 }
 
 void cs_908c27d4c8b0dafd_init(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Ref<cs_8c57b816bbc8fd6e> v_property) {
+cs_init_8c57b816bbc8fd6e();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property)",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(v_property); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
@@ -57,6 +59,7 @@ pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_e34104df98d3719c(pls::cs::Array<pls::cs::Re
 }
 
 void cs_e34104df98d3719c_init(pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_this,pls::cs::Array<pls::cs::Ref<cs_8c57b816bbc8fd6e>> v_pros,pls::cs::Array<std::int32_t> v_ints,pls::cs::Array<std::int64_t> v_lngs,pls::cs::Array<pls::cs::String> v_strs,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_bins) {
+cs_init_8c57b816bbc8fd6e();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Property.#ctor(kairo.unity.util.Property[],System.Int32[],System.Int64[],System.String[],System.Byte[][])",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_8c57b816bbc8fd6e>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = v_ints; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_24b7db1f10b3afd6(cs_receiver,cs_arg0); }());

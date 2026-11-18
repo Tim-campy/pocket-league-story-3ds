@@ -21,6 +21,7 @@ pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_ad74a61a58fd6836() { cs_init_23ed5cbd0e3922
 }
 
 void cs_ad74a61a58fd6836_init(pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_this) {
+cs_init_23ed5cbd0e3922f3();
 ([&]() { cs_f936e6cee1a07442_init(pls::cs::static_pointer_cast<cs_4368d694d01424b0>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.notification.MyNotify.#ctor",game);
 {

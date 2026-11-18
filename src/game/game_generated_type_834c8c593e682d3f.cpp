@@ -118,6 +118,7 @@ pls::cs::Ref<cs_834c8c593e682d3f> cs_6b785705076d0599() { cs_init_834c8c593e682d
 }
 
 void cs_6b785705076d0599_init(pls::cs::Ref<cs_834c8c593e682d3f> cs_this) {
+cs_init_834c8c593e682d3f();
 cs_this->cs_5b89dc10215c3470 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/form/RankForm.cs:M:form.RankForm.#ctor:508",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.RankForm.#ctor",game);

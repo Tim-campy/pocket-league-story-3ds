@@ -16,6 +16,7 @@ pls::cs::Ref<cs_b08d770c239489bf> cs_0c4b303cde7d7a27() { cs_init_b08d770c239489
 }
 
 void cs_0c4b303cde7d7a27_init(pls::cs::Ref<cs_b08d770c239489bf> cs_this) {
+cs_init_b08d770c239489bf();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.BaseData.#ctor",game);
 {}
 }

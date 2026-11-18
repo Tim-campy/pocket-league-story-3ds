@@ -182,6 +182,7 @@ pls::cs::Ref<cs_c63e265fb6ff73e9> cs_2c89c48d2af86765() { cs_init_c63e265fb6ff73
 }
 
 void cs_2c89c48d2af86765_init(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this) {
+cs_init_c63e265fb6ff73e9();
 cs_this->cs_57680a4eea56750a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/MatchForm.cs:M:system.form.MatchForm.#ctor:1380",pls::cs::Array<pls::cs::Ref<cs_3855bfc5096e5e16>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
 cs_this->cs_fa595b12dea8b849 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull));
 cs_this->cs_d0ea6f6e5f435277 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull));
@@ -200,6 +201,7 @@ pls::cs::Ref<cs_c63e265fb6ff73e9> cs_ea036ba10872a3b3(std::int32_t v_type) { cs_
 }
 
 void cs_ea036ba10872a3b3_init(pls::cs::Ref<cs_c63e265fb6ff73e9> cs_this,std::int32_t v_type) {
+cs_init_c63e265fb6ff73e9();
 cs_this->cs_57680a4eea56750a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/MatchForm.cs:M:system.form.MatchForm.#ctor(System.Int32):1380",pls::cs::Array<pls::cs::Ref<cs_3855bfc5096e5e16>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
 cs_this->cs_fa595b12dea8b849 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull));
 cs_this->cs_d0ea6f6e5f435277 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull));

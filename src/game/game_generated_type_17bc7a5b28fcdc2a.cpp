@@ -18,6 +18,7 @@ pls::cs::Ref<cs_17bc7a5b28fcdc2a> cs_9474c24dbd210b11(pls::cs::String v_text) { 
 }
 
 void cs_9474c24dbd210b11_init(pls::cs::Ref<cs_17bc7a5b28fcdc2a> cs_this,pls::cs::String v_text) {
+cs_init_17bc7a5b28fcdc2a();
 ([&]() { cs_123805c6bd81d455_init(pls::cs::static_pointer_cast<cs_5ad2213598dfcd5d>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.Button.#ctor(System.String)",kairo);
 {

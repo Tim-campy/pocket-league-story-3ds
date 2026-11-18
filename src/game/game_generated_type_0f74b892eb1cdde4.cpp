@@ -48,6 +48,7 @@ pls::cs::Ref<cs_0f74b892eb1cdde4> cs_cc3d747d1ea58bfa(std::int32_t v_tId) { cs_i
 }
 
 void cs_cc3d747d1ea58bfa_init(pls::cs::Ref<cs_0f74b892eb1cdde4> cs_this,std::int32_t v_tId) {
+cs_init_0f74b892eb1cdde4();
 cs_this->cs_409f13300b9da5ca = pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/TBall.cs:M:game.TBall.#ctor(System.Int32):489",([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }()));
 cs_this->cs_7caf816b84606c2b = pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/TBall.cs:M:game.TBall.#ctor(System.Int32):544",([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }()));
 ([&]() { cs_448c380432b8df0e_init(pls::cs::static_pointer_cast<cs_86b804989f2a95bb>(cs_this)); }());

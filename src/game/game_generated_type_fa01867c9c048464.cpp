@@ -44,6 +44,7 @@ pls::cs::String& cs_e9c57a349e970656(){cs_init_fa01867c9c048464();return cs_e9c5
 
 // M:system.billing.ui.StoreBase.#ctor
 void cs_e3269488b9d47182_init(pls::cs::Ref<cs_fa01867c9c048464> cs_this) {
+cs_init_fa01867c9c048464();
 cs_this->cs_7051bba65972fd27 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/StoreBase.cs:M:system.billing.ui.StoreBase.#ctor:671",pls::cs::List<pls::cs::Ref<cs_15f31d4f046b09a8>>::make());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.StoreBase.#ctor",game);
 {}

@@ -58,6 +58,7 @@ pls::cs::Ref<cs_f9cfa6da3459412e> cs_eaf2a1260918d30d() { cs_init_f9cfa6da345941
 }
 
 void cs_eaf2a1260918d30d_init(pls::cs::Ref<cs_f9cfa6da3459412e> cs_this) {
+cs_init_f9cfa6da3459412e();
 ([&]() { cs_03e2f5f2e825917f_init(pls::cs::static_pointer_cast<cs_4a8bef2ab48b32d7>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.SurfaceManager.#ctor",game);
 {

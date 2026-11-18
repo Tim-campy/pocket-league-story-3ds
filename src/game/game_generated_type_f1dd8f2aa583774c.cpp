@@ -20,6 +20,7 @@ pls::cs::Ref<cs_f1dd8f2aa583774c> cs_811ec9500127b493() { cs_init_f1dd8f2aa58377
 }
 
 void cs_811ec9500127b493_init(pls::cs::Ref<cs_f1dd8f2aa583774c> cs_this) {
+cs_init_f1dd8f2aa583774c();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.graphics.RectangleF.#ctor",kairo);
 {
 

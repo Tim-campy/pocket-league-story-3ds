@@ -459,6 +459,7 @@ pls::cs::Ref<cs_5df8265429cd2423> cs_b1cdb422de7c19d2() { cs_init_5df8265429cd24
 }
 
 void cs_b1cdb422de7c19d2_init(pls::cs::Ref<cs_5df8265429cd2423> cs_this) {
+cs_init_5df8265429cd2423();
 cs_this->cs_2f1408df5108f5c0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x384ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.BillingForm.#ctor",game);
@@ -474,6 +475,7 @@ pls::cs::Ref<cs_5df8265429cd2423> cs_fea1b006f5a8844c(std::int32_t v_type,pls::c
 }
 
 void cs_fea1b006f5a8844c_init(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_type,pls::cs::Ref<cs_feb7ae74aa59a27c> v_provide) {
+cs_init_5df8265429cd2423();
 ([&]() { std::int32_t cs_arg0 = v_type; cs_e8ae3ed2ae7db752_init(pls::cs::static_pointer_cast<cs_5df8265429cd2423>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.BillingForm.#ctor(System.Int32,system.billing.ui.ApplyTask)",game);
 {
@@ -488,6 +490,7 @@ pls::cs::Ref<cs_5df8265429cd2423> cs_e8ae3ed2ae7db752(std::int32_t v_type) { cs_
 }
 
 void cs_e8ae3ed2ae7db752_init(pls::cs::Ref<cs_5df8265429cd2423> cs_this,std::int32_t v_type) {
+cs_init_5df8265429cd2423();
 cs_this->cs_2f1408df5108f5c0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x384ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.BillingForm.#ctor(System.Int32)",game);

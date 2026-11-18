@@ -46,6 +46,7 @@ pls::cs::Ref<cs_15f31d4f046b09a8> cs_9c5286d2f0a31d6e() { cs_init_15f31d4f046b09
 }
 
 void cs_9c5286d2f0a31d6e_init(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) {
+cs_init_15f31d4f046b09a8();
 cs_this->cs_10794726de973b56 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.#ctor",game);
 {
@@ -60,6 +61,7 @@ pls::cs::Ref<cs_15f31d4f046b09a8> cs_086496be2a9fbcc0(pls::cs::Ref<cs_efeeb76408
 }
 
 void cs_086496be2a9fbcc0_init(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this,pls::cs::Ref<cs_efeeb7640894c95e> v_p,pls::cs::String v_receipt) {
+cs_init_15f31d4f046b09a8();
 cs_this->cs_10794726de973b56 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.#ctor(UnityEngine.Purchasing.Product,System.String)",game);
 {

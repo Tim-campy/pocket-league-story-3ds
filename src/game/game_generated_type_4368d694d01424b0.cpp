@@ -26,6 +26,7 @@ pls::cs::Ref<cs_4368d694d01424b0> cs_f936e6cee1a07442() { cs_init_4368d694d01424
 }
 
 void cs_f936e6cee1a07442_init(pls::cs::Ref<cs_4368d694d01424b0> cs_this) {
+cs_init_4368d694d01424b0();
 cs_this->cs_5d5ca7bd52c7784a = static_cast<std::int32_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.notification.ui.NotifyManager.#ctor",kairo);
 {

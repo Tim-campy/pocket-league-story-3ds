@@ -520,6 +520,7 @@ pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_10943ab7d88fab29() { cs_init_d0b7ac4933bed3
 }
 
 void cs_10943ab7d88fab29_init(pls::cs::Ref<cs_d0b7ac4933bed3ac> cs_this) {
+cs_init_d0b7ac4933bed3ac();
 cs_this->cs_6e2ae8ebf5f68b83 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 cs_this->cs_1e9c49d20ed33025 = pls::cs::String(u"");
 cs_this->cs_16684d7e921f7fb4 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0030" u"",1);}());

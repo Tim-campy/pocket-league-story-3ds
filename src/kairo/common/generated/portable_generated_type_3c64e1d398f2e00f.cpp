@@ -24,6 +24,7 @@ pls::cs::Ref<cs_3c64e1d398f2e00f> cs_f0250768de698879() { cs_init_3c64e1d398f2e0
 }
 
 void cs_f0250768de698879_init(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this) {
+cs_init_3c64e1d398f2e00f();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.#ctor",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>((([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>((([&]() { auto cs_target = cs_this; auto cs_value = static_cast<float>(pls::generated::cs_f32(0x00000000u)); pls::generated::cs_require(cs_target)->cs_992193a3ad58af68 = cs_value; return cs_value; }()))); pls::generated::cs_require(cs_target)->cs_3f971496b3e90e07 = cs_value; return cs_value; }()))); pls::generated::cs_require(cs_target)->cs_5940b7db44d7fcc3 = cs_value; return cs_value; }());
@@ -37,6 +38,7 @@ pls::cs::Ref<cs_3c64e1d398f2e00f> cs_4df100a3a5400345(float v_x,float v_y,float 
 }
 
 void cs_4df100a3a5400345_init(pls::cs::Ref<cs_3c64e1d398f2e00f> cs_this,float v_x,float v_y,float v_z) {
+cs_init_3c64e1d398f2e00f();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.m3d4.util3d.Vector3D.#ctor(System.Single,System.Single,System.Single)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3c64e1d398f2e00f>>(cs_this); float cs_arg0 = static_cast<float>(v_x); float cs_arg1 = static_cast<float>(v_y); float cs_arg2 = static_cast<float>(v_z); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_eab8c2f1c1ba14e9(cs_receiver,cs_arg0,cs_arg1,cs_arg2); }());

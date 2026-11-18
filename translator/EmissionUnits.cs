@@ -23,6 +23,27 @@ sealed partial class Lowerer {
     static void WriteStableBytes(string path,byte[] data){
         if(!File.Exists(path)||!File.ReadAllBytes(path).SequenceEqual(data))File.WriteAllBytes(path,data);
     }
+    // Readable (A5): in a .cpp, each KairoLibrary namespace it uses gets one alias,
+    // kl_<last segment> (two segments when the last one repeats), declared after the
+    // includes; every reference to that namespace is spelled through it. The kl_ prefix
+    // cannot meet a name of the game. Headers keep the full names.
+    static (string text,string aliases) AliasLibraryNamespaces(string cpp){
+        var pattern=new System.Text.RegularExpressions.Regex(@"(?<![\w:])(?:pls::)?generated::((?:[a-z][A-Za-z0-9_]*::)+)(?=[A-Za-z_])");
+        var paths=pattern.Matches(cpp).Select(m=>m.Groups[1].Value.TrimEnd(':')).Distinct().OrderBy(x=>x,StringComparer.Ordinal).ToList();
+        if(paths.Count==0)return (cpp,"");
+        string Alias(string path,int segments)=>"kl_"+String.Join("_",path.Split("::").TakeLast(segments));
+        var names=new Dictionary<string,string>(StringComparer.Ordinal);
+        foreach(var path in paths){
+            var count=path.Split("::").Length;var segments=1;
+            while(segments<count&&paths.Count(o=>o!=path&&Alias(o,Math.Min(segments,o.Split("::").Length))==Alias(path,segments))>0)segments++;
+            names[path]=Alias(path,segments);
+        }
+        if(names.Values.Distinct().Count()!=names.Count)return (cpp,"");
+        var text=pattern.Replace(cpp,m=>names[m.Groups[1].Value.TrimEnd(':')]+"::");
+        var aliases=new StringBuilder("\n");
+        foreach(var path in paths)aliases.Append("namespace "+names[path]+" = pls::generated::"+path+";\n");
+        return (text,aliases.Append('\n').ToString());
+    }
     static void WriteStable(string path,string text)=>WriteStableBytes(path,new UTF8Encoding(false).GetBytes(text.Replace("\r\n","\n")));
     // The input is generated C++, not an arbitrary source parser. Preserve every
     // byte of each complete declaration; strings/comments never affect braces.
@@ -209,7 +230,9 @@ sealed partial class Lowerer {
                 .Where(marker=>registry!.Tokens.ContainsKey(marker)&&readableConstFallback.TryGetValue(marker,out var info)&&units.ContainsKey(info.owner))
                 .Select(marker=>units[readableConstFallback[marker].owner].Stem+".hpp")).ToArray();
             var templates=DependencyTemplates(content+unit.Header,unit).Distinct().ToArray();
-            Write(unit.Stem+".cpp",banner+Includes(headers)+Includes(templates)+RuntimeIncludes(content)+Wrap(readable?Namespaced(unit.RCpp):content));
+            var unitBody=Wrap(readable?Namespaced(unit.RCpp):content);
+            var aliases="";if(readable)(unitBody,aliases)=AliasLibraryNamespaces(unitBody);
+            Write(unit.Stem+".cpp",banner+Includes(headers)+Includes(templates)+RuntimeIncludes(content)+aliases+unitBody);
             if(unit.Templates.Length!=0){var template=unit.Templates.ToString();
                 Write(unit.Stem+"_templates.hpp",banner+"#pragma once\n"+Includes(DependencyHeaders(template,unit).Concat(unit.BodyHeaders).Append(unit.Stem+".hpp"))+Includes(DependencyTemplates(template,unit).Where(name=>name!=unit.Stem+"_templates.hpp"))+RuntimeIncludes(template)+Wrap(readable?Namespaced(unit.RTemplates):template));
             }

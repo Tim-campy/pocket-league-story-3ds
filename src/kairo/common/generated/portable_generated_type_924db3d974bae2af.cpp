@@ -21,6 +21,7 @@ pls::cs::Ref<cs_924db3d974bae2af> cs_74758feb8d7ec688() { cs_init_924db3d974bae2
 }
 
 void cs_74758feb8d7ec688_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this) {
+cs_init_924db3d974bae2af();
 ([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureLong.#ctor",kairo);
 {
@@ -35,6 +36,7 @@ pls::cs::Ref<cs_924db3d974bae2af> cs_8b6e6e5ae1d900bd(std::int64_t v_value) { cs
 }
 
 void cs_8b6e6e5ae1d900bd_init(pls::cs::Ref<cs_924db3d974bae2af> cs_this,std::int64_t v_value) {
+cs_init_924db3d974bae2af();
 ([&]() { std::int64_t cs_arg0 = v_value; cs_6a8c2e7be2327b6f_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureLong.#ctor(System.Int64)",kairo);
 {

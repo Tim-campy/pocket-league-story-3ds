@@ -20,6 +20,7 @@ pls::cs::Ref<cs_7f70540c4f85d74f> cs_b544d4afdbad19e4(pls::cs::String v_name,std
 }
 
 void cs_b544d4afdbad19e4_init(pls::cs::Ref<cs_7f70540c4f85d74f> cs_this,pls::cs::String v_name,std::int64_t v_value) {
+cs_init_7f70540c4f85d74f();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.AccessCount.#ctor(System.String,System.Int64)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_name; pls::game::cs_require(cs_target)->cs_59ca359e3d3d712d = cs_value; return cs_value; }());

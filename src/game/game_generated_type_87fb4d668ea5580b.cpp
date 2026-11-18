@@ -492,6 +492,7 @@ pls::cs::Ref<cs_87fb4d668ea5580b> cs_049b13b83157cd05() { cs_init_87fb4d668ea558
 }
 
 void cs_049b13b83157cd05_init(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this) {
+cs_init_87fb4d668ea5580b();
 ([&]() { bool cs_arg0 = (!(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { return pls::generated::cs_ce0912b8167f3504(); }());}))); bool cs_arg1 = true; cs_6a4fbab3f7192191_init(pls::cs::static_pointer_cast<cs_87fb4d668ea5580b>(cs_this),cs_arg0,cs_arg1); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.TextLayout.#ctor",kairo);
 {
@@ -506,6 +507,7 @@ pls::cs::Ref<cs_87fb4d668ea5580b> cs_6a4fbab3f7192191(bool v_autoScale,bool v_lo
 }
 
 void cs_6a4fbab3f7192191_init(pls::cs::Ref<cs_87fb4d668ea5580b> cs_this,bool v_autoScale,bool v_localizeFontEnable) {
+cs_init_87fb4d668ea5580b();
 cs_this->cs_b0b620cb9221d56f = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/TextLayout.cs:M:kairo.unity.ui.TextLayout.#ctor(System.Boolean,System.Boolean):4953",pls::cs::Array<pls::cs::Ref<cs_43347b50b6a10e65>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.TextLayout.#ctor(System.Boolean,System.Boolean)",kairo);
 {

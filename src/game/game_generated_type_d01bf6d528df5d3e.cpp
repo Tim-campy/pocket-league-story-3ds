@@ -61,6 +61,7 @@ pls::cs::Ref<cs_d01bf6d528df5d3e> cs_54b9e88b29d65e8e() { cs_init_d01bf6d528df5d
 }
 
 void cs_54b9e88b29d65e8e_init(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this) {
+cs_init_d01bf6d528df5d3e();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x387ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.LineupForm.#ctor",game);
 {
@@ -75,6 +76,7 @@ pls::cs::Ref<cs_d01bf6d528df5d3e> cs_bde331d144b7e233(std::int32_t v_type) { cs_
 }
 
 void cs_bde331d144b7e233_init(pls::cs::Ref<cs_d01bf6d528df5d3e> cs_this,std::int32_t v_type) {
+cs_init_d01bf6d528df5d3e();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x387ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.LineupForm.#ctor(System.Int32)",game);
 {

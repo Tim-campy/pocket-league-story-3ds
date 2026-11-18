@@ -19,6 +19,7 @@ pls::cs::Ref<cs_9b21b86f0d2914e0> cs_2a1179e902640c2a() { cs_init_9b21b86f0d2914
 }
 
 void cs_2a1179e902640c2a_init(pls::cs::Ref<cs_9b21b86f0d2914e0> cs_this) {
+cs_init_9b21b86f0d2914e0();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.TouchEffect.#ctor",game);
 {}
 }

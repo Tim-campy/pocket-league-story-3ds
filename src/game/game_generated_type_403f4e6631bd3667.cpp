@@ -202,6 +202,7 @@ pls::cs::Ref<cs_403f4e6631bd3667> cs_5810442fa8088c56() { cs_init_403f4e6631bd36
 }
 
 void cs_5810442fa8088c56_init(pls::cs::Ref<cs_403f4e6631bd3667> cs_this) {
+cs_init_403f4e6631bd3667();
 cs_this->cs_86f9bdd77df832c7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Team.cs:M:game.Team.#ctor:4294",pls::assets::baked_array<float>("cb486e136a46c7f4a054496a91ea561422587b6f352d766a21ee4598437ca3c5"));
 cs_this->cs_d503d7fcacbcbe34 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Team.cs:M:game.Team.#ctor:4407",pls::assets::baked_array<float>("d145fd7253c59faad7cf92636fc230f5cd62c3ac8c3f0cbe2ebdd390dad6bc38"));
 cs_this->cs_ca886c7ed83148c0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Team.cs:M:game.Team.#ctor:4527",pls::assets::baked_array<float>("b86ff9f1b096316cc90c60ce6b6ef3fe3935526087a21435353c083a672fa949"));

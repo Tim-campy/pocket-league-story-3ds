@@ -22,6 +22,7 @@ pls::cs::Ref<cs_a465028bea3432a3> cs_d176e2e695c74782() { cs_init_a465028bea3432
 }
 
 void cs_d176e2e695c74782_init(pls::cs::Ref<cs_a465028bea3432a3> cs_this) {
+cs_init_a465028bea3432a3();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JCalendar.#ctor",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/util/JCalendar.cs:M:java.util.JCalendar.#ctor:1246",([&]() -> pls::cs::Ref<cs_66dbad5679f8ab87> { return cs_f437b6bb4cf7b2a6(); }())); pls::generated::cs_require(cs_target)->cs_03197f755fcefa4b = cs_value; return cs_value; }());

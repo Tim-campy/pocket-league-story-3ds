@@ -25,6 +25,7 @@ pls::cs::Ref<cs_bb652fbb61000386> cs_54c6ff780bd91d97(pls::cs::Ref<cs_bb652fbb61
 }
 
 void cs_54c6ff780bd91d97_init(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::Ref<cs_bb652fbb61000386> v_src) {
+cs_init_bb652fbb61000386();
 ([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureString.#ctor(kairo.unity.util.SecureString)",kairo);
 {
@@ -39,6 +40,7 @@ pls::cs::Ref<cs_bb652fbb61000386> cs_ede7ead54c734d4c(pls::cs::String v_value) {
 }
 
 void cs_ede7ead54c734d4c_init(pls::cs::Ref<cs_bb652fbb61000386> cs_this,pls::cs::String v_value) {
+cs_init_bb652fbb61000386();
 ([&]() { cs_a55d2b3f0d930c1e_init(pls::cs::static_pointer_cast<cs_bd164c3c94a49e2a>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureString.#ctor(System.String)",kairo);
 {

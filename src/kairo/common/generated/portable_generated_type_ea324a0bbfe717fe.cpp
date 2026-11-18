@@ -27,6 +27,7 @@ pls::cs::Ref<cs_ea324a0bbfe717fe> cs_60f0f6dd217b8877() { cs_init_ea324a0bbfe717
 }
 
 void cs_60f0f6dd217b8877_init(pls::cs::Ref<cs_ea324a0bbfe717fe> cs_this) {
+cs_init_ea324a0bbfe717fe();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.OutputStream.#ctor",kairo);
 {}
 }

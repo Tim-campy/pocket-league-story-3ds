@@ -167,6 +167,40 @@ sealed partial class Lowerer {
         return true;
     }
     int closureDepth;
+    // Readable C3a: protected regions (try/finally, using) being emitted, innermost last.
+    Stack<SyntaxNode> flowRegions=new();
+    static IEnumerable<SyntaxNode> OwnBodyNodes(SyntaxNode root)=>root.DescendantNodesAndSelf(n=>n==root||n is not AnonymousFunctionExpressionSyntax&&n is not LocalFunctionStatementSyntax);
+    static bool RegionReturns(IEnumerable<SyntaxNode> roots)=>roots.Any(r=>OwnBodyNodes(r).OfType<ReturnStatementSyntax>().Any());
+    static List<(SyntaxNode target,bool cont)> RegionCrossings(SyntaxNode region,IEnumerable<SyntaxNode> roots){
+        var list=new List<(SyntaxNode target,bool cont)>();
+        foreach(var root in roots)foreach(var jump in OwnBodyNodes(root).OfType<StatementSyntax>().Where(s=>s is BreakStatementSyntax or ContinueStatementSyntax)){
+            var target=BranchTarget(jump);
+            if(target!=null&&!target.Ancestors().Contains(region)&&!list.Contains((target,jump is ContinueStatementSyntax)))list.Add((target,jump is ContinueStatementSyntax));
+        }
+        return list;
+    }
+    // The protected body returns a pls::cs::Flow; after run_finally the outcome becomes
+    // an ordinary return/break/continue, or is handed to the enclosing region.
+    string FlowRegion(SyntaxNode region,IEnumerable<SyntaxNode> roots,Func<string> protectedText,string cleanup,IMethodSymbol method,string setup){
+        var returns=RegionReturns(roots);var crossings=RegionCrossings(region,roots);
+        string body;flowRegions.Push(region);try{body=protectedText();}finally{flowRegions.Pop();}
+        var resultType=method.ReturnsVoid?"void":Type(method.ReturnType,region);
+        var name="cs_flow_"+temporary++;
+        var b=new StringBuilder("{"+setup+"auto "+name+" = pls::cs::run_finally([&]() -> pls::cs::Flow<"+resultType+"> {"+body+" return {};}, [&]() "+cleanup+");\n");
+        var inner=flowRegions.Count>0;var parent=inner?flowRegions.Peek():null;
+        // When the region's end is unreachable in C#, every outcome leaves: the return
+        // is unconditional (C++ needs it on every path).
+        var endReachable=model.AnalyzeControlFlow(region is TryStatementSyntax tryRegion?tryRegion:((UsingStatementSyntax)region))?.EndPointIsReachable??true;
+        if(returns&&endReachable)b.Append("if ("+name+".returned()) return "+(inner?name:method.ReturnsVoid?"":name+".value()")+";\n");
+        var propagate=false;
+        foreach(var (target,cont) in crossings){
+            if(inner&&!target.Ancestors().Contains(parent!)){propagate=true;continue;}
+            b.Append("if ("+name+(cont?".is_continue(":".is_break(")+target.SpanStart+")) "+(cont?"continue;":"break;")+"\n");
+        }
+        if(propagate)b.Append("if ("+name+".branched()) return "+name+";\n");
+        if(returns&&!endReachable)b.Append("return "+(inner?name:method.ReturnsVoid?"":name+".value()")+";\n");
+        return b.Append('}').ToString();
+    }
     // Readable: in a member function a field of this is written bare unless a local
     // or parameter of the method (any nesting) has the same C# name.
     static HashSet<string> DeclaredNames(SyntaxNode declaration){
@@ -603,6 +637,22 @@ sealed partial class Lowerer {
         foreach(var capture in captures)if(!capturedVariables.Contains(capture))throw new Unsupported(node,"captured variable was not allocated a shared cell");
         bool captureThis=node.DescendantNodes().OfType<ThisExpressionSyntax>().Any()||node.DescendantNodes().OfType<BaseExpressionSyntax>().Any()||node.DescendantNodes().OfType<IdentifierNameSyntax>().Any(n=>!(n.Parent is MemberAccessExpressionSyntax m&&m.Name==n)&&model.GetSymbolInfo(n).Symbol is ISymbol s&&!s.IsStatic&&(s is IFieldSymbol||s is IPropertySymbol||s is IMethodSymbol));
         if(captureThis&&methods[current].IsStatic)throw new Unsupported(node,"anonymous implicit receiver analysis is incomplete");
+        if(readable){
+            // One call: the lambda captures the cells and the receiver by value; the same
+            // values are handed to the closure object, which traces them.
+            var outerName=captureThis&&InstanceMember(methods[current])?"cs_outer":"cs_this";
+            var captureList=captures.Select(c=>Local(c)+"_cell").ToList();var captureValues=captures.Select(c=>Local(c)+"_cell").ToList();
+            if(captureThis){captureList.Add(outerName=="cs_outer"?"cs_outer=cs_this":"cs_this");captureValues.Add("cs_this");}
+            var lambdaResult=Type(symbol.ReturnType,node);
+            closureDepth++;string lambdaBody;var savedLambdaRegions=flowRegions;flowRegions=new();
+            try{lambdaBody=node.Body is BlockSyntax lambdaBlock?Statement(lambdaBlock,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;flowRegions=savedLambdaRegions;}
+            if(outerName=="cs_outer")lambdaBody=System.Text.RegularExpressions.Regex.Replace(lambdaBody,@"\bcs_this\b","cs_outer");
+            var lambdaCells=String.Concat(symbol.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,node)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),node)+";"));
+            var lambdaKey="std::string(\""+current+":"+node.SpanStart+"\")"+String.Concat(captures.Skip(1).Select(c=>"+std::to_string(reinterpret_cast<std::uintptr_t>(pls::cs::raw("+Local(c)+"_cell)))"));
+            var lambdaIdentity=captures.Length!=0?"pls::cs::raw("+Local(captures[0])+"_cell)":captureThis?"pls::cs::raw(cs_this)":"nullptr";
+            var lambdaParameters=String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)));
+            return Type(delegateType,node)+"::from_closure("+lambdaIdentity+","+lambdaKey+",["+String.Join(",",captureList)+"]("+lambdaParameters+") -> "+lambdaResult+" {"+lambdaCells+lambdaBody+"}"+String.Concat(captureValues.Select(v=>","+v))+")";
+        }
         var name="cs_closure_"+Hash(current+":"+node.SpanStart);if(readable)RegisterClosure(name,node);var result=Type(symbol.ReturnType,node);var builder=new StringBuilder("([&](){struct "+name+" : pls::cs::Object{");
         foreach(var capture in captures)builder.Append(CellType(capture,node)+" "+Local(capture)+"_cell;");
         // Readable C2: in a member function `this` is the receiver; the closure keeps it
@@ -615,8 +665,8 @@ sealed partial class Lowerer {
         builder.Append("}void release_edges()override{pls::cs::Object::release_edges();");
         foreach(var capture in captures)builder.Append("pls::cs::clear_ref("+Local(capture)+"_cell);");if(captureThis)builder.Append("pls::cs::clear_ref("+outer+");");
         builder.Append("}"+result+" Invoke("+String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)))+")");
-        closureDepth++;string body;
-        try{body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;}
+        closureDepth++;string body;var savedRegions=flowRegions;flowRegions=new();
+        try{body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;flowRegions=savedRegions;}
         if(outer=="cs_outer")body=System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this\b","cs_outer");
         var parameterCells=String.Concat(symbol.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,node)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),node)+";"));
         builder.Append("{"+parameterCells+body+"}};auto cs_closure=pls::cs::make_ref<"+name+">();");
@@ -1433,8 +1483,8 @@ sealed partial class Lowerer {
         var target=BranchTarget(branch);return target!=null&&branch.Ancestors().TakeWhile(node=>node!=target).Any(node=>node is UsingStatementSyntax or TryStatementSyntax{Finally:not null});
     }
     static bool HasProtectedBranch(SyntaxNode target)=>target.DescendantNodes().OfType<StatementSyntax>().Any(branch=>branch is BreakStatementSyntax or ContinueStatementSyntax&&BranchTarget(branch)==target&&ProtectedBranch(branch));
-    static string BranchBody(SyntaxNode target,string body){
-        if(!HasProtectedBranch(target))return body;
+    string BranchBody(SyntaxNode target,string body){
+        if(readable||!HasProtectedBranch(target))return body;
         return "{try "+(body.StartsWith("{",StringComparison.Ordinal)?body:"{"+body+"}")+"catch(const pls::cs::BranchFlow&cs_branch){if(cs_branch.target!="+target.SpanStart+")throw;if(cs_branch.kind==pls::cs::BranchFlow::Kind::continue_)continue;break;}}";
     }
     string Statement(StatementSyntax n,IMethodSymbol method) {
@@ -1442,17 +1492,24 @@ sealed partial class Lowerer {
         switch(n) {
             case BlockSyntax b:return "{\n"+String.Join("\n",b.Statements.Select(s=>Statement(s,method)))+"\n}";
             case ReturnStatementSyntax r:
+                if(readable&&flowRegions.Count>0)return r.Expression==null?"return pls::cs::flow_return();":"return pls::cs::flow_return("+Converted(r.Expression,method.ReturnType)+");";
                 if(returnFlowMethods.Contains(Id(method)))return "throw pls::cs::ReturnFlow<"+Type(method.ReturnType,r)+">{"+(r.Expression==null?"":Converted(r.Expression,method.ReturnType))+"};";
+                if(readable&&r.Expression!=null&&HoistLambda(Converted(r.Expression,method.ReturnType)) is var(returnPrefix,returnValue))return "{"+returnPrefix+"return "+returnValue+";}";
                 return r.Expression==null?"return;":"return "+Converted(r.Expression,method.ReturnType)+";";
             case ExpressionStatementSyntax e:{
                 var statementText=(readable?ReadableEffect(e.Expression):null)??Expr(e.Expression);
                 if(readable&&FlattenStatementLambda(statementText) is string block)return block;
                 return statementText+";";
             }
-            case LocalDeclarationStatementSyntax l:return Declare(l.Declaration)+";";
+            case LocalDeclarationStatementSyntax l:{
+                var declared=Declare(l.Declaration);
+                if(readable&&l.Declaration.Variables.Count==1){var cut=declared.IndexOf(" = ([&]()",StringComparison.Ordinal);
+                    if(cut>0&&HoistLambda(declared[(cut+3)..]) is var(prefix,value))return prefix+declared[..cut]+" = "+value+";";}
+                return declared+";";
+            }
             case UsingStatementSyntax resource:
                 var resourceFlow=model.AnalyzeControlFlow(resource.Statement);
-                if(resourceFlow==null||!resourceFlow.Succeeded||resourceFlow.ExitPoints.Any(exit=>exit is ReturnStatementSyntax?!returnFlowMethods.Contains(Id(method)):exit is not BreakStatementSyntax&&exit is not ContinueStatementSyntax))throw new Unsupported(resource,"using with an escaping goto requires control-token lowering");
+                if(resourceFlow==null||!resourceFlow.Succeeded||resourceFlow.ExitPoints.Any(exit=>exit is ReturnStatementSyntax?!(readable||returnFlowMethods.Contains(Id(method))):exit is not BreakStatementSyntax&&exit is not ContinueStatementSyntax))throw new Unsupported(resource,"using with an escaping goto requires control-token lowering");
                 string ResourceBody(int index){
                     if(resource.Declaration!=null&&index==resource.Declaration.Variables.Count)return Statement(resource.Statement,method);
                     ITypeSymbol? resourceType;string variable,initialization;
@@ -1470,6 +1527,10 @@ sealed partial class Lowerer {
                         var contract=compilation.GetTypeByMetadataName("System.IDisposable")!.GetMembers("Dispose").OfType<IMethodSymbol>().Single();
                         var implementation=resourceNamed.FindImplementationForInterfaceMember(contract) as IMethodSymbol??throw new Unsupported(resource,"using Dispose implementation unresolved");
                         dispose=BridgeCall(implementation,variable,resource);
+                    }
+                    if(readable&&(RegionReturns(new[]{resource.Statement})||RegionCrossings(resource,new[]{resource.Statement}).Count!=0)){
+                        if(resource.Declaration!=null&&resource.Declaration.Variables.Count>1)throw new Unsupported(resource,"readable: using with several variables and an escaping return/branch");
+                        return FlowRegion(resource,new[]{resource.Statement},()=>Statement(resource.Statement,method),"{if("+variable+"){"+dispose+";}}",method,initialization);
                     }
                     return "{"+initialization+"pls::cs::run_finally([&](){"+(resource.Declaration==null?Statement(resource.Statement,method):ResourceBody(index+1))+"},[&](){if("+variable+"){"+dispose+";}});}";
                 }
@@ -1520,6 +1581,8 @@ sealed partial class Lowerer {
                 var unique=temporary++;var local=model.GetDeclaredSymbol(f)!;
                 var capturedEach=capturedVariables.Contains(local);
                 return "{ auto cs_each"+unique+" = "+Expr(f.Expression)+"; for (std::int32_t cs_i"+unique+"=0; cs_i"+unique+"<cs_each"+unique+".length(); ++cs_i"+unique+") { "+(capturedEach?CellType(local,f):Type(local.Type,f))+" "+Local(local)+(capturedEach?"_cell":"")+" = "+(capturedEach?CellAllocation(local,"cs_each"+unique+".get_Item(cs_i"+unique+")",f):"cs_each"+unique+".get_Item(cs_i"+unique+")")+"; "+BranchBody(f,Statement(f.Statement,method))+" } }";
+            case BreakStatementSyntax readableJump when readable:{var target=BranchTarget(readableJump);return flowRegions.Count>0&&target!=null&&!target.Ancestors().Contains(flowRegions.Peek())?"return pls::cs::flow_break("+target.SpanStart+");":"break;";}
+            case ContinueStatementSyntax readableJump when readable:{var target=BranchTarget(readableJump);return flowRegions.Count>0&&target!=null&&!target.Ancestors().Contains(flowRegions.Peek())?"return pls::cs::flow_continue("+target.SpanStart+");":"continue;";}
             case BreakStatementSyntax jump:return ProtectedBranch(jump)?"throw pls::cs::BranchFlow{"+BranchTarget(jump)!.SpanStart+",pls::cs::BranchFlow::Kind::break_};":"break;";
             case ContinueStatementSyntax jump:return ProtectedBranch(jump)?"throw pls::cs::BranchFlow{"+BranchTarget(jump)!.SpanStart+",pls::cs::BranchFlow::Kind::continue_};":"continue;";
             case EmptyStatementSyntax _:return ";";
@@ -1579,6 +1642,12 @@ sealed partial class Lowerer {
                     protectedBranch|=protectedFlow.ExitPoints.Any(exit=>exit is BreakStatementSyntax or ContinueStatementSyntax);
                 }
                 var reachable=protectedBranch||(model.AnalyzeControlFlow(tr)?.EndPointIsReachable??true);
+                if(readable){
+                    var cleanup=Statement(tr.Finally.Block,method);
+                    var roots=new List<SyntaxNode>{tr.Block};roots.AddRange(tr.Catches.Select(c=>(SyntaxNode)c.Block));
+                    if(RegionReturns(roots)||RegionCrossings(tr,roots).Count!=0)return FlowRegion(tr,roots,Protected,cleanup,method,"");
+                    return "pls::cs::run_finally([&]() {"+Protected()+"}, [&]() "+cleanup+");";
+                }
                 if(returnFlowMethods.Contains(Id(method)))return "pls::cs::run_finally([&]() {"+Protected()+"}, [&]() "+Statement(tr.Finally.Block,method)+");";
                 if(reachable&&tr.Block.DescendantNodes().OfType<ReturnStatementSyntax>().Any())throw new Unsupported(tr,"finally with mixed fallthrough/return requires structured control token lowering");
                 return (reachable?"":"return ")+"pls::cs::run_finally([&]() -> "+(reachable?"void":Type(method.ReturnType,tr))+" "+"{ "+Protected()+" }, [&]() "+Statement(tr.Finally.Block,method)+");";
@@ -1610,7 +1679,7 @@ sealed partial class Lowerer {
                     }
                     builder.Append((hasCaseJump?SwitchSectionLabel(sw,section)+": ;\n":"")+"{\n"+String.Join("\n",section.Statements.Select(s=>Statement(s,method)))+"\n}\n");
                 }
-                builder.Append(stringSwitch?"}}":"}");return HasProtectedBranch(sw)?"try{"+builder+"}catch(const pls::cs::BranchFlow&cs_branch){if(cs_branch.target!="+sw.SpanStart+"||cs_branch.kind!=pls::cs::BranchFlow::Kind::break_)throw;}":builder.ToString();
+                builder.Append(stringSwitch?"}}":"}");return !readable&&HasProtectedBranch(sw)?"try{"+builder+"}catch(const pls::cs::BranchFlow&cs_branch){if(cs_branch.target!="+sw.SpanStart+"||cs_branch.kind!=pls::cs::BranchFlow::Kind::break_)throw;}":builder.ToString();
             default:throw new Unsupported(n,"statement lowering not implemented");
         }
     }
@@ -1688,7 +1757,7 @@ sealed partial class Lowerer {
         }
         var declaration=syntax[id];var oldModel=model;var oldCurrent=current;var oldHoist=hoistLocals;var oldCaptured=capturedVariables;current=id;model=compilation.GetSemanticModel(declaration.SyntaxTree);hoistLocals=false;capturedVariables=new(SymbolEqualityComparer.Default);
         var flowBody=ExecutableBody(declaration).block as SyntaxNode??ExecutableBody(declaration).arrow;
-        if(flowBody!=null&&OwnScopeNodes(flowBody).Any(node=>node is TryStatementSyntax{Finally:not null} or UsingStatementSyntax)&&OwnScopeNodes(flowBody).OfType<ReturnStatementSyntax>().Any())returnFlowMethods.Add(id);
+        if(!readable&&flowBody!=null&&OwnScopeNodes(flowBody).Any(node=>node is TryStatementSyntax{Finally:not null} or UsingStatementSyntax)&&OwnScopeNodes(flowBody).OfType<ReturnStatementSyntax>().Any())returnFlowMethods.Add(id);
         dependencies[id]=new();fieldDependencies[id]=new();classDependencies[id]=new();methodKinds[id]=new();active.Add(id);
         try {
             var hasServicePolicy=request.service_overrides.TryGetValue(id,out var servicePolicy);
@@ -1739,6 +1808,12 @@ sealed partial class Lowerer {
             if(constructor) {
                 var ctor=declaration as ConstructorDeclarationSyntax;var chainedThis=ctor?.Initializer?.IsKind(SyntaxKind.ThisConstructorInitializer)??false;
                 var init=new StringBuilder("{\n");
+                // A constructor invocation initializes its own type first (ECMA-335
+                // II.10.5.3.1, first invocation of any constructor; Unity Mono does the
+                // same for BeforeFieldInit types: tools/test_type_init_translated.py).
+                // A base type is so initialized when a derived constructor calls it, and
+                // an existing instance implies its whole type chain is initialized.
+                if(!RecordStruct(method.ContainingType)&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))init.Append(TypeInitFunction(method.ContainingType)+"();\n");
                 foreach(var field in method.ContainingType.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&!chainedThis)) {
                     if(field.AssociatedSymbol is IPropertySymbol initializedAuto&&(initializedAuto.DeclaringSyntaxReferences[0].GetSyntax() as PropertyDeclarationSyntax)?.Initializer!=null)throw new Unsupported(declaration,"auto-property constructor initializer requires ordered field emission");
                     if(field.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is VariableDeclaratorSyntax f&&f.Initializer!=null) {
@@ -1777,7 +1852,9 @@ sealed partial class Lowerer {
                 body+="\n"+template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
                 if(method.ContainingType.IsAbstract)body=template+"void "+Name(method)+"_init("+initParameters+") "+initBody;
             } else if(!method.IsStatic&&!InstanceMember(method)) body=readable?Splice("cs_require(cs_this);",body):"{ if(!cs_this)throw pls::cs::NullReferenceException();\n"+body+"\n}";
-            if(!constructor&&!removedJavaBridge&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))body=readable?Splice(TypeInitFunction(method.ContainingType)+"();",body):"{ "+TypeInitFunction(method.ContainingType)+"();\n"+body+"\n}";
+            // Readable (A1): an instance method needs no guard, its instance exists (see the
+            // constructor above); static methods keep the guard at entry.
+            if(!constructor&&!(readable&&!method.IsStatic&&method.MethodKind!=MethodKind.StaticConstructor)&&!removedJavaBridge&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))body=readable?Splice(TypeInitFunction(method.ContainingType)+"();",body):"{ "+TypeInitFunction(method.ContainingType)+"();\n"+body+"\n}";
             var source=QualifyHelpers(constructor&&method.ContainingType.IsAbstract?body:template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
             if(InstanceMember(method)&&!hasServicePolicy)body=BareFields(body,declaration,method.ContainingType);
             if(MemberMethod(method)&&!hasServicePolicy)source=QualifyHelpers(template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");

@@ -70,6 +70,7 @@ pls::cs::Ref<cs_4489b86073532f79> cs_ba0b2666b0bd54f7() { cs_init_4489b86073532f
 }
 
 void cs_ba0b2666b0bd54f7_init(pls::cs::Ref<cs_4489b86073532f79> cs_this) {
+cs_init_4489b86073532f79();
 cs_this->cs_7ef89a4385d82e88 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TrainingData.cs:M:data.TrainingData.#ctor:1212",pls::assets::baked_array<std::int32_t>("1c4b2e289dcb3f55cf79c1255f45b55ddc3d57b73e6857a5c8842a601253acb8")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TrainingData.#ctor",game);
@@ -86,6 +87,7 @@ pls::cs::Ref<cs_4489b86073532f79> cs_07a2366478a6bbe4(pls::cs::String v_src) { c
 }
 
 void cs_07a2366478a6bbe4_init(pls::cs::Ref<cs_4489b86073532f79> cs_this,pls::cs::String v_src) {
+cs_init_4489b86073532f79();
 cs_this->cs_7ef89a4385d82e88 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TrainingData.cs:M:data.TrainingData.#ctor(System.String):1212",pls::assets::baked_array<std::int32_t>("1c4b2e289dcb3f55cf79c1255f45b55ddc3d57b73e6857a5c8842a601253acb8")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TrainingData.#ctor(System.String)",game);

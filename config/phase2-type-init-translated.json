@@ -1,0 +1,26 @@
+{
+  "operation": "translated-type-initialization-timing-versus-unity-mono",
+  "status": "PASS",
+  "results": {
+    "mono": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs",
+    "normal": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs",
+    "readable": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs"
+  },
+  "inputs": {
+    "tests/translator/TypeInitTimingFixtures.cs": "e155b986e66cc9e7cceaccc208e3778289eb6bbacf63961de745def35f53bbfe",
+    "tools/test_type_init_translated.py": "ff253649ad0d493a8eeac97af62f4c111bd09cb10ba7b173f404738c7bb73b9b"
+  },
+  "producer": {
+    "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
+    "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
+    "translator_source_sha256": "5c7fc3e4084397d9ceb2435718d31008bd95ab4e7f5a9655c479b47eb4cf5bc0",
+    "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
+    "readable_source_sha256": [
+      "7f08e1fc41a718933b1013604838d24e35bbc921a5baf6c1269d7f593c60bf14",
+      "e8b8b4b77cd1ccc05c5180c9f1339eae860a450a3359ccc64c7b9f3804848373"
+    ],
+    "driver_sha256": "5c3705cf873216cd5df961363a02c8b02d32745619b52038f3c8a3c74c1e7916"
+  },
+  "game_assets_used": false,
+  "original_binaries_executed": false
+}

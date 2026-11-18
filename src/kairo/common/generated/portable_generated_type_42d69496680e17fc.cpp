@@ -19,6 +19,7 @@ pls::cs::Ref<cs_42d69496680e17fc> cs_8fb57d859eee275a() { cs_init_42d69496680e17
 }
 
 void cs_8fb57d859eee275a_init(pls::cs::Ref<cs_42d69496680e17fc> cs_this) {
+cs_init_42d69496680e17fc();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JRuntime.#ctor",kairo);
 {}
 }

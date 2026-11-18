@@ -35,6 +35,7 @@ pls::cs::Ref<cs_b6ad7779caeeb23c> cs_90ee7811a5836c91() { cs_init_b6ad7779caeeb2
 }
 
 void cs_90ee7811a5836c91_init(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this) {
+cs_init_b6ad7779caeeb23c();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); bool cs_arg2 = true; cs_2c9eb5964aff96b8_init(pls::cs::static_pointer_cast<cs_b6ad7779caeeb23c>(cs_this),cs_arg0,cs_arg1,cs_arg2); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.GameDataRecord.#ctor",kairo);
 {
@@ -49,6 +50,7 @@ pls::cs::Ref<cs_b6ad7779caeeb23c> cs_a5fcfa14b1e244ef(std::int32_t v_number,bool
 }
 
 void cs_a5fcfa14b1e244ef_init(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,std::int32_t v_number,bool v_insert) {
+cs_init_b6ad7779caeeb23c();
 ([&]() { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_047c3ab4bcca9557(cs_receiver); }()); return pls::generated::cs_2dbfed27c63e8b3d(cs_arg0); }());}); std::int32_t cs_arg1 = v_number; bool cs_arg2 = v_insert; cs_2c9eb5964aff96b8_init(pls::cs::static_pointer_cast<cs_b6ad7779caeeb23c>(cs_this),cs_arg0,cs_arg1,cs_arg2); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.GameDataRecord.#ctor(System.Int32,System.Boolean)",kairo);
 {
@@ -63,6 +65,7 @@ pls::cs::Ref<cs_b6ad7779caeeb23c> cs_2c9eb5964aff96b8(std::int32_t v_friendId,st
 }
 
 void cs_2c9eb5964aff96b8_init(pls::cs::Ref<cs_b6ad7779caeeb23c> cs_this,std::int32_t v_friendId,std::int32_t v_number,bool v_insert) {
+cs_init_b6ad7779caeeb23c();
 cs_this->cs_a401daa035e0faf4 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/GameDataRecord.cs:M:kairo.unity.system.GameDataRecord.#ctor(System.Int32,System.Int32,System.Boolean):1642",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_db21a4a60995105d = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/GameDataRecord.cs:M:kairo.unity.system.GameDataRecord.#ctor(System.Int32,System.Int32,System.Boolean):1693",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_9ae60e1c180bff03 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/GameDataRecord.cs:M:kairo.unity.system.GameDataRecord.#ctor(System.Int32,System.Int32,System.Boolean):1742",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));

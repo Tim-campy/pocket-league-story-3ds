@@ -53,6 +53,7 @@ pls::cs::Ref<cs_08829eb6a4df2a40> cs_b6efdcfa6839537c() { cs_init_08829eb6a4df2a
 }
 
 void cs_b6efdcfa6839537c_init(pls::cs::Ref<cs_08829eb6a4df2a40> cs_this) {
+cs_init_08829eb6a4df2a40();
 ([&]() { cs_fb6a0b22d395f57f_init(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.MyBilling.#ctor",game);
 {

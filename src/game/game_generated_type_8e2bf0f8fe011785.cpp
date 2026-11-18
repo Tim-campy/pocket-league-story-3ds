@@ -26,6 +26,7 @@ pls::cs::Ref<cs_8e2bf0f8fe011785> cs_2f2e7f50616852fe(pls::cs::String v_productI
 }
 
 void cs_2f2e7f50616852fe_init(pls::cs::Ref<cs_8e2bf0f8fe011785> cs_this,pls::cs::String v_productId,pls::cs::String v_orderId,std::int32_t v_amount,std::int32_t v_actCode) {
+cs_init_8e2bf0f8fe011785();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.payment.PaymentDataRecord.#ctor(System.String,System.String,System.Int32,System.Int32)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_productId; pls::game::cs_require(cs_target)->cs_1a5ce6d62f4773c6 = cs_value; return cs_value; }());

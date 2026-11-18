@@ -16,6 +16,7 @@ pls::cs::Ref<cs_c10f171a3a4c8973> cs_4541939614682a87() { cs_init_c10f171a3a4c89
 }
 
 void cs_4541939614682a87_init(pls::cs::Ref<cs_c10f171a3a4c8973> cs_this) {
+cs_init_c10f171a3a4c8973();
 ([&](){ cs_this->source_ctor("System.Exception");}());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.payment.IllegalPurchaseException.#ctor",kairo);
 {}

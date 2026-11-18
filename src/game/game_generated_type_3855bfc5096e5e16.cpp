@@ -16,6 +16,7 @@ pls::cs::Ref<cs_3855bfc5096e5e16> cs_927f6709c23b7c76() { cs_init_3855bfc5096e5e
 }
 
 void cs_927f6709c23b7c76_init(pls::cs::Ref<cs_3855bfc5096e5e16> cs_this) {
+cs_init_3855bfc5096e5e16();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.MatchForm.UserRecord.#ctor",game);
 {}
 }

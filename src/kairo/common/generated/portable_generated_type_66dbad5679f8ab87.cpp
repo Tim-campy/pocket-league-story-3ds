@@ -25,6 +25,7 @@ pls::cs::Ref<cs_66dbad5679f8ab87> cs_f437b6bb4cf7b2a6() { cs_init_66dbad5679f8ab
 }
 
 void cs_f437b6bb4cf7b2a6_init(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this) {
+cs_init_66dbad5679f8ab87();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JDate.#ctor",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::DateTime::get_UtcNow(); pls::generated::cs_require(cs_target)->cs_672aeddf6395a59c = cs_value; return cs_value; }());
@@ -38,6 +39,7 @@ pls::cs::Ref<cs_66dbad5679f8ab87> cs_bbcadd583a6daacb(std::int64_t v_date) { cs_
 }
 
 void cs_bbcadd583a6daacb_init(pls::cs::Ref<cs_66dbad5679f8ab87> cs_this,std::int64_t v_date) {
+cs_init_66dbad5679f8ab87();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JDate.#ctor(System.Int64)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_66dbad5679f8ab87>>(cs_this); std::int64_t cs_arg0 = v_date; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d5b7c3d10f4ecec3(cs_receiver,cs_arg0); }());

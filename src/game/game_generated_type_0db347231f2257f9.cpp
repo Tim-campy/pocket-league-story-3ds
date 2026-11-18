@@ -105,6 +105,7 @@ pls::cs::Ref<cs_0db347231f2257f9> cs_af08075d2d2d0bdc() { cs_init_0db347231f2257
 }
 
 void cs_af08075d2d2d0bdc_init(pls::cs::Ref<cs_0db347231f2257f9> cs_this) {
+cs_init_0db347231f2257f9();
 cs_this->cs_759d3fbb8e1c6be6 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/GameManager.cs:M:game.GameManager.#ctor:2438",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_1dc6ad81a01b35ba = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/GameManager.cs:M:game.GameManager.#ctor:2475",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_4f89237a08ace829 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/GameManager.cs:M:game.GameManager.#ctor:2575",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));

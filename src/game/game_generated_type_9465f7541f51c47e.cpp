@@ -25,6 +25,7 @@ pls::cs::Ref<cs_9465f7541f51c47e> cs_2ce578f5724575d0() { cs_init_9465f7541f51c4
 }
 
 void cs_2ce578f5724575d0_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this) {
+cs_init_9465f7541f51c47e();
 cs_this->cs_617d9d7e65ae6487 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/Friend.cs:M:system.friend.ui.Friend.#ctor:335",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_2b38757bf00583cf = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/Friend.cs:M:system.friend.ui.Friend.#ctor:382",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_c9cc587d986ccc18 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/Friend.cs:M:system.friend.ui.Friend.#ctor:430",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
@@ -45,6 +46,7 @@ pls::cs::Ref<cs_9465f7541f51c47e> cs_64e4e3906ae79838(pls::cs::Array<std::uint8_
 }
 
 void cs_64e4e3906ae79838_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::Array<std::uint8_t> v_src) {
+cs_init_9465f7541f51c47e();
 ([&]() { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = v_src; return pls::generated::cs_0062608f682073ef(cs_arg0); }());}); cs_8df91cf012e20150_init(pls::cs::static_pointer_cast<cs_9465f7541f51c47e>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.Friend.#ctor(System.Byte[])",game);
 {
@@ -59,6 +61,7 @@ pls::cs::Ref<cs_9465f7541f51c47e> cs_0f10e92aa7924479(pls::cs::String v_friendId
 }
 
 void cs_0f10e92aa7924479_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::String v_friendId,pls::cs::String v_name,std::int32_t v_state,std::int32_t v_minute,std::int32_t v_updated) {
+cs_init_9465f7541f51c47e();
 cs_this->cs_617d9d7e65ae6487 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/Friend.cs:M:system.friend.ui.Friend.#ctor(System.String,System.String,System.Int32,System.Int32,System.Int32):335",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_2b38757bf00583cf = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/Friend.cs:M:system.friend.ui.Friend.#ctor(System.String,System.String,System.Int32,System.Int32,System.Int32):382",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_c9cc587d986ccc18 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/Friend.cs:M:system.friend.ui.Friend.#ctor(System.String,System.String,System.Int32,System.Int32,System.Int32):430",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
@@ -82,6 +85,7 @@ pls::cs::Ref<cs_9465f7541f51c47e> cs_8df91cf012e20150(pls::cs::String v_src) { c
 }
 
 void cs_8df91cf012e20150_init(pls::cs::Ref<cs_9465f7541f51c47e> cs_this,pls::cs::String v_src) {
+cs_init_9465f7541f51c47e();
 ([&]() { cs_2ce578f5724575d0_init(pls::cs::static_pointer_cast<cs_9465f7541f51c47e>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.Friend.#ctor(System.String)",game);
 {

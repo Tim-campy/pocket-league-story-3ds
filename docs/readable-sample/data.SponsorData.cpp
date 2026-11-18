@@ -15,6 +15,10 @@
 #include "kairo.unity.ui.ResourceManager.hpp"
 #include "main.AppData.hpp"
 
+namespace kl_io = pls::generated::java::io;
+namespace kl_lang = pls::generated::java::lang;
+namespace kl_util = pls::generated::kairo::unity::util;
+
 namespace pls::game {
 namespace data {
 
@@ -73,6 +77,7 @@ pls::cs::Ref<game::UserData>& SponsorData::udat_() {
 }
 
 void SponsorData::create_init(pls::cs::Ref<SponsorData> self) {
+    SponsorData::ensure_initialized();
     self->income_ = pls::cs::Array<std::int32_t>::make(2);
     ([&]() {
         BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
@@ -83,6 +88,7 @@ void SponsorData::create_init(pls::cs::Ref<SponsorData> self) {
 }
 
 void SponsorData::create_init(pls::cs::Ref<SponsorData> self, pls::cs::String src) {
+    SponsorData::ensure_initialized();
     self->income_ = pls::cs::Array<std::int32_t>::make(2);
     ([&]() {
         BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
@@ -112,8 +118,6 @@ pls::cs::Ref<SponsorData> SponsorData::create(pls::cs::String src) {
 
 // M:data.SponsorData.Init
 void SponsorData::Init() {
-    SponsorData::ensure_initialized();
-
     state_ = 0;
     satisfactPoint_ = 0;
     feelPt_ = 0;
@@ -122,75 +126,62 @@ void SponsorData::Init() {
 
 // M:data.SponsorData.Load(System.String)
 void SponsorData::Load(pls::cs::String src) {
-    SponsorData::ensure_initialized();
-
     pls::cs::Int32 num = 0;
-    pls::cs::Array<pls::cs::String> array =
-        generated::kairo::unity::util::StringUtil::Split(src, literal(u"\t"));
-    id_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    pls::cs::Array<pls::cs::String> array = kl_util::StringUtil::Split(src, literal(u"\t"));
+    id_ = kl_lang::JInteger::ParseInt(array[num++]);
     name_ = array[num++];
-    charaIndex_ = generated::java::lang::JInteger::ParseInt(array[num++]);
-    privilegeType_ = generated::java::lang::JInteger::ParseInt(array[num++]);
-    privilegeValue_ = generated::java::lang::JInteger::ParseInt(array[num++]);
-    costType_ = generated::java::lang::JInteger::ParseInt(array[num++]);
-    cost_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    charaIndex_ = kl_lang::JInteger::ParseInt(array[num++]);
+    privilegeType_ = kl_lang::JInteger::ParseInt(array[num++]);
+    privilegeValue_ = kl_lang::JInteger::ParseInt(array[num++]);
+    costType_ = kl_lang::JInteger::ParseInt(array[num++]);
+    cost_ = kl_lang::JInteger::ParseInt(array[num++]);
     {
         auto cs_target = income_;
         auto cs_index = 0;
-        auto cs_value = generated::java::lang::JInteger::ParseInt(array[num++]);
+        auto cs_value = kl_lang::JInteger::ParseInt(array[num++]);
         cs_target.set_Item(cs_index, cs_value);
     }
     {
         auto cs_target = income_;
         auto cs_index = 1;
-        auto cs_value = generated::java::lang::JInteger::ParseInt(array[num++]);
+        auto cs_value = kl_lang::JInteger::ParseInt(array[num++]);
         cs_target.set_Item(cs_index, cs_value);
     }
-    satisfactDifficult_ = generated::java::lang::JInteger::ParseInt(array[num++]);
-    difficult_ = generated::java::lang::JInteger::ParseInt(array[num++]);
-    feelPtInt_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    satisfactDifficult_ = kl_lang::JInteger::ParseInt(array[num++]);
+    difficult_ = kl_lang::JInteger::ParseInt(array[num++]);
+    feelPtInt_ = kl_lang::JInteger::ParseInt(array[num++]);
     explain_ = array[num++];
     execsScript_ = EventData::ReadScript(array[num++]);
-    flag_ = generated::java::lang::JInteger::ParseInt(array[num++]);
+    flag_ = kl_lang::JInteger::ParseInt(array[num++]);
     feelPt_ = feelPtInt_;
 }
 
 // M:data.SponsorData.NewGame
 void SponsorData::NewGame() {
-    SponsorData::ensure_initialized();
-
     state_ = 0;
-    if (generated::kairo::unity::util::BitUtil::Check(flag_, 1)) {
+    if (kl_util::BitUtil::Check(flag_, 1)) {
         SponsorData::ChangeState(1);
     }
 }
 
 // M:data.SponsorData.Serialize(java.io.OutputStream)
-void SponsorData::Serialize(pls::cs::Ref<generated::java::io::OutputStream> os) {
-    SponsorData::ensure_initialized();
-
-    generated::kairo::unity::util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
-    generated::kairo::unity::util::StreamUtil::WriteInt(os, satisfactPoint_);
-    generated::kairo::unity::util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_));
-    generated::kairo::unity::util::StreamUtil::WriteBoolean(os, new_);
+void SponsorData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
+    kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(state_));
+    kl_util::StreamUtil::WriteInt(os, satisfactPoint_);
+    kl_util::StreamUtil::WriteShort(os, pls::cs::cast_integral<std::int16_t>(feelPt_));
+    kl_util::StreamUtil::WriteBoolean(os, new_);
 }
 
 // M:data.SponsorData.Deserialize(java.io.InputStream)
-void SponsorData::Deserialize(pls::cs::Ref<generated::java::io::InputStream> stream) {
-    SponsorData::ensure_initialized();
-
-    state_ =
-        pls::cs::cast_integral<std::int32_t>(generated::kairo::unity::util::StreamUtil::ReadShort(stream));
-    satisfactPoint_ = generated::kairo::unity::util::StreamUtil::ReadInt(stream);
-    feelPt_ =
-        pls::cs::cast_integral<std::int32_t>(generated::kairo::unity::util::StreamUtil::ReadShort(stream));
-    new_ = generated::kairo::unity::util::StreamUtil::ReadBoolean(stream);
+void SponsorData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
+    state_ = pls::cs::cast_integral<std::int32_t>(kl_util::StreamUtil::ReadShort(stream));
+    satisfactPoint_ = kl_util::StreamUtil::ReadInt(stream);
+    feelPt_ = pls::cs::cast_integral<std::int32_t>(kl_util::StreamUtil::ReadShort(stream));
+    new_ = kl_util::StreamUtil::ReadBoolean(stream);
 }
 
 // M:data.SponsorData.ChangeState(System.Int32)
 void SponsorData::ChangeState(pls::cs::Int32 state) {
-    SponsorData::ensure_initialized();
-
     if ((state_ == 0) && (state == 1)) {
         new_ = true;
     }
@@ -221,17 +212,16 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
 
 // M:data.SponsorData.GetIncome
 std::int32_t SponsorData::GetIncome() {
-    SponsorData::ensure_initialized();
-
-    return ([&]() -> std::int32_t {
-        std::int32_t cs_arg0 = satisfactPoint_;
-        std::int32_t cs_arg1 = 0;
-        std::int32_t cs_arg2 = 100;
-        std::int32_t cs_arg3 = income_[0];
-        std::int32_t cs_arg4 = income_[1];
-        bool cs_arg5 = true;
-        return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
-    }());
+    {
+        std::int32_t cs_arg0_21 = satisfactPoint_;
+        std::int32_t cs_arg1_21 = 0;
+        std::int32_t cs_arg2_21 = 100;
+        std::int32_t cs_arg3_21 = income_[0];
+        std::int32_t cs_arg4_21 = income_[1];
+        bool cs_arg5_21 = true;
+        return game::GameUtil::RateConvert(cs_arg0_21, cs_arg1_21, cs_arg2_21, cs_arg3_21, cs_arg4_21,
+                                           cs_arg5_21);
+    }
 }
 
 // M:data.SponsorData.UpdateSatisFactPoint
@@ -291,8 +281,6 @@ void SponsorData::UpdateSatisFactPoint() {
 
 // M:data.SponsorData.GetDifficultStr
 pls::cs::String SponsorData::GetDifficultStr() {
-    SponsorData::ensure_initialized();
-
     if (difficult_ < 50) {
         return SponsorData::difficultStr()[0];
     }
@@ -330,8 +318,6 @@ void SponsorData::RemoveNew() {
 
 // M:data.SponsorData.IsNew
 bool SponsorData::IsNew() {
-    SponsorData::ensure_initialized();
-
     if (new_) {
         return true;
     }

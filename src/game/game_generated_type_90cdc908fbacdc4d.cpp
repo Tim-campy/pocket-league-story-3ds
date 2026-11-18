@@ -21,6 +21,7 @@ pls::cs::Ref<cs_90cdc908fbacdc4d> cs_8a97d90a17275f58() { cs_init_90cdc908fbacdc
 }
 
 void cs_8a97d90a17275f58_init(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this) {
+cs_init_90cdc908fbacdc4d();
 ([&]() { cs_3afc5298ce4a3e84_init(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.panel.InputPanel.#ctor",game);
 {
@@ -35,6 +36,7 @@ pls::cs::Ref<cs_90cdc908fbacdc4d> cs_7236fab2e58bd0b3(pls::cs::String v_label,pl
 }
 
 void cs_7236fab2e58bd0b3_init(pls::cs::Ref<cs_90cdc908fbacdc4d> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName) {
+cs_init_90cdc908fbacdc4d();
 ([&]() { pls::cs::String cs_arg0 = v_label; pls::cs::String cs_arg1 = v_defaultText; std::int32_t cs_arg2 = v_maxLength; std::int32_t cs_arg3 = v_inputMode; pls::cs::String cs_arg4 = v_itemName; cs_6b53a5cdc402f43c_init(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(cs_this),cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.panel.InputPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String)",game);
 {

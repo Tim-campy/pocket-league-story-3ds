@@ -28,6 +28,7 @@ pls::cs::Ref<cs_851a96be86c28dd2> cs_fb860c1d341fcefd() { cs_init_851a96be86c28d
 }
 
 void cs_fb860c1d341fcefd_init(pls::cs::Ref<cs_851a96be86c28dd2> cs_this) {
+cs_init_851a96be86c28dd2();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.KairoText.#ctor",game);
 {}
 }

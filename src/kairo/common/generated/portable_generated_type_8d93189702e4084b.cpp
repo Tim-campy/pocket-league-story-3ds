@@ -19,6 +19,7 @@ pls::cs::Ref<cs_8d93189702e4084b> cs_606370a03155bf34(pls::cs::Ref<cs_e7a5499b36
 }
 
 void cs_606370a03155bf34_init(pls::cs::Ref<cs_8d93189702e4084b> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) {
+cs_init_8d93189702e4084b();
 ([&]() { cs_7c187221d1d7c346_init(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.DataInputStream.#ctor(java.io.InputStream)",kairo);
 {

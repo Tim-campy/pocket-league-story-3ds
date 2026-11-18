@@ -79,6 +79,26 @@ def promote_ledger(result):
             row['estado']='runs';row['notas']=row['notas'].split('; phase2:')[0]+'; phase2: completed instrumented invocation in authenticated diagnostic attempt '+str(result['attempt'])+'; no behavior verification'
     with path.open('w',encoding='utf8',newline='')as f:
         w=csv.DictWriter(f,fieldnames=list(rows[0]),lineterminator='\n');w.writeheader();w.writerows(rows)
+# Parsed method counters per log, keyed by the SHA-256 of the log bytes just hashed
+# by the caller: the same log always parses to the same counters, so the result is
+# kept in memory and in build/ (never in Git). Every check against the receipt still
+# runs on the cached value.
+_PARSED={}
+def parsed_methods(log,log_sha):
+    if log_sha in _PARSED:return _PARSED[log_sha]
+    cache=ROOT/'build/diagnostic-parse-cache'/(log_sha+'.json')
+    methods=None
+    if cache.is_file():
+        try:
+            rows=json.loads(cache.read_text(encoding='utf8'))
+            methods={(r['assembly'],r['id']):r for r in rows}
+        except (json.JSONDecodeError,KeyError,TypeError):methods=None
+    if methods is None:
+        methods,_,_=parse(log.read_text(encoding='utf8',errors='replace'))
+        cache.parent.mkdir(parents=True,exist_ok=True)
+        temporary=cache.with_suffix('.tmp');temporary.write_text(json.dumps(list(methods.values())),encoding='utf8');temporary.replace(cache)
+    _PARSED[log_sha]=methods
+    return methods
 def validated_completed(history,assembly):
     ids=set()
     for attempt in history.get('attempts',[]):
@@ -91,8 +111,9 @@ def validated_completed(history,assembly):
         manifest=ROOT/receipt['source_inputs']['path']
         if sha(manifest)!=receipt['source_inputs']['sha256']:raise ValueError('Execution input snapshot differs')
         log=ROOT/receipt['log']['path']
-        if sha(log)!=receipt['log']['sha256']:raise ValueError('Execution log differs')
-        methods,_,_=parse(log.read_text(encoding='utf8',errors='replace'))
+        log_sha=sha(log)
+        if log_sha!=receipt['log']['sha256']:raise ValueError('Execution log differs')
+        methods=parsed_methods(log,log_sha)
         if receipt['methods']!=sorted(methods.values(),key=lambda r:(r['assembly'],r['id'])):raise ValueError('Execution counters differ from log')
         pointer=receipt.get('generation_reports',{}).get(assembly)
         if not pointer:raise ValueError('Execution generation report is absent')

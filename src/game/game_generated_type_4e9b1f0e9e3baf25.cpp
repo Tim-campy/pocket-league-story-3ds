@@ -27,6 +27,7 @@ pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_58437f0f251471b8() { cs_init_4e9b1f0e9e3baf
 }
 
 void cs_58437f0f251471b8_init(pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_this) {
+cs_init_4e9b1f0e9e3baf25();
 cs_this->cs_7532de0b2467e888 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/TouchEffectManager.cs:M:surface.TouchEffectManager.#ctor:260",([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_9b21b86f0d2914e0>>(); }()));
 cs_this->cs_7cc420fdd246795c = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/TouchEffectManager.cs:M:surface.TouchEffectManager.#ctor:343",([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_9b21b86f0d2914e0>>(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.TouchEffectManager.#ctor",game);

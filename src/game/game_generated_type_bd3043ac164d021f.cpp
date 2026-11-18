@@ -43,6 +43,7 @@ pls::cs::Ref<cs_bd3043ac164d021f> cs_48c3032d5b5bf9c8() { cs_init_bd3043ac164d02
 }
 
 void cs_48c3032d5b5bf9c8_init(pls::cs::Ref<cs_bd3043ac164d021f> cs_this) {
+cs_init_bd3043ac164d021f();
 cs_this->cs_601e287145250385 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SponsorData.cs:M:data.SponsorData.#ctor:839",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.SponsorData.#ctor",game);
@@ -59,6 +60,7 @@ pls::cs::Ref<cs_bd3043ac164d021f> cs_2699965129f6a232(pls::cs::String v_src) { c
 }
 
 void cs_2699965129f6a232_init(pls::cs::Ref<cs_bd3043ac164d021f> cs_this,pls::cs::String v_src) {
+cs_init_bd3043ac164d021f();
 cs_this->cs_601e287145250385 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SponsorData.cs:M:data.SponsorData.#ctor(System.String):839",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.SponsorData.#ctor(System.String)",game);

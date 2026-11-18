@@ -21,6 +21,7 @@ pls::cs::Ref<cs_22115ea4236d0eaa> cs_624a0425464d274a() { cs_init_22115ea4236d0e
 }
 
 void cs_624a0425464d274a_init(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this) {
+cs_init_22115ea4236d0eaa();
 cs_this->cs_db96c721c151249c = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor:168",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_0ba613afa6875a18 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor:214",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendPlayTimeData.#ctor",game);
@@ -36,6 +37,7 @@ pls::cs::Ref<cs_22115ea4236d0eaa> cs_d95d2ae3639f5d06(pls::cs::String v_friendId
 }
 
 void cs_d95d2ae3639f5d06_init(pls::cs::Ref<cs_22115ea4236d0eaa> cs_this,pls::cs::String v_friendId,std::int32_t v_minute,std::int32_t v_state) {
+cs_init_22115ea4236d0eaa();
 cs_this->cs_db96c721c151249c = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32):168",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_0ba613afa6875a18 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/ui/FriendPlayTimeData.cs:M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32):214",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendPlayTimeData.#ctor(System.String,System.Int32,System.Int32)",game);

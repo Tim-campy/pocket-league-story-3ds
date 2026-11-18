@@ -43,6 +43,7 @@ pls::cs::Ref<cs_1ab688350081022a> cs_c91e4943a0e046f2() { cs_init_1ab68835008102
 }
 
 void cs_c91e4943a0e046f2_init(pls::cs::Ref<cs_1ab688350081022a> cs_this) {
+cs_init_1ab688350081022a();
 cs_this->cs_02dbac76cf838af6 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/lineup/ui/LineupManager.cs:M:kairo.unity.system.lineup.ui.LineupManager.#ctor:343",pls::cs::Array<pls::cs::Ref<cs_fd683372658feff4>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
 cs_this->cs_f51be28da9a279d7 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/lineup/ui/LineupManager.cs:M:kairo.unity.system.lineup.ui.LineupManager.#ctor:392",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));
 cs_this->cs_107cdef48659996d = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/lineup/ui/LineupManager.cs:M:kairo.unity.system.lineup.ui.LineupManager.#ctor:445",pls::cs::Array<pls::cs::Ref<cs_fd683372658feff4>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));

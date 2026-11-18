@@ -308,6 +308,7 @@ pls::cs::Ref<cs_e31f80000513fe82> cs_046213c85d73180d() { cs_init_e31f80000513fe
 }
 
 void cs_046213c85d73180d_init(pls::cs::Ref<cs_e31f80000513fe82> cs_this) {
+cs_init_e31f80000513fe82();
 cs_this->cs_1cd084998e540d5f = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3cull));
 cs_this->cs_47a70b982a4eea72 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3cull));
 cs_this->cs_405ba57fedfb60a1 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/TitleForm.cs:M:form.TitleForm.#ctor:2284",pls::assets::baked_array<std::int32_t>("59c4c80f6eaa92e857040fa91fa7e8adb436ca9e20cb9bc29053c5bbfb398d92")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});

@@ -16,6 +16,7 @@ pls::cs::Ref<cs_e373231f616cd1ed> cs_2ec538e1b5422edb() { cs_init_e373231f616cd1
 }
 
 void cs_2ec538e1b5422edb_init(pls::cs::Ref<cs_e373231f616cd1ed> cs_this) {
+cs_init_e373231f616cd1ed();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.#ctor",kairo);
 {}
 }

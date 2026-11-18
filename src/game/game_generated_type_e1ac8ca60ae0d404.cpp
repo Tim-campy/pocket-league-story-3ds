@@ -23,6 +23,7 @@ pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_ef5589b812f9d157() { cs_init_e1ac8ca60ae0d4
 }
 
 void cs_ef5589b812f9d157_init(pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_this) {
+cs_init_e1ac8ca60ae0d404();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceBase.MotionEventRecord.#ctor",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_e1ac8ca60ae0d404>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_7c055166f9b27c04(cs_receiver); }());

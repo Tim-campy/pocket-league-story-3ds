@@ -19,6 +19,7 @@ pls::cs::Ref<cs_3b41638e424b9ee0> cs_c3a84083a67ee263(pls::cs::Array<std::uint8_
 }
 
 void cs_c3a84083a67ee263_init(pls::cs::Ref<cs_3b41638e424b9ee0> cs_this,pls::cs::Array<std::uint8_t> v_data) {
+cs_init_3b41638e424b9ee0();
 ([&]() { cs_7c187221d1d7c346_init(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.ByteArrayInputStream.#ctor(System.Byte[])",kairo);
 {

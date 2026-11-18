@@ -24,6 +24,12 @@
 #include "generated/java.util.JTool_templates.hpp"
 #include "generated/java.util.Vector_1_templates.hpp"
 
+namespace kl_lang = pls::generated::java::lang;
+namespace kl_java_util = pls::generated::java::util;
+namespace kl_cfg = pls::generated::kairo::common::cfg;
+namespace kl_util3d = pls::generated::kairo::unity::m3d4::util3d;
+namespace kl_unity_util = pls::generated::kairo::unity::util;
+
 namespace pls::game {
 namespace game {
 
@@ -115,8 +121,7 @@ static pls::cs::Array<pls::cs::Array<std::int32_t>> Team_DEAFULT_FORMATION_EVA_s
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> Team_DEAFULT_FORMATION_EVA_PENALTYAREA_storage{};
 
-static pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>
-    Team_FORMATION_KICKOFF_storage{};
+static pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>> Team_FORMATION_KICKOFF_storage{};
 
 static std::int32_t Team_FORMATION_RATE_DEFFECNE_storage{};
 
@@ -162,7 +167,7 @@ static float Team_RPP_W_DISTOGOAL_NORMAL_storage{};
 
 static float Team_RPP_W_DISTOGOAL_PAREA_storage{};
 
-static pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> Team_team_formationCenterPos_storage{};
+static pls::cs::Ref<kl_util3d::Vector3D> Team_team_formationCenterPos_storage{};
 
 void Team::ensure_initialized() {
     static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor) {
@@ -204,11 +209,11 @@ void Team::ensure_initialized() {
     state.run("game.Team", []() {
         Team_FORMATION_KICKOFF_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.FORMATION_KICKOFF", [&]() {
-                return pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>::from(
-                    {generated::kairo::unity::m3d4::util3d::Vector3D::create(static_cast<float>(-30.0f), 0.0f,
-                                                                             static_cast<float>(-20.0f)),
-                     generated::kairo::unity::m3d4::util3d::Vector3D::create(static_cast<float>(-5.0f), 0.0f,
-                                                                             static_cast<float>(-30.0f))});
+                return pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>::from(
+                    {kl_util3d::Vector3D::create(static_cast<float>(-30.0f), 0.0f,
+                                                 static_cast<float>(-20.0f)),
+                     kl_util3d::Vector3D::create(static_cast<float>(-5.0f), 0.0f,
+                                                 static_cast<float>(-30.0f))});
             });
         Team_AMEFTO_ONECHARGETIME_PLAYER_storage = pls::cs::evaluate_type_initializer_field(
             "F:game.Team.AMEFTO_ONECHARGETIME_PLAYER", [&]() { return 40; });
@@ -394,10 +399,8 @@ void Team::ensure_initialized() {
             pls::cs::evaluate_type_initializer_field("F:game.Team.RPP_W_AROUNDENEMY", [&]() { return 0.6f; });
         Team_PRP_W_DIS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.PRP_W_DIS", [&]() { return 1.4f; });
-        Team_team_formationCenterPos_storage =
-            pls::cs::evaluate_type_initializer_field("F:game.Team.team_formationCenterPos", [&]() {
-                return generated::kairo::unity::m3d4::util3d::Vector3D::create();
-            });
+        Team_team_formationCenterPos_storage = pls::cs::evaluate_type_initializer_field(
+            "F:game.Team.team_formationCenterPos", [&]() { return kl_util3d::Vector3D::create(); });
         Team_GOAL_GLAD_AROUND_POS_storage =
             pls::cs::evaluate_type_initializer_field("F:game.Team.GOAL_GLAD_AROUND_POS", [&]() {
                 return pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>::from(
@@ -462,7 +465,7 @@ pls::cs::Array<pls::cs::Array<std::int32_t>>& Team::DEAFULT_FORMATION_EVA_PENALT
     return Team_DEAFULT_FORMATION_EVA_PENALTYAREA_storage;
 }
 
-pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>& Team::FORMATION_KICKOFF() {
+pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>& Team::FORMATION_KICKOFF() {
     Team::ensure_initialized();
     return Team_FORMATION_KICKOFF_storage;
 }
@@ -577,12 +580,13 @@ float& Team::RPP_W_DISTOGOAL_PAREA() {
     return Team_RPP_W_DISTOGOAL_PAREA_storage;
 }
 
-pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>& Team::team_formationCenterPos() {
+pls::cs::Ref<kl_util3d::Vector3D>& Team::team_formationCenterPos() {
     Team::ensure_initialized();
     return Team_team_formationCenterPos_storage;
 }
 
 void Team::create_init(pls::cs::Ref<Team> self) {
+    Team::ensure_initialized();
     self->CEVA_PASSER_MP2 =
         pls::cs::Array<float>::from({0.7f, 0.4f, 0.7f, 0.4f, 0.2f, 0.4f, 0.7f, 0.4f, 0.7f});
     self->CEVA_PASSER_MP2_DIV = pls::cs::Array<float>::from(
@@ -591,8 +595,8 @@ void Team::create_init(pls::cs::Ref<Team> self) {
         pls::cs::Array<float>::from({1.0f, 0.99f, 1.0f, 0.99f, 0.95f, 0.99f, 1.0f, 0.99f, 1.0f});
     self->CEVA_PASSER_AP = pls::cs::Array<std::int32_t>::from({50, 20, 0, 0, 0, 0});
     self->CEVA_PASSER_ENEAP = pls::cs::Array<std::int32_t>::from({-50, -20, 0, 0, 0, 0});
-    self->ballNearPlayer_ = generated::java::util::Vector::create();
-    self->players_receive_ = generated::java::util::Vector::create();
+    self->ballNearPlayer_ = kl_java_util::Vector::create();
+    self->players_receive_ = kl_java_util::Vector::create();
     self->w_disBoal = 0.5f;
     self->w_formation = 0.5f;
 
@@ -610,8 +614,6 @@ pls::cs::Ref<Team> Team::create() {
 
 // M:game.Team.Init(System.Boolean,System.Int32,System.Int32)
 void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId) {
-    Team::ensure_initialized();
-
     team_id_ = team_id;
     tDataId_ = tDataId;
     pls::cs::Ref<data::TeamData> teamData = require(apdat_)->tData_.get_Item(tDataId);
@@ -633,7 +635,7 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
     if (isUserTeam) {
         for (pls::cs::Int32 i = 0; i < (array).length(); ++i) {
             pls::cs::Ref<data::PlayerData> playerData = pls::cs::unbox<pls::cs::Ref<data::PlayerData>>(
-                generated::java::util::Vector_2_ElementAt(require(require(udat_)->memberPDataist_), i));
+                kl_java_util::Vector_2_ElementAt(require(require(udat_)->memberPDataist_), i));
             array[i] = require(playerData)->id_;
         }
     } else {
@@ -666,8 +668,7 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
         {
             auto cs_receiver = static_cast<pls::cs::Ref<Team>>(this);
             pls::cs::Ref<Player> cs_arg0 = players_.get_Item(l);
-            pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg1 =
-                require(players_.get_Item(l))->pos_;
+            pls::cs::Ref<kl_util3d::Vector3D> cs_arg1 = require(players_.get_Item(l))->pos_;
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
@@ -682,16 +683,16 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
     CORRECT_LINE = pls::cs::Array<std::int32_t>::make(4);
     NOW_LINE = pls::cs::Array<std::int32_t>::make(4);
     team_policyEva = pls::cs::Array<std::int32_t>::make(4);
-    team_eva = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    team_eva = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({4, 2}));
-    team_frect = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<float>>>(
+    team_frect = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<float>>>(
         pls::cs::Array<std::int32_t>::from({4, 2}));
-    frect_pos = pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>::make(4);
+    frect_pos = pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>::make(4);
     for (pls::cs::Int32 m = 0; m < (frect_pos).length(); ++m) {
         {
             auto cs_target = frect_pos;
             auto cs_index = m;
-            auto cs_value = generated::kairo::unity::m3d4::util3d::Vector3D::create();
+            auto cs_value = kl_util3d::Vector3D::create();
             cs_target.set_Item(cs_index, cs_value);
         }
         if ((m == 1) || (m == 2)) {
@@ -700,22 +701,22 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
             require(frect_pos.get_Item(m))->x_ = static_cast<float>(-450.0f);
         }
     }
-    frect_cpos = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    frect_cpos = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({4, 2}));
-    amefto_goalPos_ = pls::cs::Array<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>::make(2);
+    amefto_goalPos_ = pls::cs::Array<pls::cs::Ref<kl_util3d::Vector3D>>::make(2);
     for (pls::cs::Int32 n = 0; n < (amefto_goalPos_).length(); ++n) {
         {
             auto cs_target = amefto_goalPos_;
             auto cs_index = n;
-            auto cs_value = generated::kairo::unity::m3d4::util3d::Vector3D::create();
+            auto cs_value = kl_util3d::Vector3D::create();
             cs_target.set_Item(cs_index, cs_value);
         }
     }
     require(amefto_goalPos_.get_Item(0))->x_ = static_cast<float>(-450.0f);
     require(amefto_goalPos_.get_Item(1))->x_ = 450.0f;
-    amefto_cameraPos_ = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    amefto_cameraPos_ = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({2, 2}));
-    amefto_address_ = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    amefto_address_ = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({2, 2}));
     receiverPIdBox_ = pls::cs::Array<std::int32_t>::make(5);
     if (isUserTeam) {
@@ -733,11 +734,9 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
 
 // M:game.Team.Update
 void Team::Update() {
-    Team::ensure_initialized();
-
     if (require(require(udat_)->gm_)->state_ == 0) {
-        if (generated::java::util::Vector_2_Size(require(players_receive_)) > 0) {
-            generated::java::util::Vector_2_RemoveAllElements(require(players_receive_));
+        if (kl_java_util::Vector_2_Size(require(players_receive_)) > 0) {
+            kl_java_util::Vector_2_RemoveAllElements(require(players_receive_));
         }
         Team::Amefto();
         Team::Update_formationRect2();
@@ -786,7 +785,7 @@ void Team::Update() {
             }());
         }
         if (require(require(udat_)->gm_)->gameState_ == 2) {
-            if (!(generated::kairo::unity::util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16))) {
+            if (!(kl_unity_util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16))) {
                 Team::SetSortGroundBallNear();
                 pls::cs::Ref<Player> player = pls::cs::Ref<Player>{};
                 if (((((!is_null(require(require(udat_)->ball_)->lastOwner_)) &&
@@ -795,7 +794,7 @@ void Team::Update() {
                     player = (players_.get_Item(require(require(udat_)->ball_)->targetPId));
                 } else {
                     player = ((pls::cs::unbox<pls::cs::Ref<Player>>(
-                        generated::java::util::Vector_2_FirstElement(require(ballNearPlayer_)))));
+                        kl_java_util::Vector_2_FirstElement(require(ballNearPlayer_)))));
                 }
                 for (pls::cs::Int32 num = pls::cs::sub_i32((receiverPIdBox_).length(), 1); num >= 1; --num) {
                     receiverPIdBox_[num] = receiverPIdBox_[(num - 1)];
@@ -807,7 +806,7 @@ void Team::Update() {
                         break;
                     }
                     if (j == pls::cs::sub_i32((receiverPIdBox_).length(), 1)) {
-                        generated::java::util::Vector_2_AddElement(
+                        kl_java_util::Vector_2_AddElement(
                             require(players_receive_),
                             static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player)));
                     }
@@ -819,26 +818,26 @@ void Team::Update() {
                      (require(require(require(udat_)->ball_)->lastOwner_)->team_id_ == team_id_)) &&
                     (require(require(udat_)->ball_)->targetPId != -1)) {
                     player2 = players_.get_Item(require(require(udat_)->ball_)->targetPId);
-                    generated::java::util::Vector_2_AddElement(
+                    kl_java_util::Vector_2_AddElement(
                         require(players_receive_),
                         static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player2)));
                 } else {
                     player2 = pls::cs::unbox<pls::cs::Ref<Player>>(
-                        generated::java::util::Vector_2_FirstElement(require(ballNearPlayer_)));
+                        kl_java_util::Vector_2_FirstElement(require(ballNearPlayer_)));
                     pls::cs::Int32 num2 = pls::cs::conv_i32(require(player2)->temp_len);
-                    generated::java::util::Vector_2_AddElement(
+                    kl_java_util::Vector_2_AddElement(
                         require(players_receive_),
                         static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player2)));
-                    for (pls::cs::Int32 k = 0;
-                         k < generated::java::util::Vector_2_Size(require(ballNearPlayer_)); ++k) {
+                    for (pls::cs::Int32 k = 0; k < kl_java_util::Vector_2_Size(require(ballNearPlayer_));
+                         ++k) {
                         pls::cs::Ref<Player> player3 = pls::cs::unbox<pls::cs::Ref<Player>>(
-                            generated::java::util::Vector_2_ElementAt(require(ballNearPlayer_), k));
+                            kl_java_util::Vector_2_ElementAt(require(ballNearPlayer_), k));
                         if (static_cast<double>(require(player3)->temp_len) >
                             static_cast<double>(static_cast<float>(((num2 - 2))))) {
-                            generated::java::util::Vector_2_AddElement(
+                            kl_java_util::Vector_2_AddElement(
                                 require(players_receive_),
                                 static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player3)));
-                            if (generated::java::util::Vector_2_Size(require(players_receive_)) >= 3) {
+                            if (kl_java_util::Vector_2_Size(require(players_receive_)) >= 3) {
                                 break;
                             }
                         }
@@ -858,8 +857,8 @@ void Team::Update() {
         }
     } else if (((require(require(udat_)->gm_)->state_ == 3) || (require(require(udat_)->gm_)->state_ == 4)) ||
                (require(require(udat_)->gm_)->state_ == 5)) {
-        if (generated::java::util::Vector_2_Size(require(players_receive_)) > 0) {
-            generated::java::util::Vector_2_RemoveAllElements(require(players_receive_));
+        if (kl_java_util::Vector_2_Size(require(players_receive_)) > 0) {
+            kl_java_util::Vector_2_RemoveAllElements(require(players_receive_));
         }
         Team::Update_coatEva();
         for (pls::cs::Int32 n = 0; n < (players_).length(); ++n) {
@@ -912,8 +911,6 @@ void Team::Update() {
 
 // M:game.Team.Collision
 void Team::Collision() {
-    Team::ensure_initialized();
-
     if (require(require(udat_)->gm_)->state_ == 0) {
         for (pls::cs::Int32 i = 0; i < (players_).length(); ++i) {
             require(players_.get_Item(i))->Collision();
@@ -923,18 +920,13 @@ void Team::Collision() {
 
 // M:game.Team.Draw(kairo.unity.ui.Graphics,System.Boolean)
 void Team::Draw(pls::cs::Ref<pls::kairo::Graphics> g, bool offscreen) {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < (players_).length(); ++i) {
         require(players_.get_Item(i))->Draw(g, i);
     }
 }
 
 // M:game.Team.SetPosFPos(game.Player,kairo.unity.m3d4.util3d.Vector3D)
-void Team::SetPosFPos(pls::cs::Ref<Player> player,
-                      pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> var_out) {
-    Team::ensure_initialized();
-
+void Team::SetPosFPos(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vector3D> var_out) {
     pls::cs::Array<pls::cs::Array<std::int32_t>> formation_ =
         require(require(apdat_)->formationData_.get_Item(
                     require(require(udat_)->gm_)->team_formationPage_[require(player)->team_id_]))
@@ -947,32 +939,23 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player,
                 float cs_arg0 = static_cast<float>(formation_[p_id_][0]);
                 float cs_arg1 = 0.0f;
                 float cs_arg2 = 8.0f;
-                float cs_arg3 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[0]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                        return (cs_left - cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
-                float cs_arg4 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[0]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                        return (cs_left + cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
+                float cs_arg3 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[0]) -
+                          static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f))))) +
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
+                float cs_arg4 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[0]) +
+                          static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f))))) -
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             require(cs_target)->x_ = cs_value;
             return cs_value;
@@ -984,32 +967,23 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player,
                 float cs_arg0 = static_cast<float>(formation_[p_id_][1]);
                 float cs_arg1 = 8.0f;
                 float cs_arg2 = 0.0f;
-                float cs_arg3 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[1]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                        return (cs_left - cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
-                float cs_arg4 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[1]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                        return (cs_left + cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
+                float cs_arg3 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[1]) -
+                          static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) +
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
+                float cs_arg4 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[1]) +
+                          static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) -
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             require(cs_target)->z_ = cs_value;
             return cs_value;
@@ -1021,32 +995,23 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player,
                 float cs_arg0 = static_cast<float>(formation_[p_id_][0]);
                 float cs_arg1 = 0.0f;
                 float cs_arg2 = 8.0f;
-                float cs_arg3 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[0]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                        return (cs_left + cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
-                float cs_arg4 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[0]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                        return (cs_left - cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
+                float cs_arg3 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[0]) +
+                          static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f))))) -
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
+                float cs_arg4 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[0]) -
+                          static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f))))) +
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             require(cs_target)->x_ = cs_value;
             return cs_value;
@@ -1058,32 +1023,23 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player,
                 float cs_arg0 = static_cast<float>(formation_[p_id_][1]);
                 float cs_arg1 = 8.0f;
                 float cs_arg2 = 0.0f;
-                float cs_arg3 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[1]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                        return (cs_left + cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
-                float cs_arg4 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(([&]() -> double {
-                        auto cs_left = static_cast<double>(fPos_[1]);
-                        auto cs_right =
-                            static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                        return (cs_left - cs_right);
-                    }()));
-                    auto cs_right = static_cast<double>(
-                        (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
-                         static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
+                float cs_arg3 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[1]) +
+                          static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) -
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
+                float cs_arg4 = static_cast<float>(
+                    (static_cast<double>(
+                         (static_cast<double>(fPos_[1]) -
+                          static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) +
+                     static_cast<double>(
+                         (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
+                          static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             require(cs_target)->z_ = cs_value;
             return cs_value;
@@ -1109,30 +1065,23 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player,
 
 // M:game.Team.SetFormationParam(game.Player)
 void Team::SetFormationParam(pls::cs::Ref<Player> player) {
-    Team::ensure_initialized();
-
     if (require(player)->team_id_ == 0) {
         ([&]() {
             auto cs_target = require(player)->formation_;
             auto cs_index = 0;
             auto cs_value = pls::cs::conv_i32(([&]() -> float {
                 float cs_arg0 = require(require(player)->pos_)->x_;
-                float cs_arg1 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[0]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
-                float cs_arg2 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[0]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
+                float cs_arg1 = static_cast<float>(
+                    (static_cast<double>(fPos_[0]) -
+                     static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)))));
+                float cs_arg2 = static_cast<float>(
+                    (static_cast<double>(fPos_[0]) +
+                     static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)))));
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1142,22 +1091,17 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
             auto cs_index = 1;
             auto cs_value = pls::cs::conv_i32(([&]() -> float {
                 float cs_arg0 = require(require(player)->pos_)->z_;
-                float cs_arg1 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[1]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
-                float cs_arg2 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[1]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
+                float cs_arg1 = static_cast<float>(
+                    (static_cast<double>(fPos_[1]) -
+                     static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
+                float cs_arg2 = static_cast<float>(
+                    (static_cast<double>(fPos_[1]) +
+                     static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1168,22 +1112,17 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
             auto cs_index = 0;
             auto cs_value = pls::cs::conv_i32(([&]() -> float {
                 float cs_arg0 = require(require(player)->pos_)->x_;
-                float cs_arg1 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[0]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
-                float cs_arg2 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[0]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
+                float cs_arg1 = static_cast<float>(
+                    (static_cast<double>(fPos_[0]) +
+                     static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)))));
+                float cs_arg2 = static_cast<float>(
+                    (static_cast<double>(fPos_[0]) -
+                     static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(2.0f)))));
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1193,22 +1132,17 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
             auto cs_index = 1;
             auto cs_value = pls::cs::conv_i32(([&]() -> float {
                 float cs_arg0 = require(require(player)->pos_)->z_;
-                float cs_arg1 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[1]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                    return (cs_left + cs_right);
-                }()));
-                float cs_arg2 = static_cast<float>(([&]() -> double {
-                    auto cs_left = static_cast<double>(fPos_[1]);
-                    auto cs_right =
-                        static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                    return (cs_left - cs_right);
-                }()));
+                float cs_arg1 = static_cast<float>(
+                    (static_cast<double>(fPos_[1]) +
+                     static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
+                float cs_arg2 = static_cast<float>(
+                    (static_cast<double>(fPos_[1]) -
+                     static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvert_3(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
+                                                                      cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1218,8 +1152,6 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
 
 // M:game.Team.SetFormationRectParam
 void Team::SetFormationRectParam() {
-    Team::ensure_initialized();
-
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num2 = 0;
     pls::cs::Int32 num3 = 0;
@@ -1234,11 +1166,9 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player2 = players_.get_Item(j);
-            pls::cs::Int32 num7 = ([&]() -> std::int32_t {
-                auto cs_left = require(player2)->formation_[1];
-                auto cs_right = require(player)->formation_[1];
-                return pls::cs::sub_i32(cs_left, cs_right);
-            }());
+            auto cs_left_47 = require(player2)->formation_[1];
+            auto cs_right_47 = require(player)->formation_[1];
+            pls::cs::Int32 num7 = pls::cs::sub_i32(cs_left_47, cs_right_47);
             if ((num > num7) && (num7 > num5)) {
                 num = num7;
             }
@@ -1252,11 +1182,9 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player3 = players_.get_Item(k);
-            pls::cs::Int32 num8 = ([&]() -> std::int32_t {
-                auto cs_left = require(player)->formation_[1];
-                auto cs_right = require(player3)->formation_[1];
-                return pls::cs::sub_i32(cs_left, cs_right);
-            }());
+            auto cs_left_48 = require(player)->formation_[1];
+            auto cs_right_48 = require(player3)->formation_[1];
+            pls::cs::Int32 num8 = pls::cs::sub_i32(cs_left_48, cs_right_48);
             if ((num2 > num8) && (num8 > num5)) {
                 num2 = num8;
             }
@@ -1270,17 +1198,14 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player4 = players_.get_Item(l);
-            pls::cs::Int32 num9 = ([&]() -> std::int32_t {
-                auto cs_left = require(player)->formation_[0];
-                auto cs_right = require(player4)->formation_[0];
-                return pls::cs::sub_i32(cs_left, cs_right);
-            }());
-            if (((num3 > num9) && (num9 > num5)) &&
-                (generated::java::lang::JMath::Abs_2(([&]() -> std::int32_t {
-                     auto cs_left = require(player)->formation_[1];
-                     auto cs_right = require(player4)->formation_[1];
-                     return pls::cs::sub_i32(cs_left, cs_right);
-                 }())) < num6)) {
+            auto cs_left_49 = require(player)->formation_[0];
+            auto cs_right_49 = require(player4)->formation_[0];
+            pls::cs::Int32 num9 = pls::cs::sub_i32(cs_left_49, cs_right_49);
+            if (((num3 > num9) && (num9 > num5)) && (kl_lang::JMath::AbsInt(([&]() -> std::int32_t {
+                                                         auto cs_left = require(player)->formation_[1];
+                                                         auto cs_right = require(player4)->formation_[1];
+                                                         return pls::cs::sub_i32(cs_left, cs_right);
+                                                     }())) < num6)) {
                 num3 = num9;
             }
         }
@@ -1293,17 +1218,14 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player5 = players_.get_Item(m);
-            pls::cs::Int32 num10 = ([&]() -> std::int32_t {
-                auto cs_left = require(player5)->formation_[0];
-                auto cs_right = require(player)->formation_[0];
-                return pls::cs::sub_i32(cs_left, cs_right);
-            }());
-            if (((num4 > num10) && (num10 > num5)) &&
-                (generated::java::lang::JMath::Abs_2(([&]() -> std::int32_t {
-                     auto cs_left = require(player)->formation_[1];
-                     auto cs_right = require(player5)->formation_[1];
-                     return pls::cs::sub_i32(cs_left, cs_right);
-                 }())) < num6)) {
+            auto cs_left_50 = require(player5)->formation_[0];
+            auto cs_right_50 = require(player)->formation_[0];
+            pls::cs::Int32 num10 = pls::cs::sub_i32(cs_left_50, cs_right_50);
+            if (((num4 > num10) && (num10 > num5)) && (kl_lang::JMath::AbsInt(([&]() -> std::int32_t {
+                                                           auto cs_left = require(player)->formation_[1];
+                                                           auto cs_right = require(player5)->formation_[1];
+                                                           return pls::cs::sub_i32(cs_left, cs_right);
+                                                       }())) < num6)) {
                 num4 = num10;
             }
         }
@@ -1338,10 +1260,8 @@ void Team::SetFormationRectParam() {
 
 // M:game.Team.SetSortGroundBallNear
 void Team::SetSortGroundBallNear() {
-    Team::ensure_initialized();
-
-    if (generated::java::util::Vector_2_Size(require(ballNearPlayer_)) > 0) {
-        generated::java::util::Vector_2_RemoveAllElements(require(ballNearPlayer_));
+    if (kl_java_util::Vector_2_Size(require(ballNearPlayer_)) > 0) {
+        kl_java_util::Vector_2_RemoveAllElements(require(ballNearPlayer_));
     }
     pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
     require(require(ball_)->temp_pos)->x_ = static_cast<float>(
@@ -1376,38 +1296,35 @@ void Team::SetSortGroundBallNear() {
         }
         {
             auto cs_target = player;
-            auto cs_value =
-                static_cast<float>(static_cast<float>(generated::java::lang::JMath::Sqrt(static_cast<double>(
-                    (static_cast<double>(
-                         (static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->x_) -
-                                                static_cast<double>(require(require(player)->pos_)->x_)))) *
-                          static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->x_) -
-                                                static_cast<double>(require(require(player)->pos_)->x_)))))) +
-                     static_cast<double>(
-                         (static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->z_) -
-                                                static_cast<double>(require(require(player)->pos_)->z_)))) *
-                          static_cast<double>(
-                              ((static_cast<double>(require(require(ball_)->temp_pos)->z_) -
-                                static_cast<double>(require(require(player)->pos_)->z_)))))))))));
+            auto cs_value = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
+                (static_cast<double>(
+                     (static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->x_) -
+                                            static_cast<double>(require(require(player)->pos_)->x_)))) *
+                      static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->x_) -
+                                            static_cast<double>(require(require(player)->pos_)->x_)))))) +
+                 static_cast<double>(
+                     (static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->z_) -
+                                            static_cast<double>(require(require(player)->pos_)->z_)))) *
+                      static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->z_) -
+                                            static_cast<double>(require(require(player)->pos_)->z_)))))))))));
             require(cs_target)->temp_len = cs_value;
         }
-        generated::java::util::Vector_2_AddElement(
-            require(ballNearPlayer_), static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player)));
+        kl_java_util::Vector_2_AddElement(require(ballNearPlayer_),
+                                          static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player)));
     }
-    for (pls::cs::Int32 j = 0;
-         j < pls::cs::sub_i32(generated::java::util::Vector_2_Size(require(ballNearPlayer_)), 1); ++j) {
-        for (pls::cs::Int32 num =
-                 pls::cs::sub_i32(generated::java::util::Vector_2_Size(require(ballNearPlayer_)), 1);
+    for (pls::cs::Int32 j = 0; j < pls::cs::sub_i32(kl_java_util::Vector_2_Size(require(ballNearPlayer_)), 1);
+         ++j) {
+        for (pls::cs::Int32 num = pls::cs::sub_i32(kl_java_util::Vector_2_Size(require(ballNearPlayer_)), 1);
              num > j; --num) {
             pls::cs::Ref<Player> player2 = pls::cs::unbox<pls::cs::Ref<Player>>(
-                generated::java::util::Vector_2_ElementAt(require(ballNearPlayer_), j));
+                kl_java_util::Vector_2_ElementAt(require(ballNearPlayer_), j));
             pls::cs::Ref<Player> player3 = pls::cs::unbox<pls::cs::Ref<Player>>(
-                generated::java::util::Vector_2_ElementAt(require(ballNearPlayer_), num));
+                kl_java_util::Vector_2_ElementAt(require(ballNearPlayer_), num));
             if (require(player3)->temp_len < require(player2)->temp_len) {
-                generated::java::util::Vector_2_SetElementAt(
+                kl_java_util::Vector_2_SetElementAt(
                     require(ballNearPlayer_),
                     static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player3)), j);
-                generated::java::util::Vector_2_SetElementAt(
+                kl_java_util::Vector_2_SetElementAt(
                     require(ballNearPlayer_),
                     static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player2)), num);
             }
@@ -1417,14 +1334,12 @@ void Team::SetSortGroundBallNear() {
 
 // M:game.Team.SetSortJampBallNear
 void Team::SetSortJampBallNear() {
-    Team::ensure_initialized();
-
-    if (generated::java::util::Vector_2_Size(require(ballNearPlayer_)) > 0) {
-        generated::java::util::Vector_2_RemoveAllElements(require(ballNearPlayer_));
+    if (kl_java_util::Vector_2_Size(require(ballNearPlayer_)) > 0) {
+        kl_java_util::Vector_2_RemoveAllElements(require(ballNearPlayer_));
     }
     pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
     require(require(ball_)->temp_pos)->Set(require(ball_)->fallPos_);
-    w_disBoal = static_cast<float>(GameUtil::RateConvert_3(
+    w_disBoal = static_cast<float>(GameUtil::RateConvertFloatFloatFloatFloatFloat(
         static_cast<float>(pls::cs::div_i32(pls::cs::mul_i32(require(ball_)->savePosFrame_, 100),
                                             require(ball_)->fallTime_)),
         0.0f, 100.0f, 0.7f, 1.0f, true));
@@ -1439,7 +1354,7 @@ void Team::SetSortJampBallNear() {
         if (require(player)->seb_ == 12) {
             continue;
         }
-        num = static_cast<float>(static_cast<float>(generated::java::lang::JMath::Sqrt(static_cast<double>(
+        num = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
             (static_cast<double>(
                  (static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->x_) -
                                         static_cast<double>(require(require(player)->pos_)->x_)))) *
@@ -1450,7 +1365,7 @@ void Team::SetSortJampBallNear() {
                                         static_cast<double>(require(require(player)->pos_)->z_)))) *
                   static_cast<double>(((static_cast<double>(require(require(ball_)->temp_pos)->z_) -
                                         static_cast<double>(require(require(player)->pos_)->z_)))))))))));
-        num2 = static_cast<float>(static_cast<float>(generated::java::lang::JMath::Sqrt(static_cast<double>(
+        num2 = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
             (static_cast<double>(
                  (static_cast<double>(((static_cast<double>(require(require(player)->formationGo_)->x_) -
                                         static_cast<double>(require(require(player)->pos_)->x_)))) *
@@ -1466,27 +1381,26 @@ void Team::SetSortJampBallNear() {
                                 ((static_cast<double>(w_disBoal) + static_cast<double>(w_formation)))));
         {
             auto cs_target = player;
-            auto cs_value = static_cast<float>(
-                GameUtil::RateConvert_3(require(player)->temp_len, 225.0f, 0.0f, 0.0f, 100.0f, true));
+            auto cs_value = static_cast<float>(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+                require(player)->temp_len, 225.0f, 0.0f, 0.0f, 100.0f, true));
             require(cs_target)->temp_len = cs_value;
         }
-        generated::java::util::Vector_2_AddElement(
-            require(ballNearPlayer_), static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player)));
+        kl_java_util::Vector_2_AddElement(require(ballNearPlayer_),
+                                          static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player)));
     }
-    for (pls::cs::Int32 j = 0;
-         j < pls::cs::sub_i32(generated::java::util::Vector_2_Size(require(ballNearPlayer_)), 1); ++j) {
-        for (pls::cs::Int32 num3 =
-                 pls::cs::sub_i32(generated::java::util::Vector_2_Size(require(ballNearPlayer_)), 1);
+    for (pls::cs::Int32 j = 0; j < pls::cs::sub_i32(kl_java_util::Vector_2_Size(require(ballNearPlayer_)), 1);
+         ++j) {
+        for (pls::cs::Int32 num3 = pls::cs::sub_i32(kl_java_util::Vector_2_Size(require(ballNearPlayer_)), 1);
              num3 > j; --num3) {
             pls::cs::Ref<Player> player2 = pls::cs::unbox<pls::cs::Ref<Player>>(
-                generated::java::util::Vector_2_ElementAt(require(ballNearPlayer_), j));
+                kl_java_util::Vector_2_ElementAt(require(ballNearPlayer_), j));
             pls::cs::Ref<Player> player3 = pls::cs::unbox<pls::cs::Ref<Player>>(
-                generated::java::util::Vector_2_ElementAt(require(ballNearPlayer_), num3));
+                kl_java_util::Vector_2_ElementAt(require(ballNearPlayer_), num3));
             if (require(player3)->temp_len > require(player2)->temp_len) {
-                generated::java::util::Vector_2_SetElementAt(
+                kl_java_util::Vector_2_SetElementAt(
                     require(ballNearPlayer_),
                     static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player3)), j);
-                generated::java::util::Vector_2_SetElementAt(
+                kl_java_util::Vector_2_SetElementAt(
                     require(ballNearPlayer_),
                     static_cast<pls::cs::Ref<pls::cs::Object>>(pls::cs::box(player2)), num3);
             }
@@ -1496,35 +1410,28 @@ void Team::SetSortJampBallNear() {
 
 // M:game.Team.Init_coatEva
 void Team::Init_coatEva() {
-    Team::ensure_initialized();
-
-    coatEva_passer = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    coatEva_passer = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_freeRun = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    coatEva_freeRun = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_defence = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    coatEva_defence = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_looseBall = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    coatEva_looseBall = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_passer2 = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    coatEva_passer2 = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_freeRun2 = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    coatEva_freeRun2 = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_new_offence =
-        generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-            pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_new_deffence =
-        generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-            pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
-    coatEva_new_offence_passer =
-        generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
-            pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
+    coatEva_new_offence = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+        pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
+    coatEva_new_deffence = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+        pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
+    coatEva_new_offence_passer = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+        pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
 }
 
 // M:game.Team.Update_coatEva
 void Team::Update_coatEva() {
-    Team::ensure_initialized();
-
     if (Team::ChWhichChargeTern()) {
         Team::Update_coatEvaNewOffence();
     } else {
@@ -1534,8 +1441,6 @@ void Team::Update_coatEva() {
 
 // M:game.Team.Update_coatEvaNewOffence
 void Team::Update_coatEvaNewOffence() {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_new_offence[i][j] = 0;
@@ -1648,8 +1553,6 @@ void Team::Update_coatEvaNewOffence() {
 
 // M:game.Team.Update_coatEvaNewDeffence
 void Team::Update_coatEvaNewDeffence() {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_new_deffence[i][j] = 0;
@@ -1750,8 +1653,6 @@ void Team::Update_coatEvaNewDeffence() {
 
 // M:game.Team.Update_coatEvaPasser
 void Team::Update_coatEvaPasser() {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_passer[i][j] = 0;
@@ -1820,8 +1721,6 @@ void Team::Update_coatEvaPasser() {
 
 // M:game.Team.Update_coatEvaFreeRun
 void Team::Update_coatEvaFreeRun() {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_freeRun[i][j] = 0;
@@ -1911,8 +1810,6 @@ void Team::Update_coatEvaFreeRun() {
 
 // M:game.Team.Update_coatEvaDefence
 void Team::Update_coatEvaDefence() {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_defence[i][j] = 0;
@@ -2005,8 +1902,6 @@ void Team::Update_coatEvaDefence() {
 
 // M:game.Team.Update_coatEvaLooseBall
 void Team::Update_coatEvaLooseBall() {
-    Team::ensure_initialized();
-
     pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
     pls::cs::Int32 num = 0;
     if (require(require(ball_)->pos_)->z_ > 0.0f) {
@@ -2081,10 +1976,8 @@ void Team::Update_coatEvaLooseBall() {
 
 // M:game.Team.GetPasser
 pls::cs::Ref<Player> Team::GetPasser() {
-    Team::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < (players_).length(); ++i) {
-        if (generated::kairo::unity::util::BitUtil::Check(require(players_.get_Item(i))->flag_, 4)) {
+        if (kl_unity_util::BitUtil::Check(require(players_.get_Item(i))->flag_, 4)) {
             return players_.get_Item(i);
         }
     }
@@ -2093,8 +1986,6 @@ pls::cs::Ref<Player> Team::GetPasser() {
 
 // M:game.Team.GetLastKicker
 pls::cs::Ref<Player> Team::GetLastKicker() {
-    Team::ensure_initialized();
-
     if ((lastKickeer_ >= 0) && (lastKickeer_ < (players_).length())) {
         return players_.get_Item(lastKickeer_);
     }
@@ -2104,8 +1995,6 @@ pls::cs::Ref<Player> Team::GetLastKicker() {
 // M:game.Team.GetSum(System.Int32[][],System.Int32,System.Int32,System.Boolean)
 std::int32_t Team::GetSum(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
                           pls::cs::Int32 cy, bool div) {
-    Team::ensure_initialized();
-
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num3 = pls::cs::Int32{};
     pls::cs::Int32 num4 = pls::cs::Int32{};
@@ -2128,8 +2017,6 @@ std::int32_t Team::GetSum(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls
 pls::cs::Array<std::int32_t> Team::GetMostEvaAddress(pls::cs::Array<pls::cs::Array<std::int32_t>> data,
                                                      pls::cs::Int32 cx, pls::cs::Int32 cy,
                                                      pls::cs::Int32 num) {
-    Team::ensure_initialized();
-
     pls::cs::Int32 num2 = 0;
     pls::cs::Int32 num3 = 0;
     pls::cs::Int32 num4 = 0;
@@ -2164,8 +2051,6 @@ pls::cs::Array<std::int32_t> Team::GetMostEvaAddress(pls::cs::Array<pls::cs::Arr
 // M:game.Team.SetMostEvaAddressFromMoveArea(game.Player,System.Int32[],System.Boolean)
 void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::Array<std::int32_t> var_out,
                                          bool isThroughPass) {
-    Team::ensure_initialized();
-
     pls::cs::Array<pls::cs::Array<std::int32_t>> coatEva = require(player)->GetCoatEva();
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num2 = 0;
@@ -2192,8 +2077,8 @@ void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::A
             for (pls::cs::Int32 i = num4; i <= num5; ++i) {
                 if ((((num6 < 0) || (num6 >= (coatEva).length())) || (i < 0)) ||
                     (i >= (coatEva[0]).length())) {
-                    if (generated::kairo::common::cfg::Config::DEBUG_CMD()) {
-                        generated::kairo::unity::util::Log::Info(
+                    if (kl_cfg::Config::DEBUG_CMD()) {
+                        kl_unity_util::Log::Info(
                             literal(
                                 u"\u25A0Team.java setMostEvaAddressFromMoveArea() \u30A8\u30E9\u30FC") /* "■Team.java setMostEvaAddressFromMoveArea() エラー" */
                             ,
@@ -2211,10 +2096,10 @@ void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::A
         }
         var_out[0] = num2;
         var_out[1] = num3;
-    } catch (const pls::cs::Exception& cs_caught_96) {
-        auto t = pls::cs::capture_exception(cs_caught_96);
+    } catch (const pls::cs::Exception& cs_caught_104) {
+        auto t = pls::cs::capture_exception(cs_caught_104);
         {
-            generated::kairo::unity::util::Log::Info(t);
+            kl_unity_util::Log::Info(t);
         }
     }
 }
@@ -2223,8 +2108,6 @@ void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::A
 void Team::SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Player> player,
                                                     pls::cs::Array<std::int32_t> var_out,
                                                     bool isThroughPass) {
-    Team::ensure_initialized();
-
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num2 = 0;
     pls::cs::Int32 num3 = 0;
@@ -2261,28 +2144,23 @@ void Team::SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Player> player,
 
 // M:game.Team.Get_playerPosEva(game.Player,System.Int32,System.Int32)
 std::int32_t Team::Get_playerPosEva(pls::cs::Ref<Player> player, pls::cs::Int32 xi, pls::cs::Int32 yi) {
-    Team::ensure_initialized();
-
     return Team::Get_playerPosEva(player, xi, yi, true);
 }
 
 // M:game.Team.Get_playerPosEva(game.Player,System.Int32,System.Int32,System.Boolean)
 std::int32_t Team::Get_playerPosEva(pls::cs::Ref<Player> player, pls::cs::Int32 xi, pls::cs::Int32 yi,
                                     bool div) {
-    Team::ensure_initialized();
-
     pls::cs::Array<pls::cs::Array<std::int32_t>> coatEva = require(player)->GetCoatEva();
     pls::cs::Int32 sum = Team::GetSum(coatEva, xi, yi, div);
     pls::cs::Int32 num = GameUtil::RateConvert(sum, 0, 700, 0, 100, true);
-    pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> posFromAddress =
-        Camera::GetPosFromAddress(xi, yi);
+    pls::cs::Ref<kl_util3d::Vector3D> posFromAddress = Camera::GetPosFromAddress(xi, yi);
     pls::cs::Int32 num2 = 0;
     if (team_id_ == 0) {
-        num2 = (pls::cs::conv_i32(GameUtil::RateConvert_3(
+        num2 = (pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
             require(posFromAddress)->z_, static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f, true)));
     } else {
-        num2 = (pls::cs::conv_i32(GameUtil::RateConvert_3(require(posFromAddress)->z_, 900.0f,
-                                                          static_cast<float>(-900.0f), 0.0f, 100.0f, true)));
+        num2 = (pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+            require(posFromAddress)->z_, 900.0f, static_cast<float>(-900.0f), 0.0f, 100.0f, true)));
     }
     {
         pls::cs::Int32 recoveredReturn_42482 = pls::cs::conv_i32(
@@ -2298,8 +2176,6 @@ std::int32_t Team::Get_playerPosEva(pls::cs::Ref<Player> player, pls::cs::Int32 
 // M:game.Team.Get_playerReceivePosEva(game.Player,System.Int32,System.Int32)
 std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs::Int32 xi,
                                            pls::cs::Int32 yi) {
-    Team::ensure_initialized();
-
     pls::cs::Array<pls::cs::Array<std::int32_t>> array = pls::cs::Array<pls::cs::Array<std::int32_t>>{};
     array = coatEva_new_offence;
     pls::cs::Int32 sum = Team::GetSum(array, xi, yi, true);
@@ -2314,10 +2190,11 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
     pls::cs::Single num3 = Team::RPP_W_DISTOGOAL_NORMAL();
     if (team_id_ == 0) {
         if (!(Team::ChPAreaLineOver())) {
-            num2 = pls::cs::conv_i32(GameUtil::RateConvert_3(x, 270.0f, 0.0f, 0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(
+                GameUtil::RateConvertFloatFloatFloatFloatFloat(x, 270.0f, 0.0f, 0.0f, 100.0f, true));
         } else {
             pls::cs::Single x2 =
-                static_cast<float>(static_cast<float>(generated::java::lang::JMath::Sqrt(static_cast<double>(
+                static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
                     (static_cast<double>((static_cast<double>(require(require(player)->pos_)->x_) *
                                           static_cast<double>(require(require(player)->pos_)->x_))) +
                      static_cast<double>(
@@ -2326,23 +2203,24 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
                           static_cast<double>(
                               ((static_cast<double>(900.0f) -
                                 static_cast<double>(require(require(player)->pos_)->z_)))))))))));
-            num2 = pls::cs::conv_i32(GameUtil::RateConvert_3(x2, 900.0f, 0.0f, 0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(
+                GameUtil::RateConvertFloatFloatFloatFloatFloat(x2, 900.0f, 0.0f, 0.0f, 100.0f, true));
             num3 = Team::RPP_W_DISTOGOAL_PAREA();
         }
     } else if (!(Team::ChPAreaLineOver())) {
-        num2 = pls::cs::conv_i32(
-            GameUtil::RateConvert_3(x, static_cast<float>(-270.0f), 0.0f, 0.0f, 100.0f, true));
+        num2 = pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+            x, static_cast<float>(-270.0f), 0.0f, 0.0f, 100.0f, true));
     } else {
-        pls::cs::Single x3 =
-            static_cast<float>(static_cast<float>(generated::java::lang::JMath::Sqrt(static_cast<double>(
-                (static_cast<double>((static_cast<double>(require(require(player)->pos_)->x_) *
-                                      static_cast<double>(require(require(player)->pos_)->x_))) +
-                 static_cast<double>(
-                     (static_cast<double>(((static_cast<double>(-900.0f) -
-                                            static_cast<double>(require(require(player)->pos_)->z_)))) *
-                      static_cast<double>(((static_cast<double>(-900.0f) -
-                                            static_cast<double>(require(require(player)->pos_)->z_)))))))))));
-        num2 = pls::cs::conv_i32(GameUtil::RateConvert_3(x3, 900.0f, 0.0f, 0.0f, 100.0f, true));
+        pls::cs::Single x3 = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
+            (static_cast<double>((static_cast<double>(require(require(player)->pos_)->x_) *
+                                  static_cast<double>(require(require(player)->pos_)->x_))) +
+             static_cast<double>(
+                 (static_cast<double>(((static_cast<double>(-900.0f) -
+                                        static_cast<double>(require(require(player)->pos_)->z_)))) *
+                  static_cast<double>(((static_cast<double>(-900.0f) -
+                                        static_cast<double>(require(require(player)->pos_)->z_)))))))))));
+        num2 = pls::cs::conv_i32(
+            GameUtil::RateConvertFloatFloatFloatFloatFloat(x3, 900.0f, 0.0f, 0.0f, 100.0f, true));
         num3 = Team::RPP_W_DISTOGOAL_PAREA();
     }
     pls::cs::Int32 num4 = 0;
@@ -2351,12 +2229,12 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
          ++i) {
         pls::cs::Ref<Player> player2 =
             require(require(udat_)->teams_.get_Item(pls::cs::sub_i32(1, team_id_)))->players_.get_Item(i);
-        if ((generated::java::lang::JMath::Abs_2(([&]() -> std::int32_t {
+        if ((kl_lang::JMath::AbsInt(([&]() -> std::int32_t {
                  auto cs_left = require(player)->address_[0];
                  auto cs_right = require(player2)->address_[0];
                  return pls::cs::sub_i32(cs_left, cs_right);
              }())) <= 1) &&
-            (generated::java::lang::JMath::Abs_2(([&]() -> std::int32_t {
+            (kl_lang::JMath::AbsInt(([&]() -> std::int32_t {
                  auto cs_left = require(player)->address_[1];
                  auto cs_right = require(player2)->address_[1];
                  return pls::cs::sub_i32(cs_left, cs_right);
@@ -2374,19 +2252,19 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
                                       static_cast<double>(static_cast<float>(num5))))) /
                                    (((Team::RPP_W_COATEVASUM() + num3) + Team::RPP_W_AROUNDENEMY())))));
     }
-    pls::cs::Single x4 =
-        static_cast<float>(static_cast<float>(generated::java::lang::JMath::Sqrt(static_cast<double>(
-            (static_cast<double>(
-                 (static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->x_) -
-                                        static_cast<double>(require(require(player)->temp_vec)->x_)))) *
-                  static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->x_) -
-                                        static_cast<double>(require(require(player)->temp_vec)->x_)))))) +
-             static_cast<double>(
-                 (static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->z_) -
-                                        static_cast<double>(require(require(player)->temp_vec)->z_)))) *
-                  static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->z_) -
-                                        static_cast<double>(require(require(player)->temp_vec)->z_)))))))))));
-    pls::cs::Int32 num6 = pls::cs::conv_i32(GameUtil::RateConvert_3(x4, 900.0f, 0.0f, 0.0f, 100.0f, true));
+    pls::cs::Single x4 = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
+        (static_cast<double>(
+             (static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->x_) -
+                                    static_cast<double>(require(require(player)->temp_vec)->x_)))) *
+              static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->x_) -
+                                    static_cast<double>(require(require(player)->temp_vec)->x_)))))) +
+         static_cast<double>(
+             (static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->z_) -
+                                    static_cast<double>(require(require(player)->temp_vec)->z_)))) *
+              static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->z_) -
+                                    static_cast<double>(require(require(player)->temp_vec)->z_)))))))))));
+    pls::cs::Int32 num6 = pls::cs::conv_i32(
+        GameUtil::RateConvertFloatFloatFloatFloatFloat(x4, 900.0f, 0.0f, 0.0f, 100.0f, true));
     {
         pls::cs::Int32 recoveredReturn = pls::cs::conv_i32(
             (((((((static_cast<double>(Team::RPP_W_COATEVASUM()) *
@@ -2403,8 +2281,6 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
 // M:game.Team.Cal_evaCoatMulti(System.Int32,System.Int32[][],System.Int32,System.Int32,System.Single[])
 void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
                             pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<float> muliti_param) {
-    Team::ensure_initialized();
-
     pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>> array =
         pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>{};
     if ((mode == 0)) {
@@ -2443,8 +2319,6 @@ void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<s
 // M:game.Team.Cal_evaCoatMulti9block(System.Int32[][],System.Int32,System.Int32,System.Single[])
 void Team::Cal_evaCoatMulti9block(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
                                   pls::cs::Int32 cy, pls::cs::Array<float> muliti_param) {
-    Team::ensure_initialized();
-
     pls::cs::Int32 num = pls::cs::Int32{};
     pls::cs::Int32 num2 = pls::cs::Int32{};
     for (pls::cs::Int32 i = 0; i < (Team::PANEL_DIRECT_R_9BLOCK()).length(); ++i) {
@@ -2464,8 +2338,6 @@ void Team::Cal_evaCoatMulti9block(pls::cs::Array<pls::cs::Array<std::int32_t>> d
 // M:game.Team.Cal_evaCoatAdd(System.Int32,System.Int32[][],System.Int32,System.Int32,System.Int32[])
 void Team::Cal_evaCoatAdd(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
                           pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param) {
-    Team::ensure_initialized();
-
     pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>> array =
         pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>{};
     if ((mode == 0)) {
@@ -2504,8 +2376,6 @@ void Team::Cal_evaCoatAdd(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std
 // M:game.Team.Cal_evaCoatAdd9block(System.Int32[][],System.Int32,System.Int32,System.Int32[])
 void Team::Cal_evaCoatAdd9block(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
                                 pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param) {
-    Team::ensure_initialized();
-
     pls::cs::Int32 num = pls::cs::Int32{};
     pls::cs::Int32 num2 = pls::cs::Int32{};
     for (pls::cs::Int32 i = 0; i < (Team::PANEL_DIRECT_R_9BLOCK()).length(); ++i) {
@@ -2524,8 +2394,6 @@ void Team::Cal_evaCoatAdd9block(pls::cs::Array<pls::cs::Array<std::int32_t>> dat
 
 // M:game.Team.Amefto
 void Team::Amefto() {
-    Team::ensure_initialized();
-
     if (is_null(require(require(udat_)->ball_)->lastOwner_)) {
         return;
     }
@@ -2580,8 +2448,6 @@ void Team::Amefto() {
 
 // M:game.Team.Amefto_start
 void Team::Amefto_start() {
-    Team::ensure_initialized();
-
     startZ_ = require(require(require(udat_)->ball_)->pos_)->z_;
     if (team_id_ == 0) {
         goalZ_ = static_cast<float>(
@@ -2601,12 +2467,12 @@ void Team::Amefto_start() {
         require(cs_target)->z_ = cs_value;
     }
     {
-        pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg0 = amefto_goalPos_.get_Item(0);
+        pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = amefto_goalPos_.get_Item(0);
         pls::cs::Array<std::int32_t> cs_arg1 = amefto_address_[0];
         Camera::ConvertGlobalToAddress(cs_arg0, cs_arg1);
     }
     {
-        pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg0 = amefto_goalPos_.get_Item(1);
+        pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = amefto_goalPos_.get_Item(1);
         pls::cs::Array<std::int32_t> cs_arg1 = amefto_address_[1];
         Camera::ConvertGlobalToAddress(cs_arg0, cs_arg1);
     }
@@ -2623,8 +2489,6 @@ void Team::Amefto_start() {
 
 // M:game.Team.Update_formationRect2
 void Team::Update_formationRect2() {
-    Team::ensure_initialized();
-
     ternCharge = true;
     if (is_null(require(require(udat_)->ball_)->lastOwner_)) {
         ternCharge = false;
@@ -2666,7 +2530,7 @@ void Team::Update_formationRect2() {
                 ((!is_null(passer) && (require(passer)->p_id_ == 0)))) {
                 require(Team::team_formationCenterPos())->z_ = static_cast<float>(-180.0f);
             }
-            if (generated::kairo::unity::util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16)) {
+            if (kl_unity_util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16)) {
                 require(Team::team_formationCenterPos())->x_ =
                     require(require(require(udat_)->ball_)->fallPos_)->x_;
                 require(Team::team_formationCenterPos())->z_ =
@@ -2692,7 +2556,7 @@ void Team::Update_formationRect2() {
                 ((!is_null(passer) && (require(passer)->p_id_ == 0)))) {
                 require(Team::team_formationCenterPos())->z_ = 180.0f;
             }
-            if (generated::kairo::unity::util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16)) {
+            if (kl_unity_util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16)) {
                 require(Team::team_formationCenterPos())->x_ =
                     require(require(require(udat_)->ball_)->fallPos_)->x_;
                 require(Team::team_formationCenterPos())->z_ =
@@ -2734,8 +2598,7 @@ void Team::Update_formationRect2() {
         {
             auto cs_target = fPos_;
             auto cs_index = 3;
-            auto cs_value =
-                static_cast<float>(generated::java::lang::JMath::Abs(static_cast<float>((num - num2))));
+            auto cs_value = static_cast<float>(kl_lang::JMath::Abs(static_cast<float>((num - num2))));
             cs_target.set_Item(cs_index, cs_value);
         }
         fPos_[1] = static_cast<float>((((num + num2)) / 2.0f));
@@ -2791,7 +2654,7 @@ void Team::Update_formationRect2() {
         num5 = GameUtil::RateConvert(num8, 0, 5, 0, 100, true);
         require(Team::team_formationCenterPos())->x_ = require(require(require(udat_)->ball_)->pos_)->x_;
         require(Team::team_formationCenterPos())->z_ = require(require(require(udat_)->ball_)->pos_)->z_;
-        if (generated::kairo::unity::util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16)) {
+        if (kl_unity_util::BitUtil::Check(require(require(udat_)->ball_)->flag_, 16)) {
             require(Team::team_formationCenterPos())->z_ =
                 require(require(require(udat_)->ball_)->fallPos_)->z_;
         }
@@ -2799,18 +2662,12 @@ void Team::Update_formationRect2() {
             auto cs_target = Team::team_formationCenterPos();
             auto cs_old = require(cs_target)->z_;
             auto cs_rhs = ([&]() -> std::int32_t {
-                auto cs_left = ([&]() -> std::int32_t {
-                    auto cs_left = Team::FORMATION_RATE_DEFFECNE();
-                    auto cs_right = Team::FORMATION_TYPE_RATE()[formationType_];
-                    return pls::cs::add_i32(cs_left, cs_right);
-                }());
+                auto cs_left = pls::cs::add_i32(Team::FORMATION_RATE_DEFFECNE(),
+                                                Team::FORMATION_TYPE_RATE()[formationType_]);
                 auto cs_right = ([&]() -> std::int32_t {
-                    auto cs_left = pls::cs::mul_i32(2, (([&]() -> std::int32_t {
-                                                        auto cs_left = Team::FORMATION_RATE_DEFFECNE();
-                                                        auto cs_right =
-                                                            Team::FORMATION_TYPE_RATE()[formationType_];
-                                                        return pls::cs::add_i32(cs_left, cs_right);
-                                                    }())));
+                    auto cs_left =
+                        pls::cs::mul_i32(2, (pls::cs::add_i32(Team::FORMATION_RATE_DEFFECNE(),
+                                                              Team::FORMATION_TYPE_RATE()[formationType_])));
                     auto cs_right = team_id_;
                     return pls::cs::mul_i32(cs_left, cs_right);
                 }());
@@ -2905,31 +2762,25 @@ void Team::Update_formationRect2() {
         {
             auto cs_target = fPos_;
             auto cs_index = 3;
-            auto cs_value =
-                static_cast<float>(generated::java::lang::JMath::Abs(static_cast<float>((num9 - num10))));
+            auto cs_value = static_cast<float>(kl_lang::JMath::Abs(static_cast<float>((num9 - num10))));
             cs_target.set_Item(cs_index, cs_value);
         }
         fPos_[1] = static_cast<float>((((num9 + num10)) / 2.0f));
     }
     pls::cs::Int32 num13 = 30;
     if (team_id_ == 0) {
-        if (static_cast<double>(([&]() -> double {
-                auto cs_left = static_cast<double>(fPos_[1]);
-                auto cs_right =
-                    static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                return (cs_left - cs_right);
-            }())) < static_cast<double>(-900.0f)) {
+        if (static_cast<double>(
+                (static_cast<double>(fPos_[1]) -
+                 static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) <
+            static_cast<double>(-900.0f)) {
             fPos_[1] = static_cast<float>(
                 (static_cast<double>(-900.0f) +
                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         }
         if (static_cast<double>(
-                (static_cast<double>(([&]() -> double {
-                     auto cs_left = static_cast<double>(fPos_[1]);
-                     auto cs_right =
-                         static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                     return (cs_left + cs_right);
-                 }())) +
+                (static_cast<double>(
+                     (static_cast<double>(fPos_[1]) +
+                      static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) +
                  static_cast<double>(static_cast<float>(num13)))) > static_cast<double>(900.0f)) {
             fPos_[1] = static_cast<float>(
                 (static_cast<double>(
@@ -2939,12 +2790,9 @@ void Team::Update_formationRect2() {
         }
     } else {
         if (static_cast<double>(
-                (static_cast<double>(([&]() -> double {
-                     auto cs_left = static_cast<double>(fPos_[1]);
-                     auto cs_right =
-                         static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                     return (cs_left - cs_right);
-                 }())) -
+                (static_cast<double>(
+                     (static_cast<double>(fPos_[1]) -
+                      static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) -
                  static_cast<double>(static_cast<float>(num13)))) < static_cast<double>(-900.0f)) {
             fPos_[1] = static_cast<float>(
                 (static_cast<double>(
@@ -2952,25 +2800,23 @@ void Team::Update_formationRect2() {
                       static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) +
                  static_cast<double>(static_cast<float>(num13))));
         }
-        if (static_cast<double>(([&]() -> double {
-                auto cs_left = static_cast<double>(fPos_[1]);
-                auto cs_right =
-                    static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-                return (cs_left + cs_right);
-            }())) > static_cast<double>(900.0f)) {
+        if (static_cast<double>(
+                (static_cast<double>(fPos_[1]) +
+                 static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) >
+            static_cast<double>(900.0f)) {
             fPos_[1] = static_cast<float>(
                 (static_cast<double>(900.0f) -
                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         }
     }
     pls::cs::Single num14 = 0.0f;
-    num14 =
-        static_cast<float>(GameUtil::RateConvert_3(require(Team::team_formationCenterPos())->z_,
-                                                   static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f, true));
+    num14 = static_cast<float>(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+        require(Team::team_formationCenterPos())->z_, static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f,
+        true));
     pls::cs::Single num15 = 0.0f;
     pls::cs::Single num16 = static_cast<float>(
         (static_cast<double>(
-             (static_cast<double>(generated::java::lang::JMath::Abs(static_cast<float>(([&]() -> double {
+             (static_cast<double>(kl_lang::JMath::Abs(static_cast<float>(([&]() -> double {
                   auto cs_left = static_cast<double>(require(Map::COAT_GOAL1_GLOBALPOS().get_Item(1))->x_);
                   auto cs_right = static_cast<double>(require(Map::COAT_GOAL1_GLOBALPOS().get_Item(0))->x_);
                   return (cs_left - cs_right);
@@ -2980,7 +2826,7 @@ void Team::Update_formationRect2() {
     if (Team::ChWhichChargeTern()) {
         num16 = static_cast<float>((
             static_cast<double>((
-                static_cast<double>(generated::java::lang::JMath::Abs(static_cast<float>(([&]() -> double {
+                static_cast<double>(kl_lang::JMath::Abs(static_cast<float>(([&]() -> double {
                     auto cs_left = static_cast<double>(require(Map::COAT_GOAL1_GLOBALPOS().get_Item(1))->x_);
                     auto cs_right = static_cast<double>(require(Map::COAT_GOAL1_GLOBALPOS().get_Item(0))->x_);
                     return (cs_left - cs_right);
@@ -2989,9 +2835,11 @@ void Team::Update_formationRect2() {
             static_cast<double>(100.0f)));
     }
     if ((num14 < 50.0f)) {
-        num15 = static_cast<float>(GameUtil::RateConvert_3(num14, 5.0f, 30.0f, num16, 900.0f, true));
+        num15 = static_cast<float>(
+            GameUtil::RateConvertFloatFloatFloatFloatFloat(num14, 5.0f, 30.0f, num16, 900.0f, true));
     } else {
-        num15 = static_cast<float>(GameUtil::RateConvert_3(num14, 70.0f, 95.0f, 900.0f, num16, true));
+        num15 = static_cast<float>(
+            GameUtil::RateConvertFloatFloatFloatFloatFloat(num14, 70.0f, 95.0f, 900.0f, num16, true));
     }
     fPos_[0] = 0.0f;
     fPos_[2] = num15;
@@ -2999,60 +2847,45 @@ void Team::Update_formationRect2() {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<Team>>(this);
             pls::cs::Ref<Player> cs_arg0 = players_.get_Item(j);
-            pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg1 =
-                require(players_.get_Item(j))->formationGo_;
+            pls::cs::Ref<kl_util3d::Vector3D> cs_arg1 = require(players_.get_Item(j))->formationGo_;
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
             cs_receiver->SetPosFPos(cs_arg0, cs_arg1);
         }
     }
-    ([&]() {
+    {
         auto cs_target = frect_pos.get_Item(0);
-        auto cs_value = static_cast<float>(([&]() -> double {
-            auto cs_left = static_cast<double>(fPos_[1]);
-            auto cs_right = static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-            return (cs_left + cs_right);
-        }()));
+        auto cs_value = static_cast<float>(
+            (static_cast<double>(fPos_[1]) +
+             static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         require(cs_target)->z_ = cs_value;
-        return cs_value;
-    }());
-    ([&]() {
+    }
+    {
         auto cs_target = frect_pos.get_Item(1);
-        auto cs_value = static_cast<float>(([&]() -> double {
-            auto cs_left = static_cast<double>(fPos_[1]);
-            auto cs_right = static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-            return (cs_left + cs_right);
-        }()));
+        auto cs_value = static_cast<float>(
+            (static_cast<double>(fPos_[1]) +
+             static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         require(cs_target)->z_ = cs_value;
-        return cs_value;
-    }());
-    ([&]() {
+    }
+    {
         auto cs_target = frect_pos.get_Item(2);
-        auto cs_value = static_cast<float>(([&]() -> double {
-            auto cs_left = static_cast<double>(fPos_[1]);
-            auto cs_right = static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-            return (cs_left - cs_right);
-        }()));
+        auto cs_value = static_cast<float>(
+            (static_cast<double>(fPos_[1]) -
+             static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         require(cs_target)->z_ = cs_value;
-        return cs_value;
-    }());
-    ([&]() {
+    }
+    {
         auto cs_target = frect_pos.get_Item(3);
-        auto cs_value = static_cast<float>(([&]() -> double {
-            auto cs_left = static_cast<double>(fPos_[1]);
-            auto cs_right = static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)));
-            return (cs_left - cs_right);
-        }()));
+        auto cs_value = static_cast<float>(
+            (static_cast<double>(fPos_[1]) -
+             static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         require(cs_target)->z_ = cs_value;
-        return cs_value;
-    }());
+    }
 }
 
 // M:game.Team.SetPositionKickOff
 void Team::SetPositionKickOff() {
-    Team::ensure_initialized();
-
     fPos_[0] = 0.0f;
     fPos_[1] = static_cast<float>(
         pls::cs::conv_i32(((static_cast<double>(-450.0f) +
@@ -3065,8 +2898,7 @@ void Team::SetPositionKickOff() {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<Team>>(this);
             pls::cs::Ref<Player> cs_arg0 = players_.get_Item(i);
-            pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg1 =
-                require(players_.get_Item(i))->pos_;
+            pls::cs::Ref<kl_util3d::Vector3D> cs_arg1 = require(players_.get_Item(i))->pos_;
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
@@ -3082,7 +2914,7 @@ void Team::SetPositionKickOff() {
     require(require(require(udat_)->ball_)->pos_)->Set(0.0f, 0.0f, 0.0f);
     {
         auto cs_target = require(udat_)->ball_;
-        auto cs_value = generated::kairo::unity::util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
+        auto cs_value = kl_unity_util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
         require(cs_target)->flag_ = cs_value;
     }
     Camera::ConvertGlobalToScreen(require(require(udat_)->ball_)->pos_,
@@ -3100,7 +2932,7 @@ void Team::SetPositionKickOff() {
     if (require(require(udat_)->gm_)->gameState_ == team_id_) {
         if (team_id_ == 0) {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
+                auto cs_receiver = static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(
                     require(players_.get_Item(pls::cs::sub_i32((players_).length(), 1)))->pos_);
                 float cs_arg0 = require(Team::FORMATION_KICKOFF().get_Item(0))->x_;
                 float cs_arg1 = 0.0f;
@@ -3112,9 +2944,8 @@ void Team::SetPositionKickOff() {
             }
             if (require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->formation_[0] >= 50) {
                 {
-                    auto cs_receiver =
-                        static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                            require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
+                    auto cs_receiver = static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(
+                        require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
                     float cs_arg0 = require(Team::FORMATION_KICKOFF().get_Item(1))->x_;
                     float cs_arg1 = 0.0f;
                     float cs_arg2 = require(Team::FORMATION_KICKOFF().get_Item(1))->z_;
@@ -3125,9 +2956,8 @@ void Team::SetPositionKickOff() {
                 }
             } else {
                 {
-                    auto cs_receiver =
-                        static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                            require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
+                    auto cs_receiver = static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(
+                        require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
                     float cs_arg0 =
                         static_cast<float>((-((require(Team::FORMATION_KICKOFF().get_Item(1))->x_))));
                     float cs_arg1 = 0.0f;
@@ -3140,7 +2970,7 @@ void Team::SetPositionKickOff() {
             }
         } else {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
+                auto cs_receiver = static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(
                     require(players_.get_Item(pls::cs::sub_i32((players_).length(), 1)))->pos_);
                 float cs_arg0 = require(Team::FORMATION_KICKOFF().get_Item(0))->x_;
                 float cs_arg1 = 0.0f;
@@ -3152,9 +2982,8 @@ void Team::SetPositionKickOff() {
             }
             if (require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->formation_[0] <= 50) {
                 {
-                    auto cs_receiver =
-                        static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                            require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
+                    auto cs_receiver = static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(
+                        require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
                     float cs_arg0 = require(Team::FORMATION_KICKOFF().get_Item(1))->x_;
                     float cs_arg1 = 0.0f;
                     float cs_arg2 =
@@ -3166,9 +2995,8 @@ void Team::SetPositionKickOff() {
                 }
             } else {
                 {
-                    auto cs_receiver =
-                        static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                            require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
+                    auto cs_receiver = static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(
+                        require(players_.get_Item(pls::cs::sub_i32((players_).length(), 2)))->pos_);
                     float cs_arg0 =
                         static_cast<float>((-((require(Team::FORMATION_KICKOFF().get_Item(1))->x_))));
                     float cs_arg1 = 0.0f;
@@ -3195,8 +3023,6 @@ void Team::SetPositionKickOff() {
 
 // M:game.Team.SetPositionThrowIn
 void Team::SetPositionThrowIn() {
-    Team::ensure_initialized();
-
     if (require(require(udat_)->gm_)->gameState_ == team_id_) {
         pls::cs::Int32 num = pls::cs::Int32{};
         pls::cs::Int32 num2 = pls::cs::Int32{};
@@ -3206,18 +3032,18 @@ void Team::SetPositionThrowIn() {
             } else {
                 num = 100;
             }
-            num2 = pls::cs::conv_i32(
-                GameUtil::RateConvert_3(require(require(require(udat_)->ball_)->lineOutPos_)->z_,
-                                        static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+                require(require(require(udat_)->ball_)->lineOutPos_)->z_, static_cast<float>(-900.0f), 900.0f,
+                0.0f, 100.0f, true));
         } else {
             if (((require(require(require(udat_)->ball_)->lineOutPos_)->x_ > 0.0f))) {
                 num = 0;
             } else {
                 num = 100;
             }
-            num2 = pls::cs::conv_i32(
-                GameUtil::RateConvert_3(require(require(require(udat_)->ball_)->lineOutPos_)->z_, 900.0f,
-                                        static_cast<float>(-900.0f), 0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+                require(require(require(udat_)->ball_)->lineOutPos_)->z_, 900.0f, static_cast<float>(-900.0f),
+                0.0f, 100.0f, true));
         }
         pls::cs::Int32 num3 = 2147483647 /* Int32.MaxValue */;
         pls::cs::Int32 num4 = 1;
@@ -3243,14 +3069,13 @@ void Team::SetPositionThrowIn() {
         }
         {
             auto cs_target = players_.get_Item(num4);
-            auto cs_value =
-                generated::kairo::unity::util::BitUtil::On(require(players_.get_Item(num4))->flag_, 256);
+            auto cs_value = kl_unity_util::BitUtil::On(require(players_.get_Item(num4))->flag_, 256);
             require(cs_target)->flag_ = cs_value;
         }
         if (require(require(require(udat_)->ball_)->lineOutPos_)->x_ < 0.0f) {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                    require(players_.get_Item(num4))->pos_);
+                auto cs_receiver =
+                    static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(require(players_.get_Item(num4))->pos_);
                 float cs_arg0 = static_cast<float>(-470.0f);
                 float cs_arg1 = 0.0f;
                 float cs_arg2 = require(require(require(udat_)->ball_)->lineOutPos_)->z_;
@@ -3261,8 +3086,8 @@ void Team::SetPositionThrowIn() {
             }
         } else {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                    require(players_.get_Item(num4))->pos_);
+                auto cs_receiver =
+                    static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(require(players_.get_Item(num4))->pos_);
                 float cs_arg0 = 470.0f;
                 float cs_arg1 = 0.0f;
                 float cs_arg2 = require(require(require(udat_)->ball_)->lineOutPos_)->z_;
@@ -3274,8 +3099,7 @@ void Team::SetPositionThrowIn() {
         }
         {
             auto cs_target = require(udat_)->ball_;
-            auto cs_value =
-                generated::kairo::unity::util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
+            auto cs_value = kl_unity_util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
             require(cs_target)->flag_ = cs_value;
         }
         if (require(require(require(udat_)->ball_)->lineOutPos_)->x_ > 0.0f) {
@@ -3298,21 +3122,17 @@ void Team::SetPositionThrowIn() {
 
 // M:game.Team.SetPositionGoalKick
 void Team::SetPositionGoalKick() {
-    Team::ensure_initialized();
-
     if (require(require(udat_)->gm_)->gameState_ == team_id_) {
         {
             auto cs_target = players_.get_Item(0);
-            auto cs_value =
-                generated::kairo::unity::util::BitUtil::On(require(players_.get_Item(0))->flag_, 512);
+            auto cs_value = kl_unity_util::BitUtil::On(require(players_.get_Item(0))->flag_, 512);
             require(cs_target)->flag_ = cs_value;
         }
         if (team_id_ == 0) {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                    require(players_.get_Item(0))->pos_);
-                pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg0 =
-                    Map::COAT_GOAL1_IN_GLOBALPOS().get_Item(0);
+                auto cs_receiver =
+                    static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(require(players_.get_Item(0))->pos_);
+                pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = Map::COAT_GOAL1_IN_GLOBALPOS().get_Item(0);
                 if (!cs_receiver) {
                     throw pls::cs::NullReferenceException();
                 }
@@ -3320,10 +3140,9 @@ void Team::SetPositionGoalKick() {
             }
         } else {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                    require(players_.get_Item(0))->pos_);
-                pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D> cs_arg0 =
-                    Map::COAT_GOAL2_IN_GLOBALPOS().get_Item(0);
+                auto cs_receiver =
+                    static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(require(players_.get_Item(0))->pos_);
+                pls::cs::Ref<kl_util3d::Vector3D> cs_arg0 = Map::COAT_GOAL2_IN_GLOBALPOS().get_Item(0);
                 if (!cs_receiver) {
                     throw pls::cs::NullReferenceException();
                 }
@@ -3338,8 +3157,8 @@ void Team::SetPositionGoalKick() {
         require(require(udat_)->ball_)->SetStop();
         if (team_id_ == 0) {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                    require(require(udat_)->ball_)->pos_);
+                auto cs_receiver =
+                    static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(require(require(udat_)->ball_)->pos_);
                 float cs_arg0 = require(Map::COAT_GOAL1_IN_GLOBALPOS().get_Item(0))->x_;
                 float cs_arg1 = 0.0f;
                 float cs_arg2 = require(Map::COAT_GOAL1_IN_GLOBALPOS().get_Item(1))->z_;
@@ -3350,8 +3169,8 @@ void Team::SetPositionGoalKick() {
             }
         } else {
             {
-                auto cs_receiver = static_cast<pls::cs::Ref<generated::kairo::unity::m3d4::util3d::Vector3D>>(
-                    require(require(udat_)->ball_)->pos_);
+                auto cs_receiver =
+                    static_cast<pls::cs::Ref<kl_util3d::Vector3D>>(require(require(udat_)->ball_)->pos_);
                 float cs_arg0 = require(Map::COAT_GOAL2_IN_GLOBALPOS().get_Item(0))->x_;
                 float cs_arg1 = 0.0f;
                 float cs_arg2 = require(Map::COAT_GOAL2_IN_GLOBALPOS().get_Item(1))->z_;
@@ -3363,8 +3182,7 @@ void Team::SetPositionGoalKick() {
         }
         {
             auto cs_target = require(udat_)->ball_;
-            auto cs_value =
-                generated::kairo::unity::util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
+            auto cs_value = kl_unity_util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
             require(cs_target)->flag_ = cs_value;
         }
     }
@@ -3372,14 +3190,11 @@ void Team::SetPositionGoalKick() {
 
 // M:game.Team.SetPositionConnerKick
 void Team::SetPositionConnerKick() {
-    Team::ensure_initialized();
-
     if (require(require(udat_)->gm_)->gameState_ == team_id_) {
         pls::cs::Int32 num = 8;
         {
             auto cs_target = players_.get_Item(num);
-            auto cs_value =
-                generated::kairo::unity::util::BitUtil::On(require(players_.get_Item(num))->flag_, 1024);
+            auto cs_value = kl_unity_util::BitUtil::On(require(players_.get_Item(num))->flag_, 1024);
             require(cs_target)->flag_ = cs_value;
         }
         if (team_id_ == 0) {
@@ -3421,8 +3236,7 @@ void Team::SetPositionConnerKick() {
         }
         {
             auto cs_target = require(udat_)->ball_;
-            auto cs_value =
-                generated::kairo::unity::util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
+            auto cs_value = kl_unity_util::BitUtil::Off(require(require(udat_)->ball_)->flag_, 1);
             require(cs_target)->flag_ = cs_value;
         }
         Team::Amefto_start();
@@ -3431,21 +3245,19 @@ void Team::SetPositionConnerKick() {
 
 // M:game.Team.SetGoalState
 void Team::SetGoalState() {
-    Team::ensure_initialized();
-
     if (require(require(udat_)->gm_)->gameState_ == pls::cs::sub_i32(1, team_id_)) {
         if ((((!(require(require(udat_)->gm_)->halfTime)) && (team_id_ == 0))) ||
             ((require(require(udat_)->gm_)->halfTime && (team_id_ == 1)))) {
             {
                 auto cs_receiver =
-                    static_cast<pls::cs::Ref<generated::java::util::Vector_2<pls::cs::Ref<pls::cs::Object>>>>(
+                    static_cast<pls::cs::Ref<kl_java_util::Vector_2<pls::cs::Ref<pls::cs::Object>>>>(
                         require(require(udat_)->gm_)->scorerListUserTeam);
-                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(generated::java::lang::JInteger::create(
-                    require(players_.get_Item(lastKickeer_))->pData_id_));
+                pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(
+                    kl_lang::JInteger::create(require(players_.get_Item(lastKickeer_))->pData_id_));
                 if (!cs_receiver) {
                     throw pls::cs::NullReferenceException();
                 }
-                generated::java::util::Vector_2_AddElement(cs_receiver, cs_arg0);
+                kl_java_util::Vector_2_AddElement(cs_receiver, cs_arg0);
             }
             require(require(apdat_)->pData_.get_Item(require(players_.get_Item(lastKickeer_))->pData_id_))
                 ->SetActScore(5);
@@ -3473,7 +3285,7 @@ void Team::SetGoalState() {
             if (i == lastKickeer_) {
                 {
                     auto cs_target = player;
-                    auto cs_value = generated::kairo::unity::util::BitUtil::On(require(player)->flag_, 2048);
+                    auto cs_value = kl_unity_util::BitUtil::On(require(player)->flag_, 2048);
                     require(cs_target)->flag_ = cs_value;
                 }
                 if (num == 0) {
@@ -3500,7 +3312,7 @@ void Team::SetGoalState() {
             } else {
                 {
                     auto cs_target = player;
-                    auto cs_value = generated::kairo::unity::util::BitUtil::On(require(player)->flag_, 4096);
+                    auto cs_value = kl_unity_util::BitUtil::On(require(player)->flag_, 4096);
                     require(cs_target)->flag_ = cs_value;
                 }
                 ([&]() {
@@ -3538,7 +3350,7 @@ void Team::SetGoalState() {
             pls::cs::Ref<Player> player2 = players_.get_Item(j);
             {
                 auto cs_target = player2;
-                auto cs_value = generated::kairo::unity::util::BitUtil::On(require(player2)->flag_, 8192);
+                auto cs_value = kl_unity_util::BitUtil::On(require(player2)->flag_, 8192);
                 require(cs_target)->flag_ = cs_value;
             }
             require(player2)->AddCommandChangeSeb(12);
@@ -3548,8 +3360,6 @@ void Team::SetGoalState() {
 
 // M:game.Team.ChWhichChargeTern
 bool Team::ChWhichChargeTern() {
-    Team::ensure_initialized();
-
     bool result = true;
     if (is_null(require(require(udat_)->ball_)->lastOwner_)) {
         result = false;
@@ -3572,8 +3382,6 @@ bool Team::ChWhichChargeTern() {
 
 // M:game.Team.ChPAreaLineOver
 bool Team::ChPAreaLineOver() {
-    Team::ensure_initialized();
-
     if (team_id_ == 0) {
         if ([&]() -> bool {
                 auto cs_left = static_cast<double>(require(amefto_goalPos_.get_Item(0))->z_);

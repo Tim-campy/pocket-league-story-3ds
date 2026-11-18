@@ -42,6 +42,7 @@ pls::cs::Ref<cs_c8e1f3d3f96670c6> cs_d1ef6eff6523bffb() { cs_init_c8e1f3d3f96670
 }
 
 void cs_d1ef6eff6523bffb_init(pls::cs::Ref<cs_c8e1f3d3f96670c6> cs_this) {
+cs_init_c8e1f3d3f96670c6();
 cs_this->cs_d48b2c060366a193 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Matrix.cs:M:kairo.unity.ui.Matrix.#ctor:245",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x9ull))));
 cs_this->cs_00f172d916ac1eda = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Matrix.cs:M:kairo.unity.ui.Matrix.#ctor:285",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x9ull))));
 cs_this->cs_5911c1aef793c754 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/ui/Matrix.cs:M:kairo.unity.ui.Matrix.#ctor:325",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x9ull))));

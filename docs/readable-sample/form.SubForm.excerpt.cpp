@@ -3,8 +3,6 @@
 
 // M:form.SubForm.Draw(kairo.unity.ui.Graphics)
 void SubForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
-    SubForm::ensure_initialized();
-
     pls::cs::Int32 num = x_;
     pls::cs::Int32 num2 = y_;
     if ((require(view_)->GetGameWidth() > 240) || (require(view_)->GetGameHeight() > 240)) {
@@ -21,14 +19,14 @@ void SubForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     }
     require(g)->SetOrigin(num, num2);
     pls::cs::run_finally(
-        [&]() -> void {
+        [&]() {
             try {
                 SubForm::_draw(g);
-            } catch (const pls::cs::Exception& cs_caught_114) {
-                auto ex = pls::cs::capture_exception(cs_caught_114);
+            } catch (const pls::cs::Exception& cs_caught_122) {
+                auto ex = pls::cs::capture_exception(cs_caught_122);
                 {
-                    if (generated::kairo::common::cfg::Config::DEBUG_CMD()) {
-                        generated::kairo::unity::util::Log::Info(
+                    if (kl_cfg::Config::DEBUG_CMD()) {
+                        kl_unity_util::Log::Info(
                             ([&]() {
                                 auto cs_left = pls::cs::String::concat(
                                     pls::cs::String::concat(
@@ -52,8 +50,6 @@ void SubForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
 // M:form.SubForm._draw(kairo.unity.ui.Graphics)
 void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
-    SubForm::ensure_initialized();
-
     err_method = literal(u"_draw()");
     if (untilActiveHide_ || (wait_ > 0)) {
         return;
@@ -62,19 +58,10 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     pls::cs::Int32 num = pls::cs::Int32{};
     pls::cs::Int32 num2 = pls::cs::Int32{};
     pls::cs::Int32 num3 = pls::cs::Int32{};
-    num24 = ([&]() {
-        auto cs_value = ([&]() {
-            auto cs_value = ([&]() {
-                auto cs_value = 0;
-                num3 = cs_value;
-                return cs_value;
-            }());
-            num2 = cs_value;
-            return cs_value;
-        }());
-        num = cs_value;
-        return cs_value;
-    }());
+    num3 = 0;
+    num2 = num3;
+    num = num2;
+    num24 = num;
     pls::cs::Ref<pls::kairo::Font> font =
         require(g)->GetFont(static_cast<pls::cs::Ref<pls::kairo::Font>>(pls::cs::Ref<pls::kairo::Font>{}));
     bool flag = false;
@@ -173,42 +160,53 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         } else if (type_ == 3) {
             SubForm::DrawMenu_btmInfo(g);
             SubForm::DrawMenu(g, 0);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 4) {
             SubForm::DrawMenu(g, 0);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 8) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 5) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 7) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 6) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 9) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 10) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 11) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 12) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 22) {
             SubForm::DrawMenu(g, 1);
-            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::Create_2(2));
+            surface::GameView::AddTouch(4, 22, kairo::unity::surface::TouchOption::CreateInt(2));
         } else if (type_ == 0) {
             require(apdat_)->DrawWindow(
                 g, 202, 122, 0,
                 literal(u"\u4F1A\u8A71\u30A6\u30A3\u30F3\u30C9\u30A6") /* "会話ウィンドウ" */);
             require(apdat_)->DrawBox(g, 27, 82, 214, 159);
             require(g)->SetColor(SubForm::SC_WINDOW_BLACK());
-    // ... (1371 more lines in the full unit)
+            require(textLay_)->Draw(g, 37.0f, 100.0f);
+            if (humanCharaType_ == 0) {
+                SubForm::Draw_chara(g, 172, 0, 1, frame_, 193, 189);
+                require(g)->SetColor(SubForm::SC_WINDOW_BLACK());
+                require(g)->DrawString(literal(u"\u59EB\u5DDD\u30C1\u30A2\u5B50") /* "姫川チア子" */, 84.0f,
+                                       174.0f);
+            } else if (humanCharaType_ == 1) {
+                if (humanCharaIndex_ != -1) {
+                    pls::cs::Ref<data::PlayerData> playerData =
+                        require(apdat_)->pData_.get_Item(humanCharaIndex_);
+                    require(udat_)->SetDispPlayerData(0, require(udat_)->selectUniform_,
+    // ... (1338 more lines in the full unit)
 }

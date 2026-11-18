@@ -55,6 +55,7 @@ pls::cs::Ref<cs_bad15ea7469ee2b9> cs_7703d612ae2455fc() { cs_init_bad15ea7469ee2
 }
 
 void cs_7703d612ae2455fc_init(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this) {
+cs_init_bad15ea7469ee2b9();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.Main.#ctor",game);
 {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(cs_this); pls::cs::Ref<pls::kairo::IApplication> cs_arg0 = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->source_Init(cs_arg0); }());});

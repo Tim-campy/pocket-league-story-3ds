@@ -23,6 +23,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_8d483d962b875686() { cs_init_6517d63c018709
 }
 
 void cs_8d483d962b875686_init(pls::cs::Ref<cs_6517d63c01870958> cs_this) {
+cs_init_6517d63c01870958();
 cs_this->cs_c71933e9bca11daa = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor:886",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.#ctor",kairo);
 {
@@ -37,6 +38,7 @@ pls::cs::Ref<cs_6517d63c01870958> cs_a791f152e6170c69(pls::cs::Ref<cs_6517d63c01
 }
 
 void cs_a791f152e6170c69_init(pls::cs::Ref<cs_6517d63c01870958> cs_this,pls::cs::Ref<cs_6517d63c01870958> v_copy) {
+cs_init_6517d63c01870958();
 cs_this->cs_c71933e9bca11daa = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption):886",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))));
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchOption.#ctor(kairo.unity.surface.TouchOption)",kairo);
 {

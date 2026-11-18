@@ -58,6 +58,7 @@ pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_b8786f8cf097476e() { cs_init_c9cd56cdd30ecf
 }
 
 void cs_b8786f8cf097476e_init(pls::cs::Ref<cs_c9cd56cdd30ecf7a> cs_this) {
+cs_init_c9cd56cdd30ecf7a();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x38cull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.LanguageForm.#ctor",game);
 {

@@ -44,6 +44,12 @@
 #include "system.form.LanguageForm.hpp"
 #include "generated/java.util.JTool_templates.hpp"
 
+namespace kl_io = pls::generated::java::io;
+namespace kl_lang = pls::generated::java::lang;
+namespace kl_java_util = pls::generated::java::util;
+namespace kl_cfg = pls::generated::kairo::common::cfg;
+namespace kl_unity_util = pls::generated::kairo::unity::util;
+
 namespace pls::game {
 namespace form {
 
@@ -139,11 +145,12 @@ pls::cs::Array<std::int32_t>& TitleForm::TITLE_GUEST() {
 }
 
 void TitleForm::create_init(pls::cs::Ref<TitleForm> self) {
+    TitleForm::ensure_initialized();
     self->x_ = 60;
     self->y_ = 60;
-    self->ta_data = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    self->ta_data = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({20, 6}));
-    self->zsort_mhobj = generated::java::util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
+    self->zsort_mhobj = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({20, 2}));
     ([&]() {
         std::int32_t cs_arg0 = 1;
@@ -161,15 +168,11 @@ pls::cs::Ref<TitleForm> TitleForm::create() {
 
 // M:form.TitleForm.ToString
 pls::cs::String TitleForm::ToString() {
-    TitleForm::ensure_initialized();
-
     return pls::cs::String::concat(literal(u"TitleForm:"), integer_string(state_));
 }
 
 // M:form.TitleForm.Init
 bool TitleForm::Init() {
-    TitleForm::ensure_initialized();
-
     MyFormBase::Init();
     udat_ = game::UserData::GetInstance();
     {
@@ -258,14 +261,14 @@ bool TitleForm::Init() {
     }
     kairo::unity::ui::Canvas::SetLinearFilterEnable(require(canvas_), (num == 1));
     if ((((!(cfg::MyConfig::SMART_PASS())) && (!(cfg::MyConfig::AMAZON()))) &&
-         (!(generated::kairo::common::cfg::Config::TRIAL_VERSION()))) &&
-        (!(generated::kairo::common::cfg::Config::ADMOB_ENABLE()))) {
+         (!(kl_cfg::Config::TRIAL_VERSION()))) &&
+        (!(kl_cfg::Config::ADMOB_ENABLE()))) {
         try {
             TitleForm::LoadKiaroAdClickNum();
-        } catch (const pls::cs::Exception& cs_caught_125) {
-            auto t = pls::cs::capture_exception(cs_caught_125);
+        } catch (const pls::cs::Exception& cs_caught_133) {
+            auto t = pls::cs::capture_exception(cs_caught_133);
             {
-                generated::kairo::unity::util::Log::Info(t);
+                kl_unity_util::Log::Info(t);
             }
         }
     }
@@ -274,311 +277,289 @@ bool TitleForm::Init() {
 
 // M:form.TitleForm.Update
 bool TitleForm::Update() {
-    TitleForm::ensure_initialized();
-    try {
-        MyFormBase::Update();
-        titleFrame_ = main::AppData::ClampMax(pls::cs::add_i32(titleFrame_, 1), 2147483646);
-        frame_ = pls::cs::mod_i32((pls::cs::add_i32(frame_, 1)), 2147483647 /* Int32.MaxValue */);
-        TitleForm::Update_titleAnime();
-        pls::cs::Int32 pOUND_PRESS_CNT = POUND_PRESS_CNT;
-        if (require(canvas_)->CheckKeyState(2048)) {
-            POUND_PRESS_CNT = pls::cs::add_i32(POUND_PRESS_CNT, 1);
-            if (POUND_PRESS_CNT > 40) {
-                STAR = true;
-            }
-        } else {
-            POUND_PRESS_CNT = 0;
+    MyFormBase::Update();
+    titleFrame_ = main::AppData::ClampMax(pls::cs::add_i32(titleFrame_, 1), 2147483646);
+    frame_ = pls::cs::mod_i32((pls::cs::add_i32(frame_, 1)), 2147483647 /* Int32.MaxValue */);
+    TitleForm::Update_titleAnime();
+    pls::cs::Int32 pOUND_PRESS_CNT = POUND_PRESS_CNT;
+    if (require(canvas_)->CheckKeyState(2048)) {
+        POUND_PRESS_CNT = pls::cs::add_i32(POUND_PRESS_CNT, 1);
+        if (POUND_PRESS_CNT > 40) {
+            STAR = true;
         }
-        if (state_ == 0) {
-            if ((((generated::kairo::common::cfg::Config::DEBUG_CMD_DEV() && (POUND_PRESS_CNT == 0)) &&
-                  (0 < pOUND_PRESS_CNT)) &&
-                 (pOUND_PRESS_CNT < 20)) &&
-                (!(generated::kairo::common::cfg::Config::PTW()))) {
-                {
-                    auto cs_target = require(require(apdat_)->sysSave_)->ints;
-                    auto cs_index = 1;
-                    auto cs_value = generated::kairo::unity::util::BitUtil::Off(
-                        require(require(apdat_)->sysSave_)->ints[1], 1);
-                    cs_target.set_Item(cs_index, cs_value);
-                }
-                require(require(apdat_)->sysSave_)->ints[2] = 0;
-                pls::cs::Ref<pls::kairo::RecordStore> recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
-                pls::cs::run_finally(
-                    [&]() {
-                        try {
-                            recordStore = pls::kairo::RecordStore::OpenRecordStore(1);
-                            require(recordStore)->RemoveAllRecord();
-                            require(apdat_)->SaveSystem();
-                        } catch (const pls::cs::Exception& cs_caught_128) {
-                            auto t = pls::cs::capture_exception(cs_caught_128);
-                            {
-                                if (generated::kairo::common::cfg::Config::PRINT()) {
-                                    generated::kairo::unity::util::Log::Info(t);
-                                }
+    } else {
+        POUND_PRESS_CNT = 0;
+    }
+    if (state_ == 0) {
+        if ((((kl_cfg::Config::DEBUG_CMD_DEV() && (POUND_PRESS_CNT == 0)) && (0 < pOUND_PRESS_CNT)) &&
+             (pOUND_PRESS_CNT < 20)) &&
+            (!(kl_cfg::Config::PTW()))) {
+            {
+                auto cs_target = require(require(apdat_)->sysSave_)->ints;
+                auto cs_index = 1;
+                auto cs_value = kl_unity_util::BitUtil::Off(require(require(apdat_)->sysSave_)->ints[1], 1);
+                cs_target.set_Item(cs_index, cs_value);
+            }
+            require(require(apdat_)->sysSave_)->ints[2] = 0;
+            pls::cs::Ref<pls::kairo::RecordStore> recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
+            pls::cs::run_finally(
+                [&]() {
+                    try {
+                        recordStore = pls::kairo::RecordStore::OpenRecordStore(1);
+                        require(recordStore)->RemoveAllRecord();
+                        require(apdat_)->SaveSystem();
+                    } catch (const pls::cs::Exception& cs_caught_137) {
+                        auto t = pls::cs::capture_exception(cs_caught_137);
+                        {
+                            if (kl_cfg::Config::PRINT()) {
+                                kl_unity_util::Log::Info(t);
                             }
                         }
-                    },
-                    [&]() {
-                        if (!is_null(recordStore)) {
-                            try {
-                                require(recordStore)->CloseRecordStore();
-                            } catch (const pls::cs::Exception& cs_caught_129) {
-                                pls::cs::capture_exception(cs_caught_129);
-                                {
-                                }
-                            }
-                        }
-                        recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
-                    });
-                throw pls::cs::ReturnFlow<bool>{require(formMan_)->ChangeCurrentForm(
-                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(require(apdat_)->frmBoot_))};
-            }
-            require(require(require(apdat_)->resCom2_)->seb.get_Item(61))->Frame();
-            if (require(canvas_)->CheckKeyRepeat(131072)) {
-                selMenu_ = pls::cs::mod_i32((pls::cs::add_i32(pls::cs::sub_i32(selMenu_, 1), 2)), 2);
-            }
-            if (require(canvas_)->CheckKeyRepeat(524288)) {
-                selMenu_ = pls::cs::mod_i32((pls::cs::add_i32(pls::cs::add_i32(selMenu_, 1), 2)), 2);
-            }
-            if (!is_null(dialog_)) {
-                if ((require(dialog_)->value1_ == 0) && (require(dialog_)->result__SubForm == 0)) {
-                    dialog_ = pls::cs::Ref<SubForm>{};
-                    throw pls::cs::ReturnFlow<bool>{require(formMan_)->RemoveAllForms()};
-                }
-                if ((require(dialog_)->value1_ == 1) && (require(dialog_)->result__SubForm == 0)) {
-                    dialog_ = pls::cs::Ref<SubForm>{};
-                    kairo::unity::ui::Canvas::OpenBrowser(generated::kairo::common::cfg::Config::URL_SITE());
-                }
-                dialog_ = pls::cs::Ref<SubForm>{};
-            }
-            if (require(apdat_)->IsPushSoftLabel(1)) {
-                pls::cs::String buttons = literal(u"\u306F\u3044\t\u3044\u3044\u3048");
-                dialog_ = SubForm::MakeDialog(
-                    literal(
-                        u"\u30B2\u30FC\u30E0\u3092\u7D42\u4E86\u3057\u307E\u3059") /* "ゲームを終了します" */,
-                    buttons, 1);
-                require(dialog_)->value1_ = 0;
-                throw pls::cs::ReturnFlow<bool>{
-                    require(formMan_)->Push(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(dialog_))};
-            }
-            if (require(apdat_)->IsPushSoftLabel(5)) {
-                kairo::unity::ui::Canvas::OpenBrowser(generated::kairo::common::cfg::Config::URL_SITE());
-                throw pls::cs::ReturnFlow<bool>{true};
-            }
-            if (require(canvas_)->CheckKeyPulse(1048576)) {
-                if (!(generated::kairo::common::cfg::Config::TRIAL_VERSION())) {
-                    if (selMenu_ == 0) {
-                        TitleForm::ChangeState(1);
-                    } else if (selMenu_ == 1) {
-                        throw pls::cs::ReturnFlow<bool>{
-                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(RankForm::create()))};
                     }
-                } else if (selMenu_ == 0) {
+                },
+                [&]() {
+                    if (!is_null(recordStore)) {
+                        try {
+                            require(recordStore)->CloseRecordStore();
+                        } catch (const pls::cs::Exception& cs_caught_136) {
+                            pls::cs::capture_exception(cs_caught_136);
+                            {
+                            }
+                        }
+                    }
+                    recordStore = pls::cs::Ref<pls::kairo::RecordStore>{};
+                });
+            return require(formMan_)->ChangeCurrentForm(
+                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(require(apdat_)->frmBoot_));
+        }
+        require(require(require(apdat_)->resCom2_)->seb.get_Item(61))->Frame();
+        if (require(canvas_)->CheckKeyRepeat(131072)) {
+            selMenu_ = pls::cs::mod_i32((pls::cs::add_i32(pls::cs::sub_i32(selMenu_, 1), 2)), 2);
+        }
+        if (require(canvas_)->CheckKeyRepeat(524288)) {
+            selMenu_ = pls::cs::mod_i32((pls::cs::add_i32(pls::cs::add_i32(selMenu_, 1), 2)), 2);
+        }
+        if (!is_null(dialog_)) {
+            if ((require(dialog_)->value1_ == 0) && (require(dialog_)->result__SubForm == 0)) {
+                dialog_ = pls::cs::Ref<SubForm>{};
+                return require(formMan_)->RemoveAllForms();
+            }
+            if ((require(dialog_)->value1_ == 1) && (require(dialog_)->result__SubForm == 0)) {
+                dialog_ = pls::cs::Ref<SubForm>{};
+                kairo::unity::ui::Canvas::OpenBrowser(kl_cfg::Config::URL_SITE());
+            }
+            dialog_ = pls::cs::Ref<SubForm>{};
+        }
+        if (require(apdat_)->IsPushSoftLabel(1)) {
+            pls::cs::String buttons = literal(u"\u306F\u3044\t\u3044\u3044\u3048");
+            dialog_ = SubForm::MakeDialog(
+                literal(u"\u30B2\u30FC\u30E0\u3092\u7D42\u4E86\u3057\u307E\u3059") /* "ゲームを終了します" */,
+                buttons, 1);
+            require(dialog_)->value1_ = 0;
+            return require(formMan_)->Push(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(dialog_));
+        }
+        if (require(apdat_)->IsPushSoftLabel(5)) {
+            kairo::unity::ui::Canvas::OpenBrowser(kl_cfg::Config::URL_SITE());
+            return true;
+        }
+        if (require(canvas_)->CheckKeyPulse(1048576)) {
+            if (!(kl_cfg::Config::TRIAL_VERSION())) {
+                if (selMenu_ == 0) {
                     TitleForm::ChangeState(1);
                 } else if (selMenu_ == 1) {
-                    pls::cs::String packageName =
-                        require(pls::kairo::IApplication::GetCurrentApp())->GetPackageName();
-                    packageName = generated::java::lang::StringEx::SubstringJ(
-                        packageName, 0,
-                        pls::cs::sub_i32(generated::java::lang::StringEx::Length(packageName), 1));
-                    kairo::unity::ui::Canvas::OpenBrowser(pls::cs::String::concat(
-                        pls::cs::String::concat(
-                            pls::cs::String::concat(
-                                pls::cs::String::concat(literal(u"market://details?id="), packageName),
-                                literal(
-                                    u"&referrer=utm_source%3Dappli%26utm_medium%3Dhouse_ad%26utm_content%3D")),
-                            packageName),
-                        literal(u"_lite%26utm_campaign%3Dbanner")));
+                    return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(RankForm::create()));
                 }
-            }
-            if (STAR && require(canvas_)->CheckKeyPulse(2)) {
-                main::AppData::currentSaveSlot_() = selectSave_;
-                {
-                    auto cs_receiver = static_cast<pls::cs::Ref<main::AppData>>(apdat_);
-                    pls::cs::String cs_arg0 =
-                        pls::cs::String::concat(literal(u"\u9001\u4FE1SYSTEM:") /* "送信SYSTEM:" */,
-                                                require(require(apdat_)->sysSave_)->strs[10]);
-                    bool cs_arg1 = true;
-                    if (!cs_receiver) {
-                        throw pls::cs::NullReferenceException();
-                    }
-                    cs_receiver->SendSaveData(cs_arg0, cs_arg1);
-                }
-            } else if ((generated::kairo::common::cfg::Config::DEBUG_CMD_DEV() &&
-                        (!(generated::kairo::common::cfg::Config::PTW()))) &&
-                       require(canvas_)->CheckKeyPulse(2)) {
-                pls::cs::Ref<pls::kairo::RecordStore> recordStore2 = pls::cs::Ref<pls::kairo::RecordStore>{};
-                pls::cs::String url = pls::cs::String::concat(
+            } else if (selMenu_ == 0) {
+                TitleForm::ChangeState(1);
+            } else if (selMenu_ == 1) {
+                pls::cs::String packageName =
+                    require(pls::kairo::IApplication::GetCurrentApp())->GetPackageName();
+                packageName = kl_lang::StringEx::SubstringJ(
+                    packageName, 0, pls::cs::sub_i32(kl_lang::StringEx::Length(packageName), 1));
+                kairo::unity::ui::Canvas::OpenBrowser(pls::cs::String::concat(
                     pls::cs::String::concat(
-                        pls::cs::String::concat(generated::kairo::common::cfg::Config::URL_SP(),
-                                                literal(u"&ver=")),
-                        integer_string(202)),
-                    literal(u"&load=save.bin"));
-                pls::cs::run_finally(
-                    [&]() {
-                        try {
-                            pls::cs::Array<std::uint8_t> data = kairo::unity::io::Http::Connect(
-                                url,
-                                static_cast<pls::cs::Array<std::uint8_t>>(pls::cs::Array<std::uint8_t>{}),
-                                false);
-                            recordStore2 = pls::kairo::RecordStore::OpenRecordStore(0);
-                            {
-                                auto cs_receiver =
-                                    static_cast<pls::cs::Ref<pls::kairo::RecordStore>>(recordStore2);
-                                std::int32_t cs_arg0 = pls::cs::add_i32(1, main::AppData::currentSaveSlot_());
-                                pls::cs::Array<std::uint8_t> cs_arg1 = data;
-                                if (!cs_receiver) {
-                                    throw pls::cs::NullReferenceException();
-                                }
-                                cs_receiver->WriteRecord(cs_arg0, cs_arg1);
-                            }
-                            {
-                                auto cs_target = require(require(apdat_)->sysSave_)->ints;
-                                auto cs_index = pls::cs::add_i32(6, main::AppData::currentSaveSlot_());
-                                auto cs_value = 300;
-                                cs_target.set_Item(cs_index, cs_value);
-                            }
-                            {
-                                auto cs_target = require(require(apdat_)->sysSave_)->strs;
-                                auto cs_index = pls::cs::add_i32(4, main::AppData::currentSaveSlot_());
-                                auto cs_value = literal(u"120");
-                                cs_target.set_Item(cs_index, cs_value);
-                            }
-                            {
-                                auto cs_target = require(require(apdat_)->sysSave_)->strs;
-                                auto cs_index = pls::cs::add_i32(2, main::AppData::currentSaveSlot_());
-                                auto cs_value =
-                                    literal(u"[\u53D7\u4FE1\u30C7\u30FC\u30BF]") /* "[受信データ]" */;
-                                cs_target.set_Item(cs_index, cs_value);
-                            }
-                            require(apdat_)->SaveSystem();
-                            pls::cs::Ref<kairo::unity::ui::Dialog> dialog =
-                                kairo::unity::ui::Dialog::create(0, literal(u"\u5B8C\u4E86") /* "完了" */);
-                            require(dialog)->SetText(literal(
-                                u"\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u306E\u4E0A\u66F8\u304D\u5B8C\u4E86") /* "セーブデータの上書き完了" */);
-                            require(dialog)->Show();
-                        } catch (const pls::cs::Exception& cs_caught_130) {
-                            pls::cs::capture_exception(cs_caught_130);
-                            {
-                                pls::cs::Ref<kairo::unity::ui::Dialog> dialog2 =
-                                    kairo::unity::ui::Dialog::create(
-                                        0, literal(u"\u30A8\u30E9\u30FC") /* "エラー" */);
-                                require(dialog2)->SetText(
-                                    literal(u"\u901A\u4FE1\u5931\u6557") /* "通信失敗" */);
-                                require(dialog2)->Show();
-                            }
-                        }
-                    },
-                    [&]() {
-                        if (!is_null(recordStore2)) {
-                            try {
-                                require(recordStore2)->CloseRecordStore();
-                            } catch (const pls::cs::Exception& cs_caught_131) {
-                                pls::cs::capture_exception(cs_caught_131);
-                                {
-                                }
-                            }
-                        }
-                        recordStore2 = pls::cs::Ref<pls::kairo::RecordStore>{};
-                    });
+                        pls::cs::String::concat(
+                            pls::cs::String::concat(literal(u"market://details?id="), packageName),
+                            literal(
+                                u"&referrer=utm_source%3Dappli%26utm_medium%3Dhouse_ad%26utm_content%3D")),
+                        packageName),
+                    literal(u"_lite%26utm_campaign%3Dbanner")));
             }
-        } else if (state_ == 1) {
-            require(require(require(apdat_)->resCom2_)->seb.get_Item(61))->Frame();
-            pls::cs::Int32 num = 2;
-            if (require(canvas_)->CheckKeyRepeat(65536)) {
-                selectSave_ = (((pls::cs::sub_i32(selectSave_, 1) + num)) % num);
+        }
+        if (STAR && require(canvas_)->CheckKeyPulse(2)) {
+            main::AppData::currentSaveSlot_() = selectSave_;
+            {
+                auto cs_receiver = static_cast<pls::cs::Ref<main::AppData>>(apdat_);
+                pls::cs::String cs_arg0 =
+                    pls::cs::String::concat(literal(u"\u9001\u4FE1SYSTEM:") /* "送信SYSTEM:" */,
+                                            require(require(apdat_)->sysSave_)->strs[10]);
+                bool cs_arg1 = true;
+                if (!cs_receiver) {
+                    throw pls::cs::NullReferenceException();
+                }
+                cs_receiver->SendSaveData(cs_arg0, cs_arg1);
             }
-            if (require(canvas_)->CheckKeyRepeat(262144)) {
-                selectSave_ = (((pls::cs::add_i32(selectSave_, 1) + num)) % num);
-            }
-            if (require(canvas_)->CheckKeyRepeat(131072)) {
-                selectSaveType_ =
-                    pls::cs::mod_i32((pls::cs::add_i32(pls::cs::sub_i32(selectSaveType_, 1), 2)), 2);
-            }
-            if (require(canvas_)->CheckKeyRepeat(524288)) {
-                selectSaveType_ =
-                    pls::cs::mod_i32((pls::cs::add_i32(pls::cs::add_i32(selectSaveType_, 1), 2)), 2);
-            }
-            if ((selectSaveType_ == 0) &&
-                (require(require(apdat_)->sysSave_)->ints[pls::cs::add_i32(11, selectSave_)] == -1)) {
-                selectSaveType_ = 1;
-            }
-            if (!is_null(dialog_)) {
-                if (require(dialog_)->result__SubForm == 0) {
-                    TitleForm::ContinueGame();
-                } else if (require(dialog_)->result__SubForm == 1) {
-                    TitleForm::NewGame();
-                } else if (require(dialog_)->result__SubForm == 2) {
-                    require(require(apdat_)->sysSave_)
-                        ->ints[pls::cs::add_i32(((((selectSaveType_ == 0)) ? 11 : 6)), selectSave_)] = -1;
+        } else if ((kl_cfg::Config::DEBUG_CMD_DEV() && (!(kl_cfg::Config::PTW()))) &&
+                   require(canvas_)->CheckKeyPulse(2)) {
+            pls::cs::Ref<pls::kairo::RecordStore> recordStore2 = pls::cs::Ref<pls::kairo::RecordStore>{};
+            pls::cs::String url = pls::cs::String::concat(
+                pls::cs::String::concat(pls::cs::String::concat(kl_cfg::Config::URL_SP(), literal(u"&ver=")),
+                                        integer_string(202)),
+                literal(u"&load=save.bin"));
+            pls::cs::run_finally(
+                [&]() {
                     try {
-                        require(apdat_)->SaveSystem();
-                    } catch (const pls::cs::Exception& cs_caught_132) {
-                        pls::cs::capture_exception(cs_caught_132);
+                        pls::cs::Array<std::uint8_t> data = kairo::unity::io::Http::Connect(
+                            url, static_cast<pls::cs::Array<std::uint8_t>>(pls::cs::Array<std::uint8_t>{}),
+                            false);
+                        recordStore2 = pls::kairo::RecordStore::OpenRecordStore(0);
                         {
+                            auto cs_receiver =
+                                static_cast<pls::cs::Ref<pls::kairo::RecordStore>>(recordStore2);
+                            std::int32_t cs_arg0 = pls::cs::add_i32(1, main::AppData::currentSaveSlot_());
+                            pls::cs::Array<std::uint8_t> cs_arg1 = data;
+                            if (!cs_receiver) {
+                                throw pls::cs::NullReferenceException();
+                            }
+                            cs_receiver->WriteRecord(cs_arg0, cs_arg1);
+                        }
+                        {
+                            auto cs_target = require(require(apdat_)->sysSave_)->ints;
+                            auto cs_index = pls::cs::add_i32(6, main::AppData::currentSaveSlot_());
+                            auto cs_value = 300;
+                            cs_target.set_Item(cs_index, cs_value);
+                        }
+                        {
+                            auto cs_target = require(require(apdat_)->sysSave_)->strs;
+                            auto cs_index = pls::cs::add_i32(4, main::AppData::currentSaveSlot_());
+                            auto cs_value = literal(u"120");
+                            cs_target.set_Item(cs_index, cs_value);
+                        }
+                        {
+                            auto cs_target = require(require(apdat_)->sysSave_)->strs;
+                            auto cs_index = pls::cs::add_i32(2, main::AppData::currentSaveSlot_());
+                            auto cs_value = literal(u"[\u53D7\u4FE1\u30C7\u30FC\u30BF]") /* "[受信データ]" */;
+                            cs_target.set_Item(cs_index, cs_value);
+                        }
+                        require(apdat_)->SaveSystem();
+                        pls::cs::Ref<kairo::unity::ui::Dialog> dialog =
+                            kairo::unity::ui::Dialog::create(0, literal(u"\u5B8C\u4E86") /* "完了" */);
+                        require(dialog)->SetText(literal(
+                            u"\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u306E\u4E0A\u66F8\u304D\u5B8C\u4E86") /* "セーブデータの上書き完了" */);
+                        require(dialog)->Show();
+                    } catch (const pls::cs::Exception& cs_caught_139) {
+                        pls::cs::capture_exception(cs_caught_139);
+                        {
+                            pls::cs::Ref<kairo::unity::ui::Dialog> dialog2 = kairo::unity::ui::Dialog::create(
+                                0, literal(u"\u30A8\u30E9\u30FC") /* "エラー" */);
+                            require(dialog2)->SetText(literal(u"\u901A\u4FE1\u5931\u6557") /* "通信失敗" */);
+                            require(dialog2)->Show();
                         }
                     }
-                }
-                dialog_ = pls::cs::Ref<SubForm>{};
-                throw pls::cs::ReturnFlow<bool>{false};
-            }
-            if (require(canvas_)->CheckKeyPulse(1048576)) {
-                if (require(require(apdat_)->sysSave_)
-                        ->ints[pls::cs::add_i32(((((selectSaveType_ == 0)) ? 11 : 6)), selectSave_)] != -1) {
-                    if (selectSaveType_ == 0) {
-                        TitleForm::ContinueGame();
-                        throw pls::cs::ReturnFlow<bool>{true};
+                },
+                [&]() {
+                    if (!is_null(recordStore2)) {
+                        try {
+                            require(recordStore2)->CloseRecordStore();
+                        } catch (const pls::cs::Exception& cs_caught_138) {
+                            pls::cs::capture_exception(cs_caught_138);
+                            {
+                            }
+                        }
                     }
-                    dialog_ =
-                        SubForm::create(22, 136, pls::cs::add_i32(97, pls::cs::mul_i32(selectSaveType_, 47)));
-                    require(dialog_)->value1_ = selectSave_;
-                    throw pls::cs::ReturnFlow<bool>{
-                        static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
-                            static_cast<pls::cs::Ref<pls::kairo::FormBase>>(dialog_))};
-                }
+                    recordStore2 = pls::cs::Ref<pls::kairo::RecordStore>{};
+                });
+        }
+    } else if (state_ == 1) {
+        require(require(require(apdat_)->resCom2_)->seb.get_Item(61))->Frame();
+        pls::cs::Int32 num = 2;
+        if (require(canvas_)->CheckKeyRepeat(65536)) {
+            selectSave_ = (((pls::cs::sub_i32(selectSave_, 1) + num)) % num);
+        }
+        if (require(canvas_)->CheckKeyRepeat(262144)) {
+            selectSave_ = (((pls::cs::add_i32(selectSave_, 1) + num)) % num);
+        }
+        if (require(canvas_)->CheckKeyRepeat(131072)) {
+            selectSaveType_ =
+                pls::cs::mod_i32((pls::cs::add_i32(pls::cs::sub_i32(selectSaveType_, 1), 2)), 2);
+        }
+        if (require(canvas_)->CheckKeyRepeat(524288)) {
+            selectSaveType_ =
+                pls::cs::mod_i32((pls::cs::add_i32(pls::cs::add_i32(selectSaveType_, 1), 2)), 2);
+        }
+        if ((selectSaveType_ == 0) &&
+            (require(require(apdat_)->sysSave_)->ints[pls::cs::add_i32(11, selectSave_)] == -1)) {
+            selectSaveType_ = 1;
+        }
+        if (!is_null(dialog_)) {
+            if (require(dialog_)->result__SubForm == 0) {
+                TitleForm::ContinueGame();
+            } else if (require(dialog_)->result__SubForm == 1) {
                 TitleForm::NewGame();
-            } else if (require(apdat_)->IsPushSoftLabel(2)) {
-                TitleForm::ChangeState(0);
-            } else if (STAR && require(canvas_)->CheckKeyPulse(2)) {
-                main::AppData::currentSaveSlot_() = selectSave_;
-                {
-                    auto cs_receiver = static_cast<pls::cs::Ref<main::AppData>>(apdat_);
-                    pls::cs::String cs_arg0 =
-                        pls::cs::String::concat(literal(u"\u9001\u4FE1SYSTEM:") /* "送信SYSTEM:" */,
-                                                require(require(apdat_)->sysSave_)->strs[10]);
-                    bool cs_arg1 = true;
-                    if (!cs_receiver) {
-                        throw pls::cs::NullReferenceException();
+            } else if (require(dialog_)->result__SubForm == 2) {
+                require(require(apdat_)->sysSave_)
+                    ->ints[pls::cs::add_i32(((((selectSaveType_ == 0)) ? 11 : 6)), selectSave_)] = -1;
+                try {
+                    require(apdat_)->SaveSystem();
+                } catch (const pls::cs::Exception& cs_caught_140) {
+                    pls::cs::capture_exception(cs_caught_140);
+                    {
                     }
-                    cs_receiver->SendSaveData(cs_arg0, cs_arg1);
                 }
             }
+            dialog_ = pls::cs::Ref<SubForm>{};
+            return false;
         }
-        if (STAR && require(canvas_)->CheckKeyPulse(1024)) {
-            pls::cs::Ref<kairo::unity::ui::Dialog> dialog3 = kairo::unity::ui::Dialog::create(
-                3,
-                literal(
-                    u"\u30C7\u30FC\u30BF\u306E\u518D\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9") /* "データの再ダウンロード" */);
-            require(dialog3)->SetText(literal(
-                u"\u30C7\u30FC\u30BF\u3092\u518D\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u3057\u307E\u3059\u304B\uFF1F\n\u203B\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u306F\u6D88\u3048\u307E\u305B\u3093"));
-            if (require(dialog3)->Show() == 4) {
-                require(apdat_)->ResourceReDownload();
-                throw pls::cs::ReturnFlow<bool>{require(formMan_)->ChangeCurrentForm(
-                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(require(apdat_)->frmBoot_))};
+        if (require(canvas_)->CheckKeyPulse(1048576)) {
+            if (require(require(apdat_)->sysSave_)
+                    ->ints[pls::cs::add_i32(((((selectSaveType_ == 0)) ? 11 : 6)), selectSave_)] != -1) {
+                if (selectSaveType_ == 0) {
+                    TitleForm::ContinueGame();
+                    return true;
+                }
+                dialog_ =
+                    SubForm::create(22, 136, pls::cs::add_i32(97, pls::cs::mul_i32(selectSaveType_, 47)));
+                require(dialog_)->value1_ = selectSave_;
+                return static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
+                    static_cast<pls::cs::Ref<pls::kairo::FormBase>>(dialog_));
+            }
+            TitleForm::NewGame();
+        } else if (require(apdat_)->IsPushSoftLabel(2)) {
+            TitleForm::ChangeState(0);
+        } else if (STAR && require(canvas_)->CheckKeyPulse(2)) {
+            main::AppData::currentSaveSlot_() = selectSave_;
+            {
+                auto cs_receiver = static_cast<pls::cs::Ref<main::AppData>>(apdat_);
+                pls::cs::String cs_arg0 =
+                    pls::cs::String::concat(literal(u"\u9001\u4FE1SYSTEM:") /* "送信SYSTEM:" */,
+                                            require(require(apdat_)->sysSave_)->strs[10]);
+                bool cs_arg1 = true;
+                if (!cs_receiver) {
+                    throw pls::cs::NullReferenceException();
+                }
+                cs_receiver->SendSaveData(cs_arg0, cs_arg1);
             }
         }
-        throw pls::cs::ReturnFlow<bool>{true};
-    } catch (const pls::cs::ReturnFlow<bool>& cs_return) {
-        return cs_return.value;
     }
-    return pls::cs::invalid_return_flow<bool>();
+    if (STAR && require(canvas_)->CheckKeyPulse(1024)) {
+        pls::cs::Ref<kairo::unity::ui::Dialog> dialog3 = kairo::unity::ui::Dialog::create(
+            3,
+            literal(
+                u"\u30C7\u30FC\u30BF\u306E\u518D\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9") /* "データの再ダウンロード" */);
+        require(dialog3)->SetText(literal(
+            u"\u30C7\u30FC\u30BF\u3092\u518D\u30C0\u30A6\u30F3\u30ED\u30FC\u30C9\u3057\u307E\u3059\u304B\uFF1F\n\u203B\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u306F\u6D88\u3048\u307E\u305B\u3093"));
+        if (require(dialog3)->Show() == 4) {
+            require(apdat_)->ResourceReDownload();
+            return require(formMan_)->ChangeCurrentForm(
+                static_cast<pls::cs::Ref<pls::kairo::FormBase>>(require(apdat_)->frmBoot_));
+        }
+    }
+    return true;
 }
 
 // M:form.TitleForm.ContinueGame
 void TitleForm::ContinueGame() {
-    TitleForm::ensure_initialized();
-
     if (require(require(apdat_)->sysSave_)
             ->ints[pls::cs::add_i32(((((selectSaveType_ == 0)) ? 11 : 6)), selectSave_)] != -1) {
         try {
@@ -597,12 +578,12 @@ void TitleForm::ContinueGame() {
             require(apdat_)->LoadGame(selectSave_, (selectSaveType_ == 0));
             require(formMan_)->ChangeCurrentForm(
                 static_cast<pls::cs::Ref<pls::kairo::FormBase>>(require(apdat_)->frmGame_));
-        } catch (const pls::cs::Exception& cs_caught_123) {
-            auto t = pls::cs::capture_exception(cs_caught_123);
+        } catch (const pls::cs::Exception& cs_caught_131) {
+            auto t = pls::cs::capture_exception(cs_caught_131);
             {
-                require(apdat_)->save_ = pls::cs::Ref<generated::kairo::unity::util::Property>{};
-                if (generated::kairo::common::cfg::Config::PRINT()) {
-                    generated::kairo::unity::util::Log::Info(t);
+                require(apdat_)->save_ = pls::cs::Ref<kl_unity_util::Property>{};
+                if (kl_cfg::Config::PRINT()) {
+                    kl_unity_util::Log::Info(t);
                 }
                 {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(formMan_);
@@ -630,8 +611,6 @@ void TitleForm::ContinueGame() {
 
 // M:form.TitleForm.NewGame
 void TitleForm::NewGame() {
-    TitleForm::ensure_initialized();
-
     dialog_ = SubForm::create(71);
     static_cast<pls::cs::Ref<pls::kairo::FormBase>>(this)->Push(
         static_cast<pls::cs::Ref<pls::kairo::FormBase>>(dialog_));
@@ -639,8 +618,6 @@ void TitleForm::NewGame() {
 
 // M:form.TitleForm.SmartBeginPaint(kairo.unity.ui.Graphics)
 void TitleForm::SmartBeginPaint(pls::cs::Ref<pls::kairo::Graphics> g) {
-    TitleForm::ensure_initialized();
-
     {
         auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
         std::int32_t cs_arg0 = pls::kairo::Graphics::GetColorOfRGB(0, 0, 0);
@@ -673,22 +650,18 @@ void TitleForm::SmartBeginPaint(pls::cs::Ref<pls::kairo::Graphics> g) {
 
 // M:form.TitleForm.Draw(kairo.unity.ui.Graphics)
 void TitleForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
-    TitleForm::ensure_initialized();
-
     try {
         TitleForm::_draw(g);
-    } catch (const pls::cs::Exception& cs_caught_124) {
-        auto t = pls::cs::capture_exception(cs_caught_124);
+    } catch (const pls::cs::Exception& cs_caught_132) {
+        auto t = pls::cs::capture_exception(cs_caught_132);
         {
-            generated::kairo::unity::util::Log::Info(t);
+            kl_unity_util::Log::Info(t);
         }
     }
 }
 
 // M:form.TitleForm._draw(kairo.unity.ui.Graphics)
 void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
-    TitleForm::ensure_initialized();
-
     pls::cs::Ref<surface::GameView> instance = surface::GameView::GetInstance();
     TitleForm::SmartBeginPaint(g);
     ([&]() -> void {
@@ -707,19 +680,10 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     }());
     pls::cs::Int32 num20 = pls::cs::Int32{}, num = pls::cs::Int32{}, num2 = pls::cs::Int32{},
                    num3 = pls::cs::Int32{};
-    num20 = ([&]() {
-        auto cs_value = ([&]() {
-            auto cs_value = ([&]() {
-                auto cs_value = 0;
-                num3 = cs_value;
-                return cs_value;
-            }());
-            num2 = cs_value;
-            return cs_value;
-        }());
-        num = cs_value;
-        return cs_value;
-    }());
+    num3 = 0;
+    num2 = num3;
+    num = num2;
+    num20 = num;
     TitleForm::Draw_titleAnime(g);
     require(apdat_)->Draw_trophy(g, titleFrame_);
     if ([&]() -> bool {
@@ -738,12 +702,10 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
         }());
         pls::cs::Int32 num4 = 6;
-        pls::cs::Int32 num5 = ([&]() -> std::int32_t {
-            auto cs_left = titleFrame_;
-            auto cs_right =
-                TitleForm::title_anime()[pls::cs::sub_i32((TitleForm::title_anime()).length(), 1)];
-            return pls::cs::sub_i32(cs_left, cs_right);
-        }());
+        auto cs_left_148 = titleFrame_;
+        auto cs_right_148 =
+            TitleForm::title_anime()[pls::cs::sub_i32((TitleForm::title_anime()).length(), 1)];
+        pls::cs::Int32 num5 = pls::cs::sub_i32(cs_left_148, cs_right_148);
         pls::cs::Int32 num6 = (num5 % (((num4 + num4) + 32)));
         pls::cs::Int32 num7 = 0;
         if (num6 < num4) {
@@ -845,7 +807,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     }
     if (state_ == 0) {
         pls::cs::Array<pls::cs::String> array = pls::cs::Array<pls::cs::String>{};
-        if (!((generated::kairo::common::cfg::Config::TRIAL_VERSION()))) {
+        if (!((kl_cfg::Config::TRIAL_VERSION()))) {
             array = pls::cs::Array<pls::cs::String>::from(
                 {literal(u"\u30B9\u30BF\u30FC\u30C8") /* "スタート" */,
                  literal(u"\u30CF\u30A4\u30B9\u30B3\u30A2") /* "ハイスコア" */});
@@ -903,8 +865,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     require(g)->FillRect(static_cast<float>((num23 - (num21 / 2))),
                                          static_cast<float>(((num18 + (num19 * i)) + 4)),
                                          static_cast<float>(num21), 16.0f);
-                    if ((generated::kairo::common::cfg::Config::TRIAL_VERSION()) &&
-                        (kairo::unity::util::Language::English())) {
+                    if ((kl_cfg::Config::TRIAL_VERSION()) && (kairo::unity::util::Language::English())) {
 
                     } else {
                         {
@@ -972,8 +933,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 surface::GameView::AddTouch(g, 0, (num23 - 50), ((num18 + (num19 * i)) + 1), 100, num19, i);
             }
         }
-        if ((generated::kairo::common::cfg::Config::DEBUG() &&
-             generated::kairo::common::cfg::Config::SHOW_DEBUG()) &&
+        if ((kl_cfg::Config::DEBUG() && kl_cfg::Config::SHOW_DEBUG()) &&
             (!(require(formMan_)->IsCapturing()))) {
             pls::cs::String text2 = kairo::unity::util::Language::GetLanguageCode();
             if (is_null(text2)) {
@@ -1030,7 +990,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             std::int32_t cs_arg1 = 198;
             std::int32_t cs_arg2 = 146;
             std::int32_t cs_arg3 = num24;
-            pls::cs::String cs_arg4 = MyFormBase::LT_2(
+            pls::cs::String cs_arg4 = MyFormBase::LTLong(
                 literal(u"\u30BB\u30FC\u30D6\u30B9\u30ED\u30C3\u30C8 <0>/2") /* "セーブスロット <0>/2" */,
                 pls::cs::cast_integral<std::int64_t>(pls::cs::add_i32(selectSave_, 1)));
             std::int32_t cs_arg5 = -12;
@@ -1050,7 +1010,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     require(require(apdat_)->resCom2_)->seb.get_Item(24);
                 std::int32_t cs_arg5 = 0;
                 std::int32_t cs_arg6 = 16;
-                surface::GameView::AddTouch_2(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
+                surface::GameView::AddTouchSeb(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
             }
             {
                 pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
@@ -1062,7 +1022,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     require(require(apdat_)->resCom2_)->seb.get_Item(24);
                 std::int32_t cs_arg5 = 1;
                 std::int32_t cs_arg6 = 18;
-                surface::GameView::AddTouch_2(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
+                surface::GameView::AddTouchSeb(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
             }
         }
         pls::cs::Int32 num25 = ((num24 + 74) + 6);
@@ -1265,16 +1225,15 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             auto cs_left = pls::cs::String::concat(
                                 ([&]() {
                                     auto cs_left = pls::cs::String::concat(
-                                        generated::kairo::unity::util::StringUtil::FormatString(
-                                            generated::java::lang::JString::ValueOf_2((num32 + 1)), 2, u' '),
+                                        kl_unity_util::StringUtil::FormatString(
+                                            kl_lang::JString::ValueOfInt((num32 + 1)), 2, u' '),
                                         literal(u"\t"));
-                                    auto cs_right = generated::kairo::unity::util::StringUtil::FormatString(
-                                        generated::java::lang::JString::ValueOf_2((num33 + 1)), 2, u' ',
-                                        false);
+                                    auto cs_right = kl_unity_util::StringUtil::FormatString(
+                                        kl_lang::JString::ValueOfInt((num33 + 1)), 2, u' ', false);
                                     return pls::cs::String::concat(cs_left, cs_right);
                                 }()),
                                 literal(u"\t"));
-                            auto cs_right = generated::java::lang::JString::ValueOf_2((num34 + 1));
+                            auto cs_right = kl_lang::JString::ValueOfInt((num34 + 1));
                             return pls::cs::String::concat(cs_left, cs_right);
                         }()));
                     float cs_arg2 = static_cast<float>((((7 + num27) + 70) - 72));
@@ -1282,13 +1241,14 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
                     }
-                    kairo::unity::ui::Graphics::DrawString_2(cs_receiver, cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                    kairo::unity::ui::Graphics::DrawStringTextFormatStringFloat(cs_receiver, cs_arg0, cs_arg1,
+                                                                                cs_arg2, cs_arg3);
                 }());
                 {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::String cs_arg0 = MyFormBase::YEN(
                         literal(u"\u4E07\u5186") /* "万円" */,
-                        generated::java::lang::JLong::ParseLong(
+                        kl_lang::JLong::ParseLong(
                             require(require(apdat_)->sysSave_)
                                 ->strs[pls::cs::add_i32(((((j == 0)) ? 8 : 4)), selectSave_)]));
                     float cs_arg1 = static_cast<float>((num27 + 172));
@@ -1333,7 +1293,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             ,
             120.0f, static_cast<float>(num25), 2);
     }
-    if (generated::kairo::common::cfg::Config::TRIAL_VERSION()) {
+    if (kl_cfg::Config::TRIAL_VERSION()) {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
             std::int32_t cs_arg0 = pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
@@ -1357,55 +1317,30 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         }
     }
     require(g)->SetOrigin(0, 0);
-    if (!(generated::kairo::unity::util::Language::Japanese())) {
+    if (!(kl_unity_util::Language::Japanese())) {
         system::form::LanguageForm::DrawButton(
-            g, ([&]() {
-                struct Lambda_717_32 : pls::cs::Object {
-                    pls::cs::Ref<TitleForm> self;
-                    void trace_edges(const pls::cs::EdgeVisitor& v) const override {
-                        pls::cs::Object::trace_edges(v);
-                        pls::cs::trace_value(self, v);
+            g,
+            pls::cs::Delegate<void()>::from_closure(
+                pls::cs::raw(this), std::string("M:form.TitleForm._draw(kairo.unity.ui.Graphics):20130"),
+                [self = this]() -> void {
+                    {
+                        require(self->formMan_)
+                            ->ChangeCurrentForm(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
+                                require(self->apdat_)->frmBoot_));
                     }
-                    void release_edges() override {
-                        pls::cs::Object::release_edges();
-                        pls::cs::clear_ref(self);
-                    }
-                    void Invoke() {
-                        {
-                            require(self->formMan_)
-                                ->ChangeCurrentForm(static_cast<pls::cs::Ref<pls::kairo::FormBase>>(
-                                    require(self->apdat_)->frmBoot_));
-                        }
-                    }
-                };
-                auto cs_closure = pls::cs::make_ref<Lambda_717_32>();
-                cs_closure->self = this;
-                return pls::cs::Delegate<void()>::bind_identity(
-                    cs_closure, pls::cs::raw(this),
-                    std::string("M:form.TitleForm._draw(kairo.unity.ui.Graphics):20130"),
-                    [weak = pls::cs::DelegateCapture<Lambda_717_32>(cs_closure)]() -> void {
-                        auto target = weak.lock();
-                        if (!target) {
-                            throw pls::cs::NullReferenceException();
-                        }
-                        target->Invoke();
-                    });
-            }()),
+                },
+                this),
             20);
     }
 }
 
 // M:form.TitleForm.Resume
 bool TitleForm::Resume() {
-    TitleForm::ensure_initialized();
-
     return MyFormBase::Resume();
 }
 
 // M:form.TitleForm.Finish
 bool TitleForm::Finish() {
-    TitleForm::ensure_initialized();
-
     MyFormBase::Finish();
     if (!is_null(resTitle_)) {
         require(resTitle_)->Dispose();
@@ -1417,8 +1352,6 @@ bool TitleForm::Finish() {
 
 // M:form.TitleForm.ChangeState(System.Int32)
 void TitleForm::ChangeState(pls::cs::Int32 state) {
-    TitleForm::ensure_initialized();
-
     pls::cs::Array<std::int32_t> array = TitleForm::softLabels_()[state];
     if ([&]() {
             auto cs_left = pls::cs::box(array);
@@ -1442,8 +1375,6 @@ void TitleForm::ChangeState(pls::cs::Int32 state) {
 
 // M:form.TitleForm.Update_titleAnime
 void TitleForm::Update_titleAnime() {
-    TitleForm::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < (ta_data).length(); ++i) {
         if (ta_data[i][0] == 0) {
             continue;
@@ -1517,22 +1448,16 @@ void TitleForm::Update_titleAnime() {
 
 // M:form.TitleForm.SetAppearCnt
 void TitleForm::SetAppearCnt() {
-    TitleForm::ensure_initialized();
-
     APPEAR_TIME = game::GameUtil::RateConvert(game::GameUtil::Random(100), 0, 99, 20, 70, true);
 }
 
 // M:form.TitleForm.ResetHobjExist(System.Int32)
 void TitleForm::ResetHobjExist(pls::cs::Int32 index) {
-    TitleForm::ensure_initialized();
-
     ta_data[index][0] = 0;
 }
 
 // M:form.TitleForm.Draw_titleAnime(kairo.unity.ui.Graphics)
 void TitleForm::Draw_titleAnime(pls::cs::Ref<pls::kairo::Graphics> g) {
-    TitleForm::ensure_initialized();
-
     for (pls::cs::Int32 i = 0; i < (ta_data).length(); ++i) {
         zsort_mhobj[i][0] = i;
         zsort_mhobj[i][1] = ta_data[i][3];
@@ -1596,8 +1521,6 @@ void TitleForm::Draw_titleAnime(pls::cs::Ref<pls::kairo::Graphics> g) {
 
 // M:form.TitleForm.SetTouchValue(System.Int32,System.Int32)
 void TitleForm::SetTouchValue(std::int32_t type, std::int32_t value) {
-    TitleForm::ensure_initialized();
-
     type = pls::cs::cast_integral<std::int32_t>(
         ((pls::cs::cast_integral<std::int64_t>(type) & pls::cs::cast_integral<std::int64_t>(0xFFFF0000u))));
     switch (type) {
@@ -1618,8 +1541,6 @@ void TitleForm::SetTouchValue(std::int32_t type, std::int32_t value) {
 
 // M:form.TitleForm.OnTouchEvent(kairo.unity.surface.TouchEvent)
 bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) {
-    TitleForm::ensure_initialized();
-
     if (!(system::form::LanguageForm::OnTouchEvent(e))) {
         return false;
     }
@@ -1634,10 +1555,10 @@ bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) 
                     try {
                         TitleForm::UpdateKairoAdClickNum();
                         require(apdat_)->SaveSystem();
-                    } catch (const pls::cs::Exception& cs_caught_126) {
-                        auto t = pls::cs::capture_exception(cs_caught_126);
+                    } catch (const pls::cs::Exception& cs_caught_134) {
+                        auto t = pls::cs::capture_exception(cs_caught_134);
                         {
-                            generated::kairo::unity::util::Log::Info(t);
+                            kl_unity_util::Log::Info(t);
                         }
                     }
                     if ((((!(cfg::MyConfig::SMART_PASS())) && (!(cfg::MyConfig::AMAZON()))) &&
@@ -1651,10 +1572,10 @@ bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) 
                     try {
                         TitleForm::UpdateKairoAdClickNum(10);
                         require(apdat_)->SaveSystem();
-                    } catch (const pls::cs::Exception& cs_caught_127) {
-                        auto t2 = pls::cs::capture_exception(cs_caught_127);
+                    } catch (const pls::cs::Exception& cs_caught_135) {
+                        auto t2 = pls::cs::capture_exception(cs_caught_135);
                         {
-                            generated::kairo::unity::util::Log::Info(t2);
+                            kl_unity_util::Log::Info(t2);
                         }
                     }
                 }
@@ -1669,89 +1590,74 @@ bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) 
 
 // M:form.TitleForm.LoadKiaroAdClickNum
 void TitleForm::LoadKiaroAdClickNum() {
-    TitleForm::ensure_initialized();
-    try {
-        if (cfg::MyConfig::SMART_PASS() || cfg::MyConfig::AMAZON()) {
-            throw pls::cs::ReturnFlow<void>{};
-        }
-        kairoAdClickNum_ = 0;
-        if ((require(require(apdat_)->sysSave_)->bins[5]).length() > 0) {
-            pls::cs::Ref<generated::java::io::ByteArrayInputStream> byteArrayInputStream =
-                pls::cs::Ref<generated::java::io::ByteArrayInputStream>{};
-            pls::cs::run_finally(
-                [&]() {
-                    {
-                        byteArrayInputStream = generated::java::io::ByteArrayInputStream::create(
-                            require(require(apdat_)->sysSave_)->bins[5]);
-                        kairoAdClickNum_ = pls::cs::cast_integral<std::int32_t>(
-                            generated::kairo::unity::util::StreamUtil::ReadShort(
-                                static_cast<pls::cs::Ref<generated::java::io::InputStream>>(
-                                    byteArrayInputStream)));
-                    }
-                },
-                [&]() {
-                    if (!is_null(byteArrayInputStream)) {
-                        require(byteArrayInputStream)->Close();
-                    }
-                    byteArrayInputStream = pls::cs::Ref<generated::java::io::ByteArrayInputStream>{};
-                });
-        }
-    } catch (const pls::cs::ReturnFlow<void>& cs_return) {
+    if (cfg::MyConfig::SMART_PASS() || cfg::MyConfig::AMAZON()) {
         return;
+    }
+    kairoAdClickNum_ = 0;
+    if ((require(require(apdat_)->sysSave_)->bins[5]).length() > 0) {
+        pls::cs::Ref<kl_io::ByteArrayInputStream> byteArrayInputStream =
+            pls::cs::Ref<kl_io::ByteArrayInputStream>{};
+        pls::cs::run_finally(
+            [&]() {
+                {
+                    byteArrayInputStream =
+                        kl_io::ByteArrayInputStream::create(require(require(apdat_)->sysSave_)->bins[5]);
+                    kairoAdClickNum_ =
+                        pls::cs::cast_integral<std::int32_t>(kl_unity_util::StreamUtil::ReadShort(
+                            static_cast<pls::cs::Ref<kl_io::InputStream>>(byteArrayInputStream)));
+                }
+            },
+            [&]() {
+                if (!is_null(byteArrayInputStream)) {
+                    require(byteArrayInputStream)->Close();
+                }
+                byteArrayInputStream = pls::cs::Ref<kl_io::ByteArrayInputStream>{};
+            });
     }
 }
 
 // M:form.TitleForm.UpdateKairoAdClickNum
 void TitleForm::UpdateKairoAdClickNum() {
-    TitleForm::ensure_initialized();
-
     TitleForm::UpdateKairoAdClickNum(1);
 }
 
 // M:form.TitleForm.UpdateKairoAdClickNum(System.Int32)
 void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
-    TitleForm::ensure_initialized();
-    try {
-        if (cfg::MyConfig::SMART_PASS() || cfg::MyConfig::AMAZON()) {
-            throw pls::cs::ReturnFlow<void>{};
-        }
-        kairoAdClickNum_ = pls::cs::add_i32(kairoAdClickNum_, addClickNum);
-        pls::cs::Ref<generated::java::io::ByteArrayOutputStream> byteArrayOutputStream =
-            pls::cs::Ref<generated::java::io::ByteArrayOutputStream>{};
-        pls::cs::run_finally(
-            [&]() {
-                {
-                    byteArrayOutputStream = generated::java::io::ByteArrayOutputStream::create();
-                    generated::kairo::unity::util::StreamUtil::WriteShort(
-                        static_cast<pls::cs::Ref<generated::java::io::OutputStream>>(byteArrayOutputStream),
-                        pls::cs::cast_integral<std::int16_t>(kairoAdClickNum_));
-                    {
-                        auto cs_target = require(require(apdat_)->sysSave_)->bins;
-                        auto cs_index = 5;
-                        auto cs_value = require(byteArrayOutputStream)->ToByteArray();
-                        cs_target.set_Item(cs_index, cs_value);
-                    }
-                }
-            },
-            [&]() {
-                if (!is_null(byteArrayOutputStream)) {
-                    require(byteArrayOutputStream)->Close();
-                }
-                byteArrayOutputStream = pls::cs::Ref<generated::java::io::ByteArrayOutputStream>{};
-            });
-    } catch (const pls::cs::ReturnFlow<void>& cs_return) {
+    if (cfg::MyConfig::SMART_PASS() || cfg::MyConfig::AMAZON()) {
         return;
     }
+    kairoAdClickNum_ = pls::cs::add_i32(kairoAdClickNum_, addClickNum);
+    pls::cs::Ref<kl_io::ByteArrayOutputStream> byteArrayOutputStream =
+        pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
+    pls::cs::run_finally(
+        [&]() {
+            {
+                byteArrayOutputStream = kl_io::ByteArrayOutputStream::create();
+                kl_unity_util::StreamUtil::WriteShort(
+                    static_cast<pls::cs::Ref<kl_io::OutputStream>>(byteArrayOutputStream),
+                    pls::cs::cast_integral<std::int16_t>(kairoAdClickNum_));
+                {
+                    auto cs_target = require(require(apdat_)->sysSave_)->bins;
+                    auto cs_index = 5;
+                    auto cs_value = require(byteArrayOutputStream)->ToByteArray();
+                    cs_target.set_Item(cs_index, cs_value);
+                }
+            }
+        },
+        [&]() {
+            if (!is_null(byteArrayOutputStream)) {
+                require(byteArrayOutputStream)->Close();
+            }
+            byteArrayOutputStream = pls::cs::Ref<kl_io::ByteArrayOutputStream>{};
+        });
 }
 
 // M:form.TitleForm.GetHashCode
 std::int32_t TitleForm::GetHashCode() {
-    TitleForm::ensure_initialized();
-
-    return ([&]() {
-        auto cs_receiver = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-        return require(cs_receiver)->pls::cs::Object::GetHashCode();
-    }());
+    {
+        auto cs_receiver_150 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+        return require(cs_receiver_150)->pls::cs::Object::GetHashCode();
+    }
 }
 } // namespace form
 } // namespace pls::game

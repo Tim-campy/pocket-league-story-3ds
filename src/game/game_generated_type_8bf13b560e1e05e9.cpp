@@ -33,6 +33,7 @@ pls::cs::Ref<cs_8bf13b560e1e05e9> cs_3afc5298ce4a3e84() { cs_init_8bf13b560e1e05
 }
 
 void cs_3afc5298ce4a3e84_init(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this) {
+cs_init_8bf13b560e1e05e9();
 cs_this->cs_ce90b55fbd071e4f = pls::source_allocations::completed("new_array","src/KairoLibrary/kfw/panel/MainPanel.cs:M:kfw.panel.MainPanel.#ctor:429",([&](){auto cs_initial_array_758=pls::cs::Array<char16_t>::make(4);cs_initial_array_758.at(0)=char16_t(47);cs_initial_array_758.at(1)=char16_t(124);cs_initial_array_758.at(2)=char16_t(60);cs_initial_array_758.at(3)=char16_t(62);return cs_initial_array_758;}()));
 cs_this->cs_cbcfd5b19b2bb127 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x540d" u"\x524d" u"",2);}());
 cs_this->cs_210652685e2645f7 = true;
@@ -52,6 +53,7 @@ pls::cs::Ref<cs_8bf13b560e1e05e9> cs_6b53a5cdc402f43c(pls::cs::String v_label,pl
 }
 
 void cs_6b53a5cdc402f43c_init(pls::cs::Ref<cs_8bf13b560e1e05e9> cs_this,pls::cs::String v_label,pls::cs::String v_defaultText,std::int32_t v_maxLength,std::int32_t v_inputMode,pls::cs::String v_itemName) {
+cs_init_8bf13b560e1e05e9();
 cs_this->cs_ce90b55fbd071e4f = pls::source_allocations::completed("new_array","src/KairoLibrary/kfw/panel/MainPanel.cs:M:kfw.panel.MainPanel.#ctor(System.String,System.String,System.Int32,System.Int32,System.String):429",([&](){auto cs_initial_array_718=pls::cs::Array<char16_t>::make(4);cs_initial_array_718.at(0)=char16_t(47);cs_initial_array_718.at(1)=char16_t(124);cs_initial_array_718.at(2)=char16_t(60);cs_initial_array_718.at(3)=char16_t(62);return cs_initial_array_718;}()));
 cs_this->cs_cbcfd5b19b2bb127 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x540d" u"\x524d" u"",2);}());
 cs_this->cs_210652685e2645f7 = true;

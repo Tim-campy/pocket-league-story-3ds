@@ -318,6 +318,7 @@ pls::cs::Ref<cs_2ef6641b828546ac> cs_05e7da3c85f41cc3(std::int32_t v_obj_type) {
 }
 
 void cs_05e7da3c85f41cc3_init(pls::cs::Ref<cs_2ef6641b828546ac> cs_this,std::int32_t v_obj_type) {
+cs_init_2ef6641b828546ac();
 cs_this->cs_18bf4a66d27f1118 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.#ctor(System.Int32):13840",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xbull))));
 cs_this->cs_1b075af36519c1f1 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Player.cs:M:game.Player.#ctor(System.Int32):13882",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_9ffe03bd458f255b = pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/Player.cs:M:game.Player.#ctor(System.Int32):13957",([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }()));

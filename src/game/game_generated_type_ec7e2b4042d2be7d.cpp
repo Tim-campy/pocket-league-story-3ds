@@ -22,6 +22,7 @@ pls::cs::Ref<cs_ec7e2b4042d2be7d> cs_99b0e4c5e8c0b01f(std::int16_t v_value) { cs
 }
 
 void cs_99b0e4c5e8c0b01f_init(pls::cs::Ref<cs_ec7e2b4042d2be7d> cs_this,std::int16_t v_value) {
+cs_init_ec7e2b4042d2be7d();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JShort.#ctor(System.Int16)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_value; pls::game::cs_require(cs_target)->cs_5b36d01ce9e9d318 = cs_value; return cs_value; }());

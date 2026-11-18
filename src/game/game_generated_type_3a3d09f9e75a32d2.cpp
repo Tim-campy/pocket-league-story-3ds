@@ -19,6 +19,7 @@ pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_4766c761098d0094() { cs_init_3a3d09f9e75a32
 }
 
 void cs_4766c761098d0094_init(pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_this) {
+cs_init_3a3d09f9e75a32d2();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchComponent.#ctor",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3a3d09f9e75a32d2>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_0541e8aace93207c(cs_receiver); }());
@@ -32,6 +33,7 @@ pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_beb950d6aeeb844b(pls::cs::Ref<cs_3a3d09f9e7
 }
 
 void cs_beb950d6aeeb844b_init(pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_this,pls::cs::Ref<cs_3a3d09f9e75a32d2> v_copy) {
+cs_init_3a3d09f9e75a32d2();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.TouchComponent.#ctor(kairo.unity.surface.TouchComponent)",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_3a3d09f9e75a32d2>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_0541e8aace93207c(cs_receiver); }());

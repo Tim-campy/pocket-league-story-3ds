@@ -25,6 +25,7 @@ pls::cs::Ref<cs_50c5a567a6876ee3> cs_145bafe9acaf77f9() { cs_init_50c5a567a6876e
 }
 
 void cs_145bafe9acaf77f9_init(pls::cs::Ref<cs_50c5a567a6876ee3> cs_this) {
+cs_init_50c5a567a6876ee3();
 ([&]() { cs_d710b4eaf3ab212a_init(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.KairoDummy.#ctor",kairo);
 {}

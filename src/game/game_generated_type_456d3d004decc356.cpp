@@ -20,6 +20,7 @@ pls::cs::Ref<cs_456d3d004decc356> cs_42bd1e40ac82632c() { cs_init_456d3d004decc3
 }
 
 void cs_42bd1e40ac82632c_init(pls::cs::Ref<cs_456d3d004decc356> cs_this) {
+cs_init_456d3d004decc356();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.DelayEvent.#ctor",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); pls::game::cs_require(cs_target)->cs_c91865d620b9553c = cs_value; return cs_value; }());
@@ -38,6 +39,7 @@ pls::cs::Ref<cs_456d3d004decc356> cs_da24e0fc27feed21(std::int32_t v_delayId,std
 }
 
 void cs_da24e0fc27feed21_init(pls::cs::Ref<cs_456d3d004decc356> cs_this,std::int32_t v_delayId,std::int32_t v_line,std::int32_t v_wait,std::int32_t v_hour,std::int32_t v_rideChara,pls::cs::String v_args,pls::cs::Array<std::int32_t> v_argi) {
+cs_init_456d3d004decc356();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.DelayEvent.#ctor(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.String,System.Int32[])",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_delayId; pls::game::cs_require(cs_target)->cs_c91865d620b9553c = cs_value; return cs_value; }());

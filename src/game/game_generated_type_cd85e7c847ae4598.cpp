@@ -28,6 +28,7 @@ pls::cs::Ref<cs_cd85e7c847ae4598> cs_77c1e405abfca250() { cs_init_cd85e7c847ae45
 }
 
 void cs_77c1e405abfca250_init(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this) {
+cs_init_cd85e7c847ae4598();
 ([&]() { pls::cs::String cs_arg0 = pls::cs::String(u""); pls::cs::String cs_arg1 = pls::cs::String(u""); cs_f82de0fa574740fa_init(pls::cs::static_pointer_cast<cs_cd85e7c847ae4598>(cs_this),cs_arg0,cs_arg1); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.PurchaseRecord.#ctor",game);
 {
@@ -42,6 +43,7 @@ pls::cs::Ref<cs_cd85e7c847ae4598> cs_f82de0fa574740fa(pls::cs::String v_productI
 }
 
 void cs_f82de0fa574740fa_init(pls::cs::Ref<cs_cd85e7c847ae4598> cs_this,pls::cs::String v_productId,pls::cs::String v_orderId) {
+cs_init_cd85e7c847ae4598();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.PurchaseRecord.#ctor(System.String,System.String)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_productId; pls::game::cs_require(cs_target)->cs_08330cbc7084da66 = cs_value; return cs_value; }());

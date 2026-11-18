@@ -35,6 +35,7 @@ pls::cs::Ref<cs_169021fb033627ed> cs_db8a7eae181558d7() { cs_init_169021fb033627
 }
 
 void cs_db8a7eae181558d7_init(pls::cs::Ref<cs_169021fb033627ed> cs_this) {
+cs_init_169021fb033627ed();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TeamData.#ctor",game);
 {
@@ -49,6 +50,7 @@ pls::cs::Ref<cs_169021fb033627ed> cs_d3708c7ee2884e7d(pls::cs::String v_src) { c
 }
 
 void cs_d3708c7ee2884e7d_init(pls::cs::Ref<cs_169021fb033627ed> cs_this,pls::cs::String v_src) {
+cs_init_169021fb033627ed();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TeamData.#ctor(System.String)",game);
 {

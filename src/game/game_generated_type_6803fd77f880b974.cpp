@@ -48,6 +48,7 @@ pls::cs::Ref<cs_6803fd77f880b974> cs_f2509d262d9e1e5a() { cs_init_6803fd77f880b9
 }
 
 void cs_f2509d262d9e1e5a_init(pls::cs::Ref<cs_6803fd77f880b974> cs_this) {
+cs_init_6803fd77f880b974();
 cs_this->cs_5d29f5a9131d52b7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor:1240",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull))));
 cs_this->cs_ff65a733703f405d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor:1285",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
@@ -65,6 +66,7 @@ pls::cs::Ref<cs_6803fd77f880b974> cs_2d324a9760e19f9c(pls::cs::String v_src) { c
 }
 
 void cs_2d324a9760e19f9c_init(pls::cs::Ref<cs_6803fd77f880b974> cs_this,pls::cs::String v_src) {
+cs_init_6803fd77f880b974();
 cs_this->cs_5d29f5a9131d52b7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor(System.String):1240",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull))));
 cs_this->cs_ff65a733703f405d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SupervisorData.cs:M:data.SupervisorData.#ctor(System.String):1285",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());

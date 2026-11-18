@@ -88,6 +88,7 @@ pls::cs::Ref<cs_925b3cf054e42b78> cs_f6c1ebd73ba5dcdc() { cs_init_925b3cf054e42b
 }
 
 void cs_f6c1ebd73ba5dcdc_init(pls::cs::Ref<cs_925b3cf054e42b78> cs_this) {
+cs_init_925b3cf054e42b78();
 cs_this->cs_42ee6ef0eb7e8761 = true;
 cs_this->cs_25150d256e75d102 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 ([&]() { cs_d710b4eaf3ab212a_init(pls::cs::static_pointer_cast<cs_b489b0d33bb37bb8>(cs_this)); }());

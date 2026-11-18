@@ -168,7 +168,16 @@ sealed partial class Lowerer {
             foreach(var m in emitted.Keys.Select(id=>methods[id]).Where(m=>SymbolEqualityComparer.Default.Equals(m.ContainingType.OriginalDefinition,t)).OrderBy(m=>m.MethodKind==MethodKind.Constructor?0:1).ThenBy(TreeOf,StringComparer.Ordinal).ThenBy(Position).ThenBy(m=>Id(m),StringComparer.Ordinal)){
                 var constructor=m.MethodKind==MethodKind.Constructor;
                 var arity=m.Parameters.Length+(!m.IsStatic&&!constructor&&!MemberMethod(m)?1:0);if(MemberMethod(m))memberTokens.Add(Name(m));
-                var name=Assign(constructor?"create":CppIdentifier(m.Name),arity,constructor);
+                // A4: an overload that collides with an earlier one of the same name and C++
+                // arity takes a suffix from its parameter types where the group differs
+                // (RateConvertFloat), never an ordinal; Assign numbers only a leftover clash.
+                var stem=constructor?"create":CppIdentifier(m.Name);
+                if(!constructor){
+                    var group=emitted.Keys.Select(id=>methods[id]).Where(o=>SymbolEqualityComparer.Default.Equals(o.ContainingType.OriginalDefinition,t)&&o.Name==m.Name&&o.MethodKind==m.MethodKind&&CppArity(o)==arity)
+                        .OrderBy(TreeOf,StringComparer.Ordinal).ThenBy(Position).ThenBy(o=>Id(o),StringComparer.Ordinal).ToList();
+                    if(group.Count>1&&!SymbolEqualityComparer.Default.Equals(group[0],m))stem+=TypeSuffix(m,group);
+                }
+                var name=Assign(stem,arity,constructor);
                 r.Tokens[Name(m)]=Make(name);
                 if(constructor)r.Tokens[Name(m)+"_init"]=Make(name+"_init");
             }
@@ -412,6 +421,24 @@ sealed partial class Lowerer {
     }
     readonly Dictionary<string,INamedTypeSymbol> typesByKey=new(StringComparer.Ordinal);
     INamedTypeSymbol? TypeOfKey(RName name)=>typesByKey.GetValueOrDefault(Key(name.Path));
+    int CppArity(IMethodSymbol m)=>m.Parameters.Length+(!m.IsStatic&&m.MethodKind!=MethodKind.Constructor&&!MemberMethod(m)?1:0);
+    static string TypeWord(ITypeSymbol type)=>type switch{
+        IArrayTypeSymbol array=>TypeWord(array.ElementType)+"Array",
+        _ when type.SpecialType==SpecialType.System_Int32=>"Int",_ when type.SpecialType==SpecialType.System_Single=>"Float",
+        _ when type.SpecialType==SpecialType.System_Double=>"Double",_ when type.SpecialType==SpecialType.System_Int64=>"Long",
+        _ when type.SpecialType==SpecialType.System_Boolean=>"Bool",_ when type.SpecialType==SpecialType.System_String=>"String",
+        _ when type.SpecialType==SpecialType.System_Byte=>"Byte",_ when type.SpecialType==SpecialType.System_Int16=>"Short",
+        _ when type.SpecialType==SpecialType.System_Char=>"Char",_ when type.SpecialType==SpecialType.System_Object=>"Object",
+        _=>CppIdentifier(type.Name)};
+    // Parameter types of m at the positions where its overload group differs.
+    static string TypeSuffix(IMethodSymbol m,List<IMethodSymbol> group){
+        var words=new StringBuilder();
+        for(int i=0;i<m.Parameters.Length;i++){
+            var differs=group.Any(o=>i>=o.Parameters.Length||!SymbolEqualityComparer.Default.Equals(o.Parameters[i].Type,m.Parameters[i].Type)||o.Parameters[i].RefKind!=m.Parameters[i].RefKind);
+            if(differs)words.Append((m.Parameters[i].RefKind==RefKind.None?"":"Ref")+TypeWord(m.Parameters[i].Type));
+        }
+        return words.Length==0?"Overload":words.ToString();
+    }
     // Tokens of instance methods emitted as member functions (C2): no `static`.
     readonly HashSet<string> memberTokens=new(StringComparer.Ordinal);
     string MemberDeclaration(string block,string rewritten){var (_,token,_,_,_)=FindDeclarator(block);return memberTokens.Contains(token)?rewritten:StaticDeclaration(rewritten);}

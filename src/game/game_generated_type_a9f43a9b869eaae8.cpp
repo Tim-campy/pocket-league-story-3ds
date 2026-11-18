@@ -46,6 +46,7 @@ pls::cs::Ref<cs_a9f43a9b869eaae8> cs_f36e81cdbda57fca(std::int32_t v_id) { cs_in
 }
 
 void cs_f36e81cdbda57fca_init(pls::cs::Ref<cs_a9f43a9b869eaae8> cs_this,std::int32_t v_id) {
+cs_init_a9f43a9b869eaae8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.Tenant.#ctor(System.Int32)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_id; pls::game::cs_require(cs_target)->cs_78bf2be30869260e = cs_value; return cs_value; }());

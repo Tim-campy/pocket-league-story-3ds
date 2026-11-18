@@ -20,6 +20,7 @@ pls::cs::Ref<cs_a42daea58251b089> cs_a9e6857e64b08e0d() { cs_init_a42daea58251b0
 }
 
 void cs_a9e6857e64b08e0d_init(pls::cs::Ref<cs_a42daea58251b089> cs_this) {
+cs_init_a42daea58251b089();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Purchase.#ctor",game);
 {
 
@@ -33,6 +34,7 @@ pls::cs::Ref<cs_a42daea58251b089> cs_f7abaa335be13394(pls::cs::String v_itemType
 }
 
 void cs_f7abaa335be13394_init(pls::cs::Ref<cs_a42daea58251b089> cs_this,pls::cs::String v_itemType,pls::cs::String v_jsonPurchaseInfo,pls::cs::String v_signature) {
+cs_init_a42daea58251b089();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Purchase.#ctor(System.String,System.String,System.String)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_itemType; pls::game::cs_require(cs_target)->cs_d753206820f21a8d = cs_value; return cs_value; }());

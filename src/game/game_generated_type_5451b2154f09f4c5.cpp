@@ -124,6 +124,7 @@ pls::cs::Ref<cs_5451b2154f09f4c5> cs_1980f3b6859ab3da(std::int32_t v_id) { cs_in
 }
 
 void cs_1980f3b6859ab3da_init(pls::cs::Ref<cs_5451b2154f09f4c5> cs_this,std::int32_t v_id) {
+cs_init_5451b2154f09f4c5();
 ([&]() { std::int32_t cs_arg0 = v_id; pls::cs::static_pointer_cast<pls::kairo::FormBase>(cs_this)->source_construct(cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.MyFormBase.#ctor(System.Int32)",game);
 {

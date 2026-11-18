@@ -19,6 +19,7 @@ pls::cs::Ref<cs_88b206217a8b30c2> cs_780e36bec4975ef3() { cs_init_88b206217a8b30
 }
 
 void cs_780e36bec4975ef3_init(pls::cs::Ref<cs_88b206217a8b30c2> cs_this) {
+cs_init_88b206217a8b30c2();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectTask.#ctor",kairo);
 {}
 }

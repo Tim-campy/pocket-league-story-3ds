@@ -26,6 +26,7 @@ pls::cs::Ref<cs_feb7ae74aa59a27c> cs_6dc2344fc05b41a8() { cs_init_feb7ae74aa59a2
 }
 
 void cs_6dc2344fc05b41a8_init(pls::cs::Ref<cs_feb7ae74aa59a27c> cs_this) {
+cs_init_feb7ae74aa59a27c();
 cs_this->cs_9fc1ef5d1c5e7bde = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/ApplyTask.cs:M:system.billing.ui.ApplyTask.#ctor:514",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.ApplyTask.#ctor",game);
 {
@@ -40,6 +41,7 @@ pls::cs::Ref<cs_feb7ae74aa59a27c> cs_be1899f5ff576e9b(pls::cs::Ref<cs_931908081e
 }
 
 void cs_be1899f5ff576e9b_init(pls::cs::Ref<cs_feb7ae74aa59a27c> cs_this,pls::cs::Ref<cs_931908081ea62151> v_item,std::int32_t v_type,bool v_notice) {
+cs_init_feb7ae74aa59a27c();
 cs_this->cs_9fc1ef5d1c5e7bde = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/ApplyTask.cs:M:system.billing.ui.ApplyTask.#ctor(system.billing.ui.BillingItem,System.Int32,System.Boolean):514",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.ApplyTask.#ctor(system.billing.ui.BillingItem,System.Int32,System.Boolean)",game);
 {
@@ -54,6 +56,7 @@ pls::cs::Ref<cs_feb7ae74aa59a27c> cs_c9ca6e1962944643(pls::cs::String v_gift) { 
 }
 
 void cs_c9ca6e1962944643_init(pls::cs::Ref<cs_feb7ae74aa59a27c> cs_this,pls::cs::String v_gift) {
+cs_init_feb7ae74aa59a27c();
 cs_this->cs_9fc1ef5d1c5e7bde = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/ApplyTask.cs:M:system.billing.ui.ApplyTask.#ctor(System.String):514",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.ApplyTask.#ctor(System.String)",game);
 {

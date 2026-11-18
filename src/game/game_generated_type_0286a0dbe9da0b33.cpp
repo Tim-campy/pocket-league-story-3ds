@@ -20,6 +20,7 @@ pls::cs::Ref<cs_0286a0dbe9da0b33> cs_63545d46c6887c12(std::int32_t v_type,pls::c
 }
 
 void cs_63545d46c6887c12_init(pls::cs::Ref<cs_0286a0dbe9da0b33> cs_this,std::int32_t v_type,pls::cs::String v_title) {
+cs_init_0286a0dbe9da0b33();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Dialog.#ctor(System.Int32,System.String)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_type; pls::game::cs_require(cs_target)->cs_71eb51b3f792969a = cs_value; return cs_value; }());

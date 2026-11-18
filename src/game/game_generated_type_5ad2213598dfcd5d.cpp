@@ -16,6 +16,7 @@ pls::cs::Ref<cs_5ad2213598dfcd5d> cs_123805c6bd81d455() { cs_init_5ad2213598dfcd
 }
 
 void cs_123805c6bd81d455_init(pls::cs::Ref<cs_5ad2213598dfcd5d> cs_this) {
+cs_init_5ad2213598dfcd5d();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.Component.#ctor",kairo);
 {}
 }

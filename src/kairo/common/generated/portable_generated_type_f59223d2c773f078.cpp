@@ -16,6 +16,7 @@ pls::cs::Ref<cs_f59223d2c773f078> cs_bcb3a1c31d9b5d23(pls::cs::String v_id) { cs
 }
 
 void cs_bcb3a1c31d9b5d23_init(pls::cs::Ref<cs_f59223d2c773f078> cs_this,pls::cs::String v_id) {
+cs_init_f59223d2c773f078();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.util.JTimeZone.#ctor(System.String)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_id; pls::generated::cs_require(cs_target)->cs_05e71bcde75517db = cs_value; return cs_value; }());

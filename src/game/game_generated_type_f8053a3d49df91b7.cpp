@@ -16,6 +16,7 @@ pls::cs::Ref<cs_f8053a3d49df91b7> cs_ed3f157af0fe9b57() { cs_init_f8053a3d49df91
 }
 
 void cs_ed3f157af0fe9b57_init(pls::cs::Ref<cs_f8053a3d49df91b7> cs_this) {
+cs_init_f8053a3d49df91b7();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:TJPlacement.#ctor",game);
 {}
 }

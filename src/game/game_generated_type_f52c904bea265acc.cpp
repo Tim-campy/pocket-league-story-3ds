@@ -70,6 +70,7 @@ pls::cs::Ref<cs_f52c904bea265acc> cs_5fbebbed5279ae0b() { cs_init_f52c904bea265a
 }
 
 void cs_5fbebbed5279ae0b_init(pls::cs::Ref<cs_f52c904bea265acc> cs_this) {
+cs_init_f52c904bea265acc();
 ([&]() { std::int32_t cs_arg0 = cs_0539026e7603868c(); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.ConnectForm.#ctor",game);
 {

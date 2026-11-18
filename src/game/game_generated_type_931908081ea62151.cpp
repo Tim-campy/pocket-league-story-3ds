@@ -33,6 +33,7 @@ pls::cs::Ref<cs_931908081ea62151> cs_d9871f7e20992ddf() { cs_init_931908081ea621
 }
 
 void cs_d9871f7e20992ddf_init(pls::cs::Ref<cs_931908081ea62151> cs_this) {
+cs_init_931908081ea62151();
 cs_this->cs_feae4d6092e68c7b = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:654",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_4ed7d84c1dce4799 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:702",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));
 cs_this->cs_5994cfa5fd307cd3 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingItem.cs:M:system.billing.ui.BillingItem.#ctor:936",([&]() -> pls::cs::Ref<pls::generated::cs_7fd3b635ed6929d0> { return pls::generated::cs_26fc017eba499603(); }()));

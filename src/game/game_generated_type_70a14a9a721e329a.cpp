@@ -38,6 +38,7 @@ pls::cs::Ref<cs_70a14a9a721e329a> cs_ab264fb7a8ead88e() { cs_init_70a14a9a721e32
 }
 
 void cs_ab264fb7a8ead88e_init(pls::cs::Ref<cs_70a14a9a721e329a> cs_this) {
+cs_init_70a14a9a721e329a();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.TArea.#ctor",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }()); pls::game::cs_require(cs_target)->cs_ffdf9e524c6d33fb = cs_value; return cs_value; }());

@@ -84,6 +84,7 @@ pls::cs::Ref<cs_b728593e3dcffe31> cs_63b2bd45669dab69(pls::cs::String v_imgList,
 }
 
 void cs_63b2bd45669dab69_init(pls::cs::Ref<cs_b728593e3dcffe31> cs_this,pls::cs::String v_imgList,pls::cs::String v_sebList,pls::cs::String v_sndList,pls::cs::String v_figList,pls::cs::String v_actList,pls::cs::String v_texList,pls::cs::String v_grpList) {
+cs_init_b728593e3dcffe31();
 cs_this->cs_b2b7060a2ecd4629 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 cs_this->cs_f9b013b52e784f8d = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
 cs_this->cs_e9b5a40492d552a9 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffull));

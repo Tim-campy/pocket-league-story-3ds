@@ -90,6 +90,7 @@ pls::cs::Ref<cs_52158c8b20364c2b> cs_9eb68b9f4334471a(pls::cs::Array<std::uint8_
 }
 
 void cs_9eb68b9f4334471a_init(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::Array<std::uint8_t> v_data) {
+cs_init_52158c8b20364c2b();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.JarInflater.#ctor(System.Byte[])",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(v_data); auto cs_right = pls::cs::box(pls::cs::Array<std::uint8_t>{}); return cs_left == cs_right; }())) {

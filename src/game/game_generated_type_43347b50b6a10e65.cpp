@@ -24,6 +24,7 @@ pls::cs::Ref<cs_43347b50b6a10e65> cs_105f56890100ea40(pls::cs::Ref<cs_87fb4d668e
 }
 
 void cs_105f56890100ea40_init(pls::cs::Ref<cs_43347b50b6a10e65> cs_this,pls::cs::Ref<cs_87fb4d668ea5580b> v_parent,pls::cs::Ref<pls::kairo::Font> v_font,std::int32_t v_color,float v_x,float v_y,std::int32_t v_blink) {
+cs_init_43347b50b6a10e65();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.TextLayout.TextBlock.#ctor(kairo.unity.ui.TextLayout,kairo.unity.ui.Font,System.Int32,System.Single,System.Single,System.Int32)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_parent; pls::game::cs_require(cs_target)->cs_c4c04b027207a322 = cs_value; return cs_value; }());

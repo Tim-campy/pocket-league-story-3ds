@@ -70,6 +70,7 @@ pls::cs::Ref<cs_6ee7d14059be1acf>& cs_33c160ec018e286a(){cs_init_6ee7d14059be1ac
 
 // M:system.billing.ui.BillingManager.#ctor
 void cs_fb6a0b22d395f57f_init(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this) {
+cs_init_6ee7d14059be1acf();
 cs_this->cs_712a37a136a3e228 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.ui.BillingManager.#ctor:871",pls::cs::make_ref<pls::cs::Object>());
 cs_this->cs_7fef88b0a5547c46 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.ui.BillingManager.#ctor:926",pls::cs::make_ref<pls::cs::Object>());
 ([&]() { cs_e3269488b9d47182_init(pls::cs::static_pointer_cast<cs_fa01867c9c048464>(cs_this)); }());

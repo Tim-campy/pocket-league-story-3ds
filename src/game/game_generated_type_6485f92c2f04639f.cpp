@@ -39,6 +39,7 @@ pls::cs::Ref<cs_6485f92c2f04639f> cs_ec84f3d30b68a2f9() { cs_init_6485f92c2f0463
 }
 
 void cs_ec84f3d30b68a2f9_init(pls::cs::Ref<cs_6485f92c2f04639f> cs_this) {
+cs_init_6485f92c2f04639f();
 ([&]() { pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(cs_this)->source_construct(); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.FormManager.#ctor",game);
 {

@@ -59,6 +59,7 @@ pls::cs::Ref<cs_af32d28251411c95> cs_11534d928e8399e4() { cs_init_af32d28251411c
 }
 
 void cs_11534d928e8399e4_init(pls::cs::Ref<cs_af32d28251411c95> cs_this) {
+cs_init_af32d28251411c95();
 ([&]() { cs_a1b466bc14363691_init(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.surface.GameBanner.#ctor",game);
 {

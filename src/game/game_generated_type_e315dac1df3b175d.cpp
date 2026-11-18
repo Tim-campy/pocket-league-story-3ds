@@ -452,6 +452,7 @@ pls::cs::Ref<cs_e315dac1df3b175d> cs_99d89125e258aca0() { cs_init_e315dac1df3b17
 }
 
 void cs_99d89125e258aca0_init(pls::cs::Ref<cs_e315dac1df3b175d> cs_this) {
+cs_init_e315dac1df3b175d();
 cs_this->cs_ac0dd82664682ea8 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.#ctor:7122",([&]() -> pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Array<std::int32_t>>> { return pls::generated::cs_946b70ecd88b233a<pls::cs::Array<std::int32_t>>(); }()));
 cs_this->cs_fb778efa514fe1a4 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/surface/GameView.cs:M:surface.GameView.#ctor:7274",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 ([&]() { cs_a1b466bc14363691_init(pls::cs::static_pointer_cast<cs_9326c27a92cfea3a>(cs_this)); }());

@@ -24,6 +24,7 @@ pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_e4bc487b2460253c() { cs_init_80d72c9d6f5bfc
 }
 
 void cs_e4bc487b2460253c_init(pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_this) {
+cs_init_80d72c9d6f5bfcfe();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.EventData.#ctor",game);
 {
@@ -38,6 +39,7 @@ pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_142d416c03b7e0fe(pls::cs::String v_src) { c
 }
 
 void cs_142d416c03b7e0fe_init(pls::cs::Ref<cs_80d72c9d6f5bfcfe> cs_this,pls::cs::String v_src) {
+cs_init_80d72c9d6f5bfcfe();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.EventData.#ctor(System.String)",game);
 {

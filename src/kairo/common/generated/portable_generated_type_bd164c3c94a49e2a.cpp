@@ -26,6 +26,7 @@ pls::cs::Ref<cs_a0cf9aef6a251bfd>& cs_1e58df81cbed8f35(){cs_init_bd164c3c94a49e2
 
 // M:kairo.unity.util.SecureNumber.#ctor
 void cs_a55d2b3f0d930c1e_init(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this) {
+cs_init_bd164c3c94a49e2a();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureNumber.#ctor",kairo);
 {
 
@@ -35,6 +36,7 @@ void cs_a55d2b3f0d930c1e_init(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this) {
 
 // M:kairo.unity.util.SecureNumber.#ctor(System.Int64)
 void cs_6a8c2e7be2327b6f_init(pls::cs::Ref<cs_bd164c3c94a49e2a> cs_this,std::int64_t v_value) {
+cs_init_bd164c3c94a49e2a();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureNumber.#ctor(System.Int64)",kairo);
 {
 ([&]() -> pls::cs::Ref<cs_bd164c3c94a49e2a> { auto cs_receiver = static_cast<pls::cs::Ref<cs_bd164c3c94a49e2a>>(cs_this); std::int64_t cs_arg0 = v_value; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_322ad21e82d893d1(cs_receiver,cs_arg0); }());

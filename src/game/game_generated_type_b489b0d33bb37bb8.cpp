@@ -97,6 +97,7 @@ pls::cs::Ref<cs_b489b0d33bb37bb8>& cs_11e5ce60ddaa567b(){cs_init_b489b0d33bb37bb
 
 // M:kairo.unity.system.KairoBase.#ctor
 void cs_d710b4eaf3ab212a_init(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this) {
+cs_init_b489b0d33bb37bb8();
 cs_this->cs_bb15809d7dd758fd = true;
 cs_this->cs_ac9d14d8fd218a0c = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.#ctor:2896",([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}()); return pls::generated::cs_ede7ead54c734d4c(cs_arg0); }()));
 cs_this->cs_efb4aeef5c6f7590 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.#ctor:2956",([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}()); return pls::generated::cs_ede7ead54c734d4c(cs_arg0); }()));

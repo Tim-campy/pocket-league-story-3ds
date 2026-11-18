@@ -208,6 +208,7 @@ pls::cs::Ref<cs_7eb0a1119bc141dc> cs_9b717c692f7d696e() { cs_init_7eb0a1119bc141
 }
 
 void cs_9b717c692f7d696e_init(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this) {
+cs_init_7eb0a1119bc141dc();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SpForm.#ctor",game);
 {
@@ -222,6 +223,7 @@ pls::cs::Ref<cs_7eb0a1119bc141dc> cs_122d27bb8b75d40b(pls::cs::Ref<pls::cs::Exce
 }
 
 void cs_122d27bb8b75d40b_init(pls::cs::Ref<cs_7eb0a1119bc141dc> cs_this,pls::cs::Ref<pls::cs::ExceptionObject> v_th) {
+cs_init_7eb0a1119bc141dc();
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SpForm.#ctor(System.Exception)",game);
 {

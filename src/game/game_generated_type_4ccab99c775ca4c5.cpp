@@ -18,6 +18,7 @@ pls::cs::Ref<cs_4ccab99c775ca4c5> cs_86553cba2c357ac5(pls::cs::String v_text,std
 }
 
 void cs_86553cba2c357ac5_init(pls::cs::Ref<cs_4ccab99c775ca4c5> cs_this,pls::cs::String v_text,std::int32_t v_columns,std::int32_t v_rows,std::int32_t v_mode) {
+cs_init_4ccab99c775ca4c5();
 ([&]() { cs_123805c6bd81d455_init(pls::cs::static_pointer_cast<cs_5ad2213598dfcd5d>(cs_this)); }());
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.TextBox.#ctor(System.String,System.Int32,System.Int32,System.Int32)",kairo);
 {

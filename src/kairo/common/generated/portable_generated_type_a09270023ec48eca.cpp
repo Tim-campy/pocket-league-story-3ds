@@ -46,6 +46,7 @@ pls::cs::Ref<cs_a09270023ec48eca> cs_f4af9cf35590567d(pls::cs::Ref<cs_e7a5499b36
 }
 
 void cs_f4af9cf35590567d_init(pls::cs::Ref<cs_a09270023ec48eca> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_ist) {
+cs_init_a09270023ec48eca();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.io.WrappedSystemStream.#ctor(java.io.InputStream)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_ist; pls::generated::cs_require(cs_target)->cs_39cd957faf78264b = cs_value; return cs_value; }());

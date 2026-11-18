@@ -23,6 +23,7 @@ pls::cs::Ref<cs_d37bccc1c3814fc6>& cs_fff40af3d4f61c60(){cs_init_d37bccc1c3814fc
 
 // M:kairo.unity.panel.FepPanel.#ctor
 void cs_429433773226956d_init(pls::cs::Ref<cs_d37bccc1c3814fc6> cs_this) {
+cs_init_d37bccc1c3814fc6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.panel.FepPanel.#ctor",kairo);
 {
 

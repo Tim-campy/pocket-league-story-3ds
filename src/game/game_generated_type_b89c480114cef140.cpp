@@ -171,6 +171,7 @@ pls::cs::Ref<cs_b89c480114cef140> cs_17b081440f10c655() { cs_init_b89c480114cef1
 }
 
 void cs_17b081440f10c655_init(pls::cs::Ref<cs_b89c480114cef140> cs_this) {
+cs_init_b89c480114cef140();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:cfg.MyConfig.#ctor",game);
 {}
 }

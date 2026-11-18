@@ -44,6 +44,7 @@ pls::cs::Ref<cs_4feff672b530e53a> cs_b971b33d4c019b20(std::int32_t v_id,pls::cs:
 }
 
 void cs_b971b33d4c019b20_init(pls::cs::Ref<cs_4feff672b530e53a> cs_this,std::int32_t v_id,pls::cs::Ref<cs_70a14a9a721e329a> v_tArea) {
+cs_init_4feff672b530e53a();
 cs_this->cs_715fd6f982e10ed8 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TGroupArea.cs:M:game.TGroupArea.#ctor(System.Int32,game.TArea):848",pls::cs::Array<pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));
 cs_this->cs_d23b87f2e8aaf9ff = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TGroupArea.cs:M:game.TGroupArea.#ctor(System.Int32,game.TArea):921",pls::assets::baked_array<std::int32_t>("256200658f3f770921712f82862d008160e306a2562b862bc74ed15a3715af58")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});
 cs_this->cs_6694a64c2504414a = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TGroupArea.cs:M:game.TGroupArea.#ctor(System.Int32,game.TArea):964",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull))));

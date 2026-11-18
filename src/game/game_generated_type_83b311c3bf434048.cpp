@@ -212,6 +212,7 @@ pls::cs::Ref<cs_83b311c3bf434048> cs_64c9f5f15fdbbee4() { cs_init_83b311c3bf4340
 }
 
 void cs_64c9f5f15fdbbee4_init(pls::cs::Ref<cs_83b311c3bf434048> cs_this) {
+cs_init_83b311c3bf434048();
 cs_this->cs_90c48aa3966cc14f = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Map.cs:M:game.Map.#ctor:1489",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_7cf81a47be13790c = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Map.cs:M:game.Map.#ctor:1531",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_522deb1589832776 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Map.cs:M:game.Map.#ctor:1596",pls::assets::baked_array<std::int32_t>("e096713791e61ddaadebc1462b42fa813de24a8f2fb39a4f4edeef4c382c7149")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});

@@ -25,6 +25,7 @@ pls::cs::Ref<cs_dc09c88a279424b5> cs_d337fafafa1bc98d() { cs_init_dc09c88a279424
 }
 
 void cs_d337fafafa1bc98d_init(pls::cs::Ref<cs_dc09c88a279424b5> cs_this) {
+cs_init_dc09c88a279424b5();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.TextFormat.#ctor",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_dc09c88a279424b5>>(cs_this); pls::cs::String cs_arg0 = pls::cs::String{}; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_470e46d1c0096c27(cs_receiver,cs_arg0); }());

@@ -103,6 +103,7 @@ pls::cs::Ref<cs_1815a6964debf82a> cs_8583931b461c8c9c() { cs_init_1815a6964debf8
 }
 
 void cs_8583931b461c8c9c_init(pls::cs::Ref<cs_1815a6964debf82a> cs_this) {
+cs_init_1815a6964debf82a();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.GameUtil.#ctor",game);
 {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/GameUtil.cs:M:game.GameUtil.#ctor:1317",pls::cs::Array<float>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5bull)))); cs_9a7c211135939d32() = cs_value; return cs_value; }());

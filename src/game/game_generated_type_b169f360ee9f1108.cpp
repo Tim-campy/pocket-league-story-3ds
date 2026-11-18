@@ -20,6 +20,7 @@ pls::cs::Ref<cs_b169f360ee9f1108> cs_fdfacb67cda123d7() { cs_init_b169f360ee9f11
 }
 
 void cs_fdfacb67cda123d7_init(pls::cs::Ref<cs_b169f360ee9f1108> cs_this) {
+cs_init_b169f360ee9f1108();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.SkuDetails.#ctor",game);
 {
 
@@ -33,6 +34,7 @@ pls::cs::Ref<cs_b169f360ee9f1108> cs_943696d8c8e0a6d0(pls::cs::String v_itemType
 }
 
 void cs_943696d8c8e0a6d0_init(pls::cs::Ref<cs_b169f360ee9f1108> cs_this,pls::cs::String v_itemType,pls::cs::String v_jsonSkuDetails) {
+cs_init_b169f360ee9f1108();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.SkuDetails.#ctor(System.String,System.String)",game);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_itemType; pls::game::cs_require(cs_target)->cs_e0a5bfe7faf6c07e = cs_value; return cs_value; }());
@@ -52,6 +54,7 @@ pls::cs::Ref<cs_b169f360ee9f1108> cs_26ea8b67da16b42f(pls::cs::String v_jsonSkuD
 }
 
 void cs_26ea8b67da16b42f_init(pls::cs::Ref<cs_b169f360ee9f1108> cs_this,pls::cs::String v_jsonSkuDetails) {
+cs_init_b169f360ee9f1108();
 ([&]() { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0069" u"\x006e" u"\x0061" u"\x0070" u"\x0070" u"",5);}()); pls::cs::String cs_arg1 = v_jsonSkuDetails; cs_943696d8c8e0a6d0_init(pls::cs::static_pointer_cast<cs_b169f360ee9f1108>(cs_this),cs_arg0,cs_arg1); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.SkuDetails.#ctor(System.String)",game);
 {

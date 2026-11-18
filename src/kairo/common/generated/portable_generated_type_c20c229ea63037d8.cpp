@@ -27,6 +27,7 @@ pls::cs::Ref<cs_c20c229ea63037d8> cs_5d0efd71eb31c332(pls::cs::Ref<cs_c20c229ea6
 }
 
 void cs_5d0efd71eb31c332_init(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Ref<cs_c20c229ea63037d8> v_property) {
+cs_init_c20c229ea63037d8();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty)",kairo);
 {
 if (([&]() { auto cs_left = pls::cs::box(v_property); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
@@ -47,6 +48,7 @@ pls::cs::Ref<cs_c20c229ea63037d8> cs_1ec84b4dfcd94394(pls::cs::Array<pls::cs::Re
 }
 
 void cs_1ec84b4dfcd94394_init(pls::cs::Ref<cs_c20c229ea63037d8> cs_this,pls::cs::Array<pls::cs::Ref<cs_c20c229ea63037d8>> v_pros,pls::cs::Array<std::int32_t> v_ints,pls::cs::Array<std::int64_t> v_lngs,pls::cs::Array<pls::cs::String> v_strs,pls::cs::Array<pls::cs::Array<std::uint8_t>> v_bins) {
+cs_init_c20c229ea63037d8();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty[],System.Int32[],System.Int64[],System.String[],System.Byte[][])",kairo);
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_c20c229ea63037d8>>(cs_this); pls::cs::Array<std::int32_t> cs_arg0 = v_ints; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_e2efbe60a722c41f(cs_receiver,cs_arg0); }());

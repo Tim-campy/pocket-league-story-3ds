@@ -159,6 +159,7 @@ pls::cs::Ref<cs_7c0f60cfdd8cf265> cs_e11ce83d845d2cdc() { cs_init_7c0f60cfdd8cf2
 }
 
 void cs_e11ce83d845d2cdc_init(pls::cs::Ref<cs_7c0f60cfdd8cf265> cs_this) {
+cs_init_7c0f60cfdd8cf265();
 cs_this->cs_fbf4fe665706f8c9 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/MapMain.cs:M:game.MapMain.#ctor:1719",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_5066f59a0b8e2673 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/MapMain.cs:M:game.MapMain.#ctor:1784",pls::assets::baked_array<std::int32_t>("0106020d76b287ebf1e43deed978ffaf4cb2f0ab7f72e419c3d3772df2b939ac")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});
 cs_this->cs_6c2603a9ca88487c = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/MapMain.cs:M:game.MapMain.#ctor:2198",pls::assets::baked_array<std::int32_t>("35adbd036b0b4fbd8b4884cedd845f1795a2feb0ad98434727c294a0ee29821d")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});

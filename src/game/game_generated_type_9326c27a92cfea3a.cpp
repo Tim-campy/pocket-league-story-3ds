@@ -63,6 +63,7 @@ pls::cs::Array<std::int32_t>& cs_19e8a97a219b74b4(){cs_init_9326c27a92cfea3a();r
 
 // M:kairo.unity.surface.SurfaceBase.#ctor
 void cs_a1b466bc14363691_init(pls::cs::Ref<cs_9326c27a92cfea3a> cs_this) {
+cs_init_9326c27a92cfea3a();
 cs_this->cs_fd43e19d8c4585af = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs:M:kairo.unity.surface.SurfaceBase.#ctor:6720",pls::cs::List<float>::make());
 cs_this->cs_568eda1d21a5fdb4 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs:M:kairo.unity.surface.SurfaceBase.#ctor:6806",pls::cs::List<pls::cs::Ref<pls::kairo::Graphics>>::make());
 cs_this->cs_b48b2a151f962449 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs:M:kairo.unity.surface.SurfaceBase.#ctor:7048",pls::cs::make_ref<pls::cs::Object>());

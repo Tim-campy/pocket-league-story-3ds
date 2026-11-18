@@ -293,6 +293,7 @@ pls::cs::Ref<cs_e7d772862db62924> cs_6b6e33fd4eab08cf() { cs_init_e7d772862db629
 }
 
 void cs_6b6e33fd4eab08cf_init(pls::cs::Ref<cs_e7d772862db62924> cs_this) {
+cs_init_e7d772862db62924();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.common.cfg.Config.#ctor",kairo);
 {
 

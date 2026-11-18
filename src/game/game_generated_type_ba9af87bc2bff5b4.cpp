@@ -41,6 +41,7 @@ pls::cs::Ref<cs_ba9af87bc2bff5b4> cs_a791cb158e08c2da() { cs_init_ba9af87bc2bff5
 }
 
 void cs_a791cb158e08c2da_init(pls::cs::Ref<cs_ba9af87bc2bff5b4> cs_this) {
+cs_init_ba9af87bc2bff5b4();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TradeData.#ctor",game);
 {
@@ -56,6 +57,7 @@ pls::cs::Ref<cs_ba9af87bc2bff5b4> cs_37b0bebd00841d79(pls::cs::String v_src) { c
 }
 
 void cs_37b0bebd00841d79_init(pls::cs::Ref<cs_ba9af87bc2bff5b4> cs_this,pls::cs::String v_src) {
+cs_init_ba9af87bc2bff5b4();
 ([&]() { cs_0c4b303cde7d7a27_init(pls::cs::static_pointer_cast<cs_b08d770c239489bf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.TradeData.#ctor(System.String)",game);
 {

@@ -19,6 +19,7 @@ pls::cs::Ref<cs_75beb3a42e16f9bd> cs_f09852df11161a25() { cs_init_75beb3a42e16f9
 }
 
 void cs_f09852df11161a25_init(pls::cs::Ref<cs_75beb3a42e16f9bd> cs_this) {
+cs_init_75beb3a42e16f9bd();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.WebBox.#ctor",game);
 {
 ([&]() -> bool { return cs_3a9f80bb9d4c67b0(); }());

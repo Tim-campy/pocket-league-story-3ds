@@ -32,6 +32,7 @@ pls::cs::Ref<cs_ec8ac507fb495e84> cs_f0504e3d15ead28a() { cs_init_ec8ac507fb495e
 }
 
 void cs_f0504e3d15ead28a_init(pls::cs::Ref<cs_ec8ac507fb495e84> cs_this) {
+cs_init_ec8ac507fb495e84();
 ([&]() { cs_7a28af13c1c2f5ac_init(pls::cs::static_pointer_cast<cs_2d2e25a6914f7709>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.MyFriend.#ctor",game);
 {

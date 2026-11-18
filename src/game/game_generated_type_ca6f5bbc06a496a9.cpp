@@ -275,6 +275,7 @@ pls::cs::Ref<cs_ca6f5bbc06a496a9> cs_b9391ddec5a3d861() { cs_init_ca6f5bbc06a496
 }
 
 void cs_b9391ddec5a3d861_init(pls::cs::Ref<cs_ca6f5bbc06a496a9> cs_this) {
+cs_init_ca6f5bbc06a496a9();
 cs_this->cs_3ea872603d2e9d76 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/Camera.cs:M:game.Camera.#ctor:2418",pls::assets::baked_array<std::int32_t>("cfbb2705fa209b2f85109d02cd41bcf09716481ed21745c0266afd732d892446"));
 cs_this->cs_ee86be3caf241af4 = true;
 cs_this->cs_59fe5b7f304c8d90 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull));

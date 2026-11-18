@@ -827,6 +827,7 @@ pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_0d4cf39d498f953d() { cs_init_65bcdaa7ea8c7d
 }
 
 void cs_0d4cf39d498f953d_init(pls::cs::Ref<cs_65bcdaa7ea8c7d7a> cs_this) {
+cs_init_65bcdaa7ea8c7d7a();
 cs_this->cs_d9c6b5257622c335 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/SoccerForm.cs:M:form.SoccerForm.#ctor:4553",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull))));
 cs_this->cs_339cab4ba45b15ae = pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/SoccerForm.cs:M:form.SoccerForm.#ctor:4593",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull))));
 cs_this->cs_701ac75d3a83a65a = pls::source_allocations::completed("new_object","src/Assembly-CSharp/form/SoccerForm.cs:M:form.SoccerForm.#ctor:4796",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));
@@ -2863,4 +2864,3 @@ std::int32_t v_evaCumstomer_88933 = ([&]() -> std::int32_t { auto cs_receiver = 
 std::int32_t v_idealSalse_88978 = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_75707aa3f1629c85>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bbae670b7d242ec3; }())); std::int32_t cs_arg0 = v_evaCumstomer_88933; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_1b7a4355eac56530(cs_receiver,cs_arg0); }());
 float v_ticketSalseRate_89035 = static_cast<float>(([&]() -> float { auto cs_receiver = static_cast<pls::cs::Ref<cs_75707aa3f1629c85>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bbae670b7d242ec3; }())); std::int32_t cs_arg0 = v_evaCumstomer_88933; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_93f3b9d4686589de(cs_receiver,cs_arg0); }()));
 std::int32_t v_num_89100 = pls::cs::conv_i32((([&]() -> double { auto cs_left = static_cast<double>(static_cast<float>(v_idealSalse_88978)); auto cs_right = static_cast<double>(v_ticketSalseRate_89035); return (cs_left * cs_right); }())));
-std::int64_t v_num2_89158 = ([&]()

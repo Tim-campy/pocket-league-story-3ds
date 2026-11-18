@@ -62,6 +62,7 @@ pls::cs::Ref<cs_5dc998c2cffb18c8> cs_148ae4520ebf5819(pls::cs::Delegate<void(pls
 }
 
 void cs_148ae4520ebf5819_init(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_connectMethod,pls::cs::Delegate<void(pls::cs::Ref<cs_5dc998c2cffb18c8>,pls::cs::Ref<cs_408ac5c74e5f3515>)> v_resultMethod) {
+cs_init_5dc998c2cffb18c8();
 cs_this->cs_c1863875b9b75cb4 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/form/HttpForm.cs:M:system.form.HttpForm.#ctor(system.form.HttpForm.HttpMethod,system.form.HttpForm.HttpMethod):1427",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<pls::cs::Object>>::make());
 ([&]() { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x38dull)); cs_1980f3b6859ab3da_init(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this),cs_arg0); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.#ctor(system.form.HttpForm.HttpMethod,system.form.HttpForm.HttpMethod)",game);

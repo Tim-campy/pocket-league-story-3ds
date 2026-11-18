@@ -33,6 +33,7 @@ pls::cs::Ref<cs_96c54d9323f24f8e> cs_188280dcda94b686(pls::cs::Ref<cs_96c54d9323
 }
 
 void cs_188280dcda94b686_init(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::Ref<cs_96c54d9323f24f8e> v_balloon) {
+cs_init_96c54d9323f24f8e();
 cs_this->cs_26d7ee92947806bd = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1239",pls::cs::List<pls::cs::Ref<cs_9f5a071d05c1d020>>::make());
 cs_this->cs_34be2585a809d78b = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1292",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
 cs_this->cs_4b66e3dd8daf3086 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(kairo.unity.ui.Balloon):1349",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
@@ -50,6 +51,7 @@ pls::cs::Ref<cs_96c54d9323f24f8e> cs_c46e5f8db55f0d51(pls::cs::String v_text,std
 }
 
 void cs_c46e5f8db55f0d51_init(pls::cs::Ref<cs_96c54d9323f24f8e> cs_this,pls::cs::String v_text,std::int32_t v_color) {
+cs_init_96c54d9323f24f8e();
 cs_this->cs_26d7ee92947806bd = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1239",pls::cs::List<pls::cs::Ref<cs_9f5a071d05c1d020>>::make());
 cs_this->cs_34be2585a809d78b = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1292",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));
 cs_this->cs_4b66e3dd8daf3086 = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1349",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));

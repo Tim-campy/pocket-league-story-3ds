@@ -16,6 +16,7 @@ pls::cs::Ref<cs_8a422f6f9c1bd55e> cs_ddcc638d2dde3014() { cs_init_8a422f6f9c1bd5
 }
 
 void cs_ddcc638d2dde3014_init(pls::cs::Ref<cs_8a422f6f9c1bd55e> cs_this) {
+cs_init_8a422f6f9c1bd55e();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:BuildInfos.BuildInfo.#ctor",game);
 {}
 }

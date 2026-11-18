@@ -145,6 +145,7 @@ pls::cs::Ref<cs_ec7bde62b3c2b35f> cs_782fa1fc1af65d01() { cs_init_ec7bde62b3c2b3
 }
 
 void cs_782fa1fc1af65d01_init(pls::cs::Ref<cs_ec7bde62b3c2b35f> cs_this) {
+cs_init_ec7bde62b3c2b35f();
 cs_this->cs_9e712efeca5b30d7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1305",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_e48554a4b57f9fee = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1367",pls::assets::baked_array<std::int32_t>("b343353743a9174c4ae846129d729a5b8f7a6e911406c8e3eadf00b1508b6744")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});
 cs_this->cs_53f4fa45f700d80d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor:1438",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
@@ -165,6 +166,7 @@ pls::cs::Ref<cs_ec7bde62b3c2b35f> cs_71a0691cbf1139d5(pls::cs::String v_src) { c
 }
 
 void cs_71a0691cbf1139d5_init(pls::cs::Ref<cs_ec7bde62b3c2b35f> cs_this,pls::cs::String v_src) {
+cs_init_ec7bde62b3c2b35f();
 cs_this->cs_9e712efeca5b30d7 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor(System.String):1305",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));
 cs_this->cs_e48554a4b57f9fee = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor(System.String):1367",pls::assets::baked_array<std::int32_t>("b343353743a9174c4ae846129d729a5b8f7a6e911406c8e3eadf00b1508b6744")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});
 cs_this->cs_53f4fa45f700d80d = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/FanActData.cs:M:data.FanActData.#ctor(System.String):1438",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));

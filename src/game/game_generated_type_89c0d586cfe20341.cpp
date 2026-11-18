@@ -26,6 +26,7 @@ pls::cs::Ref<cs_89c0d586cfe20341> cs_f8a8e5cab3297e6d() { cs_init_89c0d586cfe203
 }
 
 void cs_f8a8e5cab3297e6d_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this) {
+cs_init_89c0d586cfe20341();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.#ctor",kairo);
 {
 
@@ -39,6 +40,7 @@ pls::cs::Ref<cs_89c0d586cfe20341> cs_bab91f84bee2e3d9(pls::cs::Ref<cs_4c145fe8f0
 }
 
 void cs_bab91f84bee2e3d9_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Ref<cs_4c145fe8f008af05> v_target) {
+cs_init_89c0d586cfe20341();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.#ctor(java.lang.JRunnable)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):715",([&]() { auto cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(java.lang.JRunnable):726",([&](){auto cs_target=static_cast<pls::cs::Ref<cs_4c145fe8f008af05>>(v_target);if(!cs_target)throw pls::cs::NullReferenceException();return pls::cs::Delegate<void()>::bind(cs_target,pls::cs::box(cs_target)->managed_delegate_method_id("cs_virtual_6cb47d5f5df8e7cc"),[cs_weak=pls::cs::DelegateCapture<cs_4c145fe8f008af05>(cs_target)]()->void{auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();cs_receiver->cs_virtual_6cb47d5f5df8e7cc();});}())); return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());
@@ -52,6 +54,7 @@ pls::cs::Ref<cs_89c0d586cfe20341> cs_6ac8ad3def9eea9e(pls::cs::Delegate<void()> 
 }
 
 void cs_6ac8ad3def9eea9e_init(pls::cs::Ref<cs_89c0d586cfe20341> cs_this,pls::cs::Delegate<void()> v_start) {
+cs_init_89c0d586cfe20341();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JThread.#ctor(System.Threading.ThreadStart)",kairo);
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.#ctor(System.Threading.ThreadStart):797",([&]() { auto cs_arg0 = v_start; return pls::cs::make_ref<pls::cs::Thread>(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_a54a7772b0af70eb = cs_value; return cs_value; }());

@@ -18,6 +18,7 @@ pls::cs::Ref<cs_e6ed65290db381ba> cs_44e98bc97ba8204b() { cs_init_e6ed65290db381
 }
 
 void cs_44e98bc97ba8204b_init(pls::cs::Ref<cs_e6ed65290db381ba> cs_this) {
+cs_init_e6ed65290db381ba();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.util.Json.#ctor",game);
 {}
 }

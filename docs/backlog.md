@@ -3,6 +3,64 @@
 Itens registrados para tratamento posterior. Nada aqui está autorizado a
 mudar a lógica do jogo antes do congelamento.
 
+## Fase 3, etapa 2 — primeira alteração: largura de 400 na tela de cima
+
+Registrado em 2026-11-18 (decisão do usuário, item 3: só leitura, aplicar
+depois do congelamento). Medido com sondas privadas num snapshot de diagnóstico
+em `build/` (`SurfaceBase.SetSize/SetHeight`, fim de
+`SurfaceManager.AdjustSurfaceLayout`, `GameForm.Draw`), roteiro dos menus,
+protótipo de duas telas.
+
+**O que fixa a área do jogo em 240×192 (em x = 80) quando a plataforma
+informa 400×240.** Não é uma largura fixa no jogo; é a orientação.
+
+1. Ao entrar no mapa, `GameForm` (Init) chama
+   `app_.SetOrientation(apdat_.sysSave_.ints[13])`
+   (`reference/src/Assembly-CSharp/form/GameForm.cs:308-316`). O valor salvo
+   corresponde à rotação automática (`WindowOrientation::auto_rotation`).
+2. O host guarda esse modo e o devolve na leitura:
+   `src/kairo/platform/sdl/backend.cpp:59` (`Backend::orientation()` devolve o
+   modo guardado tal como está); o host nulo/ARM faz o mesmo
+   (`src/main/null_main.cpp:210-211`). Daí `IApplication::IsSide()`
+   (`src/kairo/api/application.hpp:117-121`) passa a dizer falso, embora a tela
+   continue deitada. No Unity, ler `Screen.orientation` com rotação automática
+   devolve a orientação real do aparelho, nunca `AutoRotation`
+   (`reference/src/KairoLibrary/kairo/unity/ui/IApplication.cs:637-641` lê
+   `Screen.orientation`).
+3. `SurfaceManager.AdjustSurfaceLayout`
+   (`reference/src/Assembly-CSharp/surface/SurfaceManager.cs:103-111`), com
+   `wide_` falso (calculado no boot com `IsSide()` verdadeiro, linhas 44-51),
+   troca largura e altura como se o aparelho tivesse girado para retrato:
+   largura 240, altura 400. Com 400 − 240 = 160 ≥ `SIZE_FULL`×0,75 = 120 de
+   altura livre, o modo da `GamePad` deixa de ser 2 (linhas 133-135) e passa a
+   ser o salvo (`ints[15]`, modo 1): barra de 48 px.
+4. Depois de `Fullscreen`, o leiaute relê o `Canvas` sem a troca
+   (`width=400`, `num3=240`, linhas 162-164): a vista fica com
+   `SetSize(240, 240)` (linha 128), `SetHeight(240 − 48 = 192)` (linha 183) e
+   `SetLocation((400 − 240)/2 = 80, 0)` (linha 187). É o quadro observado.
+
+Sequência medida por quadro, no mapa: vista `SetSize 240x240` →
+`GamePad SetSize 240x400` → `GamePad SetHeight 48` → vista `SetHeight 192` →
+`GamePad SetSize 400x240`. Antes do mapa (título), a mesma função deixa a vista
+em 400×240, modo 2, colunas laterais de 61 px.
+
+**Mudança mínima que liberaria a largura.** Na plataforma (KairoLibrary
+reimplementada, não no código traduzido): o leitor de orientação do host
+devolver a orientação física quando o modo guardado for `auto_rotation`, como
+o Unity (`backend.cpp:59` e o equivalente do host do 3DS). Com isso `IsSide()`
+continua verdadeiro no mapa, não há troca, o `SurfaceManager` escolhe o modo 2
+e a vista fica com 400×240; o `GameForm` já trata vistas com mais de 240
+(`GameForm.cs:431-455`, `GetTopBarOffT/M/MBack`). Segunda parte, se a barra
+`GamePad` for para a tela de baixo (B.3): no modo 2 a `GamePad` reserva colunas
+laterais de 61 px para os rótulos (`GamePad.GetSideSize`, `GamePad.cs:1010-1019`;
+`GameView.GetSideSoftWidth`, `GameView.cs:372-381`), que o mapa e as telas
+descontam (`GameForm.cs:1142`, `AppData.cs:5368`); retirá-las exige mudar
+código traduzido.
+
+Nota para a decisão: a primeira parte é correção de fidelidade da plataforma
+(o original no Android, deitado, nunca vê `IsSide()` falso), não alteração do
+jogo. Por pedido do usuário, nada foi alterado agora.
+
 ## Requisitos do congelamento
 
 ### Critério 5 — nomes originais no C++ legível

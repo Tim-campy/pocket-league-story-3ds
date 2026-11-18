@@ -41,7 +41,6 @@ void SetReserveSave(std::int32_t x)override{cs_51448637417220ba(value_,x);}
 void Save()override{cs_ecb38147f2318edc(value_);}
 void SaveAll()override{cs_f0ab887a70f5eb9a(value_);}
 void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::trace_value(value_,visitor);}
-void release_edges()override{cs::release_value(value_);}
 };
 return cs::make_ref<SourceKairoAdapter>(value);});
 // Complete-corpus proof: no concrete SaveRecorder subclass/constructor call.

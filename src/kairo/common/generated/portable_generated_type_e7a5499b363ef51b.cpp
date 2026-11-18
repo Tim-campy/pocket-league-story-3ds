@@ -6,8 +6,6 @@ namespace pls::generated {
 
 void cs_e7a5499b363ef51b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_8aa92818c04571d3,visitor);pls::cs::trace_value(cs_e65a8825426ed7a3,visitor);pls::cs::trace_value(cs_0f6af5e5e6987974,visitor);}
 
-void cs_e7a5499b363ef51b::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_8aa92818c04571d3);pls::cs::release_value(cs_e65a8825426ed7a3);pls::cs::release_value(cs_0f6af5e5e6987974);}
-
 std::int64_t cs_e7a5499b363ef51b::cs_virtual_c6a293635ddab59b(std::int64_t v_cnt) {return cs_c6a293635ddab59b(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()),v_cnt);}
 
 void cs_e7a5499b363ef51b::cs_virtual_a1f672a1edc7446d() {cs_a1f672a1edc7446d(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}

@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_0f74b892eb1cdde4 : cs_86b804989f2a95bb {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_0f74b892eb1cdde4)||target==typeid(cs_86b804989f2a95bb)||cs_86b804989f2a95bb::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_da04bc9883e88cc6")return "M:game.TBall.GetToGoalLineTime(game.Player)";return cs_86b804989f2a95bb::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "game.TBall";}
 std::string managed_type_name()const override{return source_managed_type_name();}

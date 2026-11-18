@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_cd97eee87b3216c4::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);pls::cs::trace_value(cs_5e52c7bad466e5ea,visitor);}
 
-void cs_cd97eee87b3216c4::release_edges(){pls::cs::ExceptionObject::release_edges();pls::cs::release_value(cs_5e52c7bad466e5ea);}
-
 void cs_init_cd97eee87b3216c4(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.KairoException",[](){
 
 });}

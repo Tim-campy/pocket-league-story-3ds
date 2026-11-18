@@ -7,12 +7,10 @@ int assertions=0;void check(bool condition,const char*message){++assertions;if(!
 struct Item:Object {
     Ref<Object>owner;Ref<Item>self;
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(owner,visitor);trace_value(self,visitor);}
-    void release_edges()override{release_value(owner);release_value(self);}
 };
 struct Holder:Object {
     Stack<Ref<Item>>stack=Stack<Ref<Item>>::make();
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(stack,visitor);}
-    void release_edges()override{release_value(stack);}
 };
 }
 int main(){GcMutatorScope mutator;

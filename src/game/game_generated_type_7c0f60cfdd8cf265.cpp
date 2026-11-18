@@ -28,8 +28,6 @@ namespace pls::game {
 
 void cs_7c0f60cfdd8cf265::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_41266fca9710b6a6,visitor);pls::cs::trace_value(cs_e19f7cb3134d030c,visitor);pls::cs::trace_value(cs_72c428c8805565a1,visitor);pls::cs::trace_value(cs_fbf4fe665706f8c9,visitor);pls::cs::trace_value(cs_5066f59a0b8e2673,visitor);pls::cs::trace_value(cs_ad464509c81dad24,visitor);pls::cs::trace_value(cs_6c2603a9ca88487c,visitor);pls::cs::trace_value(cs_1d803c02b57d0068,visitor);}
 
-void cs_7c0f60cfdd8cf265::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_41266fca9710b6a6);pls::cs::release_value(cs_e19f7cb3134d030c);pls::cs::release_value(cs_72c428c8805565a1);pls::cs::release_value(cs_fbf4fe665706f8c9);pls::cs::release_value(cs_5066f59a0b8e2673);pls::cs::release_value(cs_ad464509c81dad24);pls::cs::release_value(cs_6c2603a9ca88487c);pls::cs::release_value(cs_1d803c02b57d0068);}
-
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_ce9c482ff23e237f_value{};
 
 static pls::cs::Array<std::int32_t> cs_b7f85b6936470cb6_value{};

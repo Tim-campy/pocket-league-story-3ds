@@ -57,7 +57,6 @@ def main():
     sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
     for path,digest in stamp.items():
         if sha(ROOT/path)!=digest:raise ValueError('Baseline source changed: '+path)
-    if 'PLS_TRACING_GC:BOOL=ON' not in (baseline/'CMakeCache.txt').read_text():raise ValueError('This measurement requires the integrated tracing runtime')
     folder.mkdir()
     for kind in range(5):
         paths=[captures/f'{kind}-{i}.bin' for i in range(16)]
@@ -86,7 +85,7 @@ def main():
     cmake='cmake_minimum_required(VERSION 3.20)\nproject(HotMethods LANGUAGES CXX)\nset(CMAKE_CXX_STANDARD 17)\nset(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)\nfind_package(freetype CONFIG REQUIRED)\n'
     cmake+='add_executable(hot_methods '+q(ROOT/'tools/profiling/hot_methods_native.cpp')+' '+' '.join(map(q,objects))+')\n'
     cmake+='target_include_directories(hot_methods PRIVATE '+' '.join(map(q,includes))+')\n'
-    cmake+='target_compile_definitions(hot_methods PRIVATE PLS_NULL_BACKEND=1 PLS_TRACING_GC=1)\ntarget_compile_options(hot_methods PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(hot_methods PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
+    cmake+='target_compile_definitions(hot_methods PRIVATE PLS_NULL_BACKEND=1)\ntarget_compile_options(hot_methods PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(hot_methods PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
     cmake+='target_link_libraries(hot_methods PRIVATE '+q(baseline/'null_runtime.lib')+' Freetype::Freetype Psapi Advapi32)\n'
     (folder/'CMakeLists.txt').write_text(cmake)
     with (folder/'native-build.log').open('wb') as log:

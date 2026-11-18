@@ -7,7 +7,6 @@ namespace pls::generated {
 struct cs_924db3d974bae2af : cs_bd164c3c94a49e2a {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_924db3d974bae2af)||target==typeid(cs_bd164c3c94a49e2a)||cs_bd164c3c94a49e2a::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:kairo.unity.util.SecureLong.Equals(System.Object)";if(slot=="GetHashCode")return "M:kairo.unity.util.SecureLong.GetHashCode";return cs_bd164c3c94a49e2a::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "kairo.unity.util.SecureLong";}
 std::string managed_type_name()const override{return source_managed_type_name();}

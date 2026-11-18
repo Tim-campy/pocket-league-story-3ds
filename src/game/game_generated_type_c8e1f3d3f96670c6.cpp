@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_c8e1f3d3f96670c6::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_d48b2c060366a193,visitor);pls::cs::trace_value(cs_00f172d916ac1eda,visitor);pls::cs::trace_value(cs_5911c1aef793c754,visitor);}
 
-void cs_c8e1f3d3f96670c6::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_d48b2c060366a193);pls::cs::release_value(cs_00f172d916ac1eda);pls::cs::release_value(cs_5911c1aef793c754);}
-
 bool cs_c8e1f3d3f96670c6::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_e4546eba7825f981(pls::cs::static_pointer_cast<cs_c8e1f3d3f96670c6>(shared_from_this()),v_obj);}
 
 std::int32_t cs_c8e1f3d3f96670c6::GetHashCode() {return cs_f80b20705650c56f(pls::cs::static_pointer_cast<cs_c8e1f3d3f96670c6>(shared_from_this()));}

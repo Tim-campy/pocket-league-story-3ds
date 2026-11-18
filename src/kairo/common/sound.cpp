@@ -26,7 +26,6 @@ public:
     void Pump()override{audio_call([&]{mixer_->pump();});}
     void memory_ranges(const memory::RangeVisitor& visit)const override{mixer_->memory_ranges(visit);}
     void trace_edges(const cs::EdgeVisitor& v)const override{for(const auto& port:ports_)cs::trace_value(port.clip,v);}
-    void release_edges()override{for(auto& port:ports_)pls::cs::clear_ref(port.clip);}
 };
 #endif
 }
@@ -63,13 +62,12 @@ void SoundPlayer::Stop(cs::Ref<SoundBase> sound){if(!sound)throw cs::NullReferen
 void SoundPlayer::StopAll(){while(!playing_.empty())playing_.front()->Stop();playing_.clear();}
 void SoundPlayer::SetPortMax(std::int32_t maximum){if(maximum<0)throw cs::OverflowException();if(maximum>4)throw cs::NotSupportedException("Native SoundPlayer supports the original four streaming ports");if(static_cast<std::size_t>(maximum)==ports_.size())return;for(std::size_t i=static_cast<std::size_t>(maximum);i<ports_.size();++i)RemovePort(static_cast<std::int32_t>(i));ports_.resize(static_cast<std::size_t>(maximum));}
 void SoundPlayer::trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(volumes_,v);cs::trace_value(master_,v);cs::trace_value(muted_,v);cs::trace_value(output_,v);for(const auto& p:ports_)cs::trace_value(p.sound,v);for(const auto& s:playing_)cs::trace_value(s,v);}
-void SoundPlayer::release_edges(){cs::release_value(volumes_);cs::release_value(master_);cs::release_value(muted_);pls::cs::clear_ref(output_);ports_.clear();playing_.clear();}
 SoundBase::SoundBase(cs::Ref<SoundData> data,std::int32_t type,std::int32_t loop):data_(std::move(data)),type_(type),loop_(loop){}
 void SoundBase::register_sound(cs::Ref<SoundBase> sound){sound_list_.push_back(std::move(sound));}
 std::int32_t SoundBase::state(){if(!data_)return 0;auto player=SoundPlayer::GetInstance();const auto port=player->PortOf(this);if(port==-1)return 3;bool playing=false;ui([&]{playing=player->output_->IsPlaying(port);},player);return playing?2:3;}
 void SoundBase::SetLoop(std::int32_t loop){loop_=loop;auto player=SoundPlayer::GetInstance();const auto port=player->PortOf(this);if(port!=-1)player->output_->SetLoop(port,loop==-1);}
 void SoundBase::Dispose(){if(data_)ui([&]{cs::clear_ref(data_);},shared_from_this());cs::clear_ref(data_);type_=0;const auto self=pls::cs::static_pointer_cast<SoundBase>(shared_from_this());const auto found=std::find(sound_list_.begin(),sound_list_.end(),self);if(found!=sound_list_.end())sound_list_.erase(found);}
-void SoundBase::trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(name_,v);cs::trace_value(data_,v);}void SoundBase::release_edges(){cs::release_value(name_);pls::cs::clear_ref(data_);}
+void SoundBase::trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(name_,v);cs::trace_value(data_,v);}
 cs::Ref<SoundOGG> SoundOGG::Load(cs::String file){
     if(file.is_null())throw cs::NullReferenceException();auto name=file.code_units();const auto dot=name.rfind(u'.');if(dot!=std::u16string::npos)name.resize(dot);
     cs::Ref<SoundOGG> result{};ui([&]{if(!sound_catalog)throw cs::InvalidOperationException("Sound asset catalog is not installed");auto id=cs::String(name).utf8();for(char& c:id)if(c>='A'&&c<='Z')c=static_cast<char>(c-'A'+'a');const assets::Entry* entry=nullptr;for(const auto* candidate:sound_catalog->entries(assets::Kind::audio))if(candidate->key==id){entry=candidate;break;}

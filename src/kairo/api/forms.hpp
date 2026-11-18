@@ -12,7 +12,7 @@ public:
     AppEventType Type;
     cs::Array<cs::Ref<cs::Object>> Args{};
     AppEvent(AppEventType type,cs::Array<cs::Ref<cs::Object>> args={}):Type(type),Args(args.is_null()?cs::Array<cs::Ref<cs::Object>>::make(0):args){}
-    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(Args,v);}void release_edges()override{cs::release_value(Args);}
+    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(Args,v);}
 };
 class FormManagerBase;
 class SourceFormExecution;
@@ -52,7 +52,7 @@ public:
     bool Push(cs::Ref<FormBase>);bool Pop();bool CheckUsable();
     std::int32_t GetId(){return id_;}std::int32_t GetProcessMode(){return mode_.load();}void SetProcessMode(std::int32_t value){mode_.store(value);}
     bool IsAlive(){return mode_.load()==3||mode_.load()==1||mode_.load()==2;}
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
 };
 // Platform bridges resolve real source collaborators. A null game-state bridge
 // is useful only for isolated null-branch fixtures: the authenticated game
@@ -114,7 +114,7 @@ public:
     void SetPause(bool value){pause_=value;}bool IsPause(){return pause_;}void SurfaceChanged(){surface_changed_=true;}
     bool capturing_{};
     bool IsCapturing(){return capturing_;}
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
     // Source warning is observable; host must implement it before false Init /
     // Finish is accepted. The warning string remains a source-derived concern.
     std::function<void(cs::Ref<FormBase>,bool)> on_lifecycle_warning;

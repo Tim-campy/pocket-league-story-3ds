@@ -5,8 +5,6 @@ namespace pls::game {
 
 void cs_23a020152d468724::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_cd97eee87b3216c4::trace_edges(visitor);pls::cs::trace_value(cs_0e62fcf0f027f737,visitor);}
 
-void cs_23a020152d468724::release_edges(){cs_cd97eee87b3216c4::release_edges();pls::cs::release_value(cs_0e62fcf0f027f737);}
-
 pls::cs::String cs_23a020152d468724::ToString() {return cs_959efe4557f9babf(pls::cs::static_pointer_cast<cs_23a020152d468724>(shared_from_this()));}
 
 void cs_init_23a020152d468724(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.NotPermitException",[](){

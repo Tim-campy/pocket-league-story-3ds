@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_fbfef5c19ac20749::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_d610593762120cde,visitor);pls::cs::trace_value(cs_ede9b012c16594d4,visitor);pls::cs::trace_value(cs_11096a2934652136,visitor);pls::cs::trace_value(cs_aed8d166cc394ada,visitor);pls::cs::trace_value(cs_a44884f8becb8e1b,visitor);pls::cs::trace_value(cs_0915461b6b8b6552,visitor);}
 
-void cs_fbfef5c19ac20749::release_edges(){pls::cs::release_value(cs_d610593762120cde);pls::cs::release_value(cs_ede9b012c16594d4);pls::cs::release_value(cs_11096a2934652136);pls::cs::release_value(cs_aed8d166cc394ada);pls::cs::release_value(cs_a44884f8becb8e1b);pls::cs::release_value(cs_0915461b6b8b6552);}
-
 void cs_init_fbfef5c19ac20749(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Image.TextRenderTask",[](){
 
 });}

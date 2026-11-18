@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_b08d770c239489bf::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_18df8a841fecdd70,visitor);pls::cs::trace_value(cs_77b7447583c10f78,visitor);}
 
-void cs_b08d770c239489bf::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_18df8a841fecdd70);pls::cs::release_value(cs_77b7447583c10f78);}
-
 void cs_init_b08d770c239489bf(){static pls::cs::TypeInitState state;state.run("data.BaseData",[](){
 
 });}

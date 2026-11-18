@@ -5,8 +5,6 @@ namespace pls::generated {
 
 void cs_ea324a0bbfe717fe::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_f48613bc1c6327b8,visitor);}
 
-void cs_ea324a0bbfe717fe::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_f48613bc1c6327b8);}
-
 void cs_ea324a0bbfe717fe::cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_t> v_b,std::int32_t v_offset,std::int32_t v_len) {cs_eeffa75bcd0cd73d(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b,v_offset,v_len);}
 
 void cs_ea324a0bbfe717fe::cs_virtual_109456b2dd9e2d77(pls::cs::Array<std::uint8_t> v_b) {cs_109456b2dd9e2d77(pls::cs::static_pointer_cast<cs_ea324a0bbfe717fe>(shared_from_this()),v_b);}

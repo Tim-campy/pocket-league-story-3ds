@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_e315dac1df3b175d : cs_9326c27a92cfea3a {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_e315dac1df3b175d)||target==typeid(cs_9326c27a92cfea3a)||cs_9326c27a92cfea3a::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_9b7c686ee42b269b")return "M:surface.GameView.IsGameSurface";if(slot=="cs_virtual_14c25464911dc345")return "M:surface.GameView.BeginTouchRegist(kairo.unity.ui.Graphics)";if(slot=="cs_virtual_77304e19eb4e3af6")return "M:surface.GameView.EndTouchRegist(kairo.unity.ui.Graphics)";if(slot=="cs_virtual_f7a60b8dd9e85732")return "M:surface.GameView.DoEnd";if(slot=="cs_virtual_e94b5958615f0bf0")return "M:surface.GameView.OnKeyDown(System.Int32)";if(slot=="cs_virtual_9f5fde625f99aa16")return "M:surface.GameView.OnTouchEvent(kairo.unity.surface.TouchEvent)";if(slot=="cs_virtual_07a0bb2e4afc307c")return "M:surface.GameView.Draw(kairo.unity.ui.Graphics)";if(slot=="cs_virtual_acea3de130dbb7cd")return "M:surface.GameView.RotateClear";if(slot=="cs_virtual_f10884576b82823a")return "M:surface.GameView.OnReceiveTouchEvent(kairo.unity.surface.MotionEvent)";return cs_9326c27a92cfea3a::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "surface.GameView";}
 std::string managed_type_name()const override{return source_managed_type_name();}

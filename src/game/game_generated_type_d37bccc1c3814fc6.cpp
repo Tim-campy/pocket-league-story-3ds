@@ -11,8 +11,6 @@ namespace pls::game {
 
 void cs_d37bccc1c3814fc6::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_0e31a9f06d96ef28,visitor);pls::cs::trace_value(cs_c7c45a9f1963614b,visitor);pls::cs::trace_value(cs_271d18d953230ddd,visitor);pls::cs::trace_value(cs_d79c777337d31004,visitor);pls::cs::trace_value(cs_b8eaf4c46c566a9c,visitor);}
 
-void cs_d37bccc1c3814fc6::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_0e31a9f06d96ef28);pls::cs::release_value(cs_c7c45a9f1963614b);pls::cs::release_value(cs_271d18d953230ddd);pls::cs::release_value(cs_d79c777337d31004);pls::cs::release_value(cs_b8eaf4c46c566a9c);}
-
 static pls::cs::Ref<cs_d37bccc1c3814fc6> cs_fff40af3d4f61c60_value{};
 
 void cs_init_d37bccc1c3814fc6(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fff40af3d4f61c60_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel",[](){

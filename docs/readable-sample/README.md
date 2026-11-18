@@ -199,7 +199,7 @@ Quando `"readable"` está desligado nenhum desses caminhos é alcançado.
 - **Exceções:** `try`/`catch` captura `pls::cs::Exception` e testa o tipo
   gerenciado (`pls::cs::exception_is`, `dynamic_pointer_cast`); `finally` vira
   `pls::cs::run_finally`, e `return` dentro de `finally` usa `ReturnFlow`.
-- **Coletor:** cada struct tem `trace_edges`/`release_edges` e cada tipo com
+- **Coletor:** cada struct tem `trace_edges` e cada tipo com
   campos estáticos registra raízes (`GcRootProvider`); são necessários ao coletor
   por rastreamento.
 - **Delegates e closures:** viram uma struct local `Lambda_<linha>_<coluna>` com

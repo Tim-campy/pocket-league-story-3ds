@@ -8,8 +8,6 @@ namespace pls::game {
 
 void cs_80d72c9d6f5bfcfe::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_b08d770c239489bf::trace_edges(visitor);pls::cs::trace_value(cs_1fa16b1439554e13,visitor);pls::cs::trace_value(cs_a874245b40e2af4b,visitor);pls::cs::trace_value(cs_3fa79636aa02329a,visitor);pls::cs::trace_value(cs_10e47a57597e3769,visitor);}
 
-void cs_80d72c9d6f5bfcfe::release_edges(){cs_b08d770c239489bf::release_edges();pls::cs::release_value(cs_1fa16b1439554e13);pls::cs::release_value(cs_a874245b40e2af4b);pls::cs::release_value(cs_3fa79636aa02329a);pls::cs::release_value(cs_10e47a57597e3769);}
-
 static pls::cs::Array<pls::cs::String> cs_a6acb1dbcdc3e821_value{};
 
 void cs_init_80d72c9d6f5bfcfe(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a6acb1dbcdc3e821_value,visitor);});static pls::cs::TypeInitState state;state.run("data.EventData",[](){

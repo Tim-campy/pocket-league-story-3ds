@@ -33,7 +33,6 @@ class Image : public cs::Object {
     template<class T>struct BalloonTasks : cs::Object {
         cs::List<T> values=cs::List<T>::make();
         void trace_edges(const cs::EdgeVisitor&visit)const override{cs::trace_value(values,visit);}
-        void release_edges()override{cs::release_value(values);}
     };
     cs::Ref<cs::Object> balloon_tasks_{},text_tasks_{},touch_tasks_{};
     template<class T>cs::List<T>& task_slot(cs::Ref<cs::Object>&slot){
@@ -119,7 +118,7 @@ public:
     template<class T>cs::List<T>& source_touch_tasks(){return task_slot<T>(touch_tasks_);}
     bool source_has_balloon_tasks()const{return bool(balloon_tasks_)||bool(text_tasks_);}
     bool source_has_touch_tasks()const{return bool(touch_tasks_);}
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
     const std::vector<std::uint8_t>& pixels()const;
 };
 class Offscreen : public cs::Object {
@@ -139,7 +138,7 @@ public:
     static void RenderAll();static void EndFrame();static void DisposeAll();
     static bool IsRendering();
     static std::string LastRenderError();
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
 };
 class Graphics : public cs::Object {
     friend class Canvas;
@@ -270,7 +269,6 @@ public:
     void Dispose(bool=false){} // CPU commands are immediate; no cached meshes to clear.
     cs::Ref<Image> target()const{return target_;}
     void trace_edges(const cs::EdgeVisitor&)const override;
-    void release_edges()override;
 };
 inline void native_graphics_push_matrix(cs::Ref<Graphics> g,cs::Array<float> values){cs::nonnull(g)->PushMatrixValues(values);}
 inline cs::GcRootProvider graphics_roots([](const cs::EdgeVisitor&visitor){Graphics::trace_static_roots(visitor);});

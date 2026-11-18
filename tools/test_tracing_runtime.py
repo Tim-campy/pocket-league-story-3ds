@@ -13,7 +13,7 @@ def main():
     compiler,env=msvc_environment()
     sources=[ROOT/'tests/translator/tracing_runtime_fixtures.cpp',ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp']
     binary=folder/'fixture.exe'
-    command=[str(compiler),'/nologo','/std:c++17','/EHsc','/O2','/fp:strict','/W4','/WX','/utf-8','/DPLS_TRACING_GC=1','/I'+str(ROOT/'src/kairo/common'),'/Fe:'+str(binary),*[str(p)for p in sources]]
+    command=[str(compiler),'/nologo','/std:c++17','/EHsc','/O2','/fp:strict','/W4','/WX','/utf-8','/I'+str(ROOT/'src/kairo/common'),'/Fe:'+str(binary),*[str(p)for p in sources]]
     result=subprocess.run(command,cwd=folder,env=env,capture_output=True)
     (folder/'compile.log').write_bytes(result.stdout+result.stderr)
     if result.returncode:raise RuntimeError('Inspect build/tracing-runtime/compile.log')

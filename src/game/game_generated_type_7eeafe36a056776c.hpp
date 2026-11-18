@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_7eeafe36a056776c : cs_5451b2154f09f4c5 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_7eeafe36a056776c)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:system.form.FriendForm.ToString";if(slot=="Init")return "M:system.form.FriendForm.Init";if(slot=="Update")return "M:system.form.FriendForm.Update";if(slot=="Draw")return "M:system.form.FriendForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Resume")return "M:system.form.FriendForm.Resume";if(slot=="Finish")return "M:system.form.FriendForm.Finish";if(slot=="GetTouchValue")return "M:system.form.FriendForm.GetTouchValue(System.Int32,System.Int32)";if(slot=="SetTouchValue")return "M:system.form.FriendForm.SetTouchValue(System.Int32,System.Int32)";if(slot=="cs_virtual_7a6109cc91f876a5")return "M:system.form.FriendForm.OnTouchEvent(kairo.unity.surface.TouchEvent)";if(slot=="GetHashCode")return "M:system.form.FriendForm.GetHashCode";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.form.FriendForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

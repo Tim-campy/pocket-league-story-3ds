@@ -68,41 +68,6 @@ void Team::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
     pls::cs::trace_value(players_receive_, visitor);
 }
 
-void Team::release_edges() {
-    pls::cs::Object::release_edges();
-    pls::cs::release_value(apdat_);
-    pls::cs::release_value(udat_);
-    pls::cs::release_value(players_);
-    pls::cs::release_value(fPos_);
-    pls::cs::release_value(CORRECT_LINE);
-    pls::cs::release_value(NOW_LINE);
-    pls::cs::release_value(team_policyEva);
-    pls::cs::release_value(team_eva);
-    pls::cs::release_value(team_frect);
-    pls::cs::release_value(frect_pos);
-    pls::cs::release_value(frect_cpos);
-    pls::cs::release_value(amefto_goalPos_);
-    pls::cs::release_value(amefto_cameraPos_);
-    pls::cs::release_value(amefto_address_);
-    pls::cs::release_value(receiverPIdBox_);
-    pls::cs::release_value(CEVA_PASSER_MP2);
-    pls::cs::release_value(CEVA_PASSER_MP2_DIV);
-    pls::cs::release_value(CEVA_PASSER_MP3);
-    pls::cs::release_value(CEVA_PASSER_AP);
-    pls::cs::release_value(CEVA_PASSER_ENEAP);
-    pls::cs::release_value(coatEva_passer);
-    pls::cs::release_value(coatEva_freeRun);
-    pls::cs::release_value(coatEva_defence);
-    pls::cs::release_value(coatEva_looseBall);
-    pls::cs::release_value(coatEva_passer2);
-    pls::cs::release_value(coatEva_freeRun2);
-    pls::cs::release_value(coatEva_new_offence);
-    pls::cs::release_value(coatEva_new_offence_passer);
-    pls::cs::release_value(coatEva_new_deffence);
-    pls::cs::release_value(ballNearPlayer_);
-    pls::cs::release_value(players_receive_);
-}
-
 static pls::cs::Array<std::int32_t> Team_AMEFTO_FRECT_GOALZ_storage{};
 
 static std::int32_t Team_AMEFTO_ONECHARGETIME_PLAYER_storage{};

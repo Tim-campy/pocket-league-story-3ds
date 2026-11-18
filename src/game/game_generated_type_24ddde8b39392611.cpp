@@ -9,8 +9,6 @@ namespace pls::game {
 
 void cs_24ddde8b39392611::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_86cc8a271e68cde9,visitor);pls::cs::trace_value(cs_050458c631e7a9c0,visitor);pls::cs::trace_value(cs_e9473a0af87a54bc,visitor);pls::cs::trace_value(cs_04a5436ce9dc3d38,visitor);}
 
-void cs_24ddde8b39392611::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_86cc8a271e68cde9);pls::cs::release_value(cs_050458c631e7a9c0);pls::cs::release_value(cs_e9473a0af87a54bc);pls::cs::release_value(cs_04a5436ce9dc3d38);}
-
 void cs_init_24ddde8b39392611(){static pls::cs::TypeInitState state;state.run("system.billing.ui.PurchaseLogView",[](){
 
 });}

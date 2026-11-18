@@ -13,8 +13,6 @@ namespace pls::game {
 
 void cs_4a8bef2ab48b32d7::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6a384974a2464779,visitor);pls::cs::trace_value(cs_4a2bd2b1dc2b62f7,visitor);pls::cs::trace_value(cs_60fc9d5519e72fab,visitor);pls::cs::trace_value(cs_fa643bfe19a61f34,visitor);pls::cs::trace_value(cs_1503ca63d74f3eef,visitor);pls::cs::trace_value(cs_ae92969ac71a8af3,visitor);}
 
-void cs_4a8bef2ab48b32d7::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_6a384974a2464779);pls::cs::release_value(cs_4a2bd2b1dc2b62f7);pls::cs::release_value(cs_60fc9d5519e72fab);pls::cs::release_value(cs_fa643bfe19a61f34);pls::cs::release_value(cs_1503ca63d74f3eef);pls::cs::release_value(cs_ae92969ac71a8af3);}
-
 void cs_4a8bef2ab48b32d7::cs_virtual_a4fa9c8087597dcf(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_a4fa9c8087597dcf(pls::cs::static_pointer_cast<cs_4a8bef2ab48b32d7>(shared_from_this()),v_g);}
 
 void cs_4a8bef2ab48b32d7::cs_virtual_fb350f55fa7620cd(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_fb350f55fa7620cd(pls::cs::static_pointer_cast<cs_4a8bef2ab48b32d7>(shared_from_this()),v_g);}

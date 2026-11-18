@@ -30,20 +30,20 @@ C# de origem e serve para comparar com a referência.
 
 - **Campos de referência.** Todo campo que guarda uma referência gerenciada
   (`pls::cs::Ref<...>`, `String`, `Array<...>`, `Delegate<...>`) precisa aparecer
-  em `trace_edges` e em `release_edges` da classe. Um campo esquecido em
-  `trace_edges` deixa o coletor liberar um objeto ainda em uso.
+  em `trace_edges` da classe. Um campo esquecido em `trace_edges` deixa o
+  coletor liberar um objeto ainda em uso.
 - **Estáticos de referência.** Toda variável estática que guarda uma referência
   entra no `GcRootProvider` da classe.
 - **Conferência automática:**
   `python tests/repository/test_gc_field_tracing.py src/game` (obrigatória
   depois do congelamento; faz parte da verificação completa).
-- **Papel de `release_edges` (C5c).** O coletor de produção (rastreamento,
-  `src/runtime/tracing_gc.cpp`) **não chama** `release_edges`: ele marca a partir
-  das raízes e libera o que não alcança. `release_edges` só é usado no build
-  histórico de comparação com `shared_ptr` (`PLS_TRACING_GC=0`), onde quebra os
-  ciclos de referência que a contagem não libera. Enquanto esse build existir,
-  mantenha `release_edges` igual a `trace_edges`. Removê-lo junto com o build
-  histórico é uma decisão do usuário (registrar em `docs/backlog.md`).
+- **Só `trace_edges` (A6, 2026-11-18).** O coletor (`src/runtime/tracing_gc.cpp`)
+  marca a partir das raízes e libera o que não alcança; não há outro gancho por
+  classe. `release_edges` e o build histórico com `shared_ptr`
+  (`PLS_TRACING_GC=0`) foram removidos por decisão do usuário (2026-11-17, A6),
+  depois de a verificação completa confirmar que nada dependia deles.
+  `pls::cs::release_value` continua existindo só para liberações explícitas e
+  imediatas (ex.: `Offscreen::cleanup`), que não dependem da coleta.
 - **Ponteiros fora do heap gerenciado.** Uma referência guardada num objeto C++
   comum (não `pls::cs::Object`) não é vista pelo coletor, a não ser que esteja na
   pilha. Use um objeto gerenciado com `trace_edges` ou uma raiz.

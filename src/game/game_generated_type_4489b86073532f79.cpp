@@ -15,8 +15,6 @@ namespace pls::game {
 
 void cs_4489b86073532f79::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_b08d770c239489bf::trace_edges(visitor);pls::cs::trace_value(cs_33497b4bf95ea17d,visitor);pls::cs::trace_value(cs_fac79ffb07acaaa9,visitor);pls::cs::trace_value(cs_615b022e6d4f3411,visitor);pls::cs::trace_value(cs_7ef89a4385d82e88,visitor);pls::cs::trace_value(cs_06b59428a9b9dfa2,visitor);pls::cs::trace_value(cs_6f534bf5e33e413b,visitor);pls::cs::trace_value(cs_e09416a0f920ad4d,visitor);pls::cs::trace_value(cs_6b0563ed7fd65c34,visitor);pls::cs::trace_value(cs_9b228d050db54a04,visitor);}
 
-void cs_4489b86073532f79::release_edges(){cs_b08d770c239489bf::release_edges();pls::cs::release_value(cs_33497b4bf95ea17d);pls::cs::release_value(cs_fac79ffb07acaaa9);pls::cs::release_value(cs_615b022e6d4f3411);pls::cs::release_value(cs_7ef89a4385d82e88);pls::cs::release_value(cs_06b59428a9b9dfa2);pls::cs::release_value(cs_6f534bf5e33e413b);pls::cs::release_value(cs_e09416a0f920ad4d);pls::cs::release_value(cs_6b0563ed7fd65c34);pls::cs::release_value(cs_9b228d050db54a04);}
-
 static pls::cs::Ref<cs_2ffa6f51468590ea> cs_5f399ea9f5649963_value{};
 
 static std::int32_t cs_5559eb56fc750675_value{};

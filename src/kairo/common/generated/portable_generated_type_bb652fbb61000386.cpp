@@ -7,8 +7,6 @@ namespace pls::generated {
 
 void cs_bb652fbb61000386::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_bd164c3c94a49e2a::trace_edges(visitor);pls::cs::trace_value(cs_3a4ab2d19bbedee8,visitor);pls::cs::trace_value(cs_23af4da78e1ad81f,visitor);pls::cs::trace_value(cs_3af0cc4416bce0e0,visitor);pls::cs::trace_value(cs_fe44ec569b4e9ab5,visitor);}
 
-void cs_bb652fbb61000386::release_edges(){cs_bd164c3c94a49e2a::release_edges();pls::cs::release_value(cs_3a4ab2d19bbedee8);pls::cs::release_value(cs_23af4da78e1ad81f);pls::cs::release_value(cs_3af0cc4416bce0e0);pls::cs::release_value(cs_fe44ec569b4e9ab5);}
-
 std::int32_t cs_bb652fbb61000386::GetHashCode() {return cs_0a77e2bc4ebc201e(pls::cs::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
 
 bool cs_bb652fbb61000386::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_145a142f07908920(pls::cs::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()),v_obj);}

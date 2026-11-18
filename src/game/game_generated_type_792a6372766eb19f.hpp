@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_792a6372766eb19f : cs_9326c27a92cfea3a {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_792a6372766eb19f)||target==typeid(cs_9326c27a92cfea3a)||cs_9326c27a92cfea3a::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_9b7c686ee42b269b")return "M:surface.GamePad.IsGameSurface";if(slot=="cs_virtual_9f5fde625f99aa16")return "M:surface.GamePad.OnTouchEvent(kairo.unity.surface.TouchEvent)";if(slot=="cs_virtual_07a0bb2e4afc307c")return "M:surface.GamePad.Draw(kairo.unity.ui.Graphics)";if(slot=="cs_virtual_acea3de130dbb7cd")return "M:surface.GamePad.RotateClear";return cs_9326c27a92cfea3a::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "surface.GamePad";}
 std::string managed_type_name()const override{return source_managed_type_name();}

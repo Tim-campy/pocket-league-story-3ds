@@ -6,7 +6,6 @@ namespace pls::generated {
 struct cs_ea324a0bbfe717fe : pls::cs::Object {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_ea324a0bbfe717fe)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:java.io.OutputStream.Close";if(slot=="cs_virtual_2adf924bd0d7d65a")return "M:java.io.OutputStream.Flush";if(slot=="cs_virtual_a2a7e1a6575cae4c")return "M:java.io.OutputStream.Write(System.Int32)";if(slot=="cs_virtual_109456b2dd9e2d77")return "M:java.io.OutputStream.Write(System.Byte[])";if(slot=="cs_virtual_eeffa75bcd0cd73d")return "M:java.io.OutputStream.Write(System.Byte[],System.Int32,System.Int32)";return pls::cs::Object::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "java.io.OutputStream";}
 std::string managed_type_name()const override{return source_managed_type_name();}

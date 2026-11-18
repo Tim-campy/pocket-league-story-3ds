@@ -219,13 +219,8 @@ template<class T>struct has_managed_object<T,std::void_t<decltype(std::declval<T
 template<class T>void trace_value(const T&value,const EdgeVisitor&visitor);
 template<class T>void release_value(T&value);
 struct Object
-#if !PLS_TRACING_GC
- : std::enable_shared_from_this<Object>
-#endif
  {
-#if PLS_TRACING_GC
     Object* shared_from_this()noexcept{return this;}
-#endif
     static bool source_reference_assignable(const std::type_info& target){return target==typeid(Object);}
     virtual ~Object()=default;
     std::recursive_mutex monitor;
@@ -240,7 +235,6 @@ struct Object
     virtual std::string managed_delegate_method_id(const std::string& slot)const{return slot;}
     virtual String ToString();
     virtual void trace_edges(const EdgeVisitor&)const{}
-    virtual void release_edges(){}
     virtual void memory_ranges(const memory::RangeVisitor&)const{}
 };
 void register_managed_object(const Ref<Object>&object,std::size_t body_bytes=0,const void*body_begin=nullptr);
@@ -263,7 +257,6 @@ void gc_collect(std::int32_t generation=2);
 // volume threshold was due inside a loading safe point; volume: due at a frame end.
 enum class GcTrigger:std::uint8_t{explicit_call=0,volume=1,transition=2,loading=3};
 struct GcEvent{std::uint64_t sequence=0;GcTrigger trigger=GcTrigger::explicit_call;std::uint64_t pause_ns=0;char source[48]{};};
-#if PLS_TRACING_GC
 // source: static text naming the transition (form type); copied, may be null.
 void gc_request_collection(const char* source=nullptr);
 // Collections after `sequence`, oldest first; a bounded ring keeps the last 64.
@@ -276,13 +269,6 @@ void gc_frame_end();
 // by the platform after a synchronous UI-thread call returns (the slice loop
 // of ResourceManager.LoadStart runs inline on the UI thread for many slices).
 void gc_loading_safepoint();
-#else
-inline void gc_request_collection(const char* =nullptr){}
-inline std::vector<GcEvent> gc_events_after(std::uint64_t){return {};}
-inline void gc_context(const char*){}
-inline void gc_frame_end(){}
-inline void gc_loading_safepoint(){}
-#endif
 std::int32_t gc_max_generation()noexcept;
 std::int32_t gc_generation(const Ref<Object>&object);
 struct GcCollectionStats {std::size_t tracked=0,roots=0,unreachable=0,collected=0;};
@@ -325,23 +311,18 @@ template<class M> class ManagedLockGuard {
 public:
     explicit ManagedLockGuard(M& mutex):mutex_(mutex){
         if(mutex_.try_lock())return;
-#if PLS_TRACING_GC
         GcNativeBlockingScope parked;
-#endif
         mutex_.lock();
     }
     ~ManagedLockGuard(){mutex_.unlock();}
     ManagedLockGuard(const ManagedLockGuard&)=delete;
     ManagedLockGuard&operator=(const ManagedLockGuard&)=delete;
 };
-#if PLS_TRACING_GC
 gc::Heap& tracing_heap();
 void ensure_gc_thread();
-#endif
 template<class T,class=void>struct stable_gc_buffers:std::false_type{};
 template<class T>struct stable_gc_buffers<T,std::void_t<decltype(T::pls_stable_gc_buffers)>>:std::bool_constant<T::pls_stable_gc_buffers>{};
 template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
-#if PLS_TRACING_GC
     static_assert(std::is_base_of_v<Object,T>,"Managed allocation requires an exact Object descriptor");
     try{
         ensure_gc_thread();
@@ -364,13 +345,6 @@ template<class T,class...Args>Ref<T> make_ref(Args&&...args) {
         return gc::make_described<T>(tracing_heap(),descriptor,std::forward<Args>(args)...);
     }catch(const std::bad_alloc&){throw OutOfMemoryException();}
     catch(const std::logic_error&error){throw InvalidOperationException(error.what());}
-#else
-    try{
-        if constexpr(gc::Allocation<T>::custom){auto allocation=gc::Allocation<T>::create(std::forward<Args>(args)...);auto bytes=gc::Allocation<T>::bytes(*allocation);auto result=std::shared_ptr<T>(std::move(allocation));if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,bytes,result.get());return result;}
-        else{auto result=std::make_shared<T>(std::forward<Args>(args)...);if constexpr(std::is_base_of_v<Object,T>)register_managed_object(result,sizeof(T),result.get());return result;}
-    }
-    catch(const std::bad_alloc&){throw OutOfMemoryException();}
-#endif
 }
 
 class String {
@@ -406,12 +380,8 @@ public:
     // initialized (no static guard held across the pool allocation). The pool
     // roots the storage forever, so the published pointer stays valid.
     static String literal_at(std::atomic<void*>& site,const char16_t* text,std::size_t length){
-#if PLS_TRACING_GC
         if(void* cached=site.load(std::memory_order_acquire)){String value;value.data_=static_cast<Storage*>(cached);return value;}
         String value=literal(text,length);site.store(static_cast<void*>(value.data_),std::memory_order_release);return value;
-#else
-        (void)site;return literal(text,length);
-#endif
     }
     static String from_utf8(const std::string& text);
     std::string utf8()const;
@@ -550,7 +520,6 @@ template<class T> class Array : private ArrayViewStorage<is_shared_ref<T>::value
         std::string managed_type_name()const override{return managed_type_name_traits<T>::name()+"[]";}
         const std::type_info&element_type()const noexcept override{return typeid(T);}
         void trace_edges(const EdgeVisitor&visitor)const override{for(std::int32_t i=0;i<size;++i)trace_value(values()[static_cast<std::size_t>(i)],visitor);}
-        void release_edges()override{for(std::int32_t i=0;i<size;++i)release_value(values()[static_cast<std::size_t>(i)]);}
         bool reference_element_is_a(const std::type_info& target)const override{
             if constexpr(is_shared_ref<T>::value){using E=typename is_shared_ref<T>::element_type;return reference_assignability<E>::is_a(target);}
             else return false;
@@ -640,7 +609,6 @@ template<class T,class U>Ref<T> as(const Ref<U>&value){return pls::cs::dynamic_p
 template<class T,class U>Ref<T> cast(const Ref<U>&value){auto result=as<T>(value);if(value&&!result)throw InvalidCastException();return result;}
 template<class T>struct Cell : Object {T value{};Cell()=default;explicit Cell(T v):value(std::move(v)){};
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(value,visitor);}
-    void release_edges()override{release_value(value);}
 };
 template<class F>bool exception_filter(F&&body)noexcept{try{return body();}catch(...){return false;}}
 
@@ -650,14 +618,10 @@ template<class F>bool exception_filter(F&&body)noexcept{try{return body();}catch
 // hierarchy. C# catch handlers cannot intercept a pending return.
 template<class T>struct ReturnFlow {
     T value;
-#if PLS_TRACING_GC
     GcRootProvider roots;
     explicit ReturnFlow(T result):value(std::move(result)),roots([this](const EdgeVisitor&visitor){trace_value(value,visitor);}){}
     ReturnFlow(const ReturnFlow&other):ReturnFlow(other.value){}
     ReturnFlow(ReturnFlow&&other):ReturnFlow(std::move(other.value)){}
-#else
-    explicit ReturnFlow(T result):value(std::move(result)){}
-#endif
 };
 template<>struct ReturnFlow<void> {};
 struct BranchFlow {enum class Kind{break_,continue_};std::int32_t target;Kind kind;};
@@ -745,12 +709,6 @@ template<class R,class...Args>class Delegate<R(Args...)> {
             Object::trace_edges(visitor);
             for(const auto&binding:bindings)if(auto target=binding.managed_target.lock())visitor(target);
         }
-        void release_edges()override{
-            Object::release_edges();
-#if !PLS_TRACING_GC
-            bindings.clear(); // Legacy cycle breaking; traced lists are immutable.
-#endif
-        }
         void memory_ranges(const memory::RangeVisitor&visitor)const override{
             Object::memory_ranges(visitor);
             if(bindings.capacity())visitor(bindings.data(),bindings.capacity()*sizeof(Binding),memory::Category::managed_heap);
@@ -798,7 +756,6 @@ public:
     bool is_null()const noexcept{return count()==0;}
     explicit operator bool()const noexcept{return !is_null();}
     void trace_edges(const EdgeVisitor&visitor)const{if(list_)visitor(list_);}
-    void release_edges(){clear_ref(list_);}
     R operator()(Args...args)const {
         if(is_null())throw NullReferenceException();
         const auto snapshot=list_; // Removing handlers during invocation affects the next call.
@@ -858,7 +815,6 @@ template<class T> std::shared_ptr<Pinned<T>> pin(T value){return std::make_share
 // Process-lifetime managed singleton: the root is registered at construction
 // (no managed allocation under the function-static guard); the value is created
 // outside any lock and published atomically (a racing loser becomes garbage).
-#if PLS_TRACING_GC
 template<class T> class RootedOnce {
     std::atomic<T*> slot_{};
     GcRootProvider roots_{[this](const EdgeVisitor& visitor){Ref<T> value=slot_.load(std::memory_order_acquire);trace_value(value,visitor);}};
@@ -870,13 +826,6 @@ public:
         return expected;
     }
 };
-#else
-template<class T> class RootedOnce {
-    std::once_flag once_;Ref<T> value_{};
-public:
-    template<class F> Ref<T> get(F&& factory){std::call_once(once_,[&]{value_=factory();});return value_;}
-};
-#endif
 std::int32_t int32_parse(const String&value,bool hexadecimal=false);
 bool int32_try_parse(const String&value,std::int32_t& result);
 std::int64_t int64_parse(const String&value,bool hexadecimal=false);
@@ -888,8 +837,6 @@ std::int64_t int64_parse(const String&value,bool hexadecimal=false);
 namespace pls::cs {
 template<class T,class=void>struct has_trace_edges : std::false_type{};
 template<class T>struct has_trace_edges<T,std::void_t<decltype(std::declval<const T&>().trace_edges(std::declval<const EdgeVisitor&>()))>>:std::true_type{};
-template<class T,class=void>struct has_release_edges : std::false_type{};
-template<class T>struct has_release_edges<T,std::void_t<decltype(std::declval<T&>().release_edges())>>:std::true_type{};
 template<class T>void trace_value(const T&value,const EdgeVisitor&visitor){
     if constexpr(is_shared_ref<T>::value){
         using Element=typename is_shared_ref<T>::element_type;
@@ -898,10 +845,11 @@ template<class T>void trace_value(const T&value,const EdgeVisitor&visitor){
     }else if constexpr(has_managed_object<T>::value){if(auto object=value.as_object())visitor(object);}
     else if constexpr(has_trace_edges<T>::value)value.trace_edges(visitor);
 }
+// Explicit release of one reference (Offscreen::cleanup and similar): clears it
+// now, independent of collection. Not a collector hook.
 template<class T>void release_value(T&value){
     if constexpr(is_shared_ref<T>::value)clear_ref(value);
     else if constexpr(has_managed_object<T>::value)value=T{};
-    else if constexpr(has_release_edges<T>::value)value.release_edges();
 }
 [[noreturn]] inline void throw_divide_by_zero() { throw DivideByZeroException(); }
 } // namespace pls::cs

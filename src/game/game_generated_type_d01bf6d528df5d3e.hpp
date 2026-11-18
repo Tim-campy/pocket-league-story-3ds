@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_d01bf6d528df5d3e : cs_5451b2154f09f4c5 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_d01bf6d528df5d3e)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:system.form.LineupForm.ToString";if(slot=="Init")return "M:system.form.LineupForm.Init";if(slot=="Draw")return "M:system.form.LineupForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Finish")return "M:system.form.LineupForm.Finish";if(slot=="Resume")return "M:system.form.LineupForm.Resume";if(slot=="Update")return "M:system.form.LineupForm.Update";if(slot=="GetTouchValue")return "M:system.form.LineupForm.GetTouchValue(System.Int32,System.Int32)";if(slot=="SetTouchValue")return "M:system.form.LineupForm.SetTouchValue(System.Int32,System.Int32)";if(slot=="CheckMainWindow")return "M:system.form.LineupForm.CheckMainWindow";if(slot=="GetHashCode")return "M:system.form.LineupForm.GetHashCode";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.form.LineupForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

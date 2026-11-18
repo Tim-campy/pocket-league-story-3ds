@@ -30,14 +30,6 @@ void SponsorData::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
     pls::cs::trace_value(execsScript_, visitor);
 }
 
-void SponsorData::release_edges() {
-    BaseData::release_edges();
-    pls::cs::release_value(name_);
-    pls::cs::release_value(income_);
-    pls::cs::release_value(explain_);
-    pls::cs::release_value(execsScript_);
-}
-
 static pls::cs::Ref<main::AppData> SponsorData_apdat__storage{};
 
 static pls::cs::Array<pls::cs::String> SponsorData_difficultStr_storage{};

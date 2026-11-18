@@ -6,7 +6,6 @@ namespace pls::game {
 struct cs_931908081ea62151 : pls::cs::Object {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_931908081ea62151)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_d1922bb59f7ed3bf")return "M:system.billing.ui.BillingItem.Init(System.Int32,System.Int32,System.String,System.String,System.String,System.Int32,System.String)";if(slot=="cs_virtual_eae24f37838268a3")return "M:system.billing.ui.BillingItem.Serialize(java.io.OutputStream)";if(slot=="cs_virtual_d1e3bc579a0b32eb")return "M:system.billing.ui.BillingItem.Deserialize(java.io.InputStream)";return pls::cs::Object::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.billing.ui.BillingItem";}
 std::string managed_type_name()const override{return source_managed_type_name();}

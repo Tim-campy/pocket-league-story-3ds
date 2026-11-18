@@ -8,8 +8,6 @@ namespace pls::game {
 
 void cs_0286a0dbe9da0b33::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6e5c685dce0d605a,visitor);pls::cs::trace_value(cs_ef63d4d4b6ab550f,visitor);pls::cs::trace_value(cs_7f418c9c27e5c628,visitor);pls::cs::trace_value(cs_7c40c7d83d91cf74,visitor);pls::cs::trace_value(cs_1931e59a708b44ff,visitor);pls::cs::trace_value(cs_71eb51b3f792969a,visitor);pls::cs::trace_value(cs_49c162566c3d94ef,visitor);}
 
-void cs_0286a0dbe9da0b33::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_6e5c685dce0d605a);pls::cs::release_value(cs_ef63d4d4b6ab550f);pls::cs::release_value(cs_7f418c9c27e5c628);pls::cs::release_value(cs_7c40c7d83d91cf74);pls::cs::release_value(cs_1931e59a708b44ff);pls::cs::release_value(cs_71eb51b3f792969a);pls::cs::release_value(cs_49c162566c3d94ef);}
-
 void cs_init_0286a0dbe9da0b33(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Dialog",[](){
 
 });}

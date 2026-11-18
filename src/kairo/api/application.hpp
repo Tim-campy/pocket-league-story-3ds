@@ -141,7 +141,6 @@ public:
     std::int64_t GetRenderTime()const{return render_ms_;}std::int64_t GetUpdateTime()const{return update_ms_;}
     cs::String GetDataPath()const{return data_path_;}
     void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::Object::trace_edges(visitor);cs::trace_value(data_path_,visitor);cs::trace_value(initialization_owner_,visitor);}
-    void release_edges()override{cs::Object::release_edges();cs::release_value(data_path_);cs::release_value(initialization_owner_);initialization_={};}
     void Terminate(){if(termination_)return;if(!termination_handler_)throw cs::InvalidOperationException("Termination event/finish bridge is not installed");termination_=true;termination_handler_();}
     static void Sleep(std::int32_t ms){if(ms<-1)throw cs::ArgumentOutOfRangeException();if(ms==-1)throw cs::NotSupportedException("Infinite app sleep needs a cancellation host");std::this_thread::sleep_for(std::chrono::milliseconds(ms));}
     // Loading safe point only after the OUTERMOST inline UI call returns:

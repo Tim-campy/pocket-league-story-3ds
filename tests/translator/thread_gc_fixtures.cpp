@@ -18,7 +18,6 @@ template<class F>Ref<Thread> make_thread(F&& body){return make_ref<Thread>(Threa
 struct Node:Object {
     Ref<Node> peer{};Ref<Thread> thread{};
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(peer,visitor);trace_value(thread,visitor);}
-    void release_edges()override{pls::cs::clear_ref(peer);pls::cs::clear_ref(thread);}
 };
 struct TraceBarrier:Object {
     std::atomic<bool>* entered;std::atomic<bool>* allow;std::atomic<bool>* complete;

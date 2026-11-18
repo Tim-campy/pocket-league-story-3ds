@@ -102,7 +102,7 @@ std::ofstream o("OUTPUT/"+std::to_string(kind)+"-"+std::to_string(counts[kind]++
     cmake='cmake_minimum_required(VERSION 3.20)\nproject(CaptureHotInputs LANGUAGES CXX)\nset(CMAKE_CXX_STANDARD 17)\nset(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)\nfind_package(freetype CONFIG REQUIRED)\n'
     cmake+='add_executable(capture_game '+quote(folder/'host.cpp')+' '+' '.join(map(quote,affected+objects))+')\n'
     cmake+='target_include_directories(capture_game PRIVATE '+' '.join(map(quote,includes))+')\n'
-    cmake+='target_compile_definitions(capture_game PRIVATE PLS_NULL_BACKEND=1 PLS_TRACING_GC=1)\ntarget_compile_options(capture_game PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(capture_game PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
+    cmake+='target_compile_definitions(capture_game PRIVATE PLS_NULL_BACKEND=1)\ntarget_compile_options(capture_game PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(capture_game PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
     cmake+='target_link_libraries(capture_game PRIVATE '+quote(baseline/'null_runtime.lib')+' Freetype::Freetype Psapi Advapi32)\n'
     (folder/'CMakeLists.txt').write_text(cmake)
     proof=dict(operation='private-entry-input-capture',methods=[methods[n]['id']for n in selected],window=[1201,1500],max_per_method=[16,args.cal_cases,16,16,16],cal_inputs_byte_distinct=True,changed_units=[p.name for p in affected],

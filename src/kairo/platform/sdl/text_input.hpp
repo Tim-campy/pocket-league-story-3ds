@@ -27,6 +27,5 @@ public:
     std::int32_t DisplayMode()const{return display_mode_;}
     std::int32_t InputMode()const{return input_mode_;}
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(text_,v);cs::trace_value(panel_request_.title,v);cs::trace_value(panel_request_.text,v);cs::trace_value(panel_request_.positive,v);cs::trace_value(panel_request_.negative,v);}
-    void release_edges()override{cs::release_value(text_);panel_request_={};}
 };
 }

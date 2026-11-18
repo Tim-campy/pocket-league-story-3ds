@@ -86,7 +86,7 @@ sealed partial class Lowerer {
     // the same name differs by its self parameter and coexists with them.)
     static readonly HashSet<string> ObjectMemberNames=new(StringComparer.Ordinal){
         "shared_from_this","source_reference_assignable","monitor","equals","get_hash_code","managed_type_name",
-        "managed_delegate_method_id","trace_edges","release_edges","memory_ranges","source_managed_type_name","type_name","source_ctor"};
+        "managed_delegate_method_id","trace_edges","memory_ranges","source_managed_type_name","type_name","source_ctor"};
     static string CppIdentifier(string name){
         name=name.TrimStart('@');
         var builder=new StringBuilder();

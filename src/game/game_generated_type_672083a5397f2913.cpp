@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_672083a5397f2913::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_892fee32e48ccc2a,visitor);pls::cs::trace_value(cs_46be5d13750c48b7,visitor);pls::cs::trace_value(cs_af8004110cb79aa4,visitor);pls::cs::trace_value(cs_adf957d75456082a,visitor);pls::cs::trace_value(cs_868c2bf8c835789a,visitor);pls::cs::trace_value(cs_13421d3977fbd718,visitor);}
 
-void cs_672083a5397f2913::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_892fee32e48ccc2a);pls::cs::release_value(cs_46be5d13750c48b7);pls::cs::release_value(cs_af8004110cb79aa4);pls::cs::release_value(cs_adf957d75456082a);pls::cs::release_value(cs_868c2bf8c835789a);pls::cs::release_value(cs_13421d3977fbd718);}
-
 void cs_init_672083a5397f2913(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Seb.WorkStaticValue",[](){
 
 });}

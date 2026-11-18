@@ -20,6 +20,5 @@ public:
         // safepoint may run while the field's lock is held.
     }
     void trace_edges(const EdgeVisitor&visitor)const{std::lock_guard<std::mutex>lock(mutex_);trace_value(value_,visitor);}
-    void release_edges(){T displaced{};{std::lock_guard<std::mutex>lock(mutex_);using std::swap;swap(value_,displaced);}}
 };
 }

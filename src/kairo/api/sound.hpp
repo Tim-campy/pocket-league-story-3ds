@@ -65,7 +65,7 @@ public:
     // Diagnostics expose identities/counts, never pretend to be game methods.
     std::size_t host_playing_count()const{return playing_.size();}
     std::int32_t host_port(const SoundBase* sound){return PortOf(sound);}
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
     void memory_ranges(const memory::RangeVisitor& visit)const override {
         visit(ports_.data(),ports_.capacity()*sizeof(Port),memory::Category::managed_heap);
         visit(playing_.data(),playing_.capacity()*sizeof(cs::Ref<SoundBase>),memory::Category::managed_heap);
@@ -91,7 +91,7 @@ public:
     std::int32_t GetLoop(){return loop_;}void SetLoop(std::int32_t);
     cs::Ref<cs::Object> GetData(){return data_;}
     cs::String ToString()override{auto value=std::u16string(u"[");if(!name_.is_null())value+=name_.code_units();value+=u"] ";value+=cs::String::from_utf8(managed_type_name()).code_units();return cs::String(std::move(value));}
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
 };
 class SoundOGG : public SoundBase {
 public:

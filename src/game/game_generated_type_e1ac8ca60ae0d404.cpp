@@ -7,8 +7,6 @@ namespace pls::game {
 
 void cs_e1ac8ca60ae0d404::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_7e57fb8b2c00b332,visitor);pls::cs::trace_value(cs_a07960f3828b6654,visitor);pls::cs::trace_value(cs_0c2122c67a220ad5,visitor);pls::cs::trace_value(cs_d19197b1eca33954,visitor);pls::cs::trace_value(cs_03e6582cfb7c53c4,visitor);pls::cs::trace_value(cs_b2d35947212f5095,visitor);pls::cs::trace_value(cs_767548071e1ac66d,visitor);pls::cs::trace_value(cs_5e13f1b59d6187ce,visitor);pls::cs::trace_value(cs_68e37d2551fe1039,visitor);pls::cs::trace_value(cs_445810c66b37725f,visitor);pls::cs::trace_value(cs_dca7b292fa5b4249,visitor);}
 
-void cs_e1ac8ca60ae0d404::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_7e57fb8b2c00b332);pls::cs::release_value(cs_a07960f3828b6654);pls::cs::release_value(cs_0c2122c67a220ad5);pls::cs::release_value(cs_d19197b1eca33954);pls::cs::release_value(cs_03e6582cfb7c53c4);pls::cs::release_value(cs_b2d35947212f5095);pls::cs::release_value(cs_767548071e1ac66d);pls::cs::release_value(cs_5e13f1b59d6187ce);pls::cs::release_value(cs_68e37d2551fe1039);pls::cs::release_value(cs_445810c66b37725f);pls::cs::release_value(cs_dca7b292fa5b4249);}
-
 static pls::cs::Ref<cs_e373231f616cd1ed> cs_994906ff6b942bc3_value{};
 
 void cs_init_e1ac8ca60ae0d404(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_994906ff6b942bc3_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.MotionEventRecord",[](){

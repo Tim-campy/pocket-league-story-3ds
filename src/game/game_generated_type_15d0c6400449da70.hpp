@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_15d0c6400449da70 : pls::kairo::MonoBehaviour, cs_500cf5d961e2c3a4 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_15d0c6400449da70)||target==typeid(pls::kairo::MonoBehaviour)||pls::kairo::MonoBehaviour::source_reference_assignable(target)||target==typeid(cs_500cf5d961e2c3a4);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_a0d307e27d51aaf6")return "M:system.tapjoy.ui.Tapjoy.CallBalance";return pls::kairo::MonoBehaviour::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.tapjoy.ui.Tapjoy";}
 std::string managed_type_name()const override{return source_managed_type_name();}

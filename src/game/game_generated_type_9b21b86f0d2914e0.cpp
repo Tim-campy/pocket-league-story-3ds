@@ -7,8 +7,6 @@ namespace pls::game {
 
 void cs_9b21b86f0d2914e0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_d5047348b0759e4e,visitor);pls::cs::trace_value(cs_104e5f6a41bc31a2,visitor);pls::cs::trace_value(cs_4f23ff2646eb23aa,visitor);pls::cs::trace_value(cs_287f9edf5a6fc99a,visitor);pls::cs::trace_value(cs_85d4a94d45c5d889,visitor);pls::cs::trace_value(cs_b766893b7bb434f0,visitor);pls::cs::trace_value(cs_95b7593873c71ecc,visitor);pls::cs::trace_value(cs_b9b3024a4bbf4537,visitor);pls::cs::trace_value(cs_4f16085a44631993,visitor);pls::cs::trace_value(cs_579f8976161c3a90,visitor);pls::cs::trace_value(cs_46524ed757f195c3,visitor);pls::cs::trace_value(cs_f9be90c450193aae,visitor);}
 
-void cs_9b21b86f0d2914e0::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_d5047348b0759e4e);pls::cs::release_value(cs_104e5f6a41bc31a2);pls::cs::release_value(cs_4f23ff2646eb23aa);pls::cs::release_value(cs_287f9edf5a6fc99a);pls::cs::release_value(cs_85d4a94d45c5d889);pls::cs::release_value(cs_b766893b7bb434f0);pls::cs::release_value(cs_95b7593873c71ecc);pls::cs::release_value(cs_b9b3024a4bbf4537);pls::cs::release_value(cs_4f16085a44631993);pls::cs::release_value(cs_579f8976161c3a90);pls::cs::release_value(cs_46524ed757f195c3);pls::cs::release_value(cs_f9be90c450193aae);}
-
 void cs_init_9b21b86f0d2914e0(){static pls::cs::TypeInitState state;state.run("surface.TouchEffect",[](){
 
 });}

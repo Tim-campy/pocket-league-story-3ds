@@ -74,6 +74,5 @@ void MeshManager::Render(const cs::Ref<Image>&target,const Commands&dynamic,cons
     }
 }
 void MeshManager::trace_edges(const cs::EdgeVisitor&visit)const{cs::trace_value(graphics_,visit);for(const auto&batch:batches_)cs::trace_value(batch.image,visit);}
-void MeshManager::release_edges(){cs::release_value(graphics_);for(auto&batch:batches_)cs::release_value(batch.image);batches_.clear();active_.clear();}
 void MeshManager::memory_ranges(const memory::RangeVisitor&visit)const{visit(batches_.data(),batches_.capacity()*sizeof(Batch),memory::Category::managed_heap);for(const auto&batch:batches_)visit(batch.fragments.data(),batch.fragments.capacity()*sizeof(Fragment),memory::Category::managed_heap);}
 }

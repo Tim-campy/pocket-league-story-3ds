@@ -6,7 +6,6 @@ namespace pls::game {
 struct cs_89c0d586cfe20341 : pls::cs::Object {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_89c0d586cfe20341)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.lang.JThread.Equals(System.Object)";if(slot=="GetHashCode")return "M:java.lang.JThread.GetHashCode";return pls::cs::Object::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "java.lang.JThread";}
 std::string managed_type_name()const override{return source_managed_type_name();}

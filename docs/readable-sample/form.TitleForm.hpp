@@ -14,7 +14,6 @@ struct TitleForm : MyFormBase {
     }
 
     void trace_edges(const pls::cs::EdgeVisitor& visitor) const override;
-    void release_edges() override;
 
     std::string managed_delegate_method_id(const std::string& slot) const override {
         if (slot == "ToString") {

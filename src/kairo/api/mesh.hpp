@@ -48,7 +48,6 @@ public:
     const Commands&commands()const{return batches_;}
     static void Render(const cs::Ref<Image>&,const Commands&,const Commands&);
     void trace_edges(const cs::EdgeVisitor&visit)const override;
-    void release_edges()override;
     void memory_ranges(const memory::RangeVisitor&visit)const override;
 };
 }

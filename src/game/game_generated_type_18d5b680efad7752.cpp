@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_18d5b680efad7752::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_437ffc21e8449636,visitor);pls::cs::trace_value(cs_fda18c2ca470418e,visitor);pls::cs::trace_value(cs_79a73cb588797b93,visitor);}
 
-void cs_18d5b680efad7752::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_437ffc21e8449636);pls::cs::release_value(cs_fda18c2ca470418e);pls::cs::release_value(cs_79a73cb588797b93);}
-
 void cs_init_18d5b680efad7752(){static pls::cs::TypeInitState state;state.run("kairo.unity.io.Http.HttpThread",[](){
 
 });}

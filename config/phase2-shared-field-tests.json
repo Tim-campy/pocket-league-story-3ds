@@ -1,28 +1,28 @@
 {
   "operation": "own-managed-shared-field-fixtures",
   "status": "PASS",
-  "assertions": 21,
+  "assertions": 20,
   "results": {
     "status": "PASS",
-    "assertions": 21,
+    "assertions": 20,
     "lost_update_result": 1,
     "game_executed": false
   },
-  "producer_sha256": "ff1ea124b8ea586569c8d6e3c21b41b5159998c8fad27a3d48719a51d350e80e",
+  "producer_sha256": "356fbe82fef72542fa54bcd82b7e91a434ec6708f0ac0032c368b8f6fe702096",
   "inputs_sha256": {
-    "tests/translator/shared_field_fixtures.cpp": "dfb0b520aedbf39c0bfab251ea0437cf4061972cb44cd6a69915a1f5dd193f52",
-    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
-    "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
+    "tests/translator/shared_field_fixtures.cpp": "483f1221151ae4f6a768490e150b13da7490574d7b569d8a228a0f275b5008a2",
+    "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
+    "src/kairo/common/managed_thread.cpp": "e2991399800c9efa29d4a3bd72ead94b6cb26f6848b357bfd9984ab933f89f8d",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
-    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "src/kairo/common/semantic_runtime.hpp": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10",
-    "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
+    "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
+    "src/kairo/common/semantic_runtime.hpp": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b",
+    "src/kairo/common/managed_thread.hpp": "2580d462b364f7c77717e7864879ad79361f40cc6539341358f57239ffccd0bc",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431"
   },
   "native_executable": {
     "path": "build/shared-field-fixtures/shared-field-fixtures.exe",
-    "sha256": "295ef0ef46f297b8b0f3664541fda4ed5173ca78f90d30f67546c2d6de20143d"
+    "sha256": "287d7b1eff7906179a574f23f39a1386b155ba920c736d392a4476b6abd4e92c"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

@@ -57,7 +57,6 @@ public:
     Array<std::uint8_t> ToArray() const;
     Array<std::uint8_t> GetBuffer() const;
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(buffer_,visitor);}
-    void release_edges()override{release_value(buffer_);}
 private:
     Array<std::uint8_t> buffer_;
     std::int32_t origin_ = 0, position_ = 0, length_ = 0, capacity_ = 0;
@@ -88,6 +87,5 @@ public:
     virtual std::int32_t Read(Array<std::uint8_t>buffer,std::int32_t offset,std::int32_t count);
     virtual void Close();virtual void Dispose(){Close();}
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(stream_,visitor);trace_value(buffer_,visitor);}
-    void release_edges()override{release_value(stream_);release_value(buffer_);}
 };
 } // namespace pls::cs

@@ -13,13 +13,11 @@ template<class F>Ref<Thread>worker(F&&function){return make_ref<Thread>(ThreadSt
 struct Node:Object {
     std::int32_t number=7;SharedField<Ref<Node>>next;
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(next,visitor);}
-    void release_edges()override{release_value(next);}
 };
 struct Board:Object {
     SharedField<std::int32_t>count;SharedField<bool>published;
     SharedField<String>text;SharedField<Ref<Node>>object;SharedField<Array<std::int32_t>>array;
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(text,visitor);trace_value(object,visitor);trace_value(array,visitor);}
-    void release_edges()override{release_value(text);release_value(object);release_value(array);}
 };
 static_assert(!std::is_copy_constructible_v<SharedField<std::int32_t>>);
 static_assert(!std::is_convertible_v<SharedField<std::int32_t>,std::int32_t>);
@@ -49,7 +47,6 @@ int main(){GcMutatorScope mutator;auto board=make_ref<Board>();
     auto cycle=make_ref<Board>();cycle->object.store(make_ref<Node>());auto held=cycle->object.load();pls::cs::Weak<Object>weak_array=cycle->array.load().as_object();
     cycle->text.store(String(u"traced"));cycle->array.store(Array<std::int32_t>::from({1}));pls::cs::Weak<Object>text_weak=cycle->text.load().as_object();weak_array=cycle->array.load().as_object();
     gc_collect(0);check(!text_weak.expired()&&!weak_array.expired(),"GC traces String and array storage through fields");
-    cycle->release_edges();check(cycle->text.load().is_null()&&cycle->array.load().is_null()&&!cycle->object.load(),"release_edges clears wrappers");
-    check(held&&held->number==7,"Loaded copy survives release_edges");
+    check(held&&held->number==7,"Loaded copy of a field survives collection");
     std::cout<<"{\"status\":\"PASS\",\"assertions\":"<<assertions<<",\"lost_update_result\":"<<lost_update<<",\"game_executed\":false}\n";
 }

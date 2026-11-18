@@ -494,7 +494,7 @@
   },
   "normal_key_regression": {
     "receipt": "config/phase2-input-tests.json",
-    "sha256": "cbf63c0979e53983cd831d87478a5b65ebd6ec426eaf173f458e9937b6bd460a",
+    "sha256": "6d970acb06a9782c933e08bbe7093f182f9234aee286766916861555e4aa89b5",
     "fixture_cases": 56,
     "passed": 56,
     "native_adapter_assertions": 19,
@@ -516,14 +516,14 @@
   "inputs": {
     "tests/kairo/input_frame_fixtures.cpp": "f0244f5435efec550174ea6201a6da2a7c697ba8c6992e6d2210a17a944a655c",
     "src/kairo/platform/sdl/input.cpp": "98895936ed7906c7cf71c5edfcfe3fe54001d0bdd0dcd75e1f092059528ca139",
-    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
+    "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
     "tests/kairo/InputFrameOracle.cs": "01025deb364316050adb293b0fba364340e0808fb0d1e42ca62477a6c79ef27b",
     "tools/probe_input_frames.py": "f45bb14a35b9c4ca1e07d04cb2fcd780f4fa71679e057855d6faa1ffd05c1d2d",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
-    "src/kairo/api/input.hpp": "0c3f2ab9a63f94359e6aace100913ab684dddfae5e453b9ea4ba8802b9d20fbf",
-    "src/kairo/common/semantic_runtime.hpp": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10",
-    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
-    "config/phase2-input-tests.json": "cbf63c0979e53983cd831d87478a5b65ebd6ec426eaf173f458e9937b6bd460a"
+    "src/kairo/api/input.hpp": "0ad98903cf66860b1f4faed60e5f4c57dcf4423fa7360a4bf41b2654eaa68669",
+    "src/kairo/common/semantic_runtime.hpp": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b",
+    "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
+    "config/phase2-input-tests.json": "6d970acb06a9782c933e08bbe7093f182f9234aee286766916861555e4aa89b5"
   },
   "source_manifest": [
     {
@@ -534,7 +534,7 @@
   "keycode_metadata_sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",
   "native_executable": {
     "path": "build/input-frame-probe/input-frame-fixtures.exe",
-    "sha256": "b5d4180bd7adcbfab8813b74b9d6b3dc455671863cf48adc1b3704fd0d388281"
+    "sha256": "81501ed0ebd5ee61c9685a913dc4eebfe87c077dae06a6ccaaeb2fbb36e13679"
   },
   "original_methods": [
     "public void DecideKeyState(): complete body",

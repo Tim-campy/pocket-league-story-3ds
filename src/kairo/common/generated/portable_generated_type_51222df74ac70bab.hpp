@@ -8,7 +8,6 @@ template<typename T_T>
 struct cs_51222df74ac70bab : pls::cs::Object, cs_a0dc211eb3feb56d {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_51222df74ac70bab)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target)||target==typeid(cs_a0dc211eb3feb56d);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.Vector`1.Equals(System.Object)";if(slot=="ToString")return "M:java.util.Vector`1.ToString";if(slot=="cs_virtual_60122bb6c899278e")return "M:java.util.Vector`1.get_List";return pls::cs::Object::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return std::string("java.util.Vector`1[")+pls::cs::managed_type_name_traits<T_T>::name()+"]";}
 std::string managed_type_name()const override{return source_managed_type_name();}

@@ -21,8 +21,6 @@ namespace pls::game {
 
 void cs_70a14a9a721e329a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_ffdf9e524c6d33fb,visitor);pls::cs::trace_value(cs_1b8f7a41fa7edc56,visitor);pls::cs::trace_value(cs_86d5d3bcc0799404,visitor);pls::cs::trace_value(cs_29b2aacd5fae61d1,visitor);pls::cs::trace_value(cs_19069f1ff64b1613,visitor);pls::cs::trace_value(cs_e7912e879cc58c4c,visitor);pls::cs::trace_value(cs_0c5fe00a7079041e,visitor);pls::cs::trace_value(cs_275b6ec9f62df479,visitor);pls::cs::trace_value(cs_b42e59d77da5e022,visitor);pls::cs::trace_value(cs_2a09121f03ba2c1f,visitor);pls::cs::trace_value(cs_2087da0c686e772f,visitor);}
 
-void cs_70a14a9a721e329a::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_ffdf9e524c6d33fb);pls::cs::release_value(cs_1b8f7a41fa7edc56);pls::cs::release_value(cs_86d5d3bcc0799404);pls::cs::release_value(cs_29b2aacd5fae61d1);pls::cs::release_value(cs_19069f1ff64b1613);pls::cs::release_value(cs_e7912e879cc58c4c);pls::cs::release_value(cs_0c5fe00a7079041e);pls::cs::release_value(cs_275b6ec9f62df479);pls::cs::release_value(cs_b42e59d77da5e022);pls::cs::release_value(cs_2a09121f03ba2c1f);pls::cs::release_value(cs_2087da0c686e772f);}
-
 static pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> cs_38b65a08b06f36b7_value{};
 
 void cs_init_70a14a9a721e329a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_38b65a08b06f36b7_value,visitor);});static pls::cs::TypeInitState state;state.run("game.TArea",[](){

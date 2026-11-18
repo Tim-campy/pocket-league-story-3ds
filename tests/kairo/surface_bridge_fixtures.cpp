@@ -22,7 +22,6 @@ struct Source:cs::Object {
  std::vector<cs::Ref<Item>> list;cs::Ref<kairo::Canvas> cycle{};
  virtual void AdjustSurfaceLayout()=0;virtual void Draw(cs::Ref<kairo::Graphics>)=0;virtual void DrawComponents(cs::Ref<kairo::Graphics>)=0;virtual void DoEvents()=0;
  void trace_edges(const cs::EdgeVisitor& visitor)const override{for(const auto& item:list)cs::trace_value(item,visitor);cs::trace_value(cycle,visitor);}
- void release_edges()override{list.clear();pls::cs::clear_ref(cycle);}
 };
 struct TaggedSource:Source {
  int tag;explicit TaggedSource(int tag):tag(tag){}

@@ -5,8 +5,6 @@ namespace pls::generated {
 
 void cs_fb60578b3098a284::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_ea324a0bbfe717fe::trace_edges(visitor);}
 
-void cs_fb60578b3098a284::release_edges(){cs_ea324a0bbfe717fe::release_edges();}
-
 pls::cs::String cs_fb60578b3098a284::ToString() {return cs_576830aae6220bdb(pls::cs::static_pointer_cast<cs_fb60578b3098a284>(shared_from_this()));}
 
 void cs_fb60578b3098a284::cs_virtual_0d912191800a0b86() {cs_939f1d17e9442852(pls::cs::static_pointer_cast<cs_fb60578b3098a284>(shared_from_this()));}

@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_29293d4d6e77d3bc::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_adc35de421fe3eef,visitor);pls::cs::trace_value(cs_1f0b9be8292dcf69,visitor);}
 
-void cs_29293d4d6e77d3bc::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_adc35de421fe3eef);pls::cs::release_value(cs_1f0b9be8292dcf69);}
-
 static pls::cs::Ref<cs_2ffa6f51468590ea> cs_d3541fa57bc06660_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_7ddc12ff1c507889_value{};

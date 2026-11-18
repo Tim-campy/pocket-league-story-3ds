@@ -65,5 +65,4 @@ bool Canvas::OnKeyDown(std::int32_t code,cs::Ref<KeyEvent> event){
 bool Canvas::OnKeyUp(std::int32_t code,cs::Ref<KeyEvent> event){if(!event)throw cs::NullReferenceException();if(event->GetRepeatCount()==0)keys_.PhysicalUp(code);return true;}
 bool Canvas::OnTouchEvent(cs::Ref<MotionEvent> event){if(!event)throw cs::NullReferenceException();if(surface_)surface_->Touch(std::move(event));return true;}
 void Canvas::trace_edges(const cs::EdgeVisitor& visitor)const{cs::trace_value(display_,visitor);cs::trace_value(graphics_,visitor);cs::trace_value(default_font_,visitor);cs::trace_value(surface_,visitor);cs::trace_value(source_surface_,visitor);for(const auto& label:labels_)cs::trace_value(label,visitor);cs::trace_value(shown_,visitor);keys_.trace_edges(visitor);}
-void Canvas::release_edges(){pls::cs::clear_ref(display_);pls::cs::clear_ref(graphics_);pls::cs::clear_ref(default_font_);pls::cs::clear_ref(surface_);pls::cs::clear_ref(source_surface_);for(auto& label:labels_)cs::release_value(label);cs::release_value(shown_);on_back={};}
 }

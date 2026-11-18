@@ -38,6 +38,5 @@ public:
     void SetLoop(std::int32_t n,bool loop)override{port(n).loop=loop;}
     void Pump()override{for(int n=0;n<4;++n)(void)IsPlaying(n);}
     void trace_edges(const cs::EdgeVisitor&v)const override{for(const auto&p:ports_)cs::trace_value(p.clip,v);}
-    void release_edges()override{for(auto&p:ports_)pls::cs::clear_ref(p.clip);}
 };
 }

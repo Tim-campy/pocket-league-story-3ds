@@ -188,6 +188,19 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
 }
 
 void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
+    // PLS_PC_LAYOUT_TRACE=1: print the sizes the platform reports to the game's
+    // SurfaceManager.AdjustSurfaceLayout whenever they change (read-only).
+    if (std::getenv("PLS_PC_LAYOUT_TRACE")) {
+        static std::string last;
+        if (auto app = kairo::IApplication::GetCurrentApp()) {
+            char text[256];
+            std::snprintf(text, sizeof text, "app=%dx%d scale_auto=%.3f scale=%.3f res=%.3f canvas=%dx%d fullscreen=%d status=%d",
+                          app->GetWidth(), app->GetHeight(), app->GetScaleRatio(true), app->GetScaleRatio(false),
+                          app->GetResolutionScaleRatio(), canvas.GetWidth(), canvas.GetHeight(),
+                          canvas.IsFullscreen() ? 1 : 0, canvas.GetStatusBarHeight());
+            if (last != text) { last = text; std::fprintf(stderr, "PLS_LAYOUT %s\n", text); }
+        }
+    }
     // Circle pad (option i of the feasibility study): the drag the original map
     // accepts (GameForm.OnTouchCamera: DOWN, GRID_DRAG beyond 4 px, UP), started at
     // the view centre so that no CLICK is produced. Only while the map is on top.

@@ -92,7 +92,6 @@ public:
     std::function<void()> on_back;
     std::int32_t GetSyncMillSecound(std::int32_t){return 0;} // Original spelling/body.
     void trace_edges(const cs::EdgeVisitor&)const override;
-    void release_edges()override;
 };
 inline cs::GcRootProvider canvas_roots([](const cs::EdgeVisitor&visitor){Canvas::trace_static_roots(visitor);});
 }

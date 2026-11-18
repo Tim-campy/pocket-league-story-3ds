@@ -8,7 +8,6 @@ namespace pls::game {
 struct cs_c63e265fb6ff73e9 : cs_5451b2154f09f4c5, cs_4c145fe8f008af05 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_c63e265fb6ff73e9)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor)||target==typeid(cs_4c145fe8f008af05);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:system.form.MatchForm.ToString";if(slot=="Init")return "M:system.form.MatchForm.Init";if(slot=="Draw")return "M:system.form.MatchForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Finish")return "M:system.form.MatchForm.Finish";if(slot=="Resume")return "M:system.form.MatchForm.Resume";if(slot=="Update")return "M:system.form.MatchForm.Update";if(slot=="GetTouchValue")return "M:system.form.MatchForm.GetTouchValue(System.Int32,System.Int32)";if(slot=="SetTouchValue")return "M:system.form.MatchForm.SetTouchValue(System.Int32,System.Int32)";if(slot=="CheckMainWindow")return "M:system.form.MatchForm.CheckMainWindow";if(slot=="cs_virtual_6cb47d5f5df8e7cc")return "M:system.form.MatchForm.Run";if(slot=="GetHashCode")return "M:system.form.MatchForm.GetHashCode";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.form.MatchForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

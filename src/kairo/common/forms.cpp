@@ -6,7 +6,6 @@ bool FormBase::Push(cs::Ref<FormBase> form){if(manager_)manager_->Push(pls::cs::
 bool FormBase::Pop(){if(manager_)manager_->Pop(pls::cs::static_pointer_cast<FormBase>(shared_from_this()));return true;}
 bool FormBase::CheckUsable(){return manager_&&manager_->CheckUsable(pls::cs::static_pointer_cast<FormBase>(shared_from_this()));}
 void FormBase::trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(left_,v);cs::trace_value(right_,v);cs::trace_value(third_,v);cs::trace_value(fourth_,v);cs::trace_value(manager_,v);}
-void FormBase::release_edges(){cs::release_value(left_);cs::release_value(right_);cs::release_value(third_);cs::release_value(fourth_);pls::cs::clear_ref(manager_);}
 void FormManagerBase::owner(){if(std::this_thread::get_id()!=owner_)throw cs::NotSupportedException("FormManager cross-thread synchronization bridge is not implemented");}
 void FormManagerBase::labels(cs::Ref<FormBase> form){if(!form)throw cs::NullReferenceException();auto left=form->left_.load();auto right=form->right_.load();auto third=form->third_.load();auto fourth=form->fourth_.load();Canvas::GetInstance()->SetSoftLabel(left,right,third,fourth);}
 cs::Ref<FormBase> FormManagerBase::GetForm(std::int32_t index){if(index<0||static_cast<std::size_t>(index)>=stack_.size())throw cs::ArgumentOutOfRangeException();return stack_[static_cast<std::size_t>(index)];}
@@ -70,7 +69,6 @@ void FormManagerBase::ProcessEvent(cs::Ref<AppEvent> event){if(!event)throw cs::
 void FormManagerBase::ProcessEvent(AppEventType type,cs::Array<cs::Ref<cs::Object>> args){auto app=IApplication::GetCurrentApp();if(!app)return;auto manager=app->GetFormManager();if(manager)manager->ProcessEvent(cs::make_ref<AppEvent>(type,args));}
 void FormManagerBase::ProcessBackKey(){for(auto i=static_cast<std::int32_t>(stack_.size())-1;i>=0;--i){auto form=GetForm(i);if(form&&form->IsAlive()&&form->ProcessBackKey())return;}ShowTerminationDialog();}
 void FormManagerBase::trace_edges(const cs::EdgeVisitor& v)const{for(const auto& f:stack_)cs::trace_value(f,v);for(const auto& state:game_states_)cs::trace_value(state.first,v);cs::trace_value(current_,v);cs::trace_value(loading_,v);cs::trace_value(print_,v);cs::trace_value(game_state_,v);cs::trace_value(execution_,v);}
-void FormManagerBase::release_edges(){stack_.clear();game_states_.clear();pls::cs::clear_ref(current_);pls::cs::clear_ref(loading_);pls::cs::clear_ref(print_);pls::cs::clear_ref(game_state_);pls::cs::clear_ref(execution_);on_lifecycle_warning={};}
 }
 
 namespace pls::kairo {

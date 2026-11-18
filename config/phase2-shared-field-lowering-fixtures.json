@@ -42,10 +42,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.2126851999782957,
-    "native-compile": 36.17520890000742,
-    "managed-output": 0.5602273000404239,
-    "native-output": 0.18855530000291765
+    "csharp-compile": 0.2472632999997586,
+    "native-compile": 37.637868500023615,
+    "managed-output": 0.5893292999826372,
+    "native-output": 0.32235319999745116
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -79,11 +79,11 @@
     },
     {
       "path": "build/translator/shared-field-generated/portable_generated_type_c6c61a1d6b8969cc.cpp",
-      "sha256": "e9e07d276a82b4d2c6fd2e7748e9505d3ca771255b5e4c03091e19030c0ae761"
+      "sha256": "0cc92986fb24a1100b77c2627d52707dc79b6e606ba2cbed92a498f1e7cd546a"
     },
     {
       "path": "build/translator/shared-field-generated/portable_generated_type_c6c61a1d6b8969cc.hpp",
-      "sha256": "8462d8541e1d1581d4d6910ad594408be6cdd2f5da5bb03f3187dd99af86c124"
+      "sha256": "d2acbc4659448094b6b20a96207c2cbfd05aeb2542854681865dbe39975539ab"
     }
   ],
   "native_compiler_options": [
@@ -99,13 +99,13 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/shared-field-differential/Harness.exe",
-    "sha256": "2d975a2baece560d9dbb42ec94296bb362aba6a5fe2ffe210bee1f93b1f4726b"
+    "sha256": "de749467188cb31f3d24d87169b9c40efc99381add6362d3180c9ba243eb74ae"
   },
   "source_oracle_executable": {
     "path": "build/translator/shared-field-differential/Harness-managed.exe",
-    "sha256": "8b5aa4d100a429e923589f9dd53a8ebd91909fb617a0067b901c686d72566846"
+    "sha256": "cd41c29613c3a274db8f3d922221bc7abf34f32e4428173574edf8caaa6d830e"
   },
-  "differential_runner_sha256": "f820bad10247e598c6093be785b20681f6f98251b4ece4bff60011d956dcf133",
+  "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
     {
       "path": "build/generated/mono-collation/mono_character_tables.inc",
@@ -149,27 +149,27 @@
     },
     {
       "path": "build/translator/shared-field-generated/portable_generated_type_c6c61a1d6b8969cc.cpp",
-      "sha256": "e9e07d276a82b4d2c6fd2e7748e9505d3ca771255b5e4c03091e19030c0ae761"
+      "sha256": "0cc92986fb24a1100b77c2627d52707dc79b6e606ba2cbed92a498f1e7cd546a"
     },
     {
       "path": "build/translator/shared-field-generated/portable_generated_type_c6c61a1d6b8969cc.hpp",
-      "sha256": "8462d8541e1d1581d4d6910ad594408be6cdd2f5da5bb03f3187dd99af86c124"
+      "sha256": "d2acbc4659448094b6b20a96207c2cbfd05aeb2542854681865dbe39975539ab"
     },
     {
       "path": "src/kairo/api/application.hpp",
-      "sha256": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d"
+      "sha256": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1"
     },
     {
       "path": "src/kairo/api/asset_reader.hpp",
-      "sha256": "4ae88cac5ac773e4fc0fd850207f3e36e93be22ccade00c61a2fd3bd6b5191e3"
+      "sha256": "97ff48a508b9629afcea68ab9ccfdae4a5ab093860bc94db476b39c3458b2c84"
     },
     {
       "path": "src/kairo/api/bootstrap.hpp",
-      "sha256": "e7df9bd7690df80d014a71d2d98d3f718524a60d27897a742408b66bb23633bc"
+      "sha256": "b0afa8c3d9f01a277ee8af094e0b7352208936759ec7c1a2f8489eaac8ef4970"
     },
     {
       "path": "src/kairo/api/canvas.hpp",
-      "sha256": "b6b2b0433ab6af501e18e572b6551dcd02fa36443d0159c8732bc673a927fd6b"
+      "sha256": "0ba9ecf96ad5fd1f81e13b80df15bf984b55e42589b56aae9ef0b32f65229490"
     },
     {
       "path": "src/kairo/api/capture.hpp",
@@ -197,15 +197,15 @@
     },
     {
       "path": "src/kairo/api/forms.hpp",
-      "sha256": "2881ae09ce7fa7a8515b32c52bc56da6a11231c16df511bd2fe755cbf532aee4"
+      "sha256": "3fb3eec4ec8ef367ddf53b925b4b5a647476b8f20948873ea6b6e0707dbd4d62"
     },
     {
       "path": "src/kairo/api/forms_callbacks.hpp",
-      "sha256": "d0464ed2bc8bef61363dc7dfe72ae73bbe2076b4b181039e68eec055f1c172fd"
+      "sha256": "e15dabb6df83a2d9f462700c6e8c12f70bc7b89317a8920a527ca2ac1c1364bf"
     },
     {
       "path": "src/kairo/api/forms_execution.hpp",
-      "sha256": "e30281793db087cd620b025d0f0a25fb19a30b2daff19d387b7c115cac1e3f4d"
+      "sha256": "5d5acd6addeb087e660f94c0014584dd4156c2f4a919c0ebf657a37c853887ee"
     },
     {
       "path": "src/kairo/api/game_entry.hpp",
@@ -217,11 +217,11 @@
     },
     {
       "path": "src/kairo/api/graphics.hpp",
-      "sha256": "2e562b16c1833e4ae50f2dda69d28683b3e9fcdd2ee0406e7a736341147727e9"
+      "sha256": "f86f6ab4ed4a6063a1f21e7a7a046eaf6590e93626f7de8e3d61a6bf0e2d2d87"
     },
     {
       "path": "src/kairo/api/input.hpp",
-      "sha256": "0c3f2ab9a63f94359e6aace100913ab684dddfae5e453b9ea4ba8802b9d20fbf"
+      "sha256": "0ad98903cf66860b1f4faed60e5f4c57dcf4423fa7360a4bf41b2654eaa68669"
     },
     {
       "path": "src/kairo/api/matrix4.hpp",
@@ -229,7 +229,7 @@
     },
     {
       "path": "src/kairo/api/mesh.hpp",
-      "sha256": "1aaa09b0f24d5c2c6190e28c1f0429d6d567adc36142e663200867187c53394f"
+      "sha256": "c4e5da2ef2de506237ea656767ba579569ca9927d9c3f4aabe6a3e1f506ed834"
     },
     {
       "path": "src/kairo/api/offline_http.hpp",
@@ -249,11 +249,11 @@
     },
     {
       "path": "src/kairo/api/sound.hpp",
-      "sha256": "c56524bc459d7bb5e5a63d501df84dde3a988d522c0bdd9f7c11dcee3acacc78"
+      "sha256": "925dd002e090aea284c6a5b5c9bf63dcd029d0001a51078affd0e531b070b99d"
     },
     {
       "path": "src/kairo/api/storage.hpp",
-      "sha256": "c20679bc198dc6631772f8c05d4441bc4c8b931196527aefbc09677f99eb62e2"
+      "sha256": "c0e39dabbd3539f2d5243c39a0d0bd5d60726a646e6e090b6aea8844a08624b3"
     },
     {
       "path": "src/kairo/api/system.hpp",
@@ -321,7 +321,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp",
-      "sha256": "8429df3c31f1d9d0767e31ccb79c7fe9bcb4feee97308dd6af6712c572a92af6"
+      "sha256": "11bd6d35c843b5a0d1b5fe7b79cef3ae7ffb7ecdf88f9705b380cff0c1400fc1"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.hpp",
@@ -341,15 +341,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3b41638e424b9ee0.hpp",
-      "sha256": "2413951c153c05a09524467d5954163354e47a4d4f56b5876cfe5f92b8c9f216"
+      "sha256": "8d95825742e1dd92524d435783f52e12babed7b6ac26c0d87b3ddc05950b9e50"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3c64e1d398f2e00f.hpp",
-      "sha256": "ccd7b0dbc0e4ef3b38472c8a3698bbf20e581d39302cd83d66e2a99d1a9006d8"
+      "sha256": "4d97bd12b31835214cfee5d77f7d4a70090663ddb3f1d4917485ba08b7616d07"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_42d69496680e17fc.hpp",
-      "sha256": "95cfe553e90549847a7bc0cf13a9b45ec731f50f033a5db3a51377ffc7244a4a"
+      "sha256": "377d4dca9149ca23c4f3f535849d20eca91b8a8d7014c80c779e3d94c7270c42"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_4978cb69e37b8564.hpp",
@@ -361,15 +361,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_51222df74ac70bab.hpp",
-      "sha256": "c17d2e552d24309948cbd98388420b2b1dc5d41af38a471e856082762e51710b"
+      "sha256": "e6ffca673ab9a54b21b596380ae992758d01d509c3c0a848b01f27feebb79ec1"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_51222df74ac70bab_templates.hpp",
-      "sha256": "dcda9373c9079feb0f3411e14f8f565a874638accdfc33556bfa33fc9079b13a"
+      "sha256": "9ff6f4bb4b9e09a2ab37b878781457a9eb9ee8f4924ece02d8bda3739c452fe5"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.hpp",
-      "sha256": "851033c43397696f93d92fd838b7ade9cbf4f8953c107177241f3643e4f1c3f4"
+      "sha256": "2fe2289aca408946f8c33f00b813adac6fae5aa7edb0d4a1d6e828893146917d"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_582a926e9c7748a6.hpp",
@@ -377,23 +377,23 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_64732f8c8acf2fd3.hpp",
-      "sha256": "d9c4acb880b61e968b43b29527934ebdd5d17685e624581b00b1cca15ef1d207"
+      "sha256": "4f52992cf4269b1a894c76b164b5a03016988d472217b817d1189b1907c61398"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_66dbad5679f8ab87.hpp",
-      "sha256": "fd709ff5ab8fb6e3d134093c2b2c735f00187ca187b5ea57eb85c43ae59a4b2a"
+      "sha256": "bd2fe0e6af1660b0a0861024373e0f3fbdaeb0f6259d18e996a57c4f79df95d0"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_67cd241ab51652f1.hpp",
-      "sha256": "133d8453de229fe1ae6b020742075c495f5ff0f950965b13001fd728c0c0ef68"
+      "sha256": "1ce8960d70240b70965d9cfa42805642e182ff1b36f9095ec68acd40ae8fe51a"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_67cd241ab51652f1_templates.hpp",
-      "sha256": "f9dc28ceaaa73a5480c4f1e126b453c68bf2f930da184e6dc140114eba65cdd9"
+      "sha256": "0a73a67890f7ecbc1531993d42358e28cf971bb50f055339a85ecbe7544cc5a5"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7254e4706a01e4e7.hpp",
-      "sha256": "12cb18e597d68dfa31be5584298002c056c022df1893788e525ec11f7ee3b509"
+      "sha256": "3b4541a17683c124b571228165aa82c15b04fc5f887215a0cce3809514080988"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.hpp",
@@ -401,15 +401,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7de6788b61a5af56.hpp",
-      "sha256": "77291bc5c0b17b5220ff37eac7a1d77b3006195da79c6bc226d0f5936015c0a6"
+      "sha256": "eeb061d033e1a0b168382489c88ece90f71d91242eb3c4ba210b6e660ec6a972"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_7fd3b635ed6929d0.hpp",
-      "sha256": "22a677e1995f5109647badf3384fcc28a52e7cfd6997dc858c1abccf149f42f1"
+      "sha256": "fa2cea3cefdc5fc2436c65acc477a6542fc182c4af2663c0b36bf4a0974b76c1"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_832d81e198eeeec2.hpp",
-      "sha256": "b4271d25f3e3e6ade6bad9086725c591803fde6406de597daf9eb6907819e8db"
+      "sha256": "a955743945225662212b2820e675bf3e385505b65ecdbb0b3c8e51eac0dacef2"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -425,35 +425,35 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8c57b816bbc8fd6e.hpp",
-      "sha256": "ae4983533b257495b6518970b3c57060e87a23a8e34e592df23c2e2d12b567b4"
+      "sha256": "4f3244ca566003ca744350973b0b45302e2a2a975f9a60ac91723793fe0d81fe"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_8d93189702e4084b.hpp",
-      "sha256": "f77ba98145ee7c9a49b7238651c171fa7176e7744a9994903833b372de4e252b"
+      "sha256": "2c0c3c59c7007121c58115c5329d0d151848509d48dab5e66d7f27e1fdc5dab7"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_922b87749168eb15.hpp",
-      "sha256": "f28a269f72f3ce771c7b5848294d98a6c33b571ebfa7c3248c49669145707be3"
+      "sha256": "585be01b541af33555ae9e7d71e68f95c98e14ba143ecfa5aa7e2ea0a3bfe84c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_924db3d974bae2af.hpp",
-      "sha256": "78ea932878f1ceb3b9d4f5f122b83ae5909b07b98c78824977cd9b62ab4d8abc"
+      "sha256": "bf3e276a93965d81c36021d014d27b4b5d0b1e0c67059b10862b45d7f3e0f822"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_9487cb83e3a46e0a.hpp",
-      "sha256": "cc508c0fb83d2bdde2fc973e27c27e4d6cfd2ebc02a2a4879354a25b94b2fba2"
+      "sha256": "21e179545fca27aa9d8158aad8e1a4699aec58ac749256cd7bd4f0a7aff75550"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_98f0a1bec2084c3c.hpp",
-      "sha256": "b2612d59daf6cff70ddee5b14dc37ba051505c6e16bad60d09da3e8ee9063410"
+      "sha256": "b0d24c27f2b425a1f0de74ece28dad6a44ffdd195e0c80bccbc0b61b49e7f352"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a09270023ec48eca.hpp",
-      "sha256": "f1125315ece328c5903e592dfbb0f0d4b9c945b06be7cddf96c3d78c153b7cd1"
+      "sha256": "3ea3f2ac3a47c9efecf51c3da1c3072e8e7178b7530e9c579050e26f73dad66b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a0cf9aef6a251bfd.hpp",
-      "sha256": "cdc70fbec06af8e52063b7894916966558c608c90f34cb616f5f3216b9be44c1"
+      "sha256": "4c638a0bdd9987a345e1ff34c921f428818c680a1e3e597aa8f9c74b6c750709"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a0dc211eb3feb56d.hpp",
@@ -461,35 +461,35 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_a465028bea3432a3.hpp",
-      "sha256": "30e28953349db1a5f52815adc5fed31147b068e8546d15c7b82a5bb3d132fa30"
+      "sha256": "479882249261d607f7b146ed5d51379c9b3128471a2ed3f0653f37b0dbcf5026"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ab1b1085a7ab32b9.hpp",
-      "sha256": "f9b99a096f2e6095f5969016b80ba7b47cf6280fe370c3256c45e0c4a99febb1"
+      "sha256": "16669c4c97512d85440ff4a4d07fa2a14f40700b787767a4df655ac5e25faec2"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_acb158b492b43017.hpp",
-      "sha256": "cd91f887a1b3a5395fd9aee01002cd8150a391323b120d04746f9685f33aecdf"
+      "sha256": "9d066b33b15be4a4132c1deaa686581ca870ffbeecec25b5953261daad55f86b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.hpp",
-      "sha256": "cc9790308803b00a77e07d89276ad14343ad067bf47965f1bdf3ba935e832693"
+      "sha256": "47ef4158db11be4ff4728376e66f40e152a1055448681d5538d3a513a9d7fecc"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bd164c3c94a49e2a.hpp",
-      "sha256": "9a772f666eb609107e12ea87fb9b85ed6a1825253a2dffdde5023138f71142bd"
+      "sha256": "91e577e161c542c15c16b268154ea0142e20becc9b619d0d5a627c30a5520800"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bfe2a01361163e7a.hpp",
-      "sha256": "083720ef643e126be1c44b67bf859d9ab1b6d03463d37575e7cc4a8ad87ec6be"
+      "sha256": "13db3fc010d912349d2c1834012564a927fd971de088ae02e71962674bca81fa"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c0fae45144034cf9.hpp",
-      "sha256": "02800055796d1c4489439414fde8c2eecae716d06bc8d62af1645bd531ec88ec"
+      "sha256": "8f6811f40d821ad63cd86dc2fff92c1a73e67020e7224f6cf26b197f8462d821"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c20c229ea63037d8.hpp",
-      "sha256": "0cdc98e8f61ea47019c677d380d4d07570dce2a9930b0438dda3dbefffe841c1"
+      "sha256": "51e8eea89ab40bcd10f1c0dcd2a568d3dc02386351faf0051db0b681117f915e"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_c4521f4960c4f908.hpp",
@@ -513,15 +513,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7a5499b363ef51b.hpp",
-      "sha256": "657a352d385b873051269e54e7864b35241ae153fc9e8854273bab6a31b01a0b"
+      "sha256": "cb9fb72af71684a8a61260700675a2230374b863e22b8e69cbb82effb952643e"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_e7d772862db62924.hpp",
-      "sha256": "8368b74777a08eb7d6408af244244b7547637370d80eb7cb2cfc035ada567439"
+      "sha256": "f6f5604b5d217cfd105bf641ee20aee2a5ddd2e132afaaae9cc7d70bc82c5997"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ea324a0bbfe717fe.hpp",
-      "sha256": "fcbfd7c6c8d2d724fd263f2e5821286f237f2ef28a73f2d4a1ca380f4f514d03"
+      "sha256": "95ea848db8b2abc0c4c62869cd71952e164f8c98df1219848fb029ac15a58731"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_ead0ac0906403160.hpp",
@@ -537,15 +537,15 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f59223d2c773f078.hpp",
-      "sha256": "57f9dbb20d554d137c923c467e321b875f8e17263203a501f23c22ab42ea2db2"
+      "sha256": "44fbbeec8857e56c8cd507ad9c55e367b6212bcc6b9ab7d39cc67c7f42caffb0"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_f8b20a4d1d9d695f.hpp",
-      "sha256": "a6ab8b7855e234a5bbb957bd65e437baedea4ccb1f2d8d15fe1112cf892b652c"
+      "sha256": "1d829af0d15f1de065c45d3131403df1329d878f7bc84e8c6607d40d8a21fd7b"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_fb60578b3098a284.hpp",
-      "sha256": "4cf78baee00d8982b2fc829fab570fce7643314ca358e41323abc418efd61763"
+      "sha256": "8ee3d63d161763854880f5fcc20aa3d8b565614a8e98e981f0022eca05cd3aa9"
     },
     {
       "path": "src/kairo/common/managed_collation.cpp",
@@ -557,11 +557,11 @@
     },
     {
       "path": "src/kairo/common/managed_collections.hpp",
-      "sha256": "89b085f02f2a28c9febe055c76d1ada453b3db1ef27472517039e2e911753512"
+      "sha256": "c7497191407203e01c2ffea7db4af6c3ba72fe4fd3f2ac2de6acbaad53b69b9a"
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "dfda0326f26577190c474b819fb2c6e440398b59b9890a61e0c8c136db36286d"
+      "sha256": "f09a465a3cab7cca3b1b47ad8ce946f740949ae969dafa8c791a912c71120f59"
     },
     {
       "path": "src/kairo/common/managed_encoding.cpp",
@@ -573,11 +573,11 @@
     },
     {
       "path": "src/kairo/common/managed_exceptions.cpp",
-      "sha256": "8b3dee34e87d20c13d5ebadac7765f85035896eb6795afacdc48e31db3d4ab07"
+      "sha256": "12746a35057e39d6f74310364d19f770720ba86b30cf0e40ccc29c5cd77a1484"
     },
     {
       "path": "src/kairo/common/managed_exceptions.hpp",
-      "sha256": "02d9bfd7def6843ee9034473bbc7f5e3ccf1cf2b1df81b3a645005e7ec1585be"
+      "sha256": "cce75037e1b1c5e64ffd81ff32b554807034dddcec9554f054475618c188a4ff"
     },
     {
       "path": "src/kairo/common/managed_float_format.cpp",
@@ -609,7 +609,7 @@
     },
     {
       "path": "src/kairo/common/managed_reflection.hpp",
-      "sha256": "33ea3d138d7bc8e8a1ec894353393917c68844a5d58f6f025214175762fa1035"
+      "sha256": "3a1fd3b48234eb3b3fdf615f93857dc96e5ec251eb2a53b5b2a4f7660364c5c5"
     },
     {
       "path": "src/kairo/common/managed_regex.cpp",
@@ -617,19 +617,19 @@
     },
     {
       "path": "src/kairo/common/managed_regex.hpp",
-      "sha256": "ade7caa430fdce13ec81cc3a8f14b5e88d93b5c9bca18e92e57f029f7d9ab5ba"
+      "sha256": "cac833f11154840a91be839f0fde5f25dc9f531af7f4d26d665619cf861c6a27"
     },
     {
       "path": "src/kairo/common/managed_shared_field.hpp",
-      "sha256": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e"
+      "sha256": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f"
     },
     {
       "path": "src/kairo/common/managed_stream_reader.cpp",
-      "sha256": "e8f7e507b8ac58aa5a99484cbd07ee0ad35d56b22c201830c9d62cef6af9c699"
+      "sha256": "fce4757fe4bbc058da088ce4293d59f5ae3646a0c10f9ef310a995119ff4c92b"
     },
     {
       "path": "src/kairo/common/managed_stream_reader.hpp",
-      "sha256": "5ba11937948b2c29efe733a07bf5e28a09a0d05dc5c841944d718b06c224d4fd"
+      "sha256": "0bd9fcd7c84dbc1068a5db20fdb49a731949d13375fa5247e72e185b1d139441"
     },
     {
       "path": "src/kairo/common/managed_streams.cpp",
@@ -637,7 +637,7 @@
     },
     {
       "path": "src/kairo/common/managed_streams.hpp",
-      "sha256": "3d823c4d12858f597a886a6058667cbfb8d02b640c794e64870bbef267fb7e0f"
+      "sha256": "905ddda115192043f5cd67843a539f5c3e0b4d48c44dd141431beb91f057eab5"
     },
     {
       "path": "src/kairo/common/managed_string_ops.cpp",
@@ -653,19 +653,19 @@
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
-      "sha256": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661"
+      "sha256": "e2991399800c9efa29d4a3bd72ead94b6cb26f6848b357bfd9984ab933f89f8d"
     },
     {
       "path": "src/kairo/common/managed_thread.hpp",
-      "sha256": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96"
+      "sha256": "2580d462b364f7c77717e7864879ad79361f40cc6539341358f57239ffccd0bc"
     },
     {
       "path": "src/kairo/common/managed_time.hpp",
-      "sha256": "35198681469fa6e30aad9f55cf0a7450673b97584089e49ac61cc1e656bebb94"
+      "sha256": "8e42ed1ab0e3439709efc47259f09cd37014abf91fd8f79f896cb3f807ec65c2"
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "0ae68f5eb7faa87864513745273319d55b8a435152f9b3a7317022e39af3a38b"
+      "sha256": "305aece580567fd149a81ef8c36eddb3624c340de8515dfe6a22366f9efdeae2"
     },
     {
       "path": "src/kairo/common/memory_ranges.hpp",
@@ -693,11 +693,11 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.cpp",
-      "sha256": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9"
+      "sha256": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10"
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10"
+      "sha256": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -737,7 +737,7 @@
     },
     {
       "path": "src/runtime/managed_reference.hpp",
-      "sha256": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3"
+      "sha256": "04451445e205ffd2f9a8ff3d5977e72446d7f416908dc7861ea0e67175295787"
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
@@ -767,10 +767,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "5c7fc3e4084397d9ceb2435718d31008bd95ab4e7f5a9655c479b47eb4cf5bc0",
+    "translator_source_sha256": "eea957c2430cf624b519507de7db16bb9424ea8e5c6f960110465300d6519ed1",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
-      "7f08e1fc41a718933b1013604838d24e35bbc921a5baf6c1269d7f593c60bf14",
+      "0118f596a83b3da3cfd03a0986042d12f60e103f786dae11b76790fe25ee7f76",
       "e8b8b4b77cd1ccc05c5180c9f1339eae860a450a3359ccc64c7b9f3804848373"
     ],
     "driver_sha256": "5c3705cf873216cd5df961363a02c8b02d32745619b52038f3c8a3c74c1e7916"

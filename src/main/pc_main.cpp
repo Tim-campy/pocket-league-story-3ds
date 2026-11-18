@@ -45,7 +45,6 @@ private:
     pls::sdl::Backend& backend_;pls::cs::Ref<pls::kairo::Image> display_;bool scripted_;std::uint64_t dialogs_{0};std::map<std::u16string,std::uint64_t> seen_;
 public:
     void trace_edges(const pls::cs::EdgeVisitor& visitor)const override{pls::cs::trace_value(display_,visitor);}
-    void release_edges()override{pls::cs::release_value(display_);}
     PcDialogPresenter(pls::sdl::Backend& backend,pls::cs::Ref<pls::kairo::Image> display,bool scripted):backend_(backend),display_(std::move(display)),scripted_(scripted){}
     std::int32_t Present(const pls::kairo::DialogRequest& request)override{
         using Command=pls::kairo::PortDialog::Command;

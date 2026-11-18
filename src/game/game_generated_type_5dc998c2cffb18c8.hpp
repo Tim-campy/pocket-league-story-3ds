@@ -8,7 +8,6 @@ namespace pls::game {
 struct cs_5dc998c2cffb18c8 : cs_5451b2154f09f4c5, cs_4c145fe8f008af05 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_5dc998c2cffb18c8)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor)||target==typeid(cs_4c145fe8f008af05);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:system.form.HttpForm.ToString";if(slot=="Init")return "M:system.form.HttpForm.Init";if(slot=="Draw")return "M:system.form.HttpForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Update")return "M:system.form.HttpForm.Update";if(slot=="Finish")return "M:system.form.HttpForm.Finish";if(slot=="CheckMainWindow")return "M:system.form.HttpForm.CheckMainWindow";if(slot=="cs_virtual_6cb47d5f5df8e7cc")return "M:system.form.HttpForm.Run";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "system.form.HttpForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

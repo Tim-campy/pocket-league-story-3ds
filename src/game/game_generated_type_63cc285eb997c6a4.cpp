@@ -27,8 +27,6 @@ namespace pls::game {
 
 void cs_63cc285eb997c6a4::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_2ef6641b828546ac::trace_edges(visitor);pls::cs::trace_value(cs_4ac9c114bad6f0d7,visitor);pls::cs::trace_value(cs_3bc06ef3f8dc55e3,visitor);pls::cs::trace_value(cs_6078af47b3ba6515,visitor);pls::cs::trace_value(cs_c8358cd826240c7e,visitor);pls::cs::trace_value(cs_0ef7b7100ff41610,visitor);pls::cs::trace_value(cs_8d600bd19ad507ef,visitor);pls::cs::trace_value(cs_f51ac804b779f615,visitor);}
 
-void cs_63cc285eb997c6a4::release_edges(){cs_2ef6641b828546ac::release_edges();pls::cs::release_value(cs_4ac9c114bad6f0d7);pls::cs::release_value(cs_3bc06ef3f8dc55e3);pls::cs::release_value(cs_6078af47b3ba6515);pls::cs::release_value(cs_c8358cd826240c7e);pls::cs::release_value(cs_0ef7b7100ff41610);pls::cs::release_value(cs_8d600bd19ad507ef);pls::cs::release_value(cs_f51ac804b779f615);}
-
 bool cs_63cc285eb997c6a4::cs_virtual_c0753f11c8bf367f() {return cs_1d77724afc05a36c(pls::cs::static_pointer_cast<cs_63cc285eb997c6a4>(shared_from_this()));}
 
 static pls::cs::Array<std::int32_t> cs_1ee38942262ff09d_value{};

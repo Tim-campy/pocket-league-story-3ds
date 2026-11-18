@@ -69,21 +69,15 @@ std::string parent(const std::string& name){
 }
 template<class Native>class ManagedUnwind final:public Native {
     ExceptionRef object_;std::string name_;
-#if PLS_TRACING_GC
     GcRootProvider roots_;
-#endif
 public:
     explicit ManagedUnwind(ExceptionRef object):Native(object->get_Message().utf8()),object_(std::move(object)),name_(object_->managed_type_name())
-#if PLS_TRACING_GC
         ,roots_([this](const EdgeVisitor&visitor){trace_value(object_,visitor);})
-#endif
     {
         this->identity_token()->managed_view=object_;
     }
-#if PLS_TRACING_GC
     ManagedUnwind(const ManagedUnwind&other):Native(other),object_(other.object_),name_(other.name_),
         roots_([this](const EdgeVisitor&visitor){trace_value(object_,visitor);}){}
-#endif
     const char* type_name()const noexcept override{return name_.c_str();}
 };
 template<class Native>[[noreturn]]void unwind(const ExceptionRef& object){throw ManagedUnwind<Native>(object);}
@@ -105,7 +99,6 @@ String ExceptionObject::source_ToString(){
     return value;
 }
 void ExceptionObject::trace_edges(const EdgeVisitor& visitor)const{trace_value(message_,visitor);trace_value(inner_,visitor);}
-void ExceptionObject::release_edges(){release_value(message_);clear_ref(inner_);native_={};pls::cs::clear_ref(identity_);}
 ExceptionRef make_exception(const std::string& name){auto object=make_ref<ExceptionObject>(name);object->source_ctor(name);return object;}
 ExceptionRef make_exception(const std::string& name,String message,ExceptionRef inner){auto object=make_ref<ExceptionObject>(name);object->source_ctor(name,std::move(message),std::move(inner));return object;}
 ExceptionRef capture_exception(const Exception& exception,std::exception_ptr native){

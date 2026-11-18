@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_f8053a3d49df91b7::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_f8053a3d49df91b7::release_edges(){pls::cs::Object::release_edges();}
-
 void cs_init_f8053a3d49df91b7(){static pls::cs::TypeInitState state;state.run("TJPlacement",[](){
 
 });}

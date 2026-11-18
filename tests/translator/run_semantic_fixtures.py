@@ -91,7 +91,6 @@ def main():
     binary=folder/'semantic-fixtures.exe'
     command=[compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/permissive-','/W4','/WX','/utf-8',
              '/I'+str(runtime.parent),'/Fe:'+str(binary),source,runtime,*EXTRA_NATIVE_SOURCES.get(args.fixture,[])]
-    if args.tracing:command+=['/DPLS_TRACING_GC=1']
     execute(command,folder,'cpp-compile',env)
     actual=execute([binary,'dotnet'],folder,'cpp-run',env)
     unity=Path(os.environ.get('UNITY_ROOT',str(Path.home()/'AppData/Local/Programs/Unity/5.3.4f1')))

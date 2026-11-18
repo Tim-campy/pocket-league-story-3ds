@@ -12,7 +12,7 @@ public:
     explicit RuntimeGameState(cs::Ref<FormRuntime> runtime):runtime_(std::move(runtime)){}
     bool IsGamePlaying()override{auto source=runtime_->Kairo();return source&&source->IsGamePlaying();}
     void SetGameState(bool value)override{if(auto source=runtime_->Kairo())source->SetGameState(value);}
-    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}void release_edges()override{pls::cs::clear_ref(runtime_);}
+    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}
 };
 }
 void source_app_sleep(std::int32_t ms){

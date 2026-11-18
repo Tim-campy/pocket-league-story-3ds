@@ -6,8 +6,6 @@ namespace pls::generated {
 
 void cs_15e3f7b692b3f380::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::trace_edges(visitor);}
 
-void cs_15e3f7b692b3f380::release_edges(){cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::release_edges();}
-
 void cs_init_15e3f7b692b3f380(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.FastVector",[](){
 
 });}

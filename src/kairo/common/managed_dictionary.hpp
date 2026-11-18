@@ -18,7 +18,6 @@ template<class K,class V>struct KeyValuePair {
     KeyValuePair(K first,V second):key(std::move(first)),value(std::move(second)){}
     K get_Key()const{return key;}V get_Value()const{return value;}
     void trace_edges(const EdgeVisitor&visitor)const{trace_value(key,visitor);trace_value(value,visitor);}
-    void release_edges(){release_value(key);release_value(value);}
 };
 template<class K,class V>class Dictionary {
     struct Entry {std::uint32_t hash=0;std::optional<KeyValuePair<K,V>>item;};
@@ -28,7 +27,6 @@ template<class K,class V>class Dictionary {
             visit(free.data(),free.capacity()*sizeof(std::size_t),memory::Category::managed_heap);
         }
         void trace_edges(const EdgeVisitor&visitor)const override{for(const auto&entry:entries)if(entry.item)entry.item->trace_edges(visitor);}
-        void release_edges()override{entries.clear();free.clear();}
     };
     Ref<Storage>data_{};
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
@@ -70,7 +68,6 @@ public:
         void Reset(){verify();next_=0;current_={};}
         void Dispose(){if(runtime_profile==RuntimeProfile::UnityMono265){clear_ref(data_);disposed_=true;}}
         void trace_edges(const EdgeVisitor&visitor)const{trace_value(data_,visitor);trace_value(current_,visitor);}
-        void release_edges(){release_value(data_);release_value(current_);}
     };
     Enumerator GetEnumerator()const{require();return Enumerator(data_);}
 };
@@ -95,7 +92,6 @@ public:
     Ref<Object> get_Current()override{throw NotSupportedException("IEnumerator.Current of a boxed Dictionary enumerator: Mono 2.6 contract not established");}
     void Reset()override{inner_.Reset();}
     void trace_edges(const EdgeVisitor&visitor)const override{inner_.trace_edges(visitor);}
-    void release_edges()override{inner_.release_edges();}
 };
 template<class K,class V>Ref<EnumeratorObject> box_enumerator(typename Dictionary<K,V>::Enumerator value){return make_ref<DictionaryEnumeratorObject<K,V>>(std::move(value));}
 } // namespace pls::cs

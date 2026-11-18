@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_e6ed65290db381ba::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_e6ed65290db381ba::release_edges(){pls::cs::Object::release_edges();}
-
 void cs_init_e6ed65290db381ba(){static pls::cs::TypeInitState state;state.run("system.billing.util.Json",[](){
 
 });}

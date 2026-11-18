@@ -33,7 +33,7 @@ public:
             answer=result;return answer;
         },[&]{modal_(false);});
     }
-    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(modal_,v);}void release_edges()override{cs::release_value(modal_);}
+    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(modal_,v);}
 };
 }
 cs::Ref<kairo::DialogPresenter> make_dialog_presenter(SDL_Window* parent,cs::Delegate<void(bool)> modal_scope){return cs::make_ref<MessageBoxPresenter>(parent,std::move(modal_scope));}

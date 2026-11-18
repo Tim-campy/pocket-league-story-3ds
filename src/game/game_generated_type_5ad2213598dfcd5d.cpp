@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_5ad2213598dfcd5d::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_5ad2213598dfcd5d::release_edges(){pls::cs::Object::release_edges();}
-
 void cs_init_5ad2213598dfcd5d(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.Component",[](){
 
 });}

@@ -47,6 +47,5 @@ public:
     bool Join(std::int32_t milliseconds_timeout);
     static void Sleep(std::int32_t milliseconds_timeout);
     void trace_edges(const EdgeVisitor& visitor)const override;
-    void release_edges()override;
 };
 } // namespace pls::cs

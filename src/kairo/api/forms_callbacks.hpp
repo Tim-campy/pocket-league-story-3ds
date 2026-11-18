@@ -11,7 +11,6 @@ struct KairoCallbacks {
     cs::Delegate<void(std::int32_t)> set_reserve;
     cs::Delegate<void()> update,save,save_all;
     void trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(is_game_playing,v);cs::trace_value(reserve_enabled,v);cs::trace_value(set_game_state,v);cs::trace_value(set_reserve_enabled,v);cs::trace_value(reserve,v);cs::trace_value(set_reserve,v);cs::trace_value(update,v);cs::trace_value(save,v);cs::trace_value(save_all,v);}
-    void release_edges(){cs::release_value(is_game_playing);cs::release_value(reserve_enabled);cs::release_value(set_game_state);cs::release_value(set_reserve_enabled);cs::release_value(reserve);cs::release_value(set_reserve);cs::release_value(update);cs::release_value(save);cs::release_value(save_all);}
 };
 template<class Signature>const cs::Delegate<Signature>& required_form_callback(const cs::Delegate<Signature>& callback){if(!callback)throw cs::InvalidOperationException("Generated form collaborator binding is missing");return callback;}
 class CallbackFormKairo : public FormKairo {
@@ -26,7 +25,7 @@ public:
     std::int32_t ReserveSave()override{return required_form_callback(bindings_.reserve)();}
     void SetReserveSave(std::int32_t n)override{required_form_callback(bindings_.set_reserve)(n);}
     void Save()override{required_form_callback(bindings_.save)();}void SaveAll()override{required_form_callback(bindings_.save_all)();}
-    void trace_edges(const cs::EdgeVisitor& v)const override{bindings_.trace_edges(v);}void release_edges()override{bindings_.release_edges();}
+    void trace_edges(const cs::EdgeVisitor& v)const override{bindings_.trace_edges(v);}
 };
 struct FormCallbacks {
     cs::Delegate<cs::Ref<FormKairo>()> kairo;
@@ -39,7 +38,6 @@ struct FormCallbacks {
     cs::Delegate<void(cs::Ref<FormBase>)> resume_warning;
     cs::Delegate<void(cs::Ref<FormBase>,bool)> lifecycle_warning;
     void trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(kairo,v);cs::trace_value(recorder,v);cs::trace_value(fep,v);cs::trace_value(millis,v);cs::trace_value(sleep,v);cs::trace_value(yield,v);cs::trace_value(collect,v);cs::trace_value(begin_draw_counters,v);cs::trace_value(close_jar_cache,v);cs::trace_value(release_expired_images,v);cs::trace_value(termination_dialog,v);cs::trace_value(resume_warning,v);cs::trace_value(lifecycle_warning,v);}
-    void release_edges(){cs::release_value(kairo);cs::release_value(recorder);cs::release_value(fep);cs::release_value(millis);cs::release_value(sleep);cs::release_value(yield);cs::release_value(collect);cs::release_value(begin_draw_counters);cs::release_value(close_jar_cache);cs::release_value(release_expired_images);cs::release_value(termination_dialog);cs::release_value(resume_warning);cs::release_value(lifecycle_warning);}
 };
 class CallbackFormRuntime : public FormRuntime {
     FormCallbacks bindings_;
@@ -57,14 +55,14 @@ public:
     void BeginDrawCounters()override{required_form_callback(bindings_.begin_draw_counters)();}
     void CloseJarCache()override{required_form_callback(bindings_.close_jar_cache)();}
     void ReleaseExpiredImages()override{required_form_callback(bindings_.release_expired_images)();}
-    void trace_edges(const cs::EdgeVisitor& v)const override{bindings_.trace_edges(v);}void release_edges()override{bindings_.release_edges();}
+    void trace_edges(const cs::EdgeVisitor& v)const override{bindings_.trace_edges(v);}
 };
 class CallbackFormFep : public FormFep {
     cs::Delegate<bool()> update_;
 public:
     explicit CallbackFormFep(cs::Delegate<bool()> update):update_(std::move(update)){}
     bool Update()override{return required_form_callback(update_)();}
-    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(update_,v);}void release_edges()override{cs::release_value(update_);}
+    void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(update_,v);}
 };
 struct SurfaceCallbacks {
     cs::Delegate<void(std::int32_t,cs::Ref<KeyEvent>)> raw_key_down;
@@ -73,7 +71,6 @@ struct SurfaceCallbacks {
     cs::Delegate<void()> clear_touch,clear_game_touch,do_events,adjust_layout;
     cs::Delegate<void(cs::Ref<Graphics>)> begin_touch,draw,end_touch,draw_components;
     void trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(raw_key_down,v);cs::trace_value(key_down,v);cs::trace_value(key_up,v);cs::trace_value(touch,v);cs::trace_value(clear_touch,v);cs::trace_value(clear_game_touch,v);cs::trace_value(do_events,v);cs::trace_value(adjust_layout,v);cs::trace_value(begin_touch,v);cs::trace_value(draw,v);cs::trace_value(end_touch,v);cs::trace_value(draw_components,v);}
-    void release_edges(){cs::release_value(raw_key_down);cs::release_value(key_down);cs::release_value(key_up);cs::release_value(touch);cs::release_value(clear_touch);cs::release_value(clear_game_touch);cs::release_value(do_events);cs::release_value(adjust_layout);cs::release_value(begin_touch);cs::release_value(draw);cs::release_value(end_touch);cs::release_value(draw_components);}
 };
 class CallbackFormSurface : public FormSurface {
     SurfaceCallbacks bindings_;
@@ -88,6 +85,6 @@ public:
     void Draw(cs::Ref<Graphics> g)override{required_form_callback(bindings_.draw)(std::move(g));}
     void EndTouchRegist(cs::Ref<Graphics> g)override{required_form_callback(bindings_.end_touch)(std::move(g));}
     void DrawComponents(cs::Ref<Graphics> g)override{required_form_callback(bindings_.draw_components)(std::move(g));}
-    void trace_edges(const cs::EdgeVisitor& v)const override{bindings_.trace_edges(v);}void release_edges()override{bindings_.release_edges();}
+    void trace_edges(const cs::EdgeVisitor& v)const override{bindings_.trace_edges(v);}
 };
 }

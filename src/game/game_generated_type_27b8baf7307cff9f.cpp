@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_27b8baf7307cff9f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
 
-void cs_27b8baf7307cff9f::release_edges(){pls::cs::ExceptionObject::release_edges();}
-
 void cs_init_27b8baf7307cff9f(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.UIException",[](){
 
 });}

@@ -30,6 +30,5 @@ public:
     virtual void Dispose(){Close();}
     Ref<Stream> get_BaseStream()const{return stream_;}
     void trace_edges(const EdgeVisitor& visitor)const override;
-    void release_edges()override;
 };
 } // namespace pls::cs

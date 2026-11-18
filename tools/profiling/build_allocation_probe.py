@@ -30,7 +30,7 @@ def main():
     cmake='cmake_minimum_required(VERSION 3.20)\nproject(AllocationProbe LANGUAGES CXX)\nset(CMAKE_CXX_STANDARD 17)\nset(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreadedDLL)\nfind_package(freetype CONFIG REQUIRED)\n'
     cmake+='add_executable(allocation_game '+quote(wrapper)+' '+' '.join(map(quote,objects+extra))+')\n'
     cmake+='target_include_directories(allocation_game PRIVATE '+' '.join(map(quote,includes))+')\n'
-    cmake+='target_compile_definitions(allocation_game PRIVATE PLS_NULL_BACKEND=1 PLS_TRACING_GC=1 PLS_ALLOCATION_PROBE=1)\n'
+    cmake+='target_compile_definitions(allocation_game PRIVATE PLS_NULL_BACKEND=1 PLS_ALLOCATION_PROBE=1)\n'
     cmake+='target_compile_options(allocation_game PRIVATE /O2 /Zi /bigobj /EHsc /fp:strict /permissive- /utf-8 /we4715)\ntarget_link_options(allocation_game PRIVATE /DEBUG /OPT:REF /OPT:ICF)\n'
     cmake+='target_link_libraries(allocation_game PRIVATE '+quote(base/'null_runtime.lib')+' Freetype::Freetype Psapi Advapi32)\n'
     (folder/'CMakeLists.txt').write_text(cmake)

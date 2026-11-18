@@ -11,8 +11,6 @@ namespace pls::game {
 
 void cs_4e9b1f0e9e3baf25::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_7532de0b2467e888,visitor);pls::cs::trace_value(cs_7cc420fdd246795c,visitor);}
 
-void cs_4e9b1f0e9e3baf25::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_7532de0b2467e888);pls::cs::release_value(cs_7cc420fdd246795c);}
-
 static pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_f0c6ab846fbc94dd_value{};
 
 void cs_init_4e9b1f0e9e3baf25(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_f0c6ab846fbc94dd_value,visitor);});static pls::cs::TypeInitState state;state.run("surface.TouchEffectManager",[](){

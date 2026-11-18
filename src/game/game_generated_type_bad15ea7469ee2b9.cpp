@@ -21,8 +21,6 @@ namespace pls::game {
 
 void cs_bad15ea7469ee2b9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::kairo::IApplication::trace_edges(visitor);}
 
-void cs_bad15ea7469ee2b9::release_edges(){pls::kairo::IApplication::release_edges();}
-
 pls::cs::Ref<pls::kairo::FormManagerBase> cs_bad15ea7469ee2b9::GetFormManager() {return cs_a8d7ff329d533cce(pls::cs::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}
 
 void cs_bad15ea7469ee2b9::OnCreate() {cs_fe479bb5365005e6(pls::cs::static_pointer_cast<cs_bad15ea7469ee2b9>(shared_from_this()));}

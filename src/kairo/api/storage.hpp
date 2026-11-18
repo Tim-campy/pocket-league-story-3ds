@@ -42,7 +42,6 @@ public:
     static cs::Ref<Storage> Open(std::int32_t media,bool security);
     static cs::String GetFolder(std::int32_t media);
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(folder_,v);}
-    void release_edges()override{cs::release_value(folder_);}
     void Close();
     cs::Array<std::uint8_t> Read(cs::String filename);
     void Write(cs::String filename,cs::Array<std::uint8_t> data);

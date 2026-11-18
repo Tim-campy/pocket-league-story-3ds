@@ -131,5 +131,4 @@ bool Thread::Join(std::int32_t milliseconds){
     return finished;
 }
 void Thread::trace_edges(const EdgeVisitor& visitor)const{std::lock_guard<std::mutex> lock(state_->mutex);state_->start.trace_edges(visitor);}
-void Thread::release_edges(){std::lock_guard<std::mutex> lock(state_->mutex);state_->start.release_edges();}
 } // namespace pls::cs

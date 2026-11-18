@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_17bc7a5b28fcdc2a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_5ad2213598dfcd5d::trace_edges(visitor);pls::cs::trace_value(cs_ba2d5e888232cb91,visitor);}
 
-void cs_17bc7a5b28fcdc2a::release_edges(){cs_5ad2213598dfcd5d::release_edges();pls::cs::release_value(cs_ba2d5e888232cb91);}
-
 void cs_init_17bc7a5b28fcdc2a(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.Button",[](){
 
 });}

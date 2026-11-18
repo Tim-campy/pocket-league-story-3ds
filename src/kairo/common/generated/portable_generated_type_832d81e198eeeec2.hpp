@@ -7,7 +7,6 @@ namespace pls::generated {
 struct cs_832d81e198eeeec2 : cs_ea324a0bbfe717fe {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_832d81e198eeeec2)||target==typeid(cs_ea324a0bbfe717fe)||cs_ea324a0bbfe717fe::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_0d912191800a0b86")return "M:kairo.unity.io.ByteListOutputStream.Close";if(slot=="cs_virtual_eeffa75bcd0cd73d")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[],System.Int32,System.Int32)";if(slot=="cs_virtual_109456b2dd9e2d77")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Byte[])";if(slot=="cs_virtual_a2a7e1a6575cae4c")return "M:kairo.unity.io.ByteListOutputStream.Write(System.Int32)";if(slot=="cs_virtual_2adf924bd0d7d65a")return "M:kairo.unity.io.ByteListOutputStream.Flush";return cs_ea324a0bbfe717fe::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "kairo.unity.io.ByteListOutputStream";}
 std::string managed_type_name()const override{return source_managed_type_name();}

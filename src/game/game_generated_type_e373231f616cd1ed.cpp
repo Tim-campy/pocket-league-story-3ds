@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_e373231f616cd1ed::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6a3564cf80f64631,visitor);}
 
-void cs_e373231f616cd1ed::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_6a3564cf80f64631);}
-
 void cs_init_e373231f616cd1ed(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch",[](){
 
 });}

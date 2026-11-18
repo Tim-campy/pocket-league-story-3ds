@@ -9,8 +9,6 @@ namespace pls::game {
 
 void cs_dc09c88a279424b5::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_5352e54601bec7cb,visitor);pls::cs::trace_value(cs_110453e9e91b0c62,visitor);pls::cs::trace_value(cs_ee2adc9e2cf23dac,visitor);pls::cs::trace_value(cs_d7151221c9064cfc,visitor);}
 
-void cs_dc09c88a279424b5::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_5352e54601bec7cb);pls::cs::release_value(cs_110453e9e91b0c62);pls::cs::release_value(cs_ee2adc9e2cf23dac);pls::cs::release_value(cs_d7151221c9064cfc);}
-
 static pls::cs::Ref<cs_dc09c88a279424b5> cs_a0e59a75dec69092_value{};
 
 void cs_init_dc09c88a279424b5(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a0e59a75dec69092_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextFormat",[](){

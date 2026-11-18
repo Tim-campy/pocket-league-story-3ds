@@ -662,8 +662,6 @@ sealed partial class Lowerer {
         builder.Append("void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);");
         foreach(var capture in captures)builder.Append("pls::cs::trace_value("+Local(capture)+"_cell,v);");
         if(captureThis)builder.Append("pls::cs::trace_value("+outer+",v);");
-        builder.Append("}void release_edges()override{pls::cs::Object::release_edges();");
-        foreach(var capture in captures)builder.Append("pls::cs::clear_ref("+Local(capture)+"_cell);");if(captureThis)builder.Append("pls::cs::clear_ref("+outer+");");
         builder.Append("}"+result+" Invoke("+String.Join(",",symbol.Parameters.Select(p=>Type(p.Type,node)+" "+Local(p)))+")");
         closureDepth++;string body;var savedRegions=flowRegions;flowRegions=new();
         try{body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;flowRegions=savedRegions;}
@@ -1949,14 +1947,14 @@ sealed partial class Lowerer {
                 header.Append("};\n");continue;
             }
             if(RecordStruct(classes[id])){
-                header.Append("struct "+Name(classes[id])+" {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();\n");
+                header.Append("struct "+Name(classes[id])+" {void trace_edges(const pls::cs::EdgeVisitor&)const;\n");
                 foreach(var field in classes[id].GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))header.Append(FieldStorage(field)+" "+Name(field)+"{};\n");
                 header.Append("};\n");continue;
             }
             var baseType=classes[id].BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
             header.Append(Template(classes[id].TypeParameters)+"struct "+Name(classes[id])+" : "+baseName+String.Concat(classes[id].Interfaces.Where(t=>t.DeclaringSyntaxReferences.Length!=0).Select(t=>", "+NativeClass(t)))+" {\n");
             header.Append("static bool source_reference_assignable(const std::type_info&target){return target==typeid("+Name(classes[id])+")||target==typeid("+baseName+")||"+baseName+"::source_reference_assignable(target)"+String.Concat(classes[id].AllInterfaces.Where(type=>type.DeclaringSyntaxReferences.Length!=0).Select(type=>"||target==typeid("+NativeClass(type)+")"))+";}\n");
-            header.Append("void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;\nvoid release_edges()override;\n");
+            header.Append("void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;\n");
             header.Append("std::string managed_delegate_method_id(const std::string&slot)const override{");
             foreach(var member in methods.Values.Where(m=>SymbolEqualityComparer.Default.Equals(m.ContainingType,classes[id])))foreach(var slot in MethodSlots(member))header.Append("if(slot==\""+slot+"\")return \""+Id(member)+"\";");
             header.Append("return "+baseName+"::managed_delegate_method_id(slot);}\n");
@@ -1991,8 +1989,6 @@ sealed partial class Lowerer {
             var type=classes[id];if(type.TypeKind==TypeKind.Interface)continue;var baseType=type.BaseType;var baseName=baseType!=null&&(FrameworkClass(baseType)!=null||PlainClass(baseType)||externalTypes.ContainsKey(Id(baseType)))?NativeClass(baseType):"pls::cs::Object";
             header.Append(Template(type.TypeParameters)+"inline void "+ClassName(type)+"::trace_edges(const pls::cs::EdgeVisitor&visitor)const {"+(RecordStruct(type)?"":baseName+"::trace_edges(visitor);"));
             foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&(!readable||MayHoldReference(f.Type))))header.Append("pls::cs::trace_value("+Name(field)+",visitor);");
-            header.Append("}\n"+Template(type.TypeParameters)+"inline void "+ClassName(type)+"::release_edges(){"+(RecordStruct(type)?"":baseName+"::release_edges();"));
-            foreach(var field in type.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&(!readable||MayHoldReference(f.Type))))header.Append("pls::cs::release_value("+Name(field)+");");
             header.Append("}\n");
         }
         foreach(var m in emitted.Keys.Select(k=>methods[k]).Where(m=>MethodSlots(m).Any()&&!VirtualMember(m)))foreach(var slot in MethodSlots(m)) {

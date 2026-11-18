@@ -9,20 +9,20 @@
   "verified_boundary_ids": [],
   "native_executable": {
     "path": "build/ui-dispatch-gc/fixture.exe",
-    "sha256": "ee309f276a9753f699edc75d8d9604c2197d7452e391784bf02866d888704fcc"
+    "sha256": "f75976047920ec9e56e4c8b597ef28e22ad1aedd76cc20d10f66832083145010"
   },
   "inputs": {
-    "tools/test_ui_dispatch_gc.py": "eba1f943afce1064cbef1efb9d38fc9cc4264a1833c6548df9ba05d66ee505ca",
+    "tools/test_ui_dispatch_gc.py": "3c5e487e2cae38730cec76aa2c93f23447df164a181de82424bc5a350a196baa",
     "tests/kairo/ui_dispatch_gc.cpp": "7295527a31954ce421da5869f73c8045b272f7d29cebc39ce6600d6e93b21b6c",
-    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
-    "src/kairo/common/semantic_runtime.hpp": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10",
-    "src/kairo/api/application.hpp": "f7f4fef9df2bea4ad78967ad21b6b6b1f4c3561bfbdacfc25f0d80bf9c93092d",
-    "src/kairo/common/managed_shared_field.hpp": "45e335fb8bf140bf426893e07b25c3ef13e98be5c21865d9a74c211bc1d1d39e",
+    "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
+    "src/kairo/common/semantic_runtime.hpp": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b",
+    "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
+    "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
     "src/runtime/ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
     "src/runtime/managed_gc_bridge.inc": "490642ee09d8aaa63c6445381981bc204ad8953690482b7546cb3e3d59f49ca4",
-    "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
+    "src/runtime/managed_reference.hpp": "04451445e205ffd2f9a8ff3d5977e72446d7f416908dc7861ea0e67175295787",
     "src/runtime/tracing_gc.cpp": "2944d3884bc9f95513746e1cfb8a8b4ebd4073a2160b9c3c0d906edfcd28c767",
     "src/runtime/tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef"
   },

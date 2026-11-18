@@ -8,8 +8,6 @@ namespace pls::generated {
 
 void cs_832d81e198eeeec2::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_ea324a0bbfe717fe::trace_edges(visitor);pls::cs::trace_value(cs_dc88a962e561cf72,visitor);pls::cs::trace_value(cs_96bf466f63c1692d,visitor);pls::cs::trace_value(cs_565b1ab091133717,visitor);pls::cs::trace_value(cs_bd6a014dfd6a30e7,visitor);}
 
-void cs_832d81e198eeeec2::release_edges(){cs_ea324a0bbfe717fe::release_edges();pls::cs::release_value(cs_dc88a962e561cf72);pls::cs::release_value(cs_96bf466f63c1692d);pls::cs::release_value(cs_565b1ab091133717);pls::cs::release_value(cs_bd6a014dfd6a30e7);}
-
 void cs_832d81e198eeeec2::cs_virtual_2adf924bd0d7d65a() {cs_5e27bc3565f1a832(pls::cs::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()));}
 
 void cs_832d81e198eeeec2::cs_virtual_a2a7e1a6575cae4c(std::int32_t v_b) {cs_f1d0001066598458(pls::cs::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()),v_b);}

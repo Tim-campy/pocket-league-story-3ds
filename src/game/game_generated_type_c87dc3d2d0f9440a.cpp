@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_c87dc3d2d0f9440a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_153fdaae746575f6,visitor);pls::cs::trace_value(cs_3f97f246a7d4b8ee,visitor);pls::cs::trace_value(cs_b455953d5d99c95c,visitor);pls::cs::trace_value(cs_ad6910b7b897b250,visitor);pls::cs::trace_value(cs_618ea558ebfe77c3,visitor);pls::cs::trace_value(cs_77e1513fb44fb202,visitor);pls::cs::trace_value(cs_7a8e84cb54b27614,visitor);pls::cs::trace_value(cs_055616eacd82bf39,visitor);pls::cs::trace_value(cs_e9266e43c90692ac,visitor);pls::cs::trace_value(cs_38927e554bfc845e,visitor);}
 
-void cs_c87dc3d2d0f9440a::release_edges(){pls::cs::release_value(cs_153fdaae746575f6);pls::cs::release_value(cs_3f97f246a7d4b8ee);pls::cs::release_value(cs_b455953d5d99c95c);pls::cs::release_value(cs_ad6910b7b897b250);pls::cs::release_value(cs_618ea558ebfe77c3);pls::cs::release_value(cs_77e1513fb44fb202);pls::cs::release_value(cs_7a8e84cb54b27614);pls::cs::release_value(cs_055616eacd82bf39);pls::cs::release_value(cs_e9266e43c90692ac);pls::cs::release_value(cs_38927e554bfc845e);}
-
 void cs_init_c87dc3d2d0f9440a(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.appli.GameAppli",[](){
 
 });}

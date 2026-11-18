@@ -19,7 +19,6 @@ public:
     String get_Name(){auto text=full_name.utf8();auto offset=text.find_last_of(".+");return String::from_utf8(offset==std::string::npos?text:text.substr(offset+1));}
     Ref<RuntimeAssembly>get_Assembly();
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(full_name,visitor);}
-    void release_edges()override{full_name={};}
 };
 struct RuntimeTypeRegistry {
     std::recursive_mutex mutex;

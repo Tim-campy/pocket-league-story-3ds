@@ -78,5 +78,4 @@ void Offscreen::DisposeAll(){for(const auto&surface:surfaces)surface->Dispose();
 bool Offscreen::IsRendering(){return rendering;}
 std::string Offscreen::LastRenderError(){return render_error;}
 void Offscreen::trace_edges(const cs::EdgeVisitor&visit)const{const auto&s=*state_;cs::trace_value(s.dynamic,visit);cs::trace_value(s.statics,visit);cs::trace_value(s.layout,visit);cs::trace_value(s.image,visit);cs::trace_value(s.dynamic_graphics,visit);cs::trace_value(s.static_graphics,visit);}
-void Offscreen::release_edges(){auto&s=*state_;cs::release_value(s.dynamic);cs::release_value(s.statics);cs::release_value(s.layout);cs::release_value(s.image);cs::release_value(s.dynamic_graphics);cs::release_value(s.static_graphics);}
 }

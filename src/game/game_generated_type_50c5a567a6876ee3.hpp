@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_50c5a567a6876ee3 : cs_b489b0d33bb37bb8 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_50c5a567a6876ee3)||target==typeid(cs_b489b0d33bb37bb8)||cs_b489b0d33bb37bb8::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_3481915358ac0fff")return "M:kairo.unity.system.KairoBase.KairoDummy.Save";if(slot=="cs_virtual_06f3c8d943914943")return "M:kairo.unity.system.KairoBase.KairoDummy.SaveAll";if(slot=="cs_virtual_7226942a83482c7a")return "M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameBegin";if(slot=="cs_virtual_486e7c39f05ac1d6")return "M:kairo.unity.system.KairoBase.KairoDummy.OnSaveGameEnd";return cs_b489b0d33bb37bb8::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "kairo.unity.system.KairoBase+KairoDummy";}
 std::string managed_type_name()const override{return source_managed_type_name();}

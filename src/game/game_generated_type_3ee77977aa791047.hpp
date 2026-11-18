@@ -8,7 +8,6 @@ namespace pls::game {
 struct cs_3ee77977aa791047 : cs_5451b2154f09f4c5, cs_4c145fe8f008af05 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_3ee77977aa791047)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor)||target==typeid(cs_4c145fe8f008af05);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:form.BootForm.ToString";if(slot=="Init")return "M:form.BootForm.Init";if(slot=="Update")return "M:form.BootForm.Update";if(slot=="Draw")return "M:form.BootForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Resume")return "M:form.BootForm.Resume";if(slot=="Finish")return "M:form.BootForm.Finish";if(slot=="cs_virtual_6cb47d5f5df8e7cc")return "M:form.BootForm.Run";if(slot=="GetTouchValue")return "M:form.BootForm.GetTouchValue(System.Int32,System.Int32)";if(slot=="SetTouchValue")return "M:form.BootForm.SetTouchValue(System.Int32,System.Int32)";if(slot=="GetHashCode")return "M:form.BootForm.GetHashCode";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "form.BootForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

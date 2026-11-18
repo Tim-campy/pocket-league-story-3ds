@@ -13,8 +13,6 @@ namespace pls::game {
 
 void cs_9465f7541f51c47e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_8c0cc3bea061f0cd,visitor);pls::cs::trace_value(cs_aaefb5b9fae0397e,visitor);pls::cs::trace_value(cs_617d9d7e65ae6487,visitor);pls::cs::trace_value(cs_2b38757bf00583cf,visitor);pls::cs::trace_value(cs_c9cc587d986ccc18,visitor);}
 
-void cs_9465f7541f51c47e::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_8c0cc3bea061f0cd);pls::cs::release_value(cs_aaefb5b9fae0397e);pls::cs::release_value(cs_617d9d7e65ae6487);pls::cs::release_value(cs_2b38757bf00583cf);pls::cs::release_value(cs_c9cc587d986ccc18);}
-
 void cs_init_9465f7541f51c47e(){static pls::cs::TypeInitState state;state.run("system.friend.ui.Friend",[](){
 
 });}

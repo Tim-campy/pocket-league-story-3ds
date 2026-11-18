@@ -10,7 +10,6 @@ std::uint64_t serial=0;
 struct Job:cs::Object {
  cs::Ref<FormManagerBase> manager{};int x,y,w,h;bool pause,tmp;cs::Array<cs::String> tables;CaptureCompleted completed;
  void trace_edges(const cs::EdgeVisitor&v)const override{cs::trace_value(manager,v);cs::trace_value(tables,v);completed.trace_edges(v);}
- void release_edges()override{pls::cs::clear_ref(manager);cs::release_value(tables);completed.release_edges();}
 };
 std::vector<cs::Ref<Job>> jobs{};
 cs::GcRootProvider job_roots([](const cs::EdgeVisitor&v){for(const auto&job:jobs)cs::trace_value(job,v);});

@@ -220,7 +220,6 @@ cs::Array<float> Graphics::GetMatrixValues(std::int32_t mode)const{
 }
 std::array<float,2> Graphics::point(float x,float y)const{return {screen_[0]*x+screen_[3]*y+screen_[6],screen_[1]*x+screen_[4]*y+screen_[7]};}
 void Graphics::trace_edges(const cs::EdgeVisitor& visitor)const{cs::Object::trace_edges(visitor);cs::trace_value(mesh_manager_,visitor);cs::trace_value(target_,visitor);cs::trace_value(source_render_,visitor);cs::trace_value(offscreen_,visitor);cs::trace_value(font_,visitor);cs::trace_value(render_result_,visitor);cs::trace_value(clip_result_,visitor);cs::trace_value(image_clip_,visitor);for(const auto& f:fonts_)cs::trace_value(f,visitor);}
-void Graphics::release_edges(){cs::Object::release_edges();cs::release_value(mesh_manager_);cs::release_value(target_);cs::release_value(source_render_);cs::release_value(offscreen_);cs::release_value(font_);cs::release_value(render_result_);cs::release_value(clip_result_);cs::release_value(image_clip_);for(auto& f:fonts_)cs::release_value(f);fonts_.clear();}
 void Graphics::ClearRenderRect(){render_={0,0,target_->GetWidth(),target_->GetHeight()};SetOrigin(0,0);ClearClip();}
 void Graphics::ClearClip(){clip_={float(render_[0]),float(render_[1]),float(render_[2]),float(render_[3])};}
 void Graphics::SetClip(float x,float y,float w,float h){auto a=point(x,y),b=point(x+w,y+h);clip_={std::min(a[0],b[0]),std::min(a[1],b[1]),std::fabs(b[0]-a[0]),std::fabs(b[1]-a[1])};}

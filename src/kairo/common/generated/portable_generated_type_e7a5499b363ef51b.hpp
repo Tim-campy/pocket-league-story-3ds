@@ -6,7 +6,6 @@ namespace pls::generated {
 struct cs_e7a5499b363ef51b : pls::cs::Object {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_e7a5499b363ef51b)||target==typeid(pls::cs::Object)||pls::cs::Object::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_bb7347310506b971")return "M:java.io.InputStream.Available";if(slot=="cs_virtual_4546aef6e4846446")return "M:java.io.InputStream.Close";if(slot=="cs_virtual_baf1496cdc1c93d8")return "M:java.io.InputStream.Mark(System.Int32)";if(slot=="cs_virtual_7dfe14f35a6a22dd")return "M:java.io.InputStream.MarkSupported";if(slot=="cs_virtual_d49800fd6633bd98")return "M:java.io.InputStream.Read";if(slot=="cs_virtual_e3637c1f0ab57ef5")return "M:java.io.InputStream.Read(System.Byte[])";if(slot=="cs_virtual_4614e302bc22aa99")return "M:java.io.InputStream.Read(System.Byte[],System.Int32,System.Int32)";if(slot=="cs_virtual_a1f672a1edc7446d")return "M:java.io.InputStream.Reset";if(slot=="cs_virtual_c6a293635ddab59b")return "M:java.io.InputStream.Skip(System.Int64)";return pls::cs::Object::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "java.io.InputStream";}
 std::string managed_type_name()const override{return source_managed_type_name();}

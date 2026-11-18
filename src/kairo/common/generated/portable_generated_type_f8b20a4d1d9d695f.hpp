@@ -8,7 +8,6 @@ namespace pls::generated {
 struct cs_f8b20a4d1d9d695f : cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>> {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_f8b20a4d1d9d695f)||target==typeid(cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>)||cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>::source_reference_assignable(target)||target==typeid(cs_a0dc211eb3feb56d);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="Equals")return "M:java.util.Vector.Equals(System.Object)";return cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "java.util.Vector";}
 std::string managed_type_name()const override{return source_managed_type_name();}

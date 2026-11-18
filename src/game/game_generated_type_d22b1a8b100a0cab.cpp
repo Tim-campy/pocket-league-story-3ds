@@ -11,8 +11,6 @@ namespace pls::game {
 
 void cs_d22b1a8b100a0cab::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_b08d770c239489bf::trace_edges(visitor);pls::cs::trace_value(cs_65da99c9869d3471,visitor);pls::cs::trace_value(cs_c230b5b8d577333e,visitor);pls::cs::trace_value(cs_58dffb600270e76f,visitor);pls::cs::trace_value(cs_51227c768469b61d,visitor);}
 
-void cs_d22b1a8b100a0cab::release_edges(){cs_b08d770c239489bf::release_edges();pls::cs::release_value(cs_65da99c9869d3471);pls::cs::release_value(cs_c230b5b8d577333e);pls::cs::release_value(cs_58dffb600270e76f);pls::cs::release_value(cs_51227c768469b61d);}
-
 static pls::cs::Ref<cs_2ffa6f51468590ea> cs_b055e8ddf387ad3d_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_46c7acf5933b0c38_value{};

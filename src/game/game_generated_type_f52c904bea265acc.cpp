@@ -12,8 +12,6 @@ namespace pls::game {
 
 void cs_f52c904bea265acc::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_5451b2154f09f4c5::trace_edges(visitor);}
 
-void cs_f52c904bea265acc::release_edges(){cs_5451b2154f09f4c5::release_edges();}
-
 bool cs_f52c904bea265acc::Init() {return cs_45e17a9cd5a326a6(pls::cs::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()));}
 
 void cs_f52c904bea265acc::Draw(pls::cs::Ref<pls::kairo::Graphics> v_g) {cs_8f2e07e66a1a99d2(pls::cs::static_pointer_cast<cs_f52c904bea265acc>(shared_from_this()),v_g);}

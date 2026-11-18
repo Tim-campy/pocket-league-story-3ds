@@ -5,8 +5,6 @@ namespace pls::game {
 
 void cs_9896b6da0c305f81::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_7009afdd236d49cc,visitor);pls::cs::trace_value(cs_2d6d88bceda5ea1c,visitor);pls::cs::trace_value(cs_43d3fd031666ba13,visitor);pls::cs::trace_value(cs_f2b81922ca17726a,visitor);}
 
-void cs_9896b6da0c305f81::release_edges(){pls::cs::release_value(cs_7009afdd236d49cc);pls::cs::release_value(cs_2d6d88bceda5ea1c);pls::cs::release_value(cs_43d3fd031666ba13);pls::cs::release_value(cs_f2b81922ca17726a);}
-
 void cs_init_9896b6da0c305f81(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Image.BalloonRenderTask",[](){
 
 });}

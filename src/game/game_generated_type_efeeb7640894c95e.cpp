@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_efeeb7640894c95e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_efeeb7640894c95e::release_edges(){pls::cs::Object::release_edges();}
-
 void cs_init_efeeb7640894c95e(){static pls::cs::TypeInitState state;state.run("UnityEngine.Purchasing.Product",[](){
 
 });}

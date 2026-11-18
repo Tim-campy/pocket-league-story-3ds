@@ -4,8 +4,6 @@ namespace pls::generated {
 
 void cs_64732f8c8acf2fd3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
 
-void cs_64732f8c8acf2fd3::release_edges(){pls::cs::ExceptionObject::release_edges();}
-
 void cs_init_64732f8c8acf2fd3(){static pls::cs::TypeInitState state;state.run("java.io.EOFException",[](){
 
 });}

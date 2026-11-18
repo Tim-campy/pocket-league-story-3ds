@@ -11,7 +11,6 @@ void check(bool result){++checks;if(!result){std::fprintf(stderr,"delegate invar
 struct Owner:Object {
     Delegate<void()> callback;
     void trace_edges(const EdgeVisitor&v)const override{Object::trace_edges(v);callback.trace_edges(v);}
-    void release_edges()override{Object::release_edges();callback.release_edges();}
 };
 }
 int main(){

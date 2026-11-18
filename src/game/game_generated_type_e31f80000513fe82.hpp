@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_e31f80000513fe82 : cs_5451b2154f09f4c5 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_e31f80000513fe82)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:form.TitleForm.ToString";if(slot=="Init")return "M:form.TitleForm.Init";if(slot=="Update")return "M:form.TitleForm.Update";if(slot=="Draw")return "M:form.TitleForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Resume")return "M:form.TitleForm.Resume";if(slot=="Finish")return "M:form.TitleForm.Finish";if(slot=="SetTouchValue")return "M:form.TitleForm.SetTouchValue(System.Int32,System.Int32)";if(slot=="cs_virtual_7a6109cc91f876a5")return "M:form.TitleForm.OnTouchEvent(kairo.unity.surface.TouchEvent)";if(slot=="GetHashCode")return "M:form.TitleForm.GetHashCode";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "form.TitleForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

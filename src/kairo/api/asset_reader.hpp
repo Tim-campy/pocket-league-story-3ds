@@ -13,7 +13,6 @@ public:
     cs::String get_text()const;
     std::string managed_type_name()const override{return "UnityEngine.TextAsset";}
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(bytes_,v);}
-    void release_edges()override{cs::release_value(bytes_);}
 };
 cs::Ref<NativeTextAsset> load_text_asset(const cs::String& unity_resource_name);
 // The source has already copied bytes/text before this leaf. Native ownership

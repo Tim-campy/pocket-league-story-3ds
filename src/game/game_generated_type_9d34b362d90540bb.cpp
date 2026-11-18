@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_9d34b362d90540bb::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_9d34b362d90540bb::release_edges(){pls::cs::Object::release_edges();}
-
 void cs_init_9d34b362d90540bb(){static pls::cs::TypeInitState state;state.run("main.AppData.stringErrorCode",[](){
 
 });}

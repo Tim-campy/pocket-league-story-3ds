@@ -17,8 +17,6 @@ namespace pls::generated {
 
 void cs_52158c8b20364c2b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6f69af47bcfae216,visitor);pls::cs::trace_value(cs_8f27992211ad5e96,visitor);pls::cs::trace_value(cs_578ed5fb729c9567,visitor);}
 
-void cs_52158c8b20364c2b::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_6f69af47bcfae216);pls::cs::release_value(cs_8f27992211ad5e96);pls::cs::release_value(cs_578ed5fb729c9567);}
-
 void cs_init_52158c8b20364c2b(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.JarInflater",[](){
 
 });}

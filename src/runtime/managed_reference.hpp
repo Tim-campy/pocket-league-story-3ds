@@ -3,13 +3,10 @@
 #include <type_traits>
 #include <cstdint>
 
-// Production references are ordinary pointers. The explicit zero override is
-// retained only for historical comparison builds during verification.
-#ifndef PLS_TRACING_GC
-#define PLS_TRACING_GC 1
-#endif
+// Managed references are ordinary pointers, traced by the collector
+// (src/runtime/tracing_gc.cpp). The historical shared_ptr build was removed on
+// 2026-11-18 (decision A6 of 2026-11-17).
 namespace pls::cs {
-#if PLS_TRACING_GC
 template<class T> using Ref = T*;
 std::uint64_t managed_identity(const void* pointer);
 bool managed_alive(const void* pointer,std::uint64_t identity);
@@ -37,11 +34,6 @@ template<class T> struct DelegateCapture {
     DelegateCapture& operator=(T* value)noexcept{pointer=value;return *this;}
     T* lock()const noexcept{return pointer;}
 };
-#else
-template<class T> using Ref = std::shared_ptr<T>;
-template<class T> using Weak = std::weak_ptr<T>;
-template<class T> using DelegateCapture = std::weak_ptr<T>;
-#endif
 template<class T> T* raw(T* value) noexcept { return value; }
 template<class T> T* raw(const std::shared_ptr<T>& value) noexcept { return value.get(); }
 template<class T, class D> T* raw(const std::unique_ptr<T,D>& value) noexcept { return value.get(); }

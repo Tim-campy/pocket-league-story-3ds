@@ -6,7 +6,6 @@ namespace pls::game {
 struct cs_bad15ea7469ee2b9 : pls::kairo::IApplication {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_bad15ea7469ee2b9)||target==typeid(pls::kairo::IApplication)||pls::kairo::IApplication::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="OnCreate")return "M:main.Main.OnCreate";if(slot=="OnUpdate")return "M:main.Main.OnUpdate";if(slot=="OnDraw")return "M:main.Main.OnDraw";if(slot=="OnResume")return "M:main.Main.OnResume";if(slot=="OnSuspend")return "M:main.Main.OnSuspend";if(slot=="OnDestroy")return "M:main.Main.OnDestroy";if(slot=="GetFormManager")return "M:main.Main.GetFormManager";return pls::kairo::IApplication::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "main.Main";}
 std::string managed_type_name()const override{return source_managed_type_name();}

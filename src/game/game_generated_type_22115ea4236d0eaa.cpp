@@ -9,8 +9,6 @@ namespace pls::game {
 
 void cs_22115ea4236d0eaa::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_2940d449a6dc2c58,visitor);pls::cs::trace_value(cs_db96c721c151249c,visitor);pls::cs::trace_value(cs_0ba613afa6875a18,visitor);}
 
-void cs_22115ea4236d0eaa::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_2940d449a6dc2c58);pls::cs::release_value(cs_db96c721c151249c);pls::cs::release_value(cs_0ba613afa6875a18);}
-
 void cs_init_22115ea4236d0eaa(){static pls::cs::TypeInitState state;state.run("system.friend.ui.FriendPlayTimeData",[](){
 
 });}

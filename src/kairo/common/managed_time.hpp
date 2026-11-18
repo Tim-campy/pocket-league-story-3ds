@@ -123,6 +123,5 @@ public:
     bool get_SupportsDaylightSavingTime()const{return false;}
     String ToString()override{return display_;}
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(id_,visitor);trace_value(display_,visitor);trace_value(standard_,visitor);}
-    void release_edges()override{release_value(id_);release_value(display_);release_value(standard_);}
 };
 } // namespace pls::cs

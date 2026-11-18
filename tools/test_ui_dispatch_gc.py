@@ -14,7 +14,6 @@ def main():
     folder=ROOT/('build/ui-dispatch-tracing-gc' if args.tracing else 'build/ui-dispatch-gc');folder.mkdir(exist_ok=True)
     compiler,env=msvc_environment();source=ROOT/'tests/kairo/ui_dispatch_gc.cpp';runtime=ROOT/'src/kairo/common/semantic_runtime.cpp';target=folder/'fixture.exe'
     command=[compiler,'/nologo','/std:c++17','/EHsc','/fp:strict','/W4','/WX','/utf-8','/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/Fe:'+str(target),source,runtime]
-    if args.tracing:command+=['/DPLS_TRACING_GC=1']
     result=subprocess.run([str(v)for v in command],cwd=folder,env=env,capture_output=True);(folder/'compile.log').write_bytes(result.stdout+result.stderr)
     if result.returncode:raise RuntimeError('Inspect build/ui-dispatch-gc/compile.log')
     result=subprocess.run([target],cwd=folder,env=env,capture_output=True,timeout=20);(folder/'run.log').write_bytes(result.stdout+result.stderr)

@@ -7,7 +7,6 @@ namespace pls::generated {
 struct cs_3b41638e424b9ee0 : cs_e7a5499b363ef51b {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_3b41638e424b9ee0)||target==typeid(cs_e7a5499b363ef51b)||cs_e7a5499b363ef51b::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="cs_virtual_bb7347310506b971")return "M:java.io.ByteArrayInputStream.Available";return cs_e7a5499b363ef51b::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "java.io.ByteArrayInputStream";}
 std::string managed_type_name()const override{return source_managed_type_name();}

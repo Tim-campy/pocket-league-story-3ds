@@ -122,7 +122,7 @@ int policy(){
     auto no_kairo=pls::cs::make_ref<CallbackFormKairo>(KairoCallbacks{});rejected=false;try{no_kairo->Update();}catch(const pls::cs::InvalidOperationException&){rejected=true;}require(rejected);
     auto no_surface=pls::cs::make_ref<CallbackFormSurface>(SurfaceCallbacks{});rejected=false;try{no_surface->Draw({});}catch(const pls::cs::InvalidOperationException&){rejected=true;}require(rejected);
     auto no_fep=pls::cs::make_ref<CallbackFormFep>(pls::cs::Delegate<bool()>{});rejected=false;try{no_fep->Update();}catch(const pls::cs::InvalidOperationException&){rejected=true;}require(rejected);
-    struct Target:pls::cs::Object {pls::cs::Ref<FormKairo> adapter{};void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(adapter,v);}void release_edges()override{pls::cs::clear_ref(adapter);}};
+    struct Target:pls::cs::Object {pls::cs::Ref<FormKairo> adapter{};void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(adapter,v);}};
     pls::cs::Weak<Target> weak;
     isolated_gc_mutator([&]{auto target=pls::cs::make_ref<Target>();weak=target;KairoCallbacks bindings;bindings.update=pls::cs::Delegate<void()>::bind(target,"synthetic-update",[]{});target->adapter=pls::cs::make_ref<CallbackFormKairo>(std::move(bindings));});
     pls::cs::gc_collect();require(weak.expired());

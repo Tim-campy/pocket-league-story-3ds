@@ -1,7 +1,6 @@
 #include "bootstrap.hpp"
 namespace pls::kairo {
 void BootstrapBindings::trace_edges(const cs::EdgeVisitor& v)const{cs::trace_value(create_config,v);cs::trace_value(initialize_platform,v);cs::trace_value(load_library_resources,v);cs::trace_value(initialize_language,v);cs::trace_value(forms,v);}
-void BootstrapBindings::release_edges(){cs::release_value(create_config);cs::release_value(initialize_platform);cs::release_value(load_library_resources);cs::release_value(initialize_language);pls::cs::clear_ref(forms);}
 BootstrapContext::BootstrapContext(BootstrapBindings bindings):bindings_(std::move(bindings)){
     if(!bindings_.create_config)throw BootstrapContractError("Generated Config.Create(MyConfig) specialization is not bound");
     if(!bindings_.initialize_platform)throw BootstrapContractError("Original Awake platform initialization is not bound");
@@ -30,7 +29,6 @@ void BootstrapContext::AfterCreate(){
     after_entered_=true;bindings_.initialize_language();status_.language_initialized=true;
 }
 void BootstrapContext::trace_edges(const cs::EdgeVisitor& v)const{bindings_.trace_edges(v);cs::trace_value(library_resources_,v);}
-void BootstrapContext::release_edges(){bindings_.release_edges();pls::cs::clear_ref(library_resources_);}
 cs::Ref<BootstrapContext> configure_bootstrap(cs::Ref<IApplication> app,BootstrapBindings bindings){
     if(!app)throw cs::ArgumentNullException();auto context=cs::make_ref<BootstrapContext>(std::move(bindings));const auto weak=cs::Weak<BootstrapContext>(context);
     ApplicationInitializationBridge bridge;

@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_4c00a0e0c6e6e2e5 : cs_5ad2213598dfcd5d {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_4c00a0e0c6e6e2e5)||target==typeid(cs_5ad2213598dfcd5d)||cs_5ad2213598dfcd5d::source_reference_assignable(target);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{return cs_5ad2213598dfcd5d::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "kairo.unity.panel.Label";}
 std::string managed_type_name()const override{return source_managed_type_name();}

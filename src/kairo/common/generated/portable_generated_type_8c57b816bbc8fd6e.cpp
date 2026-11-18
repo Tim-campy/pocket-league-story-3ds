@@ -12,8 +12,6 @@ namespace pls::generated {
 
 void cs_8c57b816bbc8fd6e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_4fa0b3a7eea3a844,visitor);pls::cs::trace_value(cs_72da38f2b646e254,visitor);pls::cs::trace_value(cs_cfccd28f4d6b847a,visitor);pls::cs::trace_value(cs_d5b37f60e20607b6,visitor);pls::cs::trace_value(cs_ba76615c0cb37783,visitor);}
 
-void cs_8c57b816bbc8fd6e::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_4fa0b3a7eea3a844);pls::cs::release_value(cs_72da38f2b646e254);pls::cs::release_value(cs_cfccd28f4d6b847a);pls::cs::release_value(cs_d5b37f60e20607b6);pls::cs::release_value(cs_ba76615c0cb37783);}
-
 void cs_init_8c57b816bbc8fd6e(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Property",[](){
 
 });}

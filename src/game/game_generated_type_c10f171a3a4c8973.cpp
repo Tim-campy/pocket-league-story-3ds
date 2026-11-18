@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_c10f171a3a4c8973::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
 
-void cs_c10f171a3a4c8973::release_edges(){pls::cs::ExceptionObject::release_edges();}
-
 void cs_init_c10f171a3a4c8973(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.payment.IllegalPurchaseException",[](){
 
 });}

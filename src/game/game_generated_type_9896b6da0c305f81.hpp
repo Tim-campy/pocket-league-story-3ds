@@ -3,7 +3,7 @@
 #include "game_generated_forward.hpp"
 namespace pls::game {
 
-struct cs_9896b6da0c305f81 {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();
+struct cs_9896b6da0c305f81 {void trace_edges(const pls::cs::EdgeVisitor&)const;
 pls::cs::Ref<cs_96c54d9323f24f8e> cs_7009afdd236d49cc{};
 float cs_2d6d88bceda5ea1c{};
 float cs_43d3fd031666ba13{};

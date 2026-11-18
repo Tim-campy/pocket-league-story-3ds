@@ -7,7 +7,6 @@ namespace pls::game {
 struct cs_834c8c593e682d3f : cs_5451b2154f09f4c5 {
 static bool source_reference_assignable(const std::type_info&target){return target==typeid(cs_834c8c593e682d3f)||target==typeid(cs_5451b2154f09f4c5)||cs_5451b2154f09f4c5::source_reference_assignable(target)||target==typeid(pls::kairo::TouchValueAccessor);}
 void trace_edges(const pls::cs::EdgeVisitor&visitor)const override;
-void release_edges()override;
 std::string managed_delegate_method_id(const std::string&slot)const override{if(slot=="ToString")return "M:form.RankForm.ToString";if(slot=="Init")return "M:form.RankForm.Init";if(slot=="Update")return "M:form.RankForm.Update";if(slot=="Draw")return "M:form.RankForm.Draw(kairo.unity.ui.Graphics)";if(slot=="Resume")return "M:form.RankForm.Resume";if(slot=="Finish")return "M:form.RankForm.Finish";if(slot=="GetTouchValue")return "M:form.RankForm.GetTouchValue(System.Int32,System.Int32)";if(slot=="SetTouchValue")return "M:form.RankForm.SetTouchValue(System.Int32,System.Int32)";if(slot=="GetHashCode")return "M:form.RankForm.GetHashCode";return cs_5451b2154f09f4c5::managed_delegate_method_id(slot);}
 static std::string source_managed_type_name(){return "form.RankForm";}
 std::string managed_type_name()const override{return source_managed_type_name();}

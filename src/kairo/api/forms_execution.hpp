@@ -43,7 +43,6 @@ public:
     bool ExecuteStep(cs::Ref<FormManagerBase>)override;
     void OnDraw(cs::Ref<FormManagerBase>)override;
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(runtime_,v);}
-    void release_edges()override{pls::cs::clear_ref(runtime_);}
 };
 // Install before generated FormManager construction. Existing managers are not
 // retroactively replaced. Passing null removes the factory for isolated tests.

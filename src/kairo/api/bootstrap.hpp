@@ -14,7 +14,7 @@ struct BootstrapBindings {
     cs::Delegate<cs::Ref<cs::Object>()> load_library_resources;
     cs::Delegate<void()> initialize_language;
     cs::Ref<FormRuntime> forms{};
-    void trace_edges(const cs::EdgeVisitor&)const;void release_edges();
+    void trace_edges(const cs::EdgeVisitor&)const;
 };
 struct BootstrapStatus {
     bool config_created{},platform_initialized{},resources_attempted{},resource_object_retained{},language_initialized{};
@@ -30,7 +30,7 @@ public:
     void BeforeCreate();void AfterCreate();
     const BootstrapStatus& status()const{return status_;}
     cs::Ref<cs::Object> resource_object()const{return library_resources_;}
-    void trace_edges(const cs::EdgeVisitor&)const override;void release_edges()override;
+    void trace_edges(const cs::EdgeVisitor&)const override;
 };
 // Generated configure_application builds the bindings from source functions;
 // this installs phases around the *real virtual* Main.OnCreate in host_start.

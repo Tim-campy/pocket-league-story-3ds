@@ -195,7 +195,7 @@
     "tests/kairo/debug_input_fixtures.cpp": "7ed9448c4d28a15b8bd67d2ba62bdc266c98f83217883db0e3f4efa02b1ecec1",
     "src/kairo/platform/sdl/backend.cpp": "02d4cc8cd86a815072c683f8b457c5535069567cbc47cb71a027119abf405a6c",
     "src/kairo/platform/sdl/debug_input.cpp": "2f8b1f59a88d07ddfc4730e785d7188bac7af5ff19799cd385e5e61b4313e577",
-    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
+    "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
     "tests/kairo/DebugInputOracle.cs": "c658fcf09d326ebf7cb7d6da63343082bafa65b5e03914574500f1fa6d432bfd",
     "tests/kairo/UnityDebugInputMetadata.cs": "6ce29f5c1302cd39fcf52d2a893cc91d2287a023912e21df3c89d65dd9136c54",
     "tools/test_debug_input.py": "4f3c8903e07bd3d6c5396f20da4a280a6ba100f921d262939b092ebb957bc69a",
@@ -206,11 +206,11 @@
     "src/kairo/platform/sdl/backend.hpp": "2b8ebe0fd1b45e7d042eb71d682075059ce13d4e1dfa29ab33db144683670959",
     "src/kairo/api/platform.hpp": "83284432e1edd67e76cb450f371dc57f4fc2fa1ebcff3ae33c54c2a82a802c3f",
     "src/kairo/api/system.hpp": "bb37f69f8698583ce232749451d26d84137ff359f9954bd20083d819e98aedcd",
-    "src/kairo/common/semantic_runtime.hpp": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10"
+    "src/kairo/common/semantic_runtime.hpp": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b"
   },
   "native_executable": {
     "path": "build/debug-input-tests/debug-input-fixtures.exe",
-    "sha256": "4fc85d04131929128cbfcda335e3baa2b22643e4b5211ebfd623ce8fd6ed358e"
+    "sha256": "df077658f9bfcbadcf2723e4474eca3a53c609239a2679817d087d1c9a91f6f4"
   },
   "external_api_metadata": {
     "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",

@@ -7,8 +7,6 @@ namespace pls::game {
 
 void cs_57e2b41d1ee1c149::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_927abfca5c112b44,visitor);pls::cs::trace_value(cs_0eb66d6a46162d0d,visitor);pls::cs::trace_value(cs_5484e79983101cbd,visitor);}
 
-void cs_57e2b41d1ee1c149::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_927abfca5c112b44);pls::cs::release_value(cs_0eb66d6a46162d0d);pls::cs::release_value(cs_5484e79983101cbd);}
-
 void cs_init_57e2b41d1ee1c149(){static pls::cs::TypeInitState state;state.run("PlsPortGeneratedBootstrap.Source.ImageTaskState",[](){
 
 });}

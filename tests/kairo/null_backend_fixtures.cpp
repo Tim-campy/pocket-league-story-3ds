@@ -52,7 +52,6 @@ int main(int argc,char**argv){
         require(raster.memory().cached_rgba8_bytes==0);FT_Done_Face(face);FT_Done_FreeType(library);++fonts;
     }
     require(fonts>0);std::size_t audio=0;for(auto*entry:catalog.entries(assets::Kind::audio)){catalog.verify(*entry);auto seconds=null_backend::ogg_seconds(catalog.path(*entry));require(seconds>0&&seconds<3600);++audio;}
-#if PLS_TRACING_GC
     // A collector on another registered thread can park the producer at any
     // allocation. Previously accumulated items exist only in native vectors.
     std::atomic<bool> stop{false};std::atomic<unsigned> collections{0};std::exception_ptr failure;
@@ -67,6 +66,5 @@ int main(int argc,char**argv){
         }
     }catch(...){stop=true;{cs::GcNativeBlockingScope wait;collector.join();}throw;}
     stop=true;{cs::GcNativeBlockingScope wait;collector.join();}if(failure)std::rethrow_exception(failure);require(collections>0);
-#endif
     std::cout<<"null-backend-pass checks="<<checks<<" fonts="<<fonts<<" audio="<<audio<<'\n';
 }

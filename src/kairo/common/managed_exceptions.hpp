@@ -31,7 +31,6 @@ public:
     String source_ToString();
     String ToString()override{return source_ToString();}
     void trace_edges(const EdgeVisitor& visitor)const override;
-    void release_edges()override;
 };
 ExceptionRef make_exception(const std::string& name);
 ExceptionRef make_exception(const std::string& name,String message,ExceptionRef inner={});

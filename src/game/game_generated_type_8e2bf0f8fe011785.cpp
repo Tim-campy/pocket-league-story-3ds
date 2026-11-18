@@ -8,8 +8,6 @@ namespace pls::game {
 
 void cs_8e2bf0f8fe011785::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_1a5ce6d62f4773c6,visitor);pls::cs::trace_value(cs_2b580027dd662ff5,visitor);pls::cs::trace_value(cs_f1c6c21012307803,visitor);pls::cs::trace_value(cs_004158f701fd286d,visitor);pls::cs::trace_value(cs_3b077329e09687d5,visitor);pls::cs::trace_value(cs_cf10600a0f2e10ac,visitor);pls::cs::trace_value(cs_b85e706eedf54802,visitor);}
 
-void cs_8e2bf0f8fe011785::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_1a5ce6d62f4773c6);pls::cs::release_value(cs_2b580027dd662ff5);pls::cs::release_value(cs_f1c6c21012307803);pls::cs::release_value(cs_004158f701fd286d);pls::cs::release_value(cs_3b077329e09687d5);pls::cs::release_value(cs_cf10600a0f2e10ac);pls::cs::release_value(cs_b85e706eedf54802);}
-
 pls::cs::String cs_8e2bf0f8fe011785::ToString() {return cs_1152b3bafa6371e3(pls::cs::static_pointer_cast<cs_8e2bf0f8fe011785>(shared_from_this()));}
 
 void cs_8e2bf0f8fe011785::cs_virtual_8d925e3b30750eb6(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_stream) {cs_5372ec5ae5ecedc0(pls::cs::static_pointer_cast<cs_8e2bf0f8fe011785>(shared_from_this()),v_stream);}

@@ -12,8 +12,6 @@ namespace pls::game {
 
 void cs_43347b50b6a10e65::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_c4c04b027207a322,visitor);pls::cs::trace_value(cs_5951a1be8973598c,visitor);pls::cs::trace_value(cs_de8fb13c183fecc1,visitor);pls::cs::trace_value(cs_b17fa7396bdbcd90,visitor);pls::cs::trace_value(cs_54138a074e43426e,visitor);pls::cs::trace_value(cs_555538e920ee71b1,visitor);pls::cs::trace_value(cs_192bcc8e433dae59,visitor);pls::cs::trace_value(cs_7055da6e5ca7b4e7,visitor);pls::cs::trace_value(cs_213a47847f8db5d2,visitor);pls::cs::trace_value(cs_76ef6fdfcd6628c6,visitor);pls::cs::trace_value(cs_55c8b74f6db29a7a,visitor);}
 
-void cs_43347b50b6a10e65::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_c4c04b027207a322);pls::cs::release_value(cs_5951a1be8973598c);pls::cs::release_value(cs_de8fb13c183fecc1);pls::cs::release_value(cs_b17fa7396bdbcd90);pls::cs::release_value(cs_54138a074e43426e);pls::cs::release_value(cs_555538e920ee71b1);pls::cs::release_value(cs_192bcc8e433dae59);pls::cs::release_value(cs_7055da6e5ca7b4e7);pls::cs::release_value(cs_213a47847f8db5d2);pls::cs::release_value(cs_76ef6fdfcd6628c6);pls::cs::release_value(cs_55c8b74f6db29a7a);}
-
 void cs_init_43347b50b6a10e65(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout.TextBlock",[](){
 
 });}

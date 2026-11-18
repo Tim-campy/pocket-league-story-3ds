@@ -37,7 +37,6 @@ struct FocusApp:IApplication {
  void OnSuspend()override{FocusForm::trace+="AS,";}void OnResume()override{FocusForm::trace+="AR,";}
  void OnUpdate()override{}void OnDraw()override{}
  void trace_edges(const pls::cs::EdgeVisitor& v)const override{IApplication::trace_edges(v);pls::cs::trace_value(manager,v);}
- void release_edges()override{IApplication::release_edges();pls::cs::release_value(manager);}
 };
 int concurrent_policy(){
  pls::cs::GcMutatorScope mutator;unsigned int checks=0;auto require=[&](bool v){if(!v)throw std::runtime_error("Native UI shared field policy failed");++checks;};

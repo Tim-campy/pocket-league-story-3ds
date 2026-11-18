@@ -5,8 +5,6 @@ namespace pls::generated {
 
 void cs_8d93189702e4084b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_e7a5499b363ef51b::trace_edges(visitor);pls::cs::trace_value(cs_783a5dc8c7385bc4,visitor);}
 
-void cs_8d93189702e4084b::release_edges(){cs_e7a5499b363ef51b::release_edges();pls::cs::release_value(cs_783a5dc8c7385bc4);}
-
 void cs_8d93189702e4084b::cs_virtual_4546aef6e4846446() {cs_5b229bc3548b08c7(pls::cs::static_pointer_cast<cs_8d93189702e4084b>(shared_from_this()));}
 
 void cs_init_8d93189702e4084b(){static pls::cs::TypeInitState state;state.run("java.io.DataInputStream",[](){

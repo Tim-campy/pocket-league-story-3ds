@@ -15,8 +15,6 @@ namespace pls::generated {
 
 void cs_c20c229ea63037d8::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_3a492b4165f9d5db,visitor);pls::cs::trace_value(cs_6747c51e21a34296,visitor);pls::cs::trace_value(cs_1393912ba87bd2f6,visitor);pls::cs::trace_value(cs_4e32a5d73d9793f0,visitor);pls::cs::trace_value(cs_26072971e2305223,visitor);}
 
-void cs_c20c229ea63037d8::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_3a492b4165f9d5db);pls::cs::release_value(cs_6747c51e21a34296);pls::cs::release_value(cs_1393912ba87bd2f6);pls::cs::release_value(cs_4e32a5d73d9793f0);pls::cs::release_value(cs_26072971e2305223);}
-
 void cs_init_c20c229ea63037d8(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureProperty",[](){
 
 });}

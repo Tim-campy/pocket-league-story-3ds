@@ -23,7 +23,6 @@ template<class T>struct Box : Object {
     T value;
     explicit Box(T item):value(std::move(item)){}
     void trace_edges(const EdgeVisitor&visitor)const override{trace_value(value,visitor);}
-    void release_edges()override{release_value(value);}
     String ToString()override {
         if constexpr(std::is_same_v<T,bool>)return String(value?u"True":u"False");
         else if constexpr(std::is_same_v<T,char16_t>)return String(std::u16string{value});
@@ -89,7 +88,6 @@ template<class T>class List {
         std::int32_t size=0;
         std::uint32_t version=0;
         void trace_edges(const EdgeVisitor&visitor)const override{trace_value(items,visitor);}
-        void release_edges()override{release_value(items);}
     };
     Ref<Storage>data_{};
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}
@@ -164,7 +162,6 @@ public:
         void dispose(){if(runtime_profile==RuntimeProfile::UnityMono265)clear_ref(data);}
         bool MoveNext(){return move_next();}T get_Current()const{return current();}void Reset(){reset();}void Dispose(){dispose();}
         void trace_edges(const EdgeVisitor&visitor)const{trace_value(data,visitor);trace_value(value,visitor);}
-        void release_edges(){release_value(data);release_value(value);}
     };
     Enumerator get_enumerator()const{auto&data=require();return Enumerator{data_,data.version,0,T{}};}
     class EnumeratorObject : public IEnumerator {
@@ -172,7 +169,6 @@ public:
     public:
         explicit EnumeratorObject(Enumerator state):state_(std::move(state)){}
         void trace_edges(const EdgeVisitor&visitor)const override{state_.trace_edges(visitor);}
-        void release_edges()override{state_.release_edges();}
         bool MoveNext()override{return state_.move_next();}
         Ref<Object>get_Current()const override{return state_.current_object();}
         void Reset()override{pls::cs::clear_ref(state_);}void Dispose()override{state_.dispose();}
@@ -202,7 +198,6 @@ template<class T>class Stack {
         Storage(){if(runtime_profile==RuntimeProfile::DotNet)items=Array<T>::make(0);}
         std::string managed_type_name()const override{return "System.Collections.Generic.Stack`1["+managed_type_name_traits<T>::name()+"]";}
         void trace_edges(const EdgeVisitor&visitor)const override{trace_value(items,visitor);}
-        void release_edges()override{release_value(items);}
     };
     Ref<Storage>data_{};
     Storage&require()const{if(!data_)throw NullReferenceException();return *data_;}

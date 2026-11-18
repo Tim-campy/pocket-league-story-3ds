@@ -5,8 +5,6 @@ namespace pls::game {
 
 void cs_e00832a42e12ec3b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_1ab688350081022a::trace_edges(visitor);}
 
-void cs_e00832a42e12ec3b::release_edges(){cs_1ab688350081022a::release_edges();}
-
 void cs_init_e00832a42e12ec3b(){static pls::cs::TypeInitState state;state.run("system.lineup.MyLineup",[](){
 
 });}

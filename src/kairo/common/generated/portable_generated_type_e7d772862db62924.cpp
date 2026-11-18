@@ -7,8 +7,6 @@ namespace pls::generated {
 
 void cs_e7d772862db62924::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_e7d772862db62924::release_edges(){pls::cs::Object::release_edges();}
-
 static std::int32_t cs_c57b75ba2c108877_value{};
 
 static pls::cs::String cs_acfe0d20af2323a8_value{};

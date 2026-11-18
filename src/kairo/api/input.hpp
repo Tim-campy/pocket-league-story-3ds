@@ -25,7 +25,6 @@ public:
     MotionEvent(std::int32_t action,cs::Array<std::int32_t> ids,cs::Array<float> positions,cs::Array<float> deltas,bool mouse=false)
         :action_(action),ids_(ids),positions_(positions),deltas_(deltas),mouse_(mouse){}
     void trace_edges(const cs::EdgeVisitor& v)const override{cs::trace_value(ids_,v);cs::trace_value(positions_,v);cs::trace_value(deltas_,v);}
-    void release_edges()override{cs::release_value(ids_);cs::release_value(positions_);cs::release_value(deltas_);}
     std::int32_t GetAction(){return action_;}
     float GetX(){return positions_.at(0);}float GetY(){return positions_.at(1);}
     float GetX(std::int32_t i){return positions_.at(cs::mul_i32(i,2));}

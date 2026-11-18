@@ -76,16 +76,12 @@ public:
             // not claim to detect arbitrary user mutex/Join deadlocks.
             if(type_init_detail::would_cycle(engine,thread,owner_))return;
             engine.waits[thread]=owner_;
-#if PLS_TRACING_GC
             // end_native_wait blocks until a running collection ends: release the
             // coordinator mutex first, or other mutators block on it outside a
             // native wait and the collector's rendezvous never completes.
             {GcNativeBlockingScope parked;
             platform_condition_wait(engine.changed,guard,[&]{return status_!=Status::running;});guard.unlock();}
             guard.lock();
-#else
-            platform_condition_wait(engine.changed,guard,[&]{return status_!=Status::running;});
-#endif
             engine.waits.erase(thread);
         }
         guard.unlock();std::exception_ptr failed;

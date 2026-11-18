@@ -465,17 +465,17 @@
   "producer_sha256": "cf0a5ffd9c9b1e56c5ada7f8a83bb6d82276021e1c78efd141d248cd0885f168",
   "inputs_sha256": {
     "tests/translator/thread_fixtures.cpp": "bb82c13080409faf9b67b3aeea0d3067e3ad3bf8eb6625393e056c177b1f33f2",
-    "src/kairo/common/semantic_runtime.cpp": "ea0b194765db2ad180d9906165145d966f08e2a0552b1bf5ce7dccbfe3f02ed9",
-    "src/kairo/common/managed_thread.cpp": "bc582ab5c4eefeb9f32922100ea3ff237b1a9ff37fe4da6fcc6d0a3c15f5e661",
+    "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
+    "src/kairo/common/managed_thread.cpp": "e2991399800c9efa29d4a3bd72ead94b6cb26f6848b357bfd9984ab933f89f8d",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "tests/translator/ThreadProbe.cs": "85be9a67d96e7cbd4dbc44e8e5d64251d7f013654cf72054f6a065367cac695f",
-    "tests/translator/thread_gc_fixtures.cpp": "ee629a552f2515f41ac70c93245e5da1c01051410932379447d2f1cfe086cbac",
+    "tests/translator/thread_gc_fixtures.cpp": "f252e9141f33df5e0350397c08ec4755be2cd664948b0894ba3e43cebf576d0d",
     "tests/translator/ThreadCultureProbe.cs": "b607def630e73519d3311bfe44056f038ce1524445e94fdc5c5e2736dbbade7b",
     "tests/translator/thread_culture_fixtures.cpp": "a3604de8cc81c8023428d81354411c994fff4b68958683549ab9289c46fd6fe0",
     "src/kairo/common/managed_collation.cpp": "a3ee79c835705e7eff562ef2267713fb0c585cccad1f2d7c3f1b5104ad9dcf90",
     "src/kairo/common/managed_mono_character_data.cpp": "b4dabfa5f654fde91e8a88b6c41c155acb41425adde3412a837fa4aa9d9b46df",
-    "src/kairo/common/managed_thread.hpp": "71563c6ca93eee672f9252c344a7caca44c0ad1c6d765706a0cd3362060a8b96",
-    "src/kairo/common/semantic_runtime.hpp": "58e37a2912d2c5ab2a447d878566559d3f2f93df3fce117d27d8fde71efdaa10",
+    "src/kairo/common/managed_thread.hpp": "2580d462b364f7c77717e7864879ad79361f40cc6539341358f57239ffccd0bc",
+    "src/kairo/common/semantic_runtime.hpp": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
@@ -485,7 +485,7 @@
     "src/runtime/ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
     "src/runtime/managed_gc_bridge.inc": "490642ee09d8aaa63c6445381981bc204ad8953690482b7546cb3e3d59f49ca4",
-    "src/runtime/managed_reference.hpp": "dfcd143d65aed17414cc6f3dc14399351deba20f77c36dfa78d12d60360894f3",
+    "src/runtime/managed_reference.hpp": "04451445e205ffd2f9a8ff3d5977e72446d7f416908dc7861ea0e67175295787",
     "src/runtime/tracing_gc.cpp": "2944d3884bc9f95513746e1cfb8a8b4ebd4073a2160b9c3c0d906edfcd28c767",
     "src/runtime/tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef"
   },
@@ -495,7 +495,7 @@
   },
   "native_executable": {
     "path": "build/thread-fixtures/thread-fixtures.exe",
-    "sha256": "a9cfed8614bbce59a505e46d7de1dce84ace920d331db7faf57d7230a73474fe"
+    "sha256": "6f82c937ecc8c41b4585926d9865f72aadbff8aa0a72f69ef34faf142aaedeee"
   },
   "production_methods_promoted": 0,
   "game_binary_loaded": false,

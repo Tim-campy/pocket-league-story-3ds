@@ -7,8 +7,6 @@ namespace pls::game {
 
 void cs_851a96be86c28dd2::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_851a96be86c28dd2::release_edges(){pls::cs::Object::release_edges();}
-
 static bool cs_66520490d812bf5b_value{};
 
 static pls::cs::Array<pls::cs::Array<pls::cs::String>> cs_99f86cd66d5ccef0_value{};

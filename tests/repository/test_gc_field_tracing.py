@@ -3,8 +3,8 @@
 For every struct of a readable game unit (``<Type>.hpp`` + ``<Type>.cpp``):
   * each instance field that can hold a managed reference (declared with a
     ``pls::cs::`` reference type: ``Ref<...>``, ``String``, ``Array<...>``,
-    ``Delegate<...>``) is traced in ``trace_edges`` and released in
-    ``release_edges``; nothing else is traced;
+    ``Delegate<...>``) is traced in ``trace_edges``; nothing else is traced
+    (``release_edges`` and the shared_ptr build were removed on 2026-11-18);
   * each static storage that can hold a managed reference
     (``static pls::cs::... Type_field_storage``) is listed in the type's
     ``GcRootProvider``.
@@ -66,8 +66,7 @@ def traced(source, struct, member):
     if not match:
         return None
     body = _body(source, match.start())
-    call = 'trace_value' if member == 'trace_edges' else 'release_value'
-    return set(re.findall(r'pls::cs::' + call + r'\(\s*(\w+)', body))
+    return set(re.findall(r'pls::cs::trace_value\(\s*(\w+)', body))
 
 
 def check_folder(folder):
@@ -82,7 +81,7 @@ def check_folder(folder):
         for struct, fields in struct_fields(header).items():
             references = {name for field_type, name in fields if REFERENCE_TYPE.match(field_type)}
             values = {name for field_type, name in fields if not REFERENCE_TYPE.match(field_type)}
-            for member in ('trace_edges', 'release_edges'):
+            for member in ('trace_edges',):
                 listed = traced(source, struct, member)
                 if listed is None:
                     if references:
@@ -114,7 +113,7 @@ class GcFieldTracing(unittest.TestCase):
     def test_readable_units(self):
         for folder in default_folders():
             checked, problems = check_folder(folder)
-            self.assertGreater(checked, 0, f'no trace_edges/release_edges found in {folder}')
+            self.assertGreater(checked, 0, f'no trace_edges found in {folder}')
             self.assertEqual(problems, [], '\n'.join(problems))
 
 

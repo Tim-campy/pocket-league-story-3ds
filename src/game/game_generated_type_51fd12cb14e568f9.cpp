@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_51fd12cb14e568f9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_707c7a72abb82ec1,visitor);pls::cs::trace_value(cs_3bdfea24b8fa4dd4,visitor);}
 
-void cs_51fd12cb14e568f9::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_707c7a72abb82ec1);pls::cs::release_value(cs_3bdfea24b8fa4dd4);}
-
 void cs_init_51fd12cb14e568f9(){static pls::cs::TypeInitState state;state.run("system.billing.util.Inventory",[](){
 
 });}

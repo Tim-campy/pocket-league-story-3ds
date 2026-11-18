@@ -4,8 +4,6 @@ namespace pls::game {
 
 void cs_408ac5c74e5f3515::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_71dbc351ecc57982,visitor);pls::cs::trace_value(cs_fcff22ab2f484bde,visitor);pls::cs::trace_value(cs_7d56a65066430756,visitor);pls::cs::trace_value(cs_4d9cb6241cd66304,visitor);}
 
-void cs_408ac5c74e5f3515::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_71dbc351ecc57982);pls::cs::release_value(cs_fcff22ab2f484bde);pls::cs::release_value(cs_7d56a65066430756);pls::cs::release_value(cs_4d9cb6241cd66304);}
-
 void cs_init_408ac5c74e5f3515(){static pls::cs::TypeInitState state;state.run("system.form.HttpForm.ResultData",[](){
 
 });}

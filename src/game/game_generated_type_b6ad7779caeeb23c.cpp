@@ -19,8 +19,6 @@ namespace pls::game {
 
 void cs_b6ad7779caeeb23c::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_a401daa035e0faf4,visitor);pls::cs::trace_value(cs_db21a4a60995105d,visitor);pls::cs::trace_value(cs_9ae60e1c180bff03,visitor);pls::cs::trace_value(cs_de4cdc41e3b9a730,visitor);pls::cs::trace_value(cs_775a9b4739b7acd4,visitor);pls::cs::trace_value(cs_c6b39a5b64ca017b,visitor);}
 
-void cs_b6ad7779caeeb23c::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_a401daa035e0faf4);pls::cs::release_value(cs_db21a4a60995105d);pls::cs::release_value(cs_9ae60e1c180bff03);pls::cs::release_value(cs_de4cdc41e3b9a730);pls::cs::release_value(cs_775a9b4739b7acd4);pls::cs::release_value(cs_c6b39a5b64ca017b);}
-
 pls::cs::String cs_b6ad7779caeeb23c::ToString() {return cs_27ff635ad5111b5f(pls::cs::static_pointer_cast<cs_b6ad7779caeeb23c>(shared_from_this()));}
 
 std::int32_t cs_b6ad7779caeeb23c::GetHashCode() {return cs_02a7dd0b0ae9540d(pls::cs::static_pointer_cast<cs_b6ad7779caeeb23c>(shared_from_this()));}

@@ -14,7 +14,7 @@ def main():
     compiler,env=msvc_environment()
     sources=[ROOT/'tests/kairo/direct_kairo_adapter.cpp',ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp']
     binary=folder/'fixture.exe'
-    command=[compiler,'/nologo','/std:c++17','/O2','/EHsc','/W4','/WX','/fp:strict','/utf-8','/DPLS_TRACING_GC=1',
+    command=[compiler,'/nologo','/std:c++17','/O2','/EHsc','/W4','/WX','/fp:strict','/utf-8',
         '/I'+str(folder),'/I'+str(ROOT/'src/kairo/api'),'/I'+str(ROOT/'src/kairo/common'),'/Fe:'+str(binary),*map(str,sources)]
     with (folder/'compile.log').open('wb')as log:
         subprocess.run(command,cwd=folder,env=env,stdout=log,stderr=subprocess.STDOUT,check=True)

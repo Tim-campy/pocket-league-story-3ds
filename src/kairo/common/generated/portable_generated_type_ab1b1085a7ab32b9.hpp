@@ -3,7 +3,7 @@
 #include "portable_generated_forward.hpp"
 namespace pls::generated {
 
-struct cs_ab1b1085a7ab32b9 {void trace_edges(const pls::cs::EdgeVisitor&)const;void release_edges();
+struct cs_ab1b1085a7ab32b9 {void trace_edges(const pls::cs::EdgeVisitor&)const;
 std::int32_t cs_1bd11544863adf53{};
 std::int32_t cs_2525b3344f53d974{};
 };

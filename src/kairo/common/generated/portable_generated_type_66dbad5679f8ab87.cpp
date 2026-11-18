@@ -4,8 +4,6 @@ namespace pls::generated {
 
 void cs_66dbad5679f8ab87::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_672aeddf6395a59c,visitor);}
 
-void cs_66dbad5679f8ab87::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_672aeddf6395a59c);}
-
 std::int32_t cs_66dbad5679f8ab87::GetHashCode() {return cs_bc050b58fd51f9b2(pls::cs::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()));}
 
 bool cs_66dbad5679f8ab87::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_8682e14f5d0030c8(pls::cs::static_pointer_cast<cs_66dbad5679f8ab87>(shared_from_this()),v_obj);}

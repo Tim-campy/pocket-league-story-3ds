@@ -277,7 +277,7 @@ def direct_kairo_adapter(invoke):
         expression=invoke(name,['value_']+args,'(kairo.unity.system.KairoBase'+suffix+')',result)
         text.append(result+' '+native+'('+parameters+')override{'+('return ' if result!='void' else '')+expression+';}\n')
     text.append('void trace_edges(const cs::EdgeVisitor& visitor)const override{cs::trace_value(value_,visitor);}\n')
-    text.append('void release_edges()override{cs::release_value(value_);}\n};\n')
+    text.append('};\n')
     return ''.join(text)
 
 

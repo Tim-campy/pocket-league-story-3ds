@@ -21,7 +21,6 @@ struct FakeOutput:SoundOutput {
  void SetLoop(std::int32_t p,bool v)override{at(p).loop=v;}
  void Pump()override{}
  void trace_edges(const pls::cs::EdgeVisitor& v)const override{for(const auto& p:ports)pls::cs::trace_value(p.data,v);}
- void release_edges()override{for(auto& p:ports)pls::cs::clear_ref(p.data);}
 };
 template<class F>void P(const char* name,F&& f){std::cout<<name<<'=';try{std::cout<<f();}catch(const pls::cs::Exception& e){std::cout<<'!'<<e.type_name();}std::cout<<'\n';}
 const char* T(bool v){return v?"1":"0";}

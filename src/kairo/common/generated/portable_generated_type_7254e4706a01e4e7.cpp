@@ -4,8 +4,6 @@ namespace pls::generated {
 
 void cs_7254e4706a01e4e7::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
 
-void cs_7254e4706a01e4e7::release_edges(){pls::cs::ExceptionObject::release_edges();}
-
 void cs_init_7254e4706a01e4e7(){static pls::cs::TypeInitState state;state.run("kairo.unity.io.ConnectionException",[](){
 
 });}

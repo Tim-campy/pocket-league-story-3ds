@@ -47,7 +47,6 @@ static_assert(sizeof(void*)==4 && sizeof(std::int32_t)==4 && sizeof(float)==4 &&
 namespace {
 using Clock=std::chrono::steady_clock;
 void gc_measurement(const char* stage){
-#if PLS_TRACING_GC
     const auto s=pls::cs::tracing_heap().statistics();
     std::fprintf(stderr,"PLS_NULL_GC={\"stage\":\"%s\",\"objects\":%llu,\"body_bytes\":%llu,\"external_bytes\":%llu,\"retained_bytes\":%llu,\"peak_retained_bytes\":%llu,\"allocations\":%llu,\"allocated_bytes\":%llu,\"external_growth_bytes\":%llu,\"collections\":%llu,\"pause_ns\":%llu,\"accounting_ns\":%llu}\n",stage,
         static_cast<unsigned long long>(s.objects),static_cast<unsigned long long>(s.body_bytes),
@@ -56,9 +55,6 @@ void gc_measurement(const char* stage){
         static_cast<unsigned long long>(s.allocated_bytes),static_cast<unsigned long long>(s.external_growth_bytes),
         static_cast<unsigned long long>(s.collections),static_cast<unsigned long long>(s.pause_ns),
         static_cast<unsigned long long>(s.accounting_ns));std::fflush(stderr);
-#else
-    (void)stage;
-#endif
 }
 void memory_categories(const char*stage){
 #if defined(PLS_MEMORY_CATEGORIES)
@@ -290,20 +286,16 @@ int main(int argc,char**argv){
             }
             pls::allocation_sites::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);
             pls::source_allocations::window(completed+1>=first&&completed+1<=last?int(completed+1-first):-1);
-#if PLS_TRACING_GC
             const auto gc_before=pls::cs::tracing_heap().statistics_and_reset_pause_peak();
-#endif
             const auto before=pls::allocation_probe::snapshot();const auto start=Clock::now();const auto cpu=cpu_ns();const auto thread_start=pls::measurement::ThreadCpu::now();const auto begin=qpc();pls::cs::gc_safepoint();
             for(const auto&key:inputs)if(key.frame==completed){const auto code=key.name=="SELECT"?pls::kairo::Canvas::KEY_SELECT:key.name=="UP"?pls::kairo::Canvas::KEY_UP:key.name=="DOWN"?pls::kairo::Canvas::KEY_DOWN:key.name=="LEFT"?pls::kairo::Canvas::KEY_LEFT:key.name=="RIGHT"?pls::kairo::Canvas::KEY_RIGHT:key.name=="SOFT1"?pls::kairo::Canvas::KEY_SOFT1:pls::kairo::Canvas::KEY_SOFT2;canvas->KeyClick(code);}
             execute_frame();
             const auto end=qpc();const auto thread_end=pls::measurement::ThreadCpu::now();const auto elapsed_cpu=cpu_ns()-cpu;const auto elapsed_wall=std::chrono::duration_cast<std::chrono::nanoseconds>(Clock::now()-start).count();
             auto after=pls::allocation_probe::snapshot();after.allocations-=before.allocations;after.bytes-=before.bytes;after.collections-=before.collections;after.collection_ns-=before.collection_ns;
-#if PLS_TRACING_GC
             const auto gc_after=pls::cs::tracing_heap().statistics();
             after.collections=gc_after.collections-gc_before.collections;
             after.collection_ns=gc_after.pause_ns-gc_before.pause_ns;
             after.longest_collection_ns=gc_after.interval_max_pause_ns;
-#endif
             pls::allocation_sites::window(-1);
             pls::source_allocations::window(-1);
             for(const auto& event:pls::cs::gc_events_after(gc_seen)){gc_records.push_back({completed+1,event});gc_seen=event.sequence;}

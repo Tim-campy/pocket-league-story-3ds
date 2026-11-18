@@ -61,6 +61,28 @@ Execução: tentativas de diagnóstico 220 (300 s, 188 quadros capturados) e 221
    não se confirmou. O `SurfaceManager` (KairoLibrary) dimensiona a `GameView` em
    240 × escala. Aproveitar a largura exige mudar esse leiaute (camada KairoLibrary:
    decidir se é plataforma ou código do jogo antes de mexer).
+
+   **Investigação B.4 (2026-11-18), medida no protótipo** (`PLS_PC_LAYOUT_TRACE=1`
+   em `pc_dual_screen.cpp` imprime o que a plataforma informa; sonda temporária,
+   já revertida, nas chamadas de tela cheia e de viewport):
+   - A plataforma informa ao jogo o que deveria: aplicação 400×240, `Canvas`
+     400×240, escala automática e fixa 100, escala de resolução 100, barra de
+     status 0. Nenhum valor da camada reimplementada limita a largura a 240.
+   - O jogo chama `Fullscreen(false)` e depois `Fullscreen(true)`, isto é, o
+     `SurfaceManager.AdjustSurfaceLayout` (Assembly-CSharp, código traduzido)
+     escolhe o modo 2 (sem altura para a barra: 240 − 240 < 30). Não chama
+     `GetViewport` (modo de leiaute 0).
+   - Mesmo assim, a captura mostra a vista do mapa em 240×192, centralizada em
+     x = 80, com a barra da `GamePad` nos 48 px de baixo. Portanto o quadro de 240
+     é decidido **dentro do código traduzido** (`SurfaceManager`/`GamePad`/
+     `GameView`/`GameForm`, Assembly-CSharp e KairoLibrary portável), não pela
+     plataforma. A linha exata que fixa 240 é `UNKNOWN`: medi-la exige sonda no
+     código gerado, cujo snapshot tem hash conferido.
+   - **Conclusão pela regra da decisão B.4:** aproveitar os 400 exige editar
+     código traduzido; fica para depois do congelamento. Nada foi mudado.
+   - O próprio jogo tem caminho largo (`GameForm.GetTopBarOffT` e afins testam
+     `GetGameWidth() > 240`), o que indica que o original previa vistas mais
+     largas que 240; o teste de mapa e partida em 400 depende dessa mudança.
 2. **A barra de rótulos (Save/Menu) toma os ~48 px de baixo da tela de cima.** Essa
    barra é a superfície `GamePad` do próprio jogo, uma segunda superfície que ele já
    desenha abaixo da vista. Levar a `GamePad` para a tela de baixo daria os rótulos

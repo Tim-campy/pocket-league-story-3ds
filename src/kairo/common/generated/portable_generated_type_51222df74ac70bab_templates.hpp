@@ -197,9 +197,6 @@ template<typename T_T>
 inline void cs_51222df74ac70bab<T_T>::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_056e387f40164bd6,visitor);}
 
 template<typename T_T>
-inline void cs_51222df74ac70bab<T_T>::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_056e387f40164bd6);}
-
-template<typename T_T>
 inline pls::cs::String cs_51222df74ac70bab<T_T>::ToString() {return cs_43bff43663390cb7(pls::cs::static_pointer_cast<cs_51222df74ac70bab<T_T>>(shared_from_this()));}
 
 template<typename T_T>

@@ -4,8 +4,6 @@ namespace pls::generated {
 
 void cs_f59223d2c773f078::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_05e71bcde75517db,visitor);pls::cs::trace_value(cs_0350607f8ec43af6,visitor);pls::cs::trace_value(cs_59055747f3e8f843,visitor);}
 
-void cs_f59223d2c773f078::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_05e71bcde75517db);pls::cs::release_value(cs_0350607f8ec43af6);pls::cs::release_value(cs_59055747f3e8f843);}
-
 void cs_init_f59223d2c773f078(){static pls::cs::TypeInitState state;state.run("java.util.JTimeZone",[](){
 
 });}

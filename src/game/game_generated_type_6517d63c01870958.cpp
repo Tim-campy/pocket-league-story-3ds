@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_6517d63c01870958::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_e751c7c04a2d6904,visitor);pls::cs::trace_value(cs_0ae43c28ac9b9a7a,visitor);pls::cs::trace_value(cs_9581916698464411,visitor);pls::cs::trace_value(cs_bc3ed6e7ac2c682a,visitor);pls::cs::trace_value(cs_b5f7390e18875f50,visitor);pls::cs::trace_value(cs_907bdb29f23c20f6,visitor);pls::cs::trace_value(cs_f1365c978e9c4cae,visitor);pls::cs::trace_value(cs_58d9bdebab2ca99e,visitor);pls::cs::trace_value(cs_4be9171376316f3b,visitor);pls::cs::trace_value(cs_c71933e9bca11daa,visitor);pls::cs::trace_value(cs_a404a90eff0aeb13,visitor);pls::cs::trace_value(cs_4d04dab5735542a9,visitor);}
 
-void cs_6517d63c01870958::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_e751c7c04a2d6904);pls::cs::release_value(cs_0ae43c28ac9b9a7a);pls::cs::release_value(cs_9581916698464411);pls::cs::release_value(cs_bc3ed6e7ac2c682a);pls::cs::release_value(cs_b5f7390e18875f50);pls::cs::release_value(cs_907bdb29f23c20f6);pls::cs::release_value(cs_f1365c978e9c4cae);pls::cs::release_value(cs_58d9bdebab2ca99e);pls::cs::release_value(cs_4be9171376316f3b);pls::cs::release_value(cs_c71933e9bca11daa);pls::cs::release_value(cs_a404a90eff0aeb13);pls::cs::release_value(cs_4d04dab5735542a9);}
-
 static pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>> cs_6cb933168d711678_value{};
 
 void cs_init_6517d63c01870958(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_6cb933168d711678_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchOption",[](){

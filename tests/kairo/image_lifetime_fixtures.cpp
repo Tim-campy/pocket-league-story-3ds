@@ -5,7 +5,7 @@ using namespace pls::kairo;
 namespace {
 std::int32_t frame,create_area,baseline;bool count_enabled=true;
 std::vector<pls::cs::Ref<Image>> all;
-struct Owner:pls::cs::Object {pls::cs::Ref<Image> image{};void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(image,v);}void release_edges()override{pls::cs::clear_ref(image);}};
+struct Owner:pls::cs::Object {pls::cs::Ref<Image> image{};void trace_edges(const pls::cs::EdgeVisitor& v)const override{pls::cs::trace_value(image,v);}};
 const char* B(bool b){return b?"True":"False";}
 pls::cs::Ref<Image> S(std::uint8_t a,std::uint8_t b){auto value=Image::FromBytes(pls::cs::Array<std::uint8_t>::from({a,b,41}));all.push_back(value);return value;}
 void reset(){for(const auto& image:all)image->Dispose();all.clear();Image::SetSourceImageMaxCount(0);Image::SetSourceImageMaxPixels(0);Image::SetSourceImageValidateFrames(0);frame=0;create_area=0;count_enabled=true;baseline=Image::native_releases();}

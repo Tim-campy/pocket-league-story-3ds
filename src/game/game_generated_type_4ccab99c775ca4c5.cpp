@@ -6,8 +6,6 @@ namespace pls::game {
 
 void cs_4ccab99c775ca4c5::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_5ad2213598dfcd5d::trace_edges(visitor);pls::cs::trace_value(cs_e7444216b8176cd4,visitor);pls::cs::trace_value(cs_4761156567811a9b,visitor);pls::cs::trace_value(cs_84f6d6bdc01421d0,visitor);pls::cs::trace_value(cs_03f115a488ad951b,visitor);}
 
-void cs_4ccab99c775ca4c5::release_edges(){cs_5ad2213598dfcd5d::release_edges();pls::cs::release_value(cs_e7444216b8176cd4);pls::cs::release_value(cs_4761156567811a9b);pls::cs::release_value(cs_84f6d6bdc01421d0);pls::cs::release_value(cs_03f115a488ad951b);}
-
 void cs_init_4ccab99c775ca4c5(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.TextBox",[](){
 
 });}

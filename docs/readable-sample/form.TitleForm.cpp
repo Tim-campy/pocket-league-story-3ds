@@ -63,16 +63,6 @@ void TitleForm::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
     pls::cs::trace_value(zsort_mhobj, visitor);
 }
 
-void TitleForm::release_edges() {
-    MyFormBase::release_edges();
-    pls::cs::release_value(udat_);
-    pls::cs::release_value(resTitle_);
-    pls::cs::release_value(newGameName_);
-    pls::cs::release_value(time_);
-    pls::cs::release_value(ta_data);
-    pls::cs::release_value(zsort_mhobj);
-}
-
 static pls::cs::Array<pls::cs::Array<std::int32_t>> TitleForm_IMG_SL_storage{};
 
 static pls::cs::String TitleForm_kairoAdUrl_jp_storage{};

@@ -12,8 +12,6 @@ namespace pls::game {
 
 void cs_fd683372658feff4::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_468796fb9827f5e6,visitor);pls::cs::trace_value(cs_7b5ebddf22953059,visitor);pls::cs::trace_value(cs_7033e8b866a8dda2,visitor);pls::cs::trace_value(cs_2f097db5779cd511,visitor);pls::cs::trace_value(cs_8f7f3ca9485bb4f8,visitor);pls::cs::trace_value(cs_de1509021f22ef65,visitor);pls::cs::trace_value(cs_de2327fcc8b4451b,visitor);}
 
-void cs_fd683372658feff4::release_edges(){pls::cs::Object::release_edges();pls::cs::release_value(cs_468796fb9827f5e6);pls::cs::release_value(cs_7b5ebddf22953059);pls::cs::release_value(cs_7033e8b866a8dda2);pls::cs::release_value(cs_2f097db5779cd511);pls::cs::release_value(cs_8f7f3ca9485bb4f8);pls::cs::release_value(cs_de1509021f22ef65);pls::cs::release_value(cs_de2327fcc8b4451b);}
-
 void cs_init_fd683372658feff4(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.lineup.ui.LineupData",[](){
 
 });}

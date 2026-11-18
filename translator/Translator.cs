@@ -795,7 +795,14 @@ sealed partial class Lowerer {
                 if(symbol is IPropertySymbol property)return ReadProperty(property,property.IsStatic?null:"cs_this",Array.Empty<string>(),id);
                 throw new Unsupported(n,"identifier is not a supported local/parameter/static field");
             case LiteralExpressionSyntax lit when lit.IsKind(SyntaxKind.NullLiteralExpression):return Type(model.GetTypeInfo(lit).ConvertedType,lit)+"{}";
-            case CastExpressionSyntax cast:return Converted(cast.Expression,model.GetTypeInfo(cast).Type);
+            case CastExpressionSyntax cast:
+                // Readable C1: (float)i of a typed Int32 is pls::cs::Single(i), the same
+                // int -> binary32 conversion, typed so the enclosing arithmetic uses the
+                // Single/FloatEval operators (binary64, narrowed on store).
+                if(readable&&ArmFloat&&model.GetTypeInfo(cast).Type?.SpecialType==SpecialType.System_Single&&model.GetTypeInfo(cast.Expression).Type?.SpecialType==SpecialType.System_Int32&&TypedScalar(cast.Expression)){
+                    typedExpressions.Add(cast);return "pls::cs::Single("+Expr(cast.Expression)+")";
+                }
+                return Converted(cast.Expression,model.GetTypeInfo(cast).Type);
             case MemberAccessExpressionSyntax member:
                 if(model.GetSymbolInfo(member).Symbol is IFieldSymbol mf)return StaticField(mf,member);
                 if(model.GetTypeInfo(member.Expression).Type?.ToDisplayString()=="System.Type"&&member.Name.Identifier.ValueText is "Name" or "FullName" or "Assembly")return "cs_require("+Expr(member.Expression)+")->get_"+member.Name.Identifier.ValueText+"()";

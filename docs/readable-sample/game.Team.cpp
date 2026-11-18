@@ -590,10 +590,7 @@ void Team::Init(bool isUserTeam, pls::cs::Int32 team_id, pls::cs::Int32 tDataId)
     fPos_ = pls::cs::Array<float>::make(4);
     Team::Init_coatEva();
     fPos_[0] = 0.0f;
-    fPos_[1] = static_cast<float>(
-        pls::cs::conv_i32(((static_cast<double>(-450.0f) +
-                            static_cast<double>((static_cast<double>(900.0f) *
-                                                 static_cast<double>(static_cast<float>(team_id))))))));
+    fPos_[1] = static_cast<float>(pls::cs::conv_i32(((-450.0f + (900.0f * pls::cs::Single(team_id))))));
     fPos_[2] = 900.0f;
     fPos_[3] = 900.0f;
     pls::cs::Array<std::int32_t> array = pls::cs::Array<std::int32_t>::make(11);
@@ -919,8 +916,7 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vecto
                          (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
                           static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             require(cs_target)->x_ = cs_value;
             return cs_value;
@@ -947,8 +943,7 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vecto
                          (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
                           static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             require(cs_target)->z_ = cs_value;
             return cs_value;
@@ -975,8 +970,7 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vecto
                          (static_cast<double>((static_cast<double>(fPos_[2]) / static_cast<double>(9.0f))) /
                           static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             require(cs_target)->x_ = cs_value;
             return cs_value;
@@ -1003,8 +997,7 @@ void Team::SetPosFPos(pls::cs::Ref<Player> player, pls::cs::Ref<kl_util3d::Vecto
                          (static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(9.0f))) /
                           static_cast<double>(2.0f)))));
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             require(cs_target)->z_ = cs_value;
             return cs_value;
@@ -1045,8 +1038,7 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1065,8 +1057,7 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1086,8 +1077,7 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1106,8 +1096,7 @@ void Team::SetFormationParam(pls::cs::Ref<Player> player) {
                 float cs_arg3 = 0.0f;
                 float cs_arg4 = 100.0f;
                 bool cs_arg5 = true;
-                return GameUtil::RateConvertFloatFloatFloatFloatFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3,
-                                                                      cs_arg4, cs_arg5);
+                return GameUtil::RateConvertFloat(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
             }()));
             cs_target.set_Item(cs_index, cs_value);
             return cs_value;
@@ -1304,7 +1293,7 @@ void Team::SetSortJampBallNear() {
     }
     pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
     require(require(ball_)->temp_pos)->Set(require(ball_)->fallPos_);
-    w_disBoal = static_cast<float>(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+    w_disBoal = static_cast<float>(GameUtil::RateConvertFloat(
         static_cast<float>(pls::cs::div_i32(pls::cs::mul_i32(require(ball_)->savePosFrame_, 100),
                                             require(ball_)->fallTime_)),
         0.0f, 100.0f, 0.7f, 1.0f, true));
@@ -1346,8 +1335,8 @@ void Team::SetSortJampBallNear() {
                                 ((static_cast<double>(w_disBoal) + static_cast<double>(w_formation)))));
         {
             auto cs_target = player;
-            auto cs_value = static_cast<float>(GameUtil::RateConvertFloatFloatFloatFloatFloat(
-                require(player)->temp_len, 225.0f, 0.0f, 0.0f, 100.0f, true));
+            auto cs_value = static_cast<float>(
+                GameUtil::RateConvertFloat(require(player)->temp_len, 225.0f, 0.0f, 0.0f, 100.0f, true));
             require(cs_target)->temp_len = cs_value;
         }
         kl_java_util::Vector_2_AddElement(require(ballNearPlayer_),
@@ -2121,19 +2110,15 @@ std::int32_t Team::Get_playerPosEva(pls::cs::Ref<Player> player, pls::cs::Int32 
     pls::cs::Ref<kl_util3d::Vector3D> posFromAddress = Camera::GetPosFromAddress(xi, yi);
     pls::cs::Int32 num2 = 0;
     if (team_id_ == 0) {
-        num2 = (pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+        num2 = (pls::cs::conv_i32(GameUtil::RateConvertFloat(
             require(posFromAddress)->z_, static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f, true)));
     } else {
-        num2 = (pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
+        num2 = (pls::cs::conv_i32(GameUtil::RateConvertFloat(
             require(posFromAddress)->z_, 900.0f, static_cast<float>(-900.0f), 0.0f, 100.0f, true)));
     }
     {
-        pls::cs::Int32 recoveredReturn_42482 = pls::cs::conv_i32(
-            ((static_cast<double>(((static_cast<double>((static_cast<double>(0.7f) *
-                                                         static_cast<double>(static_cast<float>(num)))) +
-                                    static_cast<double>((static_cast<double>(0.3f) *
-                                                         static_cast<double>(static_cast<float>(num2))))))) /
-              static_cast<double>(1.0f))));
+        pls::cs::Int32 recoveredReturn_42482 =
+            pls::cs::conv_i32((((((0.7f * pls::cs::Single(num)) + (0.3f * pls::cs::Single(num2)))) / 1.0f)));
         return recoveredReturn_42482;
     }
 }
@@ -2155,8 +2140,7 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
     pls::cs::Single num3 = Team::RPP_W_DISTOGOAL_NORMAL();
     if (team_id_ == 0) {
         if (!(Team::ChPAreaLineOver())) {
-            num2 = pls::cs::conv_i32(
-                GameUtil::RateConvertFloatFloatFloatFloatFloat(x, 270.0f, 0.0f, 0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(GameUtil::RateConvertFloat(x, 270.0f, 0.0f, 0.0f, 100.0f, true));
         } else {
             pls::cs::Single x2 =
                 static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
@@ -2168,13 +2152,12 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
                           static_cast<double>(
                               ((static_cast<double>(900.0f) -
                                 static_cast<double>(require(require(player)->pos_)->z_)))))))))));
-            num2 = pls::cs::conv_i32(
-                GameUtil::RateConvertFloatFloatFloatFloatFloat(x2, 900.0f, 0.0f, 0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(GameUtil::RateConvertFloat(x2, 900.0f, 0.0f, 0.0f, 100.0f, true));
             num3 = Team::RPP_W_DISTOGOAL_PAREA();
         }
     } else if (!(Team::ChPAreaLineOver())) {
-        num2 = pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
-            x, static_cast<float>(-270.0f), 0.0f, 0.0f, 100.0f, true));
+        num2 = pls::cs::conv_i32(
+            GameUtil::RateConvertFloat(x, static_cast<float>(-270.0f), 0.0f, 0.0f, 100.0f, true));
     } else {
         pls::cs::Single x3 = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
             (static_cast<double>((static_cast<double>(require(require(player)->pos_)->x_) *
@@ -2184,8 +2167,7 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
                                         static_cast<double>(require(require(player)->pos_)->z_)))) *
                   static_cast<double>(((static_cast<double>(-900.0f) -
                                         static_cast<double>(require(require(player)->pos_)->z_)))))))))));
-        num2 = pls::cs::conv_i32(
-            GameUtil::RateConvertFloatFloatFloatFloatFloat(x3, 900.0f, 0.0f, 0.0f, 100.0f, true));
+        num2 = pls::cs::conv_i32(GameUtil::RateConvertFloat(x3, 900.0f, 0.0f, 0.0f, 100.0f, true));
         num3 = Team::RPP_W_DISTOGOAL_PAREA();
     }
     pls::cs::Int32 num4 = 0;
@@ -2210,12 +2192,10 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
     pls::cs::Int32 num5 = GameUtil::RateConvert(num4, 4, 0, 0, 100, true);
     pls::cs::Ref<Player> passer = Team::GetPasser();
     if (is_null(passer)) {
-        return pls::cs::conv_i32(((((((static_cast<double>(Team::RPP_W_COATEVASUM()) *
-                                       static_cast<double>(static_cast<float>(num))) +
-                                      (num3 * static_cast<float>(num2))) +
-                                     (static_cast<double>(Team::RPP_W_AROUNDENEMY()) *
-                                      static_cast<double>(static_cast<float>(num5))))) /
-                                   (((Team::RPP_W_COATEVASUM() + num3) + Team::RPP_W_AROUNDENEMY())))));
+        return pls::cs::conv_i32(
+            ((((((Team::RPP_W_COATEVASUM() * pls::cs::Single(num)) + (num3 * pls::cs::Single(num2))) +
+                (Team::RPP_W_AROUNDENEMY() * pls::cs::Single(num5)))) /
+              (((Team::RPP_W_COATEVASUM() + num3) + Team::RPP_W_AROUNDENEMY())))));
     }
     pls::cs::Single x4 = static_cast<float>(static_cast<float>(kl_lang::JMath::Sqrt(static_cast<double>(
         (static_cast<double>(
@@ -2228,16 +2208,12 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
                                     static_cast<double>(require(require(player)->temp_vec)->z_)))) *
               static_cast<double>(((static_cast<double>(require(require(passer)->pos_)->z_) -
                                     static_cast<double>(require(require(player)->temp_vec)->z_)))))))))));
-    pls::cs::Int32 num6 = pls::cs::conv_i32(
-        GameUtil::RateConvertFloatFloatFloatFloatFloat(x4, 900.0f, 0.0f, 0.0f, 100.0f, true));
+    pls::cs::Int32 num6 = pls::cs::conv_i32(GameUtil::RateConvertFloat(x4, 900.0f, 0.0f, 0.0f, 100.0f, true));
     {
         pls::cs::Int32 recoveredReturn = pls::cs::conv_i32(
-            (((((((static_cast<double>(Team::RPP_W_COATEVASUM()) *
-                   static_cast<double>(static_cast<float>(num))) +
-                  (num3 * static_cast<float>(num2))) +
-                 (static_cast<double>(Team::RPP_W_AROUNDENEMY()) *
-                  static_cast<double>(static_cast<float>(num5)))) +
-                (static_cast<double>(Team::PRP_W_DIS()) * static_cast<double>(static_cast<float>(num6))))) /
+            (((((((Team::RPP_W_COATEVASUM() * pls::cs::Single(num)) + (num3 * pls::cs::Single(num2))) +
+                 (Team::RPP_W_AROUNDENEMY() * pls::cs::Single(num5))) +
+                (Team::PRP_W_DIS() * pls::cs::Single(num6)))) /
               ((((Team::RPP_W_COATEVASUM() + num3) + Team::RPP_W_AROUNDENEMY()) + Team::PRP_W_DIS())))));
         return recoveredReturn;
     }
@@ -2743,27 +2719,23 @@ void Team::Update_formationRect2() {
                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))));
         }
         if (static_cast<double>(
-                (static_cast<double>(
-                     (static_cast<double>(fPos_[1]) +
-                      static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) +
-                 static_cast<double>(static_cast<float>(num13)))) > static_cast<double>(900.0f)) {
+                ((static_cast<double>(fPos_[1]) +
+                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))) +
+                 pls::cs::Single(num13))) > static_cast<double>(900.0f)) {
             fPos_[1] = static_cast<float>(
-                (static_cast<double>(
-                     (static_cast<double>(900.0f) -
-                      static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) -
-                 static_cast<double>(static_cast<float>(num13))));
+                ((static_cast<double>(900.0f) -
+                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))) -
+                 pls::cs::Single(num13)));
         }
     } else {
         if (static_cast<double>(
-                (static_cast<double>(
-                     (static_cast<double>(fPos_[1]) -
-                      static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) -
-                 static_cast<double>(static_cast<float>(num13)))) < static_cast<double>(-900.0f)) {
+                ((static_cast<double>(fPos_[1]) -
+                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))) -
+                 pls::cs::Single(num13))) < static_cast<double>(-900.0f)) {
             fPos_[1] = static_cast<float>(
-                (static_cast<double>(
-                     (static_cast<double>(-900.0f) +
-                      static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f))))) +
-                 static_cast<double>(static_cast<float>(num13))));
+                ((static_cast<double>(-900.0f) +
+                  static_cast<double>((static_cast<double>(fPos_[3]) / static_cast<double>(2.0f)))) +
+                 pls::cs::Single(num13)));
         }
         if (static_cast<double>(
                 (static_cast<double>(fPos_[1]) +
@@ -2775,9 +2747,9 @@ void Team::Update_formationRect2() {
         }
     }
     pls::cs::Single num14 = 0.0f;
-    num14 = static_cast<float>(GameUtil::RateConvertFloatFloatFloatFloatFloat(
-        require(Team::team_formationCenterPos())->z_, static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f,
-        true));
+    num14 = static_cast<float>(GameUtil::RateConvertFloat(require(Team::team_formationCenterPos())->z_,
+                                                          static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f,
+                                                          true));
     pls::cs::Single num15 = 0.0f;
     pls::cs::Single num16 = static_cast<float>(
         (static_cast<double>(
@@ -2800,11 +2772,9 @@ void Team::Update_formationRect2() {
             static_cast<double>(100.0f)));
     }
     if ((num14 < 50.0f)) {
-        num15 = static_cast<float>(
-            GameUtil::RateConvertFloatFloatFloatFloatFloat(num14, 5.0f, 30.0f, num16, 900.0f, true));
+        num15 = static_cast<float>(GameUtil::RateConvertFloat(num14, 5.0f, 30.0f, num16, 900.0f, true));
     } else {
-        num15 = static_cast<float>(
-            GameUtil::RateConvertFloatFloatFloatFloatFloat(num14, 70.0f, 95.0f, 900.0f, num16, true));
+        num15 = static_cast<float>(GameUtil::RateConvertFloat(num14, 70.0f, 95.0f, 900.0f, num16, true));
     }
     fPos_[0] = 0.0f;
     fPos_[2] = num15;
@@ -2997,18 +2967,18 @@ void Team::SetPositionThrowIn() {
             } else {
                 num = 100;
             }
-            num2 = pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
-                require(require(require(udat_)->ball_)->lineOutPos_)->z_, static_cast<float>(-900.0f), 900.0f,
-                0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(
+                GameUtil::RateConvertFloat(require(require(require(udat_)->ball_)->lineOutPos_)->z_,
+                                           static_cast<float>(-900.0f), 900.0f, 0.0f, 100.0f, true));
         } else {
             if (((require(require(require(udat_)->ball_)->lineOutPos_)->x_ > 0.0f))) {
                 num = 0;
             } else {
                 num = 100;
             }
-            num2 = pls::cs::conv_i32(GameUtil::RateConvertFloatFloatFloatFloatFloat(
-                require(require(require(udat_)->ball_)->lineOutPos_)->z_, 900.0f, static_cast<float>(-900.0f),
-                0.0f, 100.0f, true));
+            num2 = pls::cs::conv_i32(
+                GameUtil::RateConvertFloat(require(require(require(udat_)->ball_)->lineOutPos_)->z_, 900.0f,
+                                           static_cast<float>(-900.0f), 0.0f, 100.0f, true));
         }
         pls::cs::Int32 num3 = 2147483647 /* Int32.MaxValue */;
         pls::cs::Int32 num4 = 1;

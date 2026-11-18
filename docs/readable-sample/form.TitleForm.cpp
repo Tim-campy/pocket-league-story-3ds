@@ -734,8 +734,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             {
                 auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                 float cs_arg0 = static_cast<float>(((120 - (num11 / 2)) - 1));
-                float cs_arg1 = static_cast<float>(
-                    (static_cast<double>(static_cast<float>(num12)) - static_cast<double>(0.5f)));
+                float cs_arg1 = static_cast<float>((pls::cs::Single(num12) - 0.5f));
                 float cs_arg2 = static_cast<float>((num11 + 2));
                 float cs_arg3 = static_cast<float>(
                     pls::cs::add_i32(require(require(g)->GetFont(static_cast<pls::cs::Ref<pls::kairo::Font>>(

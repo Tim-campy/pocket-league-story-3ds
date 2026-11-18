@@ -129,9 +129,8 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     ((120 - (((pls::cs::sub_i32((selectButtons_).length(), 1)) * num6) / 2)) + (j * num6));
                 if (j == select_) {
                     require(g)->SetColor(SubForm::SC_WINDOW_SELECT());
-                    require(g)->FillRect(
-                        static_cast<float>(((static_cast<float>(num9) - (num4 / 2.0f)) - 5.0f)), 164.0f,
-                        static_cast<float>((num4 + 10.0f)), 17.0f);
+                    require(g)->FillRect(static_cast<float>(((pls::cs::Single(num9) - (num4 / 2.0f)) - 5.0f)),
+                                         164.0f, static_cast<float>((num4 + 10.0f)), 17.0f);
                 }
                 require(g)->SetColor(SubForm::SC_WINDOW_BLACK());
                 {
@@ -147,9 +146,9 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 surface::GameView::AddTouch(
                     g, 3,
-                    pls::cs::conv_i32(((((static_cast<float>(num9) - (num4 / 2.0f)) - 5.0f) -
-                                        static_cast<float>(((num7 / 2)))))),
-                    (164 - (num8 / 2)), pls::cs::conv_i32((((num4 + 10.0f) + static_cast<float>(num7)))),
+                    pls::cs::conv_i32(
+                        ((((pls::cs::Single(num9) - (num4 / 2.0f)) - 5.0f) - pls::cs::Single(((num7 / 2)))))),
+                    (164 - (num8 / 2)), pls::cs::conv_i32((((num4 + 10.0f) + pls::cs::Single(num7)))),
                     (17 + num8), (0x20000 | j));
             }
         }
@@ -208,5 +207,6 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     pls::cs::Ref<data::PlayerData> playerData =
                         require(apdat_)->pData_.get_Item(humanCharaIndex_);
                     require(udat_)->SetDispPlayerData(0, require(udat_)->selectUniform_,
-    // ... (1338 more lines in the full unit)
+                                                      require(playerData)->faceImg_, 0, 2);
+    // ... (1336 more lines in the full unit)
 }

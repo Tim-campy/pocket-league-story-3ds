@@ -432,12 +432,14 @@ sealed partial class Lowerer {
         _=>CppIdentifier(type.Name)};
     // Parameter types of m at the positions where its overload group differs.
     static string TypeSuffix(IMethodSymbol m,List<IMethodSymbol> group){
-        var words=new StringBuilder();
+        var words=new List<string>();
         for(int i=0;i<m.Parameters.Length;i++){
             var differs=group.Any(o=>i>=o.Parameters.Length||!SymbolEqualityComparer.Default.Equals(o.Parameters[i].Type,m.Parameters[i].Type)||o.Parameters[i].RefKind!=m.Parameters[i].RefKind);
-            if(differs)words.Append((m.Parameters[i].RefKind==RefKind.None?"":"Ref")+TypeWord(m.Parameters[i].Type));
+            if(differs)words.Add((m.Parameters[i].RefKind==RefKind.None?"":"Ref")+TypeWord(m.Parameters[i].Type));
         }
-        return words.Length==0?"Overload":words.ToString();
+        // Every differing position of the same type: that type once (RateConvertFloat).
+        if(words.Count>1&&words.Distinct().Count()==1)return words[0];
+        return words.Count==0?"Overload":String.Concat(words);
     }
     // Tokens of instance methods emitted as member functions (C2): no `static`.
     readonly HashSet<string> memberTokens=new(StringComparer.Ordinal);

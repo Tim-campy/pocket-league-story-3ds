@@ -315,6 +315,7 @@ if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_
 void cs_e6e36fb46a58d054(pls::cs::Ref<cs_b68aa9c3dd5cf14c> cs_this,pls::cs::Ref<cs_87fb4d668ea5580b> v_var_out) { cs_init_b68aa9c3dd5cf14c();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.LeagueData.SetLeagueInfoExplain(kairo.unity.ui.TextLayout)",game);
+{ cs_init_a2cea92715051fa5();
 {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_87fb4d668ea5580b>>(v_var_out); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_2be5ebb4744281a0(cs_receiver,cs_arg0); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_87fb4d668ea5580b>>(v_var_out); float cs_arg0 = static_cast<float>(pls::game::cs_f32(0x43420000u)); float cs_arg1 = static_cast<float>(pls::game::cs_f32(0x42000000u)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_33bd53255618fce1(cs_receiver,cs_arg0,cs_arg1); }());
@@ -322,6 +323,7 @@ void cs_e6e36fb46a58d054(pls::cs::Ref<cs_b68aa9c3dd5cf14c> cs_this,pls::cs::Ref<
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_87fb4d668ea5580b>>(v_var_out); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_6c80e48b0bf350ca(cs_receiver,cs_arg0); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_87fb4d668ea5580b>>(v_var_out); pls::cs::String cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0dcb60ac6f795874; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_e3fe9411871b8a7e(cs_receiver,cs_arg0); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_87fb4d668ea5580b>>(v_var_out); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_a0d538f5ac080fc1(cs_receiver); }());
+}
 }
 }
 }

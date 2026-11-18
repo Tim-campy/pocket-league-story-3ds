@@ -112,9 +112,11 @@ void cs_82519cef4853816c(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) { cs_init_15
 // M:system.billing.ui.Receipt.DebugVerificationReceipt(System.String)
 void cs_c3cd5afb73d8cc54(pls::cs::String v_token) { cs_init_15f31d4f046b09a8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.DebugVerificationReceipt(System.String)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if ((!((pls::generated::cs_b0827224162a4f93())))) {
 return;
+}
 }
 }
 }
@@ -263,6 +265,7 @@ return ([&]() -> bool { auto cs_left = ([&]() { auto cs_value = ([&]() { auto cs
 bool cs_b38ac404eaec0f92(pls::cs::Ref<cs_15f31d4f046b09a8> cs_this) { cs_init_15f31d4f046b09a8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.IsTicketProduct",game);
+{ cs_init_fa01867c9c048464();
 {
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_10794726de973b56; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left == cs_right); }())) {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::game::cs_require(cs_target)->cs_10794726de973b56 = cs_value; return cs_value; }());
@@ -271,6 +274,7 @@ if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { a
 }
 }
 return ([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_10794726de973b56; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return (cs_left == cs_right); }());
+}
 }
 }
 }
@@ -295,7 +299,8 @@ return v_receipt_2975;
 // M:system.billing.ui.Receipt.PasswordDecodeToBytes(System.String)
 pls::cs::Array<std::uint8_t> cs_942b8b55f6cc61e8(pls::cs::String v_src) { cs_init_15f31d4f046b09a8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.PasswordDecodeToBytes(System.String)",game);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 bool v_pRINT_4232 = pls::generated::cs_4cc76a7a43706693();
 pls::cs::run_finally([&]() {{
 ([&]() { auto cs_value = false; pls::generated::cs_4cc76a7a43706693() = cs_value; return cs_value; }());
@@ -311,6 +316,7 @@ throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{pls::diagnostic::api_cal
 }}, [&]() {
 ([&]() { auto cs_value = v_pRINT_4232; pls::generated::cs_4cc76a7a43706693() = cs_value; return cs_value; }());
 });
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<std::uint8_t>>();}
 }
 }
@@ -327,7 +333,8 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::
 // M:system.billing.ui.Receipt.PasswordEncode(System.Byte[])
 pls::cs::String cs_74c5b1f087d67cd2(pls::cs::Array<std::uint8_t> v_src) { cs_init_15f31d4f046b09a8();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.Receipt.PasswordEncode(System.Byte[])",game);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 bool v_pRINT_3629 = pls::generated::cs_4cc76a7a43706693();
 std::int32_t v_num_3658 = (v_src).length();
 pls::cs::run_finally([&]() {{
@@ -341,6 +348,7 @@ throw pls::cs::ReturnFlow<pls::cs::String>{pls::diagnostic::api_call([&]() -> de
 }}, [&]() {
 ([&]() { auto cs_value = v_pRINT_3629; pls::generated::cs_4cc76a7a43706693() = cs_value; return cs_value; }());
 });
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::String>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::String>();}
 }
 }

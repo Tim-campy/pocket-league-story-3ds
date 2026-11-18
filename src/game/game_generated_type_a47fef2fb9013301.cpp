@@ -29,11 +29,13 @@ cs_init_a47fef2fb9013301();
 // M:system.tapjoy.MyTapjoy.GetInstance
 pls::cs::Ref<cs_a47fef2fb9013301> cs_684884eb9c671af7() { cs_init_a47fef2fb9013301();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.tapjoy.MyTapjoy.GetInstance",game);
+{ cs_init_15d0c6400449da70();
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_11c677d992410d89()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/tapjoy/MyTapjoy.cs:M:system.tapjoy.MyTapjoy.GetInstance:360",([&]() -> pls::cs::Ref<cs_a47fef2fb9013301> { return cs_a4ea8d8a8cfcb812(); }())); cs_11c677d992410d89() = cs_value; return cs_value; }());
 }
 return pls::cs::unbox<pls::cs::Ref<cs_a47fef2fb9013301>>(pls::cs::box(cs_11c677d992410d89()));
+}
 }
 }
 }

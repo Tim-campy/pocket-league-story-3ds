@@ -1,4 +1,8 @@
- return cs_receiver->cs_4c48425abd4d3e5b; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_12ec80a97347c93e; }());
+ return cs_receiver->cs_0773e10dddc85f24; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }())); auto cs_right = v_num_27626; return pls::cs::mod_i32(cs_left,cs_right); }()); pls::game::cs_require(cs_target)->cs_0773e10dddc85f24 = cs_value; return cs_value; }());
+}
+}
+if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_58e2939b3620a324; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return (cs_left == cs_right); }())) {
+std::int32_t v_tAreaLv__63871 = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4c48425abd4d3e5b; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_12ec80a97347c93e; }());
 if (pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Canvas>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bb75efee16cbae19; }())); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x10000ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->CheckKeyRepeat(cs_arg0); }());})) {
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4c48425abd4d3e5b; }()); auto cs_value = ([&]() -> std::int32_t { std::int32_t cs_arg0 = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4c48425abd4d3e5b; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_12ec80a97347c93e; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_2b137f19947b1086(cs_arg0,cs_arg1); }()); pls::game::cs_require(cs_target)->cs_12ec80a97347c93e = cs_value; return cs_value; }());
 }
@@ -34,11 +38,18 @@ return true;
 }
 }
 }
+}
 
 // M:form.DebugForm.Update_param
 bool cs_728a7893da121244(pls::cs::Ref<cs_66eb7014769dfe80> cs_this) { cs_init_66eb7014769dfe80();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.DebugForm.Update_param",game);
+{ cs_init_403f4e6631bd3667();
+cs_init_83b311c3bf434048();
+cs_init_7c0f60cfdd8cf265();
+cs_init_76884ad002dceb7a();
+cs_init_75707aa3f1629c85();
+cs_init_2ffa6f51468590ea();
 {
 std::int32_t v_num_4947 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull));
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0773e10dddc85f24; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
@@ -750,11 +761,16 @@ return true;
 }
 }
 }
+}
 
 // M:form.DebugForm.Update_window
 bool cs_586e8f06bb3bc603(pls::cs::Ref<cs_66eb7014769dfe80> cs_this) { cs_init_66eb7014769dfe80();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.DebugForm.Update_window",game);
+{ cs_init_7c0f60cfdd8cf265();
+cs_init_ca6f5bbc06a496a9();
+cs_init_65bcdaa7ea8c7d7a();
+cs_init_a2cea92715051fa5();
 {
 std::int32_t v_num_64931 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x6ull));
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0773e10dddc85f24; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
@@ -1092,6 +1108,7 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool 
 }
 }
 return true;
+}
 }
 }
 }

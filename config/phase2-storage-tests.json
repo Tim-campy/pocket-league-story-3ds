@@ -646,7 +646,7 @@
   },
   "native_executable": {
     "path": "build/storage-tests/storage-fixtures.exe",
-    "sha256": "a7a3f072784bad8a3bb13998323bfb9efe3e5efd0300f1b8268c5083a3c94606"
+    "sha256": "9e1ef6ab44fbc690b4e167cae4f0883f0525acdbb6f902b931cc6a7f49e57a2d"
   },
   "inputs": {
     "tests/kairo/storage_fixtures.cpp": "ec52cef2a161061abec589040599e0f3893a7515a16d3c424c178de0a674800f",

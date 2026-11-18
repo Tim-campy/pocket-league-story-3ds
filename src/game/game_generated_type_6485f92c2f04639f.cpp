@@ -175,6 +175,7 @@ void cs_c1e8dc738f793cd7(pls::cs::Ref<cs_6485f92c2f04639f> cs_this) { cs_init_64
 void cs_4defd304e2135f12(pls::cs::Ref<cs_6485f92c2f04639f> cs_this) { cs_init_6485f92c2f04639f();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.FormManager.Updated",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<cs_2ffa6f51468590ea> v_instance_1496 = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }());
 std::int32_t v_num_1537 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_67befa25cd8b724d; }());
@@ -213,6 +214,7 @@ if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_
 }
 ([&]() { auto cs_target = cs_this; auto cs_value = ([&]() -> std::int32_t { auto cs_left = (([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_878ddfd231392189; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }())); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7fffffffull)); return pls::cs::mod_i32(cs_left,cs_right); }()); pls::game::cs_require(cs_target)->cs_878ddfd231392189 = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(pls::cs::static_pointer_cast<pls::kairo::FormManagerBase>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->source_Updated(); }());});
+}
 }
 }
 }

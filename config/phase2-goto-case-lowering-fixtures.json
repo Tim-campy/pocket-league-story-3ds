@@ -32,10 +32,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.24105780001264066,
-    "native-compile": 33.320115600014105,
-    "managed-output": 0.483102600031998,
-    "native-output": 0.2756635999539867
+    "csharp-compile": 0.22366180003155023,
+    "native-compile": 33.61260599998059,
+    "managed-output": 0.4711610000231303,
+    "native-output": 0.3699454999878071
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -81,11 +81,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/goto-case-differential/Harness.exe",
-    "sha256": "e6d5887ba16efd27d3fa206b39a1ad56ececd0a70f07c716f7c4567b25ce69d0"
+    "sha256": "640144701635c54557a448b2340b03c66bd390a8f0bb267ca2e7ef646523d9fd"
   },
   "source_oracle_executable": {
     "path": "build/translator/goto-case-differential/Harness-managed.exe",
-    "sha256": "268394bd851aa01121329370ec1703ebe6ba8b91b5592c234bf84c436fcf4af1"
+    "sha256": "2b9014f02d3ec0e13506038bc6f092437f66b3ab359c70e7e7840973f49ef184"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -741,10 +741,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "f6b6cc4391e1c6b65dd49b1fadcf36cce2e469d2fd10044fbfebfaf8f9033c36",
+    "translator_source_sha256": "623059149ee5ee45389df546ebc572163b9e8614b41aa474ca6733c2260f9604",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
-      "54383c25ea72630a903c0f1c5e5abdddd16db02090b996f07651090b648aa4d6",
+      "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
       "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
     "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"

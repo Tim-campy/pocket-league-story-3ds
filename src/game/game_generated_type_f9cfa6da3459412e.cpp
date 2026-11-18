@@ -69,6 +69,8 @@ cs_init_f9cfa6da3459412e();
 void cs_19ab8dcddc66e785(pls::cs::Ref<cs_f9cfa6da3459412e> cs_this) { cs_init_f9cfa6da3459412e();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.SurfaceManager.AdjustSurfaceLayout",game);
+{ pls::generated::cs_init_e7d772862db62924();
+cs_init_792a6372766eb19f();
 {
 pls::cs::Ref<cs_2ffa6f51468590ea> v_instance_1632 = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }());
 pls::cs::Ref<pls::kairo::Canvas> v_instance2_1676 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::Canvas> { return pls::kairo::Canvas::GetInstance(); }());});
@@ -190,6 +192,7 @@ if ((([&]() -> bool { auto cs_left = v_width2_3031; auto cs_right = ([&]() -> st
 }
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(cs_72947298469bea4a_value); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg1 = v_num3_2351; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_37c74a3ab45030f2(cs_receiver,cs_arg0,cs_arg1); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(cs_72947298469bea4a_value); std::int32_t cs_arg0 = v_num_2239; std::int32_t cs_arg1 = ([&]() -> std::int32_t { return cs_8919cf419e6c7708(); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_7676075e268ec275(cs_receiver,cs_arg0,cs_arg1); }());
+}
 }
 }
 }

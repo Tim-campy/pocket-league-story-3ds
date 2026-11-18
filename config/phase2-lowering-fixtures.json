@@ -510,10 +510,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.7934619999723509,
-    "native-compile": 190.8021638999926,
-    "managed-output": 0.7014068000135012,
-    "native-output": 0.6775765999918804
+    "csharp-compile": 0.819921099988278,
+    "native-compile": 189.7728012999869,
+    "managed-output": 0.6691781000117771,
+    "native-output": 0.7829871000139974
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -571,7 +571,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "37017fa2cf3d0bfef4d91ed025847defbc1d0c58006cb74a9ede376e4d90a65b"
+      "sha256": "e71c80e61b3683045415e5b1f2e30a4e9c883bb3e9f39d6301108212227a8253"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
@@ -627,7 +627,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_4dcb099a76e7118c.cpp",
-      "sha256": "8b13e2926b5c3faae7660010e5c1f04a365f85639e4401bc8a3b79ef293839d5"
+      "sha256": "e0cb200b28013f56a42976104594b93e684e0c114d4728ede4c85d74267491bf"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_4dcb099a76e7118c.hpp",
@@ -783,7 +783,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.cpp",
-      "sha256": "9df51010dbb93dedb1987e0d7ad8fd38446b6050d9c7118126a96211d261f25a"
+      "sha256": "e774c9065cce71057737ae8de3d69f094e44d160ba0cf01f8513e03625a12b94"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.hpp",
@@ -863,11 +863,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "cfcb4b2e1348394161e914d99855cecbb9149ce28db87aa2b0c66830f7d03bfc"
+    "sha256": "1d6c802b2bbc659e7caae6268f4c6aebf6dbd408d3fa68b5711c96cf282b5435"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "e831113d13116112e6378e3828661a4b778844835bf6304c05fbfb19489691ad"
+    "sha256": "2255b7e70202d0a1ec5c221eddb919d48a3ea20014295d679e9d0e86e9f9820d"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -937,7 +937,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.cpp",
-      "sha256": "37017fa2cf3d0bfef4d91ed025847defbc1d0c58006cb74a9ede376e4d90a65b"
+      "sha256": "e71c80e61b3683045415e5b1f2e30a4e9c883bb3e9f39d6301108212227a8253"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_1982ddc12b569877.hpp",
@@ -993,7 +993,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_4dcb099a76e7118c.cpp",
-      "sha256": "8b13e2926b5c3faae7660010e5c1f04a365f85639e4401bc8a3b79ef293839d5"
+      "sha256": "e0cb200b28013f56a42976104594b93e684e0c114d4728ede4c85d74267491bf"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_4dcb099a76e7118c.hpp",
@@ -1149,7 +1149,7 @@
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.cpp",
-      "sha256": "9df51010dbb93dedb1987e0d7ad8fd38446b6050d9c7118126a96211d261f25a"
+      "sha256": "e774c9065cce71057737ae8de3d69f094e44d160ba0cf01f8513e03625a12b94"
     },
     {
       "path": "build/translator/lowering-generated/portable_generated_type_bc02b68c44a9ff4d.hpp",
@@ -1827,10 +1827,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "f6b6cc4391e1c6b65dd49b1fadcf36cce2e469d2fd10044fbfebfaf8f9033c36",
+    "translator_source_sha256": "623059149ee5ee45389df546ebc572163b9e8614b41aa474ca6733c2260f9604",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
-      "54383c25ea72630a903c0f1c5e5abdddd16db02090b996f07651090b648aa4d6",
+      "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
       "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
     "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"

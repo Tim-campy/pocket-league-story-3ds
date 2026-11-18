@@ -1120,9 +1120,9 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player2 = players_.get_Item(j);
-            auto cs_left_47 = require(player2)->formation_[1];
-            auto cs_right_47 = require(player)->formation_[1];
-            pls::cs::Int32 num7 = pls::cs::sub_i32(cs_left_47, cs_right_47);
+            auto cs_left_45 = require(player2)->formation_[1];
+            auto cs_right_45 = require(player)->formation_[1];
+            pls::cs::Int32 num7 = pls::cs::sub_i32(cs_left_45, cs_right_45);
             if ((num > num7) && (num7 > num5)) {
                 num = num7;
             }
@@ -1136,9 +1136,9 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player3 = players_.get_Item(k);
-            auto cs_left_48 = require(player)->formation_[1];
-            auto cs_right_48 = require(player3)->formation_[1];
-            pls::cs::Int32 num8 = pls::cs::sub_i32(cs_left_48, cs_right_48);
+            auto cs_left_46 = require(player)->formation_[1];
+            auto cs_right_46 = require(player3)->formation_[1];
+            pls::cs::Int32 num8 = pls::cs::sub_i32(cs_left_46, cs_right_46);
             if ((num2 > num8) && (num8 > num5)) {
                 num2 = num8;
             }
@@ -1152,9 +1152,9 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player4 = players_.get_Item(l);
-            auto cs_left_49 = require(player)->formation_[0];
-            auto cs_right_49 = require(player4)->formation_[0];
-            pls::cs::Int32 num9 = pls::cs::sub_i32(cs_left_49, cs_right_49);
+            auto cs_left_47 = require(player)->formation_[0];
+            auto cs_right_47 = require(player4)->formation_[0];
+            pls::cs::Int32 num9 = pls::cs::sub_i32(cs_left_47, cs_right_47);
             if (((num3 > num9) && (num9 > num5)) && (kl_lang::JMath::AbsInt(([&]() -> std::int32_t {
                                                          auto cs_left = require(player)->formation_[1];
                                                          auto cs_right = require(player4)->formation_[1];
@@ -1172,9 +1172,9 @@ void Team::SetFormationRectParam() {
                 continue;
             }
             pls::cs::Ref<Player> player5 = players_.get_Item(m);
-            auto cs_left_50 = require(player5)->formation_[0];
-            auto cs_right_50 = require(player)->formation_[0];
-            pls::cs::Int32 num10 = pls::cs::sub_i32(cs_left_50, cs_right_50);
+            auto cs_left_48 = require(player5)->formation_[0];
+            auto cs_right_48 = require(player)->formation_[0];
+            pls::cs::Int32 num10 = pls::cs::sub_i32(cs_left_48, cs_right_48);
             if (((num4 > num10) && (num10 > num5)) && (kl_lang::JMath::AbsInt(([&]() -> std::int32_t {
                                                            auto cs_left = require(player)->formation_[1];
                                                            auto cs_right = require(player5)->formation_[1];
@@ -1364,6 +1364,8 @@ void Team::SetSortJampBallNear() {
 
 // M:game.Team.Init_coatEva
 void Team::Init_coatEva() {
+    Map::ensure_initialized();
+
     coatEva_passer = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
         pls::cs::Array<std::int32_t>::from({Map::MAPCHIP_COAT_HNUM(), Map::MAPCHIP_COAT_WNUM()}));
     coatEva_freeRun = kl_java_util::JTool::MakeArray<pls::cs::Array<pls::cs::Array<std::int32_t>>>(
@@ -1395,6 +1397,8 @@ void Team::Update_coatEva() {
 
 // M:game.Team.Update_coatEvaNewOffence
 void Team::Update_coatEvaNewOffence() {
+    Map::ensure_initialized();
+
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_new_offence[i][j] = 0;
@@ -1454,21 +1458,9 @@ void Team::Update_coatEvaNewOffence() {
             } else {
                 for (pls::cs::Int32 num5 = 0; num5 < Map::MAPCHIP_COAT_HNUM(); ++num5) {
                     for (pls::cs::Int32 num6 = 0; num6 < Map::MAPCHIP_COAT_WNUM(); ++num6) {
-                        ([&]() {
-                            auto cs_target = coatEva_new_offence[num5];
-                            auto cs_index = num6;
-                            auto cs_value = ([&]() {
-                                auto cs_array = ([&]() {
-                                    auto cs_array = Team::DEAFULT_FORMATION_EVA_PENALTYAREA();
-                                    auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - num5);
-                                    return cs_array.get_Item(cs_index);
-                                }());
-                                auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - num6);
-                                return cs_array.get_Item(cs_index);
-                            }());
-                            cs_target.set_Item(cs_index, cs_value);
-                            return cs_value;
-                        }());
+                        coatEva_new_offence[num5][num6] = Team::DEAFULT_FORMATION_EVA_PENALTYAREA()[(
+                            pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) -
+                            num5)][(pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - num6)];
                     }
                 }
             }
@@ -1507,6 +1499,8 @@ void Team::Update_coatEvaNewOffence() {
 
 // M:game.Team.Update_coatEvaNewDeffence
 void Team::Update_coatEvaNewDeffence() {
+    Map::ensure_initialized();
+
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_new_deffence[i][j] = 0;
@@ -1518,41 +1512,18 @@ void Team::Update_coatEvaNewDeffence() {
             if (!(require(team)->ChPAreaLineOver())) {
                 for (pls::cs::Int32 k = 0; k < Map::MAPCHIP_COAT_HNUM(); ++k) {
                     for (pls::cs::Int32 l = 0; l < Map::MAPCHIP_COAT_WNUM(); ++l) {
-                        ([&]() {
-                            auto cs_target = coatEva_new_deffence[k];
-                            auto cs_index = l;
-                            auto cs_value = ([&]() {
-                                auto cs_array = ([&]() {
-                                    auto cs_array = Team::DEAFULT_FORMATION_EVA();
-                                    auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - k);
-                                    return cs_array.get_Item(cs_index);
-                                }());
-                                auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - l);
-                                return cs_array.get_Item(cs_index);
-                            }());
-                            cs_target.set_Item(cs_index, cs_value);
-                            return cs_value;
-                        }());
+                        coatEva_new_deffence[k][l] =
+                            Team::DEAFULT_FORMATION_EVA()[(pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - k)]
+                                                         [(pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) -
+                                                           l)];
                     }
                 }
             } else {
                 for (pls::cs::Int32 m = 0; m < Map::MAPCHIP_COAT_HNUM(); ++m) {
                     for (pls::cs::Int32 n = 0; n < Map::MAPCHIP_COAT_WNUM(); ++n) {
-                        ([&]() {
-                            auto cs_target = coatEva_new_deffence[m];
-                            auto cs_index = n;
-                            auto cs_value = ([&]() {
-                                auto cs_array = ([&]() {
-                                    auto cs_array = Team::DEAFULT_FORMATION_EVA_PENALTYAREA();
-                                    auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - m);
-                                    return cs_array.get_Item(cs_index);
-                                }());
-                                auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - n);
-                                return cs_array.get_Item(cs_index);
-                            }());
-                            cs_target.set_Item(cs_index, cs_value);
-                            return cs_value;
-                        }());
+                        coatEva_new_deffence[m][n] = Team::DEAFULT_FORMATION_EVA_PENALTYAREA()[(
+                            pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) -
+                            m)][(pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - n)];
                     }
                 }
             }
@@ -1607,6 +1578,8 @@ void Team::Update_coatEvaNewDeffence() {
 
 // M:game.Team.Update_coatEvaPasser
 void Team::Update_coatEvaPasser() {
+    Map::ensure_initialized();
+
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_passer[i][j] = 0;
@@ -1675,6 +1648,8 @@ void Team::Update_coatEvaPasser() {
 
 // M:game.Team.Update_coatEvaFreeRun
 void Team::Update_coatEvaFreeRun() {
+    Map::ensure_initialized();
+
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_freeRun[i][j] = 0;
@@ -1764,6 +1739,8 @@ void Team::Update_coatEvaFreeRun() {
 
 // M:game.Team.Update_coatEvaDefence
 void Team::Update_coatEvaDefence() {
+    Map::ensure_initialized();
+
     for (pls::cs::Int32 i = 0; i < Map::MAPCHIP_COAT_HNUM(); ++i) {
         for (pls::cs::Int32 j = 0; j < Map::MAPCHIP_COAT_WNUM(); ++j) {
             coatEva_defence[i][j] = 0;
@@ -1773,21 +1750,9 @@ void Team::Update_coatEvaDefence() {
         if (team_id_ == 0) {
             for (pls::cs::Int32 k = 0; k < Map::MAPCHIP_COAT_HNUM(); ++k) {
                 for (pls::cs::Int32 l = 0; l < Map::MAPCHIP_COAT_WNUM(); ++l) {
-                    ([&]() {
-                        auto cs_target = coatEva_defence[k];
-                        auto cs_index = l;
-                        auto cs_value = ([&]() {
-                            auto cs_array = ([&]() {
-                                auto cs_array = Team::DEAFULT_FORMATION_EVA();
-                                auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - k);
-                                return cs_array.get_Item(cs_index);
-                            }());
-                            auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - l);
-                            return cs_array.get_Item(cs_index);
-                        }());
-                        cs_target.set_Item(cs_index, cs_value);
-                        return cs_value;
-                    }());
+                    coatEva_defence[k][l] =
+                        Team::DEAFULT_FORMATION_EVA()[(pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - k)]
+                                                     [(pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - l)];
                 }
             }
         } else {
@@ -1856,6 +1821,8 @@ void Team::Update_coatEvaDefence() {
 
 // M:game.Team.Update_coatEvaLooseBall
 void Team::Update_coatEvaLooseBall() {
+    Map::ensure_initialized();
+
     pls::cs::Ref<Ball> ball_ = require(udat_)->ball_;
     pls::cs::Int32 num = 0;
     if (require(require(ball_)->pos_)->z_ > 0.0f) {
@@ -1876,21 +1843,9 @@ void Team::Update_coatEvaLooseBall() {
         } else {
             for (pls::cs::Int32 m = 0; m < Map::MAPCHIP_COAT_HNUM(); ++m) {
                 for (pls::cs::Int32 n = 0; n < Map::MAPCHIP_COAT_WNUM(); ++n) {
-                    ([&]() {
-                        auto cs_target = coatEva_looseBall[m];
-                        auto cs_index = n;
-                        auto cs_value = ([&]() {
-                            auto cs_array = ([&]() {
-                                auto cs_array = Team::DEAFULT_FORMATION_EVA();
-                                auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - m);
-                                return cs_array.get_Item(cs_index);
-                            }());
-                            auto cs_index = (pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - n);
-                            return cs_array.get_Item(cs_index);
-                        }());
-                        cs_target.set_Item(cs_index, cs_value);
-                        return cs_value;
-                    }());
+                    coatEva_looseBall[m][n] =
+                        Team::DEAFULT_FORMATION_EVA()[(pls::cs::sub_i32(Map::MAPCHIP_COAT_HNUM(), 1) - m)]
+                                                     [(pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 1) - n)];
                 }
             }
         }
@@ -1949,6 +1904,8 @@ pls::cs::Ref<Player> Team::GetLastKicker() {
 // M:game.Team.GetSum(System.Int32[][],System.Int32,System.Int32,System.Boolean)
 std::int32_t Team::GetSum(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
                           pls::cs::Int32 cy, bool div) {
+    Map::ensure_initialized();
+
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num3 = pls::cs::Int32{};
     pls::cs::Int32 num4 = pls::cs::Int32{};
@@ -1971,22 +1928,17 @@ std::int32_t Team::GetSum(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls
 pls::cs::Array<std::int32_t> Team::GetMostEvaAddress(pls::cs::Array<pls::cs::Array<std::int32_t>> data,
                                                      pls::cs::Int32 cx, pls::cs::Int32 cy,
                                                      pls::cs::Int32 num) {
+    Map::ensure_initialized();
+
     pls::cs::Int32 num2 = 0;
     pls::cs::Int32 num3 = 0;
     pls::cs::Int32 num4 = 0;
     for (pls::cs::Int32 i = 0; i < num; ++i) {
         for (pls::cs::Int32 j = 0; j < (Team::PANEL_DIRECT_R()[i]).length(); ++j) {
-            if (((((cx + Team::PANEL_DIRECT_R()[i][j][0]) >= 0) && ([&]() -> bool {
-                      auto cs_left = (cx + Team::PANEL_DIRECT_R()[i][j][0]);
-                      auto cs_right = Map::MAPCHIP_COAT_WNUM();
-                      return (cs_left < cs_right);
-                  }())) &&
+            if (((((cx + Team::PANEL_DIRECT_R()[i][j][0]) >= 0) &&
+                  ((cx + Team::PANEL_DIRECT_R()[i][j][0]) < Map::MAPCHIP_COAT_WNUM())) &&
                  ((cy + Team::PANEL_DIRECT_R()[i][j][1]) >= 0)) &&
-                ([&]() -> bool {
-                    auto cs_left = (cy + Team::PANEL_DIRECT_R()[i][j][1]);
-                    auto cs_right = Map::MAPCHIP_COAT_HNUM();
-                    return (cs_left < cs_right);
-                }())) {
+                ((cy + Team::PANEL_DIRECT_R()[i][j][1]) < Map::MAPCHIP_COAT_HNUM())) {
                 pls::cs::Int32 num5 =
                     data[(cy + Team::PANEL_DIRECT_R()[i][j][1])][(cx + Team::PANEL_DIRECT_R()[i][j][0])];
                 if (num2 < num5) {
@@ -2005,6 +1957,9 @@ pls::cs::Array<std::int32_t> Team::GetMostEvaAddress(pls::cs::Array<pls::cs::Arr
 // M:game.Team.SetMostEvaAddressFromMoveArea(game.Player,System.Int32[],System.Boolean)
 void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::Array<std::int32_t> var_out,
                                          bool isThroughPass) {
+    Map::ensure_initialized();
+    kl_cfg::Config::ensure_initialized();
+
     pls::cs::Array<pls::cs::Array<std::int32_t>> coatEva = require(player)->GetCoatEva();
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num2 = 0;
@@ -2013,18 +1968,10 @@ void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::A
         pls::cs::Int32 num4 = require(player)->formation_address_[0][0];
         pls::cs::Int32 num5 = require(player)->formation_address_[1][0];
         if (isThroughPass) {
-            num4 = ([&]() -> std::int32_t {
-                std::int32_t cs_arg0 = require(player)->formation_address_[0][0];
-                std::int32_t cs_arg1 = 1;
-                std::int32_t cs_arg2 = pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2);
-                return main::AppData::Clamp(cs_arg0, cs_arg1, cs_arg2);
-            }());
-            num5 = ([&]() -> std::int32_t {
-                std::int32_t cs_arg0 = require(player)->formation_address_[1][0];
-                std::int32_t cs_arg1 = 1;
-                std::int32_t cs_arg2 = pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2);
-                return main::AppData::Clamp(cs_arg0, cs_arg1, cs_arg2);
-            }());
+            num4 = main::AppData::Clamp(require(player)->formation_address_[0][0], 1,
+                                        pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2));
+            num5 = main::AppData::Clamp(require(player)->formation_address_[1][0], 1,
+                                        pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2));
         }
         for (pls::cs::Int32 num6 = require(player)->formation_address_[0][1];
              num6 >= require(player)->formation_address_[3][1]; --num6) {
@@ -2062,24 +2009,18 @@ void Team::SetMostEvaAddressFromMoveArea(pls::cs::Ref<Player> player, pls::cs::A
 void Team::SetMostEvaAddressFromMoveArea_thrughPass(pls::cs::Ref<Player> player,
                                                     pls::cs::Array<std::int32_t> var_out,
                                                     bool isThroughPass) {
+    Map::ensure_initialized();
+
     pls::cs::Int32 num = 0;
     pls::cs::Int32 num2 = 0;
     pls::cs::Int32 num3 = 0;
     pls::cs::Int32 num4 = require(player)->formation_address_[0][0];
     pls::cs::Int32 num5 = require(player)->formation_address_[1][0];
     if (isThroughPass) {
-        num4 = ([&]() -> std::int32_t {
-            std::int32_t cs_arg0 = require(player)->formation_address_[0][0];
-            std::int32_t cs_arg1 = 1;
-            std::int32_t cs_arg2 = pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2);
-            return main::AppData::Clamp(cs_arg0, cs_arg1, cs_arg2);
-        }());
-        num5 = ([&]() -> std::int32_t {
-            std::int32_t cs_arg0 = require(player)->formation_address_[1][0];
-            std::int32_t cs_arg1 = 1;
-            std::int32_t cs_arg2 = pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2);
-            return main::AppData::Clamp(cs_arg0, cs_arg1, cs_arg2);
-        }());
+        num4 = main::AppData::Clamp(require(player)->formation_address_[0][0], 1,
+                                    pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2));
+        num5 = main::AppData::Clamp(require(player)->formation_address_[1][0], 1,
+                                    pls::cs::sub_i32(Map::MAPCHIP_COAT_WNUM(), 2));
     }
     for (pls::cs::Int32 num6 = require(player)->formation_address_[0][1];
          num6 >= require(player)->formation_address_[3][1]; --num6) {
@@ -2222,6 +2163,8 @@ std::int32_t Team::Get_playerReceivePosEva(pls::cs::Ref<Player> player, pls::cs:
 // M:game.Team.Cal_evaCoatMulti(System.Int32,System.Int32[][],System.Int32,System.Int32,System.Single[])
 void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
                             pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<float> muliti_param) {
+    Map::ensure_initialized();
+
     pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>> array =
         pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>{};
     if ((mode == 0)) {
@@ -2234,17 +2177,9 @@ void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<s
             continue;
         }
         for (pls::cs::Int32 j = 0; j < (array[i]).length(); ++j) {
-            if (((((cx + array[i][j][0]) >= 0) && ([&]() -> bool {
-                      auto cs_left = (cx + array[i][j][0]);
-                      auto cs_right = Map::MAPCHIP_COAT_WNUM();
-                      return (cs_left < cs_right);
-                  }())) &&
+            if (((((cx + array[i][j][0]) >= 0) && ((cx + array[i][j][0]) < Map::MAPCHIP_COAT_WNUM())) &&
                  ((cy + array[i][j][1]) >= 0)) &&
-                ([&]() -> bool {
-                    auto cs_left = (cy + array[i][j][1]);
-                    auto cs_right = Map::MAPCHIP_COAT_HNUM();
-                    return (cs_left < cs_right);
-                }())) {
+                ((cy + array[i][j][1]) < Map::MAPCHIP_COAT_HNUM())) {
                 pls::cs::Int32 num = (cx + array[i][j][0]);
                 pls::cs::Int32 num2 = (cy + array[i][j][1]);
                 data[num2][num] = pls::cs::conv_i32((([&]() -> double {
@@ -2260,6 +2195,8 @@ void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<s
 // M:game.Team.Cal_evaCoatMulti9block(System.Int32[][],System.Int32,System.Int32,System.Single[])
 void Team::Cal_evaCoatMulti9block(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
                                   pls::cs::Int32 cy, pls::cs::Array<float> muliti_param) {
+    Map::ensure_initialized();
+
     pls::cs::Int32 num = pls::cs::Int32{};
     pls::cs::Int32 num2 = pls::cs::Int32{};
     for (pls::cs::Int32 i = 0; i < (Team::PANEL_DIRECT_R_9BLOCK()).length(); ++i) {
@@ -2279,6 +2216,8 @@ void Team::Cal_evaCoatMulti9block(pls::cs::Array<pls::cs::Array<std::int32_t>> d
 // M:game.Team.Cal_evaCoatAdd(System.Int32,System.Int32[][],System.Int32,System.Int32,System.Int32[])
 void Team::Cal_evaCoatAdd(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
                           pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param) {
+    Map::ensure_initialized();
+
     pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>> array =
         pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>{};
     if ((mode == 0)) {
@@ -2291,17 +2230,9 @@ void Team::Cal_evaCoatAdd(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std
             continue;
         }
         for (pls::cs::Int32 j = 0; j < (array[i]).length(); ++j) {
-            if (((((cx + array[i][j][0]) >= 0) && ([&]() -> bool {
-                      auto cs_left = (cx + array[i][j][0]);
-                      auto cs_right = Map::MAPCHIP_COAT_WNUM();
-                      return (cs_left < cs_right);
-                  }())) &&
+            if (((((cx + array[i][j][0]) >= 0) && ((cx + array[i][j][0]) < Map::MAPCHIP_COAT_WNUM())) &&
                  ((cy + array[i][j][1]) >= 0)) &&
-                ([&]() -> bool {
-                    auto cs_left = (cy + array[i][j][1]);
-                    auto cs_right = Map::MAPCHIP_COAT_HNUM();
-                    return (cs_left < cs_right);
-                }())) {
+                ((cy + array[i][j][1]) < Map::MAPCHIP_COAT_HNUM())) {
                 pls::cs::Int32 num = (cx + array[i][j][0]);
                 pls::cs::Int32 num2 = (cy + array[i][j][1]);
                 data[num2][num] = ([&]() -> std::int32_t {
@@ -2317,6 +2248,8 @@ void Team::Cal_evaCoatAdd(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std
 // M:game.Team.Cal_evaCoatAdd9block(System.Int32[][],System.Int32,System.Int32,System.Int32[])
 void Team::Cal_evaCoatAdd9block(pls::cs::Array<pls::cs::Array<std::int32_t>> data, pls::cs::Int32 cx,
                                 pls::cs::Int32 cy, pls::cs::Array<std::int32_t> add_param) {
+    Map::ensure_initialized();
+
     pls::cs::Int32 num = pls::cs::Int32{};
     pls::cs::Int32 num2 = pls::cs::Int32{};
     for (pls::cs::Int32 i = 0; i < (Team::PANEL_DIRECT_R_9BLOCK()).length(); ++i) {
@@ -2335,6 +2268,8 @@ void Team::Cal_evaCoatAdd9block(pls::cs::Array<pls::cs::Array<std::int32_t>> dat
 
 // M:game.Team.Amefto
 void Team::Amefto() {
+    Map::ensure_initialized();
+
     if (is_null(require(require(udat_)->ball_)->lastOwner_)) {
         return;
     }
@@ -2430,6 +2365,8 @@ void Team::Amefto_start() {
 
 // M:game.Team.Update_formationRect2
 void Team::Update_formationRect2() {
+    Map::ensure_initialized();
+
     ternCharge = true;
     if (is_null(require(require(udat_)->ball_)->lastOwner_)) {
         ternCharge = false;
@@ -2821,6 +2758,8 @@ void Team::Update_formationRect2() {
 
 // M:game.Team.SetPositionGoalKick
 void Team::SetPositionGoalKick() {
+    Map::ensure_initialized();
+
     if (require(require(udat_)->gm_)->gameState_ == team_id_) {
         {
             auto cs_target = players_.get_Item(0);
@@ -3081,6 +3020,8 @@ bool Team::ChWhichChargeTern() {
 
 // M:game.Team.ChPAreaLineOver
 bool Team::ChPAreaLineOver() {
+    Map::ensure_initialized();
+
     if (team_id_ == 0) {
         if ([&]() -> bool {
                 auto cs_left = static_cast<double>(require(amefto_goalPos_.get_Item(0))->z_);

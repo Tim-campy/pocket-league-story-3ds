@@ -121,6 +121,7 @@ return;
 void cs_826469405b7c0a34(pls::cs::Ref<cs_af32d28251411c95> cs_this,pls::cs::Ref<cs_757516ce190cf813> v_evt) { cs_init_af32d28251411c95();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.surface.GameBanner.OnTouchEvent(kairo.unity.surface.TouchEvent)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<cs_3a3d09f9e75a32d2> v_component_1500 = ([&]() { auto cs_receiver = v_evt; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_613db60c2c58fddc; }());
 std::int32_t v_type_1534 = ([&]() { auto cs_receiver = v_evt; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4c4f6c2ffd41c9ca; }());
@@ -136,6 +137,7 @@ pls::cs::Ref<cs_5df8265429cd2423> v_billingForm_1945 = pls::source_allocations::
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(v_instance_1838); pls::cs::Ref<pls::kairo::FormBase> cs_arg0 = v_billingForm_1945; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->Push(cs_arg0); }());});
 } else {
 ([&]() -> bool { pls::cs::String cs_arg0 = pls::generated::cs_7f5d05d9a8be3705(); return cs_25bba6e14d51039b(cs_arg0); }());
+}
 }
 }
 }

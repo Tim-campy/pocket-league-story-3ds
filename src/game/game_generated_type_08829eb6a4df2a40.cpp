@@ -52,6 +52,7 @@ pls::cs::Ref<cs_08829eb6a4df2a40> cs_b6efdcfa6839537c() { cs_init_08829eb6a4df2a
 
 void cs_b6efdcfa6839537c_init(pls::cs::Ref<cs_08829eb6a4df2a40> cs_this) {
 cs_init_08829eb6a4df2a40();
+cs_init_6ee7d14059be1acf();
 ([&]() { cs_fb6a0b22d395f57f_init(pls::cs::static_pointer_cast<cs_6ee7d14059be1acf>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.MyBilling.#ctor",game);
 {
@@ -121,11 +122,13 @@ return pls::source_allocations::completed("new_array","src/Assembly-CSharp/syste
 // M:system.billing.MyBilling.GetInstance
 pls::cs::Ref<cs_08829eb6a4df2a40> cs_aaf24b850afadd84() { cs_init_08829eb6a4df2a40();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.MyBilling.GetInstance",game);
+{ cs_init_6ee7d14059be1acf();
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_33c160ec018e286a()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/MyBilling.cs:M:system.billing.MyBilling.GetInstance:2051",([&]() -> pls::cs::Ref<cs_08829eb6a4df2a40> { return cs_b6efdcfa6839537c(); }())); cs_33c160ec018e286a() = cs_value; return cs_value; }());
 }
 return pls::cs::unbox<pls::cs::Ref<cs_08829eb6a4df2a40>>(pls::cs::box(cs_33c160ec018e286a()));
+}
 }
 }
 }

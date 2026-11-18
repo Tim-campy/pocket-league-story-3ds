@@ -243,6 +243,7 @@ return ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = pls::d
 // M:kairo.unity.util.Language.Get
 std::int32_t cs_f2f74213ca1ea9bc() { cs_init_72d9658ed61145d6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.Get",kairo);
+{ cs_init_e7d772862db62924();
 {
 if (([&]() -> bool { auto cs_left = cs_a73b188b45467dba_value; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left != cs_right); }())) {
 return cs_a73b188b45467dba_value;
@@ -259,10 +260,12 @@ return cs_33fd9fa03c065bd8_value;
 }
 }
 }
+}
 
 // M:kairo.unity.util.Language.Get(java.util.JLocale)
 std::int32_t cs_ed54521e4ea13171(pls::cs::Ref<cs_c0fae45144034cf9> v_locale) { cs_init_72d9658ed61145d6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.Get(java.util.JLocale)",kairo);
+{ cs_init_c0fae45144034cf9();
 {
 if (([&]() -> bool { auto cs_left = cs_a73b188b45467dba_value; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)); return (cs_left != cs_right); }())) {
 return cs_a73b188b45467dba_value;
@@ -271,6 +274,7 @@ if ((([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_c0fae451440
 return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
 }
 return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));
+}
 }
 }
 }

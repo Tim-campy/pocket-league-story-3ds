@@ -1,4 +1,5 @@
-throw pls::cs::NullReferenceException(); return cs_receiver->cs_9e66073c32cd8559; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_72da38f2b646e254; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull)); auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+ return (cs_left != cs_right); }()) && ([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(v_currentApp_50293); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetWidth(); }());}); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1e0ull)); return (cs_left > cs_right); }())) && ([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(v_currentApp_50293); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetHeight(); }());}); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1e0ull)); return (cs_left > cs_right); }()))) {
+([&]() { auto cs_target = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_9e66073c32cd8559; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_72da38f2b646e254; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull)); auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Canvas>>(cs_3e56073ce0fe6fbf_value); bool cs_arg0 = false; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_bc7b8b04f006df42(cs_receiver,cs_arg0); }());
 }
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Canvas>>(cs_3e56073ce0fe6fbf_value); bool cs_arg0 = ([&]() -> bool { auto cs_left = ([&]() { auto cs_array = ([&]() { auto cs_receiver = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_9e66073c32cd8559; }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_72da38f2b646e254; }()); auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcull)); return cs_array.get_Item(cs_index); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return (cs_left == cs_right); }()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_bc7b8b04f006df42(cs_receiver,cs_arg0); }());
@@ -18,9 +19,11 @@ else {throw;} }
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_4b1fa6248654b253(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::String v_dir,pls::cs::String v_file) { cs_init_2ffa6f51468590ea();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.AppData.PhpDlFile(System.String,System.String)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::String v_url_44670 = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.PhpDlFile(System.String,System.String):44676",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.PhpDlFile(System.String,System.String):44676",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.PhpDlFile(System.String,System.String):44676",([&]() { auto cs_left = pls::generated::cs_716a03e631cc2599(); auto cs_right = (((([&]() { auto cs_left = pls::cs::box(v_dir); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) ? (pls::cs::String(u"")) : ((pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.PhpDlFile(System.String,System.String):44730",([&]() { auto cs_left = v_dir; auto cs_right = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x002f" u"",1);}()); return pls::cs::String::concat(cs_left,cs_right); }())))))); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = v_file; return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x002e" u"\x0064" u"\x0061" u"\x0074" u"",4);}()); return pls::cs::String::concat(cs_left,cs_right); }()));
 return ([&]() -> pls::cs::Array<pls::cs::Array<std::uint8_t>> { pls::cs::String cs_arg0 = v_url_44670; pls::cs::Array<std::uint8_t> cs_arg1 = pls::cs::Array<std::uint8_t>{}; bool cs_arg2 = false; bool cs_arg3 = true; return cs_54dec6a9b058dafd(cs_arg0,cs_arg1,cs_arg2,cs_arg3); }());
+}
 }
 }
 }
@@ -92,9 +95,11 @@ void cs_f1241afac3e9e8f5(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,pls::cs::Stri
 // M:main.AppData.Print(System.String)
 void cs_9b142b0c3e92ca63(pls::cs::String v_str) { cs_init_2ffa6f51468590ea();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.AppData.Print(System.String)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if (pls::generated::cs_4cc76a7a43706693()) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.Print(System.String):125948",([&]() { auto cs_left = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x25a0" u"",1);}()); auto cs_right = v_str; return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_arg1 = pls::cs::Ref<pls::cs::ExceptionObject>{}; return pls::generated::cs_812090ed79928522(cs_arg0,cs_arg1); }());});
+}
 }
 }
 }
@@ -223,6 +228,7 @@ void cs_9abd6db92a325acc(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this) { cs_init_2f
 void cs_1a8f5c64147b3e5b(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this,bool v_auto) { cs_init_2ffa6f51468590ea();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.AppData.SaveGame(System.Boolean)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::game::cs_require(cs_target)->cs_9d3b28b6be441835 = cs_value; return cs_value; }());
 pls::cs::Ref<pls::kairo::RecordStore> v_recordStore_50798 = pls::cs::Ref<pls::kairo::RecordStore>{};
@@ -387,11 +393,13 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:main.AppData.SaveSystem
 void cs_38f421ed8909306b(pls::cs::Ref<cs_2ffa6f51468590ea> cs_this) { cs_init_2ffa6f51468590ea();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.AppData.SaveSystem",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<pls::kairo::RecordStore> v_recordStore_49422 = pls::cs::Ref<pls::kairo::RecordStore>{};
 pls::cs::run_finally([&]() -> void { try {
@@ -410,6 +418,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 ([&]() { auto cs_value = pls::cs::Ref<pls::kairo::RecordStore>{}; v_recordStore_49422 = cs_value; return cs_value; }());
 });
+}
 }
 }
 }
@@ -561,6 +570,7 @@ std::int32_t v_num7_143486{};
 pls::cs::Ref<cs_0286a0dbe9da0b33> v_dialog_143783{};
 pls::cs::Ref<cs_0286a0dbe9da0b33> v_dialog2_144326{};
 pls::cs::Ref<cs_0286a0dbe9da0b33> v_dialog3_144605{};
+{ pls::generated::cs_init_e7d772862db62924();
 {
 ([&]() { auto cs_value = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.SendSaveData(System.String,System.Int32,System.Exception):137957",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.SendSaveData(System.String,System.Int32,System.Exception):137957",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.SendSaveData(System.String,System.Int32,System.Exception):137957",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.SendSaveData(System.String,System.Int32,System.Exception):137957",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/Assembly-CSharp/main/AppData.cs:M:main.AppData.SendSaveData(System.String,System.Int32,System.Exception):137957",([&]() { auto cs_left = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0064" u"\x0065" u"\x0076" u"\x003d" u"",4);}()); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3c515a641b6b6cb5; }()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x000a" u"\x0076" u"\x0065" u"\x0072" u"",4);}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = pls::game::cs_integer_string(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xcaull))); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x000a" u"",1);}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = v_text; return pls::cs::String::concat(cs_left,cs_right); }())); v_text = cs_value; return cs_value; }());
 v_instance_138017 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::Canvas> { return pls::kairo::Canvas::GetInstance(); }());});
@@ -795,6 +805,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 else {throw;} }
 cs_label_recoveredSendOuterEnd: ;
 ;
+}
 }
 }
 }

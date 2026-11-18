@@ -780,10 +780,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.5947383999591693,
-    "native-compile": 355.5058602000354,
-    "managed-output": 48.387668299954385,
-    "native-output": 61.464822500012815
+    "csharp-compile": 1.6048056000145152,
+    "native-compile": 340.25316509994445,
+    "managed-output": 44.49984780000523,
+    "native-output": 59.786610000010114
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -825,11 +825,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_18054fa8aeee43c7_cpp_part_0000.inc",
-      "sha256": "74e258ce4e64112ba0e5d85912abe7e9184565e63f8b6e2f910b87845874e2d7"
+      "sha256": "55c3eb20daaeda12b61c391f4c7b259ebebff6dbee5be25288c6fb585778997d"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_18054fa8aeee43c7_cpp_part_0001.inc",
-      "sha256": "8c079efc52a6f70dd382e94f7c78b0aa72750012a68b49603acdd50912518ab4"
+      "sha256": "27c4a5761029f94a9d01476a0a98f5d3bebd686f370b7f7876022e41c2e40034"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1feb9ce0db5130ce.cpp",
@@ -849,11 +849,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1ff3292665c8e0c4_cpp_part_0000.inc",
-      "sha256": "8c96f1b6d4fec86d924f6e9ef6d55c20805ccabb7a7bc819db41723beb026101"
+      "sha256": "c6be3f7cf9c577ab1aa03c38577b4e4517a20f24707cac5b77cfc306dd846245"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1ff3292665c8e0c4_cpp_part_0001.inc",
-      "sha256": "7cd33fc763d315e99472d4ba7f59daef9aa1eb59565c7bca94e4b6c9689e3484"
+      "sha256": "b08626ff1117853b5a2006c9aa284c06ec424eb5171b0b80c56c143aaff2346a"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1ff3292665c8e0c4_cpp_part_0002.inc",
@@ -861,7 +861,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_3af9088680f95fb3.cpp",
-      "sha256": "aa70c6fc68a33bf600b218af99dde4c2549f01ca8da36483050f92526e274301"
+      "sha256": "52785b23833b8f758abc10fbe529eecd9c248e2091ecdc7cec105bad764289d8"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_3af9088680f95fb3.hpp",
@@ -929,11 +929,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_52158c8b20364c2b_cpp_part_0000.inc",
-      "sha256": "2fb62e8a8921d8304a95c15b9acc80cf10e293dd1d7c4ecd97abddf8176109d1"
+      "sha256": "2261cd0eaa67ecc16c40372446e495ab236208106dd45a4d3659b4c639a7009d"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_52158c8b20364c2b_cpp_part_0001.inc",
-      "sha256": "08bf63d82c6e83f0b54febf5a9e8bd0fba2aad1a7504536c04117f7fa4885b2c"
+      "sha256": "85656257258144aeedf1191032531e5c28c33f5b88298cd681878bdd2b72d765"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_582a926e9c7748a6.cpp",
@@ -1033,15 +1033,15 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_72d9658ed61145d6_cpp_part_0011.inc",
-      "sha256": "d58a66b7d386972371b6854a5bfc9a12ae8d1c76ba3205028e915cb1c16a8c4b"
+      "sha256": "05601549008af6ad11b920c9f21457a7fab3a07d38e26199f49ee1578bd63558"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_72d9658ed61145d6_cpp_part_0012.inc",
-      "sha256": "e22b45e360b94002ed75cc959e02bbe4cb0b7c574499d4ac5809cc0694a3674a"
+      "sha256": "cede7ed060d83eddf5622bf3ac71f225bfdeb839bb4bf258871d7b2390f0c23f"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_72d9658ed61145d6_cpp_part_0013.inc",
-      "sha256": "13e5e6ad1954853e504d5d43ac3f36e8e8c7dbbef7f29cbed9df851d243de033"
+      "sha256": "0d944c02984a20650df9ffdc85e5183c03ac136831007f81a7dcf83453318bf9"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_7de6788b61a5af56.cpp",
@@ -1069,7 +1069,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_83a7bc36395d16bd.cpp",
-      "sha256": "79d75d84029c93dc6b3da667c038131e392cb4170fefb9d5faf64558a3b25833"
+      "sha256": "ddcae0b88f297b6cbb6e02b18e59933fa0ebe9682435cfee51c73cc855c87263"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -1333,7 +1333,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_bb652fbb61000386.cpp",
-      "sha256": "96ec5fae5d2006a39bda461e197c9beb1fac9329c15f0e9b1d16ac6fcac8e1bc"
+      "sha256": "156d41262acf9c0855c1b8fb7f2bd9cd12a557eed19d652a31cf974a5915d4d3"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_bb652fbb61000386.hpp",
@@ -1469,11 +1469,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_edf182ae9bfd734d_cpp_part_0000.inc",
-      "sha256": "031781726fc8eccc8f387ab0e4c92688548908549703ec29d335d198cbe53159"
+      "sha256": "5aeb7587e180092b381ae6ce2971f822133843c181f9954445ead417bea8d629"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_edf182ae9bfd734d_cpp_part_0001.inc",
-      "sha256": "ba0c3c3dde14117e363fdce272cbe32a521958a0a61ce486f728d27c7c9de2fe"
+      "sha256": "468abf3233b30c229b7157de0d3013d498b55cc0901ee1a90811e63caad77efe"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_f3ea616d36334b95.cpp",
@@ -1521,11 +1521,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/split-differential/Harness.exe",
-    "sha256": "7b60b3b90a16574929c741024eb6ad278f80e593f47bfaefd77a499d9afc716e"
+    "sha256": "4dd888e08005ddb8de9143c0f2761007f652b308bf008ab80fb686ecb8aaa9b8"
   },
   "source_oracle_executable": {
     "path": "build/translator/split-differential/Harness-managed.exe",
-    "sha256": "8050483d840a32b735a558564672c1f40be7292b88540012abe9fcf3f92377b4"
+    "sha256": "04cb7bf8296ea5f66dc0c65f41ce3546910976dc4d0e30d1079a75806c30c31b"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -1579,11 +1579,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_18054fa8aeee43c7_cpp_part_0000.inc",
-      "sha256": "74e258ce4e64112ba0e5d85912abe7e9184565e63f8b6e2f910b87845874e2d7"
+      "sha256": "55c3eb20daaeda12b61c391f4c7b259ebebff6dbee5be25288c6fb585778997d"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_18054fa8aeee43c7_cpp_part_0001.inc",
-      "sha256": "8c079efc52a6f70dd382e94f7c78b0aa72750012a68b49603acdd50912518ab4"
+      "sha256": "27c4a5761029f94a9d01476a0a98f5d3bebd686f370b7f7876022e41c2e40034"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1feb9ce0db5130ce.cpp",
@@ -1603,11 +1603,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1ff3292665c8e0c4_cpp_part_0000.inc",
-      "sha256": "8c96f1b6d4fec86d924f6e9ef6d55c20805ccabb7a7bc819db41723beb026101"
+      "sha256": "c6be3f7cf9c577ab1aa03c38577b4e4517a20f24707cac5b77cfc306dd846245"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1ff3292665c8e0c4_cpp_part_0001.inc",
-      "sha256": "7cd33fc763d315e99472d4ba7f59daef9aa1eb59565c7bca94e4b6c9689e3484"
+      "sha256": "b08626ff1117853b5a2006c9aa284c06ec424eb5171b0b80c56c143aaff2346a"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_1ff3292665c8e0c4_cpp_part_0002.inc",
@@ -1615,7 +1615,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_3af9088680f95fb3.cpp",
-      "sha256": "aa70c6fc68a33bf600b218af99dde4c2549f01ca8da36483050f92526e274301"
+      "sha256": "52785b23833b8f758abc10fbe529eecd9c248e2091ecdc7cec105bad764289d8"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_3af9088680f95fb3.hpp",
@@ -1683,11 +1683,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_52158c8b20364c2b_cpp_part_0000.inc",
-      "sha256": "2fb62e8a8921d8304a95c15b9acc80cf10e293dd1d7c4ecd97abddf8176109d1"
+      "sha256": "2261cd0eaa67ecc16c40372446e495ab236208106dd45a4d3659b4c639a7009d"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_52158c8b20364c2b_cpp_part_0001.inc",
-      "sha256": "08bf63d82c6e83f0b54febf5a9e8bd0fba2aad1a7504536c04117f7fa4885b2c"
+      "sha256": "85656257258144aeedf1191032531e5c28c33f5b88298cd681878bdd2b72d765"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_582a926e9c7748a6.cpp",
@@ -1787,15 +1787,15 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_72d9658ed61145d6_cpp_part_0011.inc",
-      "sha256": "d58a66b7d386972371b6854a5bfc9a12ae8d1c76ba3205028e915cb1c16a8c4b"
+      "sha256": "05601549008af6ad11b920c9f21457a7fab3a07d38e26199f49ee1578bd63558"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_72d9658ed61145d6_cpp_part_0012.inc",
-      "sha256": "e22b45e360b94002ed75cc959e02bbe4cb0b7c574499d4ac5809cc0694a3674a"
+      "sha256": "cede7ed060d83eddf5622bf3ac71f225bfdeb839bb4bf258871d7b2390f0c23f"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_72d9658ed61145d6_cpp_part_0013.inc",
-      "sha256": "13e5e6ad1954853e504d5d43ac3f36e8e8c7dbbef7f29cbed9df851d243de033"
+      "sha256": "0d944c02984a20650df9ffdc85e5183c03ac136831007f81a7dcf83453318bf9"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_7de6788b61a5af56.cpp",
@@ -1823,7 +1823,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_83a7bc36395d16bd.cpp",
-      "sha256": "79d75d84029c93dc6b3da667c038131e392cb4170fefb9d5faf64558a3b25833"
+      "sha256": "ddcae0b88f297b6cbb6e02b18e59933fa0ebe9682435cfee51c73cc855c87263"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -2087,7 +2087,7 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_bb652fbb61000386.cpp",
-      "sha256": "96ec5fae5d2006a39bda461e197c9beb1fac9329c15f0e9b1d16ac6fcac8e1bc"
+      "sha256": "156d41262acf9c0855c1b8fb7f2bd9cd12a557eed19d652a31cf974a5915d4d3"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_bb652fbb61000386.hpp",
@@ -2223,11 +2223,11 @@
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_edf182ae9bfd734d_cpp_part_0000.inc",
-      "sha256": "031781726fc8eccc8f387ab0e4c92688548908549703ec29d335d198cbe53159"
+      "sha256": "5aeb7587e180092b381ae6ce2971f822133843c181f9954445ead417bea8d629"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_edf182ae9bfd734d_cpp_part_0001.inc",
-      "sha256": "ba0c3c3dde14117e363fdce272cbe32a521958a0a61ce486f728d27c7c9de2fe"
+      "sha256": "468abf3233b30c229b7157de0d3013d498b55cc0901ee1a90811e63caad77efe"
     },
     {
       "path": "build/translator/split-generated/portable_generated_type_f3ea616d36334b95.cpp",
@@ -2889,10 +2889,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "f6b6cc4391e1c6b65dd49b1fadcf36cce2e469d2fd10044fbfebfaf8f9033c36",
+    "translator_source_sha256": "623059149ee5ee45389df546ebc572163b9e8614b41aa474ca6733c2260f9604",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
-      "54383c25ea72630a903c0f1c5e5abdddd16db02090b996f07651090b648aa4d6",
+      "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
       "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
     "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"
@@ -3147,7 +3147,7 @@
     },
     {
       "file": "portable_generated_type_3af9088680f95fb3.cpp",
-      "bytes": 1984
+      "bytes": 2016
     },
     {
       "file": "portable_generated_type_582a926e9c7748a6.hpp",
@@ -3267,11 +3267,11 @@
     },
     {
       "file": "portable_generated_type_edf182ae9bfd734d_cpp_part_0000.inc",
-      "bytes": 32755
+      "bytes": 32761
     },
     {
       "file": "portable_generated_type_edf182ae9bfd734d_cpp_part_0001.inc",
-      "bytes": 4333
+      "bytes": 4365
     },
     {
       "file": "portable_generated_type_832d81e198eeeec2.hpp",
@@ -3331,11 +3331,11 @@
     },
     {
       "file": "portable_generated_type_18054fa8aeee43c7_cpp_part_0000.inc",
-      "bytes": 32763
+      "bytes": 32760
     },
     {
       "file": "portable_generated_type_18054fa8aeee43c7_cpp_part_0001.inc",
-      "bytes": 16161
+      "bytes": 16228
     },
     {
       "file": "portable_generated_type_922b87749168eb15.hpp",
@@ -3399,11 +3399,11 @@
     },
     {
       "file": "portable_generated_type_52158c8b20364c2b_cpp_part_0000.inc",
-      "bytes": 32751
+      "bytes": 32765
     },
     {
       "file": "portable_generated_type_52158c8b20364c2b_cpp_part_0001.inc",
-      "bytes": 7479
+      "bytes": 7497
     },
     {
       "file": "portable_generated_type_bfe2a01361163e7a.hpp",
@@ -3467,15 +3467,15 @@
     },
     {
       "file": "portable_generated_type_72d9658ed61145d6_cpp_part_0011.inc",
-      "bytes": 32727
+      "bytes": 32732
     },
     {
       "file": "portable_generated_type_72d9658ed61145d6_cpp_part_0012.inc",
-      "bytes": 32765
+      "bytes": 32717
     },
     {
       "file": "portable_generated_type_72d9658ed61145d6_cpp_part_0013.inc",
-      "bytes": 7403
+      "bytes": 7509
     },
     {
       "file": "portable_generated_type_98f0a1bec2084c3c.hpp",
@@ -3515,7 +3515,7 @@
     },
     {
       "file": "portable_generated_type_83a7bc36395d16bd.cpp",
-      "bytes": 10099
+      "bytes": 10163
     },
     {
       "file": "portable_generated_type_8c57b816bbc8fd6e.hpp",
@@ -3579,7 +3579,7 @@
     },
     {
       "file": "portable_generated_type_bb652fbb61000386.cpp",
-      "bytes": 26134
+      "bytes": 26198
     },
     {
       "file": "portable_generated_type_5098bfda9cf65745.hpp",
@@ -3599,11 +3599,11 @@
     },
     {
       "file": "portable_generated_type_1ff3292665c8e0c4_cpp_part_0000.inc",
-      "bytes": 32751
+      "bytes": 32754
     },
     {
       "file": "portable_generated_type_1ff3292665c8e0c4_cpp_part_0001.inc",
-      "bytes": 32737
+      "bytes": 32766
     },
     {
       "file": "portable_generated_type_1ff3292665c8e0c4_cpp_part_0002.inc",

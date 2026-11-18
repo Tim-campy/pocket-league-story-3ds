@@ -100,6 +100,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 void cs_1fafefacc1319a3f(pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_4e9b1f0e9e3baf25();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:surface.TouchEffectManager.Draw(kairo.unity.ui.Graphics)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 for (std::int32_t v_i_952 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_952; auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_9b21b86f0d2914e0>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7532de0b2467e888; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_66a816fe45ab90e7(cs_receiver); }());}); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_952; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_952 = cs_new; return cs_old; }())) {
 try {
@@ -111,6 +112,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 }
 }}
 else {throw;} }
+}
 }
 }
 }

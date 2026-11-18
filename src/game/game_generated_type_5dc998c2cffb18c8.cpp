@@ -262,6 +262,7 @@ return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls:
 bool cs_f76006a37a507361(pls::cs::Ref<cs_5dc998c2cffb18c8> cs_this) { cs_init_5dc998c2cffb18c8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.form.HttpForm.Update",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(pls::cs::static_pointer_cast<cs_5451b2154f09f4c5>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_25913418bfe51bb8(cs_receiver); }());
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4ec59762286c4307; }()); auto cs_right = cs_4eda79c4b15c03ea_value; return (cs_left != cs_right); }())) {
@@ -291,6 +292,7 @@ return true;
 }
 }
 return true;
+}
 }
 }
 }

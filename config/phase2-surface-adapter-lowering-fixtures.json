@@ -26,10 +26,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.223073499975726,
-    "native-compile": 60.33556300000055,
-    "managed-output": 0.47522409999510273,
-    "native-output": 0.3765237999614328
+    "csharp-compile": 0.22853189997840673,
+    "native-compile": 60.74404739995953,
+    "managed-output": 0.46824729995569214,
+    "native-output": 0.3789448000025004
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -91,7 +91,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.cpp",
-      "sha256": "f2fbcec0c6a31792e8d044c55d84f159d3da53f2ee3b0a9961b20ee28b0fe53f"
+      "sha256": "78b04b4ab2b29134925a09c2acbe24e0359922dee7c8f9b7521e1d48eeb5887b"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.hpp",
@@ -111,11 +111,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/surface-adapter-differential/Harness.exe",
-    "sha256": "a0358796632b409328a4539f9a3fbfc062fd10ce4209c9b8dd7c085aef8ab134"
+    "sha256": "c0709a2f88e5ff0b3681d472bfefdf58bb607026a13748d9e7f79a2186aef42e"
   },
   "source_oracle_executable": {
     "path": "build/translator/surface-adapter-differential/Harness-managed.exe",
-    "sha256": "8f1a06b0bff9fedd4c2db681f34828048075c529ac25f61584ee6bfd09d16d5c"
+    "sha256": "cf2b1d2c5e1c2b9e6a996736e9ff7c70eeb29d280ebcd09716f649dd87e74d78"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -189,7 +189,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.cpp",
-      "sha256": "f2fbcec0c6a31792e8d044c55d84f159d3da53f2ee3b0a9961b20ee28b0fe53f"
+      "sha256": "78b04b4ab2b29134925a09c2acbe24e0359922dee7c8f9b7521e1d48eeb5887b"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.hpp",
@@ -807,10 +807,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "f6b6cc4391e1c6b65dd49b1fadcf36cce2e469d2fd10044fbfebfaf8f9033c36",
+    "translator_source_sha256": "623059149ee5ee45389df546ebc572163b9e8614b41aa474ca6733c2260f9604",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
-      "54383c25ea72630a903c0f1c5e5abdddd16db02090b996f07651090b648aa4d6",
+      "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
       "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
     "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"

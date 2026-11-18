@@ -438,6 +438,7 @@ for (std::int32_t v_i_3956 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(
 // M:data.FanBonusData.Load2
 void cs_cad7770806224169() { cs_init_69a97d2bf5ede86d();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:data.FanBonusData.Load2",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<cs_2ffa6f51468590ea> v_instance_4137 = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }());
 for (std::int32_t v_i_4183 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_4183; auto cs_right = (([&]() { auto cs_receiver = v_instance_4137; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_39dbfa9f37472c19; }())).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_4183; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_4183 = cs_new; return cs_old; }())) {
@@ -463,6 +464,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 }
 ([&]() { auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x29ull)); cs_8334425c84360fb5_value = cs_value; return cs_value; }());
 ([&]() { auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2aull)); cs_c6d086597dc95f54_value = cs_value; return cs_value; }());
+}
 }
 }
 }

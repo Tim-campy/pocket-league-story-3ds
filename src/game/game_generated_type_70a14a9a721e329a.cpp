@@ -50,6 +50,7 @@ cs_init_70a14a9a721e329a();
 void cs_7a3c8d6b2dff719e(pls::cs::Ref<cs_70a14a9a721e329a> cs_this,std::int32_t v_next_state) { cs_init_70a14a9a721e329a();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.TArea.ChangeState(System.Int32)",game);
+{ cs_init_7c0f60cfdd8cf265();
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_next_state; pls::game::cs_require(cs_target)->cs_2a09121f03ba2c1f = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::game::cs_require(cs_target)->cs_2087da0c686e772f = cs_value; return cs_value; }());
@@ -96,6 +97,7 @@ for (std::int32_t v_m_6939 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(
 } else if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_2a09121f03ba2c1f; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xeull)); return (cs_left == cs_right); }())) {
 for (std::int32_t v_n_7075 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_n_7075; auto cs_right = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b42e59d77da5e022; }())).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_n_7075; auto cs_new = pls::cs::add_i32(cs_old,1); v_n_7075 = cs_new; return cs_old; }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_4feff672b530e53a>>(([&]() { auto cs_array = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b42e59d77da5e022; }()); auto cs_index = v_n_7075; return cs_array.get_Item(cs_index); }())); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xeull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_86069acbdd7f758e(cs_receiver,cs_arg0); }());
+}
 }
 }
 }
@@ -279,6 +281,7 @@ if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_
 void cs_43892c6331385e19(pls::cs::Ref<cs_70a14a9a721e329a> cs_this,std::int32_t v_tMode) { cs_init_70a14a9a721e329a();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:game.TArea.SetTrainingArea(System.Int32)",game);
+{ cs_init_7c0f60cfdd8cf265();
 {
 ([&]() { auto cs_target = cs_this; auto cs_value = v_tMode; pls::game::cs_require(cs_target)->cs_19069f1ff64b1613 = cs_value; return cs_value; }());
 std::int32_t v_num_8776 = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_86d5d3bcc0799404; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::mul_i32(cs_left,cs_right); }());
@@ -345,6 +348,7 @@ std::int32_t v_num7_11187 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/TArea.cs:M:game.TArea.SetTrainingArea(System.Int32):11216",pls::cs::Array<pls::cs::Ref<cs_4feff672b530e53a>>::make(v_num7_11187)); pls::game::cs_require(cs_target)->cs_b42e59d77da5e022 = cs_value; return cs_value; }());
 for (std::int32_t v_n_11251 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_n_11251; auto cs_right = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b42e59d77da5e022; }())).length(); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_n_11251; auto cs_new = pls::cs::add_i32(cs_old,1); v_n_11251 = cs_new; return cs_old; }())) {
 ([&]() { auto cs_target = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_b42e59d77da5e022; }()); auto cs_index = v_n_11251; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/TArea.cs:M:game.TArea.SetTrainingArea(System.Int32):11317",([&]() -> pls::cs::Ref<cs_4feff672b530e53a> { std::int32_t cs_arg0 = v_n_11251; pls::cs::Ref<cs_70a14a9a721e329a> cs_arg1 = cs_this; return cs_b971b33d4c019b20(cs_arg0,cs_arg1); }()));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
+}
 }
 }
 }

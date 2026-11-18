@@ -3,6 +3,8 @@
 
 // M:form.SubForm.Draw(kairo.unity.ui.Graphics)
 void SubForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
+    kl_cfg::Config::ensure_initialized();
+
     pls::cs::Int32 num = x_;
     pls::cs::Int32 num2 = y_;
     if ((require(view_)->GetGameWidth() > 240) || (require(view_)->GetGameHeight() > 240)) {
@@ -50,6 +52,11 @@ void SubForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
 // M:form.SubForm._draw(kairo.unity.ui.Graphics)
 void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
+    kl_cfg::Config::ensure_initialized();
+    SoccerForm::ensure_initialized();
+    data::PlayerData::ensure_initialized();
+    game::UserData::ensure_initialized();
+
     err_method = literal(u"_draw()");
     if (untilActiveHide_ || (wait_ > 0)) {
         return;
@@ -203,10 +210,5 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 require(g)->DrawString(literal(u"\u59EB\u5DDD\u30C1\u30A2\u5B50") /* "姫川チア子" */, 84.0f,
                                        174.0f);
             } else if (humanCharaType_ == 1) {
-                if (humanCharaIndex_ != -1) {
-                    pls::cs::Ref<data::PlayerData> playerData =
-                        require(apdat_)->pData_.get_Item(humanCharaIndex_);
-                    require(udat_)->SetDispPlayerData(0, require(udat_)->selectUniform_,
-                                                      require(playerData)->faceImg_, 0, 2);
-    // ... (1336 more lines in the full unit)
+    // ... (1323 more lines in the full unit)
 }

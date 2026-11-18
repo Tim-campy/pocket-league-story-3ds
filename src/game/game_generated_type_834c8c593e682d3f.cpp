@@ -245,6 +245,7 @@ return true;
 void cs_41a080d5c8269bab(pls::cs::Ref<cs_834c8c593e682d3f> cs_this) { cs_init_834c8c593e682d3f();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.RankForm.SetSoftLabel",game);
+{ cs_init_2ffa6f51468590ea();
 {
 pls::cs::Array<std::int32_t> v_array_4668 = ([&]() { auto cs_array = cs_96890a1370dfa5a5_value; auto cs_index = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_ca0d47b3cd292341; }()); return cs_array.get_Item(cs_index); }());
 if (([&]() { auto cs_left = pls::cs::box(v_array_4668); auto cs_right = pls::cs::box(pls::cs::Array<std::int32_t>{}); return cs_left == cs_right; }())) {
@@ -254,6 +255,7 @@ return;
 std::int32_t v_num_4737 = ([&]() { auto cs_array = v_array_4668; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return cs_array.get_Item(cs_index); }());
 std::int32_t v_num2_4757 = ([&]() { auto cs_array = v_array_4668; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return cs_array.get_Item(cs_index); }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormBase>>(cs_this); pls::cs::String cs_arg0 = ([&]() { auto cs_array = cs_60b089466589d9c6(); auto cs_index = v_num_4737; return cs_array.get_Item(cs_index); }()); pls::cs::String cs_arg1 = ([&]() { auto cs_array = cs_60b089466589d9c6(); auto cs_index = v_num2_4757; return cs_array.get_Item(cs_index); }()); auto cs_arg2 = pls::cs::String{}; auto cs_arg3 = pls::cs::String{}; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetSoftLabel(cs_arg0,cs_arg1,cs_arg2,cs_arg3); }());});
+}
 }
 }
 }

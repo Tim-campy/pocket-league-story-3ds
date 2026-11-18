@@ -33,7 +33,8 @@ pls::cs::Ref<pls::cs::Object>& cs_4033fa251a2d7de3(){cs_init_11e0490f60fdc166();
 // M:kairo.unity.io.Http.Connect(System.String,System.Byte[],System.Boolean,System.Boolean)
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_54dec6a9b058dafd(pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split) { cs_init_11e0490f60fdc166();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.io.Http.Connect(System.String,System.Byte[],System.Boolean,System.Boolean)",kairo);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 pls::cs::Ref<cs_18d5b680efad7752> v_httpThread_870 = ([&]() -> pls::cs::Ref<cs_18d5b680efad7752> { return cs_c97cedff510ba4db(); }());
 pls::cs::run_finally([&]() {{
 if ((pls::generated::cs_b0827224162a4f93() && pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());})); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->CheckUiThread(); }());}))) {
@@ -47,6 +48,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }}
 ([&]() { auto cs_target = v_httpThread_870; auto cs_value = false; pls::game::cs_require(cs_target)->cs_79a73cb588797b93 = cs_value; return cs_value; }());
 });
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<pls::cs::Array<std::uint8_t>>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<pls::cs::Array<std::uint8_t>>>();}
 }
 }

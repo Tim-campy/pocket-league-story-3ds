@@ -163,6 +163,9 @@ pls::cs::String TitleForm::ToString() {
 
 // M:form.TitleForm.Init
 bool TitleForm::Init() {
+    cfg::MyConfig::ensure_initialized();
+    kl_cfg::Config::ensure_initialized();
+
     MyFormBase::Init();
     udat_ = game::UserData::GetInstance();
     {
@@ -267,6 +270,9 @@ bool TitleForm::Init() {
 
 // M:form.TitleForm.Update
 bool TitleForm::Update() {
+    kl_cfg::Config::ensure_initialized();
+    main::AppData::ensure_initialized();
+
     MyFormBase::Update();
     titleFrame_ = main::AppData::ClampMax(pls::cs::add_i32(titleFrame_, 1), 2147483646);
     frame_ = pls::cs::mod_i32((pls::cs::add_i32(frame_, 1)), 2147483647 /* Int32.MaxValue */);
@@ -404,34 +410,15 @@ bool TitleForm::Update() {
                             url, static_cast<pls::cs::Array<std::uint8_t>>(pls::cs::Array<std::uint8_t>{}),
                             false);
                         recordStore2 = pls::kairo::RecordStore::OpenRecordStore(0);
-                        {
-                            auto cs_receiver =
-                                static_cast<pls::cs::Ref<pls::kairo::RecordStore>>(recordStore2);
-                            std::int32_t cs_arg0 = pls::cs::add_i32(1, main::AppData::currentSaveSlot_());
-                            pls::cs::Array<std::uint8_t> cs_arg1 = data;
-                            if (!cs_receiver) {
-                                throw pls::cs::NullReferenceException();
-                            }
-                            cs_receiver->WriteRecord(cs_arg0, cs_arg1);
-                        }
-                        {
-                            auto cs_target = require(require(apdat_)->sysSave_)->ints;
-                            auto cs_index = pls::cs::add_i32(6, main::AppData::currentSaveSlot_());
-                            auto cs_value = 300;
-                            cs_target.set_Item(cs_index, cs_value);
-                        }
-                        {
-                            auto cs_target = require(require(apdat_)->sysSave_)->strs;
-                            auto cs_index = pls::cs::add_i32(4, main::AppData::currentSaveSlot_());
-                            auto cs_value = literal(u"120");
-                            cs_target.set_Item(cs_index, cs_value);
-                        }
-                        {
-                            auto cs_target = require(require(apdat_)->sysSave_)->strs;
-                            auto cs_index = pls::cs::add_i32(2, main::AppData::currentSaveSlot_());
-                            auto cs_value = literal(u"[\u53D7\u4FE1\u30C7\u30FC\u30BF]") /* "[受信データ]" */;
-                            cs_target.set_Item(cs_index, cs_value);
-                        }
+                        require(recordStore2)
+                            ->WriteRecord(pls::cs::add_i32(1, main::AppData::currentSaveSlot_()), data);
+                        require(require(apdat_)->sysSave_)
+                            ->ints[pls::cs::add_i32(6, main::AppData::currentSaveSlot_())] = 300;
+                        require(require(apdat_)->sysSave_)
+                            ->strs[pls::cs::add_i32(4, main::AppData::currentSaveSlot_())] = literal(u"120");
+                        require(require(apdat_)->sysSave_)
+                            ->strs[pls::cs::add_i32(2, main::AppData::currentSaveSlot_())] =
+                            literal(u"[\u53D7\u4FE1\u30C7\u30FC\u30BF]") /* "[受信データ]" */;
                         require(apdat_)->SaveSystem();
                         pls::cs::Ref<kairo::unity::ui::Dialog> dialog =
                             kairo::unity::ui::Dialog::create(0, literal(u"\u5B8C\u4E86") /* "完了" */);
@@ -550,6 +537,8 @@ bool TitleForm::Update() {
 
 // M:form.TitleForm.ContinueGame
 void TitleForm::ContinueGame() {
+    kl_cfg::Config::ensure_initialized();
+
     if (require(require(apdat_)->sysSave_)
             ->ints[pls::cs::add_i32(((((selectSaveType_ == 0)) ? 11 : 6)), selectSave_)] != -1) {
         try {
@@ -652,6 +641,9 @@ void TitleForm::Draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
 // M:form.TitleForm._draw(kairo.unity.ui.Graphics)
 void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
+    cfg::MyConfig::ensure_initialized();
+    kl_cfg::Config::ensure_initialized();
+
     pls::cs::Ref<surface::GameView> instance = surface::GameView::GetInstance();
     TitleForm::SmartBeginPaint(g);
     ([&]() -> void {
@@ -692,10 +684,10 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
         }());
         pls::cs::Int32 num4 = 6;
-        auto cs_left_148 = titleFrame_;
-        auto cs_right_148 =
+        auto cs_left_132 = titleFrame_;
+        auto cs_right_132 =
             TitleForm::title_anime()[pls::cs::sub_i32((TitleForm::title_anime()).length(), 1)];
-        pls::cs::Int32 num5 = pls::cs::sub_i32(cs_left_148, cs_right_148);
+        pls::cs::Int32 num5 = pls::cs::sub_i32(cs_left_132, cs_right_132);
         pls::cs::Int32 num6 = (num5 % (((num4 + num4) + 32)));
         pls::cs::Int32 num7 = 0;
         if (num6 < num4) {
@@ -1330,6 +1322,8 @@ bool TitleForm::Resume() {
 
 // M:form.TitleForm.Finish
 bool TitleForm::Finish() {
+    surface::GamePad::ensure_initialized();
+
     MyFormBase::Finish();
     if (!is_null(resTitle_)) {
         require(resTitle_)->Dispose();
@@ -1341,6 +1335,8 @@ bool TitleForm::Finish() {
 
 // M:form.TitleForm.ChangeState(System.Int32)
 void TitleForm::ChangeState(pls::cs::Int32 state) {
+    main::AppData::ensure_initialized();
+
     pls::cs::Array<std::int32_t> array = TitleForm::softLabels_()[state];
     if ([&]() {
             auto cs_left = pls::cs::box(array);
@@ -1530,6 +1526,8 @@ void TitleForm::SetTouchValue(std::int32_t type, std::int32_t value) {
 
 // M:form.TitleForm.OnTouchEvent(kairo.unity.surface.TouchEvent)
 bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) {
+    cfg::MyConfig::ensure_initialized();
+
     if (!(system::form::LanguageForm::OnTouchEvent(e))) {
         return false;
     }
@@ -1579,6 +1577,8 @@ bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) 
 
 // M:form.TitleForm.LoadKiaroAdClickNum
 void TitleForm::LoadKiaroAdClickNum() {
+    cfg::MyConfig::ensure_initialized();
+
     if (cfg::MyConfig::SMART_PASS() || cfg::MyConfig::AMAZON()) {
         return;
     }
@@ -1612,6 +1612,8 @@ void TitleForm::UpdateKairoAdClickNum() {
 
 // M:form.TitleForm.UpdateKairoAdClickNum(System.Int32)
 void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
+    cfg::MyConfig::ensure_initialized();
+
     if (cfg::MyConfig::SMART_PASS() || cfg::MyConfig::AMAZON()) {
         return;
     }
@@ -1644,8 +1646,8 @@ void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
 // M:form.TitleForm.GetHashCode
 std::int32_t TitleForm::GetHashCode() {
     {
-        auto cs_receiver_150 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-        return require(cs_receiver_150)->pls::cs::Object::GetHashCode();
+        auto cs_receiver_134 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+        return require(cs_receiver_134)->pls::cs::Object::GetHashCode();
     }
 }
 } // namespace form

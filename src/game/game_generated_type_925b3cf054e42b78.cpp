@@ -138,11 +138,13 @@ if (([&]() { auto cs_left = pls::cs::box(cs_4fd143d9a5ab23f5_value); auto cs_rig
 // M:system.KairoService.GetInstance
 pls::cs::Ref<cs_925b3cf054e42b78> cs_fd047093624d8d65() { cs_init_925b3cf054e42b78();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.KairoService.GetInstance",game);
+{ cs_init_b489b0d33bb37bb8();
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_11e5ce60ddaa567b()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.GetInstance:1156",([&]() -> pls::cs::Ref<cs_925b3cf054e42b78> { return cs_f6c1ebd73ba5dcdc(); }())); cs_11e5ce60ddaa567b() = cs_value; return cs_value; }());
 }
 return pls::cs::unbox<pls::cs::Ref<cs_925b3cf054e42b78>>(pls::cs::box(cs_11e5ce60ddaa567b()));
+}
 }
 }
 }
@@ -201,6 +203,7 @@ void cs_ee25274aa8cb5d52(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,bool v_take) 
 void cs_8081b8c4e247b091(pls::cs::Ref<cs_925b3cf054e42b78> cs_this) { cs_init_925b3cf054e42b78();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.KairoService.OnStart",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<cs_6485f92c2f04639f> v_instance_1385 = ([&]() -> pls::cs::Ref<cs_6485f92c2f04639f> { return cs_2daa26d559c2fca8(); }());
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_23f814b97b0cdf1c; }()); auto cs_right = ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_033269c53e74ac43(cs_receiver); }()); return (cs_left < cs_right); }())) {
@@ -290,6 +293,7 @@ else {throw;} }
 }
 }
 }
+}
 
 // M:system.KairoService.OnWrite(java.io.OutputStream)
 void cs_aae6871b403a2662(pls::cs::Ref<cs_925b3cf054e42b78> cs_this,pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) { cs_init_925b3cf054e42b78();
@@ -355,7 +359,9 @@ pls::cs::Ref<cs_6485f92c2f04639f> v_instance_3856 = ([&]() -> pls::cs::Ref<cs_64
 pls::cs::Ref<pls::kairo::FormBase> v_form_3906 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::FormBase> { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormManagerBase>>(v_instance_3856); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetForm(cs_arg0); }());});
 if ((((([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_42ee6ef0eb7e8761; }()) && ([&]() { pls::cs::Ref<cs_89c0d586cfe20341> cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0f9909df8253bfe0; }()); pls::cs::Ref<cs_89c0d586cfe20341> cs_right = pls::cs::Ref<cs_89c0d586cfe20341>{}; return cs_f0878a49dfa6a661(cs_left,cs_right); }())) && ([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormBase>>(v_form_3906); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetId(); }());}); auto cs_right = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_25150d256e75d102; }()); return (cs_left != cs_right); }())) && ([&]() -> bool { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::FormBase>>(v_form_3906); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetId(); }());}); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left != cs_right); }()))) {
 if (([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(cs_4fd143d9a5ab23f5_value); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_54b9118ddf48a0fd(cs_receiver); }())) {
-([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.Update:4105",([&]() -> pls::cs::Ref<cs_89c0d586cfe20341> { pls::cs::Delegate<void()> cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.Update:4117",pls::source_allocations::completed("closure_evaluation","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.Update:4117",([&](){struct cs_closure_24c36b76e15982e9 : pls::cs::Object{pls::cs::Ref<cs_925b3cf054e42b78> cs_this;void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);pls::cs::trace_value(cs_this,v);}void Invoke(){{
+([&]() { auto cs_target = cs_this; auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.Update:4105",([&]() -> pls::cs::Ref<cs_89c0d586cfe20341> { pls::cs::Delegate<void()> cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.Update:4117",pls::source_allocations::completed("closure_evaluation","src/Assembly-CSharp/system/KairoService.cs:M:system.KairoService.Update:4117",([&](){struct cs_closure_24c36b76e15982e9 : pls::cs::Object{pls::cs::Ref<cs_925b3cf054e42b78> cs_this;void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);pls::cs::trace_value(cs_this,v);}void Invoke(){{pls::generated::cs_init_e7d772862db62924();
+cs_init_f52c904bea265acc();
+{
 pls::cs::run_finally([&]() -> void { try {
 pls::cs::Ref<cs_6ee7d14059be1acf> v_instance2_4173 = ([&]() -> pls::cs::Ref<cs_6ee7d14059be1acf> { return cs_f8eb247e2413618b(); }());
 ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(v_instance2_4173); bool cs_arg0 = true; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_4351661fbbfaa7c4(cs_receiver,cs_arg0); }());
@@ -374,7 +380,7 @@ else {throw;} } }, [&]() {
 ([&]() { auto cs_value = true; cs_7a902abf262c4ddf() = cs_value; return cs_value; }());
 ([&]() { auto cs_target = cs_this; auto cs_value = pls::cs::Ref<cs_89c0d586cfe20341>{}; pls::game::cs_require(cs_target)->cs_0f9909df8253bfe0 = cs_value; return cs_value; }());
 });
-}}};auto cs_closure=pls::cs::make_ref<cs_closure_24c36b76e15982e9>();cs_closure->cs_this=cs_this;return pls::cs::Delegate<void()>::bind_identity(cs_closure,pls::cs::raw(cs_this),std::string("M:system.KairoService.Update:4117"),[weak=pls::cs::DelegateCapture<cs_closure_24c36b76e15982e9>(cs_closure)]()->void{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();target->Invoke();});}()))); return cs_6ac8ad3def9eea9e(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_0f9909df8253bfe0 = cs_value; return cs_value; }());
+}}}};auto cs_closure=pls::cs::make_ref<cs_closure_24c36b76e15982e9>();cs_closure->cs_this=cs_this;return pls::cs::Delegate<void()>::bind_identity(cs_closure,pls::cs::raw(cs_this),std::string("M:system.KairoService.Update:4117"),[weak=pls::cs::DelegateCapture<cs_closure_24c36b76e15982e9>(cs_closure)]()->void{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();target->Invoke();});}()))); return cs_6ac8ad3def9eea9e(cs_arg0); }())); pls::game::cs_require(cs_target)->cs_0f9909df8253bfe0 = cs_value; return cs_value; }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_89c0d586cfe20341>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_0f9909df8253bfe0; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b9636031b790b537(cs_receiver); }());
 try {
 ([&]() -> void { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(std::uint64_t(0x14ull)); cs_26244a61d0d2e16c(cs_arg0); }());

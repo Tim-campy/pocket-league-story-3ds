@@ -299,6 +299,8 @@ sealed partial class Lowerer {
         if(ConstantTypeInitializer(owner))return true;
         var caller=methods.GetValueOrDefault(current);
         if(caller==null||initializingTypes.Count!=0||TypeParameters(caller).Length!=0)return false;
+        // BeforeFieldInit: initialized at the entry of this method or lambda (EntryInitTypes).
+        if(BeforeFieldInit(owner.OriginalDefinition))return true;
         if(caller.MethodKind==MethodKind.Constructor||caller.IsStatic)return SymbolEqualityComparer.Default.Equals(caller.ContainingType,owner);
         for(var type=caller.ContainingType;type!=null;type=type.BaseType)if(SymbolEqualityComparer.Default.Equals(type,owner))return true;
         return false;

@@ -159,7 +159,8 @@ return v_file;
 pls::cs::Array<std::uint8_t> cs_344d0f488664be89(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::String v_name) { cs_init_52158c8b20364c2b();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.JarInflater.GetData(System.String)",kairo);
-{try{
+{try{ cs_init_e7d772862db62924();
+{
 ([&]() { auto cs_value = ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<cs_52158c8b20364c2b>>(cs_this); pls::cs::String cs_arg0 = v_name; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_cfa0bd9ae3912c7e(cs_receiver,cs_arg0); }()); v_name = cs_value; return cs_value; }());
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_578ed5fb729c9567; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }())) {
 pls::cs::Array<std::uint8_t> v_array_4845 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); bool cs_arg1 = false; pls::cs::String cs_arg2 = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/util/JarInflater.cs:M:kairo.unity.util.JarInflater.GetData(System.String):4876",([&]() { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_578ed5fb729c9567; }()); auto cs_right = v_name; return pls::cs::String::concat(cs_left,cs_right); }())); return pls::kairo::Storage::Read(cs_arg0,cs_arg1,cs_arg2); }());});
@@ -209,6 +210,7 @@ else {throw;} }
 ([&]() { auto cs_value = pls::cs::Ref<cs_e7a5499b363ef51b>{}; v_inputStream_5126 = cs_value; return cs_value; }());
 });
 throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{v_array2_5305};
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<std::uint8_t>>();}
 }
 }

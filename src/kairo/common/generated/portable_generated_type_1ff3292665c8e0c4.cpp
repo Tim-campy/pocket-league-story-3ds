@@ -86,6 +86,7 @@ return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_value; std::int32
 // M:kairo.unity.util.StringUtil.GetCode(System.Byte[])
 pls::cs::String cs_4cdefdb4e661cd56(pls::cs::Array<std::uint8_t> v_bytes) { cs_init_1ff3292665c8e0c4();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.StringUtil.GetCode(System.Byte[])",kairo);
+{ cs_init_e7d772862db62924();
 {
 std::uint8_t v_recoveredPdbConstByte_6203 = pls::cs::cast_integral<std::uint8_t>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)));
 pls::cs::Array<pls::cs::String> v_array_6242 = pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/StringUtil.cs:M:kairo.unity.util.StringUtil.GetCode(System.Byte[]):6250",([&](){auto cs_initial_array_517=pls::cs::Array<pls::cs::String>::make(2);cs_initial_array_517.at(0)=([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0055" u"\x0054" u"\x0046" u"\x002d" u"\x0038" u"",5);}());cs_initial_array_517.at(1)=([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0053" u"\x0068" u"\x0069" u"\x0066" u"\x0074" u"\x005f" u"\x004a" u"\x0049" u"\x0053" u"",9);}());return cs_initial_array_517;}()));
@@ -237,6 +238,7 @@ return ([&]() { auto cs_array = v_array3_9432; auto cs_index = v_num14_10067; re
 }
 }
 return pls::cs::String{};
+}
 }
 }
 }

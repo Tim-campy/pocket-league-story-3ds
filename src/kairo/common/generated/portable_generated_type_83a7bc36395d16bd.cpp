@@ -76,6 +76,7 @@ else {throw;} }
 // M:kairo.unity.util.Log.Info(System.Exception)
 pls::cs::String cs_b686603f380b2527(pls::cs::Ref<pls::cs::ExceptionObject> v_t) { cs_init_83a7bc36395d16bd();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Log.Info(System.Exception)",kairo);
+{ cs_init_e7d772862db62924();
 {
 if ((cs_4cc76a7a43706693() && ([&]() { auto cs_left = pls::cs::box(v_t); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }()))) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::Ref<pls::cs::Object> cs_arg0 = pls::cs::box(v_t); pls::kairo::debug_log(cs_arg0); }());});
@@ -84,10 +85,12 @@ return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls:
 }
 }
 }
+}
 
 // M:kairo.unity.util.Log.Info(System.String,System.Exception)
 pls::cs::String cs_812090ed79928522(pls::cs::String v_text,pls::cs::Ref<pls::cs::ExceptionObject> v_t) { cs_init_83a7bc36395d16bd();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Log.Info(System.String,System.Exception)",kairo);
+{ cs_init_e7d772862db62924();
 {
 ([&]() { auto cs_value = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = v_text; pls::cs::Ref<pls::cs::ExceptionObject> cs_arg1 = v_t; return cs_a66c820e92bb7b9a(cs_arg0,cs_arg1); }()); v_text = cs_value; return cs_value; }());
 if (cs_4cc76a7a43706693()) {
@@ -102,6 +105,7 @@ if (([&]() { auto cs_left = pls::cs::box(v_text); auto cs_right = pls::cs::Ref<p
 return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"",0);}());
 }
 return v_text;
+}
 }
 }
 }

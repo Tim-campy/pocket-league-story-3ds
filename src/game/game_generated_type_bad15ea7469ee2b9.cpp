@@ -94,6 +94,7 @@ return cs_18a692dfac4d8961_value;
 void cs_fe479bb5365005e6(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this) { cs_init_bad15ea7469ee2b9();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.Main.OnCreate",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::cs::static_pointer_cast<pls::kairo::IApplication>(cs_this)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->source_OnCreate(); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { return pls::generated::cs_f2f74213ca1ea9bc(); }());}); bool cs_arg1 = pls::generated::cs_4cc76a7a43706693(); pls::cs::String cs_arg2 = pls::generated::cs_1ce7e3797101a750(); cs_27592a85fbe0e2b1(cs_arg0,cs_arg1,cs_arg2); }());});
@@ -137,6 +138,7 @@ if (([&]() { auto cs_left = pls::cs::box(v_jarInflater_979); auto cs_right = pls
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_52158c8b20364c2b>>(v_jarInflater_979); if(!cs_receiver)throw pls::cs::NullReferenceException(); pls::generated::cs_22ec1e3c74812f59(cs_receiver); }());});
 }
 });
+}
 }
 }
 }
@@ -197,6 +199,7 @@ void cs_48b06d9d94c6401b(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this) { cs_init_ba
 void cs_0b355334e1fce7ed(pls::cs::Ref<cs_bad15ea7469ee2b9> cs_this) { cs_init_bad15ea7469ee2b9();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:main.Main.OnUpdate",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<cs_2ffa6f51468590ea> v_instance_2056 = ([&]() -> pls::cs::Ref<cs_2ffa6f51468590ea> { return cs_6b283e61fdac2d16(); }());
 pls::cs::Ref<pls::kairo::Canvas> v_instance2_2115 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::Canvas> { return pls::kairo::Canvas::GetInstance(); }());});
@@ -274,6 +277,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }}
 else {throw;} }
+}
 }
 }
 }

@@ -31,11 +31,13 @@ cs_init_23ed5cbd0e3922f3();
 // M:system.notification.MyNotify.GetInstance
 pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_baa886ffdf138e8e() { cs_init_23ed5cbd0e3922f3();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.notification.MyNotify.GetInstance",game);
+{ cs_init_4368d694d01424b0();
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_af3cecaddfff33af()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/notification/MyNotify.cs:M:system.notification.MyNotify.GetInstance:269",([&]() -> pls::cs::Ref<cs_23ed5cbd0e3922f3> { return cs_ad74a61a58fd6836(); }())); cs_af3cecaddfff33af() = cs_value; return cs_value; }());
 }
 return pls::cs::unbox<pls::cs::Ref<cs_23ed5cbd0e3922f3>>(pls::cs::box(cs_af3cecaddfff33af()));
+}
 }
 }
 }

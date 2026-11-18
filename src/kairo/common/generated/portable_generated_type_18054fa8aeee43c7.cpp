@@ -194,7 +194,8 @@ if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = v_node; if(
 // M:kairo.unity.util.Compressor.Compress(System.Byte[])
 pls::cs::Array<std::uint8_t> cs_e44260e02e247abd(pls::cs::Array<std::uint8_t> v_data) { cs_init_18054fa8aeee43c7();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Compressor.Compress(System.Byte[])",kairo);
-{try{
+{try{ cs_init_e7d772862db62924();
+{
 if ((([&]() { auto cs_left = pls::cs::box(v_data); auto cs_right = pls::cs::box(pls::cs::Array<std::uint8_t>{}); return cs_left == cs_right; }()) || ([&]() -> bool { auto cs_left = (v_data).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }()))) {
 throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{v_data};
 }
@@ -279,6 +280,7 @@ pls::cs::Array<std::uint8_t> v_data2_3444 = ([&]() -> pls::cs::Array<std::uint8_
 ([&]() { auto cs_value = pls::cs::Ref<cs_fb60578b3098a284>{}; v_byteArrayOutputStream_3334 = cs_value; return cs_value; }());
 });
 throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{v_array2_3294};
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<std::uint8_t>>();}
 }
 }
@@ -286,7 +288,8 @@ throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{v_array2_3294};
 // M:kairo.unity.util.Compressor.Expand(System.Byte[])
 pls::cs::Array<std::uint8_t> cs_76473a48703be5ba(pls::cs::Array<std::uint8_t> v_data) { cs_init_18054fa8aeee43c7();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Compressor.Expand(System.Byte[])",kairo);
-{try{
+{try{ cs_init_e7d772862db62924();
+{
 if ((([&]() { auto cs_left = pls::cs::box(v_data); auto cs_right = pls::cs::box(pls::cs::Array<std::uint8_t>{}); return cs_left == cs_right; }()) || ([&]() -> bool { auto cs_left = (v_data).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }()))) {
 throw pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>{v_data};
 }
@@ -325,6 +328,7 @@ else {throw;} }
 }
 ([&]() { auto cs_value = pls::cs::Ref<cs_fb60578b3098a284>{}; v_byteArrayOutputStream_4070 = cs_value; return cs_value; }());
 });
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<std::uint8_t>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<std::uint8_t>>();}
 }
 }

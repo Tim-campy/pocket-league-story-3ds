@@ -75,6 +75,7 @@ return ([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { return pls::kair
 bool cs_25bba6e14d51039b(pls::cs::String v_url) {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Canvas.OpenBrowser(System.String)",kairo);
 {
 pls::cs::Ref<pls::cs::Cell<pls::cs::String>> v_url_cell=pls::cs::make_ref<pls::cs::Cell<pls::cs::String>>(v_url);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 try {
 if (([&]() -> bool { auto cs_left = pls::generated::cs_fe98f159e1f0c2a7(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); return (cs_left == cs_right); }())) {
@@ -113,7 +114,7 @@ if (([&]() -> bool { auto cs_left = (v_gameAppli_30818).cs_3f97f246a7d4b8ee; aut
 }
 }
 }
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());})); pls::cs::Delegate<void()> cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082",pls::source_allocations::completed("closure_evaluation","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082",([&](){struct cs_closure_749e168bdf49d301 : pls::cs::Object{pls::cs::Ref<pls::cs::Cell<pls::cs::String>> v_url_cell;void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);pls::cs::trace_value(v_url_cell,v);}void Invoke(){{
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());})); pls::cs::Delegate<void()> cs_arg0 = pls::source_allocations::completed("delegate_evaluation","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082",pls::source_allocations::completed("closure_evaluation","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082",([&](){struct cs_closure_749e168bdf49d301 : pls::cs::Object{pls::cs::Ref<pls::cs::Cell<pls::cs::String>> v_url_cell;void trace_edges(const pls::cs::EdgeVisitor&v)const override{pls::cs::Object::trace_edges(v);pls::cs::trace_value(v_url_cell,v);}void Invoke(){{{
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::kairo::AppEventType cs_arg0 = static_cast<pls::kairo::AppEventType>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))); auto cs_arg1 = pls::source_allocations::completed("params_array","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32102",pls::cs::Array<pls::cs::Ref<pls::cs::Object>>::make(1)); cs_arg1.at(0) = pls::cs::box(v_url_cell->value); pls::kairo::FormManagerBase::ProcessEvent(cs_arg0,cs_arg1); }());});
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());})); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetTotalFrames(); }());}); pls::kairo::Canvas::source_last_browser_frame() = cs_value; return cs_value; }());
 pls::cs::String v_text_32247 = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32254",([&]() { auto cs_left = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x005f" u"\x006c" u"\x0068" u"\x003d" u"",4);}()); auto cs_right = ([&]() -> pls::cs::String { return cs_154f0344cd538956(); }()); return pls::cs::String::concat(cs_left,cs_right); }()));
@@ -129,7 +130,7 @@ if (([&]() -> bool { auto cs_left = v_num3_32383; auto cs_right = pls::cs::cast_
 pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/ui/Canvas.cs:M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32506",([&]() { auto cs_old = v_url_cell->value; auto cs_rhs = v_text_32247; auto cs_value = pls::cs::String::concat(cs_old,cs_rhs); v_url_cell->value = cs_value; return cs_value; }()));
 }
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::cs::String cs_arg0 = v_url_cell->value; pls::kairo::UnityApplication::OpenURL(cs_arg0); }());});
-}}};auto cs_closure=pls::cs::make_ref<cs_closure_749e168bdf49d301>();cs_closure->v_url_cell=v_url_cell;return pls::cs::Delegate<void()>::bind_identity(cs_closure,pls::cs::raw(v_url_cell),std::string("M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082"),[weak=pls::cs::DelegateCapture<cs_closure_749e168bdf49d301>(cs_closure)]()->void{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();target->Invoke();});}()))); bool cs_arg1 = true; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->RunOnUiThread(cs_arg0,cs_arg1); }());});
+}}}};auto cs_closure=pls::cs::make_ref<cs_closure_749e168bdf49d301>();cs_closure->v_url_cell=v_url_cell;return pls::cs::Delegate<void()>::bind_identity(cs_closure,pls::cs::raw(v_url_cell),std::string("M:kairo.unity.ui.Canvas.OpenBrowser(System.String):32082"),[weak=pls::cs::DelegateCapture<cs_closure_749e168bdf49d301>(cs_closure)]()->void{auto target=weak.lock();if(!target)throw pls::cs::NullReferenceException();target->Invoke();});}()))); bool cs_arg1 = true; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->RunOnUiThread(cs_arg0,cs_arg1); }());});
 return true;
 } catch(const pls::cs::Exception& cs_caught_278) {auto cs_exception_278=pls::cs::capture_exception(cs_caught_278);
 if(pls::cs::exception_is(cs_exception_278,"System.Exception")) {{
@@ -139,6 +140,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 }}
 else {throw;} }
 return false;
+}
 }
 }
 }

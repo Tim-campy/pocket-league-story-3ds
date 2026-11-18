@@ -371,3 +371,74 @@ normal não muda: `src/game` regenerado ficou idêntico):
 - constantes `NaN`/infinito: agora `std::numeric_limits` em forma `constexpr`, com os bits do C# (`float.NaN` = 0xFFC00000 → `-quiet_NaN()`);
 - temporários com tipo template (`Ref<...> cs_arg0`) não recebiam sufixo ao subir para o bloco e colidiam;
 - ocultação de nomes do C++: um método declarado na derivada esconde o de mesmo nome da base (`BillingManager::Load(byte[])` escondia `StoreBase::Load(InputStream)`); a chamada a método-membro não virtual passa a nomear a classe que o declara quando alguma derivada tem método de mesmo nome.
+
+## Tipos BeforeFieldInit (decisão de 2026-11-18, item 1)
+
+Regra observada no Unity Mono 2.6.5 (fixture `BfiTiming` em
+`tests/translator/TypeInitTimingFixtures.cs`, check `type-init-translated`):
+para um tipo sem construtor estático declarado, o inicializador roda na
+**entrada** de cada método (ou lambda) cujo IL referencia um campo estático do
+tipo, na ordem da primeira referência no IL, uma vez só:
+
+| Caso | Mono | Tradução (normal e legível) |
+|---|---|---|
+| referência em ramo não executado | inicializa na entrada (`A12`) | igual |
+| três tipos no mesmo método (Second, First, Third) | `CBD` antes do corpo, na ordem do IL | igual |
+| referência dentro de laço | antes da 1ª iteração (`ELLL`) | igual |
+| dois métodos que leem o mesmo tipo, com outro entre eles | entrada do primeiro, uma vez (`oFpoq`) | igual |
+| chamada de método estático do tipo | o chamador não inicializa; a entrada do chamado sim (`cGg`) | igual (guarda na entrada do método estático) |
+| método pequeno chamado só num ramo | sem efeito de inlining: inicializa quando ele roda (`565H6`) | igual |
+| método do próprio tipo sem campo | inicializa o tipo na entrada (`+Jj`) | igual |
+| lambda | na entrada da lambda (`yMz`) | igual |
+
+Resultado completo idêntico nos três: `153:IA12CBD34ELLLoFpoqcGg565H6w+JjyMz`.
+Nenhum caso divergiu do esperado. Tipos com construtor estático explícito
+mantêm o momento exato atual (primeira leitura/escrita).
+
+Implementação: `Translator.EntryInitTypes` (varredura na ordem do IL; numa
+atribuição simples o valor vem antes do campo; lambdas e funções locais à
+parte); construtores incluem os inicializadores de campos de instância e os
+argumentos de `base(...)`/`this(...)`. No legível, a leitura de estático de tipo
+BeforeFieldInit é pura (`InitializedAtRead`). Modo normal: 82 arquivos gerados
+mudaram.
+
+Lambdas de ordem nas três classes da amostra: **118 → 90** (Team 102 → 74,
+TitleForm 12, SponsorData 4). Por motivo: 39 operações binárias, 27 chamadas com
+argumentos ordenados, 22 atribuições usadas como valor, 2 criações de objeto.
+
+`Team.Cal_evaCoatMulti` agora:
+```cpp
+void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<std::int32_t>> data,
+                            pls::cs::Int32 cx, pls::cs::Int32 cy, pls::cs::Array<float> muliti_param) {
+    Map::ensure_initialized();
+
+    pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>> array =
+        pls::cs::Array<pls::cs::Array<pls::cs::Array<std::int32_t>>>{};
+    if ((mode == 0)) {
+        array = Team::PANEL_DIRECT();
+    } else if ((mode == 1)) {
+        array = Team::PANEL_DIRECT_R();
+    }
+    for (pls::cs::Int32 i = 0; i < (array).length(); ++i) {
+        if (muliti_param[i] == 0.0f) {
+            continue;
+        }
+        for (pls::cs::Int32 j = 0; j < (array[i]).length(); ++j) {
+            if (((((cx + array[i][j][0]) >= 0) && ((cx + array[i][j][0]) < Map::MAPCHIP_COAT_WNUM())) &&
+                 ((cy + array[i][j][1]) >= 0)) &&
+                ((cy + array[i][j][1]) < Map::MAPCHIP_COAT_HNUM())) {
+                pls::cs::Int32 num = (cx + array[i][j][0]);
+                pls::cs::Int32 num2 = (cy + array[i][j][1]);
+                data[num2][num] = pls::cs::conv_i32((([&]() -> double {
+                    auto cs_left = static_cast<double>(static_cast<float>(data[num2][num]));
+                    auto cs_right = static_cast<double>(muliti_param[i]);
+                    return (cs_left * cs_right);
+                }())));
+            }
+        }
+    }
+}
+```
+(Antes: duas lambdas a mais, uma em cada comparação com `Map::MAPCHIP_COAT_*NUM()`;
+ver a seção A7.) A lambda que resta multiplica elementos de dois arrays
+diferentes (`data`, `muliti_param`), que podem lançar exceções diferentes.

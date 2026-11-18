@@ -79,6 +79,7 @@ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullR
 std::int32_t cs_e9b3c6f1fee9d739(pls::cs::Ref<cs_fd683372658feff4> cs_this) { cs_init_fd683372658feff4();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.lineup.ui.LineupData.GetRatio",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if ((([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7b5ebddf22953059; }()); return pls::generated::cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }()) || ([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_7033e8b866a8dda2; }()); return pls::generated::cs_8eed6765a32617b7(cs_arg0); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }()))) {
 return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
@@ -109,6 +110,7 @@ if (([&]() -> bool { auto cs_left = v_num_1653; auto cs_right = pls::cs::cast_in
 ([&]() { auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); v_num_1653 = cs_value; return cs_value; }());
 }
 return v_num_1653;
+}
 }
 }
 }

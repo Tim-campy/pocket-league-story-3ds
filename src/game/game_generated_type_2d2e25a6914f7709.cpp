@@ -69,6 +69,7 @@ pls::cs::Ref<cs_2d2e25a6914f7709>& cs_52166bbebe634258(){cs_init_2d2e25a6914f770
 // M:system.friend.ui.FriendData.#ctor
 void cs_7a28af13c1c2f5ac_init(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this) {
 cs_init_2d2e25a6914f7709();
+pls::generated::cs_init_e7d772862db62924();
 cs_this->cs_96e8baf9470c6eef = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x5ull));
 cs_this->cs_4e08203868786b3e = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x30d5" u"\x30ec" u"\x30f3" u"\x30c9" u"\x7533" u"\x8acb" u"\x0020" u"\x304a" u"\x4f4f" u"\x307e" u"\x3044" u"\x5922" u"\x7269" u"\x8a9e" u"",14);}()); return cs_f54ac89fce23e89b(cs_arg0); }());
 cs_this->cs_6bcda45671e82301 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x304a" u"\x4f4f" u"\x307e" u"\x3044" u"\x5922" u"\x7269" u"\x8a9e" u"\x0066" u"\x006f" u"\x0072" u"\x0020" u"\x0041" u"\x006e" u"\x0064" u"\x0072" u"\x006f" u"\x0069" u"\x0064" u"\x3067" u"\x000a" u"\x30d5" u"\x30ec" u"\x30f3" u"\x30c9" u"\x7533" u"\x8acb" u"\x3057" u"\x305f" u"\x3088" u"\x0021" u"\x000a" u"\x627f" u"\x8a8d" u"\x3057" u"\x3066" u"\x306d" u"\x3002" u"",37);}()); return cs_f54ac89fce23e89b(cs_arg0); }());
@@ -547,6 +548,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 void cs_ab27af1b0dd1116f(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this) { cs_init_2d2e25a6914f7709();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendData.RefreshFriendList",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if ((!(([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_2d2e25a6914f7709>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_dae07ea79e855f60(cs_receiver); }())))) {
 return;
@@ -620,6 +622,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 pls::cs::throw_exception(v_ex_11345);
 }}
 else {throw;} }
+}
 }
 }
 }
@@ -710,6 +713,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> bool { auto 
 bool cs_dfcfbfdb98c1e305(pls::cs::Ref<cs_2d2e25a6914f7709> cs_this) { cs_init_2d2e25a6914f7709();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.ui.FriendData.UpdateRandomFriend",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Ref<cs_9465f7541f51c47e> v_friend_11523 = pls::cs::Ref<cs_9465f7541f51c47e>{};
 try {
@@ -723,6 +727,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 else {throw;} }
 ([&]() { auto cs_target = cs_this; auto cs_value = v_friend_11523; pls::game::cs_require(cs_target)->cs_91d5244f0e476cfe = cs_value; return cs_value; }());
 return ([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_91d5244f0e476cfe; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left != cs_right; }());
+}
 }
 }
 }

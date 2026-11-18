@@ -49,6 +49,7 @@ cs_this->cs_ae92969ac71a8af3 = pls::source_allocations::completed("new_array","s
 void cs_919bc150e4142cc1(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_4a8bef2ab48b32d7();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceManagerBase.BeginTouchRegist(kairo.unity.ui.Graphics)",kairo);
+{ cs_init_6517d63c01870958();
 {
 for (std::int32_t v_i_7080 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_7080; auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>>>(cs_6cb933168d711678()); if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_66a816fe45ab90e7(cs_receiver); }());}); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_7080; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_7080 = cs_new; return cs_old; }())) {
 pls::cs::Ref<cs_6517d63c01870958> v_touchOption_7144 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<cs_6517d63c01870958> { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>>>(cs_6cb933168d711678()); std::int32_t cs_arg0 = v_i_7080; if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_4b357a5c06369f9d(cs_receiver,cs_arg0); }());});
@@ -58,6 +59,7 @@ if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = v_touchOption_71
 }
 for (std::int32_t v_num_7286 = ([&]() -> std::int32_t { auto cs_left = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<cs_9326c27a92cfea3a>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a384974a2464779; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_c55367423dbb79a1(cs_receiver); }());}); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::sub_i32(cs_left,cs_right); }()); ([&]() -> bool { auto cs_left = v_num_7286; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left >= cs_right); }()); ([&]() { auto cs_old = v_num_7286; auto cs_new = pls::cs::sub_i32(cs_old,1); v_num_7286 = cs_new; return cs_old; }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<cs_9326c27a92cfea3a> { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<cs_9326c27a92cfea3a>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a384974a2464779; }())); std::int32_t cs_arg0 = v_num_7286; if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_46529d25e14daec6(cs_receiver,cs_arg0); }());})); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_14c25464911dc345(cs_arg0); }());
+}
 }
 }
 }
@@ -103,6 +105,7 @@ for (std::int32_t v_num_829 = ([&]() -> std::int32_t { auto cs_left = pls::diagn
 void cs_c311823b6552fdf7(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this) { cs_init_4a8bef2ab48b32d7();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceManagerBase.DoEvents",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 for (std::int32_t v_i_988 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); ([&]() -> bool { auto cs_left = v_i_988; auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<cs_9326c27a92cfea3a>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a384974a2464779; }())); if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_c55367423dbb79a1(cs_receiver); }());}); return (cs_left < cs_right); }()); ([&]() { auto cs_old = v_i_988; auto cs_new = pls::cs::add_i32(cs_old,1); v_i_988 = cs_new; return cs_old; }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_9326c27a92cfea3a>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<cs_9326c27a92cfea3a> { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<cs_9326c27a92cfea3a>>>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_6a384974a2464779; }())); std::int32_t cs_arg0 = v_i_988; if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_46529d25e14daec6(cs_receiver,cs_arg0); }());})); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->cs_virtual_43e8c5a72fc9d69b(); }());
@@ -210,11 +213,13 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:kairo.unity.surface.SurfaceManagerBase.Draw(kairo.unity.ui.Graphics)
 void cs_a4fa9c8087597dcf(pls::cs::Ref<cs_4a8bef2ab48b32d7> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_4a8bef2ab48b32d7();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.surface.SurfaceManagerBase.Draw(kairo.unity.ui.Graphics)",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 bool v_flag_7654 = ([&]() -> bool { return cs_ff50c908347e45e2(); }());
 std::int32_t v_i_7686 = std::int32_t{};
@@ -281,6 +286,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); float cs_arg0 = static_cast<float>(pls::game::cs_f32(0x42c80000u)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->Scale(cs_arg0); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->ClearRenderRect(); }());});
 });
+}
 }
 }
 }

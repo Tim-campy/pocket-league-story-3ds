@@ -138,6 +138,7 @@ for (std::int32_t v_i_868 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0
 void cs_843876287e794125(pls::cs::Ref<cs_1ab688350081022a> cs_this,pls::cs::Array<std::uint8_t> v_data) { cs_init_1ab688350081022a();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.lineup.ui.LineupManager.LoadLineupList(System.Byte[])",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 try {
 ([&]() { auto cs_value = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::Array<std::uint8_t> cs_arg0 = v_data; return pls::generated::cs_76473a48703be5ba(cs_arg0); }());}); v_data = cs_value; return cs_value; }());
@@ -185,6 +186,7 @@ else {throw;} }
 }
 }
 }
+}
 
 // M:kairo.unity.system.lineup.ui.LineupManager.PutPreferences(System.String,System.Byte[])
 void cs_c8bf4745da1fd956(pls::cs::String v_key,pls::cs::Array<std::uint8_t> v_data) { cs_init_1ab688350081022a();
@@ -204,7 +206,8 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { std::
 void cs_aff45949a4a776ab(pls::cs::Ref<cs_1ab688350081022a> cs_this,std::int32_t v_num) { cs_init_1ab688350081022a();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.lineup.ui.LineupManager.Start(System.Int32)",kairo);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 pls::cs::Ref<cs_b489b0d33bb37bb8> v_instance_3100 = ([&]() -> pls::cs::Ref<cs_b489b0d33bb37bb8> { return cs_3eff1227bb0de063(); }());
 pls::cs::String v_text_3146 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::IApplication>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::IApplication> { return pls::kairo::IApplication::GetCurrentApp(); }());})); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetPackageName(); }());});
 std::int32_t v_num2_3207 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_arg0 = v_text_3146; auto cs_arg1 = char16_t(46); return pls::game::cs_last_index_char1(cs_arg0,cs_arg1); }());});
@@ -372,6 +375,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 ([&]() { auto cs_value = pls::cs::Ref<pls::generated::cs_52158c8b20364c2b>{}; v_jarInflater_3535 = cs_value; return cs_value; }());
 });
+}
 }catch(const pls::cs::ReturnFlow<void>& cs_return){return;}}
 }
 }

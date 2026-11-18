@@ -31,6 +31,7 @@ pls::cs::Ref<cs_ec8ac507fb495e84> cs_f0504e3d15ead28a() { cs_init_ec8ac507fb495e
 
 void cs_f0504e3d15ead28a_init(pls::cs::Ref<cs_ec8ac507fb495e84> cs_this) {
 cs_init_ec8ac507fb495e84();
+pls::generated::cs_init_e7d772862db62924();
 ([&]() { cs_7a28af13c1c2f5ac_init(pls::cs::static_pointer_cast<cs_2d2e25a6914f7709>(cs_this)); }());
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.MyFriend.#ctor",game);
 {
@@ -98,11 +99,13 @@ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullR
 // M:system.friend.MyFriend.GetInstance
 pls::cs::Ref<cs_ec8ac507fb495e84> cs_b3ac47ebcf5c05fb() { cs_init_ec8ac507fb495e84();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.friend.MyFriend.GetInstance",game);
+{ cs_init_2d2e25a6914f7709();
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_52166bbebe634258()); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/friend/MyFriend.cs:M:system.friend.MyFriend.GetInstance:1371",([&]() -> pls::cs::Ref<cs_ec8ac507fb495e84> { return cs_f0504e3d15ead28a(); }())); cs_52166bbebe634258() = cs_value; return cs_value; }());
 }
 return pls::cs::unbox<pls::cs::Ref<cs_ec8ac507fb495e84>>(pls::cs::box(cs_52166bbebe634258()));
+}
 }
 }
 }

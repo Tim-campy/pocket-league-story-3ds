@@ -93,6 +93,36 @@ sealed partial class Lowerer {
     readonly HashSet<string> initializingTypes=new();
     static string TypeInitName(INamedTypeSymbol type)=>"cs_init_"+Hash(Id(type));
     string TypeInitFunction(INamedTypeSymbol type)=>request.external_type_initializers.GetValueOrDefault(Id(type),TypeInitName(type));
+    // BeforeFieldInit (no explicit static constructor in the source): Unity Mono runs the
+    // initializer of such a type when it compiles a method whose IL references one of its
+    // static fields, i.e. at that method's entry, even when the reference is in a branch
+    // that does not run, in the order of first reference in the IL (decision of
+    // 2026-11-18; tests/translator/TypeInitTimingFixtures.cs, BfiTiming). Types with an
+    // explicit static constructor keep the exact moment of the first access.
+    bool BeforeFieldInit(INamedTypeSymbol t)=>t.TypeKind is TypeKind.Class or TypeKind.Struct&&!t.StaticConstructors.Any(c=>!c.IsImplicitlyDeclared);
+    List<INamedTypeSymbol> EntryInitTypes(IMethodSymbol method,IEnumerable<SyntaxNode> roots){
+        var result=new List<INamedTypeSymbol>();var seen=new HashSet<string>(StringComparer.Ordinal);
+        void Note(SyntaxNode n){
+            var semantic=n.SyntaxTree==model.SyntaxTree?model:compilation.GetSemanticModel(n.SyntaxTree);
+            if(semantic.GetSymbolInfo(n).Symbol is not IFieldSymbol{IsStatic:true,IsConst:false} field)return;
+            var t=field.ContainingType.OriginalDefinition;
+            if(t.TypeParameters.Length!=0||t.DeclaringSyntaxReferences.Length==0||!BeforeFieldInit(t))return;
+            if(SymbolEqualityComparer.Default.Equals(t,method.ContainingType.OriginalDefinition))return; // own type: entry guard / constructor
+            if(externalTypes.ContainsKey(Id(t))&&!request.external_type_initializers.ContainsKey(Id(t)))return; // other assembly: only through its exported initializer
+            if(!initializedTypes.ContainsKey(Id(t))&&!request.external_type_initializers.ContainsKey(Id(t)))return; // nothing to run
+            if(seen.Add(Id(t)))result.Add(t);
+        }
+        void Visit(SyntaxNode n){
+            if(n is AnonymousFunctionExpressionSyntax or LocalFunctionStatementSyntax)return; // compiled as their own methods
+            // IL order: the value of a simple assignment is computed before the store.
+            if(n is AssignmentExpressionSyntax{RawKind:(int)SyntaxKind.SimpleAssignmentExpression} assignment){Visit(assignment.Right);Visit(assignment.Left);return;}
+            if(n is IdentifierNameSyntax||n is MemberAccessExpressionSyntax)Note(n);
+            foreach(var child in n.ChildNodes())Visit(child);
+        }
+        foreach(var root in roots)Visit(root);
+        return result;
+    }
+    string EntryInits(IMethodSymbol method,IEnumerable<SyntaxNode> roots)=>String.Concat(EntryInitTypes(method,roots).Select(t=>TypeInitFunction(t)+"();\n"));
     static string OracleStatics(INamedTypeSymbol type)=>"OracleStatics_"+Hash(Id(type));
     string FieldStorage(IFieldSymbol field)=>sharedFields.Contains(Id(field))?"pls::cs::SharedField<"+TypeName(field.Type)+">":TypeName(field.Type);
     IEnumerable<IFieldSymbol> OrderedStaticFields(INamedTypeSymbol type)=>type.GetMembers().OfType<IFieldSymbol>().Where(f=>f.IsStatic&&!f.IsConst&&f.DeclaringSyntaxReferences.Length!=0&&f.DeclaringSyntaxReferences[0].GetSyntax() is VariableDeclaratorSyntax).OrderBy(f=>Array.IndexOf(compilation.SyntaxTrees.ToArray(),f.DeclaringSyntaxReferences[0].SyntaxTree)).ThenBy(f=>f.DeclaringSyntaxReferences[0].Span.Start);
@@ -658,6 +688,7 @@ sealed partial class Lowerer {
             var lambdaResult=Type(symbol.ReturnType,node);
             closureDepth++;string lambdaBody;var savedLambdaRegions=flowRegions;flowRegions=new();
             try{lambdaBody=node.Body is BlockSyntax lambdaBlock?Statement(lambdaBlock,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;flowRegions=savedLambdaRegions;}
+            {var lambdaInits=EntryInits(methods[current],new[]{node.Body});if(lambdaInits.Length!=0)lambdaBody=Splice(lambdaInits.TrimEnd(),lambdaBody);}
             if(outerName=="cs_outer")lambdaBody=System.Text.RegularExpressions.Regex.Replace(lambdaBody,@"\bcs_this\b","cs_outer");
             var lambdaCells=String.Concat(symbol.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,node)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),node)+";"));
             var lambdaKey="std::string(\""+current+":"+node.SpanStart+"\")"+String.Concat(captures.Skip(1).Select(c=>"+std::to_string(reinterpret_cast<std::uintptr_t>(pls::cs::raw("+Local(c)+"_cell)))"));
@@ -678,6 +709,9 @@ sealed partial class Lowerer {
         closureDepth++;string body;var savedRegions=flowRegions;flowRegions=new();
         try{body=node.Body is BlockSyntax block?Statement(block,symbol):"{ "+(symbol.ReturnsVoid?"":"return ")+Converted((ExpressionSyntax)node.Body,symbol.ReturnType)+"; }";}finally{closureDepth--;flowRegions=savedRegions;}
         if(outer=="cs_outer")body=System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this\b","cs_outer");
+        // A lambda is its own method in the IL: BeforeFieldInit types it references are
+        // initialized at its entry.
+        body="{"+EntryInits(methods[current],new[]{node.Body})+body+"}";
         var parameterCells=String.Concat(symbol.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,node)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),node)+";"));
         builder.Append("{"+parameterCells+body+"}};auto cs_closure=pls::cs::make_ref<"+name+">();");
         foreach(var capture in captures)builder.Append("cs_closure->"+Local(capture)+"_cell="+Local(capture)+"_cell;");if(captureThis)builder.Append("cs_closure->"+outer+"=cs_this;");
@@ -1813,6 +1847,8 @@ sealed partial class Lowerer {
             string template=Template(TypeParameters(method));
             var autoStorage=autoBacking==null?null:autoBacking.IsStatic?StaticField(autoBacking,declaration):"cs_this->"+Name(autoBacking);
             var body=hasServicePolicy?ServicePolicyBody(method,servicePolicy,declaration):sourceBlock!=null?Statement(sourceBlock,method):sourceArrow!=null?(method.ReturnsVoid?"{ "+Expr(sourceArrow.Expression)+"; }":"{ return "+Converted(sourceArrow.Expression,method.ReturnType)+"; }"):autoBacking!=null?(method.MethodKind==MethodKind.PropertyGet?"{return "+autoStorage+";}":"{"+autoStorage+"="+Local(method.Parameters.Last())+";}"):"{}";
+            var entryInits=executable==null?"":EntryInits(method,new[]{executable});
+            if(entryInits.Length!=0&&method.MethodKind!=MethodKind.Constructor)body=readable?Splice(entryInits.TrimEnd(),body):"{ "+entryInits+body+"\n}";
             var parameterCells=String.Concat(method.Parameters.Where(p=>capturedVariables.Contains(p)).Select(p=>CellType(p,declaration)+" "+Local(p)+"_cell="+CellAllocation(p,Local(p),declaration)+";\n"));
             if(parameterCells.Length!=0)body="{\n"+parameterCells+body+"\n}";
             if(hoistLocals) {
@@ -1831,6 +1867,13 @@ sealed partial class Lowerer {
                 // A base type is so initialized when a derived constructor calls it, and
                 // an existing instance implies its whole type chain is initialized.
                 if(!RecordStruct(method.ContainingType)&&method.ContainingType.TypeParameters.Length==0&&method.ContainingType.DeclaringSyntaxReferences.Length!=0&&(!externalTypes.ContainsKey(Id(method.ContainingType))||externalGeneratedHelper))init.Append(TypeInitFunction(method.ContainingType)+"();\n");
+                // Then the BeforeFieldInit types the constructor IL references: instance field
+                // initializers (unless this(...) chains), base(...)/this(...) arguments, body.
+                {var ctorRoots=new List<SyntaxNode>();
+                 if(!chainedThis)foreach(var f in method.ContainingType.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst))foreach(var r in f.DeclaringSyntaxReferences)if(r.GetSyntax() is VariableDeclaratorSyntax{Initializer:not null} v)ctorRoots.Add(v.Initializer!.Value);
+                 if(ctor?.Initializer!=null)ctorRoots.Add(ctor.Initializer.ArgumentList);
+                 if(executable!=null)ctorRoots.Add(executable);
+                 init.Append(EntryInits(method,ctorRoots));}
                 foreach(var field in method.ContainingType.GetMembers().OfType<IFieldSymbol>().Where(f=>!f.IsStatic&&!f.IsConst&&!chainedThis)) {
                     if(field.AssociatedSymbol is IPropertySymbol initializedAuto&&(initializedAuto.DeclaringSyntaxReferences[0].GetSyntax() as PropertyDeclarationSyntax)?.Initializer!=null)throw new Unsupported(declaration,"auto-property constructor initializer requires ordered field emission");
                     if(field.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is VariableDeclaratorSyntax f&&f.Initializer!=null) {

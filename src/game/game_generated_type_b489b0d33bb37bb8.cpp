@@ -346,6 +346,7 @@ return ([&]() { auto cs_array = v_array_40273; auto cs_index = pls::cs::cast_int
 void cs_6111a681581cbed5(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectAccessCounter",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if ((!(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_ca174d10ffdcf6e9; }())))) {
 return;
@@ -402,6 +403,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { pls::
 pls::cs::throw_exception(v_exception2_19852);
 }}
 else {throw;} }
+}
 }
 }
 }
@@ -638,7 +640,8 @@ return ([&]() -> pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>
 pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>> cs_45725cf9b86d6361(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_tbname,pls::cs::String v_friendId,pls::cs::String v_get,pls::cs::String v_where,pls::cs::String v_column,pls::cs::String v_top,bool v_self,pls::cs::String v_order) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectGameDataRanking(System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.String)",kairo);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 if (([&]() { auto cs_left = pls::cs::box(v_get); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0066" u"\x0072" u"\x0069" u"\x0065" u"\x006e" u"\x0064" u"\x0069" u"\x0064" u"\x002c" u"\x006e" u"\x0075" u"\x006d" u"\x0062" u"\x0065" u"\x0072" u"\x002c" u"\x0076" u"\x0030" u"",18);}()); v_get = cs_value; return cs_value; }());
 }
@@ -693,6 +696,7 @@ if (([&]() -> bool { auto cs_left = v_num2_30379; auto cs_right = pls::cs::cast_
 });
 }
 throw pls::cs::ReturnFlow<pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>>>{v_array3_29576};
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>>>();}
 }
 }
@@ -713,7 +717,8 @@ return ([&]() -> pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> { auto cs_rec
 pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>> cs_093af82d1ebe2c52(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_tbname,pls::cs::String v_get,pls::cs::String v_where,pls::cs::String v_order,pls::cs::String v_column,std::int64_t v_value,std::int64_t v_low,std::int64_t v_high,pls::cs::String v_count,std::int32_t v_logic) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectGameDataSearch(System.String,System.String,System.String,System.String,System.String,System.Int64,System.Int64,System.Int64,System.String,System.Int32)",kairo);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 if (([&]() { auto cs_left = pls::cs::box(v_get); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_value = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0066" u"\x0072" u"\x0069" u"\x0065" u"\x006e" u"\x0064" u"\x0069" u"\x0064" u"\x002c" u"\x006e" u"\x0075" u"\x006d" u"\x0062" u"\x0065" u"\x0072" u"\x002c" u"\x0076" u"\x0030" u"",18);}()); v_get = cs_value; return cs_value; }());
 }
@@ -776,6 +781,7 @@ if (([&]() -> bool { auto cs_left = v_num2_27951; auto cs_right = pls::cs::cast_
 });
 }
 throw pls::cs::ReturnFlow<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>>{v_array3_27380};
+}
 }catch(const pls::cs::ReturnFlow<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<pls::cs::Array<pls::cs::Ref<cs_b6ad7779caeeb23c>>>();}
 }
 }
@@ -860,7 +866,8 @@ return v_array_32054;
 bool cs_8c83b0e389fd09c4(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_enforce,bool v_retry) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectLogin(System.Boolean,System.Boolean)",kairo);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 pls::cs::Ref<pls::generated::cs_c0fae45144034cf9> v_jLocale_15431 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::generated::cs_c0fae45144034cf9> { return pls::generated::cs_7faa6468ee6a5cd1(); }());});
 pls::cs::Array<pls::cs::String> v_array_15475 = pls::cs::Array<pls::cs::String>{};
 bool v_isRetryEnable_15497 = ([&]() -> bool { return cs_a18d6f92033697cb(); }());
@@ -924,6 +931,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 ([&]() -> pls::cs::Array<std::uint8_t> { pls::cs::String cs_arg0 = pls::cs::String{}; return cs_f1aa1aebdc918786(cs_arg0); }());
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x32ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_f0a4f1a9eae00df8(cs_receiver,cs_arg0); }());
 throw pls::cs::ReturnFlow<bool>{true};
+}
 }catch(const pls::cs::ReturnFlow<bool>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<bool>();}
 }
 }
@@ -944,6 +952,7 @@ return;
 std::int32_t cs_9b4d30ba65e7cbcf(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,std::int32_t v_mode,pls::cs::List<pls::cs::Ref<cs_8e2bf0f8fe011785>> v_paymemtListData,bool v_async) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.ConnectPaymemtMoney(System.Int32,System.Collections.Generic.List{kairo.unity.system.payment.PaymentDataRecord},System.Boolean)",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if ((!(([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_312c009a993a1e26(cs_receiver); }())))) {
 return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));
@@ -1023,6 +1032,7 @@ else {throw;} }
 ([&]() -> void { std::int64_t cs_arg0 = pls::cs::cast_integral<std::int64_t>(std::uint64_t(0x64ull)); cs_26244a61d0d2e16c(cs_arg0); }());
 } while (([&]() -> bool { auto cs_left = v_num2_52338; auto cs_right = v_num_52306; return (cs_left < cs_right); }()));
 return v_result_52355;
+}
 }
 }
 }
@@ -1171,6 +1181,7 @@ return v_array_33151;
 pls::cs::Array<cs_c87dc3d2d0f9440a> cs_7e52a7f62521b1ee(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,bool v_languageOnly,bool v_releaseOnly) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.GetAppList(System.Boolean,System.Boolean)",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if (([&]() -> bool { auto cs_left = (([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_3f3b83b6a44bdc33; }())).length(); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return (cs_left == cs_right); }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_b489b0d33bb37bb8>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_b2a7adc10d3ecb29(cs_receiver); }());
@@ -1184,6 +1195,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<cs_c87dc3d2d0f9440a> { auto cs_receiver = v_list_59234; return cs_receiver.ToArray(); }());});
+}
 }
 }
 }
@@ -1240,11 +1252,13 @@ return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull)
 pls::cs::String cs_6fa713935dfcd76c(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.GetCommonServer",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if (([&]() { auto cs_left = pls::cs::box(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4cd5b2fa578372a4; }())); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 ([&]() { auto cs_target = cs_this; auto cs_value = ((pls::generated::cs_b0827224162a4f93() ? ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0068" u"\x0074" u"\x0074" u"\x0070" u"\x0073" u"\x003a" u"\x002f" u"\x002f" u"\x0061" u"\x0070" u"\x0070" u"\x006c" u"\x0069" u"\x0064" u"\x0065" u"\x0076" u"\x002e" u"\x006b" u"\x0061" u"\x0069" u"\x0072" u"\x006f" u"\x0067" u"\x0061" u"\x006d" u"\x0065" u"\x002e" u"\x006a" u"\x0070" u"\x002f" u"",30);}()) : ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0068" u"\x0074" u"\x0074" u"\x0070" u"\x0073" u"\x003a" u"\x002f" u"\x002f" u"\x0061" u"\x0070" u"\x0070" u"\x006c" u"\x0069" u"\x002e" u"\x006b" u"\x0061" u"\x0069" u"\x0072" u"\x006f" u"\x0067" u"\x0061" u"\x006d" u"\x0065" u"\x002e" u"\x006a" u"\x0070" u"\x002f" u"",27);}()))); pls::game::cs_require(cs_target)->cs_4cd5b2fa578372a4 = cs_value; return cs_value; }());
 }
 return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_4cd5b2fa578372a4; }());
+}
 }
 }
 }
@@ -1295,11 +1309,13 @@ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullR
 pls::cs::String cs_f878e2def0687b14(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.GetPaymentHost",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if (((!(pls::generated::cs_b0827224162a4f93())) && ([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_36d9dd4afd7f06af; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return (cs_left == cs_right); }()))) {
 return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0068" u"\x0074" u"\x0074" u"\x0070" u"\x003a" u"\x002f" u"\x002f" u"\x0076" u"\x0069" u"\x0072" u"\x0074" u"\x0075" u"\x0061" u"\x006c" u"\x0043" u"\x0075" u"\x0072" u"\x0072" u"\x0065" u"\x006e" u"\x0063" u"\x0079" u"\x002e" u"\x006b" u"\x0061" u"\x0069" u"\x0072" u"\x006f" u"\x0067" u"\x0061" u"\x006d" u"\x0065" u"\x002e" u"\x006a" u"\x0070" u"\x002f" u"",36);}());
 }
 return ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0068" u"\x0074" u"\x0074" u"\x0070" u"\x003a" u"\x002f" u"\x002f" u"\x006b" u"\x0061" u"\x0069" u"\x0072" u"\x006f" u"\x0070" u"\x0061" u"\x0072" u"\x006b" u"\x002e" u"\x006b" u"\x0069" u"\x0072" u"\x002e" u"\x006a" u"\x0070" u"\x002f" u"",24);}());
+}
 }
 }
 }
@@ -1577,6 +1593,7 @@ return pls::source_allocations::completed("concat_operator","src/KairoLibrary/ka
 pls::cs::String cs_c9e97c6156727a98(pls::cs::Ref<cs_b489b0d33bb37bb8> cs_this,pls::cs::String v_cgi,pls::cs::Array<std::uint8_t> v_send) { cs_init_b489b0d33bb37bb8();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.system.KairoBase.MakeUrl(System.String,System.Byte[])",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 std::int32_t v_num_37247 = std::int32_t{};
 pls::cs::String v_text_37259 = pls::cs::String{};
@@ -1677,6 +1694,7 @@ if (([&]() -> bool { auto cs_left = ([&]() -> std::int32_t { pls::cs::String cs_
 ([&]() { auto cs_value = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.MakeUrl(System.String,System.Byte[]):40153",([&]() { auto cs_left = pls::source_allocations::completed("concat_operator","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.MakeUrl(System.String,System.Byte[]):40153",([&]() { auto cs_left = v_text4_38614; auto cs_right = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x003f" u"",1);}()); return pls::cs::String::concat(cs_left,cs_right); }())); auto cs_right = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { auto cs_arg0 = v_text3_37779; auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::game::cs_substring1(cs_arg0,cs_arg1); }());}); return pls::cs::String::concat(cs_left,cs_right); }())); v_text4_38614 = cs_value; return cs_value; }());
 }
 return v_text4_38614;
+}
 }
 }
 }

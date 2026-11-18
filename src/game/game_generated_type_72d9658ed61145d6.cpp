@@ -220,6 +220,7 @@ return v_result_67100;
 // M:kairo.unity.util.Language.Init
 void cs_a56548cef82c6906() { pls::generated::cs_init_72d9658ed61145d6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.Init",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if (([&]() { auto cs_left = pls::cs::box(cs_aefbaa4ea6f5261a_value); auto cs_right = pls::cs::box(pls::cs::Array<pls::cs::Array<pls::cs::String>>{}); return cs_left == cs_right; }())) {
 pls::cs::String v_filename_25734 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x006c" u"\x0061" u"\x006e" u"\x0067" u"\x0075" u"\x0061" u"\x0067" u"\x0065" u"\x002e" u"\x0064" u"\x0061" u"\x0074" u"",12);}());
@@ -335,10 +336,12 @@ if ((!(([&]() -> bool { pls::cs::String cs_arg0 = pls::diagnostic::api_call([&](
 }
 }
 }
+}
 
 // M:kairo.unity.util.Language.LoadLanguagePack(System.Byte[])
 void cs_f93cc86620424e6c(pls::cs::Array<std::uint8_t> v_data) { pls::generated::cs_init_72d9658ed61145d6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.LoadLanguagePack(System.Byte[])",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 std::int32_t v_recoveredPdbConstInt32_46651 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));
 pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> v_jarInflater_46694 = pls::cs::Ref<pls::generated::cs_52158c8b20364c2b>{};
@@ -724,6 +727,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:kairo.unity.util.Language.LT(System.String,System.String)
 pls::cs::String cs_334563e946ad4962(pls::cs::String v_text,pls::cs::String v_arg) { pls::generated::cs_init_72d9658ed61145d6();
@@ -737,6 +741,7 @@ return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::
 // M:kairo.unity.util.Language.MakeLangPackTemplate(System.Boolean,System.Int32,System.String@,System.String@)
 void cs_bf98c676cfdc6f32(bool v_japanese,std::int32_t v_version,pls::cs::String& v_file,pls::cs::String& v_data) { pls::generated::cs_init_72d9658ed61145d6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.MakeLangPackTemplate(System.Boolean,System.Int32,System.String@,System.String@)",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::String v_filename_64614 = ((v_japanese ? ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x006c" u"\x0061" u"\x006e" u"\x0067" u"\x0075" u"\x0061" u"\x0067" u"\x0065" u"\x005f" u"\x0070" u"\x0061" u"\x0063" u"\x006b" u"\x005f" u"\x0074" u"\x0065" u"\x006d" u"\x0070" u"\x006c" u"\x0061" u"\x0074" u"\x0065" u"\x005f" u"\x006a" u"\x0061" u"\x002e" u"\x0074" u"\x0078" u"\x0074" u"",29);}()) : ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x006c" u"\x0061" u"\x006e" u"\x0067" u"\x0075" u"\x0061" u"\x0067" u"\x0065" u"\x005f" u"\x0070" u"\x0061" u"\x0063" u"\x006b" u"\x005f" u"\x0074" u"\x0065" u"\x006d" u"\x0070" u"\x006c" u"\x0061" u"\x0074" u"\x0065" u"\x005f" u"\x0065" u"\x006e" u"\x002e" u"\x0074" u"\x0078" u"\x0074" u"",29);}())));
 pls::cs::String v_text_64715 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::Array<std::uint8_t> cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<std::uint8_t> { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull)); bool cs_arg1 = false; pls::cs::String cs_arg2 = v_filename_64614; return pls::kairo::Storage::Read(cs_arg0,cs_arg1,cs_arg2); }());}); return pls::generated::cs_5d8e9e8201c04369(cs_arg0); }());});
@@ -799,11 +804,13 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 }
 }
 }
+}
 
 // M:kairo.unity.util.Language.SetLanguagePack(System.String,System.Byte[],System.Boolean)
 bool cs_1acec610f93846f1(pls::cs::String v_file,pls::cs::Array<std::uint8_t> v_data,bool v_save) { pls::generated::cs_init_72d9658ed61145d6();
 {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.util.Language.SetLanguagePack(System.String,System.Byte[],System.Boolean)",kairo);
-{try{
+{try{ pls::generated::cs_init_e7d772862db62924();
+{
 if (pls::generated::cs_b0827224162a4f93()) {
 if (([&]() { auto cs_left = pls::cs::box(v_file); auto cs_right = pls::cs::Ref<pls::cs::Object>{}; return cs_left == cs_right; }())) {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x0053" u"\x0065" u"\x0074" u"\x004c" u"\x0061" u"\x006e" u"\x0067" u"\x0075" u"\x0061" u"\x0067" u"\x0065" u"\x0050" u"\x0061" u"\x0063" u"\x006b" u"\x005b" u"\x0028" u"\x006e" u"\x0075" u"\x006c" u"\x006c" u"\x0029" u"\x005d" u"",23);}()); auto cs_arg1 = pls::cs::Ref<pls::cs::ExceptionObject>{}; return pls::generated::cs_812090ed79928522(cs_arg0,cs_arg1); }());});
@@ -924,6 +931,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 ([&]() { auto cs_value = pls::cs::Ref<pls::generated::cs_52158c8b20364c2b>{}; v_jarInflater_44193 = cs_value; return cs_value; }());
 });
 throw pls::cs::ReturnFlow<bool>{true};
+}
 }catch(const pls::cs::ReturnFlow<bool>& cs_return){return cs_return.value;}return pls::cs::invalid_return_flow<bool>();}
 }
 }

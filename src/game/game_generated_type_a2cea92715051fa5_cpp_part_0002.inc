@@ -1,4 +1,5 @@
- float cs_arg3 = static_cast<float>(pls::game::cs_f32(0x427c0000u)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->DrawRect(cs_arg0,cs_arg1,cs_arg2,cs_arg3); }());});
+throw pls::cs::NullReferenceException(); cs_receiver->SetColor(cs_arg0); }());});
+pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); float cs_arg0 = static_cast<float>(v_num2_169898); float cs_arg1 = static_cast<float>(v_num3_169904); float cs_arg2 = static_cast<float>(pls::game::cs_f32(0x42f20000u)); float cs_arg3 = static_cast<float>(pls::game::cs_f32(0x427c0000u)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->DrawRect(cs_arg0,cs_arg1,cs_arg2,cs_arg3); }());});
 }
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->PopClip(); }());});
 if (([&]() -> bool { auto cs_left = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_f99225d8bef89680; }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3eull)); return (cs_left == cs_right); }())) {
@@ -89,11 +90,16 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:form.SubForm._draw6(kairo.unity.ui.Graphics)
 void cs_234c3e5564247a35(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_a2cea92715051fa5();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm._draw6(kairo.unity.ui.Graphics)",game);
+{ cs_init_7c0f60cfdd8cf265();
+cs_init_76884ad002dceb7a();
+cs_init_75707aa3f1629c85();
+cs_init_ec7bde62b3c2b35f();
 {
 std::int32_t v_num4_201726 = std::int32_t{};
 std::int32_t v_num_201736 = std::int32_t{};
@@ -958,6 +964,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:form.SubForm.#ctor
 pls::cs::Ref<cs_a2cea92715051fa5> cs_96f4037b01fdf783() { cs_init_a2cea92715051fa5();
@@ -1109,6 +1116,8 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 // M:form.SubForm.Draw_battlePic(kairo.unity.ui.Graphics,System.Int32)
 void cs_fdafb768ddb7a001(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_frame) { cs_init_a2cea92715051fa5();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm.Draw_battlePic(kairo.unity.ui.Graphics,System.Int32)",game);
+{ cs_init_d0b7ac4933bed3ac();
+cs_init_75707aa3f1629c85();
 {
 pls::cs::Ref<cs_e315dac1df3b175d> v_instance_316216 = ([&]() -> pls::cs::Ref<cs_e315dac1df3b175d> { return cs_f32a8bd00f4461ef(); }());
 std::int32_t v_originX_316258 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetOriginX(); }());});
@@ -1262,6 +1271,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:form.SubForm.Draw_btmMsg(kairo.unity.ui.Graphics,System.String,System.Int32,System.Boolean,System.Boolean)
 void cs_facb8fb08736105a(pls::cs::Ref<pls::kairo::Graphics> v_g,pls::cs::String v_str,std::int32_t v_dy,bool v_flgSelect,bool v_flgCursor) { cs_init_a2cea92715051fa5();
@@ -1353,6 +1363,7 @@ pls::cs::Ref<cs_2ffa6f51468590ea> v_instance_331357 = ([&]() -> pls::cs::Ref<cs_
 void cs_aa554c005c7607d0(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_a2cea92715051fa5();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm.Draw_clearPoint(kairo.unity.ui.Graphics)",game);
+{ cs_init_75707aa3f1629c85();
 {
 pls::cs::Ref<pls::kairo::Font> v_font_335332 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::kairo::Font> { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); pls::cs::Ref<pls::kairo::Font> cs_arg0 = pls::cs::Ref<pls::kairo::Font>{}; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->GetFont(cs_arg0); }());});
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ffa6f51468590ea>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_2bb3a4488f925b87; }())); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xdeull)); std::int32_t cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x9bull)); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); pls::cs::String cs_arg4 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\xff78" u"\xff98" u"\xff71" u"\xff8e" u"\xff9f" u"\xff72" u"\xff9d" u"\xff84" u"\x767a" u"\x8868" u"",10);}()); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_e913ec62d66058dc(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4); }());
@@ -1457,6 +1468,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); std::int32_t cs_arg0 = cs_44bd5c2a25e34ffe_value; if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetColor(cs_arg0); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\xff8a" u"\xff72" u"\xff7d" u"\xff7a" u"\xff71" u"\x0020" u"\x0020" u"\x003a" u"",8);}()); float cs_arg1 = static_cast<float>(pls::game::cs_f32(0x42ba0000u)); float cs_arg2 = static_cast<float>(v_num_335492); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->DrawString(cs_arg0,cs_arg1,cs_arg2,cs_arg3); }());});
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); pls::cs::String cs_arg0 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x003c" u"\x0030" u"\x003e" u"\x70b9" u"",4);}()); pls::cs::String cs_arg1 = ([&]() -> pls::cs::String { std::int64_t cs_arg0 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_81a1aa37ff284aa5; }()); return cs_b3583bc7466553cb(cs_arg0); }()); return cs_13c2d0b40b2bbff7(cs_arg0,cs_arg1); }()); float cs_arg1 = static_cast<float>(pls::game::cs_f32(0x43550000u)); float cs_arg2 = static_cast<float>(v_num_335492); std::int32_t cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->DrawString(cs_arg0,cs_arg1,cs_arg2,cs_arg3); }());});
+}
 }
 }
 }
@@ -1666,6 +1678,7 @@ void cs_74a6ba1b0d94d986(pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_s
 void cs_d3cf72b7f32e91b2(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_a2cea92715051fa5();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm.Draw(kairo.unity.ui.Graphics)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 std::int32_t v_num_54125 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_c3b49db8416a329c; }());
 std::int32_t v_num2_54142 = ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_bdfa2342774bf524; }());
@@ -1694,6 +1707,7 @@ pls::cs::throw_exception(v_ex_54546);
 else {throw;} } }, [&]() {
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetOrigin(cs_arg0,cs_arg1); }());});
 });
+}
 }
 }
 }
@@ -1736,6 +1750,7 @@ void cs_60f4f2bf29ade497(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<
 void cs_17f9af26e7edf1f1(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_a2cea92715051fa5();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm.DrawConfig_en(kairo.unity.ui.Graphics)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Array<std::int32_t> v_array_345549 = ([&]() -> pls::cs::Array<std::int32_t> { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(cs_this); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xd2ull)); std::int32_t cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xd2ull)); pls::cs::String cs_arg3 = ([&]() -> pls::cs::String { pls::cs::String cs_arg0 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x8a2d" u"\x5b9a" u"",2);}()); return cs_f37fe52fbf5cb7ca(cs_arg0); }()); std::int32_t cs_arg4 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); std::int32_t cs_arg5 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); std::int32_t cs_arg6 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x27ull)); std::int32_t cs_arg7 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x50ull)); std::int32_t cs_arg8 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_306639bc3bbcbaee(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6,cs_arg7,cs_arg8); }());
 std::int32_t v_num_345627 = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_array = v_array_345549; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull)); return cs_array.get_Item(cs_index); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xaull)); return pls::cs::add_i32(cs_left,cs_right); }());
@@ -1858,11 +1873,13 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:form.SubForm.DrawConfig_jp(kairo.unity.ui.Graphics)
 void cs_2f539071268bcfa0(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_a2cea92715051fa5();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm.DrawConfig_jp(kairo.unity.ui.Graphics)",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 pls::cs::Array<std::int32_t> v_array_340818 = ([&]() -> pls::cs::Array<std::int32_t> { auto cs_receiver = static_cast<pls::cs::Ref<cs_5451b2154f09f4c5>>(cs_this); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xd2ull)); std::int32_t cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xbaull)); pls::cs::String cs_arg3 = ([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x8a2d" u"\x5b9a" u"",2);}()); std::int32_t cs_arg4 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); std::int32_t cs_arg5 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); std::int32_t cs_arg6 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x27ull)); std::int32_t cs_arg7 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x50ull)); std::int32_t cs_arg8 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_306639bc3bbcbaee(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6,cs_arg7,cs_arg8); }());
 std::int32_t v_num_340881 = ([&]() -> std::int32_t { auto cs_left = ([&]() { auto cs_array = v_array_340818; auto cs_index = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7ull)); return cs_array.get_Item(cs_index); }()); auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xaull)); return pls::cs::add_i32(cs_left,cs_right); }());
@@ -1981,6 +1998,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 }
 }
+}
 
 // M:form.SubForm.DrawInputValue(kairo.unity.ui.Graphics,System.Int32,System.Int32,System.Int32,System.Boolean,System.Boolean,System.Int32,System.Int32)
 void cs_0a5194a7933b55c2(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g,std::int32_t v_right,std::int32_t v_top,std::int32_t v_value,bool v_inputMode,bool v_active,std::int32_t v_color,std::int32_t v_fig) { cs_init_a2cea92715051fa5();
@@ -2011,6 +2029,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 void cs_f42e02b73a72e9dc(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<pls::kairo::Graphics> v_g) { cs_init_a2cea92715051fa5();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:form.SubForm.DrawMenu_btmInfo(kairo.unity.ui.Graphics)",game);
+{ cs_init_75707aa3f1629c85();
 {
 std::int32_t v_num3_307283 = std::int32_t{}, v_num_307289 = std::int32_t{};
 ([&]() { auto cs_value = ([&]() { auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); v_num_307289 = cs_value; return cs_value; }()); v_num3_307283 = cs_value; return cs_value; }());
@@ -2094,6 +2113,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 }
 } else if (([&]() -> bool { auto cs_left = v_i_310064; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return (cs_left == cs_right); }())) {
 ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<cs_2ffa6f51468590ea>>(([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_2bb3a4488f925b87; }())); pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = v_g; std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4eull)); std::int64_t cs_arg2 = pls::cs::cast_integral<std::int64_t>(v_fanDispParam_310233); std::int32_t cs_arg3 = ([&]() -> std::int32_t { auto cs_left = v_num7_307314; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xeull)); return pls::cs::sub_i32(cs_left,cs_right); }()); std::int32_t cs_arg4 = ([&]() -> std::int32_t { auto cs_left = v_num2_307320; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); return pls::cs::add_i32(cs_left,cs_right); }()); std::int32_t cs_arg5 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg6 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull)); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_d78f8cf55d7f1e9b(cs_receiver,cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6); }());
+}
 }
 }
 }
@@ -2308,4 +2328,4 @@ void cs_9bf4999fec49f256(pls::cs::Ref<cs_a2cea92715051fa5> cs_this,pls::cs::Ref<
 ([&]() { auto cs_old = v_x; auto cs_rhs = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1cull)); auto cs_value = pls::cs::sub_i32(cs_old,cs_rhs); v_x = cs_value; return cs_value; }());
 ([&]() { auto cs_old = v_y; auto cs_rhs = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); auto cs_value = pls::cs::sub_i32(cs_old,cs_rhs); v_y = cs_value; return cs_value; }());
 pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); std::int32_t cs_arg0 = pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> std::int32_t { std::int32_t cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); std::int32_t cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); return pls::kairo::Graphics::GetColorOfRGB(cs_arg0,cs_arg1,cs_arg2); }());}); if(!cs_receiver)throw pls::cs::NullReferenceException(); cs_receiver->SetColor(cs_arg0); }());});
-pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(v_g); float cs_arg0 = static_cast<float>(([&]() -> std::int32_t { auto cs_left = v_x; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1cull)); return pls::cs::add_i32(cs_left,cs_right); }())); float cs_arg1 = static_cast<float>(([&]() -> std::int32_t { auto cs_left = v_y; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::add_i32(cs_left,cs_right); }())); float cs_arg2 = static_cast<float>(([&]() -> std::int32_t { auto cs_left = ([&]() -> std::int32_t { auto cs_left = v_scaleNum; auto cs_right = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull)); return pls::cs::mul_i32(cs_left,cs_right); }());
+pls::diagnostic::api_call([&]()

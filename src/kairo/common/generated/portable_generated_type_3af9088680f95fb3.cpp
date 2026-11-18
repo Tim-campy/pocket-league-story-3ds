@@ -20,8 +20,10 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> void { auto 
 // M:java.lang.JSystem.CurrentTimeMillis
 std::int64_t cs_55fcf3528750ae31() { cs_init_3af9088680f95fb3();
 {PLS_METHOD_SCOPE("KairoLibrary","M:java.lang.JSystem.CurrentTimeMillis",kairo);
+{ cs_init_66dbad5679f8ab87();
 {
 return pls::cs::conv_i64(((([&]() -> pls::cs::TimeSpan { auto cs_left = pls::cs::DateTime::get_UtcNow(); auto cs_right = cs_fa93015d6ad485b9(); return (cs_left - cs_right); }()))).get_TotalMilliseconds());
+}
 }
 }
 }

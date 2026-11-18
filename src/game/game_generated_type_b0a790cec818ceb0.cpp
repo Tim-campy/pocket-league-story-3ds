@@ -67,6 +67,7 @@ return pls::cs::String{};
 
 // M:kairo.unity.ui.Image.GetPaletteInfo(System.Byte[])
 pls::cs::Array<std::int32_t> cs_63aaf001afdbc743(pls::cs::Array<std::uint8_t> v_data) {PLS_METHOD_SCOPE("KairoLibrary","M:kairo.unity.ui.Image.GetPaletteInfo(System.Byte[])",kairo);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 if (([&]() { auto cs_left = pls::cs::box(v_data); auto cs_right = pls::cs::box(pls::cs::Array<std::uint8_t>{}); return cs_left == cs_right; }())) {
 return pls::cs::Array<std::int32_t>{};
@@ -106,6 +107,7 @@ pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Str
 return pls::cs::Array<std::int32_t>{};
 }
 return pls::cs::Array<std::int32_t>{};
+}
 }
 }
 

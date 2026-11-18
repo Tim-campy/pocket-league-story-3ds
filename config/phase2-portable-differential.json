@@ -780,10 +780,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.632158900029026,
-    "native-compile": 341.5302670999663,
-    "managed-output": 44.27985460002674,
-    "native-output": 61.888423199998215
+    "csharp-compile": 1.651800199993886,
+    "native-compile": 344.7178199000191,
+    "managed-output": 47.589333200012334,
+    "native-output": 58.537688400014304
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -817,7 +817,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.cpp",
-      "sha256": "3e5d417e211acba7136680b19cef1b586dc67a2049dba956abbe36d130cb96c0"
+      "sha256": "cf3ebe08c4d504f166f66c233020ca2dca37a03ede0ae12c33315acefdac535c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.hpp",
@@ -833,7 +833,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.cpp",
-      "sha256": "614ab9b6ee989873f99d713c0740ad4195d173bffe35b3ae619852b926e356e8"
+      "sha256": "36440998da47b112ffb34a2c354933186959d8bcd2761c5ca3690a822401ba00"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.hpp",
@@ -841,7 +841,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.cpp",
-      "sha256": "aa70c6fc68a33bf600b218af99dde4c2549f01ca8da36483050f92526e274301"
+      "sha256": "52785b23833b8f758abc10fbe529eecd9c248e2091ecdc7cec105bad764289d8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.hpp",
@@ -901,7 +901,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.cpp",
-      "sha256": "6376af6117ae4a7a21fe89f4ce63bbb206f4151b476ad5af54b1b98517f345ba"
+      "sha256": "f950c0bc4fdbdbde72e7b30e433a4a91dd027ec91ecd26156fbb09239d320ed4"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.hpp",
@@ -953,7 +953,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.cpp",
-      "sha256": "0b824c4c3fd6abb9828e75b52fa4e193ed298a26acf5f021f624088eed48d9b2"
+      "sha256": "9e9535109f71bc6555bf2de2affb92e339e70b05dbd4b53aa908e24fd3c09bc7"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.hpp",
@@ -985,7 +985,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.cpp",
-      "sha256": "79d75d84029c93dc6b3da667c038131e392cb4170fefb9d5faf64558a3b25833"
+      "sha256": "ddcae0b88f297b6cbb6e02b18e59933fa0ebe9682435cfee51c73cc855c87263"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -1113,7 +1113,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.cpp",
-      "sha256": "96ec5fae5d2006a39bda461e197c9beb1fac9329c15f0e9b1d16ac6fcac8e1bc"
+      "sha256": "156d41262acf9c0855c1b8fb7f2bd9cd12a557eed19d652a31cf974a5915d4d3"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.hpp",
@@ -1221,7 +1221,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.cpp",
-      "sha256": "a5f9d9929a5ea4fd6e9bcb3b5563fddba6bab5ffea8291684af0d9e7d4fe7718"
+      "sha256": "16109a29a0da1d563e6cb508511c5a6dae697abc33e69954bb2e00d573e83b28"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.hpp",
@@ -1273,11 +1273,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "df2ecd8f5d1c6bcc35eaa6dd39df7a6dbac7f1ce7e2b219525b182cf3eef686b"
+    "sha256": "b6ca4933f1921bec2eae6cddc89b4c70306080ecd42e1490f4b3e7ebf6e87f49"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "b4268616d624fc487ad59e38687dc8e788a34a743ba7f9fd703714f9f66ad604"
+    "sha256": "490e12bf2d4324060832dc754c50d5e383e9217abe04389c84e19cc0a9f92890"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -1483,7 +1483,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.cpp",
-      "sha256": "3e5d417e211acba7136680b19cef1b586dc67a2049dba956abbe36d130cb96c0"
+      "sha256": "cf3ebe08c4d504f166f66c233020ca2dca37a03ede0ae12c33315acefdac535c"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_18054fa8aeee43c7.hpp",
@@ -1499,7 +1499,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.cpp",
-      "sha256": "614ab9b6ee989873f99d713c0740ad4195d173bffe35b3ae619852b926e356e8"
+      "sha256": "36440998da47b112ffb34a2c354933186959d8bcd2761c5ca3690a822401ba00"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_1ff3292665c8e0c4.hpp",
@@ -1507,7 +1507,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.cpp",
-      "sha256": "aa70c6fc68a33bf600b218af99dde4c2549f01ca8da36483050f92526e274301"
+      "sha256": "52785b23833b8f758abc10fbe529eecd9c248e2091ecdc7cec105bad764289d8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_3af9088680f95fb3.hpp",
@@ -1567,7 +1567,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.cpp",
-      "sha256": "6376af6117ae4a7a21fe89f4ce63bbb206f4151b476ad5af54b1b98517f345ba"
+      "sha256": "f950c0bc4fdbdbde72e7b30e433a4a91dd027ec91ecd26156fbb09239d320ed4"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_52158c8b20364c2b.hpp",
@@ -1619,7 +1619,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.cpp",
-      "sha256": "0b824c4c3fd6abb9828e75b52fa4e193ed298a26acf5f021f624088eed48d9b2"
+      "sha256": "9e9535109f71bc6555bf2de2affb92e339e70b05dbd4b53aa908e24fd3c09bc7"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_72d9658ed61145d6.hpp",
@@ -1651,7 +1651,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.cpp",
-      "sha256": "79d75d84029c93dc6b3da667c038131e392cb4170fefb9d5faf64558a3b25833"
+      "sha256": "ddcae0b88f297b6cbb6e02b18e59933fa0ebe9682435cfee51c73cc855c87263"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_83a7bc36395d16bd.hpp",
@@ -1779,7 +1779,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.cpp",
-      "sha256": "96ec5fae5d2006a39bda461e197c9beb1fac9329c15f0e9b1d16ac6fcac8e1bc"
+      "sha256": "156d41262acf9c0855c1b8fb7f2bd9cd12a557eed19d652a31cf974a5915d4d3"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_bb652fbb61000386.hpp",
@@ -1887,7 +1887,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.cpp",
-      "sha256": "a5f9d9929a5ea4fd6e9bcb3b5563fddba6bab5ffea8291684af0d9e7d4fe7718"
+      "sha256": "16109a29a0da1d563e6cb508511c5a6dae697abc33e69954bb2e00d573e83b28"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_edf182ae9bfd734d.hpp",

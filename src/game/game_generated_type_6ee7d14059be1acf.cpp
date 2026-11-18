@@ -394,6 +394,7 @@ return ([&]() { auto cs_receiver = cs_this; if(!cs_receiver)throw pls::cs::NullR
 pls::cs::Array<pls::cs::Ref<cs_931908081ea62151>> cs_5ec95513c85ebc20(pls::cs::Ref<cs_6ee7d14059be1acf> cs_this) { cs_init_6ee7d14059be1acf();
 { if(!cs_this)throw pls::cs::NullReferenceException();
 {PLS_METHOD_SCOPE("Assembly-CSharp","M:system.billing.ui.BillingManager.GetSales",game);
+{ pls::generated::cs_init_e7d772862db62924();
 {
 bool v_flag_15158 = ([&]() -> bool { auto cs_receiver = static_cast<pls::cs::Ref<cs_6ee7d14059be1acf>>(cs_this); if(!cs_receiver)throw pls::cs::NullReferenceException(); return cs_receiver->cs_virtual_6e47643190d08935(); }());
 pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> v_vector_15195 = pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.ui.BillingManager.GetSales:15204",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));
@@ -414,6 +415,7 @@ for (std::int32_t v_j_15605 = pls::cs::cast_integral<std::int32_t>(std::uint64_t
 ([&]() { auto cs_target = v_array_15553; auto cs_index = v_j_15605; auto cs_value = pls::cs::unbox<pls::cs::Ref<cs_931908081ea62151>>(pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Ref<pls::cs::Object> { auto cs_receiver = static_cast<pls::cs::Ref<pls::generated::cs_51222df74ac70bab<pls::cs::Ref<pls::cs::Object>>>>(v_vector_15195); std::int32_t cs_arg0 = v_j_15605; if(!cs_receiver)throw pls::cs::NullReferenceException(); return pls::generated::cs_46529d25e14daec6(cs_receiver,cs_arg0); }());}));cs_target.set_Item(cs_index,cs_value);return cs_value;}());
 }
 return v_array_15553;
+}
 }
 }
 }

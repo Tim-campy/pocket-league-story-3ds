@@ -237,6 +237,18 @@ sealed partial class Lowerer {
         return false;
     }
     static string Leaf(string name){var i=name.LastIndexOf("::",StringComparison.Ordinal);return i<0?name:name[(i+2)..];}
+    // Member function name at a call through a pointer. C++ hides every base member of
+    // that name once a derived class declares one (C# does not): when some source class
+    // derived from the declaring type has a method of the same name, the call names the
+    // declaring class (Base::M). Member functions are non-virtual, so this is exact.
+    string MemberLeaf(IMethodSymbol m){
+        var leaf=Leaf(Name(m));
+        if(!readable)return leaf;
+        var owner=m.ContainingType.OriginalDefinition;
+        bool Derives(INamedTypeSymbol t){for(var b=t.BaseType;b!=null;b=b.BaseType)if(SymbolEqualityComparer.Default.Equals(b.OriginalDefinition,owner))return true;return false;}
+        var hidden=methods.Values.Any(o=>o.Name==m.Name&&!SymbolEqualityComparer.Default.Equals(o.OriginalDefinition,m.OriginalDefinition)&&Derives(o.ContainingType.OriginalDefinition));
+        return hidden?ClassName(m.ContainingType)+"::"+leaf:leaf;
+    }
     string ParameterDeclaration(IParameterSymbol p)=>ReadableParameter(p)?ReadableScalar(p.Type)!:ParameterType(p);
     bool TypedScalar(ExpressionSyntax e){
         if(!readable)return false;
@@ -701,7 +713,7 @@ sealed partial class Lowerer {
             if(native?.StartsWith("member:",StringComparison.Ordinal)??false)call="cs_receiver->"+native.Substring(7)+"("+String.Join(",",arguments)+")";
             else if(!baseCall&&(target.IsVirtual||target.IsOverride||target.IsAbstract))call="cs_receiver->"+Slot(target)+"("+String.Join(",",arguments)+")";
             else if(native==null&&VirtualMember(target))call="cs_receiver->"+QualifiedSlot(target)+"("+String.Join(",",arguments)+")";
-            else if(native==null&&MemberMethod(target))call="cs_receiver->"+Leaf(Name(target))+"("+String.Join(",",arguments)+")";
+            else if(native==null&&MemberMethod(target))call="cs_receiver->"+MemberLeaf(target)+"("+String.Join(",",arguments)+")";
             else{arguments.Insert(0,"cs_receiver");call=(native??Name(target))+"("+String.Join(",",arguments)+")";}
         }
         var lambda=capture+"("+parameters+")->"+result+"{"+(target.IsStatic?"":"auto cs_receiver=cs_weak.lock();if(!cs_receiver)throw pls::cs::NullReferenceException();")+(result=="void"?"": "return ")+call+";}";
@@ -1391,7 +1403,7 @@ sealed partial class Lowerer {
         if(native?.StartsWith("member:",StringComparison.Ordinal)??false)return "cs_require("+receiver+")->"+native.Substring(7)+"("+String.Join(",",arguments)+")";
         if(!method.IsStatic&&(method.IsVirtual||method.IsOverride||method.IsAbstract))return "cs_require("+receiver+")->"+Slot(method)+"("+String.Join(",",arguments)+")";
         if(native==null&&VirtualMember(method))return "cs_require("+receiver+")->"+QualifiedSlot(method)+"("+String.Join(",",arguments)+")";
-        if(native==null&&MemberMethod(method))return "cs_require("+receiver+")->"+Leaf(Name(method))+"("+String.Join(",",arguments)+")";
+        if(native==null&&MemberMethod(method))return "cs_require("+receiver+")->"+MemberLeaf(method)+"("+String.Join(",",arguments)+")";
         return (native??Name(method))+"("+String.Join(",",method.IsStatic?arguments:new[]{receiver}.Concat(arguments))+")";
     }
     string CanvasSourceBridge(IMethodSymbol method,List<ExpressionSyntax> args,InvocationExpressionSyntax site,string operation) {
@@ -1479,7 +1491,7 @@ sealed partial class Lowerer {
         if(nativeMember)callee="cs_receiver->"+nativeCallee!.Substring("member:".Length);
         if(virtualCall)callee="cs_receiver->"+Slot(method);
         if(readable&&!expanded&&argTexts.Count==method.Parameters.Length&&ReadableCall(method,args.Take(fixedCount).ToList(),argTexts,site,receiver,receiverNode,nativeCallee,nativeMember,virtualCall,callee) is string direct)return direct;
-        if(!virtualCall&&receiver!=null&&!nativeMember&&nativeCallee==null&&MemberMethod(method))callee="cs_receiver->"+Leaf(callee);
+        if(!virtualCall&&receiver!=null&&!nativeMember&&nativeCallee==null&&MemberMethod(method))callee="cs_receiver->"+MemberLeaf(method);
         if(!virtualCall&&receiver!=null&&!nativeMember&&nativeCallee==null&&VirtualMember(method))callee="cs_receiver->"+QualifiedSlot(method);
         b.Append(result=="void"?"":"return ");b.Append(callee+"("+String.Join(",",values)+"); }())");return b.ToString();
     }

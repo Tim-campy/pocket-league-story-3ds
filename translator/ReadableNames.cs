@@ -53,7 +53,8 @@ sealed partial class Lowerer {
     string ReadableConstantValue(IFieldSymbol field){
         if(field.ConstantValue is bool b)return b?"true":"false";
         var node=field.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax() is Microsoft.CodeAnalysis.CSharp.Syntax.VariableDeclaratorSyntax declarator&&declarator.Initializer!=null?declarator.Initializer.Value:(SyntaxNode?)null;
-        return ReadableConstant(field.ConstantValue!,field.Type,node!)??Convert.ToString(field.ConstantValue,System.Globalization.CultureInfo.InvariantCulture)!;
+        // NaN and the infinities have no literal: the normal-mode expression (constexpr).
+        return ReadableConstant(field.ConstantValue!,field.Type,node!)??Constant(field.ConstantValue,field.Type,node!);
     }
 
     // ---------------------------------------------------------------- identifiers
@@ -131,16 +132,32 @@ sealed partial class Lowerer {
 
     // ---------------------------------------------------------------- constants
     string? ReadableConstant(object value,ITypeSymbol? type,SyntaxNode node){
-        if(type is INamedTypeSymbol{TypeKind:TypeKind.Enum} enumeration){Type(type,node);return ReadableConstant(value,enumeration.EnumUnderlyingType,node)??Constant(value,enumeration.EnumUnderlyingType,node);}
+        if(type is INamedTypeSymbol{TypeKind:TypeKind.Enum} enumeration){
+            var enumType=Type(type,node);var number=ReadableConstant(value,enumeration.EnumUnderlyingType,node)??Constant(value,enumeration.EnumUnderlyingType,node);
+            // A game enum is its underlying integer in C++; a platform enum is an enum
+            // class (Image::Format, AppEventType) and needs the explicit conversion.
+            return enumType.StartsWith("std::",StringComparison.Ordinal)||enumType.StartsWith("pls::cs::Int",StringComparison.Ordinal)?number:"static_cast<"+enumType+">("+number+")";
+        }
         if(value is string text)return "literal("+Utf16Literal(text)+")"+TextComment(text);
         if(value is char ch)return ch>=32&&ch<127?"u'"+(ch is '\'' or '\\'?"\\"+ch:ch.ToString())+"'":null;
         if(value is float f){
-            if(!float.IsFinite(f))return null;var r=f.ToString("R",CultureInfo.InvariantCulture);
+            if(!float.IsFinite(f)){
+                // constexpr spellings with the exact C# bits (float.NaN is 0xFFC00000).
+                var fbits=unchecked((uint)BitConverter.SingleToInt32Bits(f));
+                return float.IsPositiveInfinity(f)?"std::numeric_limits<float>::infinity()":float.IsNegativeInfinity(f)?"-std::numeric_limits<float>::infinity()"
+                    :fbits==0x7FC00000u?"std::numeric_limits<float>::quiet_NaN()":fbits==0xFFC00000u?"-std::numeric_limits<float>::quiet_NaN()":null;
+            }
+            var r=f.ToString("R",CultureInfo.InvariantCulture);
             if(BitConverter.SingleToInt32Bits(float.Parse(r,CultureInfo.InvariantCulture))!=BitConverter.SingleToInt32Bits(f))return null;
             return (r.Contains('.')||r.Contains('E')?r:r+".0")+"f";
         }
         if(value is double d){
-            if(!double.IsFinite(d))return null;var r=d.ToString("R",CultureInfo.InvariantCulture);
+            if(!double.IsFinite(d)){
+                var dbits=unchecked((ulong)BitConverter.DoubleToInt64Bits(d));
+                return double.IsPositiveInfinity(d)?"std::numeric_limits<double>::infinity()":double.IsNegativeInfinity(d)?"-std::numeric_limits<double>::infinity()"
+                    :dbits==0x7FF8000000000000ul?"std::numeric_limits<double>::quiet_NaN()":dbits==0xFFF8000000000000ul?"-std::numeric_limits<double>::quiet_NaN()":null;
+            }
+            var r=d.ToString("R",CultureInfo.InvariantCulture);
             if(BitConverter.DoubleToInt64Bits(double.Parse(r,CultureInfo.InvariantCulture))!=BitConverter.DoubleToInt64Bits(d))return null;
             return r.Contains('.')||r.Contains('E')?r:r+".0";
         }
@@ -476,8 +493,8 @@ sealed partial class Lowerer {
             // on another receiver, the null check is part of the call after the arguments.
             // Qualified member call only from a member function (not inside a closure, not
             // from a method that still has the explicit receiver `self`).
-            if(thisReceiver)return (closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller)?"cs_this->"+Leaf(callee):callee)+"("+String.Join(", ",values)+")";
-            return Postfix(target)+"->"+Leaf(callee)+"("+String.Join(", ",values)+")";
+            if(thisReceiver)return (closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller)?"cs_this->"+MemberLeaf(method):callee)+"("+String.Join(", ",values)+")";
+            return Postfix(target)+"->"+MemberLeaf(method)+"("+String.Join(", ",values)+")";
         }
         if(nativeMember)return Postfix(target)+"->"+nativeCallee!.Substring("member:".Length)+"("+String.Join(", ",values)+")";
         values.Insert(0,target);
@@ -539,7 +556,7 @@ sealed partial class Lowerer {
         var value=tail[6..^1].Trim();var prefix=body[..at];
         if(value.Length==0||prefix.Trim().Length==0)return null;
         var suffix="_"+(++hoistCounter);
-        var declaredNames=System.Text.RegularExpressions.Regex.Matches(prefix,@"(?<![>.:]\s*)\b(cs_\w+)\s*=(?!=)").Select(m=>m.Groups[1].Value).Where(n=>n!="cs_this"&&!System.Text.RegularExpressions.Regex.IsMatch(n,"^cs_[0-9a-f]{16}")).Distinct().ToList();
+        var declaredNames=System.Text.RegularExpressions.Regex.Matches(prefix,@"(?<!(?:->|\.|::)\s*)\b(cs_\w+)\s*=(?!=)").Select(m=>m.Groups[1].Value).Where(n=>n!="cs_this"&&!System.Text.RegularExpressions.Regex.IsMatch(n,"^cs_[0-9a-f]{16}")).Distinct().ToList();
         string Rename(string s){foreach(var n in declaredNames)s=System.Text.RegularExpressions.Regex.Replace(s,@"\b"+n+@"\b",n+suffix);return s;}
         return (Rename(prefix).Trim()+"\n",Rename(value));
     }

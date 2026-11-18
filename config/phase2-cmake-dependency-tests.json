@@ -17,13 +17,13 @@
       "dependencies": 1,
       "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\cmake-dependency-tests\\source\\own_value.hpp",
       "header_sha256": "ba7bdb4e92982adb542a97fb7312daa91ddf6716598f633e45c22a87188a6757",
-      "ninja_stdout_sha256": "dbcfe2a187e7d69d0e647a2d53ac002789e6dcff1a4d015fb9618cb3b02c3477"
+      "ninja_stdout_sha256": "745fa03cc5d5f047073b563ce23bfbe7f76c7edb6225205c47c725b4f7aabe6f"
     }
   },
   "inputs": {
     "tools/test_cmake_dependencies.py": "2167441188fa91b7ba8bad582e5c1f3f85a2286fa2920d0f8421cacc540b66a3",
     "tools/pc_compiler.py": "9872945067b5bf82684c895a86b2de3fccee3c4901e7b97404568c3bd8e35096",
-    "CMakeLists.txt": "b1f93d98f613198f1905b46a0e78885c106c35c9ddc51d2041220cc8fe17f0d1",
+    "CMakeLists.txt": "3ffa8680b03adf2d040bf7f413a31def5bb332d8e1ac62f3d138389b4ec28bfe",
     "tools/build_pc.py": "9dc93648a8e3bb02523849254444cdc00d53467b897afc9d6cb5f8caa7425240"
   },
   "game_boot": false,

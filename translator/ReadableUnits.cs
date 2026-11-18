@@ -203,7 +203,8 @@ sealed partial class Lowerer {
             members.UnionWith(FieldNamesOf(t));
             foreach(var e in visibleSlots.GetValueOrDefault(Id(t))??new())members.Add(SlotName(e.key));
             foreach(var b in Chain(t)){
-                injected[typeNames[Id(b)]]=Key(TypePath(b));
+                // The class's own injected name hides a base's of the same name (C++).
+                injected.TryAdd(typeNames[Id(b)],Key(TypePath(b)));
                 foreach(var token in r.Tokens.Values.Where(n=>n.Kind==RKind.Member&&n.ClassKey==Key(TypePath(b))))members.Add(token.Leaf);
                 var baseType=b.BaseType;if(baseType!=null&&!IsStruct(baseType.OriginalDefinition)){var native=NativeClass(baseType);var leaf=native.Split("::").Last().Split('<')[0];if(r.Tokens.TryGetValue(leaf,out var baseName))leaf=baseName.Leaf;injected.TryAdd(leaf,"external:"+native);}
             }

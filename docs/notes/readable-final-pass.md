@@ -350,3 +350,24 @@ escreve.
   (`Graphics::DrawStringBold(cs_receiver, cs_arg0, ...)`).
 - Campos, elementos de array e retornos de método continuam com os tipos comuns
   (`float`, `std::int32_t`); expressões com eles ainda usam `static_cast<double>`.
+
+## C6b — jogo inteiro em modo legível (estado em 2026-11-18)
+
+| Etapa | Estado |
+|---|---|
+| 1. Compilar e linkar no PC | **Feito.** `python tools/build_readable_pc.py` (depois de `translator/readable.py sample`) compila as 401 unidades do jogo e as 121 da KairoLibrary portável legíveis e linka `pc_game.exe` (7,2 MB). O CMake ganhou `PLS_GAME_SOURCE_DIR` e `PLS_PORTABLE_GENERATED_DIR` (padrões iguais aos de antes). |
+| 2. Executar sob roteiros com salvaguarda e estresse moderado do coletor | **Não feito.** O executor de roteiros, a salvaguarda e o isolamento de saves só existem no build de diagnóstico, que hoje aceita apenas o snapshot do código canônico (`src/game`, conferido por hash contra `config/phase2-game-translation.json`). Falta uma variante de diagnóstico legível: o emissor manter `PLS_METHOD_SCOPE`/`api_call` no modo legível sob uma opção privada, `diagnostic_snapshot.py` aceitar a árvore legível como variante sem promoção de cobertura (como `candidate_generation`) e `build_pc.py` validar essa procedência. O executável legível não foi rodado fora do diagnóstico porque gravaria o save em `%APPDATA%`, fora de `build/`. |
+| 3. Verificação completa com o jogo legível | **Não feito** (depende de 2 e de o legível passar a ser a árvore verificada). |
+| 4. Build ARM e benchmark para o New 3DS | **Não feito** (depende de 2). |
+
+Defeitos do emissor legível que só apareceram ao compilar o jogo inteiro
+(todos corrigidos; diferencial legível 1.715/1.715 depois de cada um; o modo
+normal não muda: `src/game` regenerado ficou idêntico):
+
+- ordem dos includes: `generated/...` achava a árvore canônica antes da legível;
+- constantes de enum da plataforma (`enum class`: `Image::Format`, `AppEventType`, `DateTimeKind`) sem a conversão explícita;
+- bootstrap (`translator/bootstrap_source.py`): lia o relatório canônico da KairoLibrary, substituía o cabeçalho geral por includes com hash e chamava métodos de instância com o objeto como argumento (agora `cs::nonnull(obj)->M(...)`);
+- nome injetado de classe: dentro de `panel::MainPanel`, `MainPanel` designa a própria classe (C++), não a base `kfw::panel::MainPanel`;
+- constantes `NaN`/infinito: agora `std::numeric_limits` em forma `constexpr`, com os bits do C# (`float.NaN` = 0xFFC00000 → `-quiet_NaN()`);
+- temporários com tipo template (`Ref<...> cs_arg0`) não recebiam sufixo ao subir para o bloco e colidiam;
+- ocultação de nomes do C++: um método declarado na derivada esconde o de mesmo nome da base (`BillingManager::Load(byte[])` escondia `StoreBase::Load(InputStream)`); a chamada a método-membro não virtual passa a nomear a classe que o declara quando alguma derivada tem método de mesmo nome.

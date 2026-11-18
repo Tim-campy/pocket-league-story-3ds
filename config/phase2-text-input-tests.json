@@ -8,7 +8,7 @@
     "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
-    "CMakeLists.txt": "b1f93d98f613198f1905b46a0e78885c106c35c9ddc51d2041220cc8fe17f0d1",
+    "CMakeLists.txt": "3ffa8680b03adf2d040bf7f413a31def5bb332d8e1ac62f3d138389b4ec28bfe",
     "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
     "src/kairo/api/asset_reader.hpp": "97ff48a508b9629afcea68ab9ccfdae4a5ab093860bc94db476b39c3458b2c84",
     "src/kairo/api/bootstrap.hpp": "b0afa8c3d9f01a277ee8af094e0b7352208936759ec7c1a2f8489eaac8ef4970",
@@ -255,7 +255,7 @@
   },
   "native_executable": {
     "path": "build/pc/text_input_test.exe",
-    "sha256": "789898ce60087a85ebb848450e1d0950691ce9634af4330ffbdc13b4c44109b7"
+    "sha256": "fc6e538e69b0ef9c97e77ce0b69ca24de0a646806a64112639591abf669e77ea"
   },
   "verified_boundary_ids": [],
   "original_binaries_executed": false,

@@ -6,19 +6,19 @@
     {
       "fixture": "offscreen_test",
       "assertions": 23,
-      "executable_sha256": "4c6a0c4f1f86c07255ea230a3ea442f819c3b8206073180ba8da3a935ad80ebd"
+      "executable_sha256": "1bc451055b53e0f7e953a0cc2e4eefb555613c05c410c1f406e71eb34ab7e4f2"
     },
     {
       "fixture": "mesh_test",
       "assertions": 15,
-      "executable_sha256": "c9bc915e48c01ddca41b481f7d7c39afdbdbcdd0ed75cdef6645dc2c8b1834b5"
+      "executable_sha256": "8f543c3795454f90f5eff49656b943f87593edd9867d12c5ad38640ab0ac3c41"
     }
   ],
   "inputs_sha256": {
     "build/generated/mono-collation/mono_character_tables.inc": "db431ed8c2709a4d68fddf91eff64f9352f13d3e5796caa8ff01f50b857bce3a",
     "build/generated/mono-collation/mono_collation_tables.inc": "43d5184ceab146ed35d6b9717e227d30f158c05d3c21599f912c65f5b5303ee8",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
-    "CMakeLists.txt": "b1f93d98f613198f1905b46a0e78885c106c35c9ddc51d2041220cc8fe17f0d1",
+    "CMakeLists.txt": "3ffa8680b03adf2d040bf7f413a31def5bb332d8e1ac62f3d138389b4ec28bfe",
     "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
     "src/kairo/api/asset_reader.hpp": "97ff48a508b9629afcea68ab9ccfdae4a5ab093860bc94db476b39c3458b2c84",
     "src/kairo/api/bootstrap.hpp": "b0afa8c3d9f01a277ee8af094e0b7352208936759ec7c1a2f8489eaac8ef4970",

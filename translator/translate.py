@@ -531,7 +531,7 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         oracle.unlink(missing_ok=True)
         (folder/'Assembly-CSharp-source-oracle.cs').unlink(missing_ok=True)
     elif oracle.exists() and not args.readable:shutil.move(str(oracle),folder/(args.assembly+'-source-oracle.cs'))
-    if bootstrap_adapter:report['bootstrap_bindings']=bootstrap_adapter.emit(output,report,portable)
+    if bootstrap_adapter:report['bootstrap_bindings']=bootstrap_adapter.emit(output,report,readable_portable if args.readable else portable)
     if args.diagnostic_defer_capture:
         from diagnostic_leaves import package,CAPTURE
         callers=package(output)

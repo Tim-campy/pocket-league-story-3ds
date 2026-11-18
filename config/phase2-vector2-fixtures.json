@@ -60,10 +60,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.2739659000071697,
-    "native-compile": 37.731004900007974,
-    "managed-output": 0.7989365000394173,
-    "native-output": 0.31828359997598454
+    "csharp-compile": 0.26280369999585673,
+    "native-compile": 37.72454150003614,
+    "managed-output": 0.7749931000289507,
+    "native-output": 0.3192995999706909
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -117,11 +117,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/vector-value-differential/Harness.exe",
-    "sha256": "7f4d8fafee3dc4c34b04167b7538e8679881a57dc9261353a59ec953f6a93658"
+    "sha256": "30abef5969c88433e79344081c0e4b73fc78a98e63d73227d5b7121268812869"
   },
   "source_oracle_executable": {
     "path": "build/translator/vector-value-differential/Harness-managed.exe",
-    "sha256": "eac7b5a5c157b5026f493ab5a1bcc491bc11b4a1c964a10a2590fbecc5c007ef"
+    "sha256": "0449fdfa5b24965018a353a6466c39d227da47d0c4478294933e2c30ec8c8b30"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -785,13 +785,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "eea957c2430cf624b519507de7db16bb9424ea8e5c6f960110465300d6519ed1",
+    "translator_source_sha256": "f6b6cc4391e1c6b65dd49b1fadcf36cce2e469d2fd10044fbfebfaf8f9033c36",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
-      "0118f596a83b3da3cfd03a0986042d12f60e103f786dae11b76790fe25ee7f76",
-      "e8b8b4b77cd1ccc05c5180c9f1339eae860a450a3359ccc64c7b9f3804848373"
+      "54383c25ea72630a903c0f1c5e5abdddd16db02090b996f07651090b648aa4d6",
+      "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
-    "driver_sha256": "5c3705cf873216cd5df961363a02c8b02d32745619b52038f3c8a3c74c1e7916"
+    "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"
   },
   "runner_sha256": "33533ba308a4fe2c2992d9f4b7d5854a7bcd60383c282a9512056cde0854f6c0",
   "fixture_sha256": "036a4ffd5b9993a5d96b6db03444a247325238e0948ec4a872079d5886e84f57",

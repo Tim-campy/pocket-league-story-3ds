@@ -133,6 +133,10 @@ struct Team : pls::cs::Object {
     static constexpr std::int32_t CH_DATA_END = 6;
     static constexpr float w_coatEvaSum = 0.7f;
     static constexpr float w_ballLine = 0.3f;
+    void SetPositionKickOff();
+
+    void SetPositionThrowIn();
+
     static void ensure_initialized();
 
     static pls::cs::Array<std::int32_t>& AMEFTO_FRECT_GOALZ();
@@ -280,10 +284,6 @@ struct Team : pls::cs::Object {
     void Amefto_start();
 
     void Update_formationRect2();
-
-    void SetPositionKickOff();
-
-    void SetPositionThrowIn();
 
     void SetPositionGoalKick();
 

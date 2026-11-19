@@ -176,6 +176,10 @@ sealed partial class Lowerer {
                     var group=emitted.Keys.Select(id=>methods[id]).Where(o=>SymbolEqualityComparer.Default.Equals(o.ContainingType.OriginalDefinition,t)&&o.Name==m.Name&&o.MethodKind==m.MethodKind&&CppArity(o)==arity)
                         .OrderBy(TreeOf,StringComparer.Ordinal).ThenBy(Position).ThenBy(o=>Id(o),StringComparer.Ordinal).ToList();
                     if(group.Count>1&&!SymbolEqualityComparer.Default.Equals(group[0],m))stem+=TypeSuffix(m,group);
+                    // C# `new static M(...)` hiding an inherited instance M: C++ forbids a static
+                    // member with the signature of a base virtual (and hides by name anyway), so
+                    // the static one is named MStatic (LanguageForm.OnTouchEvent).
+                    if(m.IsStatic){for(var b=t.BaseType;b!=null;b=b.BaseType)if(b.GetMembers(m.Name).OfType<IMethodSymbol>().Any(o=>!o.IsStatic)){stem+="Static";break;}}
                 }
                 var name=Assign(stem,arity,constructor);
                 r.Tokens[Name(m)]=Make(name);

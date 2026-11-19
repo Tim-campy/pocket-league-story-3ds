@@ -502,3 +502,28 @@ portável, 0 problemas (campos de referência × rastreados × estáticos × ra�
 O teste foi corrigido para o código inteiro: declarações quebradas em várias
 linhas, coleções gerenciadas (`List`, `Dictionary`, `Stack`…) como referência,
 `SharedField<T>` só quando `T` é referência, e definições em `_templates.hpp`.
+
+## C6b etapas 3 e 4 — ARM legível e benchmark (2026-11-19)
+
+`python tools/build_arm11_null.py --apk APK --readable build/c6b-readable-diag-2 --output build/<nova>`
+(o CMake do ARM ganhou `PLS_PORTABLE_GENERATED_DIR`; padrão inalterado). Um
+defeito só apareceu com o GCC do devkitARM (o MSVC aceitou): um `new static`
+do C# (`LanguageForm.OnTouchEvent`) com a assinatura de um virtual herdado; o
+estático passa a se chamar `OnTouchEventStatic` (diferencial legível 1.715/1.715).
+
+| ARM (Release, O2, uma tarefa) | legível | canônico |
+|---|---|---|
+| `.3dsx` | 7.507.476 B | 10.786.024 B |
+| código (`text`) | 7.385.048 B | 10.562.052 B |
+| dados + bss | 12.152 + 65.360 B | 12.160 + 79.760 B |
+| compilação | 2.199 s | 2.693 s |
+
+O legível tem 30 % menos código e compila 18 % mais rápido no ARM. PC Release:
+`pc_game.exe` legível 7.196.160 B (o canônico não foi medido pelo mesmo
+método nesta rodada: `UNKNOWN`).
+
+Azahar (só boot e conclusão; o emulador não mede a velocidade do aparelho):
+menu New 3DS, partida New 3DS e menu Old 3DS concluídos sem exceção.
+
+Pasta do cartão: `build/c6b-sd-readable/` (`3ds/` e `pls-benchmark/`, 48 MB,
+cenário `suite`), `pls-benchmark.3dsx` SHA-256 `dec1fa98c3f0f282b79420847fa3ad84d85bf0fc3feef7360a11c4fd0ab5b6f3`.

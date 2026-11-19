@@ -121,6 +121,9 @@ início. Um script novo que compile C++/C# deve chamar `environment()` ou
 | Diferencial do modo legível | `python translator/readable.py lowering` | ~4 min; fixtures de rebaixamento emitidas legíveis contra o Mono (1.715) |
 | Tipos numéricos legíveis (C1) | `python tools/test_readable_numeric.py` | segundos; `Int32`/`Single`/`FloatEval` (wrap, exceções, estreitamento); a regressão ARM de ponto flutuante (`tools/test_arm_float_model.py`) também roda em modo legível |
 | Jogo inteiro legível no PC (C6b, só compilar) | `python tools/build_readable_pc.py` | depois de `translator/readable.py sample`; grava `build/c6b-pc-release/`; não executa (o save iria para `%APPDATA%`) |
+| Jogo legível com diagnóstico (C6b) | `python translator/readable.py diagnostic --original-managed MANAGED --output build/<nova>` e `python tools/build_pc.py ... --readable-diagnostic build/<nova>` | mesmos roteiros, salvaguarda, estresse e saves isolados; histórico próprio `build/c6b-readable-attempts.json` (nunca promove o livro-razão) |
+| Conjunto de roteiros num build (C6b) | `python tools/run_readable_routes.py --apk APK --readable build/<diag>` ou `--canonical-snapshot build/<snapshot>`; depois `python tools/compare_route_sets.py` | ~3 h por build com estresse; `build/c6b-route-set-*.json`, `build/c6b-route-compare.json` |
+| ARM legível | `python tools/build_arm11_null.py --apk APK --readable build/<diag> --output build/<nova>` | ~37 min; depois `prepare_arm11_sd.py` como no canônico |
 | Simbolizar pilha ARM | `arm-none-eabi-addr2line -f -C -i -e <elf> <endereços>` | em `C:/devkitPro/devkitARM/bin` |
 
 Nomes do C++ gerado são hashes (`cs_<hash>`); para achar o método original,

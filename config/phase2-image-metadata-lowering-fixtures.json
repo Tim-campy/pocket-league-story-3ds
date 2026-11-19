@@ -30,10 +30,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.23675089998869225,
-    "native-compile": 49.4216912999982,
-    "managed-output": 0.4696951999794692,
-    "native-output": 0.3391882000141777
+    "csharp-compile": 0.22797150001861155,
+    "native-compile": 49.50095749995671,
+    "managed-output": 0.40819300001021475,
+    "native-output": 0.3535133999539539
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -111,11 +111,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/image-metadata-differential/Harness.exe",
-    "sha256": "d76210b22063da0aa3b1794e2de30f469dc6a3c8967f3b1b6ace27cede8c29ae"
+    "sha256": "987653f04d5ed0dca8371234c1e2591620d4922ec0a1d5a92f33bed7fe60272e"
   },
   "source_oracle_executable": {
     "path": "build/translator/image-metadata-differential/Harness-managed.exe",
-    "sha256": "cfd372277247043b7ccc8477d9497762bb309d3ef4680d5c6de39231b661a1fb"
+    "sha256": "8b15fc744bc21fbc7d9bcd2bb1f585ab1d7c943967523439551d30c93890b233"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -803,13 +803,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "623059149ee5ee45389df546ebc572163b9e8614b41aa474ca6733c2260f9604",
+    "translator_source_sha256": "4c566aad98d949371df50a94d9159305fb024677052ce0bfe01b6c21bab39932",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
       "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
       "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
-    "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"
+    "driver_sha256": "653bcd3c6bd79682cc28302b0a0a49ab2c3d26eb5275c64bdc01a4b6780a55d4"
   },
   "runner_sha256": "51c1e119bbe180b17b83c51338ead4ae0dec35dec1732421074c965371afebae",
   "fixture_sha256": "316ecdbabe7334be75fba23f52d4df4da0a115b116ecffcfb965f2e882ba06e9",

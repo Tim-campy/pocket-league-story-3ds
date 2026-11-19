@@ -21,7 +21,23 @@ import sys
 import unittest
 
 ROOT = Path(__file__).resolve().parents[2]
-REFERENCE_TYPE = re.compile(r'^pls::cs::(Ref|String|Array|Delegate|SharedField)\b')
+# Managed references: object pointers, strings, arrays, delegates and the managed
+# collection classes (C# reference types held through a pointer). SharedField<T>
+# (thread-shared field wrapper) holds a reference only when T does.
+_MANAGED = re.compile(r'^pls::cs::(Ref|String|Array|Delegate|List|Dictionary|HashSet|Queue|Stack|LinkedList|SortedList|SortedDictionary|Hashtable|ArrayList)\b')
+
+
+class _ReferenceType:
+    @staticmethod
+    def match(field_type):
+        field_type = field_type.strip()
+        shared = re.match(r'^pls::cs::SharedField<(.*)>$', field_type)
+        if shared:
+            return _ReferenceType.match(shared.group(1))
+        return _MANAGED.match(field_type)
+
+
+REFERENCE_TYPE = _ReferenceType()
 
 
 def _body(text, start):
@@ -46,8 +62,16 @@ def struct_fields(header):
         body = _body(header, match.start())
         fields = []
         depth = 0
-        for line in body.splitlines():
-            stripped = line.strip()
+        # One declaration per ';' at nesting depth 0 (a wrapped type spans lines).
+        declarations, current, level = [], '', 0
+        for ch in body:
+            current += ch
+            if ch == '{': level += 1
+            elif ch == '}': level -= 1
+            elif ch == ';' and level == 0:
+                declarations.append(current); current = ''
+        for line in declarations:
+            stripped = ' '.join(line.split())
             depth_before = depth
             depth += stripped.count('{') - stripped.count('}')
             if depth_before != 0 or not stripped.endswith('{};') or '(' in stripped:
@@ -62,7 +86,7 @@ def struct_fields(header):
 
 
 def traced(source, struct, member):
-    match = re.search(r'\b' + struct + r'::' + member + r'\s*\(', source)
+    match = re.search(r'\b' + struct + r'(?:<[^>]*>)?::' + member + r'\s*\(', source)
     if not match:
         return None
     body = _body(source, match.start())
@@ -78,6 +102,9 @@ def check_folder(folder):
             continue
         header = header_path.read_text(encoding='utf-8')
         source = source_path.read_text(encoding='utf-8')
+        templates = header_path.with_name(header_path.stem + '_templates.hpp')
+        if templates.exists():
+            source += '\n' + templates.read_text(encoding='utf-8')
         for struct, fields in struct_fields(header).items():
             references = {name for field_type, name in fields if REFERENCE_TYPE.match(field_type)}
             values = {name for field_type, name in fields if not REFERENCE_TYPE.match(field_type)}

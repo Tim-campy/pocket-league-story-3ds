@@ -59,6 +59,7 @@ def main():
     parser.add_argument('--diagnostic-defer-capture',action='store_true',help='Private build-only variant: fatal guard at the missing Capture API, never normal coverage')
     parser.add_argument('--readable',action='store_true',help='Readable emission (C# names, C++ namespaces) into a private --output below build/; writes no config/ receipt')
     parser.add_argument('--readable-portable',type=Path,help='With --readable for Assembly-CSharp: the readable KairoLibrary output folder')
+    parser.add_argument('--readable-diagnostic',action='store_true',help='With --readable: keep the per-method diagnostic instrumentation (private C6b variant below build/)')
     args=parser.parse_args()
     if args.readable:
         if args.output is None or args.compile or args.diagnostics_only or args.diagnostic_defer_capture:parser.error('--readable requires --output and excludes --compile/--diagnostics-only/--diagnostic-defer-capture')
@@ -485,6 +486,9 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         from diagnostic_leaves import CAPTURE,CPP_NAME
         request['external_methods'][CAPTURE]=CPP_NAME
     if args.readable:request['readable']=True
+    if args.readable_diagnostic:
+        if not args.readable:parser.error('--readable-diagnostic requires --readable')
+        request['readable_diagnostic']=True
     input_path=output/'diagnostic-request.json'if args.diagnostic_defer_capture else output/'readable-request.json'if args.readable else folder/(args.assembly+'-input.json')
     raw_path=output/'diagnostic-raw-report.json'if args.diagnostic_defer_capture else output/'readable-raw-report.json'if args.readable else folder/(args.assembly+'-translation.json')
     if args.readable:output.mkdir(parents=True,exist_ok=True)

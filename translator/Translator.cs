@@ -53,6 +53,9 @@ sealed class Request {
     // Readable emission (translator/ReadableNames.cs). Default off: no readable
     // code path is reached and the emitted C++ is byte-identical.
     public bool readable {get;set;}
+    // C6b: private readable variant that keeps the per-method diagnostic
+    // instrumentation (PLS_METHOD_SCOPE, api_call) for routes; never public output.
+    public bool readable_diagnostic {get;set;}
 }
 sealed class BakedSpec {public string source {get;set;}="";public int span_start {get;set;}public string element_type {get;set;}="";public int count {get;set;}}
 sealed partial class Lowerer {
@@ -1199,7 +1202,7 @@ sealed partial class Lowerer {
     string Invoke(InvocationExpressionSyntax n) {
         var target=model.GetSymbolInfo(n).Symbol as IMethodSymbol;
         var result=InvokeCore(n);
-        if(!readable&&target!=null&&(externalMethods.ContainsKey(Id(target))||target.ContainingAssembly?.Name!=compilation.AssemblyName))return "pls::diagnostic::api_call([&]() -> decltype(auto) {return "+result+";})";
+        if((!readable||request.readable_diagnostic)&&target!=null&&(externalMethods.ContainsKey(Id(target))||target.ContainingAssembly?.Name!=compilation.AssemblyName))return "pls::diagnostic::api_call([&]() -> decltype(auto) {return "+result+";})";
         return result;
     }
     string InvokeCore(InvocationExpressionSyntax n) {
@@ -1857,7 +1860,7 @@ sealed partial class Lowerer {
             }
             if(returnFlowMethods.Contains(id))body="{try"+body+"catch(const pls::cs::ReturnFlow<"+Type(method.ReturnType,declaration)+">& cs_return){"+(method.ReturnsVoid?"return;":"return cs_return.value;")+"}"+(method.ReturnsVoid?"":"return pls::cs::invalid_return_flow<"+Type(method.ReturnType,declaration)+">();")+"}";
             var profileAssembly=compilation.AssemblyName=="Assembly-CSharp"&&!declaration.SyntaxTree.FilePath.Replace('\\','/').Contains("/src/Assembly-CSharp/",StringComparison.Ordinal)?"KairoLibrary":compilation.AssemblyName;
-            if(!readable)body="{PLS_METHOD_SCOPE("+JsonSerializer.Serialize(profileAssembly)+","+JsonSerializer.Serialize(id)+","+(profileAssembly=="Assembly-CSharp"?"game":"kairo")+");\n"+body+"\n}";
+            if(!readable||request.readable_diagnostic)body="{PLS_METHOD_SCOPE("+JsonSerializer.Serialize(profileAssembly)+","+JsonSerializer.Serialize(id)+","+(profileAssembly=="Assembly-CSharp"?"game":"kairo")+");\n"+body+"\n}";
             if(constructor) {
                 var ctor=declaration as ConstructorDeclarationSyntax;var chainedThis=ctor?.Initializer?.IsKind(SyntaxKind.ThisConstructorInitializer)??false;
                 var init=new StringBuilder("{\n");

@@ -11,7 +11,7 @@
   },
   "native_executable": {
     "path": "build/readable-numeric-tests/numeric-fixtures.exe",
-    "sha256": "eefa027ef989f2ef6b1c511f23dc26d3e92f494fab3e23887220912993de27a1"
+    "sha256": "16d0f0531fe74ca194c6c1b0a02b75c4143487118a113de983b2852b70fa0d85"
   },
   "game_assets_used": false,
   "original_binaries_executed": false

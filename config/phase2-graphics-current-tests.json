@@ -728,7 +728,7 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "b213d3490408b9b5ab9e99047aef9ca36622d6e583888c0a877ee6f4710c22f2"
+    "sha256": "2548634db6faa7a0e59bc9c4f2f36d447b13c63fc22b3a3f8fbadff259e95ba1"
   },
   "verified_boundary_ids": [],
   "limits": [

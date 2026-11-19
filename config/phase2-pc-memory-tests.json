@@ -21,7 +21,7 @@
   },
   "native_executable": {
     "path": "build/pc-memory-fixtures/pc-memory-fixtures.exe",
-    "sha256": "f362e19225499337a58513fbf6aa479ca987909e973fed3aaff7636241cca2ff"
+    "sha256": "d92bcbf9dbd7034e42d2ee0e3f8ad83d3d9952ec1ea1e060b141af8b82884cbb"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

@@ -8,12 +8,12 @@
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "index_sha256": "8116deb11f7599d97e0eff2b7e46a08a94bb6b99da256c670fb256079eb8b589",
-  "executable_sha256": "4a948e209854b58fc04c8cbcce9530ba455afce2e26fedd0cefe8e68bef6f1c0",
+  "executable_sha256": "26675fe534110613338e878c2b8e0f6ce26f10362329793d4aea570794c2ff05",
   "stdout_sha256": "bcab9d567909d5cdd71915f285bd4b9d0edd749a522725413c72ef013b731598",
   "sources": [
     {
       "path": "tools/build_pc.py",
-      "sha256": "9dc93648a8e3bb02523849254444cdc00d53467b897afc9d6cb5f8caa7425240"
+      "sha256": "0cca2decd13d895cb6f82f4ca9847b30d95f5df7119fff08bb3c6d06986b0b1f"
     },
     {
       "path": "tests/kairo/asset_roundtrip.cpp",

@@ -511,16 +511,16 @@
   ],
   "native_executable": {
     "path": "build/sound-tests/sound-fixtures.exe",
-    "sha256": "5b73a7c9a73a5c5918346f9461216a8823495c6f3cf3032a8dd316e214e22316"
+    "sha256": "57ee8f38dcdb2d209f88956d47326d100c1f1b79ae71f109e7da317865f992ea"
   },
   "oracle_binaries": [
     {
       "path": "build/sound-tests/SoundOracle.dll",
-      "sha256": "3a3e08502e49060940c5d1d09dd283a84cc3569ab9caad1636c384bbeea7d2fb"
+      "sha256": "51e8509a6b2123fc1c196b0b19bb80f430345483c5970af683359952badcccd8"
     },
     {
       "path": "build/sound-tests/SoundOracle-mono.exe",
-      "sha256": "913a8f95b0227279a6868c2dc761b1940aa7d3212301dbf220c4ae6a92521ca0"
+      "sha256": "e3d862c204ad166b65b4ae1f240e462112e04aaae497811b91e7b140f5bec7f8"
     }
   ],
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",

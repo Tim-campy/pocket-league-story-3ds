@@ -9,13 +9,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "623059149ee5ee45389df546ebc572163b9e8614b41aa474ca6733c2260f9604",
+    "translator_source_sha256": "4c566aad98d949371df50a94d9159305fb024677052ce0bfe01b6c21bab39932",
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
       "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
       "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
     ],
-    "driver_sha256": "44b90140aa9955cf024fa3ef1d633d6b191c0f6e82d83bff3019933cbbdef52b"
+    "driver_sha256": "653bcd3c6bd79682cc28302b0a0a49ab2c3d26eb5275c64bdc01a4b6780a55d4"
   },
   "inputs": [
     {
@@ -255,10 +255,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "6e50efefae92f791f65a88f8426fedbbc13aebd1a9dc03c0e23183f7d1c1df1e"
+    "sha256": "c2feeb54248e2a57078bcf5375d638d3d171dce013cf5d1e8e69784535b407e3"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "fc3cbf6eac9addfe80d436a4bb7f043bfcd2f4f5ed2e5353226d00c42fe5db7b"
+    "sha256": "4212f9b81d545b70407f12bd4964f1eaa3fa4fce957e64cd9a234b8c16b454bd"
   }
 }

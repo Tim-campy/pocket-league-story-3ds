@@ -128,14 +128,45 @@ def sample(args):
     if any(r['returncode'] for r in compile_results):raise SystemExit('sample compile failed; see build/readable-sample/objects/*.log')
 
 
+def diagnostic(args):
+    """C6b: the readable game and KairoLibrary with the per-method diagnostic
+    instrumentation, in a new folder below build/, plus a manifest that
+    tools/build_pc.py --readable-diagnostic validates. Never public output."""
+    import hashlib
+    out=args.output.resolve()
+    if not out.is_relative_to((ROOT/'build').resolve()):raise SystemExit('output must stay below build/')
+    if out.exists() and any(out.iterdir()):raise SystemExit('use a new empty folder')
+    portable=out/'include/generated';game=out/'game'
+    for folder in (portable,game):folder.mkdir(parents=True,exist_ok=True)
+    common=[sys.executable,str(ROOT/'translator/translate.py'),'--original-managed',str(args.original_managed),'--readable','--readable-diagnostic']
+    subprocess.run(common+['--assembly','KairoLibrary','--output',str(portable)],check=True,cwd=ROOT)
+    subprocess.run(common+['--assembly','Assembly-CSharp','--bootstrap-main','--output',str(game),'--readable-portable',str(portable)],check=True,cwd=ROOT)
+    # The same gap helper as translator/diagnostic_snapshot.py: a bootstrap gap is a
+    # flushed PLS_TRANSLATION_GAP= marker, which the route supervisor stops on.
+    import diagnostic_snapshot as snapshot_module
+    (game/'diagnostic_runtime.hpp').write_bytes(snapshot_module.GAP_HELPER.encode('utf-8'))
+    boot=game/'bootstrap_generated.cpp'
+    if boot.exists():boot.write_bytes(b'#include "diagnostic_runtime.hpp"\n'+boot.read_bytes())
+    def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
+    files=[dict(path=p.relative_to(out).as_posix(),sha256=sha(p)) for p in sorted(out.rglob('*')) if p.is_file() and p.suffix in ('.cpp','.hpp','.inc')]
+    producer={name:sha(ROOT/name) for name in ('translator/Translator.cs','translator/EmissionUnits.cs','translator/ReadableNames.cs','translator/ReadableUnits.cs','translator/translate.py','translator/bootstrap_source.py','translator/readable.py')}
+    game_report=json.loads((game/'readable-report.json').read_text(encoding='utf-8'))
+    manifest=dict(kind='readable-diagnostic',diagnostic_only=True,normal_coverage_promoted=0,producer=producer,
+                  game_methods=game_report.get('emitted_method_count'),files=files,
+                  note='Private C6b variant: readable C++ with PLS_METHOD_SCOPE; its executions never promote the canonical ledger.')
+    (out/'readable-diagnostic-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n',encoding='utf-8')
+    print(json.dumps(dict(output=str(out),files=len(files),game_methods=manifest['game_methods'])))
+
+
 def main():
     parser=argparse.ArgumentParser(description=__doc__,formatter_class=argparse.RawDescriptionHelpFormatter)
     sub=parser.add_subparsers(dest='command',required=True)
     p=sub.add_parser('lowering');p.add_argument('--no-format',action='store_true')
     p=sub.add_parser('sample');p.add_argument('--original-managed',type=Path,required=True);p.add_argument('--apk',type=Path)
     p.add_argument('--skip-translate',action='store_true');p.add_argument('--no-format',action='store_true');p.add_argument('--no-compile',action='store_true')
+    p=sub.add_parser('diagnostic');p.add_argument('--original-managed',type=Path,required=True);p.add_argument('--output',type=Path,required=True)
     args=parser.parse_args()
-    lowering(args) if args.command=='lowering' else sample(args)
+    {'lowering':lowering,'sample':sample,'diagnostic':diagnostic}[args.command](args)
 
 
 if __name__=='__main__':main()

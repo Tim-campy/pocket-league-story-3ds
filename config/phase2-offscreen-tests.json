@@ -6,12 +6,12 @@
     {
       "fixture": "offscreen_test",
       "assertions": 23,
-      "executable_sha256": "64be259f2268e00391d10a15c0d5912a9de5ceaf1961101a34c78fced5a5a1e7"
+      "executable_sha256": "e7f87bf6698ddc6286d85dc77a5963a33579a8076fddddfd446e4b1ec64af9ca"
     },
     {
       "fixture": "mesh_test",
       "assertions": 15,
-      "executable_sha256": "9e351b8945056d9fbbc3007a8e5abe9e7576f3953d26b9269053a51deeddac87"
+      "executable_sha256": "fe39ba46d3e7f81b19d3c4edf82c0be8903758e483799b8a9f2b739cd41f7899"
     }
   ],
   "inputs_sha256": {

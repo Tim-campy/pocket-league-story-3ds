@@ -442,3 +442,63 @@ void Team::Cal_evaCoatMulti(pls::cs::Int32 mode, pls::cs::Array<pls::cs::Array<s
 (Antes: duas lambdas a mais, uma em cada comparação com `Map::MAPCHIP_COAT_*NUM()`;
 ver a seção A7.) A lambda que resta multiplica elementos de dois arrays
 diferentes (`data`, `muliti_param`), que podem lançar exceções diferentes.
+
+## C6b etapa 2 — o jogo legível executado (2026-11-19)
+
+Ferramentas: `translator/readable.py diagnostic --original-managed M --output build/<nova>`
+(árvores legíveis com a instrumentação por método, opção privada
+`readable_diagnostic` do tradutor), `tools/build_pc.py --readable-diagnostic
+build/<nova>` (mesmos roteiros, salvaguarda, estresse do coletor e saves
+isolados em `build/`; histórico próprio `build/c6b-readable-attempts.json`, que
+nunca promove o livro-razão canônico), `tools/run_readable_routes.py` (reexecuta
+o conjunto de roteiros do critério 3 num build), `tools/compare_route_sets.py`,
+`tools/compare_readable_coverage.py`, `tools/compare_readable_determinism.py`.
+
+**Conjunto de roteiros do critério 3** (85 execuções = cada roteiro concluído do
+histórico canônico, por par roteiro/save; os dois builds com o código atual,
+`--gc-stress-every 50 --gc-stress-poison`, salvaguarda ativa):
+
+| | canônico | legível |
+|---|---|---|
+| roteiros concluídos | 83/85 | 83/85 (os mesmos 2 incompletos: `actions.route` atinge 600 s sob estresse; `dialogs-exit.route` encerra o jogo) |
+| métodos executados (união) | 1.573 | 1.573 — **nenhum só de um lado** |
+| alertas da salvaguarda | 0 | 0 |
+| lacunas de tradução | 0 | 0 |
+
+Por execução: mesma cobertura em 77/85, mesmos estados de interface em 83/85,
+mesmos quadros de passo (relativos à âncora) em 79/85, mesmos saves em 59/85.
+As 8 diferenças de cobertura estão todas na simulação dentro do jogo (IA de
+jogador, bola, treino, experiência) e vão nos dois sentidos. O canônico sozinho
+mostra o mesmo tipo de variação quando só a velocidade muda: com o código atual,
+`chain2` executa `GameUtil.Sin` sem estresse e não com estresse; `delay-load`,
+`AddCommandFlagOn/Off`; `saves.route` difere entre duas execuções canônicas
+idênticas; `yearend` varia entre execuções legíveis idênticas. Conclusão: sem
+indício de defeito de emissão; a simulação depende do tempo real (abaixo).
+
+**Determinismo cruzado** (`compare_readable_determinism.py`, depois da âncora de
+título, onde o relógio virtual é rebaseado):
+- roteiro dos menus: 180 passos no mesmo quadro relativo, 330 estados de
+  interface iguais, mesmo quadro final; o legível é determinístico entre
+  execuções (3/3);
+- **partida de referência** (`match-touch`, save 31): 127 passos, 18 estados e o
+  save do jogo (`rs/0003`) **idênticos byte a byte**;
+- trecho de temporada (`season`, 600 s): 702 passos e os 972 estados em comum
+  idênticos (as execuções param por tempo real em pontos diferentes, por isso o
+  save final difere).
+
+**Limite do harness (resultado negativo).** O boot do legível é 2 quadros mais
+curto (16 → 14). A causa é a thread de carregamento do `BootForm`, que espera com
+`Thread.Sleep` em tempo real e conversa com a principal pelo campo compartilhado
+`bowWait_`; o relógio virtual é um contador único avançado por leituras de
+qualquer thread. O canônico, só mais lento (estresse do coletor), passa de 16 a
+124 quadros de boot e muda leituras de relógio por quadro e o save do menu.
+Portanto, igualdade byte a byte de save só é exigível em trechos sem essa
+interação (a partida de referência é um deles). Torná-la exigível em todo lugar
+pede um relógio virtual por thread e `Sleep` virtual no modo de diagnóstico.
+
+**Mapa do coletor** (`tests/repository/test_gc_field_tracing.py`) sobre as
+árvores legíveis inteiras: 150 listas `trace_edges` no jogo e 35 na KairoLibrary
+portável, 0 problemas (campos de referência × rastreados × estáticos × raízes).
+O teste foi corrigido para o código inteiro: declarações quebradas em várias
+linhas, coleções gerenciadas (`List`, `Dictionary`, `Stack`…) como referência,
+`SharedField<T>` só quando `T` é referência, e definições em `_templates.hpp`.

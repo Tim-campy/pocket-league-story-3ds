@@ -61,6 +61,8 @@ private:
     std::array<bool, static_cast<int>(Button::Count)> held_{};
     std::int32_t pad_x_ = 0, pad_y_ = 0;  // circle pad, -1..1 per axis (keys) or scaled stick
     bool dragging_ = false;
+    bool pinching_ = false;
+    int pinch_d_ = 0;  // distance between the two synthesized fingers
     int drag_x_ = 0, drag_y_ = 0;
     std::int32_t pressed_soft_[3] = {0, 0, 0};  // soft key held by B, X, Y
     std::string last_action_;

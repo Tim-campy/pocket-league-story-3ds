@@ -91,6 +91,16 @@ Execução: tentativas de diagnóstico 220 (300 s, 188 quadros capturados) e 221
    toque por superfície na plataforma).
 3. **Título:** os rótulos "Site" e "Quit" ficam nos cantos, e o ícone de idioma
    (canto superior direito) fica fora do quadro de 240, só por toque.
-4. L/R (zoom) não ligados.
+4. ~~L/R (zoom) não ligados.~~ **Ligados (2026-11-19, decisão B.7):** no mapa, R aproxima e
+   L afasta, pela mesma pinça de dois dedos que o original aceita (`SurfaceBase` →
+   `GameForm.OnTouchCamera`, caso 12, `pinchScaleValue_`): o host sintetiza
+   `ACTION_DOWN`, `ACTION_POINTER_2_DOWN`, `ACTION_MOVE` com os dedos se afastando ou
+   aproximando 6 px por quadro, e os dois `UP` ao soltar. Medido: `GameForm.SetScale`
+   chamado 34 vezes num teste com R por 60 quadros e L por 60; capturas mostram o
+   zoom aplicado. Teste sem teclado: `PLS_PC_DUAL_HOLD="R:700-760,L:1000-1060"`.
+   **B.3 (barra `GamePad` na tela de baixo) não feito:** o `SurfaceManager` desenha
+   todas as superfícies numa passada sobre o mesmo `Graphics`; separar a `GamePad`
+   exige que a plataforma redirecione o desenho e o toque por superfície (próximo
+   passo da etapa 1).
 5. Painel provisório com sobreposição de texto em dois botões (L/R, START).
 6. Não medido: desempenho do desenho duplo; leitura no tamanho real do 3DS.

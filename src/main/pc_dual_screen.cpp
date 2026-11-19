@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <cstdio>
 #include <stdexcept>
+#include <string>
+#include <cstdlib>
 #include "font.hpp"
 #include "managed_collation.hpp"
 #include "application.hpp"
@@ -226,6 +228,46 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
     } else if (dragging_) {
         canvas.host_event(platform::Input{Kind::pointer_up, drag_x_, drag_y_});
         dragging_ = false;
+    }
+    // L/R (decision B.7 of 2026-11-17): the two-finger pinch the original map
+    // accepts (SurfaceBase pinch -> GameForm.OnTouchCamera case 12, pinchScaleValue_),
+    // centred on the view: R spreads the fingers (zoom in), L brings them closer.
+    // Prototype test hook: PLS_PC_DUAL_HOLD="R:600-640,L:700-720" holds buttons on
+    // those update frames (no keyboard needed to exercise the pinch).
+    {
+        static std::uint64_t frame = 0; ++frame;
+        static const std::string spec = std::getenv("PLS_PC_DUAL_HOLD") ? std::getenv("PLS_PC_DUAL_HOLD") : "";
+        for (std::size_t at = 0; at < spec.size();) {
+            const auto end = spec.find(',', at); const auto item = spec.substr(at, end == std::string::npos ? std::string::npos : end - at);
+            at = end == std::string::npos ? spec.size() : end + 1;
+            const auto colon = item.find(':'), dash = item.find('-');
+            if (colon == std::string::npos || dash == std::string::npos) continue;
+            const auto first = std::stoull(item.substr(colon + 1, dash - colon - 1)), last = std::stoull(item.substr(dash + 1));
+            const auto button = item[0] == 'L' ? Button::L : item[0] == 'R' ? Button::R : Button::Count;
+            if (button != Button::Count && (frame == first || frame == last + 1)) held_[static_cast<int>(button)] = frame == first;
+        }
+    }
+    const int zoom = map && !dragging_ ? (held_[static_cast<int>(Button::R)] ? 1 : 0) - (held_[static_cast<int>(Button::L)] ? 1 : 0) : 0;
+    constexpr int pcx = top_width / 2, pcy = 23 + (top_height - 23) / 2;
+    auto pinch_event = [&](std::int32_t action, bool two) {
+        auto ids = two ? cs::Array<std::int32_t>::from({0, 1}) : cs::Array<std::int32_t>::from({0});
+        auto positions = two ? cs::Array<float>::from({float(pcx - pinch_d_ / 2), float(pcy), float(pcx + pinch_d_ / 2), float(pcy)})
+                             : cs::Array<float>::from({float(pcx - pinch_d_ / 2), float(pcy)});
+        canvas.OnTouchEvent(cs::make_ref<kairo::MotionEvent>(action, ids, positions, cs::Array<float>{}));
+    };
+    if (zoom) {
+        if (!pinching_) {
+            pinching_ = true; pinch_d_ = 80;
+            pinch_event(kairo::MotionEvent::ACTION_DOWN, false);
+            pinch_event(kairo::MotionEvent::ACTION_POINTER_2_DOWN, true);
+        }
+        pinch_d_ = std::clamp(pinch_d_ + zoom * 6, 20, 220);
+        pinch_event(kairo::MotionEvent::ACTION_MOVE, true);
+        last_action_ = zoom > 0 ? "zoom +" : "zoom -";
+    } else if (pinching_) {
+        pinch_event(kairo::MotionEvent::ACTION_POINTER_2_UP, true);
+        pinch_event(kairo::MotionEvent::ACTION_UP, false);
+        pinching_ = false;
     }
 }
 

@@ -12,16 +12,16 @@ Nenhum critério cumprido é inferido de um teste parcial. A tag `v1.0.0-faithfu
 | Critério | Estado | Evidência / pendência |
 |---|---|---|
 | Tradução completa | cumprido | 1860/1958 métodos compilados (+90 membros gerados pelo compilador dentro de unidades emitidas, 6 abstratos sem corpo); 0 slots virtuais pendentes; políticas offline: 47 de 69 emitidas nos chamadores traduzidos, 22 sem chamador traduzido, 0 rejeitadas. |
-| Coletor e desempenho | cumprido | Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4. |
-| Percurso completo no PC | cumprido | 1044/1248 alcançáveis exercitados (83.7%); fora do alcance: 89 por política, 35 só depuração, 586 inalcançáveis no original (docs/coverage-never-reached.md). Aprovado pelo usuário em 2026-11-16; pendências não bloqueantes: AppData.DrawMoney2 e MapMain.UpdateTrainingCoatNum (docs/coverage-plan.md). |
+| Coletor e desempenho | cumprido | Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4. Código legível (C6b, 2026-11-20, New 3DS XL, três execuções, executável 5b5c86fd…): menu estável máx. 13,8 ms, três transições de Finish com pausa máx. 104,4 ms e frame máx. 114,5 ms; partida média 16,96/18,68/17,27 ms, máx. 20,5 ms, sem coletas; cumprido pela regra do usuário (2026-11-20). Ressalvas: margem da partida 1,3 ms; numa rodada anterior, 1 de 3 execuções teve uma coleta não classificada de 116,6 ms na partida (docs/notes/freeze-audit.md). |
+| Percurso completo no PC | cumprido | 1051/1248 alcançáveis exercitados (84.2%); fora do alcance: 89 por política, 35 só depuração, 586 inalcançáveis no original (docs/coverage-never-reached.md). Aprovado pelo usuário em 2026-11-16; pendências não bloqueantes: AppData.DrawMoney2 e MapMain.UpdateTrainingCoatNum (docs/coverage-plan.md). |
 | Fidelidade resolvida | em andamento | 4a: ponto flutuante confirmado em emulador ARM; ref de campo nulo e Sin(-0) decididos e iguais ao Mono ARM; resta a repetição em aparelho Android (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4. |
-| Código legível e aprovado | pendente | Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados. |
+| Código legível e aprovado | cumprido | Amostra aprovada com condições (2026-11-17); passada final A1–A7 e C6b: jogo inteiro legível compila no PC e no ARM, mesma cobertura do canônico no conjunto de roteiros do critério 3 (1.573 métodos), verificação completa 126/126, benchmark no New 3DS dentro do critério 2 (2026-11-20). docs/notes/readable-final-pass.md |
 
 ## Tradução
 
 | Inventário | Total | Estado medido |
 |---|---:|---|
-| Métodos a traduzir | 1958 | {'translated': 861, 'runs': 999, 'embedded': 90, 'policy': 2, 'no-body': 6} |
+| Métodos a traduzir | 1958 | {'translated': 854, 'runs': 1006, 'embedded': 90, 'policy': 2, 'no-body': 6} |
 
 ## Fronteira da KairoLibrary
 
@@ -48,7 +48,7 @@ A conversão para rastreamento está integrada e em validação. Pico comparativ
 |---|---:|---|
 | Grupos de assets | 44 | {'loads': 3, 'inventoried': 35, 'extracts': 6} |
 
-**Fase 2 parcial:** 253 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1860/1958 identidades originais com C++ compilado; 999 com retorno normal registrado em jogo; 0 verificadas.**
+**Fase 2 parcial:** 253 membros reais da fronteira verificados por diferencial de fonte; 374 métodos portáveis gerados/compilados, 172 raízes entre 172 métodos requisitados e 202 dependências. Os 254 símbolos portáveis incluem campos/tipos/outros membros e não são 254 métodos. **Assembly-CSharp: 1860/1958 identidades originais com C++ compilado; 1006 com retorno normal registrado em jogo; 0 verificadas.**
 
 ## Preparação e medições da Fase 1 preservadas
 

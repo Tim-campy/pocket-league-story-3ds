@@ -1,12 +1,12 @@
 # Métodos nunca alcançados
 
-Gerado em 2026-11-19 por `python tools/callgraph/analyze.py` a partir de `config/translation.csv` e do grafo de chamadas estático (Roslyn) do C# reconstruído; recibo em `config/phase2-reachability.json`. Só nomes de métodos do C# reconstruído; nenhum conteúdo do jogo. Regenerar após cada rodada de cobertura.
+Gerado em 2026-11-20 por `python tools/callgraph/analyze.py` a partir de `config/translation.csv` e do grafo de chamadas estático (Roslyn) do C# reconstruído; recibo em `config/phase2-reachability.json`. Só nomes de métodos do C# reconstruído; nenhum conteúdo do jogo. Regenerar após cada rodada de cobertura.
 
 Modelo: o grafo cobre Assembly-CSharp, as fontes da KairoLibrary compiladas com ele e o adaptador de plataforma gerado. Chamadas virtuais e de interface vão para as sobrescritas em tipos instanciados por código alcançável (análise rápida de tipos); delegados alcançam o método ou lambda no ponto de criação; construtores estáticos são alcançados pelo primeiro uso do tipo. Ramos guardados por flags de `Config`/`MyConfig` com valor de execução constante falso são cortados; os de depuração (`DEBUG` e flags derivadas) formam a classe "só depuração". O modelo do port corta os corpos substituídos por políticas offline (`config/service-overrides.json`) e por ligações de plataforma (`external_methods`/`external_types` do tradutor) e parte das entradas reais da plataforma (`Main`, adaptador gerado, slots virtuais).
 
 | Classe | Métodos |
 |---|---:|
-| Executados no diagnóstico (`runs`) | 999 |
+| Executados no diagnóstico (`runs`) | 1006 |
 | Alcançáveis, ainda não executados | 2 |
 | **Alcançáveis no total** (executados + não executados) | **1248** |
 | Inalcançáveis por política offline / plataforma | 89 |
@@ -23,8 +23,8 @@ Por estado do livro-razão (`embedded` = construtor estático ou lambda emitidos
 | debug-only | 33 | 2 | 0 | 0 | 0 |
 | unreachable-in-original | 550 | 30 | 0 | 5 | 0 |
 
-Cobertura sobre o alcançável: 1044 de 1248 (83.7%). Métodos `runs` que a análise não alcançou: 0.
-Executados `runs`: 999; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 202; restam sem execução nem justificativa: 2.
+Cobertura sobre o alcançável: 1051 de 1248 (84.2%). Métodos `runs` que a análise não alcançou: 0.
+Executados `runs`: 1006; creditados pelo dono ou hospedeiro executado (inicializador de tipo, construtor implícito, lambda): 45; justificados individualmente (`config/coverage-justifications.json`): 195; restam sem execução nem justificativa: 2.
 
 
 **Escopo do critério 3 (decisão do usuário, 2026-11-14):** o critério exige a execução dos alcançáveis no port. Os inalcançáveis já no original (entre eles `FriendForm`, `MatchForm`, `LineupForm` e `RestoreForm`), os só de depuração e os cortados por política ficam fora, justificados por esta análise. Salvaguarda: no build de diagnóstico, a execução de qualquer método dessas três classes gera alerta com pilha e o reclassifica como alcançável.
@@ -161,7 +161,7 @@ Sem caminho a partir das entradas do original; quando o único caminho passa por
 - **system.tapjoy.MyTapjoy** (1): `GetInstance` — sem chamadores
 - **system.tapjoy.ui.Tapjoy** (9): `AddBalance`, `GetBalance`, `GetInstance`, `GetOfferState`, `Init`, `Quit`, `ShowOffers`, `SubBalance` — sem chamadores; `CallBalance` — sobrescrita nunca chamada
 
-## Alcançáveis justificados individualmente (202)
+## Alcançáveis justificados individualmente (195)
 
 Regras em `config/coverage-justifications.json`; cada grupo cita o motivo.
 
@@ -219,17 +219,17 @@ Only in the catch of CgiRegist in BootForm.Run (BootForm.cs:415-430); the offlin
 
 `main.AppData::GetHttpErrorText`
 
-### pad-geometry (8)
+### pad-geometry (5)
 
 Port surface is 240x280: AdjustSurfaceLayout computes pad mode 1, equal to the initial mode (SurfaceManager.cs:126-139, GamePad.cs:348), so SetMode is never called; these members need pad mode 0 or 2, a screen with >=120 px under the view for pad component 21 (GamePad.cs:908-912), the never-registered pad components 17/18 (GamePad.cs:701-713), or DEBUG (false at run time via Config.Create(MyConfig)).
 
-`surface.GamePad::AddTouch`, `surface.GamePad::DrawBattery`, `surface.GamePad::DrawSoftLabelImage`, `surface.GamePad::DrawWatch`, `surface.GamePad::GetSideSize`, `surface.GamePad::SetLayoutMode`, `surface.SurfaceManager::SetLayoutMode`, `surface.TouchEffectManager::Clear`
+`surface.GamePad::AddTouch`, `surface.GamePad::DrawSoftLabelImage`, `surface.GamePad::SetLayoutMode`, `surface.SurfaceManager::SetLayoutMode`, `surface.TouchEffectManager::Clear`
 
-### pinch-gesture (6)
+### pinch-gesture (3)
 
 SetScale (which calls GetScaleRange and ResetOffscreen) runs only on TYPE_PINCH (OnTouchCamera case 12: GameForm.cs:1730-1741, SoccerForm.cs:3437-3448), which needs two pointers (SurfaceBase.cs:931-959), or from the Draw clamp (GameForm.cs:1093-1097, SoccerForm.cs:1779-1783), which never fires: scale_ starts at 100 and only SetScale changes it (range 60..240 at width 240).
 
-`form.GameForm::GetScaleRange`, `form.GameForm::ResetOffscreen`, `form.GameForm::SetScale`, `form.SoccerForm::GetScaleRange`, `form.SoccerForm::ResetOffscreen`, `form.SoccerForm::SetScale`
+`form.SoccerForm::GetScaleRange`, `form.SoccerForm::ResetOffscreen`, `form.SoccerForm::SetScale`
 
 ### script-commands-unused-by-data (1)
 
@@ -255,11 +255,11 @@ GameView.Get/Set address only the top form (GameView.cs:1248-1251). BootForm reg
 
 `form.BootForm::GetTouchValue`, `form.BootForm::SetTouchValue`, `form.GameForm::GetTouchValue`, `form.GameForm::SetTouchValue`, `form.RankForm::GetTouchValue`, `form.RankForm::SetTouchValue`
 
-### touch-component-never-created (4)
+### touch-component-never-created (3)
 
 Dead in the original: no GameView.AddTouch in Assembly-CSharp creates component ids 5, 7 or 10; id 17 is registered only while GameForm/SoccerForm is top (GameView.cs:862-869), and their OnTouchEvent consumes it with return false (GameForm.cs:1617-1624, SoccerForm.cs:3404-3411), so the empty GameView.OnTouchCamera is not reached.
 
-`surface.GameView::OnTouchCamera`, `surface.GameView::OnTouchKeyPress`, `surface.GameView::OnTouchKeyUp`, `surface.GameView::OnTouchList`
+`surface.GameView::OnTouchKeyPress`, `surface.GameView::OnTouchKeyUp`, `surface.GameView::OnTouchList`
 
 ### trial-or-billing (1)
 

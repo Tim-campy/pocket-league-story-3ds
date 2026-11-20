@@ -6,12 +6,12 @@
     {
       "fixture": "offscreen_test",
       "assertions": 23,
-      "executable_sha256": "e7f87bf6698ddc6286d85dc77a5963a33579a8076fddddfd446e4b1ec64af9ca"
+      "executable_sha256": "4876f272ef425014c0716e2ec8c71ca7caf2fa77cf7517e10e6cb7cbb1c0a86f"
     },
     {
       "fixture": "mesh_test",
       "assertions": 15,
-      "executable_sha256": "fe39ba46d3e7f81b19d3c4edf82c0be8903758e483799b8a9f2b739cd41f7899"
+      "executable_sha256": "8577d8066b477de0213b4b4376b84026a46fc86bbad5546247022ae00cc6e898"
     }
   ],
   "inputs_sha256": {
@@ -241,7 +241,7 @@
     "src/kairo/platform/null/sound.hpp": "b5230084dc33c63e99fe755ac36e1b09cfcfeded46597afeea98d381bc8e9cc1",
     "src/kairo/platform/sdl/audio.cpp": "0e4c50460a15896799962c79b9820c9656fced792fbe15bd84134db1f6a7966d",
     "src/kairo/platform/sdl/audio.hpp": "48f5a2e458820594abcc6653538034e43e4c3d87184dba64ce0083d7dfd0ac9e",
-    "src/kairo/platform/sdl/backend.cpp": "02d4cc8cd86a815072c683f8b457c5535069567cbc47cb71a027119abf405a6c",
+    "src/kairo/platform/sdl/backend.cpp": "98bad4a904dfca99d9a8f0fe716a086219601cc7a82dc641eff36112486ade9d",
     "src/kairo/platform/sdl/backend.hpp": "2b8ebe0fd1b45e7d042eb71d682075059ce13d4e1dfa29ab33db144683670959",
     "src/kairo/platform/sdl/capture.cpp": "d9c33df3a4169ae97f850c93246765642c19f65f17ddcde5c4236feefbd383d8",
     "src/kairo/platform/sdl/capture.hpp": "cbfc3301bea5853a5cfd6d6596f14f7251f2440da8475c07b78d40ea982416b4",

@@ -28,7 +28,7 @@ def criteria(phase2, game, floating=None):
         ('Tradução completa','cumprido' if count and slots==0 else 'em andamento' if count else 'pendente',
          f"{count}/1958 métodos compilados"+(f" (+{phase2['game_embedded_methods']} membros gerados pelo compilador dentro de unidades emitidas, {phase2.get('game_no_body_methods',0)} abstratos sem corpo)" if phase2.get('game_embedded_methods') else '')+f'; {slots} slots virtuais pendentes; '+policy_text(game)),
         ('Coletor e desempenho','cumprido',
-         'Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4.'),
+         'Cumprido em 2026-11-14 (v6 68634525, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida, sem coletas por volume; coletas de transição (JSystem.Gc em SubForm.Finish) com pausa máx. 111,3 ms e frame máx. 118,8 ms (limite 150 ms); partida com média 10,5–11,8 ms. Ressalva: medição com vídeo e áudio refeita na Fase 4.'+' Código legível (C6b, 2026-11-20, New 3DS XL, três execuções, executável 5b5c86fd…): menu estável máx. 13,8 ms, três transições de Finish com pausa máx. 104,4 ms e frame máx. 114,5 ms; partida média 16,96/18,68/17,27 ms, máx. 20,5 ms, sem coletas; cumprido pela regra do usuário (2026-11-20). Ressalvas: margem da partida 1,3 ms; numa rodada anterior, 1 de 3 execuções teve uma coleta não classificada de 116,6 ms na partida (docs/notes/freeze-audit.md).'),
         # Approved by the user on 2026-11-16; DrawMoney2 and UpdateTrainingCoatNum stay as
         # documented, non-blocking pendencies (retried once the text navigation log exists).
         ('Percurso completo no PC','cumprido' if phase2.get('game_executed_methods',0) else 'pendente',
@@ -37,8 +37,9 @@ def criteria(phase2, game, floating=None):
          ('4a: ponto flutuante confirmado em emulador ARM; ref de campo nulo e Sin(-0) decididos e iguais ao Mono ARM; resta a repetição em aparelho Android (docs/notes/criterion4a-status.md). 4b (telas) movido para a Fase 4.'
           if floating and floating.get('status')=='PASS' and floating.get('emulator_confirmed') and floating.get('matched')==floating.get('cases')==36
           else '4a: ponto flutuante Android e decisão sobre ref/out e Sin(-0) pendentes. 4b (telas) movido para a Fase 4.')),
-        ('Código legível e aprovado','pendente',
-         'Emissão por tipo existente; nomes originais e amostra aprovada pelo usuário ainda não comprovados.'),
+        # Marked by the user's rule of 2026-11-20: readable code within criterion 2 on hardware.
+        ('Código legível e aprovado','cumprido',
+         'Amostra aprovada com condições (2026-11-17); passada final A1–A7 e C6b: jogo inteiro legível compila no PC e no ARM, mesma cobertura do canônico no conjunto de roteiros do critério 3 (1.573 métodos), verificação completa 126/126, benchmark no New 3DS dentro do critério 2 (2026-11-20). docs/notes/readable-final-pass.md'),
     ]
 
 def markdown(phase2,game,floating=None):

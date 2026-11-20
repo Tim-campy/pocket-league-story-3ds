@@ -8,7 +8,7 @@
     "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
     "readable_source_sha256": [
       "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
-      "94feb4516dce7a88d57e91b3d6fceb155d6bc7bf66bffc43788ec74a32987cc3"
+      "4c9caeba6809ed85c073c0c03fee872c1a8351097347d7d10ee40e799a4b2c21"
     ],
     "driver_sha256": "653bcd3c6bd79682cc28302b0a0a49ab2c3d26eb5275c64bdc01a4b6780a55d4"
   },
@@ -22,16 +22,16 @@
   "changed_objects": 1,
   "native_source_output_equal": true,
   "dependency_audit": {
-    "unit_65ba7ea8307fa4c0.obj": {
+    "unit_6c3959ac6cecf6c8.obj": {
       "dependencies": 37,
-      "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_50cf419e801ccdba.hpp",
+      "required_header": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_50cf419e801ccdba.hpp",
       "header_sha256": "bd5ae2dbe163777419f5b29f15ad9737b98af9426fe3228c15cf353597082db5",
-      "ninja_stdout_sha256": "358cab9e85d607e4c05d7f99f097f9092979380c04e3e71ac43d70da4e7d70e5"
+      "ninja_stdout_sha256": "b5b97a88a42262e5fa07e1e45e5b71f940391e66c38173d8252cc38ef328beac"
     }
   },
   "initial_build": {
     "exit_code": 0,
-    "elapsed_ns": 12572223600,
+    "elapsed_ns": 11142822400,
     "optimization": "/Od",
     "jobs": 1,
     "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
@@ -51,82 +51,82 @@
       "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common",
       "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\api",
       "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src",
-      "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated"
+      "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated"
     ],
     "sources": 11,
     "objects": [
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_fa738d8566b646dd.obj",
-        "sha256": "d5c6c02c25c3ac0f3f907cf4ce774c8508f2ef912630fffc0c68f7a25712cf6a"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_13baf6619244d115.obj",
+        "sha256": "efc8758093ac75e7707fdf2e7f6245f24a07acd2551cec0fb778c7f509fe95f3"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_16d9a8d22e6c74fd.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_d617c60095580a2f.obj",
-        "sha256": "2ba84526c5f7b14198a31c1e93e5b1bf8f3dea0bc9471e2fd8a59a3d3637790b"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_16d9a8d22e6c74fd.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_daf35affbeeb04a0.obj",
+        "sha256": "d98e5e4f4298ec7773e56df30c6ed77e2c8338d78b47517c3694487820ada62a"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_22f06a836fd6015e.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_5be66e547e1d7d8a.obj",
-        "sha256": "88147e8b866a079b965a2be0d348a2c4b697dfc62d9dfce2dd8805fa92cc6c4b"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_22f06a836fd6015e.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_4b3df1c2be5bc12d.obj",
+        "sha256": "3c476f03210845aa8f85e136376423bcabd66e3fe093869ac3312ea89a19449c"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_28575903f8ad1b57.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_a4943ca751687312.obj",
-        "sha256": "f864718796356945748009e70ed654e0b9496fc4c10b98cfbd9761599bd9f8b8"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_28575903f8ad1b57.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_a8da2b4159f7bc12.obj",
+        "sha256": "34259121d738ab3cff5783a9ef04e91411abc718a7062feadf3b517afbb5248b"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_350d5f846a6f288c.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_0949aee1d6901090.obj",
-        "sha256": "9ac712b7670fbb7d9f7ee6b1433fd787926d51c38f918eb3ee01b481e02d1142"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_350d5f846a6f288c.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_de015a2041b25614.obj",
+        "sha256": "0409d62497384a416424d4fb8064002192c20f02aee0c9ae0f683ba617c10897"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_4d617e7727d7deea.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_65ba7ea8307fa4c0.obj",
-        "sha256": "b388a7433973aa212600cc00821bb7aa6520e75ede67f5964b3d351419cd3e55"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_4d617e7727d7deea.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_6c3959ac6cecf6c8.obj",
+        "sha256": "e0f5645054fa982722a43325ad4fd65ae5d4b3188b0bed605ba26dc4e991d534"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_50cf419e801ccdba.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_9d8ba4bbf04d5ddb.obj",
-        "sha256": "2825e356ef705b9abe1ab6c613946f1c59d3c09f7451954bac3d8c12fb77385e"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_50cf419e801ccdba.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_e77ac3e8ee819c68.obj",
+        "sha256": "1385135c6b6da57c2e6ec02985ae43299156dab498283dac18dcf118a5f547a5"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_8d4d33564159c298.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_7c62fef320237672.obj",
-        "sha256": "fdc62b7a5a9b73ba7152a0ba5c4827a555e7898784702ed769a014714924ed75"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_8d4d33564159c298.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_179710f216faa9db.obj",
+        "sha256": "0556d4a76d3e7505c2ac6cb968a8cc6b3b27525419c89bce67f8830cf9aa7619"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_99278e2efd675ba2.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_40bc42a1eb60548b.obj",
-        "sha256": "86418a5ab453a77dab42a7add0b4bebc7ebc651f05cbb5bd44ee4d282d80c13a"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_99278e2efd675ba2.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_413dd540f5bbe8ba.obj",
+        "sha256": "06ae2cbf18f468f9e951a7a8d38868c5ed331225a76d8c0da3b749c893930667"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_c7c2ebb1e4382a63.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_201e3619e76aae41.obj",
-        "sha256": "64f1686a6fc41b9883709b138ad79860348d6fdae795a458895c7cc00a1074fc"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_c7c2ebb1e4382a63.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_4fd0007172a05b94.obj",
+        "sha256": "8fbdf426c22e9729d5c7df19e3ade41c6839f43ce2f2eb3662197188aa1389bd"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_fc72d5daa5cb8249.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_7ed96cc5930dc487.obj",
-        "sha256": "b6f47dcad233f7d295c7c3e57990391e6b66a06b57fa9413e15bdd15ad4014c1"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_fc72d5daa5cb8249.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_b6fcd5452c9f643f.obj",
+        "sha256": "8cc89d9c840b62c9173c649af45d7642f2368eabc23a243762f6bfe99c22d98b"
       }
     ],
     "ninja_file": {
-      "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\build.ninja",
-      "sha256": "62e7eca00c8a5c77b171b4c0cdfa2be89ddfdf4bd8c5eddd1bdf75468751015d"
+      "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\build.ninja",
+      "sha256": "aa0986250665b587ed2875228377ecec7efd80c9295cf90d21f5ac08a069ce99"
     },
-    "log_sha256": "4ebe138fd97116150c4a709840108d6b36f1af033e577fd58f22e045fabd326d",
+    "log_sha256": "bbc982e0381b595352fe6bcd457838c73ba21dd9515ea9fc82a85d5d78d29c24",
     "include_prefix": {
       "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
       "prefix": "Observa\u00e7\u00e3o: incluindo arquivo: ",
-      "stdout_sha256": "0c36184c2c62b39c30db2210f625d91eedab6247a7198d73425d122c9a9d1e34",
+      "stdout_sha256": "0d9982f19f9e2ac5fd68a583d534a7420803f4451f3b5a6f5a3908247a39e78d",
       "vslang_requested": "1033"
     },
     "ninja_sha256": "9546466f0feca6d62d7d4ea9b7fbc381f8e302cb7f02f4ce327a39d8577bb293"
   },
   "body_edit_build": {
     "exit_code": 0,
-    "elapsed_ns": 1283441500,
+    "elapsed_ns": 1138467500,
     "optimization": "/Od",
     "jobs": 1,
     "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
@@ -146,81 +146,81 @@
       "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\common",
       "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src\\kairo\\api",
       "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\src",
-      "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated"
+      "/IC:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated"
     ],
     "sources": 11,
     "objects": [
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_fa738d8566b646dd.obj",
-        "sha256": "d5c6c02c25c3ac0f3f907cf4ce774c8508f2ef912630fffc0c68f7a25712cf6a"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_13baf6619244d115.obj",
+        "sha256": "efc8758093ac75e7707fdf2e7f6245f24a07acd2551cec0fb778c7f509fe95f3"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_16d9a8d22e6c74fd.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_d617c60095580a2f.obj",
-        "sha256": "2ba84526c5f7b14198a31c1e93e5b1bf8f3dea0bc9471e2fd8a59a3d3637790b"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_16d9a8d22e6c74fd.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_daf35affbeeb04a0.obj",
+        "sha256": "d98e5e4f4298ec7773e56df30c6ed77e2c8338d78b47517c3694487820ada62a"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_22f06a836fd6015e.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_5be66e547e1d7d8a.obj",
-        "sha256": "2e198150c4f79b2199ed7ecc3542465fe80dea43dab43f929257c3b2fa4341c5"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_22f06a836fd6015e.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_4b3df1c2be5bc12d.obj",
+        "sha256": "c30cf1692b85a19816bf2de03ac8577862e8913b436bb4e589b04ef0ff07da1a"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_28575903f8ad1b57.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_a4943ca751687312.obj",
-        "sha256": "f864718796356945748009e70ed654e0b9496fc4c10b98cfbd9761599bd9f8b8"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_28575903f8ad1b57.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_a8da2b4159f7bc12.obj",
+        "sha256": "34259121d738ab3cff5783a9ef04e91411abc718a7062feadf3b517afbb5248b"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_350d5f846a6f288c.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_0949aee1d6901090.obj",
-        "sha256": "9ac712b7670fbb7d9f7ee6b1433fd787926d51c38f918eb3ee01b481e02d1142"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_350d5f846a6f288c.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_de015a2041b25614.obj",
+        "sha256": "0409d62497384a416424d4fb8064002192c20f02aee0c9ae0f683ba617c10897"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_4d617e7727d7deea.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_65ba7ea8307fa4c0.obj",
-        "sha256": "b388a7433973aa212600cc00821bb7aa6520e75ede67f5964b3d351419cd3e55"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_4d617e7727d7deea.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_6c3959ac6cecf6c8.obj",
+        "sha256": "e0f5645054fa982722a43325ad4fd65ae5d4b3188b0bed605ba26dc4e991d534"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_50cf419e801ccdba.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_9d8ba4bbf04d5ddb.obj",
-        "sha256": "2825e356ef705b9abe1ab6c613946f1c59d3c09f7451954bac3d8c12fb77385e"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_50cf419e801ccdba.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_e77ac3e8ee819c68.obj",
+        "sha256": "1385135c6b6da57c2e6ec02985ae43299156dab498283dac18dcf118a5f547a5"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_8d4d33564159c298.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_7c62fef320237672.obj",
-        "sha256": "fdc62b7a5a9b73ba7152a0ba5c4827a555e7898784702ed769a014714924ed75"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_8d4d33564159c298.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_179710f216faa9db.obj",
+        "sha256": "0556d4a76d3e7505c2ac6cb968a8cc6b3b27525419c89bce67f8830cf9aa7619"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_99278e2efd675ba2.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_40bc42a1eb60548b.obj",
-        "sha256": "86418a5ab453a77dab42a7add0b4bebc7ebc651f05cbb5bd44ee4d282d80c13a"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_99278e2efd675ba2.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_413dd540f5bbe8ba.obj",
+        "sha256": "06ae2cbf18f468f9e951a7a8d38868c5ed331225a76d8c0da3b749c893930667"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_c7c2ebb1e4382a63.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_201e3619e76aae41.obj",
-        "sha256": "64f1686a6fc41b9883709b138ad79860348d6fdae795a458895c7cc00a1074fc"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_c7c2ebb1e4382a63.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_4fd0007172a05b94.obj",
+        "sha256": "8fbdf426c22e9729d5c7df19e3ade41c6839f43ce2f2eb3662197188aa1389bd"
       },
       {
-        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\generated\\portable_generated_type_fc72d5daa5cb8249.cpp",
-        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\unit_7ed96cc5930dc487.obj",
-        "sha256": "b6f47dcad233f7d295c7c3e57990391e6b66a06b57fa9413e15bdd15ad4014c1"
+        "source": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\generated\\portable_generated_type_fc72d5daa5cb8249.cpp",
+        "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\unit_b6fcd5452c9f643f.obj",
+        "sha256": "8cc89d9c840b62c9173c649af45d7642f2368eabc23a243762f6bfe99c22d98b"
       }
     ],
     "ninja_file": {
-      "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795116127265529800\\objects\\build.ninja",
-      "sha256": "62e7eca00c8a5c77b171b4c0cdfa2be89ddfdf4bd8c5eddd1bdf75468751015d"
+      "path": "C:\\Users\\l_abn\\Documents\\Projetos\\Pocket League Story 3DS\\build\\incremental-fixtures\\1795211765320571900\\objects\\build.ninja",
+      "sha256": "aa0986250665b587ed2875228377ecec7efd80c9295cf90d21f5ac08a069ce99"
     },
-    "log_sha256": "96b2b4513dcb4339ed27123bf486dc8bdad56eec752f7834a92e74fc4f879177",
+    "log_sha256": "16dd0ef7c82bc6cda1becbac4fed739c202988c493745a8371497e50746bc985",
     "include_prefix": {
       "compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
       "prefix": "Observa\u00e7\u00e3o: incluindo arquivo: ",
-      "stdout_sha256": "0c36184c2c62b39c30db2210f625d91eedab6247a7198d73425d122c9a9d1e34",
+      "stdout_sha256": "0d9982f19f9e2ac5fd68a583d534a7420803f4451f3b5a6f5a3908247a39e78d",
       "vslang_requested": "1033"
     },
     "ninja_sha256": "9546466f0feca6d62d7d4ea9b7fbc381f8e302cb7f02f4ce327a39d8577bb293"
   },
-  "native_executable_sha256": "ffacbe3eb0926dbd0b23fb7258baf3b6121754877bb6017e595e152169b22575",
-  "runtime_library_sha256": "03a4f37be61eafae4d7ff227a6e0a3796a527143e900494a248a36d66c3919cd",
+  "native_executable_sha256": "a7a63b2507b46c1258403fab92e939e6eb15885aa286d2b6b0310c34ae542352",
+  "runtime_library_sha256": "faa0e759d6d70083ed0d8905bf9ea7bd196262c25ee22a14eb9fa64fec1f187e",
   "verified_boundary_ids": [],
   "game_executed": false
 }

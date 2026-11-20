@@ -208,7 +208,7 @@ int main(int argc,char**argv){
         auto display=pls::kairo::Image::FromRgba(240,280,std::vector<std::uint8_t>(240*280*4));auto canvas=pls::kairo::Canvas::GetInstance();pls::kairo::install_canvas_back_key();canvas->host_display(display,pls::cs::make_ref<pls::kairo::Font>());
         auto app=pls::game::create_application();app->host_configure(240,280,pls::cs::String::from_utf8(preferences.u8string()),{});
         pls::kairo::WindowOrientation orientation=pls::kairo::WindowOrientation::portrait;
-        app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::portrait;});app->host_orientation_reader([&]{return orientation;});app->host_orientation_writer([&](auto v){orientation=v;});app->host_fullscreen_writer([](bool){});
+        app->host_orientation_reset([&]{orientation=pls::kairo::WindowOrientation::portrait;});app->host_orientation_reader([&]{return orientation==pls::kairo::WindowOrientation::auto_rotation?pls::kairo::WindowOrientation::portrait:orientation;});/* Unity reports the physical orientation under AutoRotation; this host is a fixed 240x280 portrait framebuffer */app->host_orientation_writer([&](auto v){orientation=v;});app->host_fullscreen_writer([](bool){});
         std::string deferred_clock;
         {
             // Deterministic clock for benchmark/diagnosis (seeds, LoadStart slices).

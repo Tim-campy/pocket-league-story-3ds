@@ -56,7 +56,14 @@ void Backend::reset_default_orientation(){
     if(window_)SDL_SetWindowSize(window_,width_,height_);
     orientation_mode_.store(0);
 }
-kairo::WindowOrientation Backend::orientation()const{const auto stored=orientation_mode_.load();return stored?static_cast<kairo::WindowOrientation>(stored):width_>height_?kairo::WindowOrientation::landscape_left:kairo::WindowOrientation::portrait;}
+kairo::WindowOrientation Backend::orientation()const{
+    // Unity's Screen.orientation reports the current physical orientation; with
+    // AutoRotation requested it never reads back as AutoRotation. The fixed PC
+    // framebuffer's physical orientation follows its shape.
+    const auto physical=width_>height_?kairo::WindowOrientation::landscape_left:kairo::WindowOrientation::portrait;
+    const auto stored=static_cast<kairo::WindowOrientation>(orientation_mode_.load());
+    return stored==kairo::WindowOrientation::unknown||stored==kairo::WindowOrientation::auto_rotation?physical:stored;
+}
 void Backend::set_orientation(kairo::WindowOrientation value){
     // This fixed-framebuffer desktop host has no rotation sensor. Support the
     // existing orientation and automatic mode; do not fake rotated rendering.

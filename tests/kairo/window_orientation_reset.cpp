@@ -19,7 +19,9 @@ int main(){
     backend.set_fullscreen(false);
     if((SDL_GetWindowFlags(window)&SDL_WINDOW_FULLSCREEN)||pls::kairo::DebugInput::get_fullScreen())throw std::runtime_error("Fullscreen flag did not clear");
     backend.set_orientation(pls::kairo::WindowOrientation::auto_rotation);
-    if(backend.orientation()!=pls::kairo::WindowOrientation::auto_rotation)throw std::runtime_error("Automatic mode was not retained");
+    // Unity's Screen.orientation reads back the physical orientation under AutoRotation
+    // (decision of 2026-11-20): this 240x280 framebuffer reads as portrait.
+    if(backend.orientation()!=pls::kairo::WindowOrientation::portrait)throw std::runtime_error("Automatic mode must read back as the physical orientation");
     backend.set_orientation(pls::kairo::WindowOrientation::portrait);
     if(backend.orientation()!=pls::kairo::WindowOrientation::portrait)throw std::runtime_error("Current portrait mode was not retained");
     bool refused=false;try{backend.set_orientation(pls::kairo::WindowOrientation::landscape_right);}catch(const pls::cs::NotSupportedException&){refused=true;}

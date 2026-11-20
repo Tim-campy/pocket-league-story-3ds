@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "semantic_runtime.hpp"
 #include "asset_catalog.hpp"
 #include "managed_shared_field.hpp"
@@ -237,6 +238,12 @@ public:
     std::int32_t GetOriginY()const{return origin_y_;}
     void PushOrigin();void PushOrigin(std::int32_t,std::int32_t,bool=false);void PopOrigin();
     void Scale(float s){scale_=s;update_world();}
+    // Phase 3 prototype (two screens): a host may redirect the drawing of one game
+    // surface to another image. The game resets the display graphics before each
+    // surface (SurfaceManagerBase.Draw); the hook sees every such reset. Empty by
+    // default: no effect on the single-screen hosts.
+    static inline std::function<void(Graphics&)> display_reset_hook{};
+    void retarget(cs::Ref<Image> image){target_=cs::nonnull(std::move(image));}
     float GetScale()const{return scale_;}
     void SetClip(float,float,float,float);void ClipRect(float,float,float,float,bool=true);
     void PushClip(){clips_.push_back(clip_);}void PopClip();void ClearClip();

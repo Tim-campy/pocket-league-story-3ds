@@ -126,6 +126,7 @@ void Graphics::ResetRender(){
     font_->SetFace(2);font_->SetSize(0);font_->SetStyle(0);
     color_=GetColorOfRGB(0,0,0);origin_x_=origin_y_=0;scale_=100.0f;
     world_={1,0,0,0,1,0,0,0,1};mode_={0,255,0};ClearRenderRect();
+    if(is_gui_&&display_reset_hook)display_reset_hook(*this);
 }
 void Graphics::BeginGLRender(bool clip_enable){
     if(!is_gui_)return;

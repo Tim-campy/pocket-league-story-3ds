@@ -98,9 +98,17 @@ Execução: tentativas de diagnóstico 220 (300 s, 188 quadros capturados) e 221
    aproximando 6 px por quadro, e os dois `UP` ao soltar. Medido: `GameForm.SetScale`
    chamado 34 vezes num teste com R por 60 quadros e L por 60; capturas mostram o
    zoom aplicado. Teste sem teclado: `PLS_PC_DUAL_HOLD="R:700-760,L:1000-1060"`.
-   **B.3 (barra `GamePad` na tela de baixo) não feito:** o `SurfaceManager` desenha
-   todas as superfícies numa passada sobre o mesmo `Graphics`; separar a `GamePad`
-   exige que a plataforma redirecione o desenho e o toque por superfície (próximo
-   passo da etapa 1).
+   **B.3 feito (2026-11-20):** a plataforma redireciona o desenho da superfície
+   `GamePad` para uma imagem própria, mostrada na tela de baixo a 80 % (320×192).
+   Mecanismo: o jogo reinicia o `Graphics` de exibição antes de cada superfície
+   (`SurfaceManagerBase.Draw`, ordem `GameView`, `GamePad`, `GameBanner`; medido: 4
+   reinícios por quadro, o primeiro é o do `Canvas`); o gancho
+   `Graphics::display_reset_hook` (vazio fora do protótipo) troca o alvo no 3º e o
+   devolve no 4º. Toque na tela de baixo vai ao jogo só onde a `GamePad` desenhou
+   (alfa ≠ 0), convertido para as coordenadas dela (não testado por roteiro: `UNKNOWN`).
+   **Tela de cima sem a barra:** mapa e menus limpos nos 400×240; título com a arte
+   num quadro de 240 centralizado (o ícone de idioma continua em cima: é da
+   `GameView`). **Tela de baixo:** só os botões dos cantos (Save/Menu, Back, Site/Quit)
+   a 80 %, pequenos e um pouco borrados; o resto fica vazio (espaço para a etapa 2).
 5. Painel provisório com sobreposição de texto em dois botões (L/R, START).
 6. Não medido: desempenho do desenho duplo; leitura no tamanho real do 3DS.

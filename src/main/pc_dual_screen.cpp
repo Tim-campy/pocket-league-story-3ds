@@ -174,6 +174,17 @@ bool Host::handle(const SDL_Event& event, kairo::Canvas& canvas, std::uint32_t t
             if (event.type == SDL_MOUSEBUTTONDOWN) dialog_->PointerDown(x, y); else dialog_->PointerUp(x, y);
             return true;
         }
+        if (gpad_image_) {
+            // Bottom-screen point -> GamePad coordinates (the image is shown at 80 %).
+            const int gx = x * top_width / bottom_width, gy = y * top_width / bottom_width;
+            using Kind = platform::Input::Kind;
+            if (event.type == SDL_MOUSEBUTTONDOWN) {
+                const auto& px = gpad_image_->pixels();
+                const bool drawn = gx >= 0 && gy >= 0 && gx < top_width && gy < top_height && px[(std::size_t(gy) * top_width + gx) * 4 + 3] != 0;
+                if (drawn) { gpad_touch_ = true; canvas.host_event(platform::Input{Kind::pointer_down, gx, gy}); last_action_ = "GamePad touch"; }
+            } else if (gpad_touch_) { gpad_touch_ = false; canvas.host_event(platform::Input{Kind::pointer_up, gx, gy}); }
+            return true;
+        }
         for (const auto& box : boxes)
             if (x >= box.x && x < box.x + box.w && y >= box.y && y < box.y + box.h) press(box.button, event.type == SDL_MOUSEBUTTONDOWN, canvas);
         if (event.type == SDL_MOUSEBUTTONUP)
@@ -271,6 +282,33 @@ void Host::update(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
     }
 }
 
+
+// Surface order (SurfaceManager.Setup): GameView, GamePad, GameBanner. The game resets
+// the display graphics before drawing each one (SurfaceManagerBase.Draw); the first
+// reset of the frame is the Canvas paint itself, so the GamePad is the third.
+static int gpad_reset_index() {
+    static const int value = std::getenv("PLS_PC_GPAD_RESET") ? std::atoi(std::getenv("PLS_PC_GPAD_RESET")) : 3;
+    return value;
+}
+void Host::begin_game_draw(cs::Ref<kairo::Image> display) {
+    display_ = display;
+    gpad_image_ = kairo::Image::FromRgba(top_width, top_height, std::vector<std::uint8_t>(std::size_t(top_width) * top_height * 4, 0));
+    resets_ = 0; routed_ = nullptr;
+    kairo::Graphics::display_reset_hook = [this](kairo::Graphics& g) {
+        const auto target = g.target();
+        if (target != display_ && target != gpad_image_) return;
+        ++resets_;
+        if (resets_ == gpad_reset_index()) { g.retarget(gpad_image_); routed_ = &g; }
+        else if (routed_ && resets_ == gpad_reset_index() + 1) { routed_->retarget(display_); routed_ = nullptr; }
+    };
+}
+void Host::end_game_draw() {
+    if (routed_) { routed_->retarget(display_); routed_ = nullptr; }
+    kairo::Graphics::display_reset_hook = nullptr;
+    if (std::getenv("PLS_PC_LAYOUT_TRACE") && resets_ != last_resets_) std::fprintf(stderr, "PLS_DISPLAY_RESETS %d\n", resets_);
+    last_resets_ = resets_;
+}
+
 void Host::draw(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
     const auto m = meaning(canvas);
     auto g = cs::make_ref<kairo::Graphics>(panel_, true);
@@ -288,6 +326,15 @@ void Host::draw(kairo::Canvas& canvas, kairo::FormManagerBase* manager) {
         g->DrawString(cs::String::from_utf8(std::string(button_name(box.button)) + "  "), float(box.x + 6), float(box.y + (box.h - 12) / 2), 0);
         if (active) g->DrawString(cs::String::from_utf8(meaning_text), float(box.x + 40), float(box.y + (box.h - 12) / 2), 0);
     };
+    if (gpad_image_) {
+        // The GamePad surface at 80 % (400x240 -> 320x192), at the top of the screen.
+        g->DrawScaledImage(gpad_image_, 0.0f, 0.0f, float(bottom_width), float(top_height * bottom_width / top_width), 0, 0, top_width, top_height);
+        g->SetColor(130, 136, 148);
+        g->DrawPreparedString(cs::String::from_utf8("Screen: " + std::string(manager && manager->GetTopForm() ? manager->GetTopForm()->managed_type_name() : "-")), 8.0f, 200.0f, 0);
+        g->DrawPreparedString(cs::String::from_utf8("Last input: " + (last_action_.empty() ? std::string("-") : last_action_)), 8.0f, 216.0f, 0);
+        present();
+        return;
+    }
     for (const auto& box : boxes) {
         std::string what;
         switch (box.button) {

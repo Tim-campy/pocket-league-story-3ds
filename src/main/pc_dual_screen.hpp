@@ -50,6 +50,10 @@ public:
     // Port dialogs go to the bottom screen (decision item 5); the top keeps the game.
     void set_dialog(kairo::PortDialog* dialog) { dialog_ = dialog; }
     void draw_dialog();
+    // B.3: the game's GamePad surface (soft label bar/buttons) is drawn into its own
+    // image and shown on the bottom screen; the top keeps GameView only.
+    void begin_game_draw(cs::Ref<kairo::Image> display);
+    void end_game_draw();
 
 private:
     void press(Button button, bool down, kairo::Canvas& canvas);
@@ -58,6 +62,10 @@ private:
     SDL_Renderer* renderer_ = nullptr;
     SDL_GameController* controller_ = nullptr;
     cs::Ref<kairo::Image> panel_;
+    cs::Ref<kairo::Image> display_, gpad_image_;
+    kairo::Graphics* routed_ = nullptr;
+    int resets_ = 0, last_resets_ = 0;
+    bool gpad_touch_ = false;  // a bottom-screen touch is being forwarded to the game
     std::array<bool, static_cast<int>(Button::Count)> held_{};
     std::int32_t pad_x_ = 0, pad_y_ = 0;  // circle pad, -1..1 per axis (keys) or scaled stick
     bool dragging_ = false;

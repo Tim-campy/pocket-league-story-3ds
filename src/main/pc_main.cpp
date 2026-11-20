@@ -345,7 +345,9 @@ int main(int argc,char** argv){
             timing.mark(pls::pc::FrameStage::update);
             audio.pump();
             timing.mark(pls::pc::FrameStage::audio);
+            if(dual)dual->begin_game_draw(display);
             app->host_draw();
+            if(dual)dual->end_game_draw();
             pls::kairo::Offscreen::EndFrame();
             pls::cs::gc_frame_end();pls::kairo::virtual_clock::end_frame();assets.age_retained();
 #if defined(PLS_DIAGNOSTIC_BUILD)

@@ -15,8 +15,8 @@
   "android_raster_comparison": "UNKNOWN",
   "sources": {
     "tools/test_graphics.py": "8a3005bd9afc908902767fdf0d0fa83fd866378397ac5ee04941fb52c562347d",
-    "src/kairo/api/graphics.hpp": "f86f6ab4ed4a6063a1f21e7a7a046eaf6590e93626f7de8e3d61a6bf0e2d2d87",
-    "src/kairo/common/graphics.cpp": "f1fed8cd5851b9db1c47e924323526fcd143677ae7c6acb30b18cc8c1522fe8d",
+    "src/kairo/api/graphics.hpp": "96e9ff7056dc7bc9d554b351c8eaf903b51a6050b9c9b5a0af8f335c565e60d7",
+    "src/kairo/common/graphics.cpp": "d3165219a77312acb66162e635330e4aa87c41016b3069e8de0d37aeefdb0d86",
     "src/kairo/common/mesh.cpp": "e084765c4deb66e7d10b38a650016a685a516a0d653270cb87d433839d5d20a7",
     "src/kairo/common/image_lifetime.cpp": "170d32305ed71f74a52580d6769888a090a76b4499ee6f45fa6edb2cd2de8c5e",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
@@ -63,10 +63,10 @@
   },
   "oracle_artifacts": {
     "build/graphics-tests/GraphicsOracle.cs": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
-    "build/graphics-tests/GraphicsOracle.dll": "ed614d348ceed4167d03d40137fb3cf93c289a9bdb58e92b4ae637a7b35d4072",
-    "build/graphics-tests/GraphicsOracle-mono.exe": "025de7c706ccdd4b80b791d2bb3b2a5a141a6ef509f7d340ac8b1b7af02b6ac7"
+    "build/graphics-tests/GraphicsOracle.dll": "0ba46b8b747370aa06fd144d3be862288eb58962106792555b1a3daa8022f276",
+    "build/graphics-tests/GraphicsOracle-mono.exe": "99b6d32eda1191d9686f6b0199fab8ad5bca597d55838709c619b63ad1b48b2c"
   },
-  "executable_sha256": "d6418c38a581d8d157557fda833009d9da10552a9ff76498dc44f5fbc1dec86b",
+  "executable_sha256": "87f368505c4146f2c21b1b62f0c5c967a83cc58080fa51acdf897c0b582210b4",
   "oracle_sha256": "31a859ca280ee46a2179bdd676a8c7b8021d48bf4606b9655be2adfb8e5e0014",
   "trace_sha256": "1d455cedba765858a3c723984c43d7291fbe457a156b3048f0b6323f4310173b",
   "verified_source_ids": [

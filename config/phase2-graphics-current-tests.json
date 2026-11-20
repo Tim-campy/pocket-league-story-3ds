@@ -652,7 +652,7 @@
   "native_gc_thread_policy": {
     "assertions": 9,
     "worker_snapshots": 2000,
-    "collections": 24,
+    "collections": 15,
     "sticky_after_end": true,
     "snapshot_survives_overwrite": true,
     "old_target_collected_after_overwrite": true,
@@ -662,7 +662,7 @@
     "tests/kairo/graphics_current_fixtures.cpp": "b144288b94a9bad789846463042ff1731e1a5193eed70e1429492bb5f512d6af",
     "src/kairo/common/canvas.cpp": "b5565204dfc91c3ed1abc520d872d9c4f46db4b8e6323cd3acca2b8fabc5d803",
     "src/kairo/platform/sdl/input.cpp": "98895936ed7906c7cf71c5edfcfe3fe54001d0bdd0dcd75e1f092059528ca139",
-    "src/kairo/common/graphics.cpp": "f1fed8cd5851b9db1c47e924323526fcd143677ae7c6acb30b18cc8c1522fe8d",
+    "src/kairo/common/graphics.cpp": "d3165219a77312acb66162e635330e4aa87c41016b3069e8de0d37aeefdb0d86",
     "src/kairo/common/mesh.cpp": "e084765c4deb66e7d10b38a650016a685a516a0d653270cb87d433839d5d20a7",
     "src/kairo/common/image_lifetime.cpp": "170d32305ed71f74a52580d6769888a090a76b4499ee6f45fa6edb2cd2de8c5e",
     "src/kairo/common/font.cpp": "de4c9fe00c9c6ebdb965c0f3e007fd12019de0700e2e004cdbdfb0099c407f8c",
@@ -673,7 +673,7 @@
     "tools/test_graphics_current.py": "4a25e4bbd78091e96639178fb70ae8126fef6dfb464f9c7c629aa9e5801cc6eb",
     "tools/test_input.py": "5aca4bbe8ec93f46f590d75063cfe6493be94b9d8818d28e67e0b0d09adf597a",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
-    "src/kairo/api/graphics.hpp": "f86f6ab4ed4a6063a1f21e7a7a046eaf6590e93626f7de8e3d61a6bf0e2d2d87",
+    "src/kairo/api/graphics.hpp": "96e9ff7056dc7bc9d554b351c8eaf903b51a6050b9c9b5a0af8f335c565e60d7",
     "src/kairo/api/canvas.hpp": "0ba9ecf96ad5fd1f81e13b80df15bf984b55e42589b56aae9ef0b32f65229490",
     "src/kairo/api/input.hpp": "0ad98903cf66860b1f4faed60e5f4c57dcf4423fa7360a4bf41b2654eaa68669",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
@@ -728,7 +728,7 @@
   "current_restored_after_nested_paint": false,
   "native_executable": {
     "path": "build/graphics-current-tests/graphics-current-fixtures.exe",
-    "sha256": "dd0ef3fb57b7542799411af746eb98fc6330ef39f195f81fc45719930ad6eb8d"
+    "sha256": "948804b21806f1a3b0b15fee58df16d0e07086a8ecf4a9eb132839f0265fde5e"
   },
   "verified_boundary_ids": [],
   "limits": [

@@ -23,9 +23,11 @@ pls::cs::String cs_b6ad7779caeeb23c::ToString() {return cs_27ff635ad5111b5f(pls:
 
 std::int32_t cs_b6ad7779caeeb23c::GetHashCode() {return cs_02a7dd0b0ae9540d(pls::cs::static_pointer_cast<cs_b6ad7779caeeb23c>(shared_from_this()));}
 
-void cs_init_b6ad7779caeeb23c(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.GameDataRecord",[](){
+static PLS_NOINLINE void cs_init_b6ad7779caeeb23c_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.GameDataRecord",flag,[](){
 
 });}
+
+void cs_init_b6ad7779caeeb23c(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_b6ad7779caeeb23c_slow(flag);}
 
 // M:kairo.unity.system.GameDataRecord.#ctor
 pls::cs::Ref<cs_b6ad7779caeeb23c> cs_90ee7811a5836c91() { cs_init_b6ad7779caeeb23c();

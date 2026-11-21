@@ -38,9 +38,11 @@ static pls::cs::Ref<cs_f9cfa6da3459412e> cs_60a3266700f223ca_value{};
 
 static pls::cs::Ref<cs_e315dac1df3b175d> cs_2c0cde3e5aa1e969_value{};
 
-void cs_init_f9cfa6da3459412e(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_72947298469bea4a_value,visitor);pls::cs::trace_value(cs_a68df2bae0e22f44_value,visitor);pls::cs::trace_value(cs_60a3266700f223ca_value,visitor);pls::cs::trace_value(cs_2c0cde3e5aa1e969_value,visitor);});static pls::cs::TypeInitState state;state.run("surface.SurfaceManager",[](){
+static PLS_NOINLINE void cs_init_f9cfa6da3459412e_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_72947298469bea4a_value,visitor);pls::cs::trace_value(cs_a68df2bae0e22f44_value,visitor);pls::cs::trace_value(cs_60a3266700f223ca_value,visitor);pls::cs::trace_value(cs_2c0cde3e5aa1e969_value,visitor);});static pls::cs::TypeInitState state;state.run("surface.SurfaceManager",flag,[](){
 
 });}
+
+void cs_init_f9cfa6da3459412e(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_f9cfa6da3459412e_slow(flag);}
 
 pls::cs::Ref<cs_af32d28251411c95>& cs_72947298469bea4a(){cs_init_f9cfa6da3459412e();return cs_72947298469bea4a_value;}
 

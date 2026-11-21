@@ -24,10 +24,12 @@ void cs_6485f92c2f04639f::Updated() {cs_4defd304e2135f12(pls::cs::static_pointer
 
 static pls::cs::Ref<cs_6485f92c2f04639f> cs_84bcc52ce28bc88e_value{};
 
-void cs_init_6485f92c2f04639f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_84bcc52ce28bc88e_value,visitor);});static pls::cs::TypeInitState state;state.run("form.FormManager",[](){
+static PLS_NOINLINE void cs_init_6485f92c2f04639f_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_84bcc52ce28bc88e_value,visitor);});static pls::cs::TypeInitState state;state.run("form.FormManager",flag,[](){
 cs_84bcc52ce28bc88e_value = pls::cs::evaluate_type_initializer_field("F:form.FormManager.instance_",[&](){return pls::cs::Ref<cs_6485f92c2f04639f>{};});
 
 });}
+
+void cs_init_6485f92c2f04639f(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_6485f92c2f04639f_slow(flag);}
 
 pls::cs::Ref<cs_6485f92c2f04639f>& cs_84bcc52ce28bc88e(){cs_init_6485f92c2f04639f();return cs_84bcc52ce28bc88e_value;}
 

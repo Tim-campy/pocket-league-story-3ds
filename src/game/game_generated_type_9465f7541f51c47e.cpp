@@ -13,9 +13,11 @@ namespace pls::game {
 
 void cs_9465f7541f51c47e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_8c0cc3bea061f0cd,visitor);pls::cs::trace_value(cs_aaefb5b9fae0397e,visitor);pls::cs::trace_value(cs_617d9d7e65ae6487,visitor);pls::cs::trace_value(cs_2b38757bf00583cf,visitor);pls::cs::trace_value(cs_c9cc587d986ccc18,visitor);}
 
-void cs_init_9465f7541f51c47e(){static pls::cs::TypeInitState state;state.run("system.friend.ui.Friend",[](){
+static PLS_NOINLINE void cs_init_9465f7541f51c47e_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.friend.ui.Friend",flag,[](){
 
 });}
+
+void cs_init_9465f7541f51c47e(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_9465f7541f51c47e_slow(flag);}
 
 // M:system.friend.ui.Friend.#ctor
 pls::cs::Ref<cs_9465f7541f51c47e> cs_2ce578f5724575d0() { cs_init_9465f7541f51c47e();

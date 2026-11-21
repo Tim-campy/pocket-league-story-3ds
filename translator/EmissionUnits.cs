@@ -81,7 +81,7 @@ sealed partial class Lowerer {
         }
         foreach(var id in emitted.Keys){var method=methods[id];owners[Name(method)]=Unit(method.ContainingType);owners[Name(method)+"_init"]=Unit(method.ContainingType);}
         foreach(var id in usedFields){var field=fieldSymbols[id];owners[Name(field)]=Unit(field.ContainingType);owners[Name(field)+"_value"]=Unit(field.ContainingType);}
-        foreach(var id in usedTypes){var type=initializedTypes[id];owners[TypeInitName(type)]=Unit(type);}
+        foreach(var id in usedTypes){var type=initializedTypes[id];owners[TypeInitName(type)]=Unit(type);owners[TypeInitName(type)+"_slow"]=Unit(type);}
         if(bootstrap!=null&&emitted.ContainsKey(Id(bootstrap)))owners["create_application"]=Unit(bootstrap.ContainingType);
         string WithoutComments(string value)=>Regex.Replace(value,@"//[^\n]*|/\*.*?\*/","",RegexOptions.Singleline).Trim();
         TypeUnit? DeclarationOwner(string block){
@@ -93,7 +93,7 @@ sealed partial class Lowerer {
             if(structure.Success)return owners.GetValueOrDefault(structure.Groups[1].Value);
             var member=Regex.Match(clean,@"\b(cs_[0-9a-f]{16})(?:<[^<>;{}()]*>)?::\w+\s*\(");
             if(member.Success)return owners.GetValueOrDefault(member.Groups[1].Value);
-            foreach(Match match in Regex.Matches(clean,@"\b(cs_(?:init_)?[0-9a-f]{16}(?:_init|_value)?|create_application)\b")){
+            foreach(Match match in Regex.Matches(clean,@"\b(cs_(?:init_)?[0-9a-f]{16}(?:_init|_value|_slow)?|create_application)\b")){
                 int end=match.Index+match.Length;while(end<clean.Length&&Char.IsWhiteSpace(clean[end]))end++;
                 if(end<clean.Length&&clean[end]=='<'){
                     int nesting=0;do{if(clean[end]=='<')nesting++;else if(clean[end]=='>')nesting--;end++;}while(end<clean.Length&&nesting!=0);

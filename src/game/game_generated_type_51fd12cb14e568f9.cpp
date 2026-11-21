@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_51fd12cb14e568f9::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_707c7a72abb82ec1,visitor);pls::cs::trace_value(cs_3bdfea24b8fa4dd4,visitor);}
 
-void cs_init_51fd12cb14e568f9(){static pls::cs::TypeInitState state;state.run("system.billing.util.Inventory",[](){
+static PLS_NOINLINE void cs_init_51fd12cb14e568f9_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.util.Inventory",flag,[](){
 
 });}
+
+void cs_init_51fd12cb14e568f9(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_51fd12cb14e568f9_slow(flag);}
 
 // M:system.billing.util.Inventory.#ctor
 pls::cs::Ref<cs_51fd12cb14e568f9> cs_711d8c323ca1c807() { cs_init_51fd12cb14e568f9();

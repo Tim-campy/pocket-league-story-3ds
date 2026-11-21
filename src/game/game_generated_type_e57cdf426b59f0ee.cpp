@@ -3,9 +3,11 @@
 #include "game_generated_type_e57cdf426b59f0ee.hpp"
 namespace pls::game {
 
-void cs_init_e57cdf426b59f0ee(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel.Display",[](){
+static PLS_NOINLINE void cs_init_e57cdf426b59f0ee_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel.Display",flag,[](){
 
 });}
+
+void cs_init_e57cdf426b59f0ee(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_e57cdf426b59f0ee_slow(flag);}
 
 // M:kairo.unity.panel.FepPanel.Display.SetCurrent(kairo.unity.panel.FepPanel)
 void cs_73ded8dcd4fca440(pls::cs::Ref<cs_d37bccc1c3814fc6> v_panel) { cs_init_e57cdf426b59f0ee();

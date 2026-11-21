@@ -10,9 +10,11 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_d3541fa57bc06660_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_7ddc12ff1c507889_value{};
 
-void cs_init_29293d4d6e77d3bc(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d3541fa57bc06660_value,visitor);pls::cs::trace_value(cs_7ddc12ff1c507889_value,visitor);});static pls::cs::TypeInitState state;state.run("game.MapObject",[](){
+static PLS_NOINLINE void cs_init_29293d4d6e77d3bc_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d3541fa57bc06660_value,visitor);pls::cs::trace_value(cs_7ddc12ff1c507889_value,visitor);});static pls::cs::TypeInitState state;state.run("game.MapObject",flag,[](){
 
 });}
+
+void cs_init_29293d4d6e77d3bc(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_29293d4d6e77d3bc_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_d3541fa57bc06660(){cs_init_29293d4d6e77d3bc();return cs_d3541fa57bc06660_value;}
 

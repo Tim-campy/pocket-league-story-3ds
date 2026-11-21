@@ -2,6 +2,7 @@
 
 Does not run the game, remove DEBUG, use physical input or claim full DoEvents.
 """
+import original_metadata
 import hashlib,json,os,sys
 from pathlib import Path
 from test_input import ROOT,sha,run,compile_modern
@@ -12,7 +13,7 @@ from inventory import compiler_paths
 def main():
     folder=ROOT/'build/debug-input-tests';folder.mkdir(parents=True,exist_ok=True)
     csc,dotnet,framework=compiler_paths();metadata_source=ROOT/'tests/kairo/UnityDebugInputMetadata.cs';metadata=folder/'UnityDebugInputMetadata.dll';compile_modern([metadata_source],metadata,folder,'metadata',csc,framework)
-    request=json.loads((ROOT/'build/translator/KairoLibrary-input.json').read_text(encoding='utf-8'));external=next(Path(p).resolve() for p in request['references'] if Path(p).name=='UnityEngine.dll')
+    external=original_metadata.unity_engine()
     if external.is_relative_to(ROOT):raise ValueError('Original API metadata must remain external')
     observations=run([dotnet,metadata,external],folder,'metadata-read').splitlines()
     expected={'key:LeftShift=304','key:RightShift=303','field:Vector3.x=060c','field:Vector3.y=060c','field:Vector3.z=060c'}

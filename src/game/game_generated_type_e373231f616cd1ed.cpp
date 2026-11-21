@@ -4,9 +4,11 @@ namespace pls::game {
 
 void cs_e373231f616cd1ed::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6a3564cf80f64631,visitor);}
 
-void cs_init_e373231f616cd1ed(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch",[](){
+static PLS_NOINLINE void cs_init_e373231f616cd1ed_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch",flag,[](){
 
 });}
+
+void cs_init_e373231f616cd1ed(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_e373231f616cd1ed_slow(flag);}
 
 // M:kairo.unity.surface.SurfaceBase.MotionEventRecord.MultiTouch.#ctor
 pls::cs::Ref<cs_e373231f616cd1ed> cs_2ec538e1b5422edb() { cs_init_e373231f616cd1ed();

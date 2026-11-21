@@ -11,10 +11,12 @@ std::int32_t cs_89c0d586cfe20341::GetHashCode() {return cs_d33c547c634b2bdf(pls:
 
 static pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>> cs_110a219403a49c59_value{};
 
-void cs_init_89c0d586cfe20341(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_110a219403a49c59_value,visitor);});static pls::cs::TypeInitState state;state.run("java.lang.JThread",[](){
+static PLS_NOINLINE void cs_init_89c0d586cfe20341_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_110a219403a49c59_value,visitor);});static pls::cs::TypeInitState state;state.run("java.lang.JThread",flag,[](){
 cs_110a219403a49c59_value = pls::cs::evaluate_type_initializer_field("F:java.lang.JThread.threadBuffer_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/java/lang/JThread.cs:M:java.lang.JThread.CurrentThread:321",pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>>::make());});
 
 });}
+
+void cs_init_89c0d586cfe20341(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_89c0d586cfe20341_slow(flag);}
 
 pls::cs::List<pls::cs::Ref<cs_89c0d586cfe20341>>& cs_110a219403a49c59(){cs_init_89c0d586cfe20341();return cs_110a219403a49c59_value;}
 

@@ -9,9 +9,11 @@ void cs_f8b20a4d1d9d695f::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 bool cs_f8b20a4d1d9d695f::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_673ba145a871a846(pls::cs::static_pointer_cast<cs_f8b20a4d1d9d695f>(shared_from_this()),v_obj);}
 
-void cs_init_f8b20a4d1d9d695f(){static pls::cs::TypeInitState state;state.run("java.util.Vector",[](){
+static PLS_NOINLINE void cs_init_f8b20a4d1d9d695f_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.util.Vector",flag,[](){
 
 });}
+
+void cs_init_f8b20a4d1d9d695f(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_f8b20a4d1d9d695f_slow(flag);}
 
 // M:java.util.Vector.#ctor
 pls::cs::Ref<cs_f8b20a4d1d9d695f> cs_b5d75502f0a9aa7e() { cs_init_f8b20a4d1d9d695f();

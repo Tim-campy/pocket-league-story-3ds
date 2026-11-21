@@ -13,9 +13,11 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_2f1cf2722aa1e793_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_d4bb3617e4a9e852_value{};
 
-void cs_init_f991feb74054b6df(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_2f1cf2722aa1e793_value,visitor);pls::cs::trace_value(cs_d4bb3617e4a9e852_value,visitor);});static pls::cs::TypeInitState state;state.run("data.MapchipMatch",[](){
+static PLS_NOINLINE void cs_init_f991feb74054b6df_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_2f1cf2722aa1e793_value,visitor);pls::cs::trace_value(cs_d4bb3617e4a9e852_value,visitor);});static pls::cs::TypeInitState state;state.run("data.MapchipMatch",flag,[](){
 
 });}
+
+void cs_init_f991feb74054b6df(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_f991feb74054b6df_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_2f1cf2722aa1e793(){cs_init_f991feb74054b6df();return cs_2f1cf2722aa1e793_value;}
 

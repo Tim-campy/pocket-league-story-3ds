@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_f65ba01749ba9d34::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_ac47dab08454a832,visitor);pls::cs::trace_value(cs_e3cc350442bf2617,visitor);pls::cs::trace_value(cs_b485e3aec4989e77,visitor);pls::cs::trace_value(cs_abeb2739082898db,visitor);}
 
-void cs_init_f65ba01749ba9d34(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.GameDataRecord.Data",[](){
+static PLS_NOINLINE void cs_init_f65ba01749ba9d34_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.GameDataRecord.Data",flag,[](){
 
 });}
+
+void cs_init_f65ba01749ba9d34(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_f65ba01749ba9d34_slow(flag);}
 
 // M:kairo.unity.system.GameDataRecord.Data.#ctor(System.String,System.Byte[],System.Boolean)
 pls::cs::Ref<cs_f65ba01749ba9d34> cs_e166ffa7af3293c0(pls::cs::String v_name,pls::cs::Array<std::uint8_t> v_value,bool v_toset) { cs_init_f65ba01749ba9d34();

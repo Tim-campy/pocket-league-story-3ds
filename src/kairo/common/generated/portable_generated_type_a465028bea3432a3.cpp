@@ -10,9 +10,11 @@ std::int32_t cs_a465028bea3432a3::GetHashCode() {return cs_26468f4a2c9b3470(pls:
 
 bool cs_a465028bea3432a3::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_9f8cfce81641ea7a(pls::cs::static_pointer_cast<cs_a465028bea3432a3>(shared_from_this()),v_obj);}
 
-void cs_init_a465028bea3432a3(){static pls::cs::TypeInitState state;state.run("java.util.JCalendar",[](){
+static PLS_NOINLINE void cs_init_a465028bea3432a3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.util.JCalendar",flag,[](){
 
 });}
+
+void cs_init_a465028bea3432a3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_a465028bea3432a3_slow(flag);}
 
 // M:java.util.JCalendar.#ctor
 pls::cs::Ref<cs_a465028bea3432a3> cs_d176e2e695c74782() { cs_init_a465028bea3432a3();

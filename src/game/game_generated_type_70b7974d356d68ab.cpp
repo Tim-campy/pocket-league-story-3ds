@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_70b7974d356d68ab::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_69110646eac3c92f,visitor);pls::cs::trace_value(cs_3b9b9f07493bab63,visitor);pls::cs::trace_value(cs_0556df4715acbd82,visitor);pls::cs::trace_value(cs_c5b0b4bdfc0bc3e5,visitor);pls::cs::trace_value(cs_80159b241b8b0fb0,visitor);pls::cs::trace_value(cs_a14ff763839a39fc,visitor);pls::cs::trace_value(cs_cdbd50f771e65195,visitor);pls::cs::trace_value(cs_07a9daa229d89929,visitor);}
 
-void cs_init_70b7974d356d68ab(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.TouchPoint",[](){
+static PLS_NOINLINE void cs_init_70b7974d356d68ab_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase.TouchPoint",flag,[](){
 
 });}
+
+void cs_init_70b7974d356d68ab(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_70b7974d356d68ab_slow(flag);}
 
 // M:kairo.unity.surface.SurfaceBase.TouchPoint.#ctor
 pls::cs::Ref<cs_70b7974d356d68ab> cs_939028c47866c657() { cs_init_70b7974d356d68ab();

@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_e6ed65290db381ba::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 
-void cs_init_e6ed65290db381ba(){static pls::cs::TypeInitState state;state.run("system.billing.util.Json",[](){
+static PLS_NOINLINE void cs_init_e6ed65290db381ba_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.util.Json",flag,[](){
 
 });}
+
+void cs_init_e6ed65290db381ba(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_e6ed65290db381ba_slow(flag);}
 
 // M:system.billing.util.Json.#ctor
 pls::cs::Ref<cs_e6ed65290db381ba> cs_44e98bc97ba8204b() { cs_init_e6ed65290db381ba();

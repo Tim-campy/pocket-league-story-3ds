@@ -34,9 +34,11 @@ namespace pls::game {
 
 static pls::cs::Ref<pls::kairo::Font> cs_9c0205d7c9701bff_value{};
 
-void cs_init_ed8eabc614ddcf9e(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_9c0205d7c9701bff_value,visitor);});static pls::cs::TypeInitState state;state.run("PlsPortGeneratedBootstrap.Source",[](){
+static PLS_NOINLINE void cs_init_ed8eabc614ddcf9e_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_9c0205d7c9701bff_value,visitor);});static pls::cs::TypeInitState state;state.run("PlsPortGeneratedBootstrap.Source",flag,[](){
 
 });}
+
+void cs_init_ed8eabc614ddcf9e(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_ed8eabc614ddcf9e_slow(flag);}
 
 pls::cs::Ref<pls::kairo::Font>& cs_9c0205d7c9701bff(){cs_init_ed8eabc614ddcf9e();return cs_9c0205d7c9701bff_value;}
 

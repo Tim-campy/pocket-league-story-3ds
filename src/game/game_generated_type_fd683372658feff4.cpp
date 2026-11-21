@@ -12,9 +12,11 @@ namespace pls::game {
 
 void cs_fd683372658feff4::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_468796fb9827f5e6,visitor);pls::cs::trace_value(cs_7b5ebddf22953059,visitor);pls::cs::trace_value(cs_7033e8b866a8dda2,visitor);pls::cs::trace_value(cs_2f097db5779cd511,visitor);pls::cs::trace_value(cs_8f7f3ca9485bb4f8,visitor);pls::cs::trace_value(cs_de1509021f22ef65,visitor);pls::cs::trace_value(cs_de2327fcc8b4451b,visitor);}
 
-void cs_init_fd683372658feff4(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.lineup.ui.LineupData",[](){
+static PLS_NOINLINE void cs_init_fd683372658feff4_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.lineup.ui.LineupData",flag,[](){
 
 });}
+
+void cs_init_fd683372658feff4(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_fd683372658feff4_slow(flag);}
 
 // M:kairo.unity.system.lineup.ui.LineupData.#ctor
 pls::cs::Ref<cs_fd683372658feff4> cs_2d5c5c827d878352() { cs_init_fd683372658feff4();

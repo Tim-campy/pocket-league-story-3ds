@@ -4,9 +4,11 @@ namespace pls::game {
 
 void cs_fbfef5c19ac20749::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_d610593762120cde,visitor);pls::cs::trace_value(cs_ede9b012c16594d4,visitor);pls::cs::trace_value(cs_11096a2934652136,visitor);pls::cs::trace_value(cs_aed8d166cc394ada,visitor);pls::cs::trace_value(cs_a44884f8becb8e1b,visitor);pls::cs::trace_value(cs_0915461b6b8b6552,visitor);}
 
-void cs_init_fbfef5c19ac20749(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Image.TextRenderTask",[](){
+static PLS_NOINLINE void cs_init_fbfef5c19ac20749_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Image.TextRenderTask",flag,[](){
 
 });}
+
+void cs_init_fbfef5c19ac20749(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_fbfef5c19ac20749_slow(flag);}
 
 // M:kairo.unity.ui.Image.TextRenderTask.#ctor(System.String,System.Single,System.Single,System.Int32,System.Int32,kairo.unity.ui.Font)
 cs_fbfef5c19ac20749 cs_990cc4ea487d53f7(pls::cs::String v_text,float v_x,float v_y,std::int32_t v_anchor,std::int32_t v_color,pls::cs::Ref<pls::kairo::Font> v_font) { cs_init_fbfef5c19ac20749();

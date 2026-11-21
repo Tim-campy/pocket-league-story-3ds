@@ -16,9 +16,11 @@ std::int32_t cs_cd85e7c847ae4598::GetHashCode() {return cs_a2ebcb9a739953bd(pls:
 
 pls::cs::String cs_cd85e7c847ae4598::ToString() {return cs_ad7fb776daed3dde(pls::cs::static_pointer_cast<cs_cd85e7c847ae4598>(shared_from_this()));}
 
-void cs_init_cd85e7c847ae4598(){static pls::cs::TypeInitState state;state.run("system.billing.ui.PurchaseRecord",[](){
+static PLS_NOINLINE void cs_init_cd85e7c847ae4598_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.ui.PurchaseRecord",flag,[](){
 
 });}
+
+void cs_init_cd85e7c847ae4598(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_cd85e7c847ae4598_slow(flag);}
 
 // M:system.billing.ui.PurchaseRecord.#ctor
 pls::cs::Ref<cs_cd85e7c847ae4598> cs_77c1e405abfca250() { cs_init_cd85e7c847ae4598();

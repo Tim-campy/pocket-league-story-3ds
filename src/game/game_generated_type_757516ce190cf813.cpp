@@ -9,9 +9,11 @@ pls::cs::String cs_757516ce190cf813::ToString() {return cs_94ac3fd922c20ee0(pls:
 
 std::int32_t cs_757516ce190cf813::GetHashCode() {return cs_cffdde71a559d83c(pls::cs::static_pointer_cast<cs_757516ce190cf813>(shared_from_this()));}
 
-void cs_init_757516ce190cf813(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchEvent",[](){
+static PLS_NOINLINE void cs_init_757516ce190cf813_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchEvent",flag,[](){
 
 });}
+
+void cs_init_757516ce190cf813(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_757516ce190cf813_slow(flag);}
 
 // M:kairo.unity.surface.TouchEvent.#ctor
 pls::cs::Ref<cs_757516ce190cf813> cs_f7e61b586cae64ba() { cs_init_757516ce190cf813();

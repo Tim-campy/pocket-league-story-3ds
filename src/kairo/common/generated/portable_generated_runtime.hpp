@@ -62,7 +62,7 @@ template<class T>std::int32_t cs_value_hash(T value){auto object=pls::cs::box(va
 
 [[maybe_unused]] static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
 
-template<class T> T cs_require(T value){if(!value)throw pls::cs::NullReferenceException();return value;}
+template<class T> inline T cs_require(T value){if(!value)pls::cs::throw_null_reference();return value;}
 
 [[maybe_unused]] static pls::cs::String cs_string_from_chars(pls::cs::Array<char16_t> chars){if(chars.is_null())throw pls::cs::ArgumentNullException();std::u16string out;for(std::int32_t i=0;i<chars.length();++i)out.push_back(chars.at(i));return pls::cs::String(std::move(out));}
 

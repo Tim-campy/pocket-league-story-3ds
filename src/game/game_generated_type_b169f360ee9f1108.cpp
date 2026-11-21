@@ -8,9 +8,11 @@ std::int32_t cs_b169f360ee9f1108::GetHashCode() {return cs_bd48f39de19516d5(pls:
 
 pls::cs::String cs_b169f360ee9f1108::ToString() {return cs_3fc374a8a3e0f24e(pls::cs::static_pointer_cast<cs_b169f360ee9f1108>(shared_from_this()));}
 
-void cs_init_b169f360ee9f1108(){static pls::cs::TypeInitState state;state.run("system.billing.util.SkuDetails",[](){
+static PLS_NOINLINE void cs_init_b169f360ee9f1108_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.util.SkuDetails",flag,[](){
 
 });}
+
+void cs_init_b169f360ee9f1108(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_b169f360ee9f1108_slow(flag);}
 
 // M:system.billing.util.SkuDetails.#ctor
 pls::cs::Ref<cs_b169f360ee9f1108> cs_fdfacb67cda123d7() { cs_init_b169f360ee9f1108();

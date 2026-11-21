@@ -24,9 +24,11 @@ void cs_e7a5499b363ef51b::cs_virtual_4546aef6e4846446() {cs_4546aef6e4846446(pls
 
 std::int32_t cs_e7a5499b363ef51b::cs_virtual_bb7347310506b971() {return cs_bb7347310506b971(pls::cs::static_pointer_cast<cs_e7a5499b363ef51b>(shared_from_this()));}
 
-void cs_init_e7a5499b363ef51b(){static pls::cs::TypeInitState state;state.run("java.io.InputStream",[](){
+static PLS_NOINLINE void cs_init_e7a5499b363ef51b_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.io.InputStream",flag,[](){
 
 });}
+
+void cs_init_e7a5499b363ef51b(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_e7a5499b363ef51b_slow(flag);}
 
 // M:java.io.InputStream.#ctor
 pls::cs::Ref<cs_e7a5499b363ef51b> cs_7c187221d1d7c346() { cs_init_e7a5499b363ef51b();

@@ -3,9 +3,11 @@
 #include "generated/portable_generated_type_98f0a1bec2084c3c.hpp"
 namespace pls::game {
 
-void cs_init_98f0a1bec2084c3c(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Language.LangPackFormat",[](){
+static PLS_NOINLINE void cs_init_98f0a1bec2084c3c_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Language.LangPackFormat",flag,[](){
 
 });}
+
+void cs_init_98f0a1bec2084c3c(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_98f0a1bec2084c3c_slow(flag);}
 
 // M:kairo.unity.util.Language.LangPackFormat.#ctor(System.String,System.Char,System.Char)
 pls::cs::Ref<pls::generated::cs_98f0a1bec2084c3c> cs_0df98a8eddce17f9(pls::cs::String v_file,char16_t v_lineCode,char16_t v_segCode) { cs_init_98f0a1bec2084c3c();

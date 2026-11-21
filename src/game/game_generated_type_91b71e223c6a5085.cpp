@@ -7,9 +7,11 @@ namespace pls::game {
 
 void cs_91b71e223c6a5085::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::generated::cs_bd164c3c94a49e2a::trace_edges(visitor);pls::cs::trace_value(cs_b80b91ae07d6fc6c,visitor);pls::cs::trace_value(cs_19f4d4bf8904a68d,visitor);pls::cs::trace_value(cs_c5d0d0adcc5f397f,visitor);pls::cs::trace_value(cs_e3c1a6fbdae10a0b,visitor);}
 
-void cs_init_91b71e223c6a5085(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureByteArray",[](){
+static PLS_NOINLINE void cs_init_91b71e223c6a5085_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureByteArray",flag,[](){
 
 });}
+
+void cs_init_91b71e223c6a5085(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_91b71e223c6a5085_slow(flag);}
 
 // M:kairo.unity.util.SecureByteArray.#ctor(System.Byte[])
 pls::cs::Ref<cs_91b71e223c6a5085> cs_541b6d91fef6dae9(pls::cs::Array<std::uint8_t> v_ary) { cs_init_91b71e223c6a5085();

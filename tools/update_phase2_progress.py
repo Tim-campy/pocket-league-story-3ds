@@ -10,6 +10,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'translator'))
+sys.path.insert(0,str(ROOT/'tools'))
 from report_paths import unpack_source_paths
 EXPECTED = 'd557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 REFERENCE = 'c7d097a847ca1f1a8e5fb7141ff11d338f5915c4'
@@ -146,7 +147,7 @@ def validate_emission(emitted,assembly):
     if 'emission_source_sha256'in producer:expect_hash(ROOT/'translator/EmissionUnits.cs',producer['emission_source_sha256'])
     if 'unit_layout'in emitted:expect_hash(ROOT/emitted['unit_layout']['path'],emitted['unit_layout']['sha256'])
     expect_hash(ROOT/'translator/translate.py',producer['driver_sha256'])
-    if 'report_paths_sha256'in producer:expect_hash(ROOT/'translator/report_paths.py',producer['report_paths_sha256'])
+    if 'report_paths_sha256'in producer:expect_hash(ROOT/'tools/report_paths.py',producer['report_paths_sha256'])
     if 'bootstrap_generator_sha256'in producer:expect_hash(ROOT/'translator/bootstrap_source.py',producer['bootstrap_generator_sha256'])
     sys.path.insert(0,str(ROOT/'tools/csharp_subset'))
     from inventory import compiler_paths

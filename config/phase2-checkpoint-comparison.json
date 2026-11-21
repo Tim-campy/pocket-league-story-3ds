@@ -675,19 +675,19 @@
   "inputs": [
     {
       "path": "translator/compare_checkpoint.py",
-      "sha256": "c32cba915f6aa6873bd28afd0f0e3ace066fbbfa462db24442a37dee1cdc24d0"
+      "sha256": "42b165e5fbeb2def61b5dddfc6864a1bd8b5faab7fcfb6857b52e0b2f3a0910b"
     },
     {
       "path": "config/phase2-translation.json",
-      "sha256": "9e4f25aca487556608758d5e2d5fd8f52832f9660e2f3a71bb78266d160092c3"
+      "sha256": "bd4d7b8baed1ba438482598ac1b6e4df4945a282248cd844bad337b280febd05"
     },
     {
       "path": "config/phase2-portable-differential.json",
-      "sha256": "29e15ce1b0063578bffce7baee882a5cba88ed8c1f4df8e3d76f30d06f1afa0f"
+      "sha256": "6cb7e6b4915e80e779bbc023434ea9b854a49bb2fbbecb37d2257f11b5a60a75"
     },
     {
       "path": "config/phase2-game-translation.json",
-      "sha256": "618463c2bd2ac2a59e812b7ccfa253f2684ea42e2e78b754cf7f244683d685fa"
+      "sha256": "42e05a2f573bf2bb7da2d0c7d030de22d8d2ddba5ac35d3dd299b16c93cf0010"
     }
   ]
 }

@@ -9,9 +9,11 @@ namespace pls::game {
 
 void cs_24ddde8b39392611::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_86cc8a271e68cde9,visitor);pls::cs::trace_value(cs_050458c631e7a9c0,visitor);pls::cs::trace_value(cs_e9473a0af87a54bc,visitor);pls::cs::trace_value(cs_04a5436ce9dc3d38,visitor);}
 
-void cs_init_24ddde8b39392611(){static pls::cs::TypeInitState state;state.run("system.billing.ui.PurchaseLogView",[](){
+static PLS_NOINLINE void cs_init_24ddde8b39392611_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.ui.PurchaseLogView",flag,[](){
 
 });}
+
+void cs_init_24ddde8b39392611(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_24ddde8b39392611_slow(flag);}
 
 // M:system.billing.ui.PurchaseLogView.#ctor(System.String)
 pls::cs::Ref<cs_24ddde8b39392611> cs_67a7684996012e79(pls::cs::String v_title) { cs_init_24ddde8b39392611();

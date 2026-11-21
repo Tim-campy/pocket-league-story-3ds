@@ -10,10 +10,12 @@ bool cs_66dbad5679f8ab87::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {re
 
 static pls::cs::DateTime cs_fa93015d6ad485b9_value{};
 
-void cs_init_66dbad5679f8ab87(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fa93015d6ad485b9_value,visitor);});static pls::cs::TypeInitState state;state.run("java.util.JDate",[](){
+static PLS_NOINLINE void cs_init_66dbad5679f8ab87_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fa93015d6ad485b9_value,visitor);});static pls::cs::TypeInitState state;state.run("java.util.JDate",flag,[](){
 cs_fa93015d6ad485b9_value = pls::cs::evaluate_type_initializer_field("F:java.util.JDate.UNIX_TIME",[&](){return ([&]() { auto cs_arg0 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x7b2ull)); auto cs_arg1 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_arg2 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull)); auto cs_arg3 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg4 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg5 = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); auto cs_arg6 = static_cast<pls::cs::DateTimeKind>(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))); return pls::cs::DateTime(cs_arg0,cs_arg1,cs_arg2,cs_arg3,cs_arg4,cs_arg5,cs_arg6); }());});
 
 });}
+
+void cs_init_66dbad5679f8ab87(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_66dbad5679f8ab87_slow(flag);}
 
 pls::cs::DateTime& cs_fa93015d6ad485b9(){cs_init_66dbad5679f8ab87();return cs_fa93015d6ad485b9_value;}
 

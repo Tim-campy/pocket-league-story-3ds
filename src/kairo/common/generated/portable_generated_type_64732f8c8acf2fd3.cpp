@@ -4,9 +4,11 @@ namespace pls::generated {
 
 void cs_64732f8c8acf2fd3::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
 
-void cs_init_64732f8c8acf2fd3(){static pls::cs::TypeInitState state;state.run("java.io.EOFException",[](){
+static PLS_NOINLINE void cs_init_64732f8c8acf2fd3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.io.EOFException",flag,[](){
 
 });}
+
+void cs_init_64732f8c8acf2fd3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_64732f8c8acf2fd3_slow(flag);}
 
 // M:java.io.EOFException.#ctor(System.String)
 pls::cs::Ref<cs_64732f8c8acf2fd3> cs_a8c0bbab413528f7(pls::cs::String v_s) { cs_init_64732f8c8acf2fd3();

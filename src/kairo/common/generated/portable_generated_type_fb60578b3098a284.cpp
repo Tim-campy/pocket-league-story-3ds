@@ -9,9 +9,11 @@ pls::cs::String cs_fb60578b3098a284::ToString() {return cs_576830aae6220bdb(pls:
 
 void cs_fb60578b3098a284::cs_virtual_0d912191800a0b86() {cs_939f1d17e9442852(pls::cs::static_pointer_cast<cs_fb60578b3098a284>(shared_from_this()));}
 
-void cs_init_fb60578b3098a284(){static pls::cs::TypeInitState state;state.run("java.io.ByteArrayOutputStream",[](){
+static PLS_NOINLINE void cs_init_fb60578b3098a284_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.io.ByteArrayOutputStream",flag,[](){
 
 });}
+
+void cs_init_fb60578b3098a284(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_fb60578b3098a284_slow(flag);}
 
 // M:java.io.ByteArrayOutputStream.#ctor
 pls::cs::Ref<cs_fb60578b3098a284> cs_10f86e0fa81e1b57() { cs_init_fb60578b3098a284();

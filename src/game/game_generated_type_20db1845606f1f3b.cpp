@@ -9,9 +9,11 @@ void cs_20db1845606f1f3b::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::C
 
 pls::cs::String cs_20db1845606f1f3b::cs_virtual_75152158b8b3764c(pls::cs::Ref<pls::kairo::Canvas> v_canvas) {return cs_4cfe4fee50427f3d(pls::cs::static_pointer_cast<cs_20db1845606f1f3b>(shared_from_this()),v_canvas);}
 
-void cs_init_20db1845606f1f3b(){static pls::cs::TypeInitState state;state.run("panel.MainPanel",[](){
+static PLS_NOINLINE void cs_init_20db1845606f1f3b_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("panel.MainPanel",flag,[](){
 
 });}
+
+void cs_init_20db1845606f1f3b(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_20db1845606f1f3b_slow(flag);}
 
 // M:panel.MainPanel.#ctor
 pls::cs::Ref<cs_20db1845606f1f3b> cs_edc2000ae353f18e() { cs_init_20db1845606f1f3b();

@@ -23,9 +23,11 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_babc5db4464a5cf1_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_9b4ff795e198ba8c_value{};
 
-void cs_init_5beb6285da308d06(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_babc5db4464a5cf1_value,visitor);pls::cs::trace_value(cs_9b4ff795e198ba8c_value,visitor);});static pls::cs::TypeInitState state;state.run("data.FormationData",[](){
+static PLS_NOINLINE void cs_init_5beb6285da308d06_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_babc5db4464a5cf1_value,visitor);pls::cs::trace_value(cs_9b4ff795e198ba8c_value,visitor);});static pls::cs::TypeInitState state;state.run("data.FormationData",flag,[](){
 
 });}
+
+void cs_init_5beb6285da308d06(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_5beb6285da308d06_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_babc5db4464a5cf1(){cs_init_5beb6285da308d06();return cs_babc5db4464a5cf1_value;}
 

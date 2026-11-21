@@ -7,9 +7,11 @@ namespace pls::game {
 
 void cs_a47fef2fb9013301::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_15d0c6400449da70::trace_edges(visitor);}
 
-void cs_init_a47fef2fb9013301(){static pls::cs::TypeInitState state;state.run("system.tapjoy.MyTapjoy",[](){
+static PLS_NOINLINE void cs_init_a47fef2fb9013301_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.tapjoy.MyTapjoy",flag,[](){
 
 });}
+
+void cs_init_a47fef2fb9013301(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_a47fef2fb9013301_slow(flag);}
 
 // M:system.tapjoy.MyTapjoy.#ctor
 pls::cs::Ref<cs_a47fef2fb9013301> cs_a4ea8d8a8cfcb812() { cs_init_a47fef2fb9013301();

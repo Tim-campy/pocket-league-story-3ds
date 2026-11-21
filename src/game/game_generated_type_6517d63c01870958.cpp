@@ -8,10 +8,12 @@ void cs_6517d63c01870958::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>> cs_6cb933168d711678_value{};
 
-void cs_init_6517d63c01870958(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_6cb933168d711678_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchOption",[](){
+static PLS_NOINLINE void cs_init_6517d63c01870958_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_6cb933168d711678_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchOption",flag,[](){
 cs_6cb933168d711678_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.surface.TouchOption.buffer",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/TouchOption.cs:M:kairo.unity.surface.SurfaceManagerBase.BeginTouchRegist(kairo.unity.ui.Graphics):997",([&]() -> pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>> { return pls::generated::cs_f349692afe9e225e<pls::cs::Ref<cs_6517d63c01870958>>(); }()));});
 
 });}
+
+void cs_init_6517d63c01870958(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_6517d63c01870958_slow(flag);}
 
 pls::cs::Ref<pls::generated::cs_67cd241ab51652f1<pls::cs::Ref<cs_6517d63c01870958>>>& cs_6cb933168d711678(){cs_init_6517d63c01870958();return cs_6cb933168d711678_value;}
 

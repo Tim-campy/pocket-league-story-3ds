@@ -60,10 +60,12 @@ static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_819bdeccec161577_value{};
 
 static pls::cs::Array<std::uint8_t> cs_3d063be827f205bd_value{};
 
-void cs_init_c63e265fb6ff73e9(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_819bdeccec161577_value,visitor);pls::cs::trace_value(cs_3d063be827f205bd_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.MatchForm",[](){
+static PLS_NOINLINE void cs_init_c63e265fb6ff73e9_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_819bdeccec161577_value,visitor);pls::cs::trace_value(cs_3d063be827f205bd_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.MatchForm",flag,[](){
 cs_819bdeccec161577_value = pls::cs::evaluate_type_initializer_field("F:system.form.MatchForm.configData_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/MatchForm.cs:M:system.form.MatchForm._draw(kairo.unity.ui.Graphics):1091",([&](){auto cs_initial_array_911=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(2);cs_initial_array_911.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/MatchForm.cs:M:system.form.MatchForm._draw(kairo.unity.ui.Graphics):1111",pls::assets::baked_array<std::int32_t>("d3bd9088fedd8c6cda682538dff5d785a1f2286cfe2809e95e7a510a445798b7"));cs_initial_array_911.at(1)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/form/MatchForm.cs:M:system.form.MatchForm._draw(kairo.unity.ui.Graphics):1139",pls::assets::baked_array<std::int32_t>("994b2d14efc1b69f538352875b1af2925353439c86c02dd719944efc1a7cd6d7"));return cs_initial_array_911;}()));});
 
 });}
+
+void cs_init_c63e265fb6ff73e9(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_c63e265fb6ff73e9_slow(flag);}
 
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_819bdeccec161577(){cs_init_c63e265fb6ff73e9();return cs_819bdeccec161577_value;}
 

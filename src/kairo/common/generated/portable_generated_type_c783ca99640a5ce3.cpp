@@ -2,9 +2,11 @@
 #include "portable_generated_type_c783ca99640a5ce3.hpp"
 namespace pls::generated {
 
-void cs_init_c783ca99640a5ce3(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.EncodeUtil",[](){
+static PLS_NOINLINE void cs_init_c783ca99640a5ce3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.EncodeUtil",flag,[](){
 
 });}
+
+void cs_init_c783ca99640a5ce3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_c783ca99640a5ce3_slow(flag);}
 
 // M:kairo.unity.util.EncodeUtil.ByteAryToFloat(System.Byte[],System.Boolean)
 float cs_a5c8c88f3deaf88b(pls::cs::Array<std::uint8_t> v_data,bool v_endian) { cs_init_c783ca99640a5ce3();

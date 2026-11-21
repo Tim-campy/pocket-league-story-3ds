@@ -8,9 +8,11 @@ namespace pls::game {
 
 void cs_456d3d004decc356::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_c91865d620b9553c,visitor);pls::cs::trace_value(cs_9530a87060fa0532,visitor);pls::cs::trace_value(cs_338cf0660cb20211,visitor);pls::cs::trace_value(cs_3bb9a4cf3da2e687,visitor);pls::cs::trace_value(cs_ec6bc173286b73e8,visitor);pls::cs::trace_value(cs_eca097466f8cf377,visitor);pls::cs::trace_value(cs_31f2cf075b1406f9,visitor);}
 
-void cs_init_456d3d004decc356(){static pls::cs::TypeInitState state;state.run("game.DelayEvent",[](){
+static PLS_NOINLINE void cs_init_456d3d004decc356_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("game.DelayEvent",flag,[](){
 
 });}
+
+void cs_init_456d3d004decc356(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_456d3d004decc356_slow(flag);}
 
 // M:game.DelayEvent.#ctor
 pls::cs::Ref<cs_456d3d004decc356> cs_42bd1e40ac82632c() { cs_init_456d3d004decc356();

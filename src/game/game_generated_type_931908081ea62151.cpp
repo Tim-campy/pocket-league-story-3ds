@@ -21,9 +21,11 @@ void cs_931908081ea62151::cs_virtual_d1e3bc579a0b32eb(pls::cs::Ref<pls::generate
 
 void cs_931908081ea62151::cs_virtual_eae24f37838268a3(pls::cs::Ref<pls::generated::cs_ea324a0bbfe717fe> v_os) {cs_eae24f37838268a3(pls::cs::static_pointer_cast<cs_931908081ea62151>(shared_from_this()),v_os);}
 
-void cs_init_931908081ea62151(){static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingItem",[](){
+static PLS_NOINLINE void cs_init_931908081ea62151_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingItem",flag,[](){
 
 });}
+
+void cs_init_931908081ea62151(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_931908081ea62151_slow(flag);}
 
 // M:system.billing.ui.BillingItem.#ctor
 pls::cs::Ref<cs_931908081ea62151> cs_d9871f7e20992ddf() { cs_init_931908081ea62151();

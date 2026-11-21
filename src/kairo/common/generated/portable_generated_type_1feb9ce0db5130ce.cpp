@@ -2,9 +2,11 @@
 #include "portable_generated_type_1feb9ce0db5130ce.hpp"
 namespace pls::generated {
 
-void cs_init_1feb9ce0db5130ce(){static pls::cs::TypeInitState state;state.run("java.lang.JLong",[](){
+static PLS_NOINLINE void cs_init_1feb9ce0db5130ce_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.lang.JLong",flag,[](){
 
 });}
+
+void cs_init_1feb9ce0db5130ce(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_1feb9ce0db5130ce_slow(flag);}
 
 // M:java.lang.JLong.ParseLong(System.String)
 std::int64_t cs_fbdffc982daddb52(pls::cs::String v_s) { cs_init_1feb9ce0db5130ce();

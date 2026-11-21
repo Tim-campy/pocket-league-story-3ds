@@ -12,9 +12,11 @@ namespace pls::game {
 
 void cs_43347b50b6a10e65::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_c4c04b027207a322,visitor);pls::cs::trace_value(cs_5951a1be8973598c,visitor);pls::cs::trace_value(cs_de8fb13c183fecc1,visitor);pls::cs::trace_value(cs_b17fa7396bdbcd90,visitor);pls::cs::trace_value(cs_54138a074e43426e,visitor);pls::cs::trace_value(cs_555538e920ee71b1,visitor);pls::cs::trace_value(cs_192bcc8e433dae59,visitor);pls::cs::trace_value(cs_7055da6e5ca7b4e7,visitor);pls::cs::trace_value(cs_213a47847f8db5d2,visitor);pls::cs::trace_value(cs_76ef6fdfcd6628c6,visitor);pls::cs::trace_value(cs_55c8b74f6db29a7a,visitor);}
 
-void cs_init_43347b50b6a10e65(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout.TextBlock",[](){
+static PLS_NOINLINE void cs_init_43347b50b6a10e65_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout.TextBlock",flag,[](){
 
 });}
+
+void cs_init_43347b50b6a10e65(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_43347b50b6a10e65_slow(flag);}
 
 // M:kairo.unity.ui.TextLayout.TextBlock.#ctor(kairo.unity.ui.TextLayout,kairo.unity.ui.Font,System.Int32,System.Single,System.Single,System.Int32)
 pls::cs::Ref<cs_43347b50b6a10e65> cs_105f56890100ea40(pls::cs::Ref<cs_87fb4d668ea5580b> v_parent,pls::cs::Ref<pls::kairo::Font> v_font,std::int32_t v_color,float v_x,float v_y,std::int32_t v_blink) { cs_init_43347b50b6a10e65();

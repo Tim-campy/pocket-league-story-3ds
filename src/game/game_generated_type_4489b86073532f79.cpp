@@ -33,7 +33,7 @@ static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_011fe1a6332af6ab_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_9377a45754031ea8_value{};
 
-void cs_init_4489b86073532f79(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_5f399ea9f5649963_value,visitor);pls::cs::trace_value(cs_5559eb56fc750675_value,visitor);pls::cs::trace_value(cs_a6d46787f3454c35_value,visitor);pls::cs::trace_value(cs_7212096907b82ef3_value,visitor);pls::cs::trace_value(cs_b9530d25c36c1b9e_value,visitor);pls::cs::trace_value(cs_b0a9eba788d7c363_value,visitor);pls::cs::trace_value(cs_d8a965f8fa560531_value,visitor);pls::cs::trace_value(cs_011fe1a6332af6ab_value,visitor);pls::cs::trace_value(cs_9377a45754031ea8_value,visitor);});static pls::cs::TypeInitState state;state.run("data.TrainingData",[](){
+static PLS_NOINLINE void cs_init_4489b86073532f79_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_5f399ea9f5649963_value,visitor);pls::cs::trace_value(cs_5559eb56fc750675_value,visitor);pls::cs::trace_value(cs_a6d46787f3454c35_value,visitor);pls::cs::trace_value(cs_7212096907b82ef3_value,visitor);pls::cs::trace_value(cs_b9530d25c36c1b9e_value,visitor);pls::cs::trace_value(cs_b0a9eba788d7c363_value,visitor);pls::cs::trace_value(cs_d8a965f8fa560531_value,visitor);pls::cs::trace_value(cs_011fe1a6332af6ab_value,visitor);pls::cs::trace_value(cs_9377a45754031ea8_value,visitor);});static pls::cs::TypeInitState state;state.run("data.TrainingData",flag,[](){
 cs_b9530d25c36c1b9e_value = pls::cs::evaluate_type_initializer_field("F:data.TrainingData.TRA_PLAYER",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TrainingData.cs:M:data.TrainingData.ChangeState(System.Int32):1386",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull))));});
 cs_b0a9eba788d7c363_value = pls::cs::evaluate_type_initializer_field("F:data.TrainingData.TRA_SELECT_TRA",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));});
 cs_d8a965f8fa560531_value = pls::cs::evaluate_type_initializer_field("F:data.TrainingData.TRA_UPPARAM",[&](){return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::int32_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/TrainingData.cs:M:data.TrainingData.ChangeState(System.Int32):1503",pls::assets::baked_array<std::int32_t>("c951490c6de85b82174ce3d222144d4ec2b6cbe06bc46cbc6ae2a1280392328a")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::int32_t>>>(cs_arg0); }());});});
@@ -43,6 +43,8 @@ cs_a6d46787f3454c35_value = pls::cs::evaluate_type_initializer_field("F:data.Tra
 cs_5559eb56fc750675_value = pls::cs::evaluate_type_initializer_field("F:data.TrainingData.fa_result",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull));});
 
 });}
+
+void cs_init_4489b86073532f79(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4489b86073532f79_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_5f399ea9f5649963(){cs_init_4489b86073532f79();return cs_5f399ea9f5649963_value;}
 

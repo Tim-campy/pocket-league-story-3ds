@@ -14,9 +14,11 @@ void cs_8e2bf0f8fe011785::cs_virtual_8d925e3b30750eb6(pls::cs::Ref<pls::generate
 
 void cs_8e2bf0f8fe011785::cs_virtual_f2ab7f0a88763f04(pls::cs::Ref<pls::generated::cs_e7a5499b363ef51b> v_stream) {cs_c147ab1af9f1939f(pls::cs::static_pointer_cast<cs_8e2bf0f8fe011785>(shared_from_this()),v_stream);}
 
-void cs_init_8e2bf0f8fe011785(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.payment.PaymentDataRecord",[](){
+static PLS_NOINLINE void cs_init_8e2bf0f8fe011785_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.payment.PaymentDataRecord",flag,[](){
 
 });}
+
+void cs_init_8e2bf0f8fe011785(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_8e2bf0f8fe011785_slow(flag);}
 
 // M:kairo.unity.system.payment.PaymentDataRecord.#ctor(System.String,System.String,System.Int32,System.Int32)
 pls::cs::Ref<cs_8e2bf0f8fe011785> cs_2f2e7f50616852fe(pls::cs::String v_productId,pls::cs::String v_orderId,std::int32_t v_amount,std::int32_t v_actCode) { cs_init_8e2bf0f8fe011785();

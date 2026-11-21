@@ -2,9 +2,11 @@
 #include "portable_generated_type_d4a32b46456ca92c.hpp"
 namespace pls::generated {
 
-void cs_init_d4a32b46456ca92c(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Base64",[](){
+static PLS_NOINLINE void cs_init_d4a32b46456ca92c_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Base64",flag,[](){
 
 });}
+
+void cs_init_d4a32b46456ca92c(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_d4a32b46456ca92c_slow(flag);}
 
 // M:kairo.unity.util.Base64.Decode(System.String)
 pls::cs::Array<std::uint8_t> cs_45659d3497c243a5(pls::cs::String v_str) { cs_init_d4a32b46456ca92c();

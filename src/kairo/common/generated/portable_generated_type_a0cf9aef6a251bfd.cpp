@@ -5,9 +5,11 @@ namespace pls::generated {
 
 void cs_a0cf9aef6a251bfd::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_51f4a63dee24d947,visitor);}
 
-void cs_init_a0cf9aef6a251bfd(){static pls::cs::TypeInitState state;state.run("java.util.JRandom",[](){
+static PLS_NOINLINE void cs_init_a0cf9aef6a251bfd_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.util.JRandom",flag,[](){
 
 });}
+
+void cs_init_a0cf9aef6a251bfd(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_a0cf9aef6a251bfd_slow(flag);}
 
 // M:java.util.JRandom.#ctor
 pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_783c2dc4bd688739() { cs_init_a0cf9aef6a251bfd();

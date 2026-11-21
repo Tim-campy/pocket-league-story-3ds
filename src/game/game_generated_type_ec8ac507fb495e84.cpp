@@ -20,9 +20,11 @@ void cs_ec8ac507fb495e84::cs_virtual_9401fb4f0ec784c5(std::int32_t v_value) {cs_
 
 pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> cs_ec8ac507fb495e84::cs_virtual_d865bbafdeb43983() {return cs_c5779f8fec16f545(pls::cs::static_pointer_cast<cs_ec8ac507fb495e84>(shared_from_this()));}
 
-void cs_init_ec8ac507fb495e84(){static pls::cs::TypeInitState state;state.run("system.friend.MyFriend",[](){
+static PLS_NOINLINE void cs_init_ec8ac507fb495e84_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.friend.MyFriend",flag,[](){
 
 });}
+
+void cs_init_ec8ac507fb495e84(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_ec8ac507fb495e84_slow(flag);}
 
 // M:system.friend.MyFriend.#ctor
 pls::cs::Ref<cs_ec8ac507fb495e84> cs_f0504e3d15ead28a() { cs_init_ec8ac507fb495e84();

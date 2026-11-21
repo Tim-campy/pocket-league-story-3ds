@@ -40,9 +40,11 @@ static pls::cs::String cs_5f281ccd452f793d_value{};
 
 static bool cs_40a53d57b75c7593_value{};
 
-void cs_init_c9cd56cdd30ecf7a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_169d42739a93e08e_value,visitor);pls::cs::trace_value(cs_5f281ccd452f793d_value,visitor);pls::cs::trace_value(cs_40a53d57b75c7593_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.LanguageForm",[](){
+static PLS_NOINLINE void cs_init_c9cd56cdd30ecf7a_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_169d42739a93e08e_value,visitor);pls::cs::trace_value(cs_5f281ccd452f793d_value,visitor);pls::cs::trace_value(cs_40a53d57b75c7593_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.LanguageForm",flag,[](){
 
 });}
+
+void cs_init_c9cd56cdd30ecf7a(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_c9cd56cdd30ecf7a_slow(flag);}
 
 pls::cs::Delegate<void()>& cs_169d42739a93e08e(){cs_init_c9cd56cdd30ecf7a();return cs_169d42739a93e08e_value;}
 

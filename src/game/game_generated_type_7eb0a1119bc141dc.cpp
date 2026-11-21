@@ -60,10 +60,12 @@ bool cs_7eb0a1119bc141dc::Update() {return cs_479b0fad2741c8e1(pls::cs::static_p
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_ecdd12a7a529d33a_value{};
 
-void cs_init_7eb0a1119bc141dc(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_ecdd12a7a529d33a_value,visitor);});static pls::cs::TypeInitState state;state.run("form.SpForm",[](){
+static PLS_NOINLINE void cs_init_7eb0a1119bc141dc_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_ecdd12a7a529d33a_value,visitor);});static pls::cs::TypeInitState state;state.run("form.SpForm",flag,[](){
 cs_ecdd12a7a529d33a_value = pls::cs::evaluate_type_initializer_field("F:form.SpForm.softLabels_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/SpForm.cs:M:form.SpForm.#ctor(System.Exception):619",([&](){auto cs_initial_array_389=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(3);cs_initial_array_389.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/SpForm.cs:M:form.SpForm.#ctor(System.Exception):639",pls::assets::baked_array<std::int32_t>("b46debb56b3de591ff375d45b839f7eb53b6c64f2bbbd491cd6358a9f59f93a2"));cs_initial_array_389.at(1)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/SpForm.cs:M:form.SpForm.#ctor(System.Exception):663",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_389.at(2)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/SpForm.cs:M:form.SpForm.#ctor(System.Exception):678",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));return cs_initial_array_389;}()));});
 
 });}
+
+void cs_init_7eb0a1119bc141dc(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_7eb0a1119bc141dc_slow(flag);}
 
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_ecdd12a7a529d33a(){cs_init_7eb0a1119bc141dc();return cs_ecdd12a7a529d33a_value;}
 

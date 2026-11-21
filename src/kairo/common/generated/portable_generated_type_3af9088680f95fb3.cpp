@@ -4,9 +4,11 @@
 #include "portable_generated_type_66dbad5679f8ab87.hpp"
 namespace pls::generated {
 
-void cs_init_3af9088680f95fb3(){static pls::cs::TypeInitState state;state.run("java.lang.JSystem",[](){
+static PLS_NOINLINE void cs_init_3af9088680f95fb3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.lang.JSystem",flag,[](){
 
 });}
+
+void cs_init_3af9088680f95fb3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_3af9088680f95fb3_slow(flag);}
 
 // M:java.lang.JSystem.Arraycopy(System.Object,System.Int32,System.Object,System.Int32,System.Int32)
 void cs_d7f58c7ab5ff68b6(pls::cs::Ref<pls::cs::Object> v_src,std::int32_t v_src_position,pls::cs::Ref<pls::cs::Object> v_dst,std::int32_t v_dst_position,std::int32_t v_length) { cs_init_3af9088680f95fb3();

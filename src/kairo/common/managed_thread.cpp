@@ -4,6 +4,10 @@
 #include <mutex>
 #include <utility>
 #include <system_error>
+#include <cstdio>
+#if defined(__3DS__)
+#include <3ds.h>
+#endif
 
 namespace pls::cs {
 namespace {
@@ -11,6 +15,15 @@ thread_local Ref<Thread> current_thread{};
 ThreadPriorityBackend priority_backend;
 using Clock = std::chrono::steady_clock;
 const auto poll_interval = std::chrono::milliseconds(1);
+#if defined(__3DS__)
+// The type-init fast path reads its flag without a barrier because every
+// managed thread shares one core (managed_type_init.hpp). Dynamic
+// initialization runs on the main thread: record its core here.
+// svcGetProcessorID is not implemented by the Azahar emulator (it returns
+// garbage); the ideal processor is, and is what fixes a 3DS thread's core.
+s32 ideal_core(){s32 id=-100;return R_SUCCEEDED(svcGetThreadIdealProcessor(&id,CUR_THREAD_HANDLE))?id:-100;}
+const s32 application_core = ideal_core();
+#endif
 }
 struct Thread::State {
     mutable std::mutex mutex;
@@ -75,6 +88,10 @@ void Thread::Start(){
     }catch(const std::system_error&){state_->state=ThreadState::Unstarted;throw OutOfMemoryException("Native thread creation failed");}
 }
 void Thread::entry(){
+#if defined(__3DS__)
+    {const s32 core=ideal_core();std::fprintf(stderr,"PLS_THREAD_CORE application=%ld thread=%ld\n",static_cast<long>(application_core),static_cast<long>(core));
+     if(core!=-100&&application_core!=-100&&core!=application_core){std::fprintf(stderr,"PLS_FATAL managed thread on core %ld, application core %ld\n",static_cast<long>(core),static_cast<long>(application_core));std::fflush(stderr);std::terminate();}}
+#endif
     current_thread=pls::cs::static_pointer_cast<Thread>(shared_from_this());
     {
         GcMutatorScope mutator;

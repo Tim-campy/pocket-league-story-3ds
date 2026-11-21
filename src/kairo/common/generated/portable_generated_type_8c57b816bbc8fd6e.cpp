@@ -12,9 +12,11 @@ namespace pls::generated {
 
 void cs_8c57b816bbc8fd6e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_4fa0b3a7eea3a844,visitor);pls::cs::trace_value(cs_72da38f2b646e254,visitor);pls::cs::trace_value(cs_cfccd28f4d6b847a,visitor);pls::cs::trace_value(cs_d5b37f60e20607b6,visitor);pls::cs::trace_value(cs_ba76615c0cb37783,visitor);}
 
-void cs_init_8c57b816bbc8fd6e(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Property",[](){
+static PLS_NOINLINE void cs_init_8c57b816bbc8fd6e_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Property",flag,[](){
 
 });}
+
+void cs_init_8c57b816bbc8fd6e(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_8c57b816bbc8fd6e_slow(flag);}
 
 // M:kairo.unity.util.Property.#ctor
 pls::cs::Ref<cs_8c57b816bbc8fd6e> cs_7a9ac0812c6bac9b() { cs_init_8c57b816bbc8fd6e();

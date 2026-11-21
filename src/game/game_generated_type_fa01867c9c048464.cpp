@@ -31,10 +31,12 @@ static pls::cs::Ref<cs_925b3cf054e42b78> cs_d59ecb529d3c681c_value{};
 
 static pls::cs::String cs_e9c57a349e970656_value{};
 
-void cs_init_fa01867c9c048464(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d59ecb529d3c681c_value,visitor);pls::cs::trace_value(cs_e9c57a349e970656_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.StoreBase",[](){
+static PLS_NOINLINE void cs_init_fa01867c9c048464_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d59ecb529d3c681c_value,visitor);pls::cs::trace_value(cs_e9c57a349e970656_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.StoreBase",flag,[](){
 cs_d59ecb529d3c681c_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.StoreBase.ks_",[&](){return pls::cs::Ref<cs_925b3cf054e42b78>{};});
 
 });}
+
+void cs_init_fa01867c9c048464(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_fa01867c9c048464_slow(flag);}
 
 pls::cs::Ref<cs_925b3cf054e42b78>& cs_d59ecb529d3c681c(){cs_init_fa01867c9c048464();return cs_d59ecb529d3c681c_value;}
 

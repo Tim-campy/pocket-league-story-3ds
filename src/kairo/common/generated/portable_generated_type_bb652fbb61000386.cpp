@@ -13,9 +13,11 @@ bool cs_bb652fbb61000386::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {re
 
 pls::cs::String cs_bb652fbb61000386::ToString() {return cs_f93784de5b5888a8(pls::cs::static_pointer_cast<cs_bb652fbb61000386>(shared_from_this()));}
 
-void cs_init_bb652fbb61000386(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureString",[](){
+static PLS_NOINLINE void cs_init_bb652fbb61000386_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureString",flag,[](){
 
 });}
+
+void cs_init_bb652fbb61000386(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_bb652fbb61000386_slow(flag);}
 
 // M:kairo.unity.util.SecureString.#ctor(kairo.unity.util.SecureString)
 pls::cs::Ref<cs_bb652fbb61000386> cs_54c6ff780bd91d97(pls::cs::Ref<cs_bb652fbb61000386> v_src) { cs_init_bb652fbb61000386();

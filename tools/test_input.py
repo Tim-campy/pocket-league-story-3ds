@@ -4,6 +4,7 @@ Unity enum values are read as PE metadata by an own-source helper, never by
 loading/executing a Unity binary. Original mouse/touch/SDK callbacks are not
 claimed to be exercised by the pure key-state differential.
 """
+import original_metadata
 import hashlib
 import json
 from native_api_proof import input_ids
@@ -60,8 +61,7 @@ def compile_modern(source,target,folder,name,csc,framework):
 def main():
     folder=ROOT/'build/input-tests';folder.mkdir(parents=True,exist_ok=True)
     csc,dotnet,framework=compiler_paths()
-    request=json.loads((ROOT/'build/translator/KairoLibrary-input.json').read_text(encoding='utf-8'))
-    unity=next(Path(p) for p in request['references'] if Path(p).name=='UnityEngine.dll')
+    unity=original_metadata.unity_engine()
     probe=folder/'EnumProbe.cs'
     probe.write_text('''using System;using System.IO;using System.Reflection.Metadata;using System.Reflection.PortableExecutable;
 class Probe {static void Main(string[] args){using(var input=File.OpenRead(args[0]))using(var pe=new PEReader(input)){

@@ -45,7 +45,7 @@ static pls::cs::Array<pls::cs::String> cs_1633c4562f4c40eb_value{};
 
 static pls::cs::Ref<cs_2d2e25a6914f7709> cs_52166bbebe634258_value{};
 
-void cs_init_2d2e25a6914f7709(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_01b07286e746610e_value,visitor);pls::cs::trace_value(cs_e2d16fab426c5d2f_value,visitor);pls::cs::trace_value(cs_2f2e8e46132e7fcc_value,visitor);pls::cs::trace_value(cs_4d39e0560b934a4f_value,visitor);pls::cs::trace_value(cs_1633c4562f4c40eb_value,visitor);pls::cs::trace_value(cs_52166bbebe634258_value,visitor);});static pls::cs::TypeInitState state;state.run("system.friend.ui.FriendData",[](){
+static PLS_NOINLINE void cs_init_2d2e25a6914f7709_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_01b07286e746610e_value,visitor);pls::cs::trace_value(cs_e2d16fab426c5d2f_value,visitor);pls::cs::trace_value(cs_2f2e8e46132e7fcc_value,visitor);pls::cs::trace_value(cs_4d39e0560b934a4f_value,visitor);pls::cs::trace_value(cs_1633c4562f4c40eb_value,visitor);pls::cs::trace_value(cs_52166bbebe634258_value,visitor);});static pls::cs::TypeInitState state;state.run("system.friend.ui.FriendData",flag,[](){
 cs_4d39e0560b934a4f_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveP_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1538",pls::cs::Array<pls::cs::Ref<pls::generated::cs_c20c229ea63037d8>>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));});
 cs_e2d16fab426c5d2f_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveI_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1608",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x6ull))));});
 cs_2f2e8e46132e7fcc_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveL_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1668",pls::cs::Array<std::int64_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull))));});
@@ -53,6 +53,8 @@ cs_1633c4562f4c40eb_value = pls::cs::evaluate_type_initializer_field("F:system.f
 cs_01b07286e746610e_value = pls::cs::evaluate_type_initializer_field("F:system.friend.ui.FriendData.defFriSaveB_",[&](){return pls::diagnostic::api_call([&]() -> decltype(auto) {return ([&]() -> pls::cs::Array<pls::cs::Array<std::uint8_t>> { pls::cs::Array<std::int32_t> cs_arg0 = pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/friend/ui/FriendData.cs:M:system.friend.MyFriend.GetInstance:1839",pls::assets::baked_array<std::int32_t>("6e365c19c558a914ef00a7a1b5233f61b516f4a502c6ac57d0fecabb75ac07cf")); return pls::generated::cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::uint8_t>>>(cs_arg0); }());});});
 
 });}
+
+void cs_init_2d2e25a6914f7709(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_2d2e25a6914f7709_slow(flag);}
 
 pls::cs::Array<pls::cs::Array<std::uint8_t>>& cs_01b07286e746610e(){cs_init_2d2e25a6914f7709();return cs_01b07286e746610e_value;}
 

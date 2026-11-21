@@ -17,9 +17,11 @@ namespace pls::generated {
 
 void cs_52158c8b20364c2b::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6f69af47bcfae216,visitor);pls::cs::trace_value(cs_8f27992211ad5e96,visitor);pls::cs::trace_value(cs_578ed5fb729c9567,visitor);}
 
-void cs_init_52158c8b20364c2b(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.JarInflater",[](){
+static PLS_NOINLINE void cs_init_52158c8b20364c2b_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.JarInflater",flag,[](){
 
 });}
+
+void cs_init_52158c8b20364c2b(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_52158c8b20364c2b_slow(flag);}
 
 // M:kairo.unity.util.JarInflater._load(java.io.InputStream)
 void cs_e488b26211313625(pls::cs::Ref<cs_52158c8b20364c2b> cs_this,pls::cs::Ref<cs_e7a5499b363ef51b> v_stream) { cs_init_52158c8b20364c2b();

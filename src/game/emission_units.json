@@ -36383,7 +36383,15 @@
       "header": "game_generated_type_0286a0dbe9da0b33.hpp",
       "templates": null
     },
+    "cs_init_0286a0dbe9da0b33_slow": {
+      "header": "game_generated_type_0286a0dbe9da0b33.hpp",
+      "templates": null
+    },
     "cs_init_072159abb3229c71": {
+      "header": "game_generated_type_072159abb3229c71.hpp",
+      "templates": null
+    },
+    "cs_init_072159abb3229c71_slow": {
       "header": "game_generated_type_072159abb3229c71.hpp",
       "templates": null
     },
@@ -36391,7 +36399,15 @@
       "header": "game_generated_type_08829eb6a4df2a40.hpp",
       "templates": null
     },
+    "cs_init_08829eb6a4df2a40_slow": {
+      "header": "game_generated_type_08829eb6a4df2a40.hpp",
+      "templates": null
+    },
     "cs_init_0ca2ef5bfa869b6b": {
+      "header": "game_generated_type_0ca2ef5bfa869b6b.hpp",
+      "templates": null
+    },
+    "cs_init_0ca2ef5bfa869b6b_slow": {
       "header": "game_generated_type_0ca2ef5bfa869b6b.hpp",
       "templates": null
     },
@@ -36399,7 +36415,15 @@
       "header": "game_generated_type_0db347231f2257f9.hpp",
       "templates": null
     },
+    "cs_init_0db347231f2257f9_slow": {
+      "header": "game_generated_type_0db347231f2257f9.hpp",
+      "templates": null
+    },
     "cs_init_0f74b892eb1cdde4": {
+      "header": "game_generated_type_0f74b892eb1cdde4.hpp",
+      "templates": null
+    },
+    "cs_init_0f74b892eb1cdde4_slow": {
       "header": "game_generated_type_0f74b892eb1cdde4.hpp",
       "templates": null
     },
@@ -36407,7 +36431,15 @@
       "header": "game_generated_type_11e0490f60fdc166.hpp",
       "templates": null
     },
+    "cs_init_11e0490f60fdc166_slow": {
+      "header": "game_generated_type_11e0490f60fdc166.hpp",
+      "templates": null
+    },
     "cs_init_130519c307b90f46": {
+      "header": "game_generated_type_130519c307b90f46.hpp",
+      "templates": null
+    },
+    "cs_init_130519c307b90f46_slow": {
       "header": "game_generated_type_130519c307b90f46.hpp",
       "templates": null
     },
@@ -36415,7 +36447,15 @@
       "header": "game_generated_type_1406fd70a8ee6f2f.hpp",
       "templates": null
     },
+    "cs_init_1406fd70a8ee6f2f_slow": {
+      "header": "game_generated_type_1406fd70a8ee6f2f.hpp",
+      "templates": null
+    },
     "cs_init_15d0c6400449da70": {
+      "header": "game_generated_type_15d0c6400449da70.hpp",
+      "templates": null
+    },
+    "cs_init_15d0c6400449da70_slow": {
       "header": "game_generated_type_15d0c6400449da70.hpp",
       "templates": null
     },
@@ -36423,7 +36463,15 @@
       "header": "game_generated_type_15f31d4f046b09a8.hpp",
       "templates": null
     },
+    "cs_init_15f31d4f046b09a8_slow": {
+      "header": "game_generated_type_15f31d4f046b09a8.hpp",
+      "templates": null
+    },
     "cs_init_169021fb033627ed": {
+      "header": "game_generated_type_169021fb033627ed.hpp",
+      "templates": null
+    },
+    "cs_init_169021fb033627ed_slow": {
       "header": "game_generated_type_169021fb033627ed.hpp",
       "templates": null
     },
@@ -36431,7 +36479,15 @@
       "header": "game_generated_type_17bc7a5b28fcdc2a.hpp",
       "templates": null
     },
+    "cs_init_17bc7a5b28fcdc2a_slow": {
+      "header": "game_generated_type_17bc7a5b28fcdc2a.hpp",
+      "templates": null
+    },
     "cs_init_1815a6964debf82a": {
+      "header": "game_generated_type_1815a6964debf82a.hpp",
+      "templates": null
+    },
+    "cs_init_1815a6964debf82a_slow": {
       "header": "game_generated_type_1815a6964debf82a.hpp",
       "templates": null
     },
@@ -36439,7 +36495,15 @@
       "header": "game_generated_type_18d5b680efad7752.hpp",
       "templates": null
     },
+    "cs_init_18d5b680efad7752_slow": {
+      "header": "game_generated_type_18d5b680efad7752.hpp",
+      "templates": null
+    },
     "cs_init_1ab688350081022a": {
+      "header": "game_generated_type_1ab688350081022a.hpp",
+      "templates": null
+    },
+    "cs_init_1ab688350081022a_slow": {
       "header": "game_generated_type_1ab688350081022a.hpp",
       "templates": null
     },
@@ -36447,7 +36511,15 @@
       "header": "game_generated_type_20db1845606f1f3b.hpp",
       "templates": null
     },
+    "cs_init_20db1845606f1f3b_slow": {
+      "header": "game_generated_type_20db1845606f1f3b.hpp",
+      "templates": null
+    },
     "cs_init_22115ea4236d0eaa": {
+      "header": "game_generated_type_22115ea4236d0eaa.hpp",
+      "templates": null
+    },
+    "cs_init_22115ea4236d0eaa_slow": {
       "header": "game_generated_type_22115ea4236d0eaa.hpp",
       "templates": null
     },
@@ -36455,7 +36527,15 @@
       "header": "game_generated_type_23a020152d468724.hpp",
       "templates": null
     },
+    "cs_init_23a020152d468724_slow": {
+      "header": "game_generated_type_23a020152d468724.hpp",
+      "templates": null
+    },
     "cs_init_23ed5cbd0e3922f3": {
+      "header": "game_generated_type_23ed5cbd0e3922f3.hpp",
+      "templates": null
+    },
+    "cs_init_23ed5cbd0e3922f3_slow": {
       "header": "game_generated_type_23ed5cbd0e3922f3.hpp",
       "templates": null
     },
@@ -36463,7 +36543,15 @@
       "header": "game_generated_type_24ddde8b39392611.hpp",
       "templates": null
     },
+    "cs_init_24ddde8b39392611_slow": {
+      "header": "game_generated_type_24ddde8b39392611.hpp",
+      "templates": null
+    },
     "cs_init_27b8baf7307cff9f": {
+      "header": "game_generated_type_27b8baf7307cff9f.hpp",
+      "templates": null
+    },
+    "cs_init_27b8baf7307cff9f_slow": {
       "header": "game_generated_type_27b8baf7307cff9f.hpp",
       "templates": null
     },
@@ -36471,7 +36559,15 @@
       "header": "game_generated_type_29293d4d6e77d3bc.hpp",
       "templates": null
     },
+    "cs_init_29293d4d6e77d3bc_slow": {
+      "header": "game_generated_type_29293d4d6e77d3bc.hpp",
+      "templates": null
+    },
     "cs_init_2b1e88c9c4c08d03": {
+      "header": "game_generated_type_2b1e88c9c4c08d03.hpp",
+      "templates": null
+    },
+    "cs_init_2b1e88c9c4c08d03_slow": {
       "header": "game_generated_type_2b1e88c9c4c08d03.hpp",
       "templates": null
     },
@@ -36479,7 +36575,15 @@
       "header": "game_generated_type_2d2e25a6914f7709.hpp",
       "templates": null
     },
+    "cs_init_2d2e25a6914f7709_slow": {
+      "header": "game_generated_type_2d2e25a6914f7709.hpp",
+      "templates": null
+    },
     "cs_init_2e79f4f38b707be7": {
+      "header": "game_generated_type_2e79f4f38b707be7.hpp",
+      "templates": null
+    },
+    "cs_init_2e79f4f38b707be7_slow": {
       "header": "game_generated_type_2e79f4f38b707be7.hpp",
       "templates": null
     },
@@ -36487,7 +36591,15 @@
       "header": "game_generated_type_2ef6641b828546ac.hpp",
       "templates": null
     },
+    "cs_init_2ef6641b828546ac_slow": {
+      "header": "game_generated_type_2ef6641b828546ac.hpp",
+      "templates": null
+    },
     "cs_init_2ffa6f51468590ea": {
+      "header": "game_generated_type_2ffa6f51468590ea.hpp",
+      "templates": null
+    },
+    "cs_init_2ffa6f51468590ea_slow": {
       "header": "game_generated_type_2ffa6f51468590ea.hpp",
       "templates": null
     },
@@ -36495,7 +36607,15 @@
       "header": "game_generated_type_381ecfc7910ffbab.hpp",
       "templates": null
     },
+    "cs_init_381ecfc7910ffbab_slow": {
+      "header": "game_generated_type_381ecfc7910ffbab.hpp",
+      "templates": null
+    },
     "cs_init_3855bfc5096e5e16": {
+      "header": "game_generated_type_3855bfc5096e5e16.hpp",
+      "templates": null
+    },
+    "cs_init_3855bfc5096e5e16_slow": {
       "header": "game_generated_type_3855bfc5096e5e16.hpp",
       "templates": null
     },
@@ -36503,7 +36623,15 @@
       "header": "game_generated_type_3a3d09f9e75a32d2.hpp",
       "templates": null
     },
+    "cs_init_3a3d09f9e75a32d2_slow": {
+      "header": "game_generated_type_3a3d09f9e75a32d2.hpp",
+      "templates": null
+    },
     "cs_init_3e5b0d35ae6be8e7": {
+      "header": "game_generated_type_3e5b0d35ae6be8e7.hpp",
+      "templates": null
+    },
+    "cs_init_3e5b0d35ae6be8e7_slow": {
       "header": "game_generated_type_3e5b0d35ae6be8e7.hpp",
       "templates": null
     },
@@ -36511,7 +36639,15 @@
       "header": "game_generated_type_3ee77977aa791047.hpp",
       "templates": null
     },
+    "cs_init_3ee77977aa791047_slow": {
+      "header": "game_generated_type_3ee77977aa791047.hpp",
+      "templates": null
+    },
     "cs_init_403f4e6631bd3667": {
+      "header": "game_generated_type_403f4e6631bd3667.hpp",
+      "templates": null
+    },
+    "cs_init_403f4e6631bd3667_slow": {
       "header": "game_generated_type_403f4e6631bd3667.hpp",
       "templates": null
     },
@@ -36519,7 +36655,15 @@
       "header": "game_generated_type_408ac5c74e5f3515.hpp",
       "templates": null
     },
+    "cs_init_408ac5c74e5f3515_slow": {
+      "header": "game_generated_type_408ac5c74e5f3515.hpp",
+      "templates": null
+    },
     "cs_init_43347b50b6a10e65": {
+      "header": "game_generated_type_43347b50b6a10e65.hpp",
+      "templates": null
+    },
+    "cs_init_43347b50b6a10e65_slow": {
       "header": "game_generated_type_43347b50b6a10e65.hpp",
       "templates": null
     },
@@ -36527,7 +36671,15 @@
       "header": "game_generated_type_4368d694d01424b0.hpp",
       "templates": null
     },
+    "cs_init_4368d694d01424b0_slow": {
+      "header": "game_generated_type_4368d694d01424b0.hpp",
+      "templates": null
+    },
     "cs_init_4489b86073532f79": {
+      "header": "game_generated_type_4489b86073532f79.hpp",
+      "templates": null
+    },
+    "cs_init_4489b86073532f79_slow": {
       "header": "game_generated_type_4489b86073532f79.hpp",
       "templates": null
     },
@@ -36535,7 +36687,15 @@
       "header": "game_generated_type_456d3d004decc356.hpp",
       "templates": null
     },
+    "cs_init_456d3d004decc356_slow": {
+      "header": "game_generated_type_456d3d004decc356.hpp",
+      "templates": null
+    },
     "cs_init_4a8bef2ab48b32d7": {
+      "header": "game_generated_type_4a8bef2ab48b32d7.hpp",
+      "templates": null
+    },
+    "cs_init_4a8bef2ab48b32d7_slow": {
       "header": "game_generated_type_4a8bef2ab48b32d7.hpp",
       "templates": null
     },
@@ -36543,7 +36703,15 @@
       "header": "game_generated_type_4c00a0e0c6e6e2e5.hpp",
       "templates": null
     },
+    "cs_init_4c00a0e0c6e6e2e5_slow": {
+      "header": "game_generated_type_4c00a0e0c6e6e2e5.hpp",
+      "templates": null
+    },
     "cs_init_4ccab99c775ca4c5": {
+      "header": "game_generated_type_4ccab99c775ca4c5.hpp",
+      "templates": null
+    },
+    "cs_init_4ccab99c775ca4c5_slow": {
       "header": "game_generated_type_4ccab99c775ca4c5.hpp",
       "templates": null
     },
@@ -36551,7 +36719,15 @@
       "header": "game_generated_type_4e9b1f0e9e3baf25.hpp",
       "templates": null
     },
+    "cs_init_4e9b1f0e9e3baf25_slow": {
+      "header": "game_generated_type_4e9b1f0e9e3baf25.hpp",
+      "templates": null
+    },
     "cs_init_4feff672b530e53a": {
+      "header": "game_generated_type_4feff672b530e53a.hpp",
+      "templates": null
+    },
+    "cs_init_4feff672b530e53a_slow": {
       "header": "game_generated_type_4feff672b530e53a.hpp",
       "templates": null
     },
@@ -36559,7 +36735,15 @@
       "header": "game_generated_type_50c5a567a6876ee3.hpp",
       "templates": null
     },
+    "cs_init_50c5a567a6876ee3_slow": {
+      "header": "game_generated_type_50c5a567a6876ee3.hpp",
+      "templates": null
+    },
     "cs_init_51fd12cb14e568f9": {
+      "header": "game_generated_type_51fd12cb14e568f9.hpp",
+      "templates": null
+    },
+    "cs_init_51fd12cb14e568f9_slow": {
       "header": "game_generated_type_51fd12cb14e568f9.hpp",
       "templates": null
     },
@@ -36567,7 +36751,15 @@
       "header": "game_generated_type_5451b2154f09f4c5.hpp",
       "templates": null
     },
+    "cs_init_5451b2154f09f4c5_slow": {
+      "header": "game_generated_type_5451b2154f09f4c5.hpp",
+      "templates": null
+    },
     "cs_init_57e2b41d1ee1c149": {
+      "header": "game_generated_type_57e2b41d1ee1c149.hpp",
+      "templates": null
+    },
+    "cs_init_57e2b41d1ee1c149_slow": {
       "header": "game_generated_type_57e2b41d1ee1c149.hpp",
       "templates": null
     },
@@ -36575,7 +36767,15 @@
       "header": "game_generated_type_5ac9304f9db0671e.hpp",
       "templates": null
     },
+    "cs_init_5ac9304f9db0671e_slow": {
+      "header": "game_generated_type_5ac9304f9db0671e.hpp",
+      "templates": null
+    },
     "cs_init_5ad2213598dfcd5d": {
+      "header": "game_generated_type_5ad2213598dfcd5d.hpp",
+      "templates": null
+    },
+    "cs_init_5ad2213598dfcd5d_slow": {
       "header": "game_generated_type_5ad2213598dfcd5d.hpp",
       "templates": null
     },
@@ -36583,7 +36783,15 @@
       "header": "game_generated_type_5beb6285da308d06.hpp",
       "templates": null
     },
+    "cs_init_5beb6285da308d06_slow": {
+      "header": "game_generated_type_5beb6285da308d06.hpp",
+      "templates": null
+    },
     "cs_init_5dc998c2cffb18c8": {
+      "header": "game_generated_type_5dc998c2cffb18c8.hpp",
+      "templates": null
+    },
+    "cs_init_5dc998c2cffb18c8_slow": {
       "header": "game_generated_type_5dc998c2cffb18c8.hpp",
       "templates": null
     },
@@ -36591,7 +36799,15 @@
       "header": "game_generated_type_5df8265429cd2423.hpp",
       "templates": null
     },
+    "cs_init_5df8265429cd2423_slow": {
+      "header": "game_generated_type_5df8265429cd2423.hpp",
+      "templates": null
+    },
     "cs_init_63cc285eb997c6a4": {
+      "header": "game_generated_type_63cc285eb997c6a4.hpp",
+      "templates": null
+    },
+    "cs_init_63cc285eb997c6a4_slow": {
       "header": "game_generated_type_63cc285eb997c6a4.hpp",
       "templates": null
     },
@@ -36599,7 +36815,15 @@
       "header": "game_generated_type_6485f92c2f04639f.hpp",
       "templates": null
     },
+    "cs_init_6485f92c2f04639f_slow": {
+      "header": "game_generated_type_6485f92c2f04639f.hpp",
+      "templates": null
+    },
     "cs_init_6517d63c01870958": {
+      "header": "game_generated_type_6517d63c01870958.hpp",
+      "templates": null
+    },
+    "cs_init_6517d63c01870958_slow": {
       "header": "game_generated_type_6517d63c01870958.hpp",
       "templates": null
     },
@@ -36607,7 +36831,15 @@
       "header": "game_generated_type_65bcdaa7ea8c7d7a.hpp",
       "templates": null
     },
+    "cs_init_65bcdaa7ea8c7d7a_slow": {
+      "header": "game_generated_type_65bcdaa7ea8c7d7a.hpp",
+      "templates": null
+    },
     "cs_init_66eb7014769dfe80": {
+      "header": "game_generated_type_66eb7014769dfe80.hpp",
+      "templates": null
+    },
+    "cs_init_66eb7014769dfe80_slow": {
       "header": "game_generated_type_66eb7014769dfe80.hpp",
       "templates": null
     },
@@ -36615,7 +36847,15 @@
       "header": "game_generated_type_672083a5397f2913.hpp",
       "templates": null
     },
+    "cs_init_672083a5397f2913_slow": {
+      "header": "game_generated_type_672083a5397f2913.hpp",
+      "templates": null
+    },
     "cs_init_6803fd77f880b974": {
+      "header": "game_generated_type_6803fd77f880b974.hpp",
+      "templates": null
+    },
+    "cs_init_6803fd77f880b974_slow": {
       "header": "game_generated_type_6803fd77f880b974.hpp",
       "templates": null
     },
@@ -36623,7 +36863,15 @@
       "header": "game_generated_type_68277163e843ed70.hpp",
       "templates": null
     },
+    "cs_init_68277163e843ed70_slow": {
+      "header": "game_generated_type_68277163e843ed70.hpp",
+      "templates": null
+    },
     "cs_init_69a97d2bf5ede86d": {
+      "header": "game_generated_type_69a97d2bf5ede86d.hpp",
+      "templates": null
+    },
+    "cs_init_69a97d2bf5ede86d_slow": {
       "header": "game_generated_type_69a97d2bf5ede86d.hpp",
       "templates": null
     },
@@ -36631,7 +36879,15 @@
       "header": "game_generated_type_6d8b1b9c55c43b83.hpp",
       "templates": null
     },
+    "cs_init_6d8b1b9c55c43b83_slow": {
+      "header": "game_generated_type_6d8b1b9c55c43b83.hpp",
+      "templates": null
+    },
     "cs_init_6ee7d14059be1acf": {
+      "header": "game_generated_type_6ee7d14059be1acf.hpp",
+      "templates": "game_generated_type_6ee7d14059be1acf_templates.hpp"
+    },
+    "cs_init_6ee7d14059be1acf_slow": {
       "header": "game_generated_type_6ee7d14059be1acf.hpp",
       "templates": "game_generated_type_6ee7d14059be1acf_templates.hpp"
     },
@@ -36639,7 +36895,15 @@
       "header": "game_generated_type_70a14a9a721e329a.hpp",
       "templates": null
     },
+    "cs_init_70a14a9a721e329a_slow": {
+      "header": "game_generated_type_70a14a9a721e329a.hpp",
+      "templates": null
+    },
     "cs_init_70b7974d356d68ab": {
+      "header": "game_generated_type_70b7974d356d68ab.hpp",
+      "templates": null
+    },
+    "cs_init_70b7974d356d68ab_slow": {
       "header": "game_generated_type_70b7974d356d68ab.hpp",
       "templates": null
     },
@@ -36647,7 +36911,15 @@
       "header": "game_generated_type_70c4092da329e972.hpp",
       "templates": null
     },
+    "cs_init_70c4092da329e972_slow": {
+      "header": "game_generated_type_70c4092da329e972.hpp",
+      "templates": null
+    },
     "cs_init_75707aa3f1629c85": {
+      "header": "game_generated_type_75707aa3f1629c85.hpp",
+      "templates": null
+    },
+    "cs_init_75707aa3f1629c85_slow": {
       "header": "game_generated_type_75707aa3f1629c85.hpp",
       "templates": null
     },
@@ -36655,7 +36927,15 @@
       "header": "game_generated_type_757516ce190cf813.hpp",
       "templates": null
     },
+    "cs_init_757516ce190cf813_slow": {
+      "header": "game_generated_type_757516ce190cf813.hpp",
+      "templates": null
+    },
     "cs_init_758f7068d68847ba": {
+      "header": "game_generated_type_758f7068d68847ba.hpp",
+      "templates": null
+    },
+    "cs_init_758f7068d68847ba_slow": {
       "header": "game_generated_type_758f7068d68847ba.hpp",
       "templates": null
     },
@@ -36663,7 +36943,15 @@
       "header": "game_generated_type_75beb3a42e16f9bd.hpp",
       "templates": null
     },
+    "cs_init_75beb3a42e16f9bd_slow": {
+      "header": "game_generated_type_75beb3a42e16f9bd.hpp",
+      "templates": null
+    },
     "cs_init_76884ad002dceb7a": {
+      "header": "game_generated_type_76884ad002dceb7a.hpp",
+      "templates": null
+    },
+    "cs_init_76884ad002dceb7a_slow": {
       "header": "game_generated_type_76884ad002dceb7a.hpp",
       "templates": null
     },
@@ -36671,7 +36959,15 @@
       "header": "game_generated_type_77de402a688eeb9d.hpp",
       "templates": null
     },
+    "cs_init_77de402a688eeb9d_slow": {
+      "header": "game_generated_type_77de402a688eeb9d.hpp",
+      "templates": null
+    },
     "cs_init_792a6372766eb19f": {
+      "header": "game_generated_type_792a6372766eb19f.hpp",
+      "templates": null
+    },
+    "cs_init_792a6372766eb19f_slow": {
       "header": "game_generated_type_792a6372766eb19f.hpp",
       "templates": null
     },
@@ -36679,7 +36975,15 @@
       "header": "game_generated_type_7a470603d6db57af.hpp",
       "templates": null
     },
+    "cs_init_7a470603d6db57af_slow": {
+      "header": "game_generated_type_7a470603d6db57af.hpp",
+      "templates": null
+    },
     "cs_init_7a8a85ab4c0396df": {
+      "header": "game_generated_type_7a8a85ab4c0396df.hpp",
+      "templates": null
+    },
+    "cs_init_7a8a85ab4c0396df_slow": {
       "header": "game_generated_type_7a8a85ab4c0396df.hpp",
       "templates": null
     },
@@ -36687,7 +36991,15 @@
       "header": "game_generated_type_7c0f60cfdd8cf265.hpp",
       "templates": null
     },
+    "cs_init_7c0f60cfdd8cf265_slow": {
+      "header": "game_generated_type_7c0f60cfdd8cf265.hpp",
+      "templates": null
+    },
     "cs_init_7eb0a1119bc141dc": {
+      "header": "game_generated_type_7eb0a1119bc141dc.hpp",
+      "templates": null
+    },
+    "cs_init_7eb0a1119bc141dc_slow": {
       "header": "game_generated_type_7eb0a1119bc141dc.hpp",
       "templates": null
     },
@@ -36695,7 +37007,15 @@
       "header": "game_generated_type_7eeafe36a056776c.hpp",
       "templates": null
     },
+    "cs_init_7eeafe36a056776c_slow": {
+      "header": "game_generated_type_7eeafe36a056776c.hpp",
+      "templates": null
+    },
     "cs_init_7f70540c4f85d74f": {
+      "header": "game_generated_type_7f70540c4f85d74f.hpp",
+      "templates": null
+    },
+    "cs_init_7f70540c4f85d74f_slow": {
       "header": "game_generated_type_7f70540c4f85d74f.hpp",
       "templates": null
     },
@@ -36703,7 +37023,15 @@
       "header": "game_generated_type_80d72c9d6f5bfcfe.hpp",
       "templates": null
     },
+    "cs_init_80d72c9d6f5bfcfe_slow": {
+      "header": "game_generated_type_80d72c9d6f5bfcfe.hpp",
+      "templates": null
+    },
     "cs_init_834c8c593e682d3f": {
+      "header": "game_generated_type_834c8c593e682d3f.hpp",
+      "templates": null
+    },
+    "cs_init_834c8c593e682d3f_slow": {
       "header": "game_generated_type_834c8c593e682d3f.hpp",
       "templates": null
     },
@@ -36711,7 +37039,15 @@
       "header": "game_generated_type_83b311c3bf434048.hpp",
       "templates": null
     },
+    "cs_init_83b311c3bf434048_slow": {
+      "header": "game_generated_type_83b311c3bf434048.hpp",
+      "templates": null
+    },
     "cs_init_851a96be86c28dd2": {
+      "header": "game_generated_type_851a96be86c28dd2.hpp",
+      "templates": null
+    },
+    "cs_init_851a96be86c28dd2_slow": {
       "header": "game_generated_type_851a96be86c28dd2.hpp",
       "templates": null
     },
@@ -36719,7 +37055,15 @@
       "header": "game_generated_type_86b804989f2a95bb.hpp",
       "templates": null
     },
+    "cs_init_86b804989f2a95bb_slow": {
+      "header": "game_generated_type_86b804989f2a95bb.hpp",
+      "templates": null
+    },
     "cs_init_87fb4d668ea5580b": {
+      "header": "game_generated_type_87fb4d668ea5580b.hpp",
+      "templates": null
+    },
+    "cs_init_87fb4d668ea5580b_slow": {
       "header": "game_generated_type_87fb4d668ea5580b.hpp",
       "templates": null
     },
@@ -36727,7 +37071,15 @@
       "header": "game_generated_type_88b206217a8b30c2.hpp",
       "templates": null
     },
+    "cs_init_88b206217a8b30c2_slow": {
+      "header": "game_generated_type_88b206217a8b30c2.hpp",
+      "templates": null
+    },
     "cs_init_89c0d586cfe20341": {
+      "header": "game_generated_type_89c0d586cfe20341.hpp",
+      "templates": null
+    },
+    "cs_init_89c0d586cfe20341_slow": {
       "header": "game_generated_type_89c0d586cfe20341.hpp",
       "templates": null
     },
@@ -36735,7 +37087,15 @@
       "header": "game_generated_type_8a422f6f9c1bd55e.hpp",
       "templates": null
     },
+    "cs_init_8a422f6f9c1bd55e_slow": {
+      "header": "game_generated_type_8a422f6f9c1bd55e.hpp",
+      "templates": null
+    },
     "cs_init_8bf13b560e1e05e9": {
+      "header": "game_generated_type_8bf13b560e1e05e9.hpp",
+      "templates": null
+    },
+    "cs_init_8bf13b560e1e05e9_slow": {
       "header": "game_generated_type_8bf13b560e1e05e9.hpp",
       "templates": null
     },
@@ -36743,7 +37103,15 @@
       "header": "game_generated_type_8e2bf0f8fe011785.hpp",
       "templates": null
     },
+    "cs_init_8e2bf0f8fe011785_slow": {
+      "header": "game_generated_type_8e2bf0f8fe011785.hpp",
+      "templates": null
+    },
     "cs_init_8f8054b388e3f93e": {
+      "header": "game_generated_type_8f8054b388e3f93e.hpp",
+      "templates": null
+    },
+    "cs_init_8f8054b388e3f93e_slow": {
       "header": "game_generated_type_8f8054b388e3f93e.hpp",
       "templates": null
     },
@@ -36751,7 +37119,15 @@
       "header": "game_generated_type_90cdc908fbacdc4d.hpp",
       "templates": null
     },
+    "cs_init_90cdc908fbacdc4d_slow": {
+      "header": "game_generated_type_90cdc908fbacdc4d.hpp",
+      "templates": null
+    },
     "cs_init_91b71e223c6a5085": {
+      "header": "game_generated_type_91b71e223c6a5085.hpp",
+      "templates": null
+    },
+    "cs_init_91b71e223c6a5085_slow": {
       "header": "game_generated_type_91b71e223c6a5085.hpp",
       "templates": null
     },
@@ -36759,7 +37135,15 @@
       "header": "game_generated_type_925b3cf054e42b78.hpp",
       "templates": null
     },
+    "cs_init_925b3cf054e42b78_slow": {
+      "header": "game_generated_type_925b3cf054e42b78.hpp",
+      "templates": null
+    },
     "cs_init_931908081ea62151": {
+      "header": "game_generated_type_931908081ea62151.hpp",
+      "templates": null
+    },
+    "cs_init_931908081ea62151_slow": {
       "header": "game_generated_type_931908081ea62151.hpp",
       "templates": null
     },
@@ -36767,7 +37151,15 @@
       "header": "game_generated_type_9326c27a92cfea3a.hpp",
       "templates": null
     },
+    "cs_init_9326c27a92cfea3a_slow": {
+      "header": "game_generated_type_9326c27a92cfea3a.hpp",
+      "templates": null
+    },
     "cs_init_9465f7541f51c47e": {
+      "header": "game_generated_type_9465f7541f51c47e.hpp",
+      "templates": null
+    },
+    "cs_init_9465f7541f51c47e_slow": {
       "header": "game_generated_type_9465f7541f51c47e.hpp",
       "templates": null
     },
@@ -36775,7 +37167,15 @@
       "header": "game_generated_type_9487cb83e3a46e0a.hpp",
       "templates": null
     },
+    "cs_init_9487cb83e3a46e0a_slow": {
+      "header": "game_generated_type_9487cb83e3a46e0a.hpp",
+      "templates": null
+    },
     "cs_init_96c54d9323f24f8e": {
+      "header": "game_generated_type_96c54d9323f24f8e.hpp",
+      "templates": null
+    },
+    "cs_init_96c54d9323f24f8e_slow": {
       "header": "game_generated_type_96c54d9323f24f8e.hpp",
       "templates": null
     },
@@ -36783,7 +37183,15 @@
       "header": "game_generated_type_9896b6da0c305f81.hpp",
       "templates": null
     },
+    "cs_init_9896b6da0c305f81_slow": {
+      "header": "game_generated_type_9896b6da0c305f81.hpp",
+      "templates": null
+    },
     "cs_init_98f0a1bec2084c3c": {
+      "header": "game_generated_type_98f0a1bec2084c3c.hpp",
+      "templates": null
+    },
+    "cs_init_98f0a1bec2084c3c_slow": {
       "header": "game_generated_type_98f0a1bec2084c3c.hpp",
       "templates": null
     },
@@ -36791,7 +37199,15 @@
       "header": "game_generated_type_9b21b86f0d2914e0.hpp",
       "templates": null
     },
+    "cs_init_9b21b86f0d2914e0_slow": {
+      "header": "game_generated_type_9b21b86f0d2914e0.hpp",
+      "templates": null
+    },
     "cs_init_9cade6927d6e0bf3": {
+      "header": "game_generated_type_9cade6927d6e0bf3.hpp",
+      "templates": null
+    },
+    "cs_init_9cade6927d6e0bf3_slow": {
       "header": "game_generated_type_9cade6927d6e0bf3.hpp",
       "templates": null
     },
@@ -36799,7 +37215,15 @@
       "header": "game_generated_type_9d34b362d90540bb.hpp",
       "templates": null
     },
+    "cs_init_9d34b362d90540bb_slow": {
+      "header": "game_generated_type_9d34b362d90540bb.hpp",
+      "templates": null
+    },
     "cs_init_9f5a071d05c1d020": {
+      "header": "game_generated_type_9f5a071d05c1d020.hpp",
+      "templates": null
+    },
+    "cs_init_9f5a071d05c1d020_slow": {
       "header": "game_generated_type_9f5a071d05c1d020.hpp",
       "templates": null
     },
@@ -36807,7 +37231,15 @@
       "header": "game_generated_type_a2cea92715051fa5.hpp",
       "templates": null
     },
+    "cs_init_a2cea92715051fa5_slow": {
+      "header": "game_generated_type_a2cea92715051fa5.hpp",
+      "templates": null
+    },
     "cs_init_a42daea58251b089": {
+      "header": "game_generated_type_a42daea58251b089.hpp",
+      "templates": null
+    },
+    "cs_init_a42daea58251b089_slow": {
       "header": "game_generated_type_a42daea58251b089.hpp",
       "templates": null
     },
@@ -36815,7 +37247,15 @@
       "header": "game_generated_type_a47fef2fb9013301.hpp",
       "templates": null
     },
+    "cs_init_a47fef2fb9013301_slow": {
+      "header": "game_generated_type_a47fef2fb9013301.hpp",
+      "templates": null
+    },
     "cs_init_a9f43a9b869eaae8": {
+      "header": "game_generated_type_a9f43a9b869eaae8.hpp",
+      "templates": null
+    },
+    "cs_init_a9f43a9b869eaae8_slow": {
       "header": "game_generated_type_a9f43a9b869eaae8.hpp",
       "templates": null
     },
@@ -36823,7 +37263,15 @@
       "header": "game_generated_type_ab1b1085a7ab32b9.hpp",
       "templates": null
     },
+    "cs_init_ab1b1085a7ab32b9_slow": {
+      "header": "game_generated_type_ab1b1085a7ab32b9.hpp",
+      "templates": null
+    },
     "cs_init_acb158b492b43017": {
+      "header": "game_generated_type_acb158b492b43017.hpp",
+      "templates": null
+    },
+    "cs_init_acb158b492b43017_slow": {
       "header": "game_generated_type_acb158b492b43017.hpp",
       "templates": null
     },
@@ -36831,7 +37279,15 @@
       "header": "game_generated_type_af32d28251411c95.hpp",
       "templates": null
     },
+    "cs_init_af32d28251411c95_slow": {
+      "header": "game_generated_type_af32d28251411c95.hpp",
+      "templates": null
+    },
     "cs_init_b08d770c239489bf": {
+      "header": "game_generated_type_b08d770c239489bf.hpp",
+      "templates": null
+    },
+    "cs_init_b08d770c239489bf_slow": {
       "header": "game_generated_type_b08d770c239489bf.hpp",
       "templates": null
     },
@@ -36839,7 +37295,15 @@
       "header": "game_generated_type_b169f360ee9f1108.hpp",
       "templates": null
     },
+    "cs_init_b169f360ee9f1108_slow": {
+      "header": "game_generated_type_b169f360ee9f1108.hpp",
+      "templates": null
+    },
     "cs_init_b489b0d33bb37bb8": {
+      "header": "game_generated_type_b489b0d33bb37bb8.hpp",
+      "templates": null
+    },
+    "cs_init_b489b0d33bb37bb8_slow": {
       "header": "game_generated_type_b489b0d33bb37bb8.hpp",
       "templates": null
     },
@@ -36847,7 +37311,15 @@
       "header": "game_generated_type_b68aa9c3dd5cf14c.hpp",
       "templates": null
     },
+    "cs_init_b68aa9c3dd5cf14c_slow": {
+      "header": "game_generated_type_b68aa9c3dd5cf14c.hpp",
+      "templates": null
+    },
     "cs_init_b6ad7779caeeb23c": {
+      "header": "game_generated_type_b6ad7779caeeb23c.hpp",
+      "templates": null
+    },
+    "cs_init_b6ad7779caeeb23c_slow": {
       "header": "game_generated_type_b6ad7779caeeb23c.hpp",
       "templates": null
     },
@@ -36855,7 +37327,15 @@
       "header": "game_generated_type_b728593e3dcffe31.hpp",
       "templates": null
     },
+    "cs_init_b728593e3dcffe31_slow": {
+      "header": "game_generated_type_b728593e3dcffe31.hpp",
+      "templates": null
+    },
     "cs_init_b89c480114cef140": {
+      "header": "game_generated_type_b89c480114cef140.hpp",
+      "templates": null
+    },
+    "cs_init_b89c480114cef140_slow": {
       "header": "game_generated_type_b89c480114cef140.hpp",
       "templates": null
     },
@@ -36863,7 +37343,15 @@
       "header": "game_generated_type_ba9af87bc2bff5b4.hpp",
       "templates": null
     },
+    "cs_init_ba9af87bc2bff5b4_slow": {
+      "header": "game_generated_type_ba9af87bc2bff5b4.hpp",
+      "templates": null
+    },
     "cs_init_bad15ea7469ee2b9": {
+      "header": "game_generated_type_bad15ea7469ee2b9.hpp",
+      "templates": null
+    },
+    "cs_init_bad15ea7469ee2b9_slow": {
       "header": "game_generated_type_bad15ea7469ee2b9.hpp",
       "templates": null
     },
@@ -36871,7 +37359,15 @@
       "header": "game_generated_type_bcccbac2bf72843d.hpp",
       "templates": null
     },
+    "cs_init_bcccbac2bf72843d_slow": {
+      "header": "game_generated_type_bcccbac2bf72843d.hpp",
+      "templates": null
+    },
     "cs_init_bd3043ac164d021f": {
+      "header": "game_generated_type_bd3043ac164d021f.hpp",
+      "templates": null
+    },
+    "cs_init_bd3043ac164d021f_slow": {
       "header": "game_generated_type_bd3043ac164d021f.hpp",
       "templates": null
     },
@@ -36879,7 +37375,15 @@
       "header": "game_generated_type_bf56843843fb840d.hpp",
       "templates": null
     },
+    "cs_init_bf56843843fb840d_slow": {
+      "header": "game_generated_type_bf56843843fb840d.hpp",
+      "templates": null
+    },
     "cs_init_c0d8fc3e635445ff": {
+      "header": "game_generated_type_c0d8fc3e635445ff.hpp",
+      "templates": null
+    },
+    "cs_init_c0d8fc3e635445ff_slow": {
       "header": "game_generated_type_c0d8fc3e635445ff.hpp",
       "templates": null
     },
@@ -36887,7 +37391,15 @@
       "header": "game_generated_type_c10f171a3a4c8973.hpp",
       "templates": null
     },
+    "cs_init_c10f171a3a4c8973_slow": {
+      "header": "game_generated_type_c10f171a3a4c8973.hpp",
+      "templates": null
+    },
     "cs_init_c63e265fb6ff73e9": {
+      "header": "game_generated_type_c63e265fb6ff73e9.hpp",
+      "templates": null
+    },
+    "cs_init_c63e265fb6ff73e9_slow": {
       "header": "game_generated_type_c63e265fb6ff73e9.hpp",
       "templates": null
     },
@@ -36895,7 +37407,15 @@
       "header": "game_generated_type_c87dc3d2d0f9440a.hpp",
       "templates": null
     },
+    "cs_init_c87dc3d2d0f9440a_slow": {
+      "header": "game_generated_type_c87dc3d2d0f9440a.hpp",
+      "templates": null
+    },
     "cs_init_c8e1f3d3f96670c6": {
+      "header": "game_generated_type_c8e1f3d3f96670c6.hpp",
+      "templates": null
+    },
+    "cs_init_c8e1f3d3f96670c6_slow": {
       "header": "game_generated_type_c8e1f3d3f96670c6.hpp",
       "templates": null
     },
@@ -36903,7 +37423,15 @@
       "header": "game_generated_type_c9cd56cdd30ecf7a.hpp",
       "templates": null
     },
+    "cs_init_c9cd56cdd30ecf7a_slow": {
+      "header": "game_generated_type_c9cd56cdd30ecf7a.hpp",
+      "templates": null
+    },
     "cs_init_ca6f5bbc06a496a9": {
+      "header": "game_generated_type_ca6f5bbc06a496a9.hpp",
+      "templates": null
+    },
+    "cs_init_ca6f5bbc06a496a9_slow": {
       "header": "game_generated_type_ca6f5bbc06a496a9.hpp",
       "templates": null
     },
@@ -36911,7 +37439,15 @@
       "header": "game_generated_type_cd85e7c847ae4598.hpp",
       "templates": null
     },
+    "cs_init_cd85e7c847ae4598_slow": {
+      "header": "game_generated_type_cd85e7c847ae4598.hpp",
+      "templates": null
+    },
     "cs_init_cd97eee87b3216c4": {
+      "header": "game_generated_type_cd97eee87b3216c4.hpp",
+      "templates": null
+    },
+    "cs_init_cd97eee87b3216c4_slow": {
       "header": "game_generated_type_cd97eee87b3216c4.hpp",
       "templates": null
     },
@@ -36919,7 +37455,15 @@
       "header": "game_generated_type_d01bf6d528df5d3e.hpp",
       "templates": null
     },
+    "cs_init_d01bf6d528df5d3e_slow": {
+      "header": "game_generated_type_d01bf6d528df5d3e.hpp",
+      "templates": null
+    },
     "cs_init_d0b7ac4933bed3ac": {
+      "header": "game_generated_type_d0b7ac4933bed3ac.hpp",
+      "templates": null
+    },
+    "cs_init_d0b7ac4933bed3ac_slow": {
       "header": "game_generated_type_d0b7ac4933bed3ac.hpp",
       "templates": null
     },
@@ -36927,7 +37471,15 @@
       "header": "game_generated_type_d22b1a8b100a0cab.hpp",
       "templates": null
     },
+    "cs_init_d22b1a8b100a0cab_slow": {
+      "header": "game_generated_type_d22b1a8b100a0cab.hpp",
+      "templates": null
+    },
     "cs_init_d37bccc1c3814fc6": {
+      "header": "game_generated_type_d37bccc1c3814fc6.hpp",
+      "templates": null
+    },
+    "cs_init_d37bccc1c3814fc6_slow": {
       "header": "game_generated_type_d37bccc1c3814fc6.hpp",
       "templates": null
     },
@@ -36935,7 +37487,15 @@
       "header": "game_generated_type_d86010513034d6a0.hpp",
       "templates": null
     },
+    "cs_init_d86010513034d6a0_slow": {
+      "header": "game_generated_type_d86010513034d6a0.hpp",
+      "templates": null
+    },
     "cs_init_dc09c88a279424b5": {
+      "header": "game_generated_type_dc09c88a279424b5.hpp",
+      "templates": null
+    },
+    "cs_init_dc09c88a279424b5_slow": {
       "header": "game_generated_type_dc09c88a279424b5.hpp",
       "templates": null
     },
@@ -36943,7 +37503,15 @@
       "header": "game_generated_type_e00832a42e12ec3b.hpp",
       "templates": null
     },
+    "cs_init_e00832a42e12ec3b_slow": {
+      "header": "game_generated_type_e00832a42e12ec3b.hpp",
+      "templates": null
+    },
     "cs_init_e1ac8ca60ae0d404": {
+      "header": "game_generated_type_e1ac8ca60ae0d404.hpp",
+      "templates": null
+    },
+    "cs_init_e1ac8ca60ae0d404_slow": {
       "header": "game_generated_type_e1ac8ca60ae0d404.hpp",
       "templates": null
     },
@@ -36951,7 +37519,15 @@
       "header": "game_generated_type_e315dac1df3b175d.hpp",
       "templates": null
     },
+    "cs_init_e315dac1df3b175d_slow": {
+      "header": "game_generated_type_e315dac1df3b175d.hpp",
+      "templates": null
+    },
     "cs_init_e31f80000513fe82": {
+      "header": "game_generated_type_e31f80000513fe82.hpp",
+      "templates": null
+    },
+    "cs_init_e31f80000513fe82_slow": {
       "header": "game_generated_type_e31f80000513fe82.hpp",
       "templates": null
     },
@@ -36959,7 +37535,15 @@
       "header": "game_generated_type_e373231f616cd1ed.hpp",
       "templates": null
     },
+    "cs_init_e373231f616cd1ed_slow": {
+      "header": "game_generated_type_e373231f616cd1ed.hpp",
+      "templates": null
+    },
     "cs_init_e57cdf426b59f0ee": {
+      "header": "game_generated_type_e57cdf426b59f0ee.hpp",
+      "templates": null
+    },
+    "cs_init_e57cdf426b59f0ee_slow": {
       "header": "game_generated_type_e57cdf426b59f0ee.hpp",
       "templates": null
     },
@@ -36967,7 +37551,15 @@
       "header": "game_generated_type_e6ed65290db381ba.hpp",
       "templates": null
     },
+    "cs_init_e6ed65290db381ba_slow": {
+      "header": "game_generated_type_e6ed65290db381ba.hpp",
+      "templates": null
+    },
     "cs_init_e9cc65282df10bc8": {
+      "header": "game_generated_type_e9cc65282df10bc8.hpp",
+      "templates": null
+    },
+    "cs_init_e9cc65282df10bc8_slow": {
       "header": "game_generated_type_e9cc65282df10bc8.hpp",
       "templates": null
     },
@@ -36975,7 +37567,15 @@
       "header": "game_generated_type_ec6b992b38927bb3.hpp",
       "templates": null
     },
+    "cs_init_ec6b992b38927bb3_slow": {
+      "header": "game_generated_type_ec6b992b38927bb3.hpp",
+      "templates": null
+    },
     "cs_init_ec7bde62b3c2b35f": {
+      "header": "game_generated_type_ec7bde62b3c2b35f.hpp",
+      "templates": null
+    },
+    "cs_init_ec7bde62b3c2b35f_slow": {
       "header": "game_generated_type_ec7bde62b3c2b35f.hpp",
       "templates": null
     },
@@ -36983,7 +37583,15 @@
       "header": "game_generated_type_ec7e2b4042d2be7d.hpp",
       "templates": null
     },
+    "cs_init_ec7e2b4042d2be7d_slow": {
+      "header": "game_generated_type_ec7e2b4042d2be7d.hpp",
+      "templates": null
+    },
     "cs_init_ec8ac507fb495e84": {
+      "header": "game_generated_type_ec8ac507fb495e84.hpp",
+      "templates": null
+    },
+    "cs_init_ec8ac507fb495e84_slow": {
       "header": "game_generated_type_ec8ac507fb495e84.hpp",
       "templates": null
     },
@@ -36991,7 +37599,15 @@
       "header": "game_generated_type_ed8eabc614ddcf9e.hpp",
       "templates": null
     },
+    "cs_init_ed8eabc614ddcf9e_slow": {
+      "header": "game_generated_type_ed8eabc614ddcf9e.hpp",
+      "templates": null
+    },
     "cs_init_efeeb7640894c95e": {
+      "header": "game_generated_type_efeeb7640894c95e.hpp",
+      "templates": null
+    },
+    "cs_init_efeeb7640894c95e_slow": {
       "header": "game_generated_type_efeeb7640894c95e.hpp",
       "templates": null
     },
@@ -36999,7 +37615,15 @@
       "header": "game_generated_type_f1dd8f2aa583774c.hpp",
       "templates": null
     },
+    "cs_init_f1dd8f2aa583774c_slow": {
+      "header": "game_generated_type_f1dd8f2aa583774c.hpp",
+      "templates": null
+    },
     "cs_init_f52c904bea265acc": {
+      "header": "game_generated_type_f52c904bea265acc.hpp",
+      "templates": null
+    },
+    "cs_init_f52c904bea265acc_slow": {
       "header": "game_generated_type_f52c904bea265acc.hpp",
       "templates": null
     },
@@ -37007,7 +37631,15 @@
       "header": "game_generated_type_f65ba01749ba9d34.hpp",
       "templates": null
     },
+    "cs_init_f65ba01749ba9d34_slow": {
+      "header": "game_generated_type_f65ba01749ba9d34.hpp",
+      "templates": null
+    },
     "cs_init_f8053a3d49df91b7": {
+      "header": "game_generated_type_f8053a3d49df91b7.hpp",
+      "templates": null
+    },
+    "cs_init_f8053a3d49df91b7_slow": {
       "header": "game_generated_type_f8053a3d49df91b7.hpp",
       "templates": null
     },
@@ -37015,7 +37647,15 @@
       "header": "game_generated_type_f991feb74054b6df.hpp",
       "templates": null
     },
+    "cs_init_f991feb74054b6df_slow": {
+      "header": "game_generated_type_f991feb74054b6df.hpp",
+      "templates": null
+    },
     "cs_init_f9cfa6da3459412e": {
+      "header": "game_generated_type_f9cfa6da3459412e.hpp",
+      "templates": null
+    },
+    "cs_init_f9cfa6da3459412e_slow": {
       "header": "game_generated_type_f9cfa6da3459412e.hpp",
       "templates": null
     },
@@ -37023,7 +37663,15 @@
       "header": "game_generated_type_fa01867c9c048464.hpp",
       "templates": null
     },
+    "cs_init_fa01867c9c048464_slow": {
+      "header": "game_generated_type_fa01867c9c048464.hpp",
+      "templates": null
+    },
     "cs_init_fbfef5c19ac20749": {
+      "header": "game_generated_type_fbfef5c19ac20749.hpp",
+      "templates": null
+    },
+    "cs_init_fbfef5c19ac20749_slow": {
       "header": "game_generated_type_fbfef5c19ac20749.hpp",
       "templates": null
     },
@@ -37031,11 +37679,23 @@
       "header": "game_generated_type_fd48512b974504f6.hpp",
       "templates": null
     },
+    "cs_init_fd48512b974504f6_slow": {
+      "header": "game_generated_type_fd48512b974504f6.hpp",
+      "templates": null
+    },
     "cs_init_fd683372658feff4": {
       "header": "game_generated_type_fd683372658feff4.hpp",
       "templates": null
     },
+    "cs_init_fd683372658feff4_slow": {
+      "header": "game_generated_type_fd683372658feff4.hpp",
+      "templates": null
+    },
     "cs_init_feb7ae74aa59a27c": {
+      "header": "game_generated_type_feb7ae74aa59a27c.hpp",
+      "templates": null
+    },
+    "cs_init_feb7ae74aa59a27c_slow": {
       "header": "game_generated_type_feb7ae74aa59a27c.hpp",
       "templates": null
     }

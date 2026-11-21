@@ -3,9 +3,11 @@
 #include "generated/portable_generated_type_ab1b1085a7ab32b9.hpp"
 namespace pls::game {
 
-void cs_init_ab1b1085a7ab32b9(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Language.Position",[](){
+static PLS_NOINLINE void cs_init_ab1b1085a7ab32b9_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Language.Position",flag,[](){
 
 });}
+
+void cs_init_ab1b1085a7ab32b9(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_ab1b1085a7ab32b9_slow(flag);}
 
 // M:kairo.unity.util.Language.Position.#ctor(System.Int32,System.Int32)
 pls::generated::cs_ab1b1085a7ab32b9 cs_f7e443d43797a1e8(std::int32_t v_line,std::int32_t v_segment) { cs_init_ab1b1085a7ab32b9();

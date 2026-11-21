@@ -2,8 +2,10 @@
 import argparse
 import hashlib
 import json
+import sys
 import re
 from pathlib import Path
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'tools'))
 from report_paths import unpack_source_paths
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -51,7 +53,7 @@ def main():
     if not canonical_compiled and not options.allow_uncompiled:raise ValueError('A compiled canonical snapshot is required, or explicit --allow-uncompiled for a private Release-first experiment')
     for key,path in [('translator_source_sha256',ROOT/'translator/Translator.cs'),('emission_source_sha256',ROOT/'translator/EmissionUnits.cs'),('driver_sha256',ROOT/'translator/translate.py')]:
         if producer.get(key)!=sha(path):raise ValueError('Canonical producer is stale; regenerate normal Game first')
-    if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=sha(ROOT/'translator/report_paths.py'):raise ValueError('Canonical path producer is stale')
+    if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=sha(ROOT/'tools/report_paths.py'):raise ValueError('Canonical path producer is stale')
     for entry in report.get('platform_adapter_sources',[]):
         if sha(ROOT/entry['path'])!=entry['sha256']:raise ValueError('Bootstrap producer/source is stale')
     canonical=report['generated_files'];names=set()

@@ -5,9 +5,11 @@ namespace pls::game {
 
 void cs_bf56843843fb840d::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_85aa6688644f1732,visitor);pls::cs::trace_value(cs_0e1d8386a566c122,visitor);pls::cs::trace_value(cs_061de919f485a022,visitor);}
 
-void cs_init_bf56843843fb840d(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.ResourceManager.JarCache",[](){
+static PLS_NOINLINE void cs_init_bf56843843fb840d_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.ResourceManager.JarCache",flag,[](){
 
 });}
+
+void cs_init_bf56843843fb840d(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_bf56843843fb840d_slow(flag);}
 
 // M:kairo.unity.ui.ResourceManager.JarCache.#ctor(System.Int32,System.Int32,kairo.unity.util.JarInflater)
 cs_bf56843843fb840d cs_b9f0cc63a3a1e0ed(std::int32_t v_rsId,std::int32_t v_rcId,pls::cs::Ref<pls::generated::cs_52158c8b20364c2b> v_jar) { cs_init_bf56843843fb840d();

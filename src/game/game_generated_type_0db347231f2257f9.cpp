@@ -57,7 +57,7 @@ static pls::cs::Array<std::int32_t> cs_0e20806db5c3305e_value{};
 
 static pls::cs::Array<std::int32_t> cs_6cae9cacf677a17f_value{};
 
-void cs_init_0db347231f2257f9(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_3b50dc05f8cda6a0_value,visitor);pls::cs::trace_value(cs_b09ed8c04aa52945_value,visitor);pls::cs::trace_value(cs_306a90f62e6a5769_value,visitor);pls::cs::trace_value(cs_7046400e80c950c9_value,visitor);pls::cs::trace_value(cs_61dda273944cdd61_value,visitor);pls::cs::trace_value(cs_56f018c4e52d3584_value,visitor);pls::cs::trace_value(cs_408d1d9bcb645a59_value,visitor);pls::cs::trace_value(cs_86191fb165bd74e6_value,visitor);pls::cs::trace_value(cs_5f3f96cf46cbc47d_value,visitor);pls::cs::trace_value(cs_6aa7bf7445947442_value,visitor);pls::cs::trace_value(cs_ac4fa7e44314cfa3_value,visitor);pls::cs::trace_value(cs_0e20806db5c3305e_value,visitor);pls::cs::trace_value(cs_6cae9cacf677a17f_value,visitor);});static pls::cs::TypeInitState state;state.run("game.GameManager",[](){
+static PLS_NOINLINE void cs_init_0db347231f2257f9_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_3b50dc05f8cda6a0_value,visitor);pls::cs::trace_value(cs_b09ed8c04aa52945_value,visitor);pls::cs::trace_value(cs_306a90f62e6a5769_value,visitor);pls::cs::trace_value(cs_7046400e80c950c9_value,visitor);pls::cs::trace_value(cs_61dda273944cdd61_value,visitor);pls::cs::trace_value(cs_56f018c4e52d3584_value,visitor);pls::cs::trace_value(cs_408d1d9bcb645a59_value,visitor);pls::cs::trace_value(cs_86191fb165bd74e6_value,visitor);pls::cs::trace_value(cs_5f3f96cf46cbc47d_value,visitor);pls::cs::trace_value(cs_6aa7bf7445947442_value,visitor);pls::cs::trace_value(cs_ac4fa7e44314cfa3_value,visitor);pls::cs::trace_value(cs_0e20806db5c3305e_value,visitor);pls::cs::trace_value(cs_6cae9cacf677a17f_value,visitor);});static pls::cs::TypeInitState state;state.run("game.GameManager",flag,[](){
 cs_56f018c4e52d3584_value = pls::cs::evaluate_type_initializer_field("F:game.GameManager.HALFTIME",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xa8cull));});
 cs_3b50dc05f8cda6a0_value = pls::cs::evaluate_type_initializer_field("F:game.GameManager.ADDTIME",[&](){return static_cast<float>(([&]() -> double { auto cs_left = static_cast<double>(static_cast<float>(cs_56f018c4e52d3584())); auto cs_right = static_cast<double>(pls::game::cs_f32(0x44960000u)); return (cs_left / cs_right); }()));});
 cs_6cae9cacf677a17f_value = pls::cs::evaluate_type_initializer_field("F:game.GameManager.WAIT_THROWIN",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/game/GameManager.cs:M:game.UserData.Init:2879",pls::assets::baked_array<std::int32_t>("309653a8f3c65f72fe4170a059d71beea77ea622540d75faa370eb4dfa27374e"));});
@@ -70,6 +70,8 @@ cs_61dda273944cdd61_value = pls::cs::evaluate_type_initializer_field("F:game.Gam
 cs_306a90f62e6a5769_value = pls::cs::evaluate_type_initializer_field("F:game.GameManager.cBallHitList",[&](){return pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/GameManager.cs:M:game.UserData.Init:3758",([&]() -> pls::cs::Ref<pls::generated::cs_f8b20a4d1d9d695f> { return pls::generated::cs_b5d75502f0a9aa7e(); }()));});
 
 });}
+
+void cs_init_0db347231f2257f9(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_0db347231f2257f9_slow(flag);}
 
 float& cs_3b50dc05f8cda6a0(){cs_init_0db347231f2257f9();return cs_3b50dc05f8cda6a0_value;}
 

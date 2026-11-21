@@ -5,9 +5,11 @@ namespace pls::generated {
 void cs_42d69496680e17fc::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);}
 static pls::cs::Ref<cs_42d69496680e17fc> cs_c1bf1420af51dac4_value{};
 
-void cs_init_42d69496680e17fc(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_c1bf1420af51dac4_value,visitor);});static pls::cs::TypeInitState state;state.run("java.lang.JRuntime",[](){
+static PLS_NOINLINE void cs_init_42d69496680e17fc_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_c1bf1420af51dac4_value,visitor);});static pls::cs::TypeInitState state;state.run("java.lang.JRuntime",flag,[](){
 
 });}
+
+void cs_init_42d69496680e17fc(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_42d69496680e17fc_slow(flag);}
 
 pls::cs::Ref<cs_42d69496680e17fc>& cs_c1bf1420af51dac4(){cs_init_42d69496680e17fc();return cs_c1bf1420af51dac4_value;}
 

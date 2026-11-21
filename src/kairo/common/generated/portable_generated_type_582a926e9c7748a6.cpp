@@ -2,9 +2,11 @@
 #include "portable_generated_type_582a926e9c7748a6.hpp"
 namespace pls::generated {
 
-void cs_init_582a926e9c7748a6(){static pls::cs::TypeInitState state;state.run("java.lang.StringEx",[](){
+static PLS_NOINLINE void cs_init_582a926e9c7748a6_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.lang.StringEx",flag,[](){
 
 });}
+
+void cs_init_582a926e9c7748a6(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_582a926e9c7748a6_slow(flag);}
 
 // M:java.lang.StringEx.CharAt(System.String,System.Int32)
 char16_t cs_b5d1dc3a4e215d09(pls::cs::String v_str,std::int32_t v_index) { cs_init_582a926e9c7748a6();

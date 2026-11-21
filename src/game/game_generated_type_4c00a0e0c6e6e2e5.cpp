@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_4c00a0e0c6e6e2e5::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_5ad2213598dfcd5d::trace_edges(visitor);pls::cs::trace_value(cs_c02206d24c9889b2,visitor);}
 
-void cs_init_4c00a0e0c6e6e2e5(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.Label",[](){
+static PLS_NOINLINE void cs_init_4c00a0e0c6e6e2e5_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.Label",flag,[](){
 
 });}
+
+void cs_init_4c00a0e0c6e6e2e5(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4c00a0e0c6e6e2e5_slow(flag);}
 
 // M:kairo.unity.panel.Label.#ctor(System.String)
 pls::cs::Ref<cs_4c00a0e0c6e6e2e5> cs_80617835aa0d7a16(pls::cs::String v_text) { cs_init_4c00a0e0c6e6e2e5();

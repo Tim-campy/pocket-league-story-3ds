@@ -13,9 +13,11 @@ void cs_4e9b1f0e9e3baf25::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<cs_4e9b1f0e9e3baf25> cs_f0c6ab846fbc94dd_value{};
 
-void cs_init_4e9b1f0e9e3baf25(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_f0c6ab846fbc94dd_value,visitor);});static pls::cs::TypeInitState state;state.run("surface.TouchEffectManager",[](){
+static PLS_NOINLINE void cs_init_4e9b1f0e9e3baf25_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_f0c6ab846fbc94dd_value,visitor);});static pls::cs::TypeInitState state;state.run("surface.TouchEffectManager",flag,[](){
 
 });}
+
+void cs_init_4e9b1f0e9e3baf25(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4e9b1f0e9e3baf25_slow(flag);}
 
 pls::cs::Ref<cs_4e9b1f0e9e3baf25>& cs_f0c6ab846fbc94dd(){cs_init_4e9b1f0e9e3baf25();return cs_f0c6ab846fbc94dd_value;}
 

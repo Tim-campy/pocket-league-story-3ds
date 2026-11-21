@@ -10,9 +10,11 @@ void cs_80d72c9d6f5bfcfe::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Array<pls::cs::String> cs_a6acb1dbcdc3e821_value{};
 
-void cs_init_80d72c9d6f5bfcfe(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a6acb1dbcdc3e821_value,visitor);});static pls::cs::TypeInitState state;state.run("data.EventData",[](){
+static PLS_NOINLINE void cs_init_80d72c9d6f5bfcfe_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a6acb1dbcdc3e821_value,visitor);});static pls::cs::TypeInitState state;state.run("data.EventData",flag,[](){
 
 });}
+
+void cs_init_80d72c9d6f5bfcfe(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_80d72c9d6f5bfcfe_slow(flag);}
 
 pls::cs::Array<pls::cs::String>& cs_a6acb1dbcdc3e821(){cs_init_80d72c9d6f5bfcfe();return cs_a6acb1dbcdc3e821_value;}
 

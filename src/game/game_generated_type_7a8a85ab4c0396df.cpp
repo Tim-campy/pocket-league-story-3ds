@@ -20,9 +20,11 @@ pls::cs::String cs_7a8a85ab4c0396df::ToString() {return cs_6d5017124c1ae7a5(pls:
 
 bool cs_7a8a85ab4c0396df::Update() {return cs_a5d5caa24a2ba6d6(pls::cs::static_pointer_cast<cs_7a8a85ab4c0396df>(shared_from_this()));}
 
-void cs_init_7a8a85ab4c0396df(){static pls::cs::TypeInitState state;state.run("system.form.RestoreForm",[](){
+static PLS_NOINLINE void cs_init_7a8a85ab4c0396df_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.form.RestoreForm",flag,[](){
 
 });}
+
+void cs_init_7a8a85ab4c0396df(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_7a8a85ab4c0396df_slow(flag);}
 
 // M:system.form.RestoreForm.#ctor(kairo.unity.form.FormBase)
 pls::cs::Ref<cs_7a8a85ab4c0396df> cs_972efb29b2f26070(pls::cs::Ref<pls::kairo::FormBase> v_next) { cs_init_7a8a85ab4c0396df();

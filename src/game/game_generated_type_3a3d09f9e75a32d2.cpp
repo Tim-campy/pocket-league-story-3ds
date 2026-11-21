@@ -7,9 +7,11 @@ namespace pls::game {
 
 void cs_3a3d09f9e75a32d2::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_0c00171d2e322a58,visitor);pls::cs::trace_value(cs_0203776c95852fed,visitor);pls::cs::trace_value(cs_830652d422733c85,visitor);pls::cs::trace_value(cs_1ec368037b30316d,visitor);pls::cs::trace_value(cs_0dcfa10d1674b264,visitor);pls::cs::trace_value(cs_2445e8abe98d39d6,visitor);pls::cs::trace_value(cs_bf6f23b78c4832ac,visitor);pls::cs::trace_value(cs_1d1d519d3428e730,visitor);pls::cs::trace_value(cs_8c5afd45472d0f2e,visitor);pls::cs::trace_value(cs_9019c7ffefab6ad8,visitor);pls::cs::trace_value(cs_91c876c3ea20d77d,visitor);pls::cs::trace_value(cs_ec0be04bf6c6d5ad,visitor);pls::cs::trace_value(cs_48f24d93a00e0ab4,visitor);}
 
-void cs_init_3a3d09f9e75a32d2(){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchComponent",[](){
+static PLS_NOINLINE void cs_init_3a3d09f9e75a32d2_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.surface.TouchComponent",flag,[](){
 
 });}
+
+void cs_init_3a3d09f9e75a32d2(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_3a3d09f9e75a32d2_slow(flag);}
 
 // M:kairo.unity.surface.TouchComponent.#ctor
 pls::cs::Ref<cs_3a3d09f9e75a32d2> cs_4766c761098d0094() { cs_init_3a3d09f9e75a32d2();

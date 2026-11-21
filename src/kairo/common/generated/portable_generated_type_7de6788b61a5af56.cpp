@@ -10,9 +10,11 @@ bool cs_7de6788b61a5af56::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {re
 
 pls::cs::String cs_7de6788b61a5af56::ToString() {return cs_044a765a6989d563(pls::cs::static_pointer_cast<cs_7de6788b61a5af56>(shared_from_this()));}
 
-void cs_init_7de6788b61a5af56(){static pls::cs::TypeInitState state;state.run("java.lang.JInteger",[](){
+static PLS_NOINLINE void cs_init_7de6788b61a5af56_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.lang.JInteger",flag,[](){
 
 });}
+
+void cs_init_7de6788b61a5af56(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_7de6788b61a5af56_slow(flag);}
 
 // M:java.lang.JInteger.#ctor(System.Int32)
 pls::cs::Ref<cs_7de6788b61a5af56> cs_6ebf505bf86af890(std::int32_t v_value) { cs_init_7de6788b61a5af56();

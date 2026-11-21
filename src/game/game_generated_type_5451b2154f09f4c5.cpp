@@ -75,7 +75,7 @@ static std::int32_t cs_06793759231a4333_value{};
 
 static std::int32_t cs_8c159bade3fd6c11_value{};
 
-void cs_init_5451b2154f09f4c5(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_c3399590d71503ae_value,visitor);pls::cs::trace_value(cs_ec3066b8c5d4780d_value,visitor);pls::cs::trace_value(cs_9c86e05bddfdb37d_value,visitor);pls::cs::trace_value(cs_d300032e2a41690b_value,visitor);pls::cs::trace_value(cs_04e42c75b0be7e7f_value,visitor);pls::cs::trace_value(cs_8df5cf54a7ccff5f_value,visitor);pls::cs::trace_value(cs_aaf938f65d980adc_value,visitor);pls::cs::trace_value(cs_5f21ec3a03035ae3_value,visitor);pls::cs::trace_value(cs_4552c7863c9e5897_value,visitor);pls::cs::trace_value(cs_8af0529eaa9e3582_value,visitor);pls::cs::trace_value(cs_9ee90d0e6c247261_value,visitor);pls::cs::trace_value(cs_06793759231a4333_value,visitor);pls::cs::trace_value(cs_8c159bade3fd6c11_value,visitor);});static pls::cs::TypeInitState state;state.run("form.MyFormBase",[](){
+static PLS_NOINLINE void cs_init_5451b2154f09f4c5_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_c3399590d71503ae_value,visitor);pls::cs::trace_value(cs_ec3066b8c5d4780d_value,visitor);pls::cs::trace_value(cs_9c86e05bddfdb37d_value,visitor);pls::cs::trace_value(cs_d300032e2a41690b_value,visitor);pls::cs::trace_value(cs_04e42c75b0be7e7f_value,visitor);pls::cs::trace_value(cs_8df5cf54a7ccff5f_value,visitor);pls::cs::trace_value(cs_aaf938f65d980adc_value,visitor);pls::cs::trace_value(cs_5f21ec3a03035ae3_value,visitor);pls::cs::trace_value(cs_4552c7863c9e5897_value,visitor);pls::cs::trace_value(cs_8af0529eaa9e3582_value,visitor);pls::cs::trace_value(cs_9ee90d0e6c247261_value,visitor);pls::cs::trace_value(cs_06793759231a4333_value,visitor);pls::cs::trace_value(cs_8c159bade3fd6c11_value,visitor);});static pls::cs::TypeInitState state;state.run("form.MyFormBase",flag,[](){
 cs_9c86e05bddfdb37d_value = pls::cs::evaluate_type_initializer_field("F:form.MyFormBase.WNDFLAG_LEFT_ARW",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));});
 cs_d300032e2a41690b_value = pls::cs::evaluate_type_initializer_field("F:form.MyFormBase.WNDFLAG_RIGHT_ARW",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));});
 cs_ec3066b8c5d4780d_value = pls::cs::evaluate_type_initializer_field("F:form.MyFormBase.WNDFLAG_BOX",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x4ull));});
@@ -89,6 +89,8 @@ cs_5f21ec3a03035ae3_value = pls::cs::evaluate_type_initializer_field("F:form.MyF
 cs_aaf938f65d980adc_value = pls::cs::evaluate_type_initializer_field("F:form.MyFormBase.WNDRET_BOX_END",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x8ull));});
 
 });}
+
+void cs_init_5451b2154f09f4c5(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_5451b2154f09f4c5_slow(flag);}
 
 std::int32_t& cs_c3399590d71503ae(){cs_init_5451b2154f09f4c5();return cs_c3399590d71503ae_value;}
 

@@ -9,9 +9,11 @@ std::int32_t cs_7fd3b635ed6929d0::GetHashCode() {return cs_f1365e1209ff8d97(pls:
 
 bool cs_7fd3b635ed6929d0::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_286beec6ddeed9d7(pls::cs::static_pointer_cast<cs_7fd3b635ed6929d0>(shared_from_this()),v_obj);}
 
-void cs_init_7fd3b635ed6929d0(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureInt",[](){
+static PLS_NOINLINE void cs_init_7fd3b635ed6929d0_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureInt",flag,[](){
 
 });}
+
+void cs_init_7fd3b635ed6929d0(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_7fd3b635ed6929d0_slow(flag);}
 
 // M:kairo.unity.util.SecureInt.#ctor
 pls::cs::Ref<cs_7fd3b635ed6929d0> cs_26fc017eba499603() { cs_init_7fd3b635ed6929d0();

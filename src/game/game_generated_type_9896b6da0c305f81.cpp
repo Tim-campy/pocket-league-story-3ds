@@ -5,9 +5,11 @@ namespace pls::game {
 
 void cs_9896b6da0c305f81::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::trace_value(cs_7009afdd236d49cc,visitor);pls::cs::trace_value(cs_2d6d88bceda5ea1c,visitor);pls::cs::trace_value(cs_43d3fd031666ba13,visitor);pls::cs::trace_value(cs_f2b81922ca17726a,visitor);}
 
-void cs_init_9896b6da0c305f81(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Image.BalloonRenderTask",[](){
+static PLS_NOINLINE void cs_init_9896b6da0c305f81_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Image.BalloonRenderTask",flag,[](){
 
 });}
+
+void cs_init_9896b6da0c305f81(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_9896b6da0c305f81_slow(flag);}
 
 // M:kairo.unity.ui.Image.BalloonRenderTask.#ctor(kairo.unity.ui.Balloon,System.Single,System.Single,kairo.unity.graphics.Offscreen)
 cs_9896b6da0c305f81 cs_1e2003e0b356c215(pls::cs::Ref<cs_96c54d9323f24f8e> v_balloon,float v_x,float v_y,pls::cs::Ref<pls::kairo::Offscreen> v_offscreen) { cs_init_9896b6da0c305f81();

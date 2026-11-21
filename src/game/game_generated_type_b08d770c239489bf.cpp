@@ -4,9 +4,11 @@ namespace pls::game {
 
 void cs_b08d770c239489bf::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_18df8a841fecdd70,visitor);pls::cs::trace_value(cs_77b7447583c10f78,visitor);}
 
-void cs_init_b08d770c239489bf(){static pls::cs::TypeInitState state;state.run("data.BaseData",[](){
+static PLS_NOINLINE void cs_init_b08d770c239489bf_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("data.BaseData",flag,[](){
 
 });}
+
+void cs_init_b08d770c239489bf(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_b08d770c239489bf_slow(flag);}
 
 // M:data.BaseData.#ctor
 pls::cs::Ref<cs_b08d770c239489bf> cs_0c4b303cde7d7a27() { cs_init_b08d770c239489bf();

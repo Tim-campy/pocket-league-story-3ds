@@ -9,9 +9,11 @@ std::int32_t cs_924db3d974bae2af::GetHashCode() {return cs_f8a6bf38dd75ef58(pls:
 
 bool cs_924db3d974bae2af::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {return cs_682c2d787a0c6c7f(pls::cs::static_pointer_cast<cs_924db3d974bae2af>(shared_from_this()),v_obj);}
 
-void cs_init_924db3d974bae2af(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureLong",[](){
+static PLS_NOINLINE void cs_init_924db3d974bae2af_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureLong",flag,[](){
 
 });}
+
+void cs_init_924db3d974bae2af(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_924db3d974bae2af_slow(flag);}
 
 // M:kairo.unity.util.SecureLong.#ctor
 pls::cs::Ref<cs_924db3d974bae2af> cs_74758feb8d7ec688() { cs_init_924db3d974bae2af();

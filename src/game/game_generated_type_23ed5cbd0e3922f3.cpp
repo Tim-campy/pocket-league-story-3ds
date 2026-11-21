@@ -9,9 +9,11 @@ void cs_23ed5cbd0e3922f3::cs_virtual_9ed05c6b3a5346ec() {cs_a56b328f925cc5e4(pls
 
 void cs_23ed5cbd0e3922f3::cs_virtual_2186b93ea03d07c2() {cs_e17b9d62b02e038f(pls::cs::static_pointer_cast<cs_23ed5cbd0e3922f3>(shared_from_this()));}
 
-void cs_init_23ed5cbd0e3922f3(){static pls::cs::TypeInitState state;state.run("system.notification.MyNotify",[](){
+static PLS_NOINLINE void cs_init_23ed5cbd0e3922f3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.notification.MyNotify",flag,[](){
 
 });}
+
+void cs_init_23ed5cbd0e3922f3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_23ed5cbd0e3922f3_slow(flag);}
 
 // M:system.notification.MyNotify.#ctor
 pls::cs::Ref<cs_23ed5cbd0e3922f3> cs_ad74a61a58fd6836() { cs_init_23ed5cbd0e3922f3();

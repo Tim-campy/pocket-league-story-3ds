@@ -21,9 +21,11 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_aa7300d19ef69635_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_d3587b5029c65d71_value{};
 
-void cs_init_3e5b0d35ae6be8e7(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_aa7300d19ef69635_value,visitor);pls::cs::trace_value(cs_d3587b5029c65d71_value,visitor);});static pls::cs::TypeInitState state;state.run("data.QuestMatchData",[](){
+static PLS_NOINLINE void cs_init_3e5b0d35ae6be8e7_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_aa7300d19ef69635_value,visitor);pls::cs::trace_value(cs_d3587b5029c65d71_value,visitor);});static pls::cs::TypeInitState state;state.run("data.QuestMatchData",flag,[](){
 
 });}
+
+void cs_init_3e5b0d35ae6be8e7(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_3e5b0d35ae6be8e7_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_aa7300d19ef69635(){cs_init_3e5b0d35ae6be8e7();return cs_aa7300d19ef69635_value;}
 

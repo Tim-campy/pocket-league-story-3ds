@@ -237,3 +237,31 @@ partir da árvore congelada, sem o tradutor. Antes do congelamento real faltam
 (a) aplicar os ajustes 1–4 no `main`, (b) reescrever os 4 testes de entrada que
 leem o artefato do tradutor, (c) decidir a instrumentação (item 5) e o destino
 dos 23 checks arquivados, e (d) a aprovação do usuário.
+
+## 7. Checks depois do congelamento (decisão do usuário, 2026-11-21)
+
+Destino dos 32 checks que falharam no ensaio, conforme a proposta aprovada:
+
+| Destino | Checks |
+|---|---|
+| **Arquivados com o tradutor** (validaram a tradução; o resultado está congelado e coberto pelos roteiros) — 21 | `portable-differential`, `portable-split-differential`, `lowering-differential`, `content-lowering`, `value-type-lowering`, `matrix-point-lowering`, `shared-field-lowering`, `surface-adapter-lowering`, `image-metadata-lowering`, `ref-out-lowering`, `goto-case-lowering`, `service-policy-lowering`, `source-allocation-attribution`, `diagnostic-leaf-guards`, `incremental-emission`, `vector-iterator`, `checkpoint-comparison`, `type-init-translated`, `float-arm-emission-regression`, `direct-kairo-adapter`, `portable-compile` |
+| **Desativados** (regeneração) — 2 | `game-diagnostic-inventory`, `game-partial-compile` |
+| **Reescritos** (feito em 2026-11-21: `tools/original_metadata.py`, o `UnityEngine.dll` vem do `--original-managed` e não do pedido do tradutor) — 4 | `input`, `input-frame-source-probe`, `debug-input-snapshot`, `application-orientation` |
+| **Congelado** — 1 | `progress` (livro-razão da Fase 2 fica como registro; depois do congelamento não é regenerado) |
+| **Arquivado** — 1 | `reachability-analysis` (critério 3 fechado; a lista de alcançáveis fica em `config/`) |
+| **Caminhos ajustados** — 1 | `repository-tests`: `test_report_paths` (o módulo foi para `tools/`, feito); `test_diagnostic_leaf_manifest` vai com o tradutor |
+| Ambiente do worktree (não é o tradutor) — 2 | `tracing-measurements`, `private-resource-catalog` |
+
+**Checks que continuam valendo (94 + 4 reescritos) e o que protegem:**
+
+| Grupo | Checks | Protege |
+|---|---|---|
+| Coletor | `tracing-gc-engine`, `tracing-gc-allocation-visibility`, `tracing-native-roots`, `tracing-ui-dispatch`, `ui-dispatch-GC`, `runtime-GcFixtures`, `ctr-gc-layout`, `gc-source-contract`, `stack-collection`, `managed-shared-fields`, `managed-threads` | marcação, varredura, raízes nativas e de pilha, threads cooperativas; com `test_gc_field_tracing.py src/game` (mapa de campos e estáticos do código mantido) é a garantia do coletor para edições à mão |
+| Runtime C# | `runtime-*` (fixtures de coleções, conversões, strings, tempo, aleatório, exceções, delegates, literais, inicialização de tipos), `string-ops`, `stream-reader`, `streams`, `binary-reader`, `runtime-encoding`, `runtime-regex`, `runtime-path`, `effective-core-profile` | semântica da BCL usada pelo jogo |
+| Ponto flutuante e números | `readable-numeric-types`, `float-discriminants-x86`, `float-cal-models`, `mono-floating-format`, `mono-number-format-source`, `historical-float-parse`, `scalar-min`, `android-math-static` | regra Mono ARM nos tipos numéricos; formatação e parsing como o Mono |
+| Colação e cultura | `mono-collation-*`, `collation-license-audit`, `culture-*`, `native-globalization`, `unicode-regeneration-audit`, `android-Unicode-static` | ordenação e comparação de textos iguais ao Mono; separação LGPL |
+| Plataforma Kairo | `graphics-*`, `arc-raster-invariants`, `offscreen-mesh`, `image-lifetime`, `forms`, `forms-execution`, `surface-source-adapter`, `dialog-service`, `sound-API`, `streaming-media`, `storage`, `raw-asset-reader`, `nonblocking-text-input`, `native-system-leaves`, `application-properties`, os 4 de entrada/orientação | desenho, telas, áudio, saves, entrada e propriedades da aplicação |
+| Serviços offline | `services`, `service-policy`, `managed-service-bindings`, `offline-http-contract`, `offline-analytics-contract` | políticas de serviços removidos (cobrança, anúncios, rede) |
+| Assets e build | `sdl-and-assets`, `prepared-native-textures`, `resource-trace-events`, `resource-yield-control-model`, `legacy-assets`, `cmake-header-dependencies`, `bootstrap-order`, `boot-concurrency-inventory`, `reference` | pipeline do APK por hash, ordem de arranque, dependências de build, submódulo de referência intacto |
+| Diagnóstico | `diagnostic-instrumentation`, `diagnostic-profile-overhead`, `diagnostic-key-parser`, `diagnostic-route-runner`, `pc-memory-sampler`, `pc-metrics-aggregation`, `native-allocator-heap` | roteiros, contadores por método e medições continuam confiáveis (instrumentação mantida, decisão 1) |
+| Fora do `verify` | 85 roteiros com estresse (`run_readable_routes.py --frozen`), builds PC/ARM | comportamento do jogo inteiro depois de cada edição |

@@ -39,12 +39,14 @@ static std::int32_t cs_21099aafdcadb3e3_value{};
 
 static std::int32_t cs_34052c1785c8754e_value{};
 
-void cs_init_5dc998c2cffb18c8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_6165a1c4f7bf45ea_value,visitor);pls::cs::trace_value(cs_4eda79c4b15c03ea_value,visitor);pls::cs::trace_value(cs_21099aafdcadb3e3_value,visitor);pls::cs::trace_value(cs_34052c1785c8754e_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.HttpForm",[](){
+static PLS_NOINLINE void cs_init_5dc998c2cffb18c8_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_6165a1c4f7bf45ea_value,visitor);pls::cs::trace_value(cs_4eda79c4b15c03ea_value,visitor);pls::cs::trace_value(cs_21099aafdcadb3e3_value,visitor);pls::cs::trace_value(cs_34052c1785c8754e_value,visitor);});static pls::cs::TypeInitState state;state.run("system.form.HttpForm",flag,[](){
 cs_21099aafdcadb3e3_value = pls::cs::evaluate_type_initializer_field("F:system.form.HttpForm.THSTATE_RUN",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));});
 cs_34052c1785c8754e_value = pls::cs::evaluate_type_initializer_field("F:system.form.HttpForm.THSTATE_SUCCESS",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));});
 cs_6165a1c4f7bf45ea_value = pls::cs::evaluate_type_initializer_field("F:system.form.HttpForm.THSTATE_FAILURE",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull));});
 
 });}
+
+void cs_init_5dc998c2cffb18c8(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_5dc998c2cffb18c8_slow(flag);}
 
 std::int32_t& cs_6165a1c4f7bf45ea(){cs_init_5dc998c2cffb18c8();return cs_6165a1c4f7bf45ea_value;}
 

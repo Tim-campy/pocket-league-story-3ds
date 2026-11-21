@@ -48,6 +48,43 @@ inline bool would_cycle(const Coordinator& engine,std::thread::id waiting,std::t
 }
 }
 
+// Fast path of one generated type initializer (performance round 2026-11-21).
+// The generated cs_init_X() keeps this flag as a constant-initialized local
+// (no guard variable) and tests it before calling the slow path; the flag is
+// published, with release order, only after the initializer completed.
+//
+// Reading it costs one plain load: no barrier instruction on the fast path.
+// That is sound where a thread that sees the flag also sees the initializer's
+// writes without a fence:
+//   * x86/x64 (PC): loads are not reordered with older loads (TSO); the signal
+//     fence keeps the compiler from hoisting the static-field reads above it.
+//   * Nintendo 3DS: every managed thread runs on the application core (checked
+//     when each managed thread starts, managed_thread.cpp), so no other core
+//     can observe the writes out of order.
+// Any other target keeps the acquire load.
+#if defined(__3DS__) || defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
+#define PLS_TYPE_INIT_UNFENCED_READ 1
+#else
+#define PLS_TYPE_INIT_UNFENCED_READ 0
+#endif
+#if defined(_MSC_VER)
+#define PLS_NOINLINE __declspec(noinline)
+#else
+#define PLS_NOINLINE __attribute__((noinline))
+#endif
+struct TypeInitFlag {
+    std::atomic<bool> done{false};
+    bool ready()const noexcept{
+#if PLS_TYPE_INIT_UNFENCED_READ
+        const bool value=done.load(std::memory_order_relaxed);
+        std::atomic_signal_fence(std::memory_order_acquire);
+        return value;
+#else
+        return done.load(std::memory_order_acquire);
+#endif
+    }
+};
+
 // One state per generated closed type, not per field. Storage is zeroed before
 // any initializer; the generated lambda executes field initializers and the
 // explicit cctor in source order. User code runs outside the coordinator lock.
@@ -61,6 +98,12 @@ public:
     TypeInitState()=default;
     TypeInitState(const TypeInitState&)=delete;
     TypeInitState& operator=(const TypeInitState&)=delete;
+    template<class F>void run(std::string_view name,TypeInitFlag& flag,F&& action){
+        run(name,std::forward<F>(action));
+        // Publish the fast path only for a completed initializer (not for a
+        // recursive or cyclic access that returned early).
+        if(completed_.load(std::memory_order_acquire))flag.done.store(true,std::memory_order_release);
+    }
     template<class F>void run(std::string_view name,F&& action){
         // Publish successful initialization only after all initializer writes.
         // Recursion, failure caching and cross-thread cycles keep the slow path.

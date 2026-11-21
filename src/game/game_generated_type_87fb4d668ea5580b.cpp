@@ -36,7 +36,7 @@ static bool cs_b9bcb985f936ef96_value{};
 
 static pls::cs::Array<pls::cs::String> cs_44e247f7ea696755_value{};
 
-void cs_init_87fb4d668ea5580b(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e474d7417b077725_value,visitor);pls::cs::trace_value(cs_0d5492cd1d90fb7a_value,visitor);pls::cs::trace_value(cs_8dc0ab0c0050133a_value,visitor);pls::cs::trace_value(cs_43a8f39c2b6c4c75_value,visitor);pls::cs::trace_value(cs_fa530d5bd7357035_value,visitor);pls::cs::trace_value(cs_b9bcb985f936ef96_value,visitor);pls::cs::trace_value(cs_44e247f7ea696755_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout",[](){
+static PLS_NOINLINE void cs_init_87fb4d668ea5580b_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e474d7417b077725_value,visitor);pls::cs::trace_value(cs_0d5492cd1d90fb7a_value,visitor);pls::cs::trace_value(cs_8dc0ab0c0050133a_value,visitor);pls::cs::trace_value(cs_43a8f39c2b6c4c75_value,visitor);pls::cs::trace_value(cs_fa530d5bd7357035_value,visitor);pls::cs::trace_value(cs_b9bcb985f936ef96_value,visitor);pls::cs::trace_value(cs_44e247f7ea696755_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextLayout",flag,[](){
 {
 ([&]() { auto cs_value = pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/TextLayout.cs:M:kairo.unity.ui.TextLayout.SetAnchor(System.Int32):5950",pls::cs::Dictionary<pls::cs::String,pls::cs::Ref<cs_ec6b992b38927bb3>>::make()); cs_43a8f39c2b6c4c75() = cs_value; return cs_value; }());
 ([&]() { auto cs_value = false; cs_b9bcb985f936ef96() = cs_value; return cs_value; }());
@@ -47,6 +47,8 @@ void cs_init_87fb4d668ea5580b(){static pls::cs::GcRootProvider roots([](const pl
 ([&]() { auto cs_value = pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x0ull)); cs_0d5492cd1d90fb7a() = cs_value; return cs_value; }());
 }
 });}
+
+void cs_init_87fb4d668ea5580b(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_87fb4d668ea5580b_slow(flag);}
 
 pls::cs::Array<pls::cs::Ref<cs_87fb4d668ea5580b>>& cs_e474d7417b077725(){cs_init_87fb4d668ea5580b();return cs_e474d7417b077725_value;}
 

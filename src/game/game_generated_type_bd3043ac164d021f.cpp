@@ -24,10 +24,12 @@ static pls::cs::Array<pls::cs::String> cs_e6ecf2ecb1664f3f_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_d96057d2c61e3445_value{};
 
-void cs_init_bd3043ac164d021f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_7feb13590a54786c_value,visitor);pls::cs::trace_value(cs_e6ecf2ecb1664f3f_value,visitor);pls::cs::trace_value(cs_d96057d2c61e3445_value,visitor);});static pls::cs::TypeInitState state;state.run("data.SponsorData",[](){
+static PLS_NOINLINE void cs_init_bd3043ac164d021f_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_7feb13590a54786c_value,visitor);pls::cs::trace_value(cs_e6ecf2ecb1664f3f_value,visitor);pls::cs::trace_value(cs_d96057d2c61e3445_value,visitor);});static pls::cs::TypeInitState state;state.run("data.SponsorData",flag,[](){
 cs_e6ecf2ecb1664f3f_value = pls::cs::evaluate_type_initializer_field("F:data.SponsorData.difficultStr",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/data/SponsorData.cs:M:data.SponsorData.ChangeState(System.Int32):1145",([&](){auto cs_initial_array_298=pls::cs::Array<pls::cs::String>::make(3);cs_initial_array_298.at(0)=([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x7c21" u"\x5358" u"",2);}());cs_initial_array_298.at(1)=([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x666e" u"\x901a" u"",2);}());cs_initial_array_298.at(2)=([]() -> pls::cs::String {static std::atomic<void*> cs_site{};return pls::cs::String::literal_at(cs_site,u"\x96e3" u"\x3057" u"\x3044" u"",3);}());return cs_initial_array_298;}()));});
 
 });}
+
+void cs_init_bd3043ac164d021f(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_bd3043ac164d021f_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_7feb13590a54786c(){cs_init_bd3043ac164d021f();return cs_7feb13590a54786c_value;}
 

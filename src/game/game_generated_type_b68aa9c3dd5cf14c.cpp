@@ -20,9 +20,11 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_7144ce158e1834c7_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_e478109e0b94893f_value{};
 
-void cs_init_b68aa9c3dd5cf14c(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_7144ce158e1834c7_value,visitor);pls::cs::trace_value(cs_e478109e0b94893f_value,visitor);});static pls::cs::TypeInitState state;state.run("data.LeagueData",[](){
+static PLS_NOINLINE void cs_init_b68aa9c3dd5cf14c_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_7144ce158e1834c7_value,visitor);pls::cs::trace_value(cs_e478109e0b94893f_value,visitor);});static pls::cs::TypeInitState state;state.run("data.LeagueData",flag,[](){
 
 });}
+
+void cs_init_b68aa9c3dd5cf14c(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_b68aa9c3dd5cf14c_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_7144ce158e1834c7(){cs_init_b68aa9c3dd5cf14c();return cs_7144ce158e1834c7_value;}
 

@@ -27,10 +27,12 @@ std::int32_t cs_9cade6927d6e0bf3::GetHashCode() {return cs_184041a08c276493(pls:
 
 static pls::cs::Ref<cs_672083a5397f2913> cs_a42589e7c76d79ef_value{};
 
-void cs_init_9cade6927d6e0bf3(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a42589e7c76d79ef_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Seb",[](){
+static PLS_NOINLINE void cs_init_9cade6927d6e0bf3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a42589e7c76d79ef_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Seb",flag,[](){
 cs_a42589e7c76d79ef_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.ui.Seb.threadLocalStatic_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Seb.cs:M:kairo.unity.ui.Seb.GetBoundingRect:2453",([&]() -> pls::cs::Ref<cs_672083a5397f2913> { return cs_0fb4b76eec65aa76(); }()));});
 
 });}
+
+void cs_init_9cade6927d6e0bf3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_9cade6927d6e0bf3_slow(flag);}
 
 pls::cs::Ref<cs_672083a5397f2913>& cs_a42589e7c76d79ef(){cs_init_9cade6927d6e0bf3();return cs_a42589e7c76d79ef_value;}
 

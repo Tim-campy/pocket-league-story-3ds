@@ -13,9 +13,11 @@ static pls::cs::Ref<cs_2ffa6f51468590ea> cs_b8ecc14dac492cc0_value{};
 
 static pls::cs::Ref<cs_75707aa3f1629c85> cs_d0f79f4e077f54c8_value{};
 
-void cs_init_2b1e88c9c4c08d03(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_b8ecc14dac492cc0_value,visitor);pls::cs::trace_value(cs_d0f79f4e077f54c8_value,visitor);});static pls::cs::TypeInitState state;state.run("data.MapchipMain",[](){
+static PLS_NOINLINE void cs_init_2b1e88c9c4c08d03_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_b8ecc14dac492cc0_value,visitor);pls::cs::trace_value(cs_d0f79f4e077f54c8_value,visitor);});static pls::cs::TypeInitState state;state.run("data.MapchipMain",flag,[](){
 
 });}
+
+void cs_init_2b1e88c9c4c08d03(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_2b1e88c9c4c08d03_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_b8ecc14dac492cc0(){cs_init_2b1e88c9c4c08d03();return cs_b8ecc14dac492cc0_value;}
 

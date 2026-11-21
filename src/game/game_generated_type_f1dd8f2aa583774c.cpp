@@ -8,9 +8,11 @@ bool cs_f1dd8f2aa583774c::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {re
 
 std::int32_t cs_f1dd8f2aa583774c::GetHashCode() {return cs_140e188d0a82c8b7(pls::cs::static_pointer_cast<cs_f1dd8f2aa583774c>(shared_from_this()));}
 
-void cs_init_f1dd8f2aa583774c(){static pls::cs::TypeInitState state;state.run("kairo.unity.graphics.RectangleF",[](){
+static PLS_NOINLINE void cs_init_f1dd8f2aa583774c_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.graphics.RectangleF",flag,[](){
 
 });}
+
+void cs_init_f1dd8f2aa583774c(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_f1dd8f2aa583774c_slow(flag);}
 
 // M:kairo.unity.graphics.RectangleF.#ctor
 pls::cs::Ref<cs_f1dd8f2aa583774c> cs_811ec9500127b493() { cs_init_f1dd8f2aa583774c();

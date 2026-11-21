@@ -11,9 +11,11 @@ void cs_15d0c6400449da70::cs_virtual_a0d307e27d51aaf6() {cs_8793f32da1f89166(pls
 
 static pls::cs::Ref<cs_15d0c6400449da70> cs_11c677d992410d89_value{};
 
-void cs_init_15d0c6400449da70(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_11c677d992410d89_value,visitor);});static pls::cs::TypeInitState state;state.run("system.tapjoy.ui.Tapjoy",[](){
+static PLS_NOINLINE void cs_init_15d0c6400449da70_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_11c677d992410d89_value,visitor);});static pls::cs::TypeInitState state;state.run("system.tapjoy.ui.Tapjoy",flag,[](){
 
 });}
+
+void cs_init_15d0c6400449da70(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_15d0c6400449da70_slow(flag);}
 
 pls::cs::Ref<cs_15d0c6400449da70>& cs_11c677d992410d89(){cs_init_15d0c6400449da70();return cs_11c677d992410d89_value;}
 

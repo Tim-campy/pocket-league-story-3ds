@@ -39,9 +39,11 @@ static pls::cs::Ref<pls::kairo::SoundBase> cs_18a692dfac4d8961_value{};
 
 static std::int32_t cs_18491103f721bd96_value{};
 
-void cs_init_bad15ea7469ee2b9(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_18a692dfac4d8961_value,visitor);pls::cs::trace_value(cs_18491103f721bd96_value,visitor);});static pls::cs::TypeInitState state;state.run("main.Main",[](){
+static PLS_NOINLINE void cs_init_bad15ea7469ee2b9_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_18a692dfac4d8961_value,visitor);pls::cs::trace_value(cs_18491103f721bd96_value,visitor);});static pls::cs::TypeInitState state;state.run("main.Main",flag,[](){
 
 });}
+
+void cs_init_bad15ea7469ee2b9(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_bad15ea7469ee2b9_slow(flag);}
 
 pls::cs::Ref<pls::kairo::SoundBase>& cs_18a692dfac4d8961(){cs_init_bad15ea7469ee2b9();return cs_18a692dfac4d8961_value;}
 

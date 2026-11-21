@@ -4,10 +4,12 @@ namespace pls::generated {
 
 static pls::cs::Array<std::uint8_t> cs_1c11d615d9916ed8_value{};
 
-void cs_init_4978cb69e37b8564(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_1c11d615d9916ed8_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.Encrypter",[](){
+static PLS_NOINLINE void cs_init_4978cb69e37b8564_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_1c11d615d9916ed8_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.Encrypter",flag,[](){
 cs_1c11d615d9916ed8_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.util.Encrypter.key_",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/util/Encrypter.cs:M:kairo.unity.util.Encrypter.Decode(System.Byte[],System.Byte[]):101",pls::cs::Array<std::uint8_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull))));});
 
 });}
+
+void cs_init_4978cb69e37b8564(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4978cb69e37b8564_slow(flag);}
 
 pls::cs::Array<std::uint8_t>& cs_1c11d615d9916ed8(){cs_init_4978cb69e37b8564();return cs_1c11d615d9916ed8_value;}
 

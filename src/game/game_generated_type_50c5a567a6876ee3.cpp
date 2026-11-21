@@ -13,9 +13,11 @@ void cs_50c5a567a6876ee3::cs_virtual_7226942a83482c7a() {cs_b4e47fce38dcaf3b(pls
 
 void cs_50c5a567a6876ee3::cs_virtual_486e7c39f05ac1d6() {cs_dc354c17f44bb95c(pls::cs::static_pointer_cast<cs_50c5a567a6876ee3>(shared_from_this()));}
 
-void cs_init_50c5a567a6876ee3(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.KairoDummy",[](){
+static PLS_NOINLINE void cs_init_50c5a567a6876ee3_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.KairoDummy",flag,[](){
 
 });}
+
+void cs_init_50c5a567a6876ee3(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_50c5a567a6876ee3_slow(flag);}
 
 // M:kairo.unity.system.KairoBase.KairoDummy.#ctor
 pls::cs::Ref<cs_50c5a567a6876ee3> cs_145bafe9acaf77f9() { cs_init_50c5a567a6876ee3();

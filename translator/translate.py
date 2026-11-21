@@ -520,7 +520,7 @@ namespace UnityEngine { public class Object {} public class TextAsset:Object{pub
         report['source_path_base']='repository_root'
         report['node_source_default']='source'
         pack_source_paths(report)
-        producer['report_paths_sha256']=digest(ROOT/'translator/report_paths.py')
+        producer['report_paths_sha256']=digest(ROOT/'tools/report_paths.py')
     if args.diagnostics_only:
         report.update(producer=producer,source_manifest=[dict(path=p,sha256=digest(reference/p)) for p in source_names],platform_adapter_sources=adapter_sources,reference_metadata=[dict(filename=p.name,sha256=digest(p)) for p in refs])
         target_report=ROOT/'config'/('phase2-game-diagnostics.json' if args.assembly=='Assembly-CSharp' else 'phase2-portable-diagnostics.json')

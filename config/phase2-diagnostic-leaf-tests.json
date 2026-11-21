@@ -11,13 +11,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "4c566aad98d949371df50a94d9159305fb024677052ce0bfe01b6c21bab39932",
-    "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
+    "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+    "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
     "readable_source_sha256": [
       "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
-      "4c9caeba6809ed85c073c0c03fee872c1a8351097347d7d10ee40e799a4b2c21"
+      "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
     ],
-    "driver_sha256": "653bcd3c6bd79682cc28302b0a0a49ab2c3d26eb5275c64bdc01a4b6780a55d4"
+    "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
   },
   "inputs_sha256": {
     "tests/translator/DiagnosticLeafFixtures.cs": "790e30c9893742ff48fa48c469b1c72fbfe24891070203a8d098bec69069bfa5",
@@ -25,5 +25,5 @@
     "translator/diagnostic_leaves.py": "d90c740de66f13176e7c9c141ed3ee15c2ddb9c74598cee58d5e2421c991c99a",
     "tools/run_native_process.py": "8aed14384b8c889cf2345228442371093faaf35294bbb0100d40cd55a3436e78"
   },
-  "native_executable_sha256": "91b170f613105b25dcd0c61d780f6b1aa361f46b9b4d962a2193ee8ca890d014"
+  "native_executable_sha256": "1167e1bfb5f358b994a4d913ce770eb485a762c7e29f7cecd513c3c93d9bbc8d"
 }

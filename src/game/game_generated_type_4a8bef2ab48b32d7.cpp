@@ -21,9 +21,11 @@ static bool cs_042e86d7c14d33a1_value{};
 
 static bool cs_c842d4269c1e5564_value{};
 
-void cs_init_4a8bef2ab48b32d7(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_042e86d7c14d33a1_value,visitor);pls::cs::trace_value(cs_c842d4269c1e5564_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceManagerBase",[](){
+static PLS_NOINLINE void cs_init_4a8bef2ab48b32d7_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_042e86d7c14d33a1_value,visitor);pls::cs::trace_value(cs_c842d4269c1e5564_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceManagerBase",flag,[](){
 
 });}
+
+void cs_init_4a8bef2ab48b32d7(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4a8bef2ab48b32d7_slow(flag);}
 
 bool& cs_042e86d7c14d33a1(){cs_init_4a8bef2ab48b32d7();return cs_042e86d7c14d33a1_value;}
 

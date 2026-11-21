@@ -4,9 +4,11 @@ namespace pls::game {
 
 void cs_cd97eee87b3216c4::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);pls::cs::trace_value(cs_5e52c7bad466e5ea,visitor);}
 
-void cs_init_cd97eee87b3216c4(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.KairoException",[](){
+static PLS_NOINLINE void cs_init_cd97eee87b3216c4_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.KairoException",flag,[](){
 
 });}
+
+void cs_init_cd97eee87b3216c4(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_cd97eee87b3216c4_slow(flag);}
 
 // M:kairo.unity.util.KairoException.get_DisplayMessage
 pls::cs::String cs_1b62bb3466e191a0(pls::cs::Ref<cs_cd97eee87b3216c4> cs_this) { cs_init_cd97eee87b3216c4();

@@ -10,9 +10,11 @@
 #include "portable_generated_type_fb60578b3098a284.hpp"
 namespace pls::generated {
 
-void cs_init_5098bfda9cf65745(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.StreamUtil",[](){
+static PLS_NOINLINE void cs_init_5098bfda9cf65745_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.StreamUtil",flag,[](){
 
 });}
+
+void cs_init_5098bfda9cf65745(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_5098bfda9cf65745_slow(flag);}
 
 // M:kairo.unity.util.StreamUtil.Read(java.io.InputStream,System.Boolean)
 pls::cs::Array<std::uint8_t> cs_e0ccb4d263b167c0(pls::cs::Ref<cs_e7a5499b363ef51b> v_stream,bool v_size) { cs_init_5098bfda9cf65745();

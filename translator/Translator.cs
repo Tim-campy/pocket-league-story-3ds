@@ -2071,7 +2071,10 @@ sealed partial class Lowerer {
         foreach(var type in usedTypes.Select(id=>initializedTypes[id]).OrderBy(t=>Id(t))) {
             var rootFields=usedFields.Select(id=>fieldSymbols[id]).Where(f=>SymbolEqualityComparer.Default.Equals(f.ContainingType,type)).OrderBy(f=>Id(f)).ToArray();
             var roots=rootFields.Length==0?"":"static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){"+String.Concat(rootFields.Select(f=>"pls::cs::trace_value("+Name(f)+"_value,visitor);"))+"});";
-            cpp.Append("void "+TypeInitName(type)+"(){"+roots+"static pls::cs::TypeInitState state;state.run(\""+type.ToDisplayString()+"\",[](){\n"+QualifyHelpers(typeInitializers[Id(type)],game)+"\n});}\n");
+            // Fast path: one plain flag test, no guard and no barrier (managed_type_init.hpp);
+            // the initializer itself stays out of line, so callers pay no prologue.
+            cpp.Append("static PLS_NOINLINE void "+TypeInitName(type)+"_slow(pls::cs::TypeInitFlag& flag){"+roots+"static pls::cs::TypeInitState state;state.run(\""+type.ToDisplayString()+"\",flag,[](){\n"+QualifyHelpers(typeInitializers[Id(type)],game)+"\n});}\n");
+            cpp.Append("void "+TypeInitName(type)+"(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;"+TypeInitName(type)+"_slow(flag);}\n");
         }
         // Static storage declared here for a type whose initializer (and root
         // provider) belongs to another unit, e.g. KairoLibrary members first
@@ -2274,7 +2277,7 @@ static pls::cs::String cs_concat_object_array(const pls::cs::Array<pls::cs::Ref<
 
 static bool cs_contains_string(const pls::cs::String&source,const pls::cs::String&value){return pls::cs::culture_index_of(source,value)>=0;}
 static bool cs_string_equals(const pls::cs::String&left,const pls::cs::String&right){left.length();return left==right;}
-template<class T> T cs_require(T value){if(!value)throw pls::cs::NullReferenceException();return value;}
+template<class T> inline T cs_require(T value){if(!value)pls::cs::throw_null_reference();return value;}
 static pls::cs::String cs_string_from_chars(pls::cs::Array<char16_t> chars){if(chars.is_null())throw pls::cs::ArgumentNullException();std::u16string out;for(std::int32_t i=0;i<chars.length();++i)out.push_back(chars.at(i));return pls::cs::String(std::move(out));}
 static bool cs_is_little_endian(){const std::uint16_t value=1;std::uint8_t first;std::memcpy(&first,&value,1);return first==1;}
 template<class T> static T cs_network_to_host(T value){

@@ -116,12 +116,28 @@ std::uint64_t resident_bytes(){
     return 0;
 #endif
 }
+// Hardware runs are copied off the card by hand: every run also keeps its own
+// numbered copies (result-N.txt, stdout-N.log, stderr-N.log, N = first free
+// slot) and one run id in all three, so a later run never overwrites an earlier
+// one and logs of different runs cannot be paired by mistake.
+std::string run_slot;std::string run_id;
+#if defined(__3DS__)
+bool sd_exists(const std::string& path){if(std::FILE* f=std::fopen(path.c_str(),"rb")){std::fclose(f);return true;}return false;}
+void choose_run_slot(){for(int n=1;n<1000;++n){auto slot=std::to_string(n);if(!sd_exists("sdmc:/pls-benchmark/result-"+slot+".txt")){run_slot=slot;break;}}run_id=run_slot+"-"+std::to_string(osGetTime());}
+void copy_sd(const std::string& from,const std::string& to){std::FILE* in=std::fopen(from.c_str(),"rb");if(!in)return;std::FILE* out=std::fopen(to.c_str(),"wb");if(out){char buffer[4096];std::size_t n;while((n=std::fread(buffer,1,sizeof buffer,in))>0)std::fwrite(buffer,1,n,out);std::fclose(out);}std::fclose(in);}
+#endif
 struct Report {
     std::string text;
     void line(const std::string& value){text+=value;text+='\n';}
     void write()const{
 #if defined(__3DS__)
         if(std::FILE* file=std::fopen("sdmc:/pls-benchmark/result.txt","wb")){std::fwrite(text.data(),1,text.size(),file);std::fclose(file);}
+        if(!run_slot.empty()){
+            if(std::FILE* file=std::fopen(("sdmc:/pls-benchmark/result-"+run_slot+".txt").c_str(),"wb")){std::fwrite(text.data(),1,text.size(),file);std::fclose(file);}
+            std::fflush(stdout);std::fflush(stderr);
+            copy_sd("sdmc:/pls-benchmark/stdout.log","sdmc:/pls-benchmark/stdout-"+run_slot+".log");
+            copy_sd("sdmc:/pls-benchmark/stderr.log","sdmc:/pls-benchmark/stderr-"+run_slot+".log");
+        }
 #endif
     }
 };
@@ -144,6 +160,7 @@ int main(int argc,char**argv){
         argc=7;argv=pointers.data();
     }
     if(!std::freopen("sdmc:/pls-benchmark/stdout.log","w",stdout)||!std::freopen("sdmc:/pls-benchmark/stderr.log","w",stderr))return 2;
+    choose_run_slot();std::printf("PLS_BENCH_RUN id=%s\n",run_id.c_str());std::fprintf(stderr,"PLS_BENCH_RUN id=%s\n",run_id.c_str());report.line("PLS_BENCH_RUN id="+run_id);
     bool new_model=false;u8 model=255;
     const auto new_result=APT_CheckNew3DS(&new_model);
     const auto config_result=cfguInit();

@@ -21,9 +21,11 @@ void cs_169021fb033627ed::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<cs_2ffa6f51468590ea> cs_992ff561c0e6aaeb_value{};
 
-void cs_init_169021fb033627ed(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_992ff561c0e6aaeb_value,visitor);});static pls::cs::TypeInitState state;state.run("data.TeamData",[](){
+static PLS_NOINLINE void cs_init_169021fb033627ed_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_992ff561c0e6aaeb_value,visitor);});static pls::cs::TypeInitState state;state.run("data.TeamData",flag,[](){
 
 });}
+
+void cs_init_169021fb033627ed(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_169021fb033627ed_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_992ff561c0e6aaeb(){cs_init_169021fb033627ed();return cs_992ff561c0e6aaeb_value;}
 

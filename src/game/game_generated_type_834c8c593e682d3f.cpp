@@ -41,10 +41,12 @@ bool cs_834c8c593e682d3f::Update() {return cs_124cf63141f56075(pls::cs::static_p
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_96890a1370dfa5a5_value{};
 
-void cs_init_834c8c593e682d3f(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_96890a1370dfa5a5_value,visitor);});static pls::cs::TypeInitState state;state.run("form.RankForm",[](){
+static PLS_NOINLINE void cs_init_834c8c593e682d3f_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_96890a1370dfa5a5_value,visitor);});static pls::cs::TypeInitState state;state.run("form.RankForm",flag,[](){
 cs_96890a1370dfa5a5_value = pls::cs::evaluate_type_initializer_field("F:form.RankForm.softLabels_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/RankForm.cs:M:form.RankForm.#ctor:594",([&](){auto cs_initial_array_308=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(1);cs_initial_array_308.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/RankForm.cs:M:form.RankForm.#ctor:609",pls::assets::baked_array<std::int32_t>("7cdcf10cc8c0b93688e904357a4dde852cf5ef34f56ad44138f7fc04a1112e54"));return cs_initial_array_308;}()));});
 
 });}
+
+void cs_init_834c8c593e682d3f(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_834c8c593e682d3f_slow(flag);}
 
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_96890a1370dfa5a5(){cs_init_834c8c593e682d3f();return cs_96890a1370dfa5a5_value;}
 

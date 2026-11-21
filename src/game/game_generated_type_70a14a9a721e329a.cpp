@@ -23,10 +23,12 @@ void cs_70a14a9a721e329a::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> cs_38b65a08b06f36b7_value{};
 
-void cs_init_70a14a9a721e329a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_38b65a08b06f36b7_value,visitor);});static pls::cs::TypeInitState state;state.run("game.TArea",[](){
+static PLS_NOINLINE void cs_init_70a14a9a721e329a_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_38b65a08b06f36b7_value,visitor);});static pls::cs::TypeInitState state;state.run("game.TArea",flag,[](){
 cs_38b65a08b06f36b7_value = pls::cs::evaluate_type_initializer_field("F:game.TArea.st_gatherPos",[&](){return pls::source_allocations::completed("new_object","src/Assembly-CSharp/game/TArea.cs:M:game.TArea.#ctor:713",([&]() -> pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f> { return pls::generated::cs_f0250768de698879(); }()));});
 
 });}
+
+void cs_init_70a14a9a721e329a(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_70a14a9a721e329a_slow(flag);}
 
 pls::cs::Ref<pls::generated::cs_3c64e1d398f2e00f>& cs_38b65a08b06f36b7(){cs_init_70a14a9a721e329a();return cs_38b65a08b06f36b7_value;}
 

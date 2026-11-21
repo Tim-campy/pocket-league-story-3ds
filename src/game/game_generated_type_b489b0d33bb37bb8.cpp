@@ -82,10 +82,12 @@ static pls::cs::Ref<cs_50c5a567a6876ee3> cs_0d794b0205468f6a_value{};
 
 static pls::cs::Ref<cs_b489b0d33bb37bb8> cs_11e5ce60ddaa567b_value{};
 
-void cs_init_b489b0d33bb37bb8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_eb4b193093fe2ed1_value,visitor);pls::cs::trace_value(cs_0d794b0205468f6a_value,visitor);pls::cs::trace_value(cs_11e5ce60ddaa567b_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase",[](){
+static PLS_NOINLINE void cs_init_b489b0d33bb37bb8_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_eb4b193093fe2ed1_value,visitor);pls::cs::trace_value(cs_0d794b0205468f6a_value,visitor);pls::cs::trace_value(cs_11e5ce60ddaa567b_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase",flag,[](){
 cs_eb4b193093fe2ed1_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.system.KairoBase.CONNECT_TRY",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/system/KairoBase.cs:M:kairo.unity.system.KairoBase.GetInstance:9662",([&](){auto cs_initial_array_279=pls::cs::Array<std::int32_t>::make(4);cs_initial_array_279.at(0)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));cs_initial_array_279.at(1)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull));cs_initial_array_279.at(2)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x3ull));cs_initial_array_279.at(3)=pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x1ull));return cs_initial_array_279;}()));});
 
 });}
+
+void cs_init_b489b0d33bb37bb8(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_b489b0d33bb37bb8_slow(flag);}
 
 pls::cs::Array<std::int32_t>& cs_eb4b193093fe2ed1(){cs_init_b489b0d33bb37bb8();return cs_eb4b193093fe2ed1_value;}
 

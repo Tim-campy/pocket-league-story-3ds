@@ -5,9 +5,11 @@
 #include "generated/portable_generated_type_7de6788b61a5af56.hpp"
 namespace pls::game {
 
-void cs_init_6d8b1b9c55c43b83(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.MD5",[](){
+static PLS_NOINLINE void cs_init_6d8b1b9c55c43b83_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.MD5",flag,[](){
 
 });}
+
+void cs_init_6d8b1b9c55c43b83(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_6d8b1b9c55c43b83_slow(flag);}
 
 // M:kairo.unity.util.MD5.GetValue(System.Byte[])
 pls::cs::String cs_56eb66aa3df24706(pls::cs::Array<std::uint8_t> v_buf) { cs_init_6d8b1b9c55c43b83();

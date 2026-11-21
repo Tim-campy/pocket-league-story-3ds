@@ -25,9 +25,11 @@ namespace pls::game {
 
 void cs_77de402a688eeb9d::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_d19c98fe2d601ad1,visitor);pls::cs::trace_value(cs_f78aa7a0d989fd7c,visitor);pls::cs::trace_value(cs_32388247d17bb567,visitor);pls::cs::trace_value(cs_0810a6bbdad8f652,visitor);pls::cs::trace_value(cs_37f984d70850be71,visitor);pls::cs::trace_value(cs_c3b53640b80e29dc,visitor);pls::cs::trace_value(cs_fa8defba521b90ce,visitor);pls::cs::trace_value(cs_7db6741aeec24156,visitor);}
 
-void cs_init_77de402a688eeb9d(){static pls::cs::TypeInitState state;state.run("kairo.unity.io.HttpObject",[](){
+static PLS_NOINLINE void cs_init_77de402a688eeb9d_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.io.HttpObject",flag,[](){
 
 });}
+
+void cs_init_77de402a688eeb9d(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_77de402a688eeb9d_slow(flag);}
 
 // M:kairo.unity.io.HttpObject._connect(System.String,System.Byte[],System.Boolean,System.Boolean)
 pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_d2a21b4a921597a9(pls::cs::Ref<cs_77de402a688eeb9d> cs_this,pls::cs::String v_url,pls::cs::Array<std::uint8_t> v_send,bool v_check,bool v_split) { cs_init_77de402a688eeb9d();

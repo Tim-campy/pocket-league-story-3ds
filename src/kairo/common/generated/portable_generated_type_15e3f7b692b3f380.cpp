@@ -6,9 +6,11 @@ namespace pls::generated {
 
 void cs_15e3f7b692b3f380::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_67cd241ab51652f1<pls::cs::Ref<pls::cs::Object>>::trace_edges(visitor);}
 
-void cs_init_15e3f7b692b3f380(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.FastVector",[](){
+static PLS_NOINLINE void cs_init_15e3f7b692b3f380_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.FastVector",flag,[](){
 
 });}
+
+void cs_init_15e3f7b692b3f380(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_15e3f7b692b3f380_slow(flag);}
 
 // M:kairo.unity.util.FastVector.#ctor
 pls::cs::Ref<cs_15e3f7b692b3f380> cs_617649d3cca73756() { cs_init_15e3f7b692b3f380();

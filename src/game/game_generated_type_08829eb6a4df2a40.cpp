@@ -35,9 +35,11 @@ static pls::cs::Ref<pls::kairo::IApplication> cs_2b99e3af7643ea42_value{};
 
 static pls::cs::Ref<cs_6485f92c2f04639f> cs_853c51ab649a13bb_value{};
 
-void cs_init_08829eb6a4df2a40(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_435cb1470132c214_value,visitor);pls::cs::trace_value(cs_2b99e3af7643ea42_value,visitor);pls::cs::trace_value(cs_853c51ab649a13bb_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.MyBilling",[](){
+static PLS_NOINLINE void cs_init_08829eb6a4df2a40_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_435cb1470132c214_value,visitor);pls::cs::trace_value(cs_2b99e3af7643ea42_value,visitor);pls::cs::trace_value(cs_853c51ab649a13bb_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.MyBilling",flag,[](){
 
 });}
+
+void cs_init_08829eb6a4df2a40(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_08829eb6a4df2a40_slow(flag);}
 
 pls::cs::Ref<cs_2ffa6f51468590ea>& cs_435cb1470132c214(){cs_init_08829eb6a4df2a40();return cs_435cb1470132c214_value;}
 

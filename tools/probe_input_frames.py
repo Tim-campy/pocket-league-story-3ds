@@ -3,6 +3,7 @@
 No Game/boundary method is automatically promoted. The previous four measured
 DEBUG+Shift differences remain documented; the current run requires zero.
 """
+import original_metadata
 import json,os,sys
 from pathlib import Path
 from test_input import ROOT,sha,run,span,compile_modern
@@ -13,7 +14,7 @@ from inventory import compiler_paths
 
 def main():
  folder=ROOT/'build/input-frame-probe';folder.mkdir(parents=True,exist_ok=True);csc,dotnet,framework=compiler_paths()
- request=json.loads((ROOT/'build/translator/KairoLibrary-input.json').read_text(encoding='utf-8'));unity=next(Path(p) for p in request['references'] if Path(p).name=='UnityEngine.dll')
+ unity=original_metadata.unity_engine()
  probe=folder/'EnumProbe.cs';probe.write_text('''using System;using System.IO;using System.Reflection.Metadata;using System.Reflection.PortableExecutable;
 class Probe{static void Main(string[] a){using(var input=File.OpenRead(a[0]))using(var pe=new PEReader(input)){var m=pe.GetMetadataReader();foreach(var h in m.TypeDefinitions){var t=m.GetTypeDefinition(h);if(m.GetString(t.Namespace)!="UnityEngine"||m.GetString(t.Name)!="KeyCode")continue;foreach(var f in t.GetFields()){var d=m.GetFieldDefinition(f);if(d.GetDefaultValue().IsNil)continue;var c=m.GetConstant(d.GetDefaultValue());var b=m.GetBlobReader(c.Value);Console.WriteLine(m.GetString(d.Name)+"="+b.ReadInt32());}}}}}
 ''',encoding='utf-8',newline='\n');probe_exe=folder/'EnumProbe.dll';compile_modern([probe],probe_exe,folder,'enum',csc,framework)

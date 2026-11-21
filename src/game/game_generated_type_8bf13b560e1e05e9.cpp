@@ -21,9 +21,11 @@ pls::cs::String cs_8bf13b560e1e05e9::cs_virtual_75152158b8b3764c(pls::cs::Ref<pl
 
 void cs_8bf13b560e1e05e9::cs_virtual_24e6f1c38df06a63(pls::cs::Ref<cs_5ad2213598dfcd5d> v_c,std::int32_t v_type,std::int32_t v_param) {cs_3e2739124195383e(pls::cs::static_pointer_cast<cs_8bf13b560e1e05e9>(shared_from_this()),v_c,v_type,v_param);}
 
-void cs_init_8bf13b560e1e05e9(){static pls::cs::TypeInitState state;state.run("kfw.panel.MainPanel",[](){
+static PLS_NOINLINE void cs_init_8bf13b560e1e05e9_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kfw.panel.MainPanel",flag,[](){
 
 });}
+
+void cs_init_8bf13b560e1e05e9(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_8bf13b560e1e05e9_slow(flag);}
 
 // M:kfw.panel.MainPanel.#ctor
 pls::cs::Ref<cs_8bf13b560e1e05e9> cs_3afc5298ce4a3e84() { cs_init_8bf13b560e1e05e9();

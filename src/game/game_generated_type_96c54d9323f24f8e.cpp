@@ -18,10 +18,12 @@ void cs_96c54d9323f24f8e::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<cs_f1dd8f2aa583774c> cs_846238cb57fd2bbf_value{};
 
-void cs_init_96c54d9323f24f8e(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_846238cb57fd2bbf_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Balloon",[](){
+static PLS_NOINLINE void cs_init_96c54d9323f24f8e_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_846238cb57fd2bbf_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Balloon",flag,[](){
 cs_846238cb57fd2bbf_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.ui.Balloon.Draw_tmp",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/ui/Balloon.cs:M:kairo.unity.ui.Balloon.#ctor(System.String,System.Int32):1465",([&]() -> pls::cs::Ref<cs_f1dd8f2aa583774c> { return cs_811ec9500127b493(); }()));});
 
 });}
+
+void cs_init_96c54d9323f24f8e(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_96c54d9323f24f8e_slow(flag);}
 
 pls::cs::Ref<cs_f1dd8f2aa583774c>& cs_846238cb57fd2bbf(){cs_init_96c54d9323f24f8e();return cs_846238cb57fd2bbf_value;}
 

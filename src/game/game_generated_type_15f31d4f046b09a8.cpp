@@ -31,10 +31,12 @@ std::int32_t cs_15f31d4f046b09a8::GetHashCode() {return cs_d860de92f53afc6c(pls:
 
 static pls::cs::Array<std::uint8_t> cs_0ab9b09ba01c1501_value{};
 
-void cs_init_15f31d4f046b09a8(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_0ab9b09ba01c1501_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.Receipt",[](){
+static PLS_NOINLINE void cs_init_15f31d4f046b09a8_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_0ab9b09ba01c1501_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.Receipt",flag,[](){
 cs_0ab9b09ba01c1501_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.Receipt.PASSKEY",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/system/billing/ui/Receipt.cs:M:system.billing.ui.Receipt.Load(java.io.InputStream):505",pls::assets::baked_array<std::uint8_t>("61736f320d2d2e922d39112d814fc89624178f8ca851f942effda611d7d9bb89"));});
 
 });}
+
+void cs_init_15f31d4f046b09a8(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_15f31d4f046b09a8_slow(flag);}
 
 pls::cs::Array<std::uint8_t>& cs_0ab9b09ba01c1501(){cs_init_15f31d4f046b09a8();return cs_0ab9b09ba01c1501_value;}
 

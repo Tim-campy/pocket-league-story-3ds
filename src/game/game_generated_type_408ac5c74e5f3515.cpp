@@ -4,9 +4,11 @@ namespace pls::game {
 
 void cs_408ac5c74e5f3515::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_71dbc351ecc57982,visitor);pls::cs::trace_value(cs_fcff22ab2f484bde,visitor);pls::cs::trace_value(cs_7d56a65066430756,visitor);pls::cs::trace_value(cs_4d9cb6241cd66304,visitor);}
 
-void cs_init_408ac5c74e5f3515(){static pls::cs::TypeInitState state;state.run("system.form.HttpForm.ResultData",[](){
+static PLS_NOINLINE void cs_init_408ac5c74e5f3515_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.form.HttpForm.ResultData",flag,[](){
 
 });}
+
+void cs_init_408ac5c74e5f3515(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_408ac5c74e5f3515_slow(flag);}
 
 // M:system.form.HttpForm.ResultData.#ctor
 pls::cs::Ref<cs_408ac5c74e5f3515> cs_8aaa473de163f748() { cs_init_408ac5c74e5f3515();

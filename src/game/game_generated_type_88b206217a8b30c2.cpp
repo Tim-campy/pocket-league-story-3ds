@@ -7,9 +7,11 @@ namespace pls::game {
 
 void cs_88b206217a8b30c2::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_1d06f3dfd534c79e,visitor);pls::cs::trace_value(cs_2e53b2d037c0f0f1,visitor);pls::cs::trace_value(cs_710aaad4a1f0ac5f,visitor);pls::cs::trace_value(cs_1ca562f042f1542c,visitor);pls::cs::trace_value(cs_2d7489c80764903f,visitor);pls::cs::trace_value(cs_c665fb818f47218f,visitor);}
 
-void cs_init_88b206217a8b30c2(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.ConnectTask",[](){
+static PLS_NOINLINE void cs_init_88b206217a8b30c2_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.ConnectTask",flag,[](){
 
 });}
+
+void cs_init_88b206217a8b30c2(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_88b206217a8b30c2_slow(flag);}
 
 // M:kairo.unity.system.KairoBase.ConnectTask.#ctor
 pls::cs::Ref<cs_88b206217a8b30c2> cs_780e36bec4975ef3() { cs_init_88b206217a8b30c2();

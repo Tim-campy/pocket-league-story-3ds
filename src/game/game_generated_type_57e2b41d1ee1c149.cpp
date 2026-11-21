@@ -7,9 +7,11 @@ namespace pls::game {
 
 void cs_57e2b41d1ee1c149::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_927abfca5c112b44,visitor);pls::cs::trace_value(cs_0eb66d6a46162d0d,visitor);pls::cs::trace_value(cs_5484e79983101cbd,visitor);}
 
-void cs_init_57e2b41d1ee1c149(){static pls::cs::TypeInitState state;state.run("PlsPortGeneratedBootstrap.Source.ImageTaskState",[](){
+static PLS_NOINLINE void cs_init_57e2b41d1ee1c149_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("PlsPortGeneratedBootstrap.Source.ImageTaskState",flag,[](){
 
 });}
+
+void cs_init_57e2b41d1ee1c149(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_57e2b41d1ee1c149_slow(flag);}
 
 // M:PlsPortGeneratedBootstrap.Source.ImageTaskState.#ctor
 pls::cs::Ref<cs_57e2b41d1ee1c149> cs_c80013d97cddb420() { cs_init_57e2b41d1ee1c149();

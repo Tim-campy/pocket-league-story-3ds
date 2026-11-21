@@ -14,9 +14,11 @@ static std::int64_t cs_a55a986dcce0645f_value{};
 
 static pls::cs::Ref<cs_a0cf9aef6a251bfd> cs_1e58df81cbed8f35_value{};
 
-void cs_init_bd164c3c94a49e2a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a55a986dcce0645f_value,visitor);pls::cs::trace_value(cs_1e58df81cbed8f35_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureNumber",[](){
+static PLS_NOINLINE void cs_init_bd164c3c94a49e2a_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a55a986dcce0645f_value,visitor);pls::cs::trace_value(cs_1e58df81cbed8f35_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureNumber",flag,[](){
 
 });}
+
+void cs_init_bd164c3c94a49e2a(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_bd164c3c94a49e2a_slow(flag);}
 
 std::int64_t& cs_a55a986dcce0645f(){cs_init_bd164c3c94a49e2a();return cs_a55a986dcce0645f_value;}
 

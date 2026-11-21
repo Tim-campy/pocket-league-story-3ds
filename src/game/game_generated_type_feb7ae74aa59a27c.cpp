@@ -14,9 +14,11 @@ namespace pls::game {
 
 void cs_feb7ae74aa59a27c::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_88b3d0bc7988e77a,visitor);pls::cs::trace_value(cs_48404c380c305c6b,visitor);pls::cs::trace_value(cs_1f1b271de448ce48,visitor);pls::cs::trace_value(cs_625190bccd0d0fa4,visitor);pls::cs::trace_value(cs_9764b5b60381a8b6,visitor);pls::cs::trace_value(cs_ccc8fd33eda36b9e,visitor);pls::cs::trace_value(cs_7d0600ed44e25c28,visitor);pls::cs::trace_value(cs_924ce9254cf3db30,visitor);pls::cs::trace_value(cs_f369b68d3e3a2183,visitor);pls::cs::trace_value(cs_9fc1ef5d1c5e7bde,visitor);pls::cs::trace_value(cs_cea09c6a91d7c902,visitor);pls::cs::trace_value(cs_26183201ac982bca,visitor);}
 
-void cs_init_feb7ae74aa59a27c(){static pls::cs::TypeInitState state;state.run("system.billing.ui.ApplyTask",[](){
+static PLS_NOINLINE void cs_init_feb7ae74aa59a27c_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.billing.ui.ApplyTask",flag,[](){
 
 });}
+
+void cs_init_feb7ae74aa59a27c(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_feb7ae74aa59a27c_slow(flag);}
 
 // M:system.billing.ui.ApplyTask.#ctor
 pls::cs::Ref<cs_feb7ae74aa59a27c> cs_6dc2344fc05b41a8() { cs_init_feb7ae74aa59a27c();

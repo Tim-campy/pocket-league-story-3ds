@@ -3,9 +3,11 @@
 #include "portable_generated_type_cbac662a28aa40b1_templates.hpp"
 namespace pls::generated {
 
-void cs_init_cbac662a28aa40b1(){static pls::cs::TypeInitState state;state.run("java.util.JTool",[](){
+static PLS_NOINLINE void cs_init_cbac662a28aa40b1_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.util.JTool",flag,[](){
 
 });}
+
+void cs_init_cbac662a28aa40b1(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_cbac662a28aa40b1_slow(flag);}
 
 // Concrete compile receipt: M:java.util.JTool.MakeArray``1(System.Int32[]) [byte[][]]
 template pls::cs::Array<pls::cs::Array<std::uint8_t>> cs_e958ba3e955da10a<pls::cs::Array<pls::cs::Array<std::uint8_t>>>(pls::cs::Array<std::int32_t>);

@@ -8,9 +8,11 @@ bool cs_9f5a071d05c1d020::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {re
 
 std::int32_t cs_9f5a071d05c1d020::GetHashCode() {return cs_cdd09ba02ba5e5aa(pls::cs::static_pointer_cast<cs_9f5a071d05c1d020>(shared_from_this()));}
 
-void cs_init_9f5a071d05c1d020(){static pls::cs::TypeInitState state;state.run("kairo.unity.graphics.Rectangle",[](){
+static PLS_NOINLINE void cs_init_9f5a071d05c1d020_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.graphics.Rectangle",flag,[](){
 
 });}
+
+void cs_init_9f5a071d05c1d020(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_9f5a071d05c1d020_slow(flag);}
 
 // M:kairo.unity.graphics.Rectangle.Equals(System.Object)
 bool cs_a3399ea8077672e2(pls::cs::Ref<cs_9f5a071d05c1d020> cs_this,pls::cs::Ref<pls::cs::Object> v_obj) { cs_init_9f5a071d05c1d020();

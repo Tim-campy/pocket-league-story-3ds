@@ -4,9 +4,11 @@ namespace pls::game {
 
 void cs_c10f171a3a4c8973::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::ExceptionObject::trace_edges(visitor);}
 
-void cs_init_c10f171a3a4c8973(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.payment.IllegalPurchaseException",[](){
+static PLS_NOINLINE void cs_init_c10f171a3a4c8973_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.payment.IllegalPurchaseException",flag,[](){
 
 });}
+
+void cs_init_c10f171a3a4c8973(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_c10f171a3a4c8973_slow(flag);}
 
 // M:kairo.unity.system.payment.IllegalPurchaseException.#ctor
 pls::cs::Ref<cs_c10f171a3a4c8973> cs_4541939614682a87() { cs_init_c10f171a3a4c8973();

@@ -15,9 +15,11 @@ namespace pls::generated {
 
 void cs_c20c229ea63037d8::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_3a492b4165f9d5db,visitor);pls::cs::trace_value(cs_6747c51e21a34296,visitor);pls::cs::trace_value(cs_1393912ba87bd2f6,visitor);pls::cs::trace_value(cs_4e32a5d73d9793f0,visitor);pls::cs::trace_value(cs_26072971e2305223,visitor);}
 
-void cs_init_c20c229ea63037d8(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureProperty",[](){
+static PLS_NOINLINE void cs_init_c20c229ea63037d8_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.SecureProperty",flag,[](){
 
 });}
+
+void cs_init_c20c229ea63037d8(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_c20c229ea63037d8_slow(flag);}
 
 // M:kairo.unity.util.SecureProperty.#ctor(kairo.unity.util.SecureProperty)
 pls::cs::Ref<cs_c20c229ea63037d8> cs_5d0efd71eb31c332(pls::cs::Ref<cs_c20c229ea63037d8> v_property) { cs_init_c20c229ea63037d8();

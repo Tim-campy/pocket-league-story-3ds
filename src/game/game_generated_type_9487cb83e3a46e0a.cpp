@@ -5,9 +5,11 @@
 #include "generated/portable_generated_type_ab1b1085a7ab32b9.hpp"
 namespace pls::game {
 
-void cs_init_9487cb83e3a46e0a(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Language.LangPackRecord",[](){
+static PLS_NOINLINE void cs_init_9487cb83e3a46e0a_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Language.LangPackRecord",flag,[](){
 
 });}
+
+void cs_init_9487cb83e3a46e0a(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_9487cb83e3a46e0a_slow(flag);}
 
 // M:kairo.unity.util.Language.LangPackRecord.#ctor(System.Int32,System.String,System.String)
 pls::cs::Ref<pls::generated::cs_9487cb83e3a46e0a> cs_3b2d98b947053d2a(std::int32_t v_id,pls::cs::String v_file,pls::cs::String v_text) { cs_init_9487cb83e3a46e0a();

@@ -57,10 +57,12 @@ static pls::cs::Ref<pls::generated::cs_bb652fbb61000386> cs_4ba6b876c86cbecd_val
 
 static pls::cs::Ref<cs_6ee7d14059be1acf> cs_33c160ec018e286a_value{};
 
-void cs_init_6ee7d14059be1acf(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ba6b876c86cbecd_value,visitor);pls::cs::trace_value(cs_33c160ec018e286a_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingManager",[](){
+static PLS_NOINLINE void cs_init_6ee7d14059be1acf_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ba6b876c86cbecd_value,visitor);pls::cs::trace_value(cs_33c160ec018e286a_value,visitor);});static pls::cs::TypeInitState state;state.run("system.billing.ui.BillingManager",flag,[](){
 cs_4ba6b876c86cbecd_value = pls::cs::evaluate_type_initializer_field("F:system.billing.ui.BillingManager.BASE64_PUBLIC_KEY",[&](){return pls::source_allocations::completed("new_object","src/Assembly-CSharp/system/billing/ui/BillingManager.cs:M:system.billing.MyBilling.#ctor:439",([&]() -> pls::cs::Ref<pls::generated::cs_bb652fbb61000386> { pls::cs::String cs_arg0 = pls::cs::String(u""); return pls::generated::cs_ede7ead54c734d4c(cs_arg0); }()));});
 
 });}
+
+void cs_init_6ee7d14059be1acf(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_6ee7d14059be1acf_slow(flag);}
 
 pls::cs::Ref<pls::generated::cs_bb652fbb61000386>& cs_4ba6b876c86cbecd(){cs_init_6ee7d14059be1acf();return cs_4ba6b876c86cbecd_value;}
 

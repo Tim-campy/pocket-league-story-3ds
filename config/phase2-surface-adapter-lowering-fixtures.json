@@ -26,10 +26,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.21349170000758022,
-    "native-compile": 65.46931640000548,
-    "managed-output": 0.4024834999581799,
-    "native-output": 0.24504099995829165
+    "csharp-compile": 0.20343679992947727,
+    "native-compile": 59.87281209998764,
+    "managed-output": 0.35017649992369115,
+    "native-output": 0.24170200002845377
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -51,11 +51,11 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_runtime.hpp",
-      "sha256": "9b2cc4e100d46853de6a20c2b8321dba696047ae19704d1a0d10a5d5dd0558a7"
+      "sha256": "1d7c99c2f641e1c272809fe9d9b1a3c5a9eb51d534795d6df82fed2a4fb89839"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_1f3722756aa67fa7.cpp",
-      "sha256": "6b573d0fecac8d8f41c2594a88ece9ef40b23b6e195ecf469049f859ed469cdb"
+      "sha256": "df18bcdec05aef3bef8dc93f52cbaa619f96c66fa0728ddf8566ddac2956e6f8"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_1f3722756aa67fa7.hpp",
@@ -75,7 +75,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_4a8bef2ab48b32d7.cpp",
-      "sha256": "d0e4ac26e2e70ce1fdacd88c4743734c18688414aa83f7d1947bb9f8eeaf1cf3"
+      "sha256": "d831adbabf35c70b73e2999a2d3ecd9d93020af89122f6cb5d76679e8527ead9"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_4a8bef2ab48b32d7.hpp",
@@ -83,7 +83,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_647df9e8ee5f40f0.cpp",
-      "sha256": "8ead84a610284f6d34141c9d7583aa206a3940d10109aea082b70dd93dbdeac7"
+      "sha256": "975c2ba8e11734f5a6437ad795e6b0eafef4af78f00f122e1bda5ae20985c3d8"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_647df9e8ee5f40f0.hpp",
@@ -91,7 +91,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.cpp",
-      "sha256": "78b04b4ab2b29134925a09c2acbe24e0359922dee7c8f9b7521e1d48eeb5887b"
+      "sha256": "d8a4900699f0ab6df9468679d1787e478d6221b30787da0144f6758573952978"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.hpp",
@@ -111,11 +111,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/surface-adapter-differential/Harness.exe",
-    "sha256": "60ef7b7b5848b22890dfe07909456cebcbe110f39721b5495ba866e87d1425f0"
+    "sha256": "f5248ae7e79edda1755894e92fa501e263962ea0fece4a39737b0ca33b3108d0"
   },
   "source_oracle_executable": {
     "path": "build/translator/surface-adapter-differential/Harness-managed.exe",
-    "sha256": "e63a046db8f8d46a339e99b840beda43975d836e3b3717beaaa5bed110587412"
+    "sha256": "be7ffadaeebe9298471eef08f1175bec238f78ccce47182dc64149f2e8d7f901"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -149,11 +149,11 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_runtime.hpp",
-      "sha256": "9b2cc4e100d46853de6a20c2b8321dba696047ae19704d1a0d10a5d5dd0558a7"
+      "sha256": "1d7c99c2f641e1c272809fe9d9b1a3c5a9eb51d534795d6df82fed2a4fb89839"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_1f3722756aa67fa7.cpp",
-      "sha256": "6b573d0fecac8d8f41c2594a88ece9ef40b23b6e195ecf469049f859ed469cdb"
+      "sha256": "df18bcdec05aef3bef8dc93f52cbaa619f96c66fa0728ddf8566ddac2956e6f8"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_1f3722756aa67fa7.hpp",
@@ -173,7 +173,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_4a8bef2ab48b32d7.cpp",
-      "sha256": "d0e4ac26e2e70ce1fdacd88c4743734c18688414aa83f7d1947bb9f8eeaf1cf3"
+      "sha256": "d831adbabf35c70b73e2999a2d3ecd9d93020af89122f6cb5d76679e8527ead9"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_4a8bef2ab48b32d7.hpp",
@@ -181,7 +181,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_647df9e8ee5f40f0.cpp",
-      "sha256": "8ead84a610284f6d34141c9d7583aa206a3940d10109aea082b70dd93dbdeac7"
+      "sha256": "975c2ba8e11734f5a6437ad795e6b0eafef4af78f00f122e1bda5ae20985c3d8"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_647df9e8ee5f40f0.hpp",
@@ -189,7 +189,7 @@
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.cpp",
-      "sha256": "78b04b4ab2b29134925a09c2acbe24e0359922dee7c8f9b7521e1d48eeb5887b"
+      "sha256": "d8a4900699f0ab6df9468679d1787e478d6221b30787da0144f6758573952978"
     },
     {
       "path": "build/translator/surface-adapter-generated/portable_generated_type_9326c27a92cfea3a.hpp",
@@ -257,7 +257,7 @@
     },
     {
       "path": "src/kairo/api/graphics.hpp",
-      "sha256": "f86f6ab4ed4a6063a1f21e7a7a046eaf6590e93626f7de8e3d61a6bf0e2d2d87"
+      "sha256": "96e9ff7056dc7bc9d554b351c8eaf903b51a6050b9c9b5a0af8f335c565e60d7"
     },
     {
       "path": "src/kairo/api/input.hpp",
@@ -357,7 +357,7 @@
     },
     {
       "path": "src/kairo/common/generated/portable_generated_runtime.hpp",
-      "sha256": "be369d74d12fa7ceff233f879cd0b2c443d70c1891c24952b7865ebb7973d8cd"
+      "sha256": "fb31488984984201bf24960e06fb0dd13cdd08e97904e85ab62676b33fe33cc8"
     },
     {
       "path": "src/kairo/common/generated/portable_generated_type_15e3f7b692b3f380.hpp",
@@ -693,7 +693,7 @@
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
-      "sha256": "e2991399800c9efa29d4a3bd72ead94b6cb26f6848b357bfd9984ab933f89f8d"
+      "sha256": "a4e660e3f7a22b467536115fc08c61b2fb57e8ee1a582f18b9bdaac03b146e65"
     },
     {
       "path": "src/kairo/common/managed_thread.hpp",
@@ -705,7 +705,7 @@
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "305aece580567fd149a81ef8c36eddb3624c340de8515dfe6a22366f9efdeae2"
+      "sha256": "7c78327b3ac6584847891c89b6f3078b5111353384078cd4d12970c8afbd5d64"
     },
     {
       "path": "src/kairo/common/memory_ranges.hpp",
@@ -737,7 +737,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b"
+      "sha256": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -807,13 +807,13 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "4c566aad98d949371df50a94d9159305fb024677052ce0bfe01b6c21bab39932",
-    "emission_source_sha256": "2da277fcd49f2c372c9a87ea013db3dd9e5e2ada49969a99b6c33ec117e7b9c3",
+    "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+    "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
     "readable_source_sha256": [
       "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
-      "4c9caeba6809ed85c073c0c03fee872c1a8351097347d7d10ee40e799a4b2c21"
+      "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
     ],
-    "driver_sha256": "653bcd3c6bd79682cc28302b0a0a49ab2c3d26eb5275c64bdc01a4b6780a55d4"
+    "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
   },
   "runner_sha256": "699606696be30fc481f12abd8936fe05d7ca555d80de76566b52cb8e45795989",
   "fixture_sha256": "bac0f5fbf4868ba589181647c7822b63b9bf2f35dee1b2e0fec89b68131d3270",

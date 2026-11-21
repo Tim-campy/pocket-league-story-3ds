@@ -2,9 +2,11 @@
 #include "game_generated_type_fd48512b974504f6.hpp"
 namespace pls::game {
 
-void cs_init_fd48512b974504f6(){static pls::cs::TypeInitState state;state.run("kairo.unity.io.ScratchPad",[](){
+static PLS_NOINLINE void cs_init_fd48512b974504f6_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.io.ScratchPad",flag,[](){
 
 });}
+
+void cs_init_fd48512b974504f6(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_fd48512b974504f6_slow(flag);}
 
 // M:kairo.unity.io.ScratchPad.GetSPSize(System.Int32)
 std::int32_t cs_611e38080e0184ae(std::int32_t v_spid) { cs_init_fd48512b974504f6();

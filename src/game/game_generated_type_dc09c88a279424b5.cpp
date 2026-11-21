@@ -11,9 +11,11 @@ void cs_dc09c88a279424b5::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<cs_dc09c88a279424b5> cs_a0e59a75dec69092_value{};
 
-void cs_init_dc09c88a279424b5(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a0e59a75dec69092_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextFormat",[](){
+static PLS_NOINLINE void cs_init_dc09c88a279424b5_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_a0e59a75dec69092_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ui.TextFormat",flag,[](){
 
 });}
+
+void cs_init_dc09c88a279424b5(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_dc09c88a279424b5_slow(flag);}
 
 pls::cs::Ref<cs_dc09c88a279424b5>& cs_a0e59a75dec69092(){cs_init_dc09c88a279424b5();return cs_a0e59a75dec69092_value;}
 

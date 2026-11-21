@@ -15,12 +15,14 @@ static pls::cs::List<pls::cs::Ref<cs_18d5b680efad7752>> cs_f7651e4f416e5e3a_valu
 
 static pls::cs::Ref<pls::cs::Object> cs_4033fa251a2d7de3_value{};
 
-void cs_init_11e0490f60fdc166(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_ba8d1e73ebddc909_value,visitor);pls::cs::trace_value(cs_c51cfc9dfddab106_value,visitor);pls::cs::trace_value(cs_f7651e4f416e5e3a_value,visitor);pls::cs::trace_value(cs_4033fa251a2d7de3_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.io.Http",[](){
+static PLS_NOINLINE void cs_init_11e0490f60fdc166_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_ba8d1e73ebddc909_value,visitor);pls::cs::trace_value(cs_c51cfc9dfddab106_value,visitor);pls::cs::trace_value(cs_f7651e4f416e5e3a_value,visitor);pls::cs::trace_value(cs_4033fa251a2d7de3_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.io.Http",flag,[](){
 cs_c51cfc9dfddab106_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.io.Http.http_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/io/Http.cs:M:kairo.unity.io.Http.Connect(System.String,System.Byte[],System.Boolean,System.Boolean):478",([&]() -> pls::cs::Ref<cs_77de402a688eeb9d> { auto cs_arg0 = false; return cs_e751bd24448f57f3(cs_arg0); }()));});
 cs_4033fa251a2d7de3_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.io.Http.lock_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/io/Http.cs:M:kairo.unity.io.Http.Connect(System.String,System.Byte[],System.Boolean,System.Boolean):529",pls::cs::make_ref<pls::cs::Object>());});
 cs_f7651e4f416e5e3a_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.io.Http.httpThreads_",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/io/Http.cs:M:kairo.unity.io.Http.Connect(System.String,System.Byte[],System.Boolean,System.Boolean):593",pls::cs::List<pls::cs::Ref<cs_18d5b680efad7752>>::make());});
 
 });}
+
+void cs_init_11e0490f60fdc166(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_11e0490f60fdc166_slow(flag);}
 
 bool& cs_ba8d1e73ebddc909(){cs_init_11e0490f60fdc166();return cs_ba8d1e73ebddc909_value;}
 

@@ -18,6 +18,7 @@ def main():
     p.add_argument('--apk',type=Path,required=True)
     p.add_argument('--snapshot',type=Path,help='Canonical diagnostic snapshot')
     p.add_argument('--readable',type=Path,help='C6b: readable trees from translator/readable.py diagnostic (instead of --snapshot)')
+    p.add_argument('--frozen',action='store_true',help='After the freeze: build src/game and src/kairo/common/generated as maintained sources')
     p.add_argument('--output',type=Path,default=ROOT/'build/null-arm11')
     p.add_argument('--optimization',choices=['O2','Os'],default='O2')
     p.add_argument('--lto',action='store_true')
@@ -28,11 +29,12 @@ def main():
     p.add_argument('--gc-stress-poison',action='store_true',help='Diagnosis only: poison dead bodies (8 MiB quarantine)')
     p.add_argument('--gc-trace',action='store_true',help='Diagnosis only: one line per collection')
     a=p.parse_args();output=a.output.resolve()
-    if bool(a.snapshot)==bool(a.readable):p.error('give --snapshot or --readable')
+    if sum(map(bool,(a.snapshot,a.readable,a.frozen)))!=1:p.error('give one of --snapshot, --readable or --frozen')
     readable_root=a.readable.resolve() if a.readable else None
-    source=(readable_root/'game') if readable_root else a.snapshot.resolve()
+    source=(readable_root/'game') if readable_root else (ROOT/'src/game') if a.frozen else a.snapshot.resolve()
     portable_dir=(readable_root/'include/generated') if readable_root else ROOT/'src/kairo/common/generated'
     def validate():
+        if a.frozen:return None  # maintained sources: nothing generated to validate
         return validate_readable_diagnostic(readable_root) if readable_root else validate_diagnostic_manifest(source)
     if not output.is_relative_to(ROOT/'build'):raise ValueError('ARM build must remain in ignored build/')
     if digest(a.apk)!=APK_SHA:raise ValueError('Expected owned APK required')

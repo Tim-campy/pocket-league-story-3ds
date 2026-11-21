@@ -3,9 +3,11 @@
 #include "game_generated_type_e9cc65282df10bc8.hpp"
 namespace pls::game {
 
-void cs_init_e9cc65282df10bc8(){static pls::cs::TypeInitState state;state.run("kairo.unity.graph.Graph",[](){
+static PLS_NOINLINE void cs_init_e9cc65282df10bc8_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.graph.Graph",flag,[](){
 
 });}
+
+void cs_init_e9cc65282df10bc8(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_e9cc65282df10bc8_slow(flag);}
 
 // M:kairo.unity.graph.Graph.Easing(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
 std::int32_t cs_20d8b864ba249ba5(std::int32_t v_v0,std::int32_t v_v1,std::int32_t v_length,std::int32_t v_frame,std::int32_t v_edging) { cs_init_e9cc65282df10bc8();

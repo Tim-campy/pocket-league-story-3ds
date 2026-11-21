@@ -8,9 +8,11 @@ namespace pls::game {
 
 void cs_0286a0dbe9da0b33::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_6e5c685dce0d605a,visitor);pls::cs::trace_value(cs_ef63d4d4b6ab550f,visitor);pls::cs::trace_value(cs_7f418c9c27e5c628,visitor);pls::cs::trace_value(cs_7c40c7d83d91cf74,visitor);pls::cs::trace_value(cs_1931e59a708b44ff,visitor);pls::cs::trace_value(cs_71eb51b3f792969a,visitor);pls::cs::trace_value(cs_49c162566c3d94ef,visitor);}
 
-void cs_init_0286a0dbe9da0b33(){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Dialog",[](){
+static PLS_NOINLINE void cs_init_0286a0dbe9da0b33_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.ui.Dialog",flag,[](){
 
 });}
+
+void cs_init_0286a0dbe9da0b33(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_0286a0dbe9da0b33_slow(flag);}
 
 // M:kairo.unity.ui.Dialog.#ctor(System.Int32,System.String)
 pls::cs::Ref<cs_0286a0dbe9da0b33> cs_63545d46c6887c12(std::int32_t v_type,pls::cs::String v_title) { cs_init_0286a0dbe9da0b33();

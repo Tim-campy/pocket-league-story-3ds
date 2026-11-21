@@ -4,9 +4,11 @@ namespace pls::generated {
 
 void cs_922b87749168eb15::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_51d08ca6eed04eda,visitor);pls::cs::trace_value(cs_8e6817a8d663aa67,visitor);pls::cs::trace_value(cs_0d73049ca9cd4bf6,visitor);pls::cs::trace_value(cs_5b846f0fd1fb1aa0,visitor);pls::cs::trace_value(cs_57d6fb57c6af0de7,visitor);}
 
-void cs_init_922b87749168eb15(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Compressor.Node",[](){
+static PLS_NOINLINE void cs_init_922b87749168eb15_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.Compressor.Node",flag,[](){
 
 });}
+
+void cs_init_922b87749168eb15(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_922b87749168eb15_slow(flag);}
 
 // M:kairo.unity.util.Compressor.Node.#ctor
 pls::cs::Ref<cs_922b87749168eb15> cs_25fc81be857429d9() { cs_init_922b87749168eb15();

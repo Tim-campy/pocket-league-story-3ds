@@ -34,9 +34,11 @@ void cs_a09270023ec48eca::Flush() {cs_6c7bbca4c29839c1(pls::cs::static_pointer_c
 
 void cs_a09270023ec48eca::Close() {cs_3f2440e57ef29f1e(pls::cs::static_pointer_cast<cs_a09270023ec48eca>(shared_from_this()));}
 
-void cs_init_a09270023ec48eca(){static pls::cs::TypeInitState state;state.run("java.io.WrappedSystemStream",[](){
+static PLS_NOINLINE void cs_init_a09270023ec48eca_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.io.WrappedSystemStream",flag,[](){
 
 });}
+
+void cs_init_a09270023ec48eca(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_a09270023ec48eca_slow(flag);}
 
 // M:java.io.WrappedSystemStream.#ctor(java.io.InputStream)
 pls::cs::Ref<cs_a09270023ec48eca> cs_f4af9cf35590567d(pls::cs::Ref<cs_e7a5499b363ef51b> v_ist) { cs_init_a09270023ec48eca();

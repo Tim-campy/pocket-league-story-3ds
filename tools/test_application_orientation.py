@@ -3,6 +3,7 @@
 Setter/autorotate observations remain context only. Default reset is exercised
 through the host callback; SDL's actual window reset has a separate CTest.
 """
+import original_metadata
 import hashlib,json,os,sys
 from pathlib import Path
 from test_input import ROOT,sha,run,span,compile_modern
@@ -15,8 +16,7 @@ def main():
     folder=ROOT/'build/application-orientation-tests';folder.mkdir(parents=True,exist_ok=True)
     csc,dotnet,framework=compiler_paths();metadata_source=ROOT/'tests/kairo/UnityScreenMetadata.cs';metadata_exe=folder/'UnityScreenMetadata.dll'
     compile_modern([metadata_source],metadata_exe,folder,'metadata',csc,framework)
-    request=json.loads((ROOT/'build/translator/KairoLibrary-input.json').read_text(encoding='utf-8'))
-    external=next(Path(p).resolve() for p in request['references'] if Path(p).name=='UnityEngine.dll')
+    external=original_metadata.unity_engine()
     if external.is_relative_to(ROOT):raise ValueError('Original Unity metadata must remain outside the port')
     metadata=run([dotnet,metadata_exe,external],folder,'metadata-read').splitlines()
     enums=dict(line.removeprefix('enum:').split('=',1) for line in metadata if line.startswith('enum:'))

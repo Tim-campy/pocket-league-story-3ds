@@ -18,9 +18,11 @@ void cs_832d81e198eeeec2::cs_virtual_eeffa75bcd0cd73d(pls::cs::Array<std::uint8_
 
 void cs_832d81e198eeeec2::cs_virtual_0d912191800a0b86() {cs_ee6ef7b3c5c52f4e(pls::cs::static_pointer_cast<cs_832d81e198eeeec2>(shared_from_this()));}
 
-void cs_init_832d81e198eeeec2(){static pls::cs::TypeInitState state;state.run("kairo.unity.io.ByteListOutputStream",[](){
+static PLS_NOINLINE void cs_init_832d81e198eeeec2_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.io.ByteListOutputStream",flag,[](){
 
 });}
+
+void cs_init_832d81e198eeeec2(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_832d81e198eeeec2_slow(flag);}
 
 // M:kairo.unity.io.ByteListOutputStream._expand
 void cs_2c474068bf2bc8ac(pls::cs::Ref<cs_832d81e198eeeec2> cs_this) { cs_init_832d81e198eeeec2();

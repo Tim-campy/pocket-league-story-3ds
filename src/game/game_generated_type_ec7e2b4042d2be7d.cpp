@@ -10,9 +10,11 @@ bool cs_ec7e2b4042d2be7d::Equals(pls::cs::Ref<pls::cs::Object> const& v_obj) {re
 
 std::int32_t cs_ec7e2b4042d2be7d::GetHashCode() {return cs_efd0cba326e67ad0(pls::cs::static_pointer_cast<cs_ec7e2b4042d2be7d>(shared_from_this()));}
 
-void cs_init_ec7e2b4042d2be7d(){static pls::cs::TypeInitState state;state.run("java.lang.JShort",[](){
+static PLS_NOINLINE void cs_init_ec7e2b4042d2be7d_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.lang.JShort",flag,[](){
 
 });}
+
+void cs_init_ec7e2b4042d2be7d(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_ec7e2b4042d2be7d_slow(flag);}
 
 // M:java.lang.JShort.#ctor(System.Int16)
 pls::cs::Ref<cs_ec7e2b4042d2be7d> cs_99b0e4c5e8c0b01f(std::int16_t v_value) { cs_init_ec7e2b4042d2be7d();

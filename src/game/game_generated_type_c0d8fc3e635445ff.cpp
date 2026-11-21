@@ -2,9 +2,11 @@
 #include "game_generated_type_c0d8fc3e635445ff.hpp"
 namespace pls::game {
 
-void cs_init_c0d8fc3e635445ff(){static pls::cs::TypeInitState state;state.run("java.net.URLDecoder",[](){
+static PLS_NOINLINE void cs_init_c0d8fc3e635445ff_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.net.URLDecoder",flag,[](){
 
 });}
+
+void cs_init_c0d8fc3e635445ff(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_c0d8fc3e635445ff_slow(flag);}
 
 // M:java.net.URLDecoder.Decode(System.String,System.String)
 pls::cs::String cs_cfedbb85c5954051(pls::cs::String v_s,pls::cs::String v_enc) { cs_init_c0d8fc3e635445ff();

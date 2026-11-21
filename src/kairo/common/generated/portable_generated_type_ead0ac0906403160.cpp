@@ -2,9 +2,11 @@
 #include "portable_generated_type_ead0ac0906403160.hpp"
 namespace pls::generated {
 
-void cs_init_ead0ac0906403160(){static pls::cs::TypeInitState state;state.run("java.lang.JMath",[](){
+static PLS_NOINLINE void cs_init_ead0ac0906403160_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.lang.JMath",flag,[](){
 
 });}
+
+void cs_init_ead0ac0906403160(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_ead0ac0906403160_slow(flag);}
 
 // M:java.lang.JMath.Abs(System.Int32)
 std::int32_t cs_2913a1bf47038615(std::int32_t v_a) { cs_init_ead0ac0906403160();

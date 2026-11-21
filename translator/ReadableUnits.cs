@@ -154,7 +154,13 @@ sealed partial class Lowerer {
                 for(int k=2;forbidden.Contains(name)||taken.Contains((name,arity))||constructor&&taken.Contains((name+"_init",arity+1));k++)name=stem+"_"+k;
                 taken.Add((name,arity));if(constructor)taken.Add((name+"_init",arity+1));return name;
             }
-            if(usedTypes.Contains(Id(t)))r.Tokens[TypeInitName(t)]=Make(Assign("ensure_initialized",0,false));
+            if(usedTypes.Contains(Id(t))){
+                r.Tokens[TypeInitName(t)]=Make(Assign("ensure_initialized",0,false));
+                // Out-of-line initializer behind the flag test (file-local function).
+                var slowPath=classMode||free?ns:path;var slow=classMode||free?flat+"_initialize_type":"initialize_type";
+                var slowName=slow;for(int k=2;Taken(slowPath,slowName);k++)slowName=slow+"_"+k;AddScope(slowPath,slowName,false);
+                r.Tokens[TypeInitName(t)+"_slow"]=new RName{Kind=RKind.Storage,Root=r.Root,Path=slowPath.Append(slowName).ToArray(),Wrap=slowPath};
+            }
             if(!free&&t.TypeParameters.Length==0&&SymbolEqualityComparer.Default.Equals(t.ContainingAssembly,compilation.Assembly))
                 foreach(var f in t.GetMembers().OfType<IFieldSymbol>().Where(ReadableConstantField).OrderBy(Position)){
                     var name=Assign(CppIdentifier(f.Name),0,false);r.Tokens[ConstName(f)]=Make(name);readableConstDecls.Add((t,f,name));

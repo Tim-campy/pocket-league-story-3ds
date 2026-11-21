@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_18d5b680efad7752::trace_edges(const pls::cs::EdgeVisitor&visitor)const {pls::cs::Object::trace_edges(visitor);pls::cs::trace_value(cs_437ffc21e8449636,visitor);pls::cs::trace_value(cs_fda18c2ca470418e,visitor);pls::cs::trace_value(cs_79a73cb588797b93,visitor);}
 
-void cs_init_18d5b680efad7752(){static pls::cs::TypeInitState state;state.run("kairo.unity.io.Http.HttpThread",[](){
+static PLS_NOINLINE void cs_init_18d5b680efad7752_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.io.Http.HttpThread",flag,[](){
 
 });}
+
+void cs_init_18d5b680efad7752(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_18d5b680efad7752_slow(flag);}
 
 // M:kairo.unity.io.Http.HttpThread.#ctor
 pls::cs::Ref<cs_18d5b680efad7752> cs_b1fabebdabf8d17c() { cs_init_18d5b680efad7752();

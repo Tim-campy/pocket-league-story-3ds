@@ -20,7 +20,7 @@
     "tests\\translator\\StackFixtures.cs": "df6cd6bea323490fe22b6134e1cf2bc2c0c9fe8acbb7710d89004e0f9ae5b484",
     "tests\\translator\\stack_fixtures.cpp": "09be6bd0e617fd708776bf9c3dcd214c50e6de1f1c6723199b2c74f8b307f58a",
     "src\\kairo\\common\\semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
-    "src\\kairo\\common\\semantic_runtime.hpp": "30b1288ca676e3dec6fa60e255ed385418241dc7c99e3a4ab1e0f2a031ee138b",
+    "src\\kairo\\common\\semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b",
     "src\\kairo\\common\\managed_collections.hpp": "c7497191407203e01c2ffea7db4af6c3ba72fe4fd3f2ac2de6acbaad53b69b9a",
     "src\\kairo\\common\\managed_random.hpp": "a88850f2ed9fe49713e14f80e01b7addbb2a6a8677d55cf558b52968d72752cf",
     "src\\kairo\\common\\managed_text.hpp": "1f2263377bb2dd888cbc721acf7d954ae78b362769a6c0dcf23a91ca5d24e731",
@@ -324,10 +324,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "dd8ec452a5ceeb2ffab2d455f49b8c3a595d66b10588df88d4712599f33d96d6"
+    "sha256": "fb2f45dd78762a22d23158659b9f94b2059e71662ef0bf7a4d0cfde5157fb9be"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "62b3bacd8caad837fa89478f9406d634ab036e87f06e48c1d63cb3645e3e74a5"
+    "sha256": "fa92cd1acff10349d8d8a56389c81b194f463eab2b39581ca08dabc11e319eeb"
   }
 }

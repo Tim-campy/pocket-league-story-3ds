@@ -6,9 +6,11 @@ namespace pls::game {
 
 void cs_4ccab99c775ca4c5::trace_edges(const pls::cs::EdgeVisitor&visitor)const {cs_5ad2213598dfcd5d::trace_edges(visitor);pls::cs::trace_value(cs_e7444216b8176cd4,visitor);pls::cs::trace_value(cs_4761156567811a9b,visitor);pls::cs::trace_value(cs_84f6d6bdc01421d0,visitor);pls::cs::trace_value(cs_03f115a488ad951b,visitor);}
 
-void cs_init_4ccab99c775ca4c5(){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.TextBox",[](){
+static PLS_NOINLINE void cs_init_4ccab99c775ca4c5_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.panel.TextBox",flag,[](){
 
 });}
+
+void cs_init_4ccab99c775ca4c5(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4ccab99c775ca4c5_slow(flag);}
 
 // M:kairo.unity.panel.TextBox.#ctor(System.String,System.Int32,System.Int32,System.Int32)
 pls::cs::Ref<cs_4ccab99c775ca4c5> cs_86553cba2c357ac5(pls::cs::String v_text,std::int32_t v_columns,std::int32_t v_rows,std::int32_t v_mode) { cs_init_4ccab99c775ca4c5();

@@ -6,9 +6,11 @@ namespace pls::game {
 
 static bool cs_0aabbac1b4cc00d9_value{};
 
-void cs_init_130519c307b90f46(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_0aabbac1b4cc00d9_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.ClockTime",[](){
+static PLS_NOINLINE void cs_init_130519c307b90f46_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_0aabbac1b4cc00d9_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.util.ClockTime",flag,[](){
 
 });}
+
+void cs_init_130519c307b90f46(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_130519c307b90f46_slow(flag);}
 
 bool& cs_0aabbac1b4cc00d9(){cs_init_130519c307b90f46();return cs_0aabbac1b4cc00d9_value;}
 

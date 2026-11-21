@@ -26,36 +26,39 @@ def executed(log):
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument('--apk', type=Path, required=True); parser.add_argument('--readable', type=Path)
+    parser.add_argument('--frozen', action='store_true', help='After the freeze: replay on build_pc --frozen-diagnostic (src/game itself)')
+    parser.add_argument('--source-repo', type=Path, help='Repository whose build/pc-diagnostic-release holds the route copies and saves (default: this one)')
     parser.add_argument('--canonical-snapshot', type=Path, help='Replay on the current canonical diagnostic snapshot instead (same options), for a like-for-like comparison')
     parser.add_argument('--gc-stress-every', type=int, default=50); parser.add_argument('--limit', type=int)
     parser.add_argument('--only', nargs='*'); parser.add_argument('--compare-only', action='store_true')
     args = parser.parse_args()
-    history = json.loads((ROOT / 'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))
+    source = (args.source_repo or ROOT).resolve()
+    history = json.loads((source / 'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))
     chosen = {}
     for a in history['attempts']:
         route = a.get('route'); result = a.get('route_result') or {}
         if not isinstance(route, dict) or result.get('status') != 'done': continue
         if route.get('name') == 'route.txt': continue  # a replay made by this tool, not an original route run
-        folder = ROOT / 'build/pc-diagnostic-release/attempts' / str(a['number'])
+        folder = source / 'build/pc-diagnostic-release/attempts' / str(a['number'])
         if not (folder / 'route.txt').is_file() or not (folder / 'game-run.stderr').is_file(): continue
         save = (a.get('restored_private_preferences') or {}).get('source_attempt')
         chosen[(route['sha256'], save)] = a
     rows = sorted(chosen.values(), key=lambda a: a['number'])
     if args.only: rows = [a for a in rows if a['route']['name'] in args.only]
     if args.limit: rows = rows[:args.limit]
-    if bool(args.readable) == bool(args.canonical_snapshot): parser.error('give --readable or --canonical-snapshot')
-    mode = 'readable' if args.readable else 'canonical'
+    if sum(map(bool, (args.readable, args.canonical_snapshot, args.frozen))) != 1: parser.error('give --readable, --canonical-snapshot or --frozen')
+    mode = 'readable' if args.readable else 'frozen' if args.frozen else 'canonical'
     out = ROOT / ('build/c6b-route-set-' + mode + '.json')
-    run_history = ROOT / ('build/c6b-readable-attempts.json' if args.readable else 'config/phase2-diagnostic-attempts.json')
-    run_build = ROOT / ('build/pc-readable-diagnostic-release' if args.readable else 'build/pc-diagnostic-release')
+    run_history = ROOT / ('build/c6b-readable-attempts.json' if args.readable else 'build/frozen-attempts.json' if args.frozen else 'config/phase2-diagnostic-attempts.json')
+    run_build = ROOT / ('build/pc-readable-diagnostic-release' if args.readable else 'build/pc-frozen-diagnostic-release' if args.frozen else 'build/pc-diagnostic-release')
     state = json.loads(out.read_text(encoding='utf-8')) if out.exists() else dict(runs={})
     for a in rows:
         key = str(a['number'])
         if args.compare_only or key in state['runs'] and state['runs'][key].get('status') == 'done': continue
-        folder = ROOT / 'build/pc-diagnostic-release/attempts' / key
+        folder = source / 'build/pc-diagnostic-release/attempts' / key
         command = [sys.executable, str(ROOT / 'build/claude-run-utf8.py') if (ROOT / 'build/claude-run-utf8.py').exists() else '', str(ROOT / 'tools/build_pc.py')]
         command = [c for c in command if c]
-        command += ['--apk', str(args.apk)] + (['--readable-diagnostic', str(args.readable)] if args.readable else ['--diagnostic-generated', str(args.canonical_snapshot)]) + [ '--configuration', 'Release', '--run', '--run-seconds', '600',
+        command += ['--apk', str(args.apk)] + (['--readable-diagnostic', str(args.readable)] if args.readable else ['--frozen-diagnostic'] if args.frozen else ['--diagnostic-generated', str(args.canonical_snapshot)]) + [ '--configuration', 'Release', '--run', '--run-seconds', '600',
                     '--diagnostic-route', str(folder / 'route.txt'), '--fast', '--gc-stress-every', str(args.gc_stress_every), '--gc-stress-poison']
         save = (a.get('restored_private_preferences') or {}).get('source_attempt')
         if save: command += ['--diagnostic-save-from-attempt', str(save)]
@@ -75,7 +78,7 @@ def main():
         print(key, state['runs'][key], flush=True)
     canonical, readable, gaps = set(), set(), []
     for key, run in state['runs'].items():
-        c, _ = executed(ROOT / 'build/pc-diagnostic-release/attempts' / key / 'game-run.stderr')
+        c, _ = executed(source / 'build/pc-diagnostic-release/attempts' / key / 'game-run.stderr')
         r, g = executed(run_build / 'attempts' / str(run['readable_attempt']) / 'game-run.stderr')
         canonical |= c; readable |= r; gaps += list(g)
         run['coverage'] = dict(canonical=len(c), readable=len(r), only_canonical=sorted(c - r)[:10], only_readable=sorted(r - c)[:10])

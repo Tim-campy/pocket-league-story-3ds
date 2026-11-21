@@ -7,10 +7,12 @@ void cs_7a470603d6db57af::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static std::int32_t cs_d9c18e1b80629b14_value{};
 
-void cs_init_7a470603d6db57af(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d9c18e1b80629b14_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ad.AdMobView",[](){
+static PLS_NOINLINE void cs_init_7a470603d6db57af_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_d9c18e1b80629b14_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.ad.AdMobView",flag,[](){
 cs_d9c18e1b80629b14_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.ad.AdMobView.adHeight_",[&](){return pls::cs::cast_integral<std::int32_t>(std::uint64_t(0xffffffffffffffffull));});
 
 });}
+
+void cs_init_7a470603d6db57af(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_7a470603d6db57af_slow(flag);}
 
 std::int32_t& cs_d9c18e1b80629b14(){cs_init_7a470603d6db57af();return cs_d9c18e1b80629b14_value;}
 

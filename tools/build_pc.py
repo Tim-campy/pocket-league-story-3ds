@@ -11,7 +11,6 @@ from pc_compiler import CMAKE,NINJA,build_jobs,environment,showincludes_prefix,a
 from run_native_process import run_native_process
 
 ROOT=Path(__file__).resolve().parents[1]
-sys.path.insert(0,str(ROOT/'translator'))
 from report_paths import unpack_source_paths
 APK_SHA='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 
@@ -103,7 +102,7 @@ def validate_diagnostic_manifest(folder,root=ROOT):
     if not isinstance(producer,dict)or manifest.get('producer')!=producer:raise ValueError('Diagnostic producer differs from canonical generation')
     for key,name in [('translator_source_sha256','translator/Translator.cs'),('emission_source_sha256','translator/EmissionUnits.cs'),('driver_sha256','translator/translate.py')]:
         if producer.get(key)!=digest(root/name):raise ValueError('Diagnostic producer source is stale')
-    if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=digest(root/'translator/report_paths.py'):raise ValueError('Diagnostic path producer source is stale')
+    if 'report_paths_sha256'in producer and producer['report_paths_sha256']!=digest(root/'tools/report_paths.py'):raise ValueError('Diagnostic path producer source is stale')
     for row in canonical.get('platform_adapter_sources',[]):
         path=(root/row['path']).resolve(strict=True)
         if not path.is_relative_to(root)or digest(path)!=row['sha256']:raise ValueError('Diagnostic bootstrap source is stale')
@@ -244,6 +243,7 @@ def main():
     parser.add_argument('--run-seconds',type=int,default=20,help='Bounded local run duration, 1..600 seconds (default20)')
     parser.add_argument('--metrics',action='store_true',help='Record opt-in native memory/frame measurements in the private run log; requires --run')
     parser.add_argument('--diagnostic-generated',type=Path,help='Private manifest-verified sources with fatal gap traps; separate build and isolated preferences')
+    parser.add_argument('--frozen-diagnostic',action='store_true',help='After the freeze: diagnostic build of src/game itself (PLS_METHOD_SCOPE kept in the sources); own history build/frozen-attempts.json')
     parser.add_argument('--readable-diagnostic',type=Path,help='C6b: readable game + KairoLibrary from translator/readable.py diagnostic (same routes/isolation; own history in build/, never promotes the canonical ledger)')
     parser.add_argument('--configuration',choices=['Debug','Release'],default='Debug')
     parser.add_argument('--jobs',type=int,choices=range(1,9),default=2,help='Parallel compilation jobs, 1..8 (default 2)')
@@ -265,20 +265,20 @@ def main():
     parser.add_argument('--dual-capture',metavar='DIR:EVERY',help='With --dual-screen: write both screens as BMP every N frames to DIR (keep under build/, never in Git)')
     args=parser.parse_args()
     if args.diagnostic_route is not None:
-        if not (args.diagnostic_generated or args.readable_diagnostic) or not args.run:parser.error('--diagnostic-route requires a diagnostic run')
+        if not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run:parser.error('--diagnostic-route requires a diagnostic run')
         if args.diagnostic_select_frame or args.diagnostic_key_frame or args.diagnostic_dismiss_popups_until_frame is not None or args.diagnostic_title_anchor is not None:parser.error('--diagnostic-route replaces the frame-based input flags')
         if not args.diagnostic_route.is_file():parser.error('Route file not found')
-    if args.ui_trace and(not (args.diagnostic_generated or args.readable_diagnostic) or not args.run):parser.error('--ui-trace requires a diagnostic run')
-    if args.fast and(not (args.diagnostic_generated or args.readable_diagnostic) or not args.run or args.virtual_clock is None):parser.error('--fast requires a diagnostic run with --virtual-clock')
+    if args.ui_trace and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run):parser.error('--ui-trace requires a diagnostic run')
+    if args.fast and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or args.virtual_clock is None):parser.error('--fast requires a diagnostic run with --virtual-clock')
     if not 1<=args.run_seconds<=600:parser.error('--run-seconds must be1..600')
-    if args.diagnostic_dismiss_popups_until_frame is not None and(not (args.diagnostic_generated or args.readable_diagnostic) or not args.run or not 300<=args.diagnostic_dismiss_popups_until_frame<=12000):parser.error('Popup replay requires a private run and a final frame300..12000')
-    if args.diagnostic_save_from_attempt is not None and(not (args.diagnostic_generated or args.readable_diagnostic) or not args.run or args.diagnostic_save_from_attempt<1):parser.error('Private save reuse requires a diagnostic run and an earlier positive attempt number')
+    if args.diagnostic_dismiss_popups_until_frame is not None and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or not 300<=args.diagnostic_dismiss_popups_until_frame<=12000):parser.error('Popup replay requires a private run and a final frame300..12000')
+    if args.diagnostic_save_from_attempt is not None and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or args.diagnostic_save_from_attempt<1):parser.error('Private save reuse requires a diagnostic run and an earlier positive attempt number')
     if args.diagnostic_unlabeled_popups_only and args.diagnostic_dismiss_popups_until_frame is None:parser.error('Unlabeled-only mode requires popup replay')
     if (args.diagnostic_generated or args.readable_diagnostic) and args.fixtures_only:parser.error('Diagnostic sources require a game build')
     if args.metrics and (not args.run or args.fixtures_only):parser.error('--metrics requires a game --run attempt')
-    if args.diagnostic_select_frame is not None and(not (args.diagnostic_generated or args.readable_diagnostic) or not args.run or any(not 1<=n<=12000 for n in args.diagnostic_select_frame)or args.diagnostic_select_frame!=sorted(set(args.diagnostic_select_frame))):parser.error('Scripted input requires a private diagnostic run and strictly increasing frames1..12000')
+    if args.diagnostic_select_frame is not None and(not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or any(not 1<=n<=12000 for n in args.diagnostic_select_frame)or args.diagnostic_select_frame!=sorted(set(args.diagnostic_select_frame))):parser.error('Scripted input requires a private diagnostic run and strictly increasing frames1..12000')
     if args.diagnostic_key_frame:
-        if not (args.diagnostic_generated or args.readable_diagnostic) or not args.run:parser.error('Scripted keys require a private diagnostic run')
+        if not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run:parser.error('Scripted keys require a private diagnostic run')
         frames=[]
         for value in args.diagnostic_key_frame:
             match=re.fullmatch(r'([0-9]+):(SELECT|UP|DOWN|LEFT|RIGHT|SOFT1|SOFT2)',value)
@@ -298,10 +298,10 @@ def main():
     env.pop('PLS_VIRTUAL_CLOCK',None)
     env.pop('PLS_PC_TITLE_ANCHOR',None)
     if args.diagnostic_title_anchor is not None:
-        if not (args.diagnostic_generated or args.readable_diagnostic) or not args.run or not 1<=args.diagnostic_title_anchor<=12000:parser.error('--diagnostic-title-anchor requires a diagnostic run and 1..12000')
+        if not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run or not 1<=args.diagnostic_title_anchor<=12000:parser.error('--diagnostic-title-anchor requires a diagnostic run and 1..12000')
         env['PLS_PC_TITLE_ANCHOR']=str(args.diagnostic_title_anchor)
     if args.virtual_clock is not None:
-        if not (args.diagnostic_generated or args.readable_diagnostic) or not args.run:parser.error('--virtual-clock requires a diagnostic run')
+        if not (args.diagnostic_generated or args.readable_diagnostic or args.frozen_diagnostic) or not args.run:parser.error('--virtual-clock requires a diagnostic run')
         env['PLS_VIRTUAL_CLOCK']=args.virtual_clock
     env.pop('PLS_PC_DISMISS_POPUPS_UNTIL',None)
     env.pop('PLS_PC_DISMISS_UNLABELED_ONLY',None)
@@ -323,7 +323,10 @@ def main():
     if args.ui_trace:env['PLS_PC_UI_TRACE']='1'
     readable_root=args.readable_diagnostic.resolve(strict=True)if args.readable_diagnostic else None
     if readable_root and args.diagnostic_generated:parser.error('--readable-diagnostic and --diagnostic-generated are exclusive')
-    if readable_root:
+    if args.frozen_diagnostic:
+        diagnostic_source=ROOT/'src/game';diagnostic_manifest=dict(traps=[],canonical_report_sha256=None,frozen=True);diagnostic_folder=ROOT/'src/game'
+        portable_dir=ROOT/'src/kairo/common/generated'
+    elif readable_root:
         diagnostic_source=readable_root;diagnostic_manifest=validate_readable_diagnostic(readable_root);diagnostic_folder=readable_root/'game'
         portable_dir=readable_root/'include/generated'
     else:
@@ -331,7 +334,7 @@ def main():
         diagnostic_manifest=validate_diagnostic_manifest(diagnostic_source)if diagnostic_source else None
         diagnostic_folder=diagnostic_working_tree(diagnostic_source,diagnostic_manifest)if diagnostic_source else None
         portable_dir=ROOT/'src/kairo/common/generated'
-    build_name='pc-readable-diagnostic'if readable_root else 'pc-diagnostic'if diagnostic_folder else 'pc'
+    build_name='pc-frozen-diagnostic'if args.frozen_diagnostic else 'pc-readable-diagnostic'if readable_root else 'pc-diagnostic'if diagnostic_folder else 'pc'
     if args.configuration=='Release':build_name+='-release'
     folder=ROOT/'build'/build_name;folder.mkdir(parents=True,exist_ok=True)
     prefix_probe=showincludes_prefix(folder/'compiler-prefix-probe',env)
@@ -342,17 +345,19 @@ def main():
               [CMAKE,'--build',folder,'--parallel',str(build_jobs(args.jobs)),*(['--clean-first']if clean or args.fixtures_only else []),*([]if args.fixtures_only else ['--target','pc_game'])]]
     if args.fixtures_only:commands.append([CMAKE.parent/'ctest.exe','--test-dir',folder,'--output-on-failure'])
     if not args.fixtures_only:
-        attempts=ROOT/('build/c6b-readable-attempts.json'if readable_root else 'config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')
+        attempts=ROOT/('build/frozen-attempts.json'if args.frozen_diagnostic else 'build/c6b-readable-attempts.json'if readable_root else 'config/phase2-diagnostic-attempts.json'if diagnostic_folder else 'config/phase2-boot-attempts.json')
         history=json.loads(attempts.read_text(encoding='utf-8')) if attempts.exists() else dict(operation='generated-game-build-and-boot-attempts',attempts=[])
         attempt=dict(number=next_attempt_number(history,folder),configuration=args.configuration,apk_sha256=APK_SHA,generated_game_sources=source_list_record([dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p)) for p in sorted((ROOT/'src/game').rglob('*.cpp'))]),game_boot=False,title_verified=False,menu_verified=False,metrics_requested=args.metrics,metrics_recorded=False)
         attempt_folder=folder/'attempts'/str(attempt['number'])
         attempt_folder.mkdir(parents=True,exist_ok=False)
         if args.diagnostic_save_from_attempt is not None:
             # A readable run reuses a save from the canonical diagnostic history.
-            source_history=json.loads((ROOT/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if readable_root else history
+            import os
+            save_build=Path(os.environ.get('PLS_SAVE_SOURCE_BUILD',str(ROOT/'build/pc-diagnostic-release')))
+            source_history=json.loads((save_build.parents[1]/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if args.frozen_diagnostic else json.loads((ROOT/'config/phase2-diagnostic-attempts.json').read_text(encoding='utf-8'))if readable_root else history
             previous=next((row for row in source_history['attempts']if row['number']==args.diagnostic_save_from_attempt),None)
             if previous is None or previous.get('diagnostic_only')is not True or previous.get('apk_sha256')!=APK_SHA:raise ValueError('Save source must be an authenticated earlier own diagnostic attempt')
-            attempt['restored_private_preferences']=restore_private_preferences(folder,args.diagnostic_save_from_attempt,attempt['number'],ROOT/('build/pc-diagnostic-'+args.configuration.lower()).replace('-debug','')if False else(ROOT/'build/pc-diagnostic-release'if args.configuration=='Release'else ROOT/'build/pc-diagnostic')if readable_root else None)
+            attempt['restored_private_preferences']=restore_private_preferences(folder,args.diagnostic_save_from_attempt,attempt['number'],ROOT/('build/pc-diagnostic-'+args.configuration.lower()).replace('-debug','')if False else(ROOT/'build/pc-diagnostic-release'if args.configuration=='Release'else ROOT/'build/pc-diagnostic')if readable_root else save_build if args.frozen_diagnostic else None)
         attempt['scripted_select_frame']=args.diagnostic_select_frame
         attempt['diagnostic_dismiss_popups_until_frame']=args.diagnostic_dismiss_popups_until_frame
         attempt['diagnostic_unlabeled_popups_only']=args.diagnostic_unlabeled_popups_only
@@ -382,10 +387,11 @@ def main():
                                   steps=sum(1 for line in route_copy.read_text(encoding='utf-8').splitlines() if line.split('#',1)[0].strip()))
         if args.metrics:env['PLS_PC_CAPTURE_DIR']=str((attempt_folder/'frames').resolve())
         if diagnostic_folder:
-            attempt.update(diagnostic_only=True,diagnostic_manifest_sha256=digest(diagnostic_folder/'manifest.json'),trap_count=len(diagnostic_manifest['traps']),
+            attempt.update(diagnostic_only=True,diagnostic_manifest_sha256=None if args.frozen_diagnostic else digest(diagnostic_folder/'manifest.json'),trap_count=len(diagnostic_manifest['traps']),
                 canonical_report_sha256=diagnostic_manifest['canonical_report_sha256'],game_coverage_promoted=False)
             attempt['diagnostic_snapshot']=diagnostic_source.relative_to(ROOT).as_posix()
             if readable_root:attempt.update(readable_variant=True,normal_coverage_promoted=0)
+            if args.frozen_diagnostic:attempt.update(frozen_source=True)
             attempt['diagnostic_compiler_tree']=diagnostic_folder.relative_to(ROOT).as_posix()
             attempt['precompile_diagnostic']=diagnostic_manifest.get('precompile_diagnostic',False)
             env['PLS_DIAGNOSTIC_SAVE_ROOT']=str((attempt_folder/'preferences').resolve())
@@ -418,7 +424,7 @@ def main():
     if not args.fixtures_only:
         game_folder=diagnostic_folder or ROOT/'src/game'
         game_unit=next(iter(sorted(game_folder.glob('game_generated_type_*.cpp'))),game_folder/'game_generated.cpp')
-        if readable_root:game_unit=game_folder/'main.Main.cpp'  # readable units are one per class
+        if readable_root or args.frozen_diagnostic:game_unit=game_folder/'main.Main.cpp'  # readable units are one per class
         required['CMakeFiles/pc_game.dir/'+game_unit.relative_to(ROOT).as_posix()+'.obj']=ROOT/'src/kairo/common/semantic_runtime.hpp'
     dependency_audit=audit_ninja_dependencies(folder,required,env)
     policy_file.write_text(json.dumps(prefix_policy,indent=2)+'\n',encoding='utf8',newline='\n')
@@ -462,7 +468,7 @@ def main():
                 log=attempt_folder/name
                 attempt['logs'].append(dict(path=log.relative_to(ROOT).as_posix(),sha256=digest(log)))
             attempt.update(stage='diagnostic-gap-detected'if attempt.get('translation_gap_detected')else'process-executed',process_exit_code=exit_code,executable_sha256=digest(exe))
-            if readable_root:
+            if readable_root or args.frozen_diagnostic:
                 # C6b: per-method counters kept apart (coverage comparison only).
                 from diagnostic_execution import parse
                 methods,_,gaps=parse((attempt_folder/'game-run.stderr').read_text(encoding='utf-8',errors='replace'))

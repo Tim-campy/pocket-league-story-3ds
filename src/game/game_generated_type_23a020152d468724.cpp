@@ -7,9 +7,11 @@ void cs_23a020152d468724::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 pls::cs::String cs_23a020152d468724::ToString() {return cs_959efe4557f9babf(pls::cs::static_pointer_cast<cs_23a020152d468724>(shared_from_this()));}
 
-void cs_init_23a020152d468724(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.NotPermitException",[](){
+static PLS_NOINLINE void cs_init_23a020152d468724_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.NotPermitException",flag,[](){
 
 });}
+
+void cs_init_23a020152d468724(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_23a020152d468724_slow(flag);}
 
 // M:kairo.unity.util.NotPermitException.ToString
 pls::cs::String cs_959efe4557f9babf(pls::cs::Ref<cs_23a020152d468724> cs_this) { cs_init_23a020152d468724();

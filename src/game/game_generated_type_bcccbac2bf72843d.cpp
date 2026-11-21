@@ -3,9 +3,11 @@
 #include "generated/portable_generated_type_ead0ac0906403160.hpp"
 namespace pls::game {
 
-void cs_init_bcccbac2bf72843d(){static pls::cs::TypeInitState state;state.run("kairo.unity.m3d4.util3d.FastMath",[](){
+static PLS_NOINLINE void cs_init_bcccbac2bf72843d_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.m3d4.util3d.FastMath",flag,[](){
 
 });}
+
+void cs_init_bcccbac2bf72843d(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_bcccbac2bf72843d_slow(flag);}
 
 // M:kairo.unity.m3d4.util3d.FastMath.Cos(System.Single)
 float cs_82e90932e565633e(float v_a) { cs_init_bcccbac2bf72843d();

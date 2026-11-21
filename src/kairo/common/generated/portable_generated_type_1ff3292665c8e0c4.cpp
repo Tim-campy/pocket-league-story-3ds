@@ -13,9 +13,11 @@
 #include "portable_generated_type_67cd241ab51652f1_templates.hpp"
 namespace pls::generated {
 
-void cs_init_1ff3292665c8e0c4(){static pls::cs::TypeInitState state;state.run("kairo.unity.util.StringUtil",[](){
+static PLS_NOINLINE void cs_init_1ff3292665c8e0c4_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.util.StringUtil",flag,[](){
 
 });}
+
+void cs_init_1ff3292665c8e0c4(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_1ff3292665c8e0c4_slow(flag);}
 
 // M:kairo.unity.util.StringUtil.Escape(System.String)
 pls::cs::String cs_d7ec43a7abb0b748(pls::cs::String v_text) { cs_init_1ff3292665c8e0c4();

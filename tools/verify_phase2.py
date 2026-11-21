@@ -95,6 +95,7 @@ def main():
     if args.apk is None or args.original_managed is None:p.error('--apk and --original-managed required for full verification')
     if not args.apk.is_file() or sha(args.apk)!=EXPECTED:p.error('Expected authenticated local APK required')
     managed=args.original_managed.resolve(strict=True)
+    os.environ['PLS_ORIGINAL_MANAGED']=str(managed)  # tools/original_metadata.py (no translator artifact)
     if managed.is_relative_to(ROOT):p.error('Original API binaries must remain outside the port repository')
     commands=[
         ('repository-tests',['-m','unittest','discover','-s','tests/repository','-p','test_*.py']),

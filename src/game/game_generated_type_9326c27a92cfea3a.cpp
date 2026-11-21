@@ -46,12 +46,14 @@ static pls::cs::Ref<cs_e1ac8ca60ae0d404> cs_e22ec5a4a308544e_value{};
 
 static pls::cs::Array<std::int32_t> cs_19e8a97a219b74b4_value{};
 
-void cs_init_9326c27a92cfea3a(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e2d8ee0a92b1147c_value,visitor);pls::cs::trace_value(cs_e22ec5a4a308544e_value,visitor);pls::cs::trace_value(cs_19e8a97a219b74b4_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase",[](){
+static PLS_NOINLINE void cs_init_9326c27a92cfea3a_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_e2d8ee0a92b1147c_value,visitor);pls::cs::trace_value(cs_e22ec5a4a308544e_value,visitor);pls::cs::trace_value(cs_19e8a97a219b74b4_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.surface.SurfaceBase",flag,[](){
 cs_e22ec5a4a308544e_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.surface.SurfaceBase.onReceiveTouchEvent_tmp",[&](){return pls::source_allocations::completed("new_object","src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs:M:kairo.unity.surface.SurfaceBase.OnKeyDown(System.Int32,kairo.unity.ui.KeyEvent):7124",([&]() -> pls::cs::Ref<cs_e1ac8ca60ae0d404> { return cs_ef5589b812f9d157(); }()));});
 cs_19e8a97a219b74b4_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.surface.SurfaceBase.screenTouchToLocal_result",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs:M:kairo.unity.surface.SurfaceBase.OnKeyDown(System.Int32,kairo.unity.ui.KeyEvent):7324",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 cs_e2d8ee0a92b1147c_value = pls::cs::evaluate_type_initializer_field("F:kairo.unity.surface.SurfaceBase.localTouchToScreen_result",[&](){return pls::source_allocations::completed("new_array","src/KairoLibrary/kairo/unity/surface/SurfaceBase.cs:M:kairo.unity.surface.SurfaceBase.OnKeyDown(System.Int32,kairo.unity.ui.KeyEvent):7388",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));});
 
 });}
+
+void cs_init_9326c27a92cfea3a(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_9326c27a92cfea3a_slow(flag);}
 
 pls::cs::Array<std::int32_t>& cs_e2d8ee0a92b1147c(){cs_init_9326c27a92cfea3a();return cs_e2d8ee0a92b1147c_value;}
 

@@ -7,9 +7,11 @@ void cs_3b41638e424b9ee0::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 std::int32_t cs_3b41638e424b9ee0::cs_virtual_bb7347310506b971() {return cs_67338973d6c3b7c6(pls::cs::static_pointer_cast<cs_3b41638e424b9ee0>(shared_from_this()));}
 
-void cs_init_3b41638e424b9ee0(){static pls::cs::TypeInitState state;state.run("java.io.ByteArrayInputStream",[](){
+static PLS_NOINLINE void cs_init_3b41638e424b9ee0_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("java.io.ByteArrayInputStream",flag,[](){
 
 });}
+
+void cs_init_3b41638e424b9ee0(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_3b41638e424b9ee0_slow(flag);}
 
 // M:java.io.ByteArrayInputStream.#ctor(System.Byte[])
 pls::cs::Ref<cs_3b41638e424b9ee0> cs_c3a84083a67ee263(pls::cs::Array<std::uint8_t> v_data) { cs_init_3b41638e424b9ee0();

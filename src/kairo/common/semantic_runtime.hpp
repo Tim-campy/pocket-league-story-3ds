@@ -574,16 +574,36 @@ public:
         return s.values()[static_cast<std::size_t>(index)];
     }
     T& operator[](std::int32_t index)const{return at(index);}
+    // The covariant-view paths are rare and large: kept out of line so the
+    // common element access inlines into the caller (performance, 2026-11-21).
     T get_Item(std::int32_t index)const{
         if(!covariance_view())return at(index);
-        if constexpr(is_shared_ref<T>::value){auto value=covariance_view()->reference_item(index);auto result=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
-        else throw_array_type_mismatch();
+        return covariant_get(index);
     }
     void set_Item(std::int32_t index,T value)const{
         if(!covariance_view()){at(index)=std::move(value);return;}
+        covariant_set(index,std::move(value));
+    }
+private:
+#if defined(_MSC_VER)
+    __declspec(noinline)
+#else
+    __attribute__((noinline))
+#endif
+    T covariant_get(std::int32_t index)const{
+        if constexpr(is_shared_ref<T>::value){auto value=covariance_view()->reference_item(index);auto result=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);if(value&&!result)throw InvalidCastException();return result;}
+        else throw_array_type_mismatch();
+    }
+#if defined(_MSC_VER)
+    __declspec(noinline)
+#else
+    __attribute__((noinline))
+#endif
+    void covariant_set(std::int32_t index,T value)const{
         if constexpr(is_shared_ref<T>::value)covariance_view()->reference_item(index,pls::cs::dynamic_pointer_cast<Object>(value));
         else throw_array_type_mismatch();
     }
+public:
     Array clone()const {
         if(covariance_view())return from_object(covariance_view()->clone_storage());
         Array result=make(length());for(std::int32_t i=0;i<length();++i)result.at(i)=at(i);return result;

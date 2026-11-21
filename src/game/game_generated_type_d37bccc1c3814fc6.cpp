@@ -13,9 +13,11 @@ void cs_d37bccc1c3814fc6::trace_edges(const pls::cs::EdgeVisitor&visitor)const {
 
 static pls::cs::Ref<cs_d37bccc1c3814fc6> cs_fff40af3d4f61c60_value{};
 
-void cs_init_d37bccc1c3814fc6(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fff40af3d4f61c60_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel",[](){
+static PLS_NOINLINE void cs_init_d37bccc1c3814fc6_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_fff40af3d4f61c60_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.panel.FepPanel",flag,[](){
 
 });}
+
+void cs_init_d37bccc1c3814fc6(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_d37bccc1c3814fc6_slow(flag);}
 
 pls::cs::Ref<cs_d37bccc1c3814fc6>& cs_fff40af3d4f61c60(){cs_init_d37bccc1c3814fc6();return cs_fff40af3d4f61c60_value;}
 

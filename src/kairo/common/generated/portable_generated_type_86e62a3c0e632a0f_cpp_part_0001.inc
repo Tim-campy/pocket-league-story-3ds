@@ -2,6 +2,8 @@
 
 });}
 
+void cs_init_86e62a3c0e632a0f(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_86e62a3c0e632a0f_slow(flag);}
+
 pls::cs::Array<pls::cs::Array<std::uint16_t>>& cs_a5cd9f1fd4c2c1ad(){cs_init_86e62a3c0e632a0f();return cs_a5cd9f1fd4c2c1ad_value;}
 
 // M:java.lang.JString.GetSJIS(System.Byte[],System.Int32,System.Int32)

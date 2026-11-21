@@ -3,7 +3,7 @@ from pathlib import Path
 import unittest
 
 ROOT=Path(__file__).resolve().parents[2]
-spec=importlib.util.spec_from_file_location('report_paths',ROOT/'translator/report_paths.py')
+spec=importlib.util.spec_from_file_location('report_paths',ROOT/'tools/report_paths.py')
 paths=importlib.util.module_from_spec(spec);spec.loader.exec_module(paths)
 
 class SourcePathReceipts(unittest.TestCase):

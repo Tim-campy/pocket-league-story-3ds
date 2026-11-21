@@ -9,9 +9,11 @@ void cs_90cdc908fbacdc4d::cs_virtual_a3ffc1615f910b95(pls::cs::Ref<pls::kairo::C
 
 pls::cs::String cs_90cdc908fbacdc4d::cs_virtual_75152158b8b3764c(pls::cs::Ref<pls::kairo::Canvas> v_canvas) {return cs_2a567fdcd523eb57(pls::cs::static_pointer_cast<cs_90cdc908fbacdc4d>(shared_from_this()),v_canvas);}
 
-void cs_init_90cdc908fbacdc4d(){static pls::cs::TypeInitState state;state.run("system.panel.InputPanel",[](){
+static PLS_NOINLINE void cs_init_90cdc908fbacdc4d_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("system.panel.InputPanel",flag,[](){
 
 });}
+
+void cs_init_90cdc908fbacdc4d(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_90cdc908fbacdc4d_slow(flag);}
 
 // M:system.panel.InputPanel.#ctor
 pls::cs::Ref<cs_90cdc908fbacdc4d> cs_8a97d90a17275f58() { cs_init_90cdc908fbacdc4d();

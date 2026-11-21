@@ -12,9 +12,11 @@ void cs_4368d694d01424b0::cs_virtual_2186b93ea03d07c2() {cs_2186b93ea03d07c2(pls
 
 static pls::cs::Ref<cs_4368d694d01424b0> cs_af3cecaddfff33af_value{};
 
-void cs_init_4368d694d01424b0(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_af3cecaddfff33af_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.system.notification.ui.NotifyManager",[](){
+static PLS_NOINLINE void cs_init_4368d694d01424b0_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_af3cecaddfff33af_value,visitor);});static pls::cs::TypeInitState state;state.run("kairo.unity.system.notification.ui.NotifyManager",flag,[](){
 
 });}
+
+void cs_init_4368d694d01424b0(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_4368d694d01424b0_slow(flag);}
 
 pls::cs::Ref<cs_4368d694d01424b0>& cs_af3cecaddfff33af(){cs_init_4368d694d01424b0();return cs_af3cecaddfff33af_value;}
 

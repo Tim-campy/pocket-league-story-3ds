@@ -8,9 +8,11 @@ pls::cs::String cs_7f70540c4f85d74f::ToString() {return cs_9eab9ded735366ec(pls:
 
 std::int32_t cs_7f70540c4f85d74f::GetHashCode() {return cs_6853b87e6d3191df(pls::cs::static_pointer_cast<cs_7f70540c4f85d74f>(shared_from_this()));}
 
-void cs_init_7f70540c4f85d74f(){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.AccessCount",[](){
+static PLS_NOINLINE void cs_init_7f70540c4f85d74f_slow(pls::cs::TypeInitFlag& flag){static pls::cs::TypeInitState state;state.run("kairo.unity.system.KairoBase.AccessCount",flag,[](){
 
 });}
+
+void cs_init_7f70540c4f85d74f(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_7f70540c4f85d74f_slow(flag);}
 
 // M:kairo.unity.system.KairoBase.AccessCount.#ctor(System.String,System.Int64)
 pls::cs::Ref<cs_7f70540c4f85d74f> cs_b544d4afdbad19e4(pls::cs::String v_name,std::int64_t v_value) { cs_init_7f70540c4f85d74f();

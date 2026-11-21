@@ -98,10 +98,12 @@ bool cs_3ee77977aa791047::Update() {return cs_b95026f36cfa9750(pls::cs::static_p
 
 static pls::cs::Array<pls::cs::Array<std::int32_t>> cs_4ec51a95e4fbbaef_value{};
 
-void cs_init_3ee77977aa791047(){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ec51a95e4fbbaef_value,visitor);});static pls::cs::TypeInitState state;state.run("form.BootForm",[](){
+static PLS_NOINLINE void cs_init_3ee77977aa791047_slow(pls::cs::TypeInitFlag& flag){static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor){pls::cs::trace_value(cs_4ec51a95e4fbbaef_value,visitor);});static pls::cs::TypeInitState state;state.run("form.BootForm",flag,[](){
 cs_4ec51a95e4fbbaef_value = pls::cs::evaluate_type_initializer_field("F:form.BootForm.softLabels_",[&](){return pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1174",([&](){auto cs_initial_array_209=pls::cs::Array<pls::cs::Array<std::int32_t>>::make(6);cs_initial_array_209.at(0)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1194",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(1)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1209",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(2)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1224",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(3)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1239",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(4)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1254",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));cs_initial_array_209.at(5)=pls::source_allocations::completed("new_array","src/Assembly-CSharp/form/BootForm.cs:M:form.BootForm.#ctor:1269",pls::cs::Array<std::int32_t>::make(pls::cs::cast_integral<std::int32_t>(std::uint64_t(0x2ull))));return cs_initial_array_209;}()));});
 
 });}
+
+void cs_init_3ee77977aa791047(){static pls::cs::TypeInitFlag flag;if(flag.ready())return;cs_init_3ee77977aa791047_slow(flag);}
 
 pls::cs::Array<pls::cs::Array<std::int32_t>>& cs_4ec51a95e4fbbaef(){cs_init_3ee77977aa791047();return cs_4ec51a95e4fbbaef_value;}
 

@@ -15,7 +15,7 @@
   },
   "native_executable": {
     "path": "build/pc-metrics-fixtures/pc-metrics-fixtures.exe",
-    "sha256": "e9f46097f69d32df6610486b0ed74b357257e04597579c32a7c8b4cbd3c215dc"
+    "sha256": "d2612ffb28abc01d4eb99acd29acea95cf15c55bece187970f13aeb13522b603"
   },
   "game_executed": false,
   "production_methods_promoted": 0

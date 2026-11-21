@@ -1,6 +1,6 @@
 #pragma once
 #include "semantic_runtime.hpp"
-#include "numeric_types.hpp"
+#include "../../runtime/numeric_types.hpp"
 
 namespace pls::cs {
 template<class T,class=void>struct has_equal_operator : std::false_type {};
@@ -15,6 +15,7 @@ template<class T>bool default_equal(const T&a,const T&b) {
         return left->Equals(right);
     }
     else if constexpr(std::is_floating_point_v<T>) return a==b || (std::isnan(a)&&std::isnan(b));
+    else if constexpr(std::is_same_v<T,Single>||std::is_same_v<T,Double>) return a.value==b.value || (std::isnan(a.value)&&std::isnan(b.value));
     else if constexpr(has_equal_operator<T>::value) return a==b;
     else throw NotSupportedException("Value equality requires generated field comparison");
 }
@@ -51,6 +52,7 @@ template<class T>Ref<Object> box(T value);
 inline Ref<Object> box(Int32 value);
 inline Ref<Object> box(Single value);
 inline Ref<Object> box(FloatEval value);
+inline Ref<Object> box(Double value);
 template<class T>Ref<Object> box(T value) {
     if constexpr(is_shared_ref<T>::value) {
         auto object=pls::cs::dynamic_pointer_cast<Object>(value);
@@ -62,8 +64,14 @@ template<class T>Ref<Object> box(T value) {
 inline Ref<Object> box(Int32 value) { return box(value.value); }
 inline Ref<Object> box(Single value) { return box(value.value); }
 inline Ref<Object> box(FloatEval value) { return box(static_cast<float>(value)); }
+inline Ref<Object> box(Double value) { return box(value.value); }
 inline Ref<Object>box(std::nullptr_t){return nullptr;}
 template<class T>T unbox(const Ref<Object>&value) {
+    // Readable numeric types unbox from the CLR primitive they stand for.
+    if constexpr(std::is_same_v<T,Single>)return Single(unbox<float>(value));
+    else if constexpr(std::is_same_v<T,Double>)return Double(unbox<double>(value));
+    else if constexpr(std::is_same_v<T,Int32>)return Int32(unbox<std::int32_t>(value));
+    else
     if constexpr(is_shared_ref<T>::value) {
         auto typed=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);
         if(value&&!typed)throw InvalidCastException();return typed;

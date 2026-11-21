@@ -7,11 +7,11 @@
     "tests/kairo/numeric_types_fixtures.cpp": "6af26ca3eb602636a3fa14255f9707c9fcb433fad1e542a87c12b4af0cfddbde",
     "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
     "src/kairo/common/managed_exceptions.cpp": "12746a35057e39d6f74310364d19f770720ba86b30cf0e40ccc29c5cd77a1484",
-    "src/kairo/common/numeric_types.hpp": "7fb57f189ffd47de1595043d77074c80877a7d68e2e72cae6a7073f69eb88e18"
+    "src/runtime/numeric_types.hpp": "9d3a951870b93f235b0dfac543d6622bc91427b1d8f4dce32686438106968ea8"
   },
   "native_executable": {
     "path": "build/readable-numeric-tests/numeric-fixtures.exe",
-    "sha256": "ceddc5631f034dee124898cd5b1502b210f0859756dee2c6bc8e22eacad27f82"
+    "sha256": "4c084d40e9560f666bcdf40cb932e1b150dd32c5f49391daa088db236307ac60"
   },
   "game_assets_used": false,
   "original_binaries_executed": false

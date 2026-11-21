@@ -32,10 +32,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+    "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
     "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
     "readable_source_sha256": [
-      "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
+      "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
       "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
     ],
     "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
@@ -43,7 +43,7 @@
   "inputs": {
     "translator/test_source_allocations.py": "a032e2fb87ed1c26612fea084da1302d98282218096acbf8cdeb6f350207f32b",
     "tests/translator/SourceAllocationFixtures.cs": "ff3918db366044ae2139ace9216a2f0b1f76154a9c770588aa27c2aba2e1e2e6",
-    "translator/Translator.cs": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+    "translator/Translator.cs": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
     "src/kairo/common/source_allocation_probe.hpp": "ae5dde3f8493cd82b3593e688a6cf160f4746766ef8e259ba5e81f226f1f3f83",
     "src/main/allocation_probe.cpp": "4d18ccc9a0cbe2bb728c362131d82496bf90d8a8c9da3e4c81c31a94da6b7678"
   }

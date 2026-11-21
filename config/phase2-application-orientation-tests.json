@@ -613,12 +613,12 @@
     "tools/test_input.py": "74aad60b4fb5f09cd70bbcd44601bf411cfbeddfcc819a5412fd0227740d4326",
     "tools/native_api_proof.py": "b7961dd73c511df0f414efdd5d97e1ee0b38e5b03c1c480ec1f9a5e1ab8439e5",
     "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
-    "src/kairo/common/semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b",
+    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
     "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f"
   },
   "native_executable": {
     "path": "build/application-orientation-tests/application-orientation-fixtures.exe",
-    "sha256": "a0e8d688271b79573c5975d29f7558fd0389fca9d312baf5388adb7a8a9bdb95"
+    "sha256": "56dc633379f92ddabcd264cb06b42c7acc0ec641bda70dc8449ebda59dac8d3d"
   },
   "historical_core_sha256": "7f16171cf5f87ca1e4c229727526d2fbc786079fc0c960f36197013ea0d986e1",
   "external_unity_api_metadata": {

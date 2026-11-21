@@ -201,10 +201,10 @@
     "src/kairo/api/touch_value_accessor.hpp": "a2faf966b9d58f74e694563ff29b68b19b73f036feef23377fcb6bbb2a9ac68a",
     "src/kairo/api/canvas.hpp": "0ba9ecf96ad5fd1f81e13b80df15bf984b55e42589b56aae9ef0b32f65229490",
     "src/kairo/api/input.hpp": "0ad98903cf66860b1f4faed60e5f4c57dcf4423fa7360a4bf41b2654eaa68669",
-    "src/kairo/api/graphics.hpp": "96e9ff7056dc7bc9d554b351c8eaf903b51a6050b9c9b5a0af8f335c565e60d7",
+    "src/kairo/api/graphics.hpp": "5ed9399e2b361a75da5b2f36c62cd6dae54f57c5169e970c06cc4367447fd11b",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
-    "src/kairo/common/semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b",
+    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
     "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -245,7 +245,7 @@
   },
   "native_executable": {
     "path": "build/surface-bridge-tests/surface-bridge-fixtures.exe",
-    "sha256": "949ef8c1325064a54b29ed97fbe362b9cfb76a4d02e87815fcb5e8bdd17b9cd1"
+    "sha256": "ecfa463b8d40af33975f4e993f372708f8235126d32d933e2a968751cbbd4655"
   },
   "verified_boundary_ids": [],
   "ordering": {

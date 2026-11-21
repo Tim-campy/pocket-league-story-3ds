@@ -12,7 +12,7 @@
 #include <limits>
 #include <stdexcept>
 #include <vector>
-#include "../../src/kairo/common/numeric_types.hpp"
+#include "../../src/runtime/numeric_types.hpp"
 
 namespace pls::cs {
 void throw_divide_by_zero() { throw std::runtime_error("DivideByZeroException"); }

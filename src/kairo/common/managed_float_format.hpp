@@ -1,4 +1,5 @@
 #pragma once
+#include "../../runtime/numeric_types.hpp"
 #include "semantic_runtime.hpp"
 namespace pls::cs {
 // Selected managed numeric culture, configured before workers, like the
@@ -11,4 +12,8 @@ struct FloatingNumberFormat {
 inline FloatingNumberFormat floating_number_format;
 String floating_to_string(float,const FloatingNumberFormat& =floating_number_format);
 String floating_to_string(double,const FloatingNumberFormat& =floating_number_format);
+// Readable numeric types: a float value formats as float (a FloatEval narrows first).
+inline String floating_to_string(Single value,const FloatingNumberFormat& format=floating_number_format){return floating_to_string(value.value,format);}
+inline String floating_to_string(FloatEval value,const FloatingNumberFormat& format=floating_number_format){return floating_to_string(static_cast<float>(value),format);}
+inline String floating_to_string(Double value,const FloatingNumberFormat& format=floating_number_format){return floating_to_string(value.value,format);}
 }

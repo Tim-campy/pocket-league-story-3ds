@@ -14,16 +14,16 @@
       "producer": {
         "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
         "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-        "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+        "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
         "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
         "readable_source_sha256": [
-          "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
+          "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
           "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
         ],
         "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
       },
-      "receipt_path": "build\\fp-emission-regression\\1795288234548714100\\binary32\\receipt.json",
-      "receipt_sha256": "a5762ac4292cd002315de35c706941d9221766d963d1097a56824227e86e4a77"
+      "receipt_path": "build\\fp-emission-regression\\1795299700728089300\\binary32\\receipt.json",
+      "receipt_sha256": "7e9db440fe7913cbf9eade5e7905e543ca7fe7de2dfca27d9fb75c1beaac88ca"
     },
     {
       "model": "mono-arm-vfp",
@@ -33,16 +33,16 @@
       "producer": {
         "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
         "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-        "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+        "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
         "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
         "readable_source_sha256": [
-          "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
+          "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
           "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
         ],
         "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
       },
-      "receipt_path": "build\\fp-emission-regression\\1795288234548714100\\mono-arm-vfp\\receipt.json",
-      "receipt_sha256": "69913ec8ac473298f5aef5610fba1831243735e6e1a9b70c9cdade98c152c366"
+      "receipt_path": "build\\fp-emission-regression\\1795299700728089300\\mono-arm-vfp\\receipt.json",
+      "receipt_sha256": "70c346fc02c42d694206bb022bdc0f4ff8bbd791ac0c32be8cfb06bea16bad15"
     },
     {
       "model": "binary32",
@@ -52,16 +52,16 @@
       "producer": {
         "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
         "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-        "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+        "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
         "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
         "readable_source_sha256": [
-          "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
+          "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
           "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
         ],
         "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
       },
-      "receipt_path": "build\\fp-emission-regression\\1795288234548714100\\binary32-readable\\receipt.json",
-      "receipt_sha256": "ff425df058d59d97550d385b6e4764716de9a5916a6fe1a3d2b6a9480fb987f4"
+      "receipt_path": "build\\fp-emission-regression\\1795299700728089300\\binary32-readable\\receipt.json",
+      "receipt_sha256": "e3ebfa4951c0c3da911c172ec83b512cc8b6efbd08c12b390caf42c56a42f521"
     },
     {
       "model": "mono-arm-vfp",
@@ -71,21 +71,21 @@
       "producer": {
         "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
         "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-        "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+        "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
         "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
         "readable_source_sha256": [
-          "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
+          "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
           "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
         ],
         "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
       },
-      "receipt_path": "build\\fp-emission-regression\\1795288234548714100\\mono-arm-vfp-readable\\receipt.json",
-      "receipt_sha256": "ed38ef597afbf0dd6b1f045e256c725aa610e4508d62aeb810cd3f3ddc0c714e"
+      "receipt_path": "build\\fp-emission-regression\\1795299700728089300\\mono-arm-vfp-readable\\receipt.json",
+      "receipt_sha256": "60eda880b75ad95bd6ce3bba9659b8173d6639f6c312d58ac54b7220147a8944"
     }
   ],
   "inputs": {
     "tools/test_arm_float_model.py": "cb6029f52cddfa00b2925a3173514ac80489ca4c371e856111676baa2ca79e6c",
-    "tools/fp-discriminants/test_emission.py": "444df726398f5816186808fa34d168e597a18732ff71cecbea49cbf9a3b7ae27",
+    "tools/fp-discriminants/test_emission.py": "bd8bf74971f624b4cbcff5fdd7ca6519b2ea99a94f5f05e6972471e4bf7b156d",
     "tools/fp-discriminants/FloatDiscriminants.cs": "466039c59972c6a148eeb75716faf9341914f25c7fef811550b875b070b19c4e",
     "tests/translator/arm_float_expected.json": "d33b40ceb05c3e7290e4243d33e279483582866752f24bfbad6a7707d47afa34"
   }

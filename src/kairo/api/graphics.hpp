@@ -206,7 +206,7 @@ public:
     void PopMatrix();void ClearLocalMatrix(){matrix_index_=-1;update_screen();}
     bool CheckLocalMatrix()const{return matrix_index_>=0||local_coordinate_count_>0;}
     void SetFlipMode(std::int32_t value){flip_mode_=value;}
-    void BeginLocalCoordination(float&,float&);void BeginLocalCoordination(std::int32_t&,std::int32_t&);void BeginLocalCoordination(){std::int32_t x=0,y=0;BeginLocalCoordination(x,y);}
+    void BeginLocalCoordination(float&,float&);void BeginLocalCoordination(cs::Single& x,cs::Single& y){BeginLocalCoordination(x.value,y.value);}void BeginLocalCoordination(std::int32_t&,std::int32_t&);void BeginLocalCoordination(){std::int32_t x=0,y=0;BeginLocalCoordination(x,y);}
     void EndLocalCoordination();
     cs::Array<float> GetClipValues()const{return cs::Array<float>::from({clip_[0],clip_[1],clip_[2],clip_[3]});}
     cs::Array<std::int32_t> GetClip(){for(std::int32_t i=0;i<4;++i)clip_result_.at(i)=cs::conv_i32(clip_[i]);return clip_result_;}

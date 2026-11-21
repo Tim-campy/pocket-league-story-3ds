@@ -13,8 +13,9 @@ template<class T>constexpr std::uint32_t array_type_code(){
     if constexpr(std::is_same_v<T,std::uint32_t>)return 8;
     if constexpr(std::is_same_v<T,std::int64_t>)return 9;
     if constexpr(std::is_same_v<T,std::uint64_t>)return 10;
-    if constexpr(std::is_same_v<T,float>)return 11;
-    if constexpr(std::is_same_v<T,double>)return 12;
+    if constexpr(std::is_same_v<T,float>||std::is_same_v<T,cs::Single>)return 11;
+    if constexpr(std::is_same_v<T,double>||std::is_same_v<T,cs::Double>)return 12;
+    if constexpr(std::is_same_v<T,cs::Int32>)return 7;
     return 0;
 }
 template<class T>cs::Array<T> baked_array(const std::string& id){

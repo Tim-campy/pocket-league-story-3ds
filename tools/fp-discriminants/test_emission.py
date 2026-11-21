@@ -66,7 +66,9 @@ def main():
     compiler,env=msvc_environment();exe=folder/'fixture.exe'
     sources=[host_path]+[generated/x['file'] for x in report['generated_chunks'] if x['file'].endswith('.cpp')]
     sources += [ROOT/'src/kairo/common/semantic_runtime.cpp',ROOT/'src/kairo/common/managed_exceptions.cpp']
-    command=[str(compiler),'/nologo','/std:c++17','/EHsc','/O2','/fp:strict','/utf-8','/I'+str(generated),'/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/Fe:'+str(exe)]+list(map(str,sources))
+    import os
+    extra=[('/D'+d) for d in os.environ.get('PLS_EXTRA_CXX_DEFINES','').split()]  # rule-isolation demonstration
+    command=[str(compiler),'/nologo','/std:c++17','/EHsc','/O2','/fp:strict','/utf-8']+extra+['/I'+str(generated),'/I'+str(ROOT/'src/kairo/common'),'/I'+str(ROOT/'src/kairo/api'),'/Fe:'+str(exe)]+list(map(str,sources))
     result=subprocess.run(command,cwd=folder,env=env,capture_output=True)
     (folder/'compile.log').write_bytes(result.stdout+result.stderr);result.check_returncode()
     output=subprocess.check_output([exe],cwd=folder,env=env,text=True)

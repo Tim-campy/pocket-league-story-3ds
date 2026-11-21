@@ -60,10 +60,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.23377290007192641,
-    "native-compile": 36.2163026999915,
-    "managed-output": 0.7415567999705672,
-    "native-output": 0.2742544000502676
+    "csharp-compile": 0.23987120005767792,
+    "native-compile": 38.902147000073455,
+    "managed-output": 0.7122296000597998,
+    "native-output": 0.20087539998348802
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -117,11 +117,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/vector-value-differential/Harness.exe",
-    "sha256": "e916e993f17b5860f15ffd2f131e3d8faf75dfb327796af099245cfa03a0a44d"
+    "sha256": "3273c719332209d4600a48038fb4f91ac5424bbd769ed4cc2b262e76da360f06"
   },
   "source_oracle_executable": {
     "path": "build/translator/vector-value-differential/Harness-managed.exe",
-    "sha256": "298946b5f9c09560ff206fdf8ef7c55a386a31ca2bef8bf25600ad8da4bf8d75"
+    "sha256": "f49f6caf3562fae79e9fc0c96157e65e8ebdb7eb8ce9639be71902d462a7538c"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -235,7 +235,7 @@
     },
     {
       "path": "src/kairo/api/graphics.hpp",
-      "sha256": "96e9ff7056dc7bc9d554b351c8eaf903b51a6050b9c9b5a0af8f335c565e60d7"
+      "sha256": "5ed9399e2b361a75da5b2f36c62cd6dae54f57c5169e970c06cc4367447fd11b"
     },
     {
       "path": "src/kairo/api/input.hpp",
@@ -311,7 +311,7 @@
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
-      "sha256": "0f741139384a0d4e651d1fa6684b2b7717d0399536cf2e440ee46808140154cf"
+      "sha256": "c9f5f321b717f651356a56382df705a53013444e63bfe66235a3882810df0767"
     },
     {
       "path": "src/kairo/common/canvas_back.hpp",
@@ -575,11 +575,11 @@
     },
     {
       "path": "src/kairo/common/managed_collections.hpp",
-      "sha256": "c7497191407203e01c2ffea7db4af6c3ba72fe4fd3f2ac2de6acbaad53b69b9a"
+      "sha256": "4c11723185f1d586914e10cbc3df2dfa7bb37f671a34ff75a43b91553b2c1ba0"
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "f09a465a3cab7cca3b1b47ad8ce946f740949ae969dafa8c791a912c71120f59"
+      "sha256": "04a28923f0029f49fb6971b3a284ff337f22381769bd4c03e89e3a24a9ff36c1"
     },
     {
       "path": "src/kairo/common/managed_encoding.cpp",
@@ -603,7 +603,7 @@
     },
     {
       "path": "src/kairo/common/managed_float_format.hpp",
-      "sha256": "4caace3870a09bcadb2e79cefb19f43974ee1cce1c84753b4fa8119f25efd5b6"
+      "sha256": "4b68ffb43ebdc76a69112ec41550c98744f0a140e73eb93c5248abecb6f13341"
     },
     {
       "path": "src/kairo/common/managed_guid_uri.hpp",
@@ -690,10 +690,6 @@
       "sha256": "237593f45c5bc1b201793228f4615d4fa493bdedded05eae30bc6e107ff2305e"
     },
     {
-      "path": "src/kairo/common/numeric_types.hpp",
-      "sha256": "7fb57f189ffd47de1595043d77074c80877a7d68e2e72cae6a7073f69eb88e18"
-    },
-    {
       "path": "src/kairo/common/platform_condition.hpp",
       "sha256": "2f3c181927f6d93168e8d777e71786bb1878d2a518218052654864d9bbf9e59e"
     },
@@ -715,7 +711,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b"
+      "sha256": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -758,6 +754,10 @@
       "sha256": "04451445e205ffd2f9a8ff3d5977e72446d7f416908dc7861ea0e67175295787"
     },
     {
+      "path": "src/runtime/numeric_types.hpp",
+      "sha256": "9d3a951870b93f235b0dfac543d6622bc91427b1d8f4dce32686438106968ea8"
+    },
+    {
       "path": "src/runtime/tracing_gc.cpp",
       "sha256": "2944d3884bc9f95513746e1cfb8a8b4ebd4073a2160b9c3c0d906edfcd28c767"
     },
@@ -785,10 +785,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "747b9fb85ee83bcc7fbd59d20509dc7b01a18ab5315132b4c0291e390129b24b",
+    "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
     "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
     "readable_source_sha256": [
-      "927d28b2758475c787996ee794465dadcccafada05cdcbab074148a158bd9674",
+      "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
       "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
     ],
     "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"

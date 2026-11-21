@@ -7,6 +7,7 @@ template<class T>std::uint32_t dictionary_hash(const T&value){
     if constexpr(is_shared_ref<T>::value){if(!value)throw ArgumentNullException();hash=box(value)->GetHashCode();}
     else if constexpr(has_managed_object<T>::value){auto object=value.as_object();if(!object)throw ArgumentNullException();hash=object->GetHashCode();}
     else if constexpr(std::is_integral_v<T>||std::is_enum_v<T>)hash=Box<T>(value).GetHashCode();
+    else if constexpr(std::is_same_v<T,Single>||std::is_same_v<T,Double>||std::is_same_v<T,Int32>)return dictionary_hash(value.value);
     else if constexpr(std::is_same_v<T,float>){auto bits=value==0?std::uint32_t(0):std::isnan(value)?std::uint32_t(0x7FC00000):bit_copy<std::uint32_t>(value);hash=cast_integral<std::int32_t>(bits);}
     else if constexpr(std::is_same_v<T,double>){auto bits=value==0?std::uint64_t(0):std::isnan(value)?std::uint64_t(0x7FF8000000000000):bit_copy<std::uint64_t>(value);hash=cast_integral<std::int32_t>(static_cast<std::uint32_t>(bits^(bits>>32)));}
     else throw NotSupportedException("Dictionary key requires generated equality/hash implementation");

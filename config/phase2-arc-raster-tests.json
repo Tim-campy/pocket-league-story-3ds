@@ -45,7 +45,7 @@
   "run_exit_code": 0,
   "native_executable": {
     "path": "build/arc-raster-tests/arc-raster-fixtures.exe",
-    "sha256": "0738acbbba75c22ad9080f4f0089a53431fe924d70bc13352fa15b514d1e1e33"
+    "sha256": "685784cc8f473f2f3056847a19186795220a7897f03d910c39f450c8f31eb5c3"
   },
   "stdout_sha256": "441e287cccb0377f85df7cdb7128d83c8e28526f1ac020202183dfdd5b655ab2",
   "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",

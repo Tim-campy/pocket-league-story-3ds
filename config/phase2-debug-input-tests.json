@@ -206,11 +206,11 @@
     "src/kairo/platform/sdl/backend.hpp": "2b8ebe0fd1b45e7d042eb71d682075059ce13d4e1dfa29ab33db144683670959",
     "src/kairo/api/platform.hpp": "83284432e1edd67e76cb450f371dc57f4fc2fa1ebcff3ae33c54c2a82a802c3f",
     "src/kairo/api/system.hpp": "bb37f69f8698583ce232749451d26d84137ff359f9954bd20083d819e98aedcd",
-    "src/kairo/common/semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b"
+    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8"
   },
   "native_executable": {
     "path": "build/debug-input-tests/debug-input-fixtures.exe",
-    "sha256": "86d7775d6f9ea21fcf14d240727593805a7a089041d1f0f80c00804b5d6399da"
+    "sha256": "f37b8dbe8371b407b8be517f5abfcf5e2ff6ff6acce79f595465cef4affff6d2"
   },
   "external_api_metadata": {
     "sha256": "7cc901371cc77e103d00b5845e8285f85fbdf36bb47ccf3d824f94c4ead32421",

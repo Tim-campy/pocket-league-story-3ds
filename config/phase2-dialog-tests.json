@@ -17,7 +17,7 @@
     "src/kairo/common/port_dialog.hpp": "80a731351b0786b56cbef086e4cb2fdf0d721f1dcf7a364bd965e2438462bd2d",
     "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
     "src/kairo/platform/sdl/dialog.hpp": "50ed8ff49fe1b27b83dfdf2462274cf283ed85dec0e1b6c4c5f2fe8a76d9c189",
-    "src/kairo/common/semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b",
+    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
     "tools/test_dialog.py": "acab463276e0b937ab263acf643c7ca3c1d95e32d3446973eaf094cb6cd81980",
     "tools/test_input.py": "74aad60b4fb5f09cd70bbcd44601bf411cfbeddfcc819a5412fd0227740d4326"
   },
@@ -29,7 +29,7 @@
   ],
   "native_executable": {
     "path": "build/dialog-tests/dialog-fixtures.exe",
-    "sha256": "1112cc0875ea41be6f36074516a5a6684d63e74fe5fed233ac3e8d21e526b6c5"
+    "sha256": "a2823a88170d4d26c4151f63f4632518dd9b192fc4d7e6df3b7169a7a30cfb19"
   },
   "verified_boundary_ids": [],
   "intended_leaf": "M:kairo.unity.native.KairoPlugin.ShowDialog(System.Int32,System.String,System.String,System.String)",

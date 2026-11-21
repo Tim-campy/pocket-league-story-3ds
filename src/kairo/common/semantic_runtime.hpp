@@ -433,6 +433,10 @@ inline Ref<ArrayBase>array_cast(const Ref<Object>&value){auto result=pls::cs::dy
 void array_copy(const Ref<ArrayBase>&source,std::int32_t source_index,const Ref<ArrayBase>&dest,std::int32_t dest_index,std::int32_t count);
 
 template<class T>class Array;
+struct Int32;struct Single;struct Double;
+// float[] crossing between the readable numeric types and plain float/double
+// (native platform APIs): an element-wise copy (none of those APIs aliases).
+template<class T,class U>inline constexpr bool float_array_pair=(std::is_same_v<T,Single>&&std::is_same_v<U,float>)||(std::is_same_v<T,float>&&std::is_same_v<U,Single>)||(std::is_same_v<T,Double>&&std::is_same_v<U,double>)||(std::is_same_v<T,double>&&std::is_same_v<U,Double>);
 template<class Signature>class Delegate;
 // These wrappers are value-sized in C++, but each element is a managed
 // reference in the 32-bit source ABI (including jagged arrays).
@@ -456,6 +460,9 @@ PLS_CS_TYPE_NAME(std::int64_t,"System.Int64")
 PLS_CS_TYPE_NAME(std::uint64_t,"System.UInt64")
 PLS_CS_TYPE_NAME(float,"System.Single")
 PLS_CS_TYPE_NAME(double,"System.Double")
+PLS_CS_TYPE_NAME(Int32,"System.Int32")
+PLS_CS_TYPE_NAME(Single,"System.Single")
+PLS_CS_TYPE_NAME(Double,"System.Double")
 PLS_CS_TYPE_NAME(String,"System.String")
 PLS_CS_TYPE_NAME(Ref<Object>,"System.Object")
 #undef PLS_CS_TYPE_NAME
@@ -546,6 +553,7 @@ template<class T> class Array : private ArrayViewStorage<is_shared_ref<T>::value
     const Storage& require()const{if(covariance_view())throw_array_type_mismatch();if(!data_)throw_null_reference();return *data_;}
 public:
     Array()noexcept=default;
+    template<class U,std::enable_if_t<float_array_pair<T,U>,int> =0>Array(const Array<U>& other){if(other.is_null())return;*this=make(other.length());for(std::int32_t i=0;i<other.length();++i)at(i)=T(other.at(i));}
     Array(std::nullptr_t)noexcept{}
     Array(std::initializer_list<T> values):Array(from(values)){}
     static Array make(std::int32_t size) {
@@ -873,7 +881,7 @@ template<class T>void release_value(T&value){
 }
 [[noreturn]] inline void throw_divide_by_zero() { throw DivideByZeroException(); }
 } // namespace pls::cs
-#include "numeric_types.hpp"
+#include "../../runtime/numeric_types.hpp"
 namespace pls::cs {
 // Readable numeric types in deduced-source helpers: convert from the plain value.
 template<class To> To cast_integral(Int32 value) noexcept { return cast_integral<To,std::int32_t>(value.value); }

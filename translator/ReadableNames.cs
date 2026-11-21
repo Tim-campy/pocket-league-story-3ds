@@ -39,7 +39,7 @@ sealed partial class Lowerer {
             or SpecialType.System_Int32 or SpecialType.System_UInt32 or SpecialType.System_Int64 or SpecialType.System_UInt64 or SpecialType.System_Single or SpecialType.System_Double;
     static string ConstantCppType(ITypeSymbol type)=>type.SpecialType switch{SpecialType.System_Boolean=>"bool",SpecialType.System_Char=>"char16_t",SpecialType.System_SByte=>"std::int8_t",
         SpecialType.System_Byte=>"std::uint8_t",SpecialType.System_Int16=>"std::int16_t",SpecialType.System_UInt16=>"std::uint16_t",SpecialType.System_Int32=>"std::int32_t",
-        SpecialType.System_UInt32=>"std::uint32_t",SpecialType.System_Int64=>"std::int64_t",SpecialType.System_UInt64=>"std::uint64_t",SpecialType.System_Single=>"float",_=>"double"};
+        SpecialType.System_UInt32=>"std::uint32_t",SpecialType.System_Int64=>"std::int64_t",SpecialType.System_UInt64=>"std::uint64_t",SpecialType.System_Single=>"pls::cs::Single",_=>"pls::cs::Double"};
     // A source reference to a named constant of this assembly: Type::Name (resolved by the renamer).
     string? ReadableConstantReference(ExpressionSyntax n){
         if(n is not (IdentifierNameSyntax or MemberAccessExpressionSyntax))return null;

@@ -342,7 +342,7 @@ sealed partial class Lowerer {
         externalTypes=request?.external_types??new();externalValueTypes=request?.external_value_types??new();externalMethods=request?.external_methods??new();externalFields=request?.external_fields??new();
         externalSlots=request?.external_slots??new();externalCompleteBases=new(request?.external_complete_bases??Array.Empty<string>());
         genericVirtualOverrides=new();newInstanceParameters=new();
-        readable=this.request.readable;readableCompilation=c;readableLocalNames.Clear();readableClosures.Clear();
+        readable=this.request.readable;readableFloat=readable&&this.request.numeric_model=="mono-arm-vfp";readableCompilation=c;readableLocalNames.Clear();readableClosures.Clear();
         foreach(var id in this.request.shared_fields){
             var field=DocumentationCommentId.GetSymbolsForDeclarationId(id,c).OfType<IFieldSymbol>().SingleOrDefault();
             if(field==null||field.IsStatic||field.IsConst||field.IsReadOnly||field.ContainingType.IsValueType||field.DeclaringSyntaxReferences.Length==0)throw new InvalidOperationException("Shared field policy requires a mutable source instance field in a reference class: "+id);
@@ -424,6 +424,7 @@ sealed partial class Lowerer {
         return (method?.Body??(declaration as AccessorDeclarationSyntax)?.Body,
             method?.ExpressionBody??(declaration as AccessorDeclarationSyntax)?.ExpressionBody??(declaration as PropertyDeclarationSyntax)?.ExpressionBody??(declaration as IndexerDeclarationSyntax)?.ExpressionBody);
     }
+    static bool readableFloat;
     static string TypeName(ITypeSymbol? t) {
         if(t is IArrayTypeSymbol a) {
             if(a.Rank!=1)throw new InvalidOperationException("rectangular array rank is not lowered");
@@ -461,8 +462,10 @@ sealed partial class Lowerer {
             case SpecialType.System_UInt32:return "std::uint32_t";
             case SpecialType.System_Int64:return "std::int64_t";
             case SpecialType.System_UInt64:return "std::uint64_t";
-            case SpecialType.System_Single:return "float";
-            case SpecialType.System_Double:return "double";
+            // Readable (item B, 2026-11-21): float and double storage everywhere is
+            // the runtime numeric types; the floating-point rule lives in them.
+            case SpecialType.System_Single:return readableFloat?"pls::cs::Single":"float";
+            case SpecialType.System_Double:return readableFloat?"pls::cs::Double":"double";
             case SpecialType.System_String:return "pls::cs::String";
             case SpecialType.System_Object:return "pls::cs::Ref<pls::cs::Object>";
             case SpecialType.None when t is INamedTypeSymbol named&&(PlainClass(named)||RecordStruct(named)||(named.TypeKind==TypeKind.Interface&&named.DeclaringSyntaxReferences.Length!=0)):return "pls::cs::Ref<"+ClassName(named)+">";
@@ -514,7 +517,17 @@ sealed partial class Lowerer {
         SpecialType.System_Int32=>"i32",SpecialType.System_UInt32=>"u32",SpecialType.System_Int64=>"i64",SpecialType.System_UInt64=>"u64",_=>""};
     void Used(SyntaxNode n){var kind=n.Kind().ToString();var counts=methodKinds[current];counts[kind]=counts.GetValueOrDefault(kind)+1;}
     bool ArmFloat => request.numeric_model=="mono-arm-vfp";
+    // Readable (item B): an int, float or double operand is written as is; the
+    // runtime numeric types apply the rule (binary64 evaluation, binary32 storage).
+    static bool FloatRuleOperand(ITypeSymbol? t)=>t?.SpecialType is SpecialType.System_Int32 or SpecialType.System_Single or SpecialType.System_Double;
+    static bool FloatingType(ITypeSymbol? t)=>t?.SpecialType is SpecialType.System_Single or SpecialType.System_Double;
+    // An integer operand meeting a float constant: neither side is a typed float in
+    // C++, so the integer gets the (implicit in C#) conversion to float written out;
+    // otherwise C++ would divide in binary32 instead of the binary64 rule.
+    bool LiteralFloatPartner(ExpressionSyntax operand,ExpressionSyntax other,ITypeSymbol? type)=>readableFloat&&type?.SpecialType==SpecialType.System_Single
+        &&Integral(model.GetTypeInfo(operand).Type)&&model.GetTypeInfo(other).Type?.SpecialType==SpecialType.System_Single&&model.GetConstantValue(other).HasValue;
     string EvaluationOperand(ExpressionSyntax node,ITypeSymbol? to) {
+        if(readableFloat&&FloatingType(to)&&FloatRuleOperand(model.GetTypeInfo(node).Type))return Expr(node);
         if(ArmFloat&&to?.SpecialType==SpecialType.System_Single) {
             var from=model.GetTypeInfo(node).Type;
             var value=from?.SpecialType==SpecialType.System_Single?Expr(node):Converted(node,to);
@@ -523,6 +536,13 @@ sealed partial class Lowerer {
         return Converted(node,to);
     }
     string Cast(string value,ITypeSymbol? from,ITypeSymbol? to,SyntaxNode node) {
+        if(readableFloat&&FloatingType(to)&&(Integral(from)||FloatingType(from))){
+            // Implicit float/double flow: the typed storage narrows or widens. Only
+            // double -> float narrows explicitly (C# requires the cast).
+            if(to!.SpecialType==SpecialType.System_Single&&from?.SpecialType==SpecialType.System_Double)return "pls::cs::Single("+value+")";
+            if(Integral(from)&&from?.SpecialType!=SpecialType.System_Int32)return Type(to,node)+"("+value+")";
+            return value;
+        }
         if(ArmFloat&&to?.SpecialType==SpecialType.System_Single&&(Integral(from)||from?.SpecialType is SpecialType.System_Single or SpecialType.System_Double))return "static_cast<float>("+value+")";
         if(to==null||SymbolEqualityComparer.Default.Equals(from,to))return value;
         if(to.ToDisplayString()=="System.Threading.ThreadPriority"||to.ToDisplayString()=="System.Threading.ThreadState")return "static_cast<"+Type(to,node)+">("+value+")";
@@ -539,7 +559,7 @@ sealed partial class Lowerer {
         }
         if(to.SpecialType==SpecialType.System_Object) {
             if(from is INamedTypeSymbol nativeValue&&externalValueTypes.ContainsKey(Id(nativeValue)))throw new Unsupported(node,"native value boxing requires an exact Equals/hash/ToString contract");
-            Type(from,node);if(ArmFloat&&from?.SpecialType==SpecialType.System_Single)value="static_cast<float>("+value+")";var boxed="pls::cs::box("+value+")";
+            Type(from,node);if(ArmFloat&&!readableFloat&&from?.SpecialType==SpecialType.System_Single)value="static_cast<float>("+value+")";var boxed="pls::cs::box("+value+")";
             return from?.IsValueType==true?SourceAllocation(node,"boxing",boxed):from is ITypeParameterSymbol?SourceAllocation(node,"generic_boxing_conversion",boxed):boxed;
         }
         if(to.ToDisplayString()=="System.Array"&&from?.SpecialType==SpecialType.System_Object)return "pls::cs::array_cast("+value+")";
@@ -851,6 +871,8 @@ sealed partial class Lowerer {
                 if(readable&&ArmFloat&&model.GetTypeInfo(cast).Type?.SpecialType==SpecialType.System_Single&&model.GetTypeInfo(cast.Expression).Type?.SpecialType==SpecialType.System_Int32&&TypedScalar(cast.Expression)){
                     typedExpressions.Add(cast);return "pls::cs::Single("+Expr(cast.Expression)+")";
                 }
+                if(readableFloat&&FloatingType(model.GetTypeInfo(cast).Type)&&(FloatRuleOperand(model.GetTypeInfo(cast.Expression).Type)||Integral(model.GetTypeInfo(cast.Expression).Type)))
+                    return Type(model.GetTypeInfo(cast).Type,cast)+"("+Expr(cast.Expression)+")";
                 return Converted(cast.Expression,model.GetTypeInfo(cast).Type);
             case MemberAccessExpressionSyntax member:
                 if(model.GetSymbolInfo(member).Symbol is IFieldSymbol mf)return StaticField(mf,member);
@@ -885,6 +907,12 @@ sealed partial class Lowerer {
                 var ct=model.GetTypeInfo(c).Type;
                 {var whenTrue=EvaluationOperand(c.WhenTrue,ct);var whenFalse=EvaluationOperand(c.WhenFalse,ct);
                 if(ReadableScalar(ct)=="pls::cs::Int32"&&TypedScalar(c.WhenTrue)!=TypedScalar(c.WhenFalse)){if(TypedScalar(c.WhenTrue))whenFalse="pls::cs::Int32("+whenFalse+")";else whenTrue="pls::cs::Int32("+whenTrue+")";}
+                // A float/double branch that is a constant is a plain C++ literal: give it
+                // the result type, or the two branches have no single common type.
+                if(readableFloat&&FloatingType(ct)){
+                    if(model.GetConstantValue(c.WhenTrue).HasValue&&!model.GetConstantValue(c.WhenFalse).HasValue)whenTrue=Type(ct,c)+"("+whenTrue+")";
+                    if(model.GetConstantValue(c.WhenFalse).HasValue&&!model.GetConstantValue(c.WhenTrue).HasValue)whenFalse=Type(ct,c)+"("+whenFalse+")";
+                }
                 return "("+Expr(c.Condition)+" ? "+whenTrue+" : "+whenFalse+")";}
             case AssignmentExpressionSyntax assignment:return Assignment(assignment);
             case InvocationExpressionSyntax invocation:return Invoke(invocation);
@@ -996,6 +1024,7 @@ sealed partial class Lowerer {
         if(type?.SpecialType==SpecialType.System_String)return value;
         if(type?.SpecialType==SpecialType.System_Char)return "cs_char_string("+value+")";
         if(Integral(type)&&type?.TypeKind!=TypeKind.Enum)return "cs_integer_string("+value+")";
+        if(readableFloat&&FloatingType(type))return "pls::cs::floating_to_string("+value+")";
         if(type?.SpecialType is SpecialType.System_Single or SpecialType.System_Double)return "pls::cs::floating_to_string("+(ArmFloat&&type.SpecialType==SpecialType.System_Single?"static_cast<float>("+value+")":value)+")";
         if(type?.SpecialType==SpecialType.System_Boolean)return "pls::cs::String("+value+"?u\"True\":u\"False\")";
         if(type?.IsReferenceType==true||type?.SpecialType==SpecialType.System_Object)return "cs_object_string(pls::cs::box("+value+"))";
@@ -1069,6 +1098,8 @@ sealed partial class Lowerer {
             return "("+Expr(b.Left)+" "+b.OperatorToken.Text+" "+Expr(b.Right)+")";
         var left=EvaluationOperand(b.Left,op?.LeftOperand.Type??model.GetTypeInfo(b.Left).ConvertedType);
         var right=EvaluationOperand(b.Right,op?.RightOperand.Type??model.GetTypeInfo(b.Right).ConvertedType);
+        if(LiteralFloatPartner(b.Left,b.Right,op?.LeftOperand.Type))left="pls::cs::Single("+left+")";
+        if(LiteralFloatPartner(b.Right,b.Left,op?.RightOperand.Type))right="pls::cs::Single("+right+")";
         var type=model.GetTypeInfo(b).Type;string result;
         var numeric=NumericSuffix(type);
         var helper=b.Kind() switch{SyntaxKind.AddExpression=>"add",SyntaxKind.SubtractExpression=>"sub",SyntaxKind.MultiplyExpression=>"mul",SyntaxKind.DivideExpression=>"div",SyntaxKind.ModuloExpression=>"mod",SyntaxKind.LeftShiftExpression=>"shl",SyntaxKind.RightShiftExpression=>"shr",_=>""};
@@ -1076,10 +1107,15 @@ sealed partial class Lowerer {
             if(helper!=""&&numeric!="")return "pls::cs::"+helper+"_"+numeric+"("+l+","+r+")";
             if(type?.SpecialType==SpecialType.System_String)throw new Unsupported(b,"string concatenation requires null-aware ordered overload lowering");
             var token=b.OperatorToken.Text;
-            if(helper=="mod"&& (type?.SpecialType==SpecialType.System_Single||type?.SpecialType==SpecialType.System_Double))return "std::fmod("+l+","+r+")";
+            if(helper=="mod"&&!readableFloat&& (type?.SpecialType==SpecialType.System_Single||type?.SpecialType==SpecialType.System_Double))return "std::fmod("+l+","+r+")";
             return "("+l+" "+token+" "+r+")";
         }
         result=Operation("cs_left","cs_right");
+        if(readableFloat&&OrderFree(b)&&FloatingType(type)&&b.Kind() is SyntaxKind.AddExpression or SyntaxKind.SubtractExpression or SyntaxKind.MultiplyExpression or SyntaxKind.DivideExpression or SyntaxKind.ModuloExpression){
+            string FloatOperand(ExpressionSyntax operand,ExpressionSyntax other)=>LiteralFloatPartner(operand,other,type)?"pls::cs::Single("+Expr(operand)+")":FloatRuleOperand(model.GetTypeInfo(operand).Type)?Expr(operand):Converted(operand,type);
+            typedExpressions.Add(b);
+            return "("+FloatOperand(b.Left,b.Right)+" "+b.OperatorToken.Text+" "+FloatOperand(b.Right,b.Left)+")";
+        }
         if(readable&&OrderFree(b)&&ReadableScalar(type) is string scalarType&&(TypedScalar(b.Left)||TypedScalar(b.Right))){
             var integer=scalarType=="pls::cs::Int32";
             var typedOperator=integer?b.Kind() is SyntaxKind.AddExpression or SyntaxKind.SubtractExpression or SyntaxKind.MultiplyExpression or SyntaxKind.DivideExpression or SyntaxKind.ModuloExpression or SyntaxKind.LeftShiftExpression or SyntaxKind.RightShiftExpression or SyntaxKind.BitwiseAndExpression or SyntaxKind.BitwiseOrExpression or SyntaxKind.ExclusiveOrExpression
@@ -1093,7 +1129,7 @@ sealed partial class Lowerer {
         // Readable: both operands inline when their evaluation order cannot be observed.
         // A bool &, |, ^ would promote to int in C++, so it keeps the typed lambda.
         if(readable&&OrderFree(b)&&!(type?.SpecialType==SpecialType.System_Boolean&&b.Kind() is SyntaxKind.BitwiseAndExpression or SyntaxKind.BitwiseOrExpression or SyntaxKind.ExclusiveOrExpression))return Operation(left,right);
-        return "([&]() -> "+(ArmFloat&&type?.SpecialType==SpecialType.System_Single?"double":Type(type,b))+" { auto cs_left = "+left+"; auto cs_right = "+right+"; return "+result+"; }())";
+        return "([&]() -> "+(ArmFloat&&type?.SpecialType==SpecialType.System_Single?(readableFloat?"pls::cs::FloatEval":"double"):Type(type,b))+" { auto cs_left = "+left+"; auto cs_right = "+right+"; return "+result+"; }())";
     }
     string Increment(ExpressionSyntax n,bool add,bool prefix) {
         var symbol=model.GetSymbolInfo(n).Symbol;var type=model.GetTypeInfo(n).Type;
@@ -1138,13 +1174,13 @@ sealed partial class Lowerer {
                 if(type?.SpecialType is SpecialType.System_Single or SpecialType.System_Double){
                     if(!SymbolEqualityComparer.Default.Equals(model.GetTypeInfo(a.Right).ConvertedType,type))throw new Unsupported(a,"mixed-width floating property compound assignment not lowered");
                     var op=helper switch{"add"=>"+","sub"=>"-","mul"=>"*",_=>"/"};
-                    propertyValue="static_cast<"+Type(type,a)+">("+(ArmFloat&&type?.SpecialType==SpecialType.System_Single?"static_cast<double>(cs_old) "+op+" static_cast<double>(cs_rhs)":"cs_old "+op+" cs_rhs")+")";
+                    propertyValue=readableFloat?"(cs_old "+op+" cs_rhs)":"static_cast<"+Type(type,a)+">("+(ArmFloat&&type?.SpecialType==SpecialType.System_Single?"static_cast<double>(cs_old) "+op+" static_cast<double>(cs_rhs)":"cs_old "+op+" cs_rhs")+")";
                 }else{
                     if(NumericSuffix(type)=="")throw new Unsupported(a,"compound property numeric promotion not lowered");
                     propertyValue="pls::cs::"+helper+"_"+NumericSuffix(type)+"(cs_old,cs_rhs)";
                 }
             }
-            setup+="auto cs_value = "+propertyValue+"; ";args.Add("cs_value");
+            setup+=(readableFloat&&FloatingType(type)?Type(type,a):"auto")+" cs_value = "+propertyValue+"; ";args.Add("cs_value");
             return "([&]() { "+setup+AccessorCall(property.SetMethod,propertyTarget,args,a)+"; return cs_value; }())";
         }
         string prefix,target;bool shared=false;
@@ -1176,10 +1212,11 @@ sealed partial class Lowerer {
             }
         }
         string value;
-        if(simple)value="auto cs_value = "+Converted(a.Right,type)+"; "+(shared?target+".store(cs_value);":target+" = cs_value;")+" return cs_value;";
+        var valueDeclaration=readableFloat&&FloatingType(type)?Type(type,a):"auto";
+        if(simple)value=valueDeclaration+" cs_value = "+Converted(a.Right,type)+"; "+(shared?target+".store(cs_value);":target+" = cs_value;")+" return cs_value;";
         else {
             var operation=CompoundOperation(a,type,"cs_old","cs_rhs");
-            value="auto cs_old = "+target+(shared?".load()":"")+"; auto cs_rhs = "+Expr(a.Right)+"; auto cs_value = "+Cast(operation,type,type,a)+"; "+(shared?target+".store(cs_value);":target+" = cs_value;")+" return cs_value;";
+            value="auto cs_old = "+target+(shared?".load()":"")+"; auto cs_rhs = "+Expr(a.Right)+"; "+valueDeclaration+" cs_value = "+(readableFloat&&FloatingType(type)?operation:Cast(operation,type,type,a))+"; "+(shared?target+".store(cs_value);":target+" = cs_value;")+" return cs_value;";
         }
         return "([&]() { "+prefix+value+" }())";
     }
@@ -1188,7 +1225,7 @@ sealed partial class Lowerer {
         string helper=a.Kind() switch{SyntaxKind.AddAssignmentExpression=>"add",SyntaxKind.SubtractAssignmentExpression=>"sub",SyntaxKind.MultiplyAssignmentExpression=>"mul",SyntaxKind.DivideAssignmentExpression=>"div",SyntaxKind.ModuloAssignmentExpression=>"mod",_=>""};
         var suffix=NumericSuffix(type);
         var operation=helper!=""&&suffix!=""?"pls::cs::"+helper+"_"+suffix+"("+old+","+rhs+")":"("+old+" "+a.OperatorToken.Text.TrimEnd('=')+" "+rhs+")";
-        if(ArmFloat&&type?.SpecialType==SpecialType.System_Single)operation="(static_cast<double>("+old+") "+a.OperatorToken.Text.TrimEnd('=')+" static_cast<double>("+rhs+"))";
+        if(ArmFloat&&!readableFloat&&type?.SpecialType==SpecialType.System_Single)operation="(static_cast<double>("+old+") "+a.OperatorToken.Text.TrimEnd('=')+" static_cast<double>("+rhs+"))";
         if(type?.SpecialType==SpecialType.System_String&&helper=="add") {
             var rightType=model.GetTypeInfo(a.Right).Type;
             if(rightType?.SpecialType==SpecialType.System_String)operation="pls::cs::String::concat("+old+","+rhs+")";
@@ -1202,6 +1239,9 @@ sealed partial class Lowerer {
     string Invoke(InvocationExpressionSyntax n) {
         var target=model.GetSymbolInfo(n).Symbol as IMethodSymbol;
         var result=InvokeCore(n);
+        // A native binding returns a plain float: type it, so that two native results never
+        // meet in binary32 arithmetic (readable numeric types, item B).
+        if(readableFloat&&target!=null&&target.ReturnType.SpecialType==SpecialType.System_Single&&externalMethods.ContainsKey(Id(target)))result="pls::cs::Single("+result+")";
         if((!readable||request.readable_diagnostic)&&target!=null&&(externalMethods.ContainsKey(Id(target))||target.ContainingAssembly?.Name!=compilation.AssemblyName))return "pls::diagnostic::api_call([&]() -> decltype(auto) {return "+result+";})";
         return result;
     }

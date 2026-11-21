@@ -432,10 +432,10 @@
     "tools/ctr_textures.py": "de6185773801876e5e1b582e1fbcc2c72f13ced5da667ad58f079b781c15b4a6",
     "src/kairo/common/ctr_texture.hpp": "1fee5b07af1f711b6d4ca560c79ede7a9fbf40f26ced31a10dabc4407becb59b",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431",
-    "src/kairo/api/graphics.hpp": "96e9ff7056dc7bc9d554b351c8eaf903b51a6050b9c9b5a0af8f335c565e60d7",
+    "src/kairo/api/graphics.hpp": "5ed9399e2b361a75da5b2f36c62cd6dae54f57c5169e970c06cc4367447fd11b",
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/application.hpp": "be92e7335b8af9201aee4e692a12b244676e899fad505e5906157d8655705cc1",
-    "src/kairo/common/semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b",
+    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/platform/sdl/font.hpp": "285a3ffc32ed8c3290d1c2fee20129f4932bb872d0285b970327af972be43081"
@@ -466,7 +466,7 @@
   ],
   "native_executable": {
     "path": "build/image-lifetime-tests/image-lifetime-fixtures.exe",
-    "sha256": "ef3f84026d66cead545ba370dc1e40499ff884ec0854285ee7396c259318ca04"
+    "sha256": "9228261507714720ffef867e82e7cda0b5a8cad8e0fc775f4b2b64cb19117dc6"
   },
   "game_assets_used": false,
   "original_binaries_executed": false,

@@ -31,13 +31,13 @@
     "src/kairo/api/debug_input.hpp": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918",
     "src/kairo/api/vector3.hpp": "4830f223a65124ea07c7e49f119e14a581d8ef2eee901c1a37c9c863f6bfac81",
     "src/kairo/api/system.hpp": "bb37f69f8698583ce232749451d26d84137ff359f9954bd20083d819e98aedcd",
-    "src/kairo/common/semantic_runtime.hpp": "8495b74822cc7fb4257d774e682db0451f01b43347a8f1d32047befab3fb013b",
+    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
     "tools/test_media.py": "7f4a8fbba1f054855f8650ee93652d207a48dd0c91dd4375e90fa107d75c2bef"
   },
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "53b67290ffb86e5860c1f6a68bd05adf12a0a138958b690046173a360d86e722",
+  "native_executable_sha256": "5ba338516a2e2a3bdc9efb5fc0d4bfa52cdd3c1515878d3f22ba1bc78f71bf54",
   "native_stdout_sha256": "094678f5eaf59041269a49d4d1fba2c8dbf38c5b38e478dffe4f840efa6bac29",
   "ffmpeg_comparisons": [
     {

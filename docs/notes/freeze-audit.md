@@ -176,4 +176,64 @@ decidir isso antes de congelar.
 
 ## 6. Ensaio em ramo separado
 
-Ver a seção "Resultado do ensaio" (preenchida ao fim do ensaio).
+Executado em 2026-11-20 no ramo local `freeze-rehearsal` (commit `9e323be`, a
+partir de `eddc7b9`), worktree `.claude/worktrees/freeze-rehearsal`. **Nenhuma tag,
+nenhum push.** Fonte: a árvore legível de diagnóstico `build/c6b-readable-diag-2`
+(a mesma validada no C6b).
+
+### Resultado
+
+| Passo | Resultado |
+|---|---|
+| Troca de `src/game` (404) e `src/kairo/common/generated` (115) pela árvore legível | feita; 519 arquivos com o cabeçalho de código mantido; corpos idênticos à árvore validada (comparação por arquivo) |
+| Tradutor movido para `tools/translator-archived/` (+ `README-ARCHIVED.md`) | feito |
+| Build PC (`pc_game`, CMake padrão, sem tradutor) | **PASS** — 7,37 MB, 109 s |
+| Build ARM (`build_arm11_null.py --frozen`) | **PASS** — `.3dsx` 7.529.268 B, 1.956 s, 0 erros |
+| Diagnóstico PC (`build_pc.py --frozen-diagnostic`) + `menu-explore` | **PASS** — passo 193, quadro 11.283 (igual ao legível), 0 alertas |
+| Conjunto de 85 roteiros (`run_readable_routes.py --frozen`) | **PASS** — 87 execuções, 85 concluídas, 0 alertas, 0 lacunas; incompletas `actions` e `dialogs-exit`, iguais ao legível |
+| Cobertura (união, métodos chamados) | 1.577 contra 1.578 do legível; só falta `PlayerData.Start_aura` (simulação da partida, depende da velocidade) |
+| Verificação `--full` (seguindo após falhas) | 94 PASS, 32 FAIL — tabela abaixo |
+
+### O que dependia do tradutor (e foi ajustado no ensaio)
+
+1. **Partes `.inc`:** unidades grandes (`form.SubForm`) vêm em partes `.inc`; a
+   troca precisa copiá-las e o cabeçalho também se aplica a elas (o primeiro build
+   falhou por isso).
+2. `build_pc.py` importava `translator/report_paths.py` → movido para `tools/`.
+3. Builds ARM e de diagnóstico exigiam o `manifest.json` do snapshot gerado →
+   modos `--frozen` (ARM) e `--frozen-diagnostic` (PC), que compilam o próprio
+   `src/game`; o CMake aceita `src/game` sem manifesto.
+4. Roteiros: `run_readable_routes.py --frozen --source-repo` (cópias de roteiro e
+   saves continuam no histórico canônico).
+5. **Instrumentação de diagnóstico** (`PLS_METHOD_SCOPE`, `api_call`,
+   `diagnostic_runtime.hpp`) vem do tradutor. Proposta: congelar **com** as
+   macros (sem efeito fora do build de diagnóstico); sem elas, roteiros,
+   salvaguarda e contadores por método param.
+
+### Checks que falham sem o tradutor (32)
+
+| Classe | Checks | Destino proposto |
+|---|---|---|
+| Executam ou importam o tradutor (diferenciais e rebaixamento) | `portable-compile`, `portable-differential`, `portable-split-differential`, `lowering-differential`, `content-lowering`, `value-type-lowering`, `matrix-point-lowering`, `shared-field-lowering`, `surface-adapter-lowering`, `image-metadata-lowering`, `ref-out-lowering`, `goto-case-lowering`, `service-policy-lowering`, `source-allocation-attribution`, `diagnostic-leaf-guards`, `incremental-emission`, `vector-iterator`, `checkpoint-comparison`, `type-init-translated`, `float-arm-emission-regression`, `direct-kairo-adapter` | arquivados com o tradutor (validaram a tradução; o resultado está congelado) |
+| Regeneração do jogo | `game-diagnostic-inventory`, `game-partial-compile` | param (não há mais geração) |
+| Leem `build/translator/KairoLibrary-input.json` (artefato do tradutor) | `input`, `input-frame-source-probe`, `debug-input-snapshot`, `application-orientation` | reescrever para ler `src/kairo/common/generated` (testes da plataforma; devem continuar) |
+| Livro-razão e alcançabilidade | `progress` (exige evidência da Fase 2 ligada ao gerado), `reachability-analysis` (monta o pedido de tradução) | `progress`: congelar o livro-razão; alcançabilidade: arquivar (critério 3 fechado) |
+| `repository-tests` | 2 de 126 (`test_report_paths`, `test_diagnostic_leaf_manifest`) | ajustar caminho / arquivar |
+| Ambiente do worktree (não é o tradutor) | `tracing-measurements` (falta `build/ctr-gc-fixture` local), `private-resource-catalog` (junção de `assets/`) | nada; passam no repositório principal |
+
+Também param fora do `verify`: `update_phase2_progress.py`, `benchmark_generated_build.py`,
+`tests/translator/run_*.py` (fixtures que traduzem C#), `fp-discriminants/*`.
+
+### Checks que passam a valer sobre código mantido
+
+`tests/repository/test_gc_field_tracing.py src/game` (mapa do coletor e raízes) e a
+auditoria de raízes passam a ser a garantia do coletor para edições à mão; os 85
+roteiros com estresse continuam (via `--frozen-diagnostic`).
+
+### Conclusão
+
+O congelamento é executável: PC e ARM compilam e o jogo percorre os 85 roteiros a
+partir da árvore congelada, sem o tradutor. Antes do congelamento real faltam
+(a) aplicar os ajustes 1–4 no `main`, (b) reescrever os 4 testes de entrada que
+leem o artefato do tradutor, (c) decidir a instrumentação (item 5) e o destino
+dos 23 checks arquivados, e (d) a aprovação do usuário.

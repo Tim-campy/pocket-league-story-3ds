@@ -124,8 +124,25 @@ contra 10,5–11,8 ms); no Azahar, ~25 %. A causa principal encontrada no códig
 No emulador o legível corrigido fica 12 % abaixo do canônico corrigido no menu
 e ~14 % abaixo da v6; a partida do legível cai ~42 %.
 
-**No console:** `UNKNOWN` até o usuário executar a pasta do cartão
-(`build/sd-benchmark-readable-fix/`). Meta: partida ≤ 12 ms de média.
+### No console (New 3DS XL, 2026-11-21, código legível final A+B)
+
+Pasta `build/sd-benchmark-readable-final/` (imagem `620f375a…`), três execuções
+com arquivos numerados e o mesmo `PLS_BENCH_RUN` em `result-N`, `stdout-N` e
+`stderr-N` (ids `1-4004285468594`, `2-4004285595084`, `3-4004285710535`).
+
+| Medida | exec. 1 | exec. 2 | exec. 3 | limite / meta |
+|---|---|---|---|---|
+| Partida: média | **10,62 ms** | **10,15 ms** | **10,36 ms** | meta ≤ 12 ms; critério < 20 ms |
+| Partida: p95 / maior quadro | 11,54 / 11,90 | 11,65 / 12,00 | 11,45 / 11,58 ms | 50 ms |
+| Partida: coletas | 0 | 0 | 0 | — |
+| Menu: média | 6,64 | 6,65 | 6,51 ms | — |
+| Menu: maior quadro estável | 10,47 | 10,49 | 10,68 ms | 50 ms |
+| Menu: transições (3; maior pausa / maior quadro) | 106,6 / 113,7 | 106,8 / 113,8 | 103,1 / 110,3 ms | 150 ms |
+
+Antes (legível, 2026-11-20): partida 16,96 / 18,68 / 17,27 ms. v6: 10,49–11,77 ms.
+**Meta atingida; a partida do código a congelar voltou ao nível da v6 (−40 %).**
+`PLS_THREAD_CORE application=0 thread=0` em todas as threads gerenciadas: a
+condição da leitura sem barreira (um só núcleo) verificada no aparelho.
 
 ## O que não foi feito (e por quê)
 

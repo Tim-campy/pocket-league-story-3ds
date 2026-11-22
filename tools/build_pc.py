@@ -15,6 +15,12 @@ from report_paths import unpack_source_paths
 APK_SHA='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 
 
+def record_attempt(attempt,history_path):
+    # The tracked canonical history stays under the content-policy size limit:
+    # bulky per-attempt detail goes to a private file (tools/attempt_details.py).
+    if Path(history_path).resolve()==(ROOT/'config/phase2-diagnostic-attempts.json').resolve():
+        import attempt_details;attempt_details.externalize(attempt)
+    return attempt
 def digest(path):return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
@@ -416,7 +422,7 @@ def main():
                 messages=(result.stdout+result.stderr).decode('utf-8',errors='replace')
                 diagnostics=[line for line in messages.splitlines() if re.search(r'(error [A-Z]+\d+|fatal error|undefined reference)',line)]
                 attempt.update(stage='configure-failed' if index==0 else 'compile-or-link-failed',exit_code=result.returncode,diagnostics=diagnostics[:8],log_sha256=digest(folder/f'step-{index}.log'))
-                history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+                history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError(f'Native build failed; see {folder}/step-{index}.log')
     portable_unit=next(iter(sorted(portable_dir.glob('portable_generated_type_*.cpp'))),None) or next(iter(sorted(portable_dir.glob('*.cpp'))))
     required={'CMakeFiles/pls_semantics.dir/src/kairo/common/semantic_runtime.cpp.obj':ROOT/'src/kairo/common/semantic_runtime.hpp',
@@ -433,7 +439,7 @@ def main():
         if inputs_before!=inputs_after:
             changed=sorted(p for p in set(inputs_before)|set(inputs_after) if inputs_before.get(p)!=inputs_after.get(p))
             attempt.update(stage='concurrent-source-change',exit_code=0,changed_inputs=changed,game_boot=False)
-            history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+            history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
             raise RuntimeError('Native inputs changed during compilation; no process was launched. Retry after the producers are stable.')
         attempt.update(stage='linked',exit_code=0,dependency_audit=dependency_audit,clean_for_dependency_policy=clean)
         if args.run:
@@ -480,13 +486,13 @@ def main():
                 try:collect(attempt,attempt_folder,history)
                 except Exception as error:
                     attempt.update(stage='execution-receipt-failed',execution_receipt_error=type(error).__name__+': '+str(error))
-                    history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf8',newline='\n')
+                    history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf8',newline='\n')
                     raise
             if args.metrics:
                 attempt['metrics_log_summary']=metric_log_summary((attempt_folder/'game-run.stderr').read_bytes())
                 attempt['metrics_recorded']=attempt['metrics_log_summary']['records']>0
                 attempt['frame_captures']=[dict(path=p.relative_to(ROOT).as_posix(),sha256=digest(p),bytes=p.stat().st_size)for p in sorted((attempt_folder/'frames').glob('frame-*.bmp'))]
-        history['attempts'].append(attempt);attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
+        history['attempts'].append(record_attempt(attempt,attempts));attempts.write_text(json.dumps(history,separators=(',',':'))+'\n',encoding='utf-8',newline='\n')
         print(json.dumps(attempt));return
     result=dict(native_fixtures='PASS',game_boot=False,title=False,menu=False,match=False,dependency_audit=dependency_audit,
                 compiler='existing MSVC',sdl2='2.32.10',game_assets_used=False)

@@ -251,10 +251,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "6900c068bb38e8b1c198665228f7a252b79b9f56e4b4d7c79157515dc33352d5"
+    "sha256": "60b71c92ae971289cd6777af3e9dc7815be534f241fa29fee80c49f630d13112"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "a843f027701d4435140d14ed482c3343ae16d8d17cefaad2b7c2de7f7882c027"
+    "sha256": "fe615172bc14113552461c9b75f911af52d411d7e959e9d9f7ed24995ce771a9"
   }
 }

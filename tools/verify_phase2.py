@@ -99,6 +99,8 @@ def main():
     if managed.is_relative_to(ROOT):p.error('Original API binaries must remain outside the port repository')
     commands=[
         ('repository-tests',['-m','unittest','discover','-s','tests/repository','-p','test_*.py']),
+        # Same content-policy gate as the GitHub workflow (.github/workflows/content-policy.yml).
+        ('content-policy',['tools/check_repository.py','--staged']),
         ('gc-source-contract',['tools/inventory_gc_contract.py']),
         ('prepared-native-textures',['tools/test_ctr_texture_runtime.py']),
         ('resource-trace-events',['tools/test_resource_trace.py']),

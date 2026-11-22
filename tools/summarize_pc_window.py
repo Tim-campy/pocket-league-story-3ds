@@ -28,7 +28,7 @@ def main():
         stages[name]=dict(samples=len(values),mean_ms=statistics.mean(values),median_ms=statistics.median(values),p95_ms=values[math.ceil(len(values)*.95)-1],max_ms=max(values))
     memory=next(r for r in records if r.get('event')=='memory'and r.get('phase')=='after_900_presented_frames')
     captures=[]
-    for row in attempt.get('frame_captures',[]):
+    for row in __import__('attempt_details').field(attempt,'frame_captures',[]):
         if sha(ROOT/row['path'])!=row['sha256']:raise ValueError('Private frame capture hash differs')
         captures.append(row)
     report=dict(operation='numeric-PC-Release-diagnostic-window',producer_sha256=sha(Path(__file__)),attempt=args.attempt,

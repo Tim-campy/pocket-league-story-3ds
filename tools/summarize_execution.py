@@ -16,7 +16,7 @@ def main():
   result['window_hot_methods']=hot_window(log.read_text(encoding='utf8',errors='replace'),a.first,a.last)
  if a.label!='UNKNOWN':
   if a.capture_frame is None:raise ValueError('A claimed screen needs an inspected local capture')
-  capture=next(r for r in attempt['frame_captures']if Path(r['path']).name=='frame-'+str(a.capture_frame)+'.bmp')
+  capture=next(r for r in __import__('attempt_details').field(attempt,'frame_captures',[])if Path(r['path']).name=='frame-'+str(a.capture_frame)+'.bmp')
   if sha(ROOT/capture['path'])!=capture['sha256']:raise ValueError('Capture differs')
   result['screen_evidence']=capture;result['screen_equivalence_android']='UNKNOWN'
  baseline=subprocess.check_output(['git','show','ce1dbd6:config/translation.csv'],cwd=ROOT).decode('utf8');rows=list(csv.DictReader(baseline.splitlines()));pending={r['id']for r in rows if r['estado']=='todo'}

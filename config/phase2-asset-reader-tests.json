@@ -90,7 +90,7 @@
   ],
   "native_executable": {
     "path": "build/asset-reader-tests/asset-reader-fixtures.exe",
-    "sha256": "1bbe0190506fd8a14ba7b3df1afdeb1b030cde543feeb4b0fac337035c8de56c"
+    "sha256": "f17794f083cd45c8f388727c1abffa96efb3e91ec2671fdb389a99101c9d3da4"
   },
   "game_assets_used": true,
   "original_binaries_executed": false,

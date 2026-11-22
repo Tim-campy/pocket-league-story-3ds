@@ -32,7 +32,7 @@
     "src/runtime/gc_memory_resource.hpp": "eef9280f108037072aa8db0973d1fe362e03ec54ca9f7be4665c33c5c379c740",
     "src/runtime/managed_gc_bridge.inc": "490642ee09d8aaa63c6445381981bc204ad8953690482b7546cb3e3d59f49ca4",
     "src/runtime/managed_reference.hpp": "04451445e205ffd2f9a8ff3d5977e72446d7f416908dc7861ea0e67175295787",
-    "src/runtime/numeric_types.hpp": "9d3a951870b93f235b0dfac543d6622bc91427b1d8f4dce32686438106968ea8",
+    "src/runtime/numeric_types.hpp": "11f9bc5eb2386612f3bf3b9114f14d7656030217c32d1b37761faf5557116181",
     "src/runtime/tracing_gc.cpp": "2944d3884bc9f95513746e1cfb8a8b4ebd4073a2160b9c3c0d906edfcd28c767",
     "src/runtime/tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef",
     "tools/test_stack.py": "1e98855c21b681076386c79e11928d82867de30327ca2f1d0d4868dff1cf1f3f",
@@ -325,10 +325,10 @@
   ],
   "gc_executable": {
     "path": "build/stack-fixtures/stack-gc-fixtures.exe",
-    "sha256": "948b6cdb4b6e412dc8620689d397434d995c2c3f152aa725d8eb278965e91cf4"
+    "sha256": "effb20ce66971542fcea51a0870027d21a258631d14c0c70c8f9dca0feb1aa0b"
   },
   "native_executable": {
     "path": "build/stack-fixtures/semantic-fixtures.exe",
-    "sha256": "e15819e41179970df12e567167fa2476376bd22316d69e64c1799c9866271f28"
+    "sha256": "d7539c0cfcd9bb0e37a8c0e90a0c01a704715d689ea7647f16444a1728b4b737"
   }
 }

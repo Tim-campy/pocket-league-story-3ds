@@ -194,19 +194,10 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
     SponsorData::ensure_initialized();
 
     {
-        auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
         pls::cs::Ref<pls::kairo::Image> cs_arg0 =
             require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
-        pls::cs::Single cs_arg1 = (dx - 10);
-        pls::cs::Single cs_arg2 = (dy - 30);
-        std::int32_t cs_arg3 = (20 * ((charaId % 12)));
-        std::int32_t cs_arg4 = (30 * ((charaId / 12)));
-        std::int32_t cs_arg5 = 20;
-        std::int32_t cs_arg6 = 30;
-        if (!cs_receiver) {
-            throw pls::cs::NullReferenceException();
-        }
-        cs_receiver->DrawImage(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5, cs_arg6);
+        require(g)->DrawImage(cs_arg0, (dx - 10), (dy - 30), (20 * ((charaId % 12))), (30 * ((charaId / 12))),
+                              20, 30);
     }
 }
 
@@ -214,13 +205,9 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
 std::int32_t SponsorData::GetIncome() {
     {
         std::int32_t cs_arg0_23 = satisfactPoint_;
-        std::int32_t cs_arg1_23 = 0;
-        std::int32_t cs_arg2_23 = 100;
         std::int32_t cs_arg3_23 = income_[0];
         std::int32_t cs_arg4_23 = income_[1];
-        bool cs_arg5_23 = true;
-        return game::GameUtil::RateConvert(cs_arg0_23, cs_arg1_23, cs_arg2_23, cs_arg3_23, cs_arg4_23,
-                                           cs_arg5_23);
+        return game::GameUtil::RateConvert(cs_arg0_23, 0, 100, cs_arg3_23, cs_arg4_23, true);
     }
 }
 

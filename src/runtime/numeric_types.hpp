@@ -113,6 +113,84 @@ PLS_CS_INT32_MIXED(>=, bool)
 #undef PLS_CS_INT32_MIXED
 static_assert((-8 >> 1) == -4, "arithmetic right shift required");
 
+// Int64: C# long, the same rules as Int32 at 64 bits (A.2, 2026-11-22).
+struct Int64 {
+    std::int64_t value{};
+    constexpr Int64() = default;
+    constexpr Int64(std::int64_t v) noexcept : value(v) {}
+    constexpr Int64(Int32 v) noexcept : value(v.value) {}  // int -> long widens implicitly
+    constexpr operator std::int64_t() const noexcept { return value; }
+    constexpr std::int64_t raw() const noexcept { return value; }
+    static constexpr std::int64_t wrap(std::uint64_t bits) noexcept {
+        return bits <= 0x7fffffffffffffffull ? static_cast<std::int64_t>(bits)
+                                             : static_cast<std::int64_t>(bits - 0x8000000000000000ull) - 0x7fffffffffffffffll - 1;
+    }
+    friend constexpr Int64 operator+(Int64 a, Int64 b) noexcept { return wrap(static_cast<std::uint64_t>(a.value) + static_cast<std::uint64_t>(b.value)); }
+    friend constexpr Int64 operator-(Int64 a, Int64 b) noexcept { return wrap(static_cast<std::uint64_t>(a.value) - static_cast<std::uint64_t>(b.value)); }
+    friend constexpr Int64 operator*(Int64 a, Int64 b) noexcept { return wrap(static_cast<std::uint64_t>(a.value) * static_cast<std::uint64_t>(b.value)); }
+    friend Int64 operator/(Int64 a, Int64 b) {
+        if (b.value == 0) throw_divide_by_zero();
+        if (a.value == std::numeric_limits<std::int64_t>::min() && b.value == -1) throw_division_overflow();
+        return a.value / b.value;
+    }
+    friend Int64 operator%(Int64 a, Int64 b) {
+        if (b.value == 0) throw_divide_by_zero();
+        if (a.value == std::numeric_limits<std::int64_t>::min() && b.value == -1) throw_division_overflow();
+        return a.value % b.value;
+    }
+    friend constexpr Int64 operator-(Int64 a) noexcept { return Int64(0) - a; }
+    friend constexpr Int64 operator&(Int64 a, Int64 b) noexcept { return a.value & b.value; }
+    friend constexpr Int64 operator|(Int64 a, Int64 b) noexcept { return a.value | b.value; }
+    friend constexpr Int64 operator^(Int64 a, Int64 b) noexcept { return a.value ^ b.value; }
+    friend constexpr Int64 operator~(Int64 a) noexcept { return ~a.value; }
+    friend constexpr Int64 operator<<(Int64 a, Int32 n) noexcept { return wrap(static_cast<std::uint64_t>(a.value) << (static_cast<std::uint32_t>(n.value) & 63u)); }
+    friend constexpr Int64 operator>>(Int64 a, Int32 n) noexcept { return a.value >> (static_cast<std::uint32_t>(n.value) & 63u); }
+    Int64& operator+=(Int64 b) noexcept { return *this = *this + b; }
+    Int64& operator-=(Int64 b) noexcept { return *this = *this - b; }
+    Int64& operator*=(Int64 b) noexcept { return *this = *this * b; }
+    Int64& operator/=(Int64 b) { return *this = *this / b; }
+    Int64& operator%=(Int64 b) { return *this = *this % b; }
+    Int64& operator&=(Int64 b) noexcept { return *this = *this & b; }
+    Int64& operator|=(Int64 b) noexcept { return *this = *this | b; }
+    Int64& operator^=(Int64 b) noexcept { return *this = *this ^ b; }
+    Int64& operator<<=(Int32 b) noexcept { return *this = *this << b; }
+    Int64& operator>>=(Int32 b) noexcept { return *this = *this >> b; }
+    Int64& operator++() noexcept { return *this += 1; }
+    Int64& operator--() noexcept { return *this -= 1; }
+    Int64 operator++(int) noexcept { Int64 old = *this; *this += 1; return old; }
+    Int64 operator--(int) noexcept { Int64 old = *this; *this -= 1; return old; }
+    friend constexpr bool operator==(Int64 a, Int64 b) noexcept { return a.value == b.value; }
+    friend constexpr bool operator!=(Int64 a, Int64 b) noexcept { return a.value != b.value; }
+    friend constexpr bool operator<(Int64 a, Int64 b) noexcept { return a.value < b.value; }
+    friend constexpr bool operator<=(Int64 a, Int64 b) noexcept { return a.value <= b.value; }
+    friend constexpr bool operator>(Int64 a, Int64 b) noexcept { return a.value > b.value; }
+    friend constexpr bool operator>=(Int64 a, Int64 b) noexcept { return a.value >= b.value; }
+};
+static_assert(std::is_standard_layout_v<Int64> && sizeof(Int64) == 8);
+// Int32 with Int64 and with plain integers up to 64 bits: both sides widen to long.
+template <class T>
+using if_any_integer = std::enable_if_t<std::is_integral_v<T> && !std::is_same_v<T, bool>, int>;
+#define PLS_CS_INT64_MIXED(op, R)                                                                   \
+    inline R operator op(Int64 a, Int32 b) { return a op Int64(b); }                             \
+    inline R operator op(Int32 a, Int64 b) { return Int64(a) op b; }                             \
+    template <class T, if_any_integer<T> = 0> inline R operator op(Int64 a, T b) { return a op Int64(static_cast<std::int64_t>(b)); } \
+    template <class T, if_any_integer<T> = 0> inline R operator op(T a, Int64 b) { return Int64(static_cast<std::int64_t>(a)) op b; }
+PLS_CS_INT64_MIXED(+, Int64)
+PLS_CS_INT64_MIXED(-, Int64)
+PLS_CS_INT64_MIXED(*, Int64)
+PLS_CS_INT64_MIXED(/, Int64)
+PLS_CS_INT64_MIXED(%, Int64)
+PLS_CS_INT64_MIXED(&, Int64)
+PLS_CS_INT64_MIXED(|, Int64)
+PLS_CS_INT64_MIXED(^, Int64)
+PLS_CS_INT64_MIXED(==, bool)
+PLS_CS_INT64_MIXED(!=, bool)
+PLS_CS_INT64_MIXED(<, bool)
+PLS_CS_INT64_MIXED(<=, bool)
+PLS_CS_INT64_MIXED(>, bool)
+PLS_CS_INT64_MIXED(>=, bool)
+#undef PLS_CS_INT64_MIXED
+
 struct FloatEval;
 struct Double;
 

@@ -30,10 +30,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.32985500001814216,
-    "native-compile": 63.689304500003345,
-    "managed-output": 0.6083990000188351,
-    "native-output": 0.875426399987191
+    "csharp-compile": 0.21806690003722906,
+    "native-compile": 54.479419599985704,
+    "managed-output": 0.5279485000064597,
+    "native-output": 0.38413000002037734
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -111,11 +111,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/image-metadata-differential/Harness.exe",
-    "sha256": "8432acfee5a70a1db523f264d57f7eb0b45ae110f54079518f30e4955a5e792b"
+    "sha256": "75ee76a05b74369a4fe77085328357fba1e1992107f13913e859475e3b493669"
   },
   "source_oracle_executable": {
     "path": "build/translator/image-metadata-differential/Harness-managed.exe",
-    "sha256": "2e6eb0ac130fe636aad10e50514732a64f715720c9f25202b4264efa59f9b5ff"
+    "sha256": "95fa9ac83cb6c668f09b20e6f642b38b2485bfd1149b85cb9444e98ba1e3e0f5"
   },
   "differential_runner_sha256": "9f538146e3b9f770209750a2ad4dc3f682eb9a528dfe1b5a5912b70eeb916d9d",
   "runtime_sources": [
@@ -773,7 +773,7 @@
     },
     {
       "path": "src/runtime/numeric_types.hpp",
-      "sha256": "9d3a951870b93f235b0dfac543d6622bc91427b1d8f4dce32686438106968ea8"
+      "sha256": "11f9bc5eb2386612f3bf3b9114f14d7656030217c32d1b37761faf5557116181"
     },
     {
       "path": "src/runtime/tracing_gc.cpp",
@@ -806,7 +806,7 @@
     "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
     "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
     "readable_source_sha256": [
-      "92433abd28eb01729186d41278f5725a43580ffaabe6d4d5aa339c95672fd22c",
+      "6cc0735d994a14f235d7eb6c050f21ee52db9ac7182234ede35ca5755f463df7",
       "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
     ],
     "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"

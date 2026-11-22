@@ -191,7 +191,7 @@ sealed partial class Lowerer {
         var owner=SymbolEqualityComparer.Default.Equals(field.ContainingType,methods.GetValueOrDefault(current)?.ContainingType)?"":field.ContainingType.Name+".";
         return " /* "+(owner+field.Name).Replace("*/","* /")+" */";
     }
-    // u"..." with printable ASCII kept; other units escaped. Octal escapes stop
+    // u"..." with visible characters as they are; control and invisible units escaped. Octal escapes stop
     // after three digits; a lone surrogate needs \x, so the literal is split.
     static string Utf16Literal(string text){
         var b=new StringBuilder("u\"");
@@ -202,16 +202,26 @@ sealed partial class Lowerer {
             else if(c=='?'&&i+1<text.Length&&text[i+1]=='?')b.Append("\\?");
             else if(c>=32&&c<127)b.Append(c);
             else if(c<32||(c>=127&&c<160))b.Append("\\"+Convert.ToString(c,8).PadLeft(3,'0'));
-            else if(char.IsHighSurrogate(c)&&i+1<text.Length&&char.IsLowSurrogate(text[i+1])){b.Append("\\U"+char.ConvertToUtf32(c,text[i+1]).ToString("X8",CultureInfo.InvariantCulture));i++;}
+            else if(char.IsHighSurrogate(c)&&i+1<text.Length&&char.IsLowSurrogate(text[i+1])){
+                var codePoint=char.ConvertToUtf32(c,text[i+1]);
+                if(VisibleText(codePoint))b.Append(c).Append(text[i+1]);else b.Append("\\U"+codePoint.ToString("X8",CultureInfo.InvariantCulture));
+                i++;
+            }
             else if(char.IsSurrogate(c))b.Append("\\x"+((int)c).ToString("X4",CultureInfo.InvariantCulture)+"\" u\"");
+            else if(VisibleText(c))b.Append(c);
             else b.Append("\\u"+((int)c).ToString("X4",CultureInfo.InvariantCulture));
         }
         return b.Append('"').ToString();
     }
-    static string TextComment(string text){
-        if(text.All(c=>c<127)||text.Any(c=>c<32||char.IsSurrogate(c)))return "";
-        return " /* \""+text.Replace("*/","* /")+"\" */";
+    // Real characters in the literal (UTF-8 sources: MSVC /utf-8, GCC default). Only
+    // what is invisible or not a character keeps an escape (A.3, 2026-11-22).
+    static bool VisibleText(int codePoint){
+        var category=CharUnicodeInfo.GetUnicodeCategory(codePoint);
+        return category is not (UnicodeCategory.Control or UnicodeCategory.Format or UnicodeCategory.LineSeparator or UnicodeCategory.ParagraphSeparator
+            or UnicodeCategory.SpaceSeparator or UnicodeCategory.PrivateUse or UnicodeCategory.OtherNotAssigned or UnicodeCategory.Surrogate);
     }
+    // The literal shows the text itself: no duplicate comment.
+    static string TextComment(string text)=>"";
 
     // ---------------------------------------------------------------- ordering
     // Pure: no side effect, cannot throw (constants, this, non-captured locals).
@@ -275,9 +285,19 @@ sealed partial class Lowerer {
             }
             case PrefixUnaryExpressionSyntax prefix:return prefix.Kind() is SyntaxKind.PreIncrementExpression or SyntaxKind.PreDecrementExpression?Order.Effectful:Classify(prefix.Operand);
             case ConditionalExpressionSyntax conditional:return Max(Classify(conditional.Condition),Max(Classify(conditional.WhenTrue),Classify(conditional.WhenFalse)));
+            case InvocationExpressionSyntax invocation when model.GetSymbolInfo(invocation).Symbol is IMethodSymbol{IsStatic:true} pureMethod&&PureCalls.ContainsKey(Id(pureMethod)):{
+                var arguments=Order.Pure;foreach(var argument in invocation.ArgumentList.Arguments)arguments=Max(arguments,Classify(argument.Expression));return arguments;}
         }
         return Order.Effectful;
     }
+    // Platform/runtime functions proven pure: no state read or written, no exception for
+    // any argument. A call to one is ordered like its arguments (A.1c, 2026-11-22).
+    static readonly Dictionary<string,string> PureCalls=new(StringComparer.Ordinal){
+        // src/kairo/common/graphics.cpp: clamps each channel to 0..255 and packs the bits
+        // (Graphics.cs:3037/3042 does the same with if-clamps); arithmetic only.
+        ["M:kairo.unity.ui.Graphics.GetColorOfRGB(System.Int32,System.Int32,System.Int32)"]="clamp + pack; no state, cannot throw",
+        ["M:kairo.unity.ui.Graphics.GetColorOfRGB(System.Int32,System.Int32,System.Int32,System.Int32)"]="clamp + pack; no state, cannot throw",
+    };
     Order StaticRead(IFieldSymbol field){
         if(field.HasConstantValue)return Order.Pure;
         if(externalFields.ContainsKey(Id(field)))return Order.Effectful;
@@ -468,39 +488,63 @@ sealed partial class Lowerer {
             else{operands.Add((Max(Order.Quiet,Classify(receiverNode)),receiverNode));receiverType=model.GetTypeInfo(receiverNode).Type;}
         }
         for(int i=0;i<args.Count;i++)operands.Add((ClassifyAs(args[i],method.Parameters[i].Type),args[i]));
-        if(!OrderFree(operands))return null;
         var external=nativeCallee!=null;
         var values=new List<string>();
         for(int i=0;i<argTexts.Count;i++){
             var text=argTexts[i];
-            // Native overload sets: an implicit reference conversion is spelled out,
-            // exactly as the typed temporary of the ordering lambda performed it.
-            if(external&&i<args.Count&&model.ClassifyConversion(args[i],method.Parameters[i].Type) is {IsReference:true,IsIdentity:false})
+            // Native overload sets: an implicit reference conversion is spelled out only
+            // where another overload of the same arity makes the call ambiguous.
+            if(external&&i<args.Count&&model.ClassifyConversion(args[i],method.Parameters[i].Type) is {IsReference:true,IsIdentity:false}
+               &&method.ContainingType.GetMembers(method.Name).OfType<IMethodSymbol>().Count(m=>m.Parameters.Length==method.Parameters.Length)>1)
                 text="static_cast<"+Type(method.Parameters[i].Type,site)+">("+text+")";
             values.Add(text);
         }
-        if(receiver==null)return callee+"("+String.Join(", ",values)+")";
+        // Evaluation order (C#: receiver, arguments left to right, null check, call).
+        // When the operands are not order-free, only what can throw or write, and plain
+        // reads that come before a write, become named temporaries; the receiver is
+        // named only when its own read can throw or an argument may change it. The call
+        // follows the temporaries, so the null check stays after the arguments.
+        var pre=new StringBuilder();
+        if(!OrderFree(operands)){
+            var classes=args.Select((a,i)=>ClassifyAs(a,method.Parameters[i].Type)).ToList();
+            var lastEffect=classes.FindLastIndex(c=>c==Order.Effectful);
+            if(receiver!=null&&!thisReceiver){
+                var symbol=model.GetSymbolInfo(Unparen(receiverNode!)).Symbol;
+                var plainLocal=symbol is ILocalSymbol or IParameterSymbol{RefKind:RefKind.None}&&!capturedVariables.Contains(symbol)&&Unparen(receiverNode!) is IdentifierNameSyntax;
+                var plainField=symbol is IFieldSymbol{IsStatic:false}&&(Unparen(receiverNode!) is IdentifierNameSyntax||Unparen(receiverNode!) is MemberAccessExpressionSyntax{Expression:ThisExpressionSyntax});
+                var written=args.Where((a,i)=>classes[i]==Order.Effectful).SelectMany(a=>Writes(a)).ToHashSet(SymbolEqualityComparer.Default);
+                var hoist=!(plainLocal||plainField)&&classes.Any(c=>c!=Order.Pure)
+                    ||plainField&&lastEffect>=0
+                    ||plainLocal&&symbol!=null&&written.Contains(symbol);
+                if(hoist){pre.Append("auto cs_receiver = "+receiver+"; ");receiver="cs_receiver";}
+            }
+            for(int i=0;i<values.Count&&i<args.Count;i++){
+                var constant=model.GetConstantValue(args[i]).HasValue;
+                if(classes[i]>=Order.Quiet||i<lastEffect&&!constant){pre.Append(Type(method.Parameters[i].Type,site)+" cs_arg"+i+" = "+values[i]+"; ");values[i]="cs_arg"+i;}
+            }
+        }
+        var result=method.MethodKind==MethodKind.Constructor?Type(method.ContainingType,site):Type(method.ReturnType,site);
+        string Done(string call)=>pre.Length==0?call:"([&]() -> "+result+" { "+pre+(result=="void"?"":"return ")+call+"; }())";
+        if(receiver==null)return Done(callee+"("+String.Join(", ",values)+")");
         var memberCall=virtualCall||nativeMember;
         var cast=memberCall&&receiverType!=null&&!SymbolEqualityComparer.Default.Equals(receiverType,method.ContainingType)&&HidesMember(receiverType,method);
         var target=cast?"static_cast<"+Type(method.ContainingType,site)+">("+receiver+")":receiver;
         if(!thisReceiver)target="cs_require("+target+")";
-        if(virtualCall)return Postfix(target)+"->"+Slot(method)+"("+String.Join(", ",values)+")";
+        if(virtualCall)return Done(Postfix(target)+"->"+Slot(method)+"("+String.Join(", ",values)+")");
         if(nativeCallee==null&&VirtualMember(method)){
             var qualified=QualifiedSlot(method);
-            if(thisReceiver)return (closureDepth>0||!methods.TryGetValue(current,out var owner)||!InstanceMember(owner)?"cs_this->"+qualified:qualified)+"("+String.Join(", ",values)+")";
-            return Postfix(target)+"->"+qualified+"("+String.Join(", ",values)+")";
+            if(thisReceiver)return Done((closureDepth>0||!methods.TryGetValue(current,out var owner)||!InstanceMember(owner)?"cs_this->"+qualified:qualified)+"("+String.Join(", ",values)+")");
+            return Done(Postfix(target)+"->"+qualified+"("+String.Join(", ",values)+")");
         }
         if(nativeCallee==null&&MemberMethod(method)){
             // Member function: on this, the qualified name (exact C# target, also for base.M());
             // on another receiver, the null check is part of the call after the arguments.
-            // Qualified member call only from a member function (not inside a closure, not
-            // from a method that still has the explicit receiver `self`).
-            if(thisReceiver)return (closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller)?"cs_this->"+MemberLeaf(method):callee)+"("+String.Join(", ",values)+")";
-            return Postfix(target)+"->"+MemberLeaf(method)+"("+String.Join(", ",values)+")";
+            if(thisReceiver)return Done((closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller)?"cs_this->"+MemberLeaf(method):callee)+"("+String.Join(", ",values)+")");
+            return Done(Postfix(target)+"->"+MemberLeaf(method)+"("+String.Join(", ",values)+")");
         }
-        if(nativeMember)return Postfix(target)+"->"+nativeCallee!.Substring("member:".Length)+"("+String.Join(", ",values)+")";
+        if(nativeMember)return Done(Postfix(target)+"->"+nativeCallee!.Substring("member:".Length)+"("+String.Join(", ",values)+")");
         values.Insert(0,target);
-        return callee+"("+String.Join(", ",values)+")";
+        return Done(callee+"("+String.Join(", ",values)+")");
     }
     static bool HidesMember(ITypeSymbol receiverType,IMethodSymbol method){
         for(var type=receiverType as INamedTypeSymbol;type!=null&&!SymbolEqualityComparer.Default.Equals(type.OriginalDefinition,method.ContainingType.OriginalDefinition);type=type.BaseType)

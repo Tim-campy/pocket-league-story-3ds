@@ -69,8 +69,7 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     num2 = num3;
     num = num2;
     num24 = num;
-    pls::cs::Ref<pls::kairo::Font> font =
-        require(g)->GetFont(static_cast<pls::cs::Ref<pls::kairo::Font>>(pls::cs::Ref<pls::kairo::Font>{}));
+    pls::cs::Ref<pls::kairo::Font> font = require(g)->GetFont(pls::cs::Ref<pls::kairo::Font>{});
     bool flag = false;
     pls::cs::Ref<pls::kairo::FormBase> topForm = require(formMan_)->GetTopForm();
     if (require(topForm)->GetId() == 4) {
@@ -112,12 +111,8 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     continue;
                 }
                 pls::cs::Single num5 = pls::cs::Single(([&]() -> pls::cs::Single {
-                    auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Font>>(font);
                     pls::cs::String cs_arg0 = selectButtons_[i];
-                    if (!cs_receiver) {
-                        throw pls::cs::NullReferenceException();
-                    }
-                    return cs_receiver->StringWidthF(cs_arg0);
+                    return require(font)->StringWidthF(cs_arg0);
                 }()));
                 if (num4 < num5) {
                     num4 = num5;
@@ -141,15 +136,8 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 require(g)->SetColor(SubForm::SC_WINDOW_BLACK());
                 {
-                    auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::String cs_arg0 = selectButtons_[j];
-                    pls::cs::Single cs_arg1 = num9;
-                    pls::cs::Single cs_arg2 = 167.0f;
-                    std::int32_t cs_arg3 = 2;
-                    if (!cs_receiver) {
-                        throw pls::cs::NullReferenceException();
-                    }
-                    cs_receiver->DrawString(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
+                    require(g)->DrawString(cs_arg0, num9, 167.0f, 2);
                 }
                 surface::GameView::AddTouch(
                     g, 3,
@@ -210,5 +198,17 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 require(g)->DrawString(literal(u"\u59EB\u5DDD\u30C1\u30A2\u5B50") /* "姫川チア子" */, 84.0f,
                                        174.0f);
             } else if (humanCharaType_ == 1) {
-    // ... (1296 more lines in the full unit)
+                if (humanCharaIndex_ != -1) {
+                    pls::cs::Ref<data::PlayerData> playerData =
+                        require(apdat_)->pData_.get_Item(humanCharaIndex_);
+                    require(udat_)->SetDispPlayerData(0, require(udat_)->selectUniform_,
+                                                      require(playerData)->faceImg_, 0, 2);
+                    require(udat_)->DrawDispPlayer(g, 193, 189);
+                    require(g)->SetColor(SubForm::SC_WINDOW_BLACK());
+                    if (MyFormBase::Jp()) {
+                        require(g)->DrawString(
+                            pls::cs::String::concat(require(playerData)->name_, require(playerData)->name2_),
+                            84.0f, 174.0f);
+                    } else {
+    // ... (826 more lines in the full unit)
 }

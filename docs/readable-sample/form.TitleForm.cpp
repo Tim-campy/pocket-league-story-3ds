@@ -73,7 +73,7 @@ static pls::cs::Array<std::int32_t> TitleForm_title_anime_storage{};
 
 static pls::cs::Array<std::int32_t> TitleForm_TITLE_GUEST_storage{};
 
-void TitleForm::ensure_initialized() {
+static PLS_NOINLINE void cs_init_e31f80000513fe82_slow(pls::cs::TypeInitFlag& flag) {
     static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor) {
         pls::cs::trace_value(TitleForm_IMG_SL_storage, visitor);
         pls::cs::trace_value(TitleForm_kairoAdUrl_jp_storage, visitor);
@@ -82,7 +82,7 @@ void TitleForm::ensure_initialized() {
         pls::cs::trace_value(TitleForm_TITLE_GUEST_storage, visitor);
     });
     static pls::cs::TypeInitState state;
-    state.run("form.TitleForm", []() {
+    state.run("form.TitleForm", flag, []() {
         TitleForm_title_anime_storage =
             pls::cs::evaluate_type_initializer_field("F:form.TitleForm.title_anime", [&]() {
                 return pls::cs::Array<std::int32_t>::from({10, 53, 78});
@@ -107,6 +107,14 @@ void TitleForm::ensure_initialized() {
                     u"market://details?id=net.kairosoft.android.soccer2_ja&referrer=utm_source%3Dappli%26utm_medium%3Dhouse_ad%26utm_content%3soccer_ja_title%26utm_campaign%3Dbanner");
             });
     });
+}
+
+void TitleForm::ensure_initialized() {
+    static pls::cs::TypeInitFlag flag;
+    if (flag.ready()) {
+        return;
+    }
+    cs_init_e31f80000513fe82_slow(flag);
 }
 
 pls::cs::Array<pls::cs::Array<std::int32_t>>& TitleForm::IMG_SL() {
@@ -607,10 +615,10 @@ void TitleForm::SmartBeginPaint(pls::cs::Ref<pls::kairo::Graphics> g) {
     }
     {
         auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
-        float cs_arg0 = 0.0f;
-        float cs_arg1 = 0.0f;
-        float cs_arg2 = static_cast<float>(require(view_)->GetGameWidth());
-        float cs_arg3 = static_cast<float>(require(view_)->GetGameHeight());
+        pls::cs::Single cs_arg0 = 0.0f;
+        pls::cs::Single cs_arg1 = 0.0f;
+        pls::cs::Single cs_arg2 = require(view_)->GetGameWidth();
+        pls::cs::Single cs_arg3 = require(view_)->GetGameHeight();
         if (!cs_receiver) {
             throw pls::cs::NullReferenceException();
         }
@@ -649,12 +657,12 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
     ([&]() -> void {
         auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
         pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(0);
-        float cs_arg1 = 0.0f;
-        float cs_arg2 = static_cast<float>(([&]() -> std::int32_t {
+        pls::cs::Single cs_arg1 = 0.0f;
+        pls::cs::Single cs_arg2 = ([&]() -> std::int32_t {
             auto cs_left = require(instance)->GetGameHeight();
             auto cs_right = require(require(resTitle_)->img.get_Item(0))->GetHeight();
             return pls::cs::sub_i32(cs_left, cs_right);
-        }()));
+        }());
         if (!cs_receiver) {
             throw pls::cs::NullReferenceException();
         }
@@ -684,10 +692,10 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, cs_arg3, cs_arg4, cs_arg5);
         }());
         pls::cs::Int32 num4 = 6;
-        auto cs_left_132 = titleFrame_;
-        auto cs_right_132 =
+        auto cs_left_151 = titleFrame_;
+        auto cs_right_151 =
             TitleForm::title_anime()[pls::cs::sub_i32((TitleForm::title_anime()).length(), 1)];
-        pls::cs::Int32 num5 = pls::cs::sub_i32(cs_left_132, cs_right_132);
+        pls::cs::Int32 num5 = pls::cs::sub_i32(cs_left_151, cs_right_151);
         pls::cs::Int32 num6 = (num5 % (((num4 + num4) + 32)));
         pls::cs::Int32 num7 = 0;
         if (num6 < num4) {
@@ -697,17 +705,15 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         }
         pls::cs::Int32 num8 = 0;
         if (num7 > 0) {
-            pls::cs::Int32 num9 =
-                pls::cs::conv_i32(game::GameUtil::SetVStop(static_cast<float>(-6000.0f), num4));
-            pls::cs::Int32 num10 =
-                pls::cs::conv_i32(game::GameUtil::SetAStop(static_cast<float>(-6000.0f), num4));
+            pls::cs::Int32 num9 = pls::cs::conv_i32(game::GameUtil::SetVStop(-6000.0f, num4));
+            pls::cs::Int32 num10 = pls::cs::conv_i32(game::GameUtil::SetAStop(-6000.0f, num4));
             num8 = ((num9 * num7) + (((num10 * num7) * ((num7 + 1))) / 2));
         }
         {
             auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
             pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(2);
-            float cs_arg1 = 0.0f;
-            float cs_arg2 = static_cast<float>(((num3 + num) + (num8 / 1000)));
+            pls::cs::Single cs_arg1 = 0.0f;
+            pls::cs::Single cs_arg2 = ((num3 + num) + (num8 / 1000));
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
@@ -725,21 +731,21 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             require(g)->SetColor(0, 0, 0, 96);
             {
                 auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
-                float cs_arg0 = static_cast<float>(((120 - (num11 / 2)) - 1));
-                float cs_arg1 = static_cast<float>((pls::cs::Single(num12) - 0.5f));
-                float cs_arg2 = static_cast<float>((num11 + 2));
-                float cs_arg3 = static_cast<float>(
+                pls::cs::Single cs_arg0 = ((120 - (num11 / 2)) - 1);
+                pls::cs::Single cs_arg1 = (pls::cs::Single(num12) - 0.5f);
+                pls::cs::Single cs_arg2 = (num11 + 2);
+                pls::cs::Single cs_arg3 =
                     pls::cs::add_i32(require(require(g)->GetFont(static_cast<pls::cs::Ref<pls::kairo::Font>>(
                                                  pls::cs::Ref<pls::kairo::Font>{})))
                                          ->GetHeight(),
-                                     1));
+                                     1);
                 if (!cs_receiver) {
                     throw pls::cs::NullReferenceException();
                 }
                 cs_receiver->FillRect(cs_arg0, cs_arg1, cs_arg2, cs_arg3);
             }
             require(g)->SetColor(255, 255, 255);
-            require(g)->DrawString(text, 120.0f, static_cast<float>(num12), 2);
+            require(g)->DrawString(text, 120.0f, num12, 2);
             require(g)->PopFont();
         }
     }
@@ -760,8 +766,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
             pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(3);
-            float cs_arg1 = static_cast<float>(num2);
-            float cs_arg2 = static_cast<float>(((num3 + num) + num14));
+            pls::cs::Single cs_arg1 = num2;
+            pls::cs::Single cs_arg2 = ((num3 + num) + num14);
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
@@ -775,8 +781,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
             pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(4);
-            float cs_arg1 = static_cast<float>(num15);
-            float cs_arg2 = static_cast<float>(num16);
+            pls::cs::Single cs_arg1 = num15;
+            pls::cs::Single cs_arg2 = num16;
             if (!cs_receiver) {
                 throw pls::cs::NullReferenceException();
             }
@@ -805,8 +811,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             {
                 auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                 pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(1);
-                float cs_arg1 = static_cast<float>(num20);
-                float cs_arg2 = static_cast<float>((num18 - 7));
+                pls::cs::Single cs_arg1 = num20;
+                pls::cs::Single cs_arg2 = (num18 - 7);
                 std::int32_t cs_arg3 = 0;
                 std::int32_t cs_arg4 = 0;
                 std::int32_t cs_arg5 = 106;
@@ -819,8 +825,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             {
                 auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                 pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(1);
-                float cs_arg1 = static_cast<float>(num20);
-                float cs_arg2 = static_cast<float>((num18 + 24));
+                pls::cs::Single cs_arg1 = num20;
+                pls::cs::Single cs_arg2 = (num18 + 24);
                 std::int32_t cs_arg3 = 0;
                 std::int32_t cs_arg4 = 36;
                 std::int32_t cs_arg5 = 106;
@@ -843,9 +849,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }
                         cs_receiver->SetColor(cs_arg0);
                     }
-                    require(g)->FillRect(static_cast<float>((num23 - (num21 / 2))),
-                                         static_cast<float>(((num18 + (num19 * i)) + 4)),
-                                         static_cast<float>(num21), 16.0f);
+                    require(g)->FillRect((num23 - (num21 / 2)), ((num18 + (num19 * i)) + 4), num21, 16.0f);
                     if ((kl_cfg::Config::TRIAL_VERSION()) && (kairo::unity::util::Language::English())) {
 
                     } else {
@@ -903,8 +907,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::String cs_arg0 = array[i];
-                    float cs_arg1 = static_cast<float>(num23);
-                    float cs_arg2 = static_cast<float>(((num18 + (num19 * i)) + 6));
+                    pls::cs::Single cs_arg1 = num23;
+                    pls::cs::Single cs_arg2 = ((num18 + (num19 * i)) + 6);
                     std::int32_t cs_arg3 = 2;
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
@@ -935,8 +939,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             {
                 auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                 pls::cs::String cs_arg0 = literal(u"2017/02/03 12:01:57");
-                float cs_arg1 = 2.0f;
-                float cs_arg2 = 18.0f;
+                pls::cs::Single cs_arg1 = 2.0f;
+                pls::cs::Single cs_arg2 = 18.0f;
                 std::int32_t cs_arg3 = pls::kairo::Graphics::GetColorOfRGB(255, 255, 255);
                 std::int32_t cs_arg4 = 1;
                 if (!cs_receiver) {
@@ -1011,18 +1015,18 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         pls::cs::Int32 dx = 42;
         pls::cs::Int32 dx2 = 199;
         pls::cs::Int32 num26 = (93 + num24);
-        require(g)->ClipRect(0.0f, static_cast<float>((num26 - 28)), 240.0f, 20.0f, true);
+        require(g)->ClipRect(0.0f, (num26 - 28), 240.0f, 20.0f, true);
         SubForm::Draw_chara(g, 171, 0, 0, frame_, dx, num26);
         SubForm::Draw_chara(g, 172, 0, 1, frame_, dx2, num26);
         require(g)->PopClip();
         if (selectSaveType_ == 0) {
             require(g)->DrawString(
                 literal(u"\u4E2D\u65AD\u30C7\u30FC\u30BF\u304B\u3089\u518D\u958B") /* "中断データから再開" */,
-                120.0f, static_cast<float>((num25 - 11)), 2);
+                120.0f, (num25 - 11), 2);
         } else {
             require(g)->DrawString(
                 literal(u"\u30BB\u30FC\u30D6\u30C7\u30FC\u30BF\u3092\u8AAD\u8FBC") /* "セーブデータを読込" */,
-                120.0f, static_cast<float>((num25 - 11)), 2);
+                120.0f, (num25 - 11), 2);
         }
         pls::cs::Int32 num27 = 29;
         pls::cs::Int32 num28 = 181;
@@ -1037,8 +1041,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::Ref<pls::kairo::Image> cs_arg0 =
                         require(require(apdat_)->resCom2_)->img.get_Item(193);
-                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL()[1][0]));
-                    float cs_arg2 = static_cast<float>(((num25 + 15) + TitleForm::IMG_SL()[1][1]));
+                    pls::cs::Single cs_arg1 = ((num27 + 10) + TitleForm::IMG_SL()[1][0]);
+                    pls::cs::Single cs_arg2 = ((num25 + 15) + TitleForm::IMG_SL()[1][1]);
                     std::int32_t cs_arg3 = TitleForm::IMG_SL()[1][2];
                     std::int32_t cs_arg4 = TitleForm::IMG_SL()[1][3];
                     std::int32_t cs_arg5 = TitleForm::IMG_SL()[1][4];
@@ -1058,19 +1062,18 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 }
                 require(g)->DrawString(
                     literal(u"\u4E2D\u65AD\u30C7\u30FC\u30BF\u306A\u3057") /* "中断データなし" */,
-                    static_cast<float>(((7 + num27) + (num28 / 2))), static_cast<float>((num25 + 15)), 2);
+                    ((7 + num27) + (num28 / 2)), (num25 + 15), 2);
                 require(g)->SetRenderMode(1, 128);
                 require(g)->SetColor(0, 0, 0);
-                require(g)->FillRect(static_cast<float>(num27), static_cast<float>(num25),
-                                     static_cast<float>(num28), static_cast<float>(num29));
+                require(g)->FillRect(num27, num25, num28, num29);
                 require(g)->SetRenderMode();
                 if ((selectSaveType_ == j) && require(apdat_)->IsTopForm(this)) {
                     {
                         auto cs_receiver = static_cast<pls::cs::Ref<kairo::unity::ui::Seb>>(
                             require(require(apdat_)->resCom2_)->seb.get_Item(61));
                         pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
-                        float cs_arg1 = static_cast<float>((((7 + num27) + num28) - 40));
-                        float cs_arg2 = static_cast<float>((num25 + 21));
+                        pls::cs::Single cs_arg1 = (((7 + num27) + num28) - 40);
+                        pls::cs::Single cs_arg2 = (num25 + 21);
                         pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg3 =
                             require(require(apdat_)->resCom2_)->img;
                         auto cs_arg4 = -1;
@@ -1090,16 +1093,16 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }
                         cs_receiver->SetColor(cs_arg0);
                     }
-                    require(g)->FillRect(static_cast<float>(((((7 + num27) + (num28 / 2)) - 36) - 5)),
-                                         static_cast<float>(((num25 + 15) - 1)), 82.0f, 14.0f);
+                    require(g)->FillRect(((((7 + num27) + (num28 / 2)) - 36) - 5), ((num25 + 15) - 1), 82.0f,
+                                         14.0f);
                 }
                 surface::GameView::AddTouch(g, 3, 0, (num25 - 5), 240, (num29 + 10), (0x20000 | j));
                 {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::Ref<pls::kairo::Image> cs_arg0 =
                         require(require(apdat_)->resCom2_)->img.get_Item(193);
-                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL()[0][0]));
-                    float cs_arg2 = static_cast<float>(((num25 + 15) + TitleForm::IMG_SL()[0][1]));
+                    pls::cs::Single cs_arg1 = ((num27 + 10) + TitleForm::IMG_SL()[0][0]);
+                    pls::cs::Single cs_arg2 = ((num25 + 15) + TitleForm::IMG_SL()[0][1]);
                     std::int32_t cs_arg3 = TitleForm::IMG_SL()[0][2];
                     std::int32_t cs_arg4 = TitleForm::IMG_SL()[0][3];
                     std::int32_t cs_arg5 = TitleForm::IMG_SL()[0][4];
@@ -1118,15 +1121,14 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     cs_receiver->SetColor(cs_arg0);
                 }
                 require(g)->DrawString(literal(u"\u7A7A\u304D\u30B9\u30ED\u30C3\u30C8") /* "空きスロット" */,
-                                       static_cast<float>(((7 + num27) + (num28 / 2))),
-                                       static_cast<float>((num25 + 15)), 2);
+                                       ((7 + num27) + (num28 / 2)), (num25 + 15), 2);
                 if ((selectSaveType_ == j) && require(apdat_)->IsTopForm(this)) {
                     {
                         auto cs_receiver = static_cast<pls::cs::Ref<kairo::unity::ui::Seb>>(
                             require(require(apdat_)->resCom2_)->seb.get_Item(61));
                         pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
-                        float cs_arg1 = static_cast<float>((((7 + num27) + num28) - 40));
-                        float cs_arg2 = static_cast<float>((num25 + 21));
+                        pls::cs::Single cs_arg1 = (((7 + num27) + num28) - 40);
+                        pls::cs::Single cs_arg2 = (num25 + 21);
                         pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg3 =
                             require(require(apdat_)->resCom2_)->img;
                         auto cs_arg4 = -1;
@@ -1146,8 +1148,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }
                         cs_receiver->SetColor(cs_arg0);
                     }
-                    require(g)->FillRect(static_cast<float>(((((7 + num27) + 90) - 42) - 5)),
-                                         static_cast<float>(((num25 + 7) - 1)), 94.0f, 14.0f);
+                    require(g)->FillRect(((((7 + num27) + 90) - 42) - 5), ((num25 + 7) - 1), 94.0f, 14.0f);
                 }
                 surface::GameView::AddTouch(g, 3, 0, (num25 - 5), 240, (num29 + 10), (0x20000 | j));
                 pls::cs::Int32 num31 = (1 - j);
@@ -1155,8 +1156,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::Ref<pls::kairo::Image> cs_arg0 =
                         require(require(apdat_)->resCom2_)->img.get_Item(193);
-                    float cs_arg1 = static_cast<float>(((num27 + 10) + TitleForm::IMG_SL()[num31][0]));
-                    float cs_arg2 = static_cast<float>(((num25 + 6) + TitleForm::IMG_SL()[num31][1]));
+                    pls::cs::Single cs_arg1 = ((num27 + 10) + TitleForm::IMG_SL()[num31][0]);
+                    pls::cs::Single cs_arg2 = ((num25 + 6) + TitleForm::IMG_SL()[num31][1]);
                     std::int32_t cs_arg3 = TitleForm::IMG_SL()[num31][2];
                     std::int32_t cs_arg4 = TitleForm::IMG_SL()[num31][3];
                     std::int32_t cs_arg5 = TitleForm::IMG_SL()[num31][4];
@@ -1179,8 +1180,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     pls::cs::String cs_arg0 =
                         require(require(apdat_)->sysSave_)
                             ->strs[pls::cs::add_i32(((((j == 0)) ? 6 : 2)), selectSave_)];
-                    float cs_arg1 = static_cast<float>(((7 + num27) + 90));
-                    float cs_arg2 = static_cast<float>((num25 + 7));
+                    pls::cs::Single cs_arg1 = ((7 + num27) + 90);
+                    pls::cs::Single cs_arg2 = (num25 + 7);
                     std::int32_t cs_arg3 = 2;
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
@@ -1217,8 +1218,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             auto cs_right = kl_lang::JString::ValueOfInt((num34 + 1));
                             return pls::cs::String::concat(cs_left, cs_right);
                         }()));
-                    float cs_arg2 = static_cast<float>((((7 + num27) + 70) - 72));
-                    float cs_arg3 = static_cast<float>((num25 + 24));
+                    pls::cs::Single cs_arg2 = (((7 + num27) + 70) - 72);
+                    pls::cs::Single cs_arg3 = (num25 + 24);
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
                     }
@@ -1232,8 +1233,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         kl_lang::JLong::ParseLong(
                             require(require(apdat_)->sysSave_)
                                 ->strs[pls::cs::add_i32(((((j == 0)) ? 8 : 4)), selectSave_)]));
-                    float cs_arg1 = static_cast<float>((num27 + 172));
-                    float cs_arg2 = static_cast<float>((num25 + 24));
+                    pls::cs::Single cs_arg1 = (num27 + 172);
+                    pls::cs::Single cs_arg2 = (num25 + 24);
                     std::int32_t cs_arg3 = 4;
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
@@ -1245,8 +1246,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         auto cs_receiver = static_cast<pls::cs::Ref<kairo::unity::ui::Seb>>(
                             require(require(apdat_)->resCom2_)->seb.get_Item(61));
                         pls::cs::Ref<pls::kairo::Graphics> cs_arg0 = g;
-                        float cs_arg1 = static_cast<float>(((7 + num27) + 145));
-                        float cs_arg2 = static_cast<float>((num25 + 12));
+                        pls::cs::Single cs_arg1 = ((7 + num27) + 145);
+                        pls::cs::Single cs_arg2 = (num25 + 12);
                         pls::cs::Array<pls::cs::Ref<pls::kairo::Image>> cs_arg3 =
                             require(require(apdat_)->resCom2_)->img;
                         auto cs_arg4 = -1;
@@ -1272,7 +1273,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             literal(
                 u"\u30C7\u30FC\u30BF\u3092\u9078\u629E\u3057\u3066\u304F\u3060\u3055\u3044") /* "データを選択してください" */
             ,
-            120.0f, static_cast<float>(num25), 2);
+            120.0f, num25, 2);
     }
     if (kl_cfg::Config::TRIAL_VERSION()) {
         {
@@ -1286,8 +1287,8 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
         {
             auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
             pls::cs::String cs_arg0 = literal(u"Lite Version");
-            float cs_arg1 = 235.0f;
-            float cs_arg2 = 5.0f;
+            pls::cs::Single cs_arg1 = 235.0f;
+            pls::cs::Single cs_arg2 = 5.0f;
             std::int32_t cs_arg3 = pls::kairo::Graphics::GetColorOfRGB(0, 0, 0);
             std::int32_t cs_arg4 = 4;
             if (!cs_receiver) {
@@ -1528,7 +1529,7 @@ void TitleForm::SetTouchValue(std::int32_t type, std::int32_t value) {
 bool TitleForm::OnTouchEvent(pls::cs::Ref<kairo::unity::surface::TouchEvent> e) {
     cfg::MyConfig::ensure_initialized();
 
-    if (!(system::form::LanguageForm::OnTouchEvent(e))) {
+    if (!(system::form::LanguageForm::OnTouchEventStatic(e))) {
         return false;
     }
     pls::cs::Ref<kairo::unity::surface::TouchComponent> component = require(e)->component;
@@ -1646,8 +1647,8 @@ void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
 // M:form.TitleForm.GetHashCode
 std::int32_t TitleForm::GetHashCode() {
     {
-        auto cs_receiver_134 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
-        return require(cs_receiver_134)->pls::cs::Object::GetHashCode();
+        auto cs_receiver_155 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+        return require(cs_receiver_155)->pls::cs::Object::GetHashCode();
     }
 }
 } // namespace form

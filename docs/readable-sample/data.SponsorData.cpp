@@ -36,14 +36,14 @@ static pls::cs::Array<pls::cs::String> SponsorData_difficultStr_storage{};
 
 static pls::cs::Ref<game::UserData> SponsorData_udat__storage{};
 
-void SponsorData::ensure_initialized() {
+static PLS_NOINLINE void cs_init_bd3043ac164d021f_slow(pls::cs::TypeInitFlag& flag) {
     static pls::cs::GcRootProvider roots([](const pls::cs::EdgeVisitor& visitor) {
         pls::cs::trace_value(SponsorData_apdat__storage, visitor);
         pls::cs::trace_value(SponsorData_difficultStr_storage, visitor);
         pls::cs::trace_value(SponsorData_udat__storage, visitor);
     });
     static pls::cs::TypeInitState state;
-    state.run("data.SponsorData", []() {
+    state.run("data.SponsorData", flag, []() {
         SponsorData_difficultStr_storage =
             pls::cs::evaluate_type_initializer_field("F:data.SponsorData.difficultStr", [&]() {
                 return pls::cs::Array<pls::cs::String>::from({literal(u"\u7C21\u5358") /* "簡単" */,
@@ -51,6 +51,14 @@ void SponsorData::ensure_initialized() {
                                                               literal(u"\u96E3\u3057\u3044") /* "難しい" */});
             });
     });
+}
+
+void SponsorData::ensure_initialized() {
+    static pls::cs::TypeInitFlag flag;
+    if (flag.ready()) {
+        return;
+    }
+    cs_init_bd3043ac164d021f_slow(flag);
 }
 
 pls::cs::Ref<main::AppData>& SponsorData::apdat_() {
@@ -189,8 +197,8 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
         auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
         pls::cs::Ref<pls::kairo::Image> cs_arg0 =
             require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
-        float cs_arg1 = static_cast<float>((dx - 10));
-        float cs_arg2 = static_cast<float>((dy - 30));
+        pls::cs::Single cs_arg1 = (dx - 10);
+        pls::cs::Single cs_arg2 = (dy - 30);
         std::int32_t cs_arg3 = (20 * ((charaId % 12)));
         std::int32_t cs_arg4 = (30 * ((charaId / 12)));
         std::int32_t cs_arg5 = 20;
@@ -205,14 +213,14 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
 // M:data.SponsorData.GetIncome
 std::int32_t SponsorData::GetIncome() {
     {
-        std::int32_t cs_arg0_21 = satisfactPoint_;
-        std::int32_t cs_arg1_21 = 0;
-        std::int32_t cs_arg2_21 = 100;
-        std::int32_t cs_arg3_21 = income_[0];
-        std::int32_t cs_arg4_21 = income_[1];
-        bool cs_arg5_21 = true;
-        return game::GameUtil::RateConvert(cs_arg0_21, cs_arg1_21, cs_arg2_21, cs_arg3_21, cs_arg4_21,
-                                           cs_arg5_21);
+        std::int32_t cs_arg0_23 = satisfactPoint_;
+        std::int32_t cs_arg1_23 = 0;
+        std::int32_t cs_arg2_23 = 100;
+        std::int32_t cs_arg3_23 = income_[0];
+        std::int32_t cs_arg4_23 = income_[1];
+        bool cs_arg5_23 = true;
+        return game::GameUtil::RateConvert(cs_arg0_23, cs_arg1_23, cs_arg2_23, cs_arg3_23, cs_arg4_23,
+                                           cs_arg5_23);
     }
 }
 

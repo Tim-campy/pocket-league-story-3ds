@@ -111,7 +111,7 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 if (is_null(selectButtons_[i])) {
                     continue;
                 }
-                pls::cs::Single num5 = static_cast<float>(([&]() -> float {
+                pls::cs::Single num5 = pls::cs::Single(([&]() -> pls::cs::Single {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Font>>(font);
                     pls::cs::String cs_arg0 = selectButtons_[i];
                     if (!cs_receiver) {
@@ -136,15 +136,15 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                     ((120 - (((pls::cs::sub_i32((selectButtons_).length(), 1)) * num6) / 2)) + (j * num6));
                 if (j == select_) {
                     require(g)->SetColor(SubForm::SC_WINDOW_SELECT());
-                    require(g)->FillRect(static_cast<float>(((pls::cs::Single(num9) - (num4 / 2.0f)) - 5.0f)),
-                                         164.0f, static_cast<float>((num4 + 10.0f)), 17.0f);
+                    require(g)->FillRect(((pls::cs::Single(num9) - (num4 / 2.0f)) - 5.0f), 164.0f,
+                                         (num4 + 10.0f), 17.0f);
                 }
                 require(g)->SetColor(SubForm::SC_WINDOW_BLACK());
                 {
                     auto cs_receiver = static_cast<pls::cs::Ref<pls::kairo::Graphics>>(g);
                     pls::cs::String cs_arg0 = selectButtons_[j];
-                    float cs_arg1 = static_cast<float>(num9);
-                    float cs_arg2 = 167.0f;
+                    pls::cs::Single cs_arg1 = num9;
+                    pls::cs::Single cs_arg2 = 167.0f;
                     std::int32_t cs_arg3 = 2;
                     if (!cs_receiver) {
                         throw pls::cs::NullReferenceException();
@@ -210,5 +210,5 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 require(g)->DrawString(literal(u"\u59EB\u5DDD\u30C1\u30A2\u5B50") /* "姫川チア子" */, 84.0f,
                                        174.0f);
             } else if (humanCharaType_ == 1) {
-    // ... (1323 more lines in the full unit)
+    // ... (1296 more lines in the full unit)
 }

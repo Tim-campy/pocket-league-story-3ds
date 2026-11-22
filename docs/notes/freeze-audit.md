@@ -265,3 +265,34 @@ Destino dos 32 checks que falharam no ensaio, conforme a proposta aprovada:
 | Assets e build | `sdl-and-assets`, `prepared-native-textures`, `resource-trace-events`, `resource-yield-control-model`, `legacy-assets`, `cmake-header-dependencies`, `bootstrap-order`, `boot-concurrency-inventory`, `reference` | pipeline do APK por hash, ordem de arranque, dependências de build, submódulo de referência intacto |
 | Diagnóstico | `diagnostic-instrumentation`, `diagnostic-profile-overhead`, `diagnostic-key-parser`, `diagnostic-route-runner`, `pc-memory-sampler`, `pc-metrics-aggregation`, `native-allocator-heap` | roteiros, contadores por método e medições continuam confiáveis (instrumentação mantida, decisão 1) |
 | Fora do `verify` | 85 roteiros com estresse (`run_readable_routes.py --frozen`), builds PC/ARM | comportamento do jogo inteiro depois de cada edição |
+
+## 8. Ensaio 2 sobre a árvore final (2026-11-22)
+
+Ramo local `freeze-rehearsal-2` (commit `5bc5944`, a partir de `8a98507`; sem tag,
+sem push). Árvore: legível final com as correções de desempenho (A) e os tipos
+numéricos estendidos (B), gerada de `build/claude-readable-b1`.
+
+| Passo | Resultado |
+|---|---|
+| `tools/freeze_tree.py` (troca da árvore) | 404 unidades do jogo (2 partes `.inc`) + 115 da KairoLibrary; cabeçalho de código mantido; nenhum "Do not edit" |
+| Tradutor arquivado | `tools/translator-archived/` |
+| Build PC (sem tradutor) | **PASS** — 6,67 MB, 597 s |
+| Build ARM `--frozen` | **PASS** — `.3dsx` 7.409.864 B, 2.004 s |
+| `menu-explore` (`--frozen-diagnostic`) | **PASS** — quadro 11.283, igual ao legível; 0 alertas |
+| `match-touch` (partida de referência) | **PASS** — quadro 2.972, igual ao legível; 0 alertas |
+| Verificação `--full`, seguindo após falhas | **99 PASS / 28 FAIL** (ensaio 1: 94 / 32) |
+
+Os 28 que falham são exatamente os destinos decididos na seção 7: 21 arquivados
+com o tradutor, 2 de regeneração, `progress` (livro-razão a congelar),
+`reachability-analysis` (a arquivar), `repository-tests` (só
+`test_diagnostic_leaf_manifest`, que vai com o tradutor) e 2 de ambiente do
+worktree (`tracing-measurements`, `private-resource-catalog`). Os 4 testes de
+plataforma reescritos e o novo `content-policy` passam. **Nenhuma dependência
+nova do tradutor.**
+
+Conjunto completo de roteiros sobre a árvore final (modo legível, antes da troca,
+mesmo código): 87 execuções, 85 concluídas, 0 alertas, 0 lacunas; cobertura
+1.576 (antes de B: 1.578; diferença em `Start_aura` e
+`AddCommandRunningRegist`, da simulação dependente da velocidade). Determinismo
+cruzado com o canônico atual: partida de referência com passos, estados e
+`rs/0003` idênticos.

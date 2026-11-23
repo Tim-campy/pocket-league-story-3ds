@@ -1689,7 +1689,7 @@ sealed partial class Lowerer {
         // takes the base pointer without needing the derived class's definition.
         if(readable&&receiver!=null&&receiverNode!=null&&(nativeCallee?.StartsWith("pls::generated::",StringComparison.Ordinal)??false)
             &&SymbolEqualityComparer.Default.Equals((model.GetTypeInfo(receiverNode).Type as INamedTypeSymbol)?.OriginalDefinition,method.ContainingType.OriginalDefinition)
-            &&LibraryForwarder(method.OriginalDefinition) is string forwarder)nativeCallee="member:"+forwarder;
+            &&LibraryForwarder(method.OriginalDefinition) is string forwarder)nativeCallee="member:"+forwarder+" PLS_DEP("+nativeCallee+") ";
         var nativeMember=nativeCallee?.StartsWith("member:",StringComparison.Ordinal)??false;
         if(method.IsGenericMethod&&nativeCallee==null){
             if(dispatch&&receiver!=null&&UnloweredGenericVirtual(method))throw new Unsupported(site,"overridden generic virtual method not lowered");

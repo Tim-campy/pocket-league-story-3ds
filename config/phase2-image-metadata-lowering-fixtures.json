@@ -30,10 +30,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.20667810004670173,
-    "native-compile": 56.15559370000847,
-    "managed-output": 0.48411920003127307,
-    "native-output": 0.28604459995403886
+    "csharp-compile": 0.20755709998775274,
+    "native-compile": 54.523067499976605,
+    "managed-output": 0.5174234999576584,
+    "native-output": 0.2058838999364525
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -111,11 +111,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/image-metadata-differential/Harness.exe",
-    "sha256": "293483d9c26220c9cc6b649aa95f158a033a915e88225cd7e75dd78628132565"
+    "sha256": "607df44fc3f72f5f0edba705001085240efd5d423e1e2691febe7fdb117eb905"
   },
   "source_oracle_executable": {
     "path": "build/translator/image-metadata-differential/Harness-managed.exe",
-    "sha256": "6c5edceca05f035da86aa0b8b06ffebeabc4a1efbe3440a7038edd93cda25d26"
+    "sha256": "d9b81d3843c9a6c935cbdce96a6734b3ecd0f66cea53bb7f7eb53a8c12675720"
   },
   "differential_runner_sha256": "f86bc128a08307ac6e87e54f7a0ae2e73e4604fce0f1f2952fe99b18ecc76a40",
   "runtime_sources": [
@@ -803,8 +803,8 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "41070aa261b43564e60d226ac40178062532f3584c210ccef89631830d803825",
-    "emission_source_sha256": "311c757254c1a01cbb3beb8c1da4c488d1d5d638ef32a7eedb463a40aa4082bb",
+    "translator_source_sha256": "e7d0cbece99d4c04a11bf02e32fc83e8b1193d9af77f3ccd89acb4c8ebdcee8c",
+    "emission_source_sha256": "88862bf0bcb46f4da6187ffb79323df9694df46734c59a9270946eeab1902aa6",
     "readable_source_sha256": [
       "e0b6ca3b258c94a50d54d01644fd791183c41000280dc4b3fd11bfef3dc6ae2f",
       "af63c6882d0c9627eb3af019a526fc5c4d2581100e1a6bcf4f26811a0137d451"

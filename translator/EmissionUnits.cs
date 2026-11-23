@@ -234,7 +234,10 @@ sealed partial class Lowerer {
     // A.4d: the inline member forwarders of a generic KairoLibrary class call their free
     // function unqualified (found by argument-dependent lookup on `this` when the template
     // is instantiated, after the function's declaration). The emitter marks them /*fwd*/.
-    static string UnqualifyForwarders(string text)=>Regex.Replace(text,@"/\*fwd\*/ (?:\w+::)*(\w+)\(","$1(");
+    static string UnqualifyForwarders(string text)=>Regex.Replace(Regex.Replace(text,@"/\*fwd\*/ (?:\w+::)*(\w+)\(","$1("),@" PLS_DEP\([^)]*\) ","");
+    // A member call to a forwarder carries PLS_DEP(free function) so the packaging includes
+    // that function's template definitions (it finds dependencies by name, not in comments); it is
+    // dropped when the file is written.
     static void WriteStable(string path,string text)=>WriteStableBytes(path,new UTF8Encoding(false).GetBytes(text.Replace("\r\n","\n")));
     // The input is generated C++, not an arbitrary source parser. Preserve every
     // byte of each complete declaration; strings/comments never affect braces.

@@ -41,3 +41,10 @@ cabeçalho de runtime nos dois lados. Instruções contadas não são tempo; o t
 - O custo zero não está provado instrução a instrução: um kernel ficou pior, e os
   outros iguais ou melhores. O critério que decide é o benchmark de menu e partida
   no New 3DS (passo a passo no relatório da rodada).
+
+## No aparelho (New 3DS XL, 2026-11-23, três execuções)
+
+Partida com média de 10,17 / 10,63 / 9,73 ms, contra 10,15–10,62 ms na rodada de
+2026-11-21 (antes do A.2) e 10,49–11,77 ms na v6; menu 6,50–6,71 ms. As 4
+instruções a mais de `Cal_evaCoatMulti9block` não aparecem no tempo do jogo:
+**custo não mensurável** no aparelho (`docs/benchmark-hardware.md`).

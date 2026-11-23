@@ -176,6 +176,40 @@ regra do `Finish` foi decidida depois do v6); o máximo estável acima vem dos
 frames por quadro (`stdout.log`) sem coleta. Na execução 3 a partida terminou
 dentro da janela (formulários 2 e 4).
 
+## Código legível da última passada do emissor (New 3DS XL, 2026-11-23, três execuções)
+
+Pacote `build/claude-sd-final` (árvore `build/claude-readable-final`, commit
+`e04f8dd`; `.3dsx` SHA-256 `7179e8c2…`). Os três `result-N.txt`, `stdout-N.log` e
+`stderr-N.log` têm o mesmo identificador de execução (rodada coerente).
+
+| Medida | exec. 1 | exec. 2 | exec. 3 | limite |
+|---|---|---|---|---|
+| Até o título | 13,00 s | 13,25 s | 13,18 s | — |
+| Menu: média | 6,50 ms | 6,71 ms | 6,66 ms | — |
+| Menu: maior quadro estável | 10,67 ms | 10,46 ms | 10,54 ms | 50 ms |
+| Menu: transições `Finish form.SubForm` (3; maior pausa / maior quadro) | 103,2 / 110,4 ms | 107,3 / 114,3 ms | 105,2 / 112,4 ms | 150 ms |
+| Partida: média | 10,17 ms | 10,63 ms | 9,73 ms | 20 ms |
+| Partida: p95 | 11,58 ms | 11,01 ms | 11,96 ms | — |
+| Partida: maior quadro sem coleta | ≤ 12 ms | ≤ 12 ms | 12,23 ms | 50 ms |
+| Partida: coleta explícita (pausa / quadro) | **114,2 / 124,0 ms** (q. 1.338) | **109,2 / 120,8 ms** (q. 1.290) | nenhuma | ver abaixo |
+| `PLS_THREAD_CORE` | 0 / 0, `unfenced` | 0 / 0, `unfenced` | 0 / 0, `unfenced` | — |
+
+- **Desempenho:** a partida voltou ao nível da v6 (10,49–11,77 ms) e da rodada
+  de 2026-11-21 (10,15–10,62 ms); o menu está abaixo da v6 (6,8–6,95 ms). Os tipos
+  inteiros do A.2 não têm custo mensurável no aparelho.
+- **Salvaguarda de threads:** as duas threads gerenciadas rodam no núcleo 0, o
+  da aplicação; a leitura sem barreira está justificada no aparelho.
+- **Coleta explícita na partida (2 de 3 execuções):** classificada `explicit`, sem
+  origem `Finish form.SubForm`. É a mesma coleta não classificada de 2026-11-20
+  (116,6 ms, quadro 1.353). No código do jogo há duas chamadas `JSystem.Gc()`
+  durante a partida, em `GameManager` (`GameManager.cs:446`, ao cruzar a metade do
+  tempo, e `GameManager.cs:507`, `ChangeState(0)`, reinício depois de gol). O log
+  não registra qual disparou: **UNKNOWN** (hipótese: o reinício depois de gol, que
+  varia de execução para execução). A pausa fica abaixo do limite das transições
+  (150 ms), mas a regra aprovada do critério 2 só classifica como transição as de
+  `Finish form.SubForm`; pela regra atual, este quadro conta como jogo estável e
+  passa o limite de 50 ms. Decisão do usuário.
+
 ## Referência no emulador (não é hardware)
 
 Azahar 2126.2, CPU 100%, mesma imagem (`ed1729a1…`; ver

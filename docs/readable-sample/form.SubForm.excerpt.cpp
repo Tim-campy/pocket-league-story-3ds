@@ -208,5 +208,5 @@ void SubForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                             pls::cs::String::concat(
                                 pls::cs::String::concat(require(playerData)->name_, literal(u" ")),
                                 require(playerData)->name2_),
-    // ... (784 more lines in the full unit)
+    // ... (774 more lines in the full unit)
 }

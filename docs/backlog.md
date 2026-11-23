@@ -105,3 +105,29 @@ interface usada pelo código gerado (`AGENTS.md`, seção 5, regra 9).
   3DS XL (v5, três execuções) a coleta de transição no menu custa 105,6–107,7 ms.
 - **Gatilho para reavaliar antes:** coletas por volume em jogo estável acima
   de 50 ms no aparelho.
+
+## Código do jogo depois do congelamento (forma, sem mudança de comportamento)
+
+### Uma grafia por tipo: `Graphics` (A.4e, adiado pelo usuário em 2026-11-23)
+
+O tipo C# `kairo.unity.ui.Graphics` aparece no C++ em duas grafias: a classe da
+plataforma `pls::kairo::Graphics` (escrita à mão; é o tipo dos objetos, `g`) e o
+namespace traduzido `kairo::unity::ui::Graphics`, com as constantes (`AQUA`, ...) e os
+métodos estáticos definidos em C# (`DrawString2`, `GetLineSpace`). O mesmo vale, em
+menor escala, para `Canvas`, `Font`, `Image` e `IApplication`. Uma só grafia exige
+que a classe da plataforma declare esses membros (ou os receba por um cabeçalho
+mantido junto com ela). Depois do congelamento o código deixa de ser gerado, e a
+unificação vira uma refatoração manual: mover os estáticos para a classe da
+plataforma e trocar as chamadas. Sem efeito em comportamento; verificação com os
+roteiros e os checks do código do jogo.
+
+### Coleções `Vector` como chamadas de membro (A.4d, parcial)
+
+As coleções genéricas da KairoLibrary têm membros que encaminham para as funções
+livres (`x->Size()` chama `Vector_2_Size(x)`); 120 chamadas do jogo já usam o membro.
+As 1.215 restantes têm receptor do tipo não genérico `java.util.Vector`
+(`Vector : Vector<object>`) e continuam como `Vector_2_Size(require(x))`: a forma de
+membro exige que a unidade inclua `java.util.Vector.hpp` (o tipo derivado completo),
+o que o empacotador do tradutor não sabia decidir. Depois do congelamento: incluir o
+cabeçalho onde falta e trocar as chamadas; o sufixo `_2` some se `Vector<T>` e
+`Vector` forem fundidos (o C# usa `Vector` só como apelido de `Vector<object>`).

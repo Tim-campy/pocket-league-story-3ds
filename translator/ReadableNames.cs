@@ -593,7 +593,7 @@ sealed partial class Lowerer {
             if(c=='\''){inChar=true;continue;}
             if(c=='{')depth++;
             else if(c=='}'){if(--depth<0)return null;}
-            else if(c=='r'&&String.CompareOrdinal(body,i,"return",0,6)==0&&(i==0||!(char.IsLetterOrDigit(body[i-1])||body[i-1]=='_'))&&(i+6>=body.Length||!(char.IsLetterOrDigit(body[i+6])||body[i+6]=='_')))returns.Add(i);
+            else if(depth==0&&c=='r'&&String.CompareOrdinal(body,i,"return",0,6)==0&&(i==0||!(char.IsLetterOrDigit(body[i-1])||body[i-1]=='_'))&&(i+6>=body.Length||!(char.IsLetterOrDigit(body[i+6])||body[i+6]=='_')))returns.Add(i);
         }
         if(depth!=0||inString||inChar||returns.Count>1)return null;
         if(returns.Count==1){
@@ -608,6 +608,41 @@ sealed partial class Lowerer {
             body=body[..at]+(simple||value.Length==0?"":value+";");
         }
         return "{"+body+"}";
+    }
+    // Readable (2026-11-23, item 2a): a statement lambda flattened to a block also has its
+    // declarations "T name = ([&]() -> R { ...; return E; }());" hoisted: the inner
+    // temporaries (renamed unique) come first, in the same order, then "T name = E;"
+    // ("T name = R(E);" when R differs from T, so the value still passes through R).
+    // A declaration with auto keeps its lambda (its type would change).
+    string? FlattenStatementDeep(string text){
+        var flat=FlattenStatementLambda(text);if(flat==null)return null;
+        var body=flat[1..^1];var output=new StringBuilder();
+        foreach(var statement in TopLevelStatements(body)){
+            var m=System.Text.RegularExpressions.Regex.Match(statement,@"^(\s*)((?:[\w:]+(?:<[^=;]*>)?)\s+(cs_\w+)\s*=\s*)(\(\[&\]\(\)\s*(?:->\s*([^{]+?))?\s*\{.*\}\(\)\))\s*;\s*$",System.Text.RegularExpressions.RegexOptions.Singleline);
+            if(m.Success&&!m.Groups[2].Value.TrimStart().StartsWith("auto ",StringComparison.Ordinal)&&HoistLambda(m.Groups[4].Value) is var(prefix,value)){
+                var declaredType=m.Groups[2].Value.Trim();declaredType=declaredType[..declaredType.LastIndexOf(m.Groups[3].Value,StringComparison.Ordinal)].Trim();
+                var returnType=m.Groups[5].Success?m.Groups[5].Value.Trim():"";
+                var converted=returnType.Length==0||returnType==declaredType?value:returnType+"("+value+")";
+                output.Append(m.Groups[1].Value+prefix+m.Groups[2].Value+converted+";");
+            }
+            else output.Append(statement);
+        }
+        return "{"+output+"}";
+    }
+    // Top-level statements of a block body (split after ';' and '}' at depth 0, strings skipped).
+    static IEnumerable<string> TopLevelStatements(string body){
+        int depth=0,start=0;bool inString=false,inChar=false,escape=false;
+        for(int i=0;i<body.Length;i++){
+            var c=body[i];
+            if(escape){escape=false;continue;}
+            if(inString||inChar){if(c=='\\')escape=true;else if(inString&&c=='"')inString=false;else if(inChar&&c=='\'')inChar=false;continue;}
+            if(c=='"'){inString=true;continue;}
+            if(c=='\''){inChar=true;continue;}
+            if(c=='{'||c=='(')depth++;
+            else if(c=='}'||c==')'){depth--;if(depth==0&&c=='}'&&(i+1>=body.Length||body[i+1]!='('&&body[i+1]!=')')){yield return body[start..(i+1)];start=i+1;}}
+            else if(c==';'&&depth==0){yield return body[start..(i+1)];start=i+1;}
+        }
+        if(start<body.Length)yield return body[start..];
     }
     // Readable C3b/A3: ([&]() -> T { auto cs_left = A; ...; return E; }()) used as the whole
     // value of a statement is split into the temporaries (made unique) followed by E.

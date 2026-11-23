@@ -192,7 +192,7 @@ sealed partial class Lowerer {
     // non-virtual calls (base.M()) name it qualified, Class::Slot(...).
     // A slot rooted in a runtime virtual keeps the runtime's plain signature (RuntimeSlotRoot),
     // so its body stays a static function behind a forwarding slot.
-    bool VirtualMember(IMethodSymbol m)=>MemberCandidate(m)&&!m.IsAbstract&&MethodSlots(m).Count()==1&&!(m.Name=="Equals"&&m.Parameters.Length==1)&&!(readableInt&&PlainSlot(m));
+    bool VirtualMember(IMethodSymbol m)=>MemberCandidate(m)&&!m.IsAbstract&&MethodSlots(m).Count()==1&&!(m.Name=="Equals"&&m.Parameters.Length==1)&&!(readableInt&&PlainSlot(m)&&m.Parameters.Any(p=>p.RefKind!=RefKind.None&&PlainTypes(true,()=>TypeName(p.Type))!=TypeName(p.Type)));
     bool InstanceMember(IMethodSymbol m)=>MemberMethod(m)||VirtualMember(m);
     // Readable A.4d: a non-virtual instance method of a generic KairoLibrary class (Vector<T>, ...)
     // stays a free function (Vector_2_Size(self)), and its class gets an inline member that
@@ -1724,8 +1724,14 @@ sealed partial class Lowerer {
                 if(readable&&r.Expression!=null&&HoistLambda(Converted(r.Expression,method.ReturnType)) is var(returnPrefix,returnValue))return "{"+returnPrefix+"return "+returnValue+";}";
                 return r.Expression==null?"return;":"return "+Converted(r.Expression,method.ReturnType)+";";
             case ExpressionStatementSyntax e:{
+                // Criterion 2 (2026-11-23): an explicit JSystem.Gc() of the game names its
+                // C# method for the collector's event log (pls::cs::GcCallSite; no effect on
+                // the collection itself).
+                if(readable&&compilation.AssemblyName=="Assembly-CSharp"&&e.Expression is InvocationExpressionSyntax gcCall
+                    &&model.GetSymbolInfo(gcCall).Symbol is IMethodSymbol{Name:"Gc",ContainingType:{Name:"JSystem"}}&&methods.TryGetValue(current,out var gcCaller))
+                    return "{\npls::cs::GcCallSite gc_site(\""+Id(gcCaller)+"\");\n"+Expr(e.Expression)+";\n}";
                 var statementText=(readable?ReadableEffect(e.Expression):null)??Expr(e.Expression);
-                if(readable&&FlattenStatementLambda(statementText) is string block)return block;
+                if(readable&&FlattenStatementDeep(statementText) is string block)return block;
                 return statementText+";";
             }
             case LocalDeclarationStatementSyntax l:{
@@ -2119,7 +2125,22 @@ sealed partial class Lowerer {
             if(MemberMethod(method)&&!hasServicePolicy)source=QualifyHelpers(template+result+" "+Name(method)+"("+parameters+") "+body,compilation.AssemblyName=="Assembly-CSharp");
             if(VirtualMember(method)){
                 // Body in the virtual member; `this` is the receiver (closures hold cs_outer).
-                source=QualifyHelpers(result+" "+QualifiedSlot(method)+"("+parameters+") "+System.Text.RegularExpressions.Regex.Replace(body,@"\bcs_this\b","this"),compilation.AssemblyName=="Assembly-CSharp");
+                var slotResult=result;var slotParameters=parameters;var slotBody=body;
+                if(readable&&PlainSlot(method)){
+                    // Item 2b (2026-11-23): a slot rooted in the runtime or the platform keeps that
+                    // root's plain signature (std::int32_t ...); the C# int parameters become
+                    // Int32 locals at entry, so the body is the same and there is one method.
+                    slotResult=PlainTypes(true,()=>TypeName(method.ReturnType));
+                    var ps=new List<string>();var prologue=new StringBuilder();
+                    foreach(var p in method.Parameters){
+                        var plain=PlainTypes(true,()=>ParameterType(p));var typed=ParameterDeclaration(p);
+                        if(p.RefKind==RefKind.None&&plain!=typed){ps.Add(plain+" "+Local(p)+"_raw");prologue.Append(typed+" "+Local(p)+" = "+Local(p)+"_raw;\n");}
+                        else ps.Add(plain+" "+Local(p));
+                    }
+                    slotParameters=String.Join(",",ps);
+                    if(prologue.Length!=0)slotBody="{\n"+prologue+body.TrimStart()[1..];
+                }
+                source=QualifyHelpers(slotResult+" "+QualifiedSlot(method)+"("+slotParameters+") "+System.Text.RegularExpressions.Regex.Replace(slotBody,@"\bcs_this\b","this"),compilation.AssemblyName=="Assembly-CSharp");
                 // Outside the game, a static entry keeps cross-assembly non-virtual calls.
                 if(compilation.AssemblyName!="Assembly-CSharp")source+="\n"+result+" "+Name(method)+"("+String.Join(",",new[]{Type(method.ContainingType,declaration)+" cs_this"}.Concat(method.Parameters.Select(p=>ParameterType(p)+" "+Local(p))))+") { "+(method.ReturnsVoid?"":"return ")+"cs_require(cs_this)->"+QualifiedSlot(method)+"("+String.Join(",",method.Parameters.Select(Local))+"); }";
             }

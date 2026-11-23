@@ -67,14 +67,6 @@ void TitleForm::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
     pls::cs::trace_value(zsort_mhobj, visitor);
 }
 
-std::int32_t TitleForm::GetHashCode() {
-    return TitleForm::GetHashCode(pls::cs::static_pointer_cast<TitleForm>(shared_from_this()));
-}
-
-void TitleForm::SetTouchValue(std::int32_t type, std::int32_t value) {
-    TitleForm::SetTouchValue(pls::cs::static_pointer_cast<TitleForm>(shared_from_this()), type, value);
-}
-
 static IntArray2 TitleForm_IMG_SL_storage{};
 
 static pls::cs::String TitleForm_kairoAdUrl_jp_storage{};
@@ -560,15 +552,13 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
 
     pls::cs::Ref<surface::GameView> instance = surface::GameView::GetInstance();
     SmartBeginPaint(g);
-    ([&]() -> void {
+    {
         pls::cs::Ref<pls::kairo::Image> cs_arg0 = require(resTitle_)->img.get_Item(0);
-        pls::cs::Single cs_arg2 = ([&]() -> pls::cs::Int32 {
-            auto cs_left = require(instance)->GetGameHeight();
-            auto cs_right = require(require(resTitle_)->img.get_Item(0))->GetHeight();
-            return cs_left - cs_right;
-        }());
+        auto cs_left_314 = require(instance)->GetGameHeight();
+        auto cs_right_314 = require(require(resTitle_)->img.get_Item(0))->GetHeight();
+        pls::cs::Single cs_arg2 = pls::cs::Int32(cs_left_314 - cs_right_314);
         require(g)->DrawImage(cs_arg0, 0.0f, cs_arg2);
-    }());
+    }
     pls::cs::Int32 num20, num, num2, num3;
     num3 = 0;
     num2 = num3;
@@ -589,9 +579,9 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
             return game::GameUtil::RateConvert(cs_arg0, cs_arg1, cs_arg2, 0, 134, true);
         }());
         pls::cs::Int32 num4 = 6;
-        auto cs_left_145 = titleFrame_;
-        auto cs_right_145 = TitleForm::title_anime()[pls::cs::Int32(TitleForm::title_anime().length()) - 1];
-        pls::cs::Int32 num5 = cs_left_145 - cs_right_145;
+        auto cs_left_315 = titleFrame_;
+        auto cs_right_315 = TitleForm::title_anime()[pls::cs::Int32(TitleForm::title_anime().length()) - 1];
+        pls::cs::Int32 num5 = cs_left_315 - cs_right_315;
         pls::cs::Int32 num6 = num5 % (num4 + num4 + 32);
         pls::cs::Int32 num7 = 0;
         if (num6 < num4) {
@@ -873,7 +863,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                 pls::cs::Int32 num33 = num30 % 10000 / 100;
                 pls::cs::Int32 num34 = num30 % 100;
                 require(g)->SetColor(pls::kairo::Graphics::GetColorOfRGB(30, 30, 30));
-                ([&]() -> void {
+                {
                     pls::cs::Ref<kairo::unity::ui::TextFormat> cs_arg0 = LF(literal(u"10,,+2"));
                     pls::cs::String cs_arg1 = MyFormBase::LT(
                         literal(u"<0>年<1>月<2>週"), ([&]() {
@@ -893,7 +883,7 @@ void TitleForm::_draw(pls::cs::Ref<pls::kairo::Graphics> g) {
                         }()));
                     kairo::unity::ui::Graphics::DrawStringTextFormatStringFloat(
                         require(g), cs_arg0, cs_arg1, 7 + num27 + 70 - 72, num25 + 24);
-                }());
+                }
                 {
                     pls::cs::String cs_arg0 = MyFormBase::YEN(
                         literal(u"万円"),
@@ -1006,7 +996,7 @@ void TitleForm::Update_titleAnime() {
         }
         if (num != -1) {
             ta_data[num][0] = 1;
-            ([&]() {
+            {
                 auto cs_target = ta_data[num];
                 auto cs_index = 1;
                 auto cs_value = ([&]() {
@@ -1015,8 +1005,7 @@ void TitleForm::Update_titleAnime() {
                     return cs_array.get_Item(cs_index);
                 }());
                 cs_target.set_Item(cs_index, cs_value);
-                return cs_value;
-            }());
+            }
             {
                 auto cs_target = ta_data[num];
                 auto cs_index = 4;
@@ -1109,21 +1098,22 @@ void TitleForm::Draw_titleAnime(pls::cs::Ref<pls::kairo::Graphics> g) {
 }
 
 // M:form.TitleForm.SetTouchValue(System.Int32,System.Int32)
-void TitleForm::SetTouchValue(pls::cs::Ref<TitleForm> self, pls::cs::Int32 type, pls::cs::Int32 value) {
-    require(self);
+void TitleForm::SetTouchValue(std::int32_t type_raw, std::int32_t value_raw) {
+    pls::cs::Int32 type = type_raw;
+    pls::cs::Int32 value = value_raw;
 
     type = pls::cs::to_int32((pls::cs::Int64(type) & pls::cs::Int64(0xFFFF0000u)));
     switch (type) {
     case 196608: {
-        self->selMenu_ = value;
+        selMenu_ = value;
         break;
     }
     case 131072: {
-        self->selectSaveType_ = value;
+        selectSaveType_ = value;
         break;
     }
     default: {
-        MyFormBase::SetTouchValue(pls::cs::static_pointer_cast<MyFormBase>(self), type, value);
+        MyFormBase::SetTouchValue(type, value);
         break;
     }
     }
@@ -1245,12 +1235,10 @@ void TitleForm::UpdateKairoAdClickNum(pls::cs::Int32 addClickNum) {
 }
 
 // M:form.TitleForm.GetHashCode
-pls::cs::Int32 TitleForm::GetHashCode(pls::cs::Ref<TitleForm> self) {
-    require(self);
-
+std::int32_t TitleForm::GetHashCode() {
     {
-        auto cs_receiver_149 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(self));
-        return require(cs_receiver_149)->pls::cs::Object::GetHashCode();
+        auto cs_receiver_319 = pls::cs::box(pls::cs::static_pointer_cast<MyFormBase>(this));
+        return require(cs_receiver_319)->pls::cs::Object::GetHashCode();
     }
 }
 } // namespace form

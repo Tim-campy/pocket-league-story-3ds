@@ -34,6 +34,15 @@ analisados pelo mesmo script para os dois (`tools/hardware_window_report.py`):
 
 As três coletas do menu repetem as da v6 (mesmos quadros 361, 397, 415, mesmas
 pausas): são as explícitas de `Finish form.SubForm`, transição pela regra.
+
+**Regra ampliada (decisão do usuário, 2026-11-23).** As duas coletas explícitas da
+partida em `GameManager` (`Update`, meio do tempo de jogo, `GameManager.cs:446`;
+`ChangeState(0)`, reinício após gol, `GameManager.cs:507`) também são transição,
+limite 150 ms. O código legível marca cada `JSystem.Gc()` do jogo com o método C#
+que a pediu (`pls::cs::GcCallSite`), e o benchmark registra essa origem; antes saía
+`source=-`. Benchmark de 2026-11-23 (New 3DS XL, três execuções): essas coletas com
+pausa 109–114 ms e quadro 121–124 ms (2 de 3 execuções); partida 9,7–10,6 ms; menu
+6,5–6,7 ms. **Critério 2 cumprido** com a regra ampliada.
 **A execução 2 tem uma coleta de 116,6 ms no quadro 1.353 da partida** (quadro
 de 132,5 ms) que não ocorreu nas execuções 1 e 3 nem no Azahar. A classificação
 dela (volume, carregamento, transição ou explícita) só está no `result.txt`

@@ -26,11 +26,11 @@
     "src/kairo/common/managed_encoding.hpp": "cf5f1b389d88b89746164493d9d31a77565acfce65d1581732692a368c994d66",
     "src/kairo/common/managed_stream_reader.hpp": "0bd9fcd7c84dbc1068a5db20fdb49a731949d13375fa5247e72e185b1d139441",
     "src/kairo/common/managed_streams.hpp": "905ddda115192043f5cd67843a539f5c3e0b4d48c44dd141431beb91f057eab5",
-    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9"
+    "src/kairo/common/semantic_runtime.hpp": "e1a925dfc989e2a4bf93ef2538bcdd85e7bbb2e857747b013a3cf3e9fe7b6774"
   },
   "native_executable": {
     "path": "build/stream-reader-fixtures/stream-reader-fixtures.exe",
-    "sha256": "05dabe96f7e3162dd938d7813c806d8c20225c9801c31778662fd9d798bdf6c1"
+    "sha256": "d9cddad5986ec94d9a723718ea5da1536caad9d3b4d88c6fa7d76749aca8084e"
   },
   "production_methods_promoted": 0,
   "original_game_binary_loaded": false

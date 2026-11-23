@@ -780,10 +780,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 1.2682657999685034,
-    "native-compile": 373.14251440006774,
-    "managed-output": 44.41375309997238,
-    "native-output": 64.83207650005352
+    "csharp-compile": 1.5215832000831142,
+    "native-compile": 381.4962365999818,
+    "managed-output": 49.86629320005886,
+    "native-output": 65.92605659994297
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -1273,11 +1273,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/differential/Harness.exe",
-    "sha256": "4c49ba1b0ab5852f33b7d664e7db871865ad825cc7a9b8be947cda72d4fb42b6"
+    "sha256": "61e6182c8aefe862a372f792370967c4101a6441c3dd0aaf3502f6370630fbbd"
   },
   "source_oracle_executable": {
     "path": "build/translator/differential/Harness-managed.exe",
-    "sha256": "59af897dd032c97a73fe5c284309dcf02b715c7fcc2cc2f1f06751a799af63ab"
+    "sha256": "0dc60f789d1534d9f4a26fed90f9a2cac59b1db2c4baf56df7fc49910a238a6f"
   },
   "differential_runner_sha256": "f86bc128a08307ac6e87e54f7a0ae2e73e4604fce0f1f2952fe99b18ecc76a40",
   "runtime_sources": [
@@ -2071,7 +2071,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9"
+      "sha256": "e1a925dfc989e2a4bf93ef2538bcdd85e7bbb2e857747b013a3cf3e9fe7b6774"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -2111,7 +2111,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "490642ee09d8aaa63c6445381981bc204ad8953690482b7546cb3e3d59f49ca4"
+      "sha256": "3e0ca1f252899f20490270433d0651802834e779f1c40cf17c62ef767e5d563d"
     },
     {
       "path": "src/runtime/managed_reference.hpp",

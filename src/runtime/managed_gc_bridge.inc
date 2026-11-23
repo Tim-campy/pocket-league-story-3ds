@@ -116,6 +116,7 @@ namespace pls::cs {
 namespace {
 std::mutex gc_event_mutex;std::array<GcEvent,64> gc_event_ring{};std::uint64_t gc_event_sequence=0;
 char gc_pending_source[48]{};char gc_explicit_context[48]{};
+thread_local const char* gc_call_site=nullptr;   // GcCallSite: method around an explicit JSystem.Gc
 void gc_collect_as(GcTrigger trigger,const char* source);
 }
 void gc_collect(std::int32_t generation){
@@ -124,8 +125,14 @@ void gc_collect(std::int32_t generation){
     // Criterion 2 (user decision 2026-11-13): an explicit source collection
     // inside a form Finish (e.g. JSystem.Gc in SubForm.Finish) is a transition.
     const bool in_finish=std::strncmp(context,"Finish ",7)==0;
-    gc_collect_as(in_finish?GcTrigger::transition:GcTrigger::explicit_call,context[0]?context:nullptr);
+    // Without a platform context, the source is the C# method around the call.
+    const char* site=gc_call_site;
+    const bool game_transition=!context[0]&&site&&(std::strcmp(site,"M:game.GameManager.Update")==0||std::strcmp(site,"M:game.GameManager.ChangeState(System.Int32)")==0);
+    const char* source=context[0]?context:site;
+    gc_collect_as(in_finish||game_transition?GcTrigger::transition:GcTrigger::explicit_call,source);
 }
+GcCallSite::GcCallSite(const char* method)noexcept:previous_(gc_call_site){gc_call_site=method;}
+GcCallSite::~GcCallSite(){gc_call_site=previous_;}
 void gc_context(const char* context){
     std::lock_guard<std::mutex>lock(gc_event_mutex);std::size_t i=0;
     if(context)for(;context[i]&&i+1<sizeof(gc_explicit_context);++i)gc_explicit_context[i]=context[i];

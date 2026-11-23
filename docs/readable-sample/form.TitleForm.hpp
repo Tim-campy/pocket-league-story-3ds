@@ -71,10 +71,6 @@ struct TitleForm : MyFormBase {
     static constexpr pls::cs::Int32 TITLE_INIT_PY_MIN = 228;
     static constexpr pls::cs::Int32 TITLE_INIT_PY_MAX = 238;
     static constexpr pls::cs::Int32 TITLE_MOVE_V = 1;
-    static pls::cs::Int32 GetHashCode(pls::cs::Ref<TitleForm> self);
-
-    static void SetTouchValue(pls::cs::Ref<TitleForm> self, pls::cs::Int32 type, pls::cs::Int32 value);
-
     static void ensure_initialized();
 
     static pls::cs::Array<pls::cs::Array<pls::cs::Int32>>& IMG_SL();

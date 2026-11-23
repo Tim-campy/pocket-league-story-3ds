@@ -15,14 +15,14 @@
     "src/kairo/common/managed_thread.cpp": "0bf2dfd32f530779799568e1a9575aca6a368b80905cbaff53dd4d18deea9edc",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
-    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9",
+    "src/kairo/common/semantic_runtime.hpp": "e1a925dfc989e2a4bf93ef2538bcdd85e7bbb2e857747b013a3cf3e9fe7b6774",
     "src/kairo/common/managed_thread.hpp": "2580d462b364f7c77717e7864879ad79361f40cc6539341358f57239ffccd0bc",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431"
   },
   "native_executable": {
     "path": "build/shared-field-fixtures/shared-field-fixtures.exe",
-    "sha256": "55f570d80c2cd7574feb92534550620ce471d07c820b7d013868f48d166997e6"
+    "sha256": "81e5d8f5e09327887b9be7203b0daf8061dc272048ee5cac7d83440983e5bfe0"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

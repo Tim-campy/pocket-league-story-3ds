@@ -107,6 +107,13 @@ void stress_and_poison() {
         kept->edge = make<Node>(heap, &Node::trace);
         roots.push_back(kept);
         hidden = reinterpret_cast<std::uintptr_t>(make<Node>(heap, &Node::trace)) ^ UINT64_C(0x5a5a5a5a5a5a5a5a);
+    });
+    // The collecting allocations run in a second isolated worker, which starts on a
+    // cleared stack: in the first worker, the frames that returned the unrooted object
+    // keep its address in slots the following calls do not overwrite, and the
+    // conservative stack scan retained it in about 1 of 10 runs (measured with
+    // PLS_GC_ROOT_TRACE, 2026-11-23: words in make<Node> and Heap::safepoint frames).
+    isolated(heap, [&] {
         for (int i = 0; i < 8; ++i) (void)make<Node>(heap, &Node::trace); // Each allocation collects.
     });
     const auto stats = heap.stress_statistics();
@@ -120,7 +127,8 @@ void stress_and_poison() {
     check(poisoned); // A later use of the unrooted object reads the poison pattern.
     heap.stress(0, false, 0);
     roots.clear();
-    isolated(heap, [&] { heap.collect(); });
+    // Exact reclamation: no caller stack or registers (this thread just read roots[0]).
+    collect_without_caller_roots(heap);
     check(heap.statistics().objects == 0);
     check(heap.stress_statistics().poisoned_objects == stats.poisoned_objects); // Off: no further poisoning.
 }

@@ -510,10 +510,10 @@
   "post_state_compared": true,
   "original_binaries_used": false,
   "execution_seconds": {
-    "csharp-compile": 0.6524642999283969,
-    "native-compile": 208.8789539000718,
-    "managed-output": 0.6387927000178024,
-    "native-output": 0.5462405999423936
+    "csharp-compile": 0.7694860000628978,
+    "native-compile": 219.81557570002042,
+    "managed-output": 0.7364445999264717,
+    "native-output": 0.740522800013423
   },
   "game_executed": false,
   "runtime_profile": "UnityMono265; actual Unity 5.3.4f1 SDK Mono source oracle, culture fixed invariant before first source type initialization",
@@ -863,11 +863,11 @@
   "native_compiler_sha256": "c94cdac6a780142920110e5cb8b7339817029eead696e0e97700b45e03216a00",
   "native_executable": {
     "path": "build/translator/lowering-differential/Harness.exe",
-    "sha256": "9dc3db26d48f7eb4bf6b40a8cda740568875e6d94026685bde2e26f145f976ba"
+    "sha256": "6596dd51620350026387d24cdcfe2c2df2381d2bcf90ca3e549045d9796426b5"
   },
   "source_oracle_executable": {
     "path": "build/translator/lowering-differential/Harness-managed.exe",
-    "sha256": "60c6f2d9978e42639d7bc5d430b1765eae8448e1d7956228ac2a1856b6359ebf"
+    "sha256": "5b091e07cd98b29e036a1368655ec8c1b30993103d3da7924bab59b96d8e23cb"
   },
   "differential_runner_sha256": "f86bc128a08307ac6e87e54f7a0ae2e73e4604fce0f1f2952fe99b18ecc76a40",
   "runtime_sources": [
@@ -1753,7 +1753,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9"
+      "sha256": "e1a925dfc989e2a4bf93ef2538bcdd85e7bbb2e857747b013a3cf3e9fe7b6774"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -1789,7 +1789,7 @@
     },
     {
       "path": "src/runtime/managed_gc_bridge.inc",
-      "sha256": "490642ee09d8aaa63c6445381981bc204ad8953690482b7546cb3e3d59f49ca4"
+      "sha256": "3e0ca1f252899f20490270433d0651802834e779f1c40cf17c62ef767e5d563d"
     },
     {
       "path": "src/runtime/managed_reference.hpp",
@@ -1827,10 +1827,10 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "e7d0cbece99d4c04a11bf02e32fc83e8b1193d9af77f3ccd89acb4c8ebdcee8c",
+    "translator_source_sha256": "b9cd34ffea5231f104ddb90dcbff8075b8108c7947d7612524a22567d4eac0db",
     "emission_source_sha256": "88862bf0bcb46f4da6187ffb79323df9694df46734c59a9270946eeab1902aa6",
     "readable_source_sha256": [
-      "e0b6ca3b258c94a50d54d01644fd791183c41000280dc4b3fd11bfef3dc6ae2f",
+      "eb458c16ad0d3959164f1782d72ea5bad3d49f176dfb500319f0e4779665c1a6",
       "af63c6882d0c9627eb3af019a526fc5c4d2581100e1a6bcf4f26811a0137d451"
     ],
     "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"

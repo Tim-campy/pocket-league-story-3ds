@@ -270,6 +270,19 @@ std::vector<GcEvent> gc_events_after(std::uint64_t sequence);
 // Platform context for explicit collections (e.g. "Finish form.SubForm");
 // copied into the event source. Null clears it. UI thread only.
 void gc_context(const char* context);
+// Origin of an explicit source collection (JSystem.Gc), set around each call by the
+// translated game code: the C# method that asked for it ("M:game.GameManager.Update").
+// Used when no platform context (Finish/Init) is active, so the benchmark names it.
+// Criterion 2 (user decision 2026-11-23): the explicit collections of GameManager.Update
+// (half-time midpoint) and GameManager.ChangeState (kick-off after a goal) are transitions.
+class GcCallSite {
+    const char* previous_;
+public:
+    explicit GcCallSite(const char* method)noexcept;
+    ~GcCallSite();
+    GcCallSite(const GcCallSite&)=delete;
+    GcCallSite& operator=(const GcCallSite&)=delete;
+};
 void gc_frame_end();
 // Loading safe point: collects only when the volume threshold is due. Called
 // by the platform after a synchronous UI-thread call returns (the slice loop

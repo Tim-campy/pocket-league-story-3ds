@@ -29,7 +29,7 @@ Os números deste arquivo são um retrato do momento da troca de agente. Se dive
 | Critério do congelamento | Estado |
 |---|---|
 | 1. Tradução completa | 1.768 de 1.958 métodos do jogo compilam; 190 corpos e 22 slots virtuais pendentes; 26 das 53 políticas offline por integrar |
-| 2. Coletor e desempenho | **Cumprido em 2026-11-14** (v6 `68634525`, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida; transições (`JSystem.Gc` em `SubForm.Finish`) com pausa máx. 111,3 ms / frame 118,8 ms, limite 150 ms; partida média 10,5–11,8 ms. Ressalva: medição com vídeo refeita na Fase 4 |
+| 2. Coletor e desempenho | **Cumprido em 2026-11-14** (v6 `68634525`, New 3DS XL, três execuções): jogo estável máx. 11,0 ms no menu e 25,9 ms na partida; transições (`JSystem.Gc` em `SubForm.Finish` e, desde 2026-11-23, as explícitas de `GameManager.Update`/`ChangeState(0)` na partida) com pausa máx. 111,3 ms / frame 118,8 ms, limite 150 ms; partida média 10,5–11,8 ms. Código legível final (2026-11-23): partida 9,7–10,6 ms; coleta explícita de `GameManager` 109–114 ms / frame 121–124 ms. Ressalva: medição com vídeo refeita na Fase 4 |
 | 3. Percurso completo no PC | Título, saves, gestão, partida completa e retorno funcionam. Temporada e roteiro de cobertura pendentes; 776 métodos exercitados |
 | 4a. Fidelidade do código gerado | Regra de ponto flutuante confirmada em emulador Android ARM e adotada; `ref` de campo nulo e `JMath.Sin(-0)` decididos (iguais ao Mono ARM); resta a repetição em aparelho (usuário) |
 | 4b. Telas (Fase 4) | Comparação de telas com o original e medição com vídeo real, na Fase 4 (decisão de 2026-11-16) |

@@ -4,13 +4,13 @@
   "arm_fixture": {
     "build": {
       "path": "build/ctr-gc-fixture/build-proof.json",
-      "sha256": "a428d82f672a89e5e090290f5ca050d1c7a43c364ed739112fea290f22b56984"
+      "sha256": "2493a0536b4719b408df8e0620fece33cefb982cbeb7a858e8ac8d92e8cabe58"
     },
     "inputs": {
       "src\\runtime\\tracing_gc.cpp": "2944d3884bc9f95513746e1cfb8a8b4ebd4073a2160b9c3c0d906edfcd28c767",
       "src\\runtime\\tracing_gc.hpp": "2884c7ec0fddec33b251aff33b0b360b53230066fa28fbf4e8aaaa6ca86faaef",
       "src\\runtime\\ctr_stack_bounds.hpp": "0c549012e21a46feb216cabb12bbdbe94e984d6ea98236c24f41ef9cc0c4821f",
-      "tests\\translator\\tracing_gc_fixtures.cpp": "b9da81c9bb2b5c649243e0d61038b218b5077cb7622db9c3d682a217c6b8dec0",
+      "tests\\translator\\tracing_gc_fixtures.cpp": "f3d7379cfec73249a9884f02b729343623301b8e34f035dea9444c5cd6247eaa",
       "tests\\translator\\tracing_gc_register_arm.S": "a514f12e6a81dc02c11e6b57ff3ab308300654f0a5e4879c32aabd0a14af1b94",
       "tools\\ctr-gc-fixture\\CMakeLists.txt": "ba7fc74d5d01f8e63e7f97f5fc2392f47218e73d2a275184cddf0165d7eb8ff6",
       "tools\\build_ctr_gc_fixture.py": "1c6bca9200c181eb02f28ab7ac9af9ad7bde1e0eb7c7b82508bf30c3407f7da2",
@@ -18,7 +18,7 @@
       "src\\runtime\\ctr_thread_lifecycle.cpp": "fedd7a7d278357943fadfbb0f81155ec5f5b6e8cbdb20d1f57c121687b58f1bc",
       "tools\\cmake\\ctr_thread_lifecycle.cmake": "0f540cf001fd74f664ac062ba6515098ad2d681267b4e1a82be1b56e224e257a"
     },
-    "image_sha256": "a207c45447ebcef3850412f54575badaabbb9143a997b175dcf77a1c3a2cd9e6",
+    "image_sha256": "d3cb4b3eff3e278b65e68563939e58b31744ecbc9e0b8ae599eead27641a9fa1",
     "runs": [
       {
         "model": "new",
@@ -26,9 +26,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-new/result.json",
-          "sha256": "91f2deb0c86c0bd02dca98d61f9ebe54ceb3ec67288d72fc785b1ae69a9d0ce8"
+          "sha256": "c27898266190934c1f73c04286eb3daada46e1e588beec1475d43069544baac1"
         },
-        "emulator_log_sha256": "8fc82c843b1df1668184b5040ce50e001e27586ac10c56ab24f72ed65aef4970"
+        "emulator_log_sha256": "45c2d7e9ee6785bcd0bc35904c82bdd9c4d7ee870c278d0c9d3b0f9add2505a0"
       },
       {
         "model": "old",
@@ -36,9 +36,9 @@
         "status": "PASS",
         "evidence": {
           "path": "build/ctr-gc-fixture/bulk-null-old/result.json",
-          "sha256": "ba565598ccc030d9ada0214c45dc63e4a9d9237723e91ff372ad833e57c0de8e"
+          "sha256": "2d7d0c428ea9a0e3bb7e8d097a33cacb4fbc81f4a7a82eab7666ba4cc2ea861b"
         },
-        "emulator_log_sha256": "47e2908ebc6171a5c5e2645b367d6c592b8b025cd643b187a928e85cc169318d"
+        "emulator_log_sha256": "e395fde50fd69db5f7b7fb05d6c3547d801faa0f3fb6c3beb290f25e748e01be"
       }
     ],
     "game_boot": false,

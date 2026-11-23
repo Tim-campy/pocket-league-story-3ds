@@ -200,10 +200,10 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
 // M:data.SponsorData.GetIncome
 pls::cs::Int32 SponsorData::GetIncome() {
     {
-        pls::cs::Int32 cs_arg0_23 = satisfactPoint_;
-        pls::cs::Int32 cs_arg3_23 = income_[0];
-        pls::cs::Int32 cs_arg4_23 = income_[1];
-        return game::GameUtil::RateConvert(cs_arg0_23, 0, 100, cs_arg3_23, cs_arg4_23, true);
+        pls::cs::Int32 cs_arg0_36 = satisfactPoint_;
+        pls::cs::Int32 cs_arg3_36 = income_[0];
+        pls::cs::Int32 cs_arg4_36 = income_[1];
+        return game::GameUtil::RateConvert(cs_arg0_36, 0, 100, cs_arg3_36, cs_arg4_36, true);
     }
 }
 

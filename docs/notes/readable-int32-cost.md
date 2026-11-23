@@ -48,3 +48,29 @@ Partida com média de 10,17 / 10,63 / 9,73 ms, contra 10,15–10,62 ms na rodada
 2026-11-21 (antes do A.2) e 10,49–11,77 ms na v6; menu 6,50–6,71 ms. As 4
 instruções a mais de `Cal_evaCoatMulti9block` não aparecem no tempo do jogo:
 **custo não mensurável** no aparelho (`docs/benchmark-hardware.md`).
+
+## Ajustes finais de emissão (2026-11-23): o benchmark do aparelho continua valendo
+
+Regra do usuário: se o código de máquina dos cinco kernels e de `TitleForm::_draw`
+for idêntico ou equivalente e o tempo no Azahar não mudar além do ruído, o
+benchmark de hardware já feito vale para o código congelado.
+
+`tools/profiling/compare_arm_functions.py`, `build/claude-arm-readable-final`
+(`e04f8dd`, o código medido no aparelho) × `build/claude-arm-readable-final2`
+(com os ajustes 2a/2b e `GcCallSite`):
+
+| Função | Resultado |
+|---|---|
+| `Team.GetSum`, `Team.Cal_evaCoatMulti9block`, `GameUtil.ChRectHitRectFloat`, `AppData.InsertGameObject`, `Camera.ConvertScreenToCamera` | **idênticas** (as primeiras diferenças eram só palavras do pool de literais: endereços de dados que se deslocaram) |
+| `TitleForm::_draw` | **equivalente**: 1.880 instruções nos dois, mesma sequência de operações; 46 linhas com outro registrador ou com os operandos de uma comparação trocados junto com a condição (`cmp ip, r7; movcc lr, ip` → `cmp r7, ip; movcc lr, r7`, o mesmo mínimo). Origem: a lambda inicial do método virou bloco (ajuste 2a) |
+
+Azahar, New 3DS, mesma máquina, em sequência:
+
+| Cenário | antes | depois |
+|---|---|---|
+| menu (média / p95 / máx.) | 7,146 / 7,188 / 7,212 ms | 7,174 / 7,210 / 7,228 ms |
+| partida (média / p95 / máx.) | 12,00 / 13,68 / 14,05 ms | 11,62 / 12,77 / 12,94 ms |
+
+Diferenças de +0,4 % e −3 %, dentro do ruído do emulador (o mesmo build `final` mediu
+9,6 ms de média na partida numa execução anterior). **O benchmark de 2026-11-23 no
+New 3DS XL vale para o código congelado.**

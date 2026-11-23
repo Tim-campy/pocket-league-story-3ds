@@ -1,4 +1,5 @@
 #include "managed_thread.hpp"
+#include "managed_type_init.hpp"
 #include <chrono>
 #include <condition_variable>
 #include <mutex>
@@ -89,8 +90,13 @@ void Thread::Start(){
 }
 void Thread::entry(){
 #if defined(__3DS__)
-    {const s32 core=ideal_core();std::fprintf(stderr,"PLS_THREAD_CORE application=%ld thread=%ld\n",static_cast<long>(application_core),static_cast<long>(core));
-     if(core!=-100&&application_core!=-100&&core!=application_core){std::fprintf(stderr,"PLS_FATAL managed thread on core %ld, application core %ld\n",static_cast<long>(core),static_cast<long>(application_core));std::fflush(stderr);std::terminate();}}
+    // Every managed thread must share the application core: the type-init fast path
+    // reads its flag without a barrier on that assumption (managed_type_init.hpp).
+    // A core that cannot be read is a failure too: the assumption would go unchecked.
+    {const s32 core=ideal_core();std::fprintf(stderr,"PLS_THREAD_CORE application=%ld thread=%ld read=%s\n",static_cast<long>(application_core),static_cast<long>(core),type_init_read_path);
+     if(core==-100||application_core==-100||core!=application_core){
+         std::fprintf(stderr,"PLS_FATAL managed thread on core %ld, application core %ld: every managed thread must run on the application core (type-init fast path, docs/maintaining-game-code.md)\n",static_cast<long>(core),static_cast<long>(application_core));
+         std::fflush(stderr);std::terminate();}}
 #endif
     current_thread=pls::cs::static_pointer_cast<Thread>(shared_from_this());
     {

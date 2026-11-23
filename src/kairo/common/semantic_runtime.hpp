@@ -104,11 +104,16 @@ template<class To,class From> constexpr bool valid_integral_cast =
     std::is_integral_v<To> && std::is_integral_v<From> && !std::is_same_v<To,bool> && !std::is_same_v<From,bool>;
 
 template<class To,class From> To cast_integral(From value) noexcept {
+    // Readable numeric types (Int32/Int64) as source or target: the plain integer inside.
+    if constexpr(std::is_class_v<To>)return To(cast_integral<decltype(To{}.raw())>(value));
+    else if constexpr(std::is_class_v<From>)return cast_integral<To>(value.raw());
+    else {
     static_assert(valid_integral_cast<To,From>);
     using U=std::make_unsigned_t<To>;
     U bits=static_cast<U>(value); // Conversion to unsigned is specified modulo2^width.
     if constexpr (std::is_signed_v<To>) return bit_copy<To>(bits);
     else return bits;
+    }
 }
 
 template<class T> T add_integer(T a,T b) noexcept {
@@ -192,6 +197,7 @@ inline std::int32_t conv_i32(double value)noexcept{return conv_signed<std::int32
 inline std::int64_t conv_i64(float value)noexcept{return conv_signed<std::int64_t>(value);}
 inline std::int64_t conv_i64(double value)noexcept{return conv_signed<std::int64_t>(value);}
 template<class T>T math_abs(T value){
+    if constexpr(std::is_class_v<T>)return T(math_abs(value.raw()));else
     if constexpr(std::is_integral_v<T>){static_assert(std::is_signed_v<T>);if(value==std::numeric_limits<T>::min())throw OverflowException();return value<0?neg_integer(value):value;}
     else return std::fabs(value);
 }
@@ -436,7 +442,8 @@ template<class T>class Array;
 struct Int32;struct Single;struct Double;
 // float[] crossing between the readable numeric types and plain float/double
 // (native platform APIs): an element-wise copy (none of those APIs aliases).
-template<class T,class U>inline constexpr bool float_array_pair=(std::is_same_v<T,Single>&&std::is_same_v<U,float>)||(std::is_same_v<T,float>&&std::is_same_v<U,Single>)||(std::is_same_v<T,Double>&&std::is_same_v<U,double>)||(std::is_same_v<T,double>&&std::is_same_v<U,Double>);
+struct Int64;
+template<class T,class U>inline constexpr bool float_array_pair=(std::is_same_v<T,Single>&&std::is_same_v<U,float>)||(std::is_same_v<T,float>&&std::is_same_v<U,Single>)||(std::is_same_v<T,Double>&&std::is_same_v<U,double>)||(std::is_same_v<T,double>&&std::is_same_v<U,Double>)||(std::is_same_v<T,Int32>&&std::is_same_v<U,std::int32_t>)||(std::is_same_v<T,std::int32_t>&&std::is_same_v<U,Int32>)||(std::is_same_v<T,Int64>&&std::is_same_v<U,std::int64_t>)||(std::is_same_v<T,std::int64_t>&&std::is_same_v<U,Int64>);
 template<class Signature>class Delegate;
 // These wrappers are value-sized in C++, but each element is a managed
 // reference in the 32-bit source ABI (including jagged arrays).
@@ -461,6 +468,7 @@ PLS_CS_TYPE_NAME(std::uint64_t,"System.UInt64")
 PLS_CS_TYPE_NAME(float,"System.Single")
 PLS_CS_TYPE_NAME(double,"System.Double")
 PLS_CS_TYPE_NAME(Int32,"System.Int32")
+PLS_CS_TYPE_NAME(Int64,"System.Int64")
 PLS_CS_TYPE_NAME(Single,"System.Single")
 PLS_CS_TYPE_NAME(Double,"System.Double")
 PLS_CS_TYPE_NAME(String,"System.String")
@@ -484,6 +492,33 @@ template<class T,class=void>struct reference_assignability {
 template<class T>struct reference_assignability<T,std::void_t<decltype(T::source_reference_assignable(std::declval<const std::type_info&>()))>>{
     static bool is_a(const std::type_info& target){return target==typeid(T)||T::source_reference_assignable(target);}
 };
+// Support code of a translated class, in one line each (readable mode, A.5; see
+// docs/maintaining-game-code.md, "Código de apoio das classes").
+//   PLS_MANAGED_CLASS(name, Self, Base, Interfaces...)  C# type name and reference
+//     assignability (the `is`/`as` checks): Self, its base chain and its interfaces.
+//   PLS_DELEGATE_SLOTS(Base, {"slot", "method id"}, ...) the C# method behind each virtual
+//     slot this class overrides, for delegate identity; other slots go to Base.
+template<class Self,class Base,class... Interfaces>
+inline bool source_class_assignable(const std::type_info& target){
+    return target==typeid(Self)||target==typeid(Base)||Base::source_reference_assignable(target)||((target==typeid(Interfaces))||...);
+}
+struct DelegateSlot{const char* slot;const char* method;};
+template<std::size_t N>
+inline const char* delegate_slot_method(const DelegateSlot(&table)[N],const std::string& slot){
+    for(const auto& entry:table)if(slot==entry.slot)return entry.method;
+    return nullptr;
+}
+} // namespace pls::cs
+#define PLS_MANAGED_CLASS(name,...) \
+    static bool source_reference_assignable(const std::type_info& target){return ::pls::cs::source_class_assignable<__VA_ARGS__>(target);} \
+    static std::string source_managed_type_name(){return name;} \
+    std::string managed_type_name()const override{return source_managed_type_name();}
+#define PLS_DELEGATE_SLOTS(base,...) \
+    std::string managed_delegate_method_id(const std::string& slot)const override{ \
+        static constexpr ::pls::cs::DelegateSlot table[]={__VA_ARGS__}; \
+        if(const char* method=::pls::cs::delegate_slot_method(table,slot))return method; \
+        return base::managed_delegate_method_id(slot);}
+namespace pls::cs {
 
 template<bool Enabled>struct ArrayViewStorage {
     Ref<ArrayBase> array_view_{};
@@ -885,4 +920,7 @@ template<class T>void release_value(T&value){
 namespace pls::cs {
 // Readable numeric types in deduced-source helpers: convert from the plain value.
 template<class To> To cast_integral(Int32 value) noexcept { return cast_integral<To,std::int32_t>(value.value); }
+template<class To> To cast_integral(Int64 value) noexcept { return cast_integral<To,std::int64_t>(value.value); }
+// out int: the readable Int32 storage receives the plain result.
+inline bool int32_try_parse(const String&value,Int32& result){std::int32_t plain=result.value;const bool ok=int32_try_parse(value,plain);result=plain;return ok;}
 }

@@ -62,16 +62,21 @@ inline bool would_cycle(const Coordinator& engine,std::thread::id waiting,std::t
 //     when each managed thread starts, managed_thread.cpp), so no other core
 //     can observe the writes out of order.
 // Any other target keeps the acquire load.
+// A build can force either path (-DPLS_TYPE_INIT_UNFENCED_READ=0 or 1); the
+// type-init test runs the PC build with both (docs/maintaining-game-code.md).
+#ifndef PLS_TYPE_INIT_UNFENCED_READ
 #if defined(__3DS__) || defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
 #define PLS_TYPE_INIT_UNFENCED_READ 1
 #else
 #define PLS_TYPE_INIT_UNFENCED_READ 0
+#endif
 #endif
 #if defined(_MSC_VER)
 #define PLS_NOINLINE __declspec(noinline)
 #else
 #define PLS_NOINLINE __attribute__((noinline))
 #endif
+inline constexpr const char* type_init_read_path=PLS_TYPE_INIT_UNFENCED_READ?"unfenced":"acquire";
 struct TypeInitFlag {
     std::atomic<bool> done{false};
     bool ready()const noexcept{

@@ -28,14 +28,14 @@
     "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
     "src/kairo/common/managed_string_ops.cpp": "31d7b2d04e73ada41ef640f92fef116c7019f64db99cb690d4434f08c4be070f",
     "tests/translator/StringOpsFixtures.cs": "3001a4c92f08d0a8f595b1b551a91263abebcf6cf90fa6b332802d6186b329c1",
-    "src/kairo/common/managed_string_ops.hpp": "15371a3c07aab211be37aeb8d396360a01e748819b85be39f032c3183033be87",
-    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
+    "src/kairo/common/managed_string_ops.hpp": "48be7944e9b71e8654612541211f79e01e86607cfa18b9c9ed1326a35c378200",
+    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9",
     "build/generated/mono-collation/mono_decimal_digit_ranges.inc": "3cd30431dc33972893517708f33e9de78f0b4290fc2ff34f6c29b61deebb2b9e",
     "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0"
   },
   "native_executable": {
     "path": "build/string-ops-fixtures/string-ops-fixtures.exe",
-    "sha256": "9eddcd492c6e3fb64c2e867166260eee0bd114f5adb3aa21d2c9b904913c008b"
+    "sha256": "fd991ddd64d3bc0650829967985267f4f870db4ee83417cd81e672f368d35cd7"
   },
   "profile_differences": 411,
   "production_methods_promoted": 0,

@@ -128,7 +128,7 @@
     "src/kairo/api/font.hpp": "ac3673d4f45e7cce48c8d7860e9196056dfd295e34cca0650244344cd16417c9",
     "src/kairo/api/sound.hpp": "925dd002e090aea284c6a5b5c9bf63dcd029d0001a51078affd0e531b070b99d",
     "src/kairo/api/input.hpp": "0ad98903cf66860b1f4faed60e5f4c57dcf4423fa7360a4bf41b2654eaa68669",
-    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
+    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9",
     "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
     "src/kairo/common/asset_catalog.hpp": "5423ee1f46521fd055fe4cadca66a2f0d1a3e82edfc8b57e6ea9df3fef2fa663",
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
@@ -146,7 +146,7 @@
   ],
   "native_executable": {
     "path": "build/bootstrap-tests/bootstrap-fixtures.exe",
-    "sha256": "3a510ff0e1e16eb15fb5e0d1673a9de0a7888175d7423e5a3af3c1aa9c0cfdcb"
+    "sha256": "922fd045a567969ab2283a0cf382055a45a83ec7a6604e18bb48ac58b6a9364c"
   },
   "limits": [
     "Own collaborators with the exact original Awake body prove callback ordering, optional-resource exception behavior and ownership only.",

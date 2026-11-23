@@ -4,20 +4,26 @@
   "results": {
     "mono": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs|153:IA12CBD34ELLLoFpoqcGg565H6w+JjyMz",
     "normal": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs|153:IA12CBD34ELLLoFpoqcGg565H6w+JjyMz",
-    "readable": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs|153:IA12CBD34ELLLoFpoqcGg565H6w+JjyMz"
+    "readable": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs|153:IA12CBD34ELLLoFpoqcGg565H6w+JjyMz",
+    "readable_acquire": "50|DB|1|DBH|41|3|9|4|DBHmVnrxvySs|153:IA12CBD34ELLLoFpoqcGg565H6w+JjyMz"
+  },
+  "read_paths": {
+    "normal": "unfenced",
+    "readable": "unfenced",
+    "readable_acquire": "acquire"
   },
   "inputs": {
     "tests/translator/TypeInitTimingFixtures.cs": "2f487b66d8bcf21d6f1899ee6c40d05b41c97d6a17191a78b468a77aeeb9454b",
-    "tools/test_type_init_translated.py": "ff253649ad0d493a8eeac97af62f4c111bd09cb10ba7b173f404738c7bb73b9b"
+    "tools/test_type_init_translated.py": "461e95480f433434c7a4fcd528d318c2f88bda03bf615a3c0d350923b0457b7b"
   },
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
-    "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
+    "translator_source_sha256": "41070aa261b43564e60d226ac40178062532f3584c210ccef89631830d803825",
+    "emission_source_sha256": "311c757254c1a01cbb3beb8c1da4c488d1d5d638ef32a7eedb463a40aa4082bb",
     "readable_source_sha256": [
-      "6cc0735d994a14f235d7eb6c050f21ee52db9ac7182234ede35ca5755f463df7",
-      "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
+      "e0b6ca3b258c94a50d54d01644fd791183c41000280dc4b3fd11bfef3dc6ae2f",
+      "af63c6882d0c9627eb3af019a526fc5c4d2581100e1a6bcf4f26811a0137d451"
     ],
     "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
   },

@@ -55,6 +55,7 @@ def run(command,folder,name,env=None):
     return p.stdout.decode('utf-8-sig')
 
 
+READABLE=False
 def values(type,index):
     if type=='bool':return ('bool','bool',['false','true'][index%2])
     native_null_inputs={'kairo.unity.surface.MotionEvent':'MotionEvent','kairo.unity.ui.KeyEvent':'KeyEvent','kairo.unity.ui.Graphics':'Graphics'}
@@ -73,8 +74,8 @@ def values(type,index):
     if type=='System.IO.SeekOrigin':return ('pls::cs::SeekOrigin',type,['0','1','2','-1','3','7','0'][index%7])
     if type=='byte':return ('std::uint8_t','byte',['0','1','127','128','255','17','3'][index%7])
     if type=='sbyte':return ('std::int8_t','sbyte',['0','1','-1','127','-128','17','-3'][index%7])
-    if type=='int':return ('std::int32_t','int', ['0','1','-1','7','-7','2147483647','(-2147483647-1)'][index%7])
-    if type=='long':return ('std::int64_t','long',['0','1','-1','17','-17','9223372036854775807','(-9223372036854775807-1)'][index%7])
+    if type=='int':return (('pls::cs::Int32' if READABLE else 'std::int32_t'),'int', ['0','1','-1','7','-7','2147483647','(-2147483647-1)'][index%7])
+    if type=='long':return (('pls::cs::Int64' if READABLE else 'std::int64_t'),'long',['0','1','-1','17','-17','9223372036854775807','(-9223372036854775807-1)'][index%7])
     if type=='ushort':return ('std::uint16_t','ushort',['0','1','127','129','33088','65535','33440'][index%7])
     if type=='uint':return ('std::uint32_t','uint',['0','1','2147483647','2147483648','4294967295','17','255'][index%7])
     if type=='ulong':return ('std::uint64_t','ulong',['0','1','9223372036854775807','9223372036854775808','18446744073709551615','17','255'][index%7])
@@ -253,6 +254,7 @@ def main():
     options=parser.parse_args()
     for path_option in ('report','generated','oracle','folder','result'):setattr(options,path_option,getattr(options,path_option).resolve())
     report=json.loads(options.report.read_text(encoding='utf-8-sig'))
+    global READABLE;READABLE=bool(report.get('readable'))
     CLASSES={c['type']:c for c in report['generated_classes']};METHODS=report['emitted_methods']
     folder=options.folder;folder.mkdir(parents=True,exist_ok=True)
     cs=[CS_FORMAT];cpp=[CPP_FORMAT];cases=[]

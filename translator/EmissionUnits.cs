@@ -44,6 +44,197 @@ sealed partial class Lowerer {
         foreach(var path in paths)aliases.Append("namespace "+names[path]+" = pls::generated::"+path+";\n");
         return (text,aliases.Append('\n').ToString());
     }
+    // Readable (A.4f): short names, in a .cpp, for the arrays of the basic C# types the tables
+    // are made of (int[] -> IntArray, int[][] -> IntArray2, ...). One alias per type, declared
+    // after the includes, used for every spelling of that type in the file; headers keep the
+    // full names. Longest spelling first, so int[][] is not read as Array<int[]>.
+    static readonly (string alias,string type)[] ArrayAliases={
+        ("IntArray3","pls::cs::Array<pls::cs::Array<pls::cs::Array<pls::cs::Int32>>>"),
+        ("IntArray2","pls::cs::Array<pls::cs::Array<pls::cs::Int32>>"),
+        ("IntArray","pls::cs::Array<pls::cs::Int32>"),
+        ("LongArray","pls::cs::Array<pls::cs::Int64>"),
+        ("StringArray2","pls::cs::Array<pls::cs::Array<pls::cs::String>>"),
+        ("StringArray","pls::cs::Array<pls::cs::String>"),
+        ("FloatArray2","pls::cs::Array<pls::cs::Array<pls::cs::Single>>"),
+        ("FloatArray","pls::cs::Array<pls::cs::Single>"),
+        ("ByteArray","pls::cs::Array<std::uint8_t>"),
+        ("BoolArray","pls::cs::Array<bool>"),
+        ("ShortArray","pls::cs::Array<std::int16_t>")};
+    static (string text,string aliases) AliasArrays(string cpp){
+        var used=new List<(string alias,string type)>();
+        foreach(var (alias,type) in ArrayAliases){
+            if(Regex.IsMatch(cpp,@"(?<![\w:])"+Regex.Escape(alias)+@"(?![\w])"))return (cpp,"");
+            var replaced=Regex.Replace(cpp,@"(?<![\w:])"+Regex.Escape(type)+@"(?![\w<])",alias);
+            if(replaced!=cpp){used.Add((alias,type));cpp=replaced;}
+        }
+        if(used.Count==0)return (cpp,"");
+        var text=new StringBuilder();
+        // Declared in dependency order (IntArray before IntArray2, which spells it).
+        foreach(var (alias,type) in used.AsEnumerable().Reverse())text.Append("using "+alias+" = "+type+";\n");
+        return (cpp,text.Append("\n").ToString());
+    }
+    // ---- Readable A.4b: redundant parentheses ---------------------------------------------
+    // The emitter wraps every operator it writes in parentheses; the parentheses the C#
+    // source wrote come marked (CsParen, a private-use character, before the '('). This
+    // pass reprints a readable unit without the unmarked pairs that C++ precedence makes
+    // redundant, and drops the marks. It reads only text the emitter itself prints: binary
+    // operators have one space on each side (a template '<' never has), unary operators
+    // none. Whatever it cannot classify keeps its parentheses: casts, calls, statement
+    // heads, lambdas, unary operands, comma groups, assignments, preprocessor lines, and
+    // operators mixed across & | ^ << >> && || (which C++ compilers ask to keep).
+    internal const char CsParen=(char)0xE000;
+    static readonly Dictionary<string,int> CppBinary=new(StringComparer.Ordinal){
+        ["*"]=13,["/"]=13,["%"]=13,["+"]=12,["-"]=12,["<<"]=11,[">>"]=11,["<"]=9,["<="]=9,[">"]=9,[">="]=9,
+        ["=="]=8,["!="]=8,["&"]=7,["^"]=6,["|"]=5,["&&"]=4,["||"]=3,["?"]=2,[":"]=2,
+        ["="]=2,["+="]=2,["-="]=2,["*="]=2,["/="]=2,["%="]=2,["<<="]=2,[">>="]=2,["&="]=2,["^="]=2,["|="]=2};
+    static readonly HashSet<string> Bitwise=new(StringComparer.Ordinal){"&","|","^","<<",">>","&&","||"};
+    const string OperatorChars="+-*/%<>=!&|^?:";
+    static string ReadableParens(string text){
+        int n=text.Length;var skip=new bool[n];var match=new int[n];Array.Fill(match,-1);
+        // Opaque regions: string and character literals, comments, preprocessor lines.
+        var opaque=new bool[n];
+        for(int i=0;i<n;){
+            char c=text[i];
+            if(c=='"'||c=='\''){int j=i+1;while(j<n&&text[j]!=c){if(text[j]=='\\')j++;j++;}for(int k=i;k<=Math.Min(j,n-1);k++)opaque[k]=true;i=j+1;continue;}
+            if(c=='/'&&i+1<n&&text[i+1]=='/'){int j=text.IndexOf('\n',i);if(j<0)j=n;for(int k=i;k<j;k++)opaque[k]=true;i=j;continue;}
+            if(c=='/'&&i+1<n&&text[i+1]=='*'){int j=text.IndexOf("*/",i+2,StringComparison.Ordinal);j=j<0?n:j+2;for(int k=i;k<j;k++)opaque[k]=true;i=j;continue;}
+            if(c=='#'&&(i==0||text[i-1]=='\n')){int j=i;while(true){j=text.IndexOf('\n',j);if(j<0){j=n;break;}if(text[j-1]=='\\'){j++;continue;}break;}for(int k=i;k<j;k++)opaque[k]=true;i=j;continue;}
+            i++;
+        }
+        var stack=new Stack<int>();
+        for(int i=0;i<n;i++){
+            if(opaque[i])continue;
+            if(text[i]=='(')stack.Push(i);
+            else if(text[i]==')'){if(stack.Count==0)return Strip(text);var o=stack.Pop();match[o]=i;match[i]=o;}
+        }
+        if(stack.Count!=0)return Strip(text);
+        int PrevIndex(int i){i--;while(i>=0&&(text[i]==' '||text[i]==CsParen))i--;return i;}
+        int NextIndex(int i){i++;while(i<n&&text[i]==' ')i++;return i;}
+        char FirstChar(int open,int close){for(int i=open+1;i<close;i++)if(text[i]!=' '&&text[i]!=CsParen)return text[i];return ' ';}
+        static bool Ident(char c)=>char.IsLetterOrDigit(c)||c=='_';
+        // A spaced binary operator (" op ") that ends right before `start`, or null.
+        string? OpBefore(int start){
+            int e=start-1;if(e<0||text[e]!=' ')return null;int s=e-1;while(s>=0&&OperatorChars.IndexOf(text[s])>=0)s--;
+            if(s==e-1||s<0||text[s]!=' ')return null;var op=text.Substring(s+1,e-s-1);return CppBinary.ContainsKey(op)?op:null;
+        }
+        // A spaced binary operator that starts right after `end`, or null.
+        string? OpAfter(int end){
+            int b=end+1;if(b>=n||text[b]!=' ')return null;int e=b+1;while(e<n&&OperatorChars.IndexOf(text[e])>=0)e++;
+            if(e==b+1||e>=n||text[e]!=' ')return null;var op=text.Substring(b+1,e-b-1);return CppBinary.ContainsKey(op)?op:null;
+        }
+        // What the group holds: its lowest top-level operator (99 = none: an operand), whether
+        // it starts with a unary operator or a cast-like '(' (unary), whether it is exactly
+        // one inner group (group), and comma/lambda content (prec 0).
+        (int prec,string? op,bool unary,bool group) Inside(int open,int close){
+            int lo=99;string? lowOp=null;int depth=0;bool first=true,unary=false,group=false;
+            for(int i=open+1;i<close;i++){
+                if(opaque[i])continue;char c=text[i];
+                if(first&&c!=' '&&c!=CsParen){
+                    first=false;
+                    if("-+!~*&".IndexOf(c)>=0)unary=true;
+                    if(c=='[')return (0,",",false,false);
+                    if(c=='('){if(NextIndex(match[i])>=close)group=true;else if(OpAfter(match[i])==null)return (0,",",false,false);}   // (T)x is a cast; (a) op b an operand
+                }
+                if(c=='('||c=='['||c=='{')depth++;
+                else if(c==')'||c==']'||c=='}')depth--;
+                else if(depth==0&&c==',')return (0,",",unary,false);
+                else if(depth==0&&c==' '){
+                    int e=i+1;while(e<close&&OperatorChars.IndexOf(text[e])>=0)e++;
+                    if(e>i+1&&e<close&&text[e]==' '){var op=text.Substring(i+1,e-i-1);if(!CppBinary.TryGetValue(op,out var p))return (0,",",unary,false);if(p<lo){lo=p;lowOp=op;}i=e-1;}
+                }
+                else if(depth==0&&OperatorChars.IndexOf(c)>=0){
+                    // Unspaced: only -> :: and a unary prefix (after a space or an opening) are
+                    // understood; anything else (a template '<', a+b, a pointer '*') keeps the group.
+                    if(c==':'&&i+1<close&&text[i+1]==':'){i++;continue;}
+                    if(c=='-'&&i+1<close&&text[i+1]=='>'){i++;continue;}
+                    var before=text[i-1];
+                    if(before is ' ' or '(' or CsParen&&"-+!~*&".IndexOf(c)>=0)continue;
+                    if(i==open+1&&"-+!~*&".IndexOf(c)>=0)continue;
+                    if("-+!~*&".IndexOf(c)>=0&&OperatorChars.IndexOf(before)>=0&&before!='>')continue;
+                    return (0,",",unary,false);
+                }
+            }
+            return (lo,lowOp,unary,group);
+        }
+        // The group's surroundings: operator precedence on each side (1 = a delimiter such as
+        // '(' ',' ';', 15 = a unary operator before it, 16 = a postfix operator after it), and
+        // whether it is a grouping parenthesis at all (not a call, cast or statement head).
+        (int left,string? leftOp,int right,string? rightOp,bool grouping) Context(int open,int close){
+            var start=open>0&&text[open-1]==CsParen?open-1:open;
+            int p=PrevIndex(open);string? lop=OpBefore(start);var leftPrec=1;bool grouping=true;
+            if(lop!=null)leftPrec=CppBinary[lop];
+            else if(p>=0){
+                char c=text[p];
+                if(Ident(c)){int s=p;while(s>=0&&Ident(text[s]))s--;var word=text.Substring(s+1,p-s);if(word is "return" or "throw" or "case")leftPrec=1;else grouping=false;}
+                else if(c is ')' or ']' or '>' or '}' or '"' or '\'')grouping=false;   // also {...}(): the call of a lambda
+                else if(c is '(' or ',' or '[' or '{' or ';' or '\n')leftPrec=1;
+                else leftPrec=15;
+            }
+            if(NextIndex(open)>=close)grouping=false;   // () is always a call
+            int q=NextIndex(close);string? rop=OpAfter(close);var rightPrec=1;
+            if(rop!=null)rightPrec=CppBinary[rop];
+            else if(q<n){
+                char c=text[q];
+                if(c is ')' or ',' or ';' or ']' or '}')rightPrec=1;
+                else if(c=='-'&&q+1<n&&text[q+1]=='>'||c is '.' or '[' or '(')rightPrec=16;
+                else grouping=false;
+            }else rightPrec=1;
+            return (leftPrec,lop,rightPrec,rop,grouping);
+        }
+        void Decide(int open,int leftPrec,string? leftOp,int rightPrec,string? rightOp){
+            int close=match[open];var marked=open>0&&text[open-1]==CsParen;
+            var inside=Inside(open,close);var remove=false;
+            if(!marked){
+                if(inside.group)remove=true;
+                else if(inside.prec==0)remove=false;
+                else if(inside.unary)remove=inside.prec==99&&leftPrec<15&&rightPrec<16
+                    &&!("-+".IndexOf(FirstChar(open,close))>=0&&leftOp is "-" or "+");
+                else if(inside.prec==99)remove=true;
+                else if(inside.prec==2)remove=inside.op=="?"&&leftPrec==1&&rightPrec==1;
+                else{
+                    var mixed=Warns(inside.op!,leftOp)||Warns(inside.op!,rightOp);
+                    remove=!mixed&&inside.prec>leftPrec&&inside.prec>=rightPrec&&rightPrec<16;
+                }
+            }
+            if(remove){skip[open]=true;skip[close]=true;}
+            for(int i=open+1;i<close;i++){
+                if(opaque[i]||text[i]!='('||match[i]<0)continue;
+                // A group that fills this removed one takes this one's surroundings.
+                if(remove&&inside.group)Decide(i,leftPrec,leftOp,rightPrec,rightOp);
+                else{var child=Context(i,match[i]);if(child.grouping)Decide(i,child.left,child.leftOp,child.right,child.rightOp);else Walk(i+1,match[i]);}
+                i=match[i];
+            }
+        }
+        void Walk(int from,int to){
+            for(int i=from;i<to;i++){
+                if(opaque[i]||text[i]!='('||match[i]<0)continue;
+                var context=Context(i,match[i]);
+                if(context.grouping)Decide(i,context.left,context.leftOp,context.right,context.rightOp);else Walk(i+1,match[i]);
+                i=match[i];
+            }
+        }
+        Walk(0,n);
+        var output=new StringBuilder(n);
+        for(int i=0;i<n;i++)if(!skip[i]&&!(text[i]==CsParen&&!opaque[i]))output.Append(text[i]);
+        return output.ToString();
+    }
+    static string Strip(string text)=>text.Replace(CsParen.ToString(),"");
+    // Pairs C++ compilers warn about without parentheses (-Wparentheses): && inside ||,
+    // & | ^ mixed with each other or with any other operator, arithmetic inside a shift,
+    // and a comparison inside a comparison. Those parentheses stay.
+    static readonly HashSet<string> BitOps=new(StringComparer.Ordinal){"&","|","^"};
+    static readonly HashSet<string> Comparisons=new(StringComparer.Ordinal){"<","<=",">",">=","==","!="};
+    static bool Warns(string inner,string? context){
+        if(context==null||context==inner&&!Comparisons.Contains(inner))return false;
+        if(inner=="&&"&&context=="||")return true;
+        if(BitOps.Contains(inner)||BitOps.Contains(context))return true;
+        if(inner is "+" or "-" or "*" or "/" or "%"&&context is "<<" or ">>")return true;
+        return Comparisons.Contains(inner)&&Comparisons.Contains(context);
+    }
+    // A.4d: the inline member forwarders of a generic KairoLibrary class call their free
+    // function unqualified (found by argument-dependent lookup on `this` when the template
+    // is instantiated, after the function's declaration). The emitter marks them /*fwd*/.
+    static string UnqualifyForwarders(string text)=>Regex.Replace(text,@"/\*fwd\*/ (?:\w+::)*(\w+)\(","$1(");
     static void WriteStable(string path,string text)=>WriteStableBytes(path,new UTF8Encoding(false).GetBytes(text.Replace("\r\n","\n")));
     // The input is generated C++, not an arbitrary source parser. Preserve every
     // byte of each complete declaration; strings/comments never affect braces.
@@ -185,7 +376,7 @@ sealed partial class Lowerer {
             foreach(var expression in site.DescendantNodesAndSelf().OfType<Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax>())AddExpressionType(owner,semantic.GetTypeInfo(expression).Type);
         }
         var generated=new List<string>();
-        void Write(string name,string text){generated.AddRange(WriteGenerated(input.output,name,text,input.chunk_bytes));}
+        void Write(string name,string text){if(readable)text=ReadableParens(UnqualifyForwarders(text));generated.AddRange(WriteGenerated(input.output,name,text,input.chunk_bytes));}
         string Includes(IEnumerable<string> names)=>String.Concat(names.Distinct().OrderBy(x=>x,StringComparer.Ordinal).Select(name=>"#include \""+name+"\"\n"));
         string RuntimeIncludes(string value)=>(value.Contains("pls::cs::math_min_single",StringComparison.Ordinal)?"#include \"managed_math.hpp\"\n":"")+(value.Contains("pls::cs::floating_to_string",StringComparison.Ordinal)?"#include \"managed_float_format.hpp\"\n":"");
         string Wrap(string text)=>"namespace "+ns+" {\n"+text+"}\n";
@@ -231,7 +422,7 @@ sealed partial class Lowerer {
                 .Select(marker=>units[readableConstFallback[marker].owner].Stem+".hpp")).ToArray();
             var templates=DependencyTemplates(content+unit.Header,unit).Distinct().ToArray();
             var unitBody=Wrap(readable?Namespaced(unit.RCpp):content);
-            var aliases="";if(readable)(unitBody,aliases)=AliasLibraryNamespaces(unitBody);
+            var aliases="";if(readable){(unitBody,aliases)=AliasLibraryNamespaces(unitBody);var arrays="";(unitBody,arrays)=AliasArrays(unitBody);aliases+=arrays;}
             Write(unit.Stem+".cpp",banner+Includes(headers)+Includes(templates)+RuntimeIncludes(content)+aliases+unitBody);
             if(unit.Templates.Length!=0){var template=unit.Templates.ToString();
                 Write(unit.Stem+"_templates.hpp",banner+"#pragma once\n"+Includes(DependencyHeaders(template,unit).Concat(unit.BodyHeaders).Append(unit.Stem+".hpp"))+Includes(DependencyTemplates(template,unit).Where(name=>name!=unit.Stem+"_templates.hpp"))+RuntimeIncludes(template)+Wrap(readable?Namespaced(unit.RTemplates):template));

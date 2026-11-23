@@ -53,6 +53,7 @@ inline Ref<Object> box(Int32 value);
 inline Ref<Object> box(Single value);
 inline Ref<Object> box(FloatEval value);
 inline Ref<Object> box(Double value);
+inline Ref<Object> box(Int64 value);
 template<class T>Ref<Object> box(T value) {
     if constexpr(is_shared_ref<T>::value) {
         auto object=pls::cs::dynamic_pointer_cast<Object>(value);
@@ -65,12 +66,14 @@ inline Ref<Object> box(Int32 value) { return box(value.value); }
 inline Ref<Object> box(Single value) { return box(value.value); }
 inline Ref<Object> box(FloatEval value) { return box(static_cast<float>(value)); }
 inline Ref<Object> box(Double value) { return box(value.value); }
+inline Ref<Object> box(Int64 value) { return box(value.value); }
 inline Ref<Object>box(std::nullptr_t){return nullptr;}
 template<class T>T unbox(const Ref<Object>&value) {
     // Readable numeric types unbox from the CLR primitive they stand for.
     if constexpr(std::is_same_v<T,Single>)return Single(unbox<float>(value));
     else if constexpr(std::is_same_v<T,Double>)return Double(unbox<double>(value));
     else if constexpr(std::is_same_v<T,Int32>)return Int32(unbox<std::int32_t>(value));
+    else if constexpr(std::is_same_v<T,Int64>)return Int64(unbox<std::int64_t>(value));
     else
     if constexpr(is_shared_ref<T>::value) {
         auto typed=pls::cs::dynamic_pointer_cast<typename is_shared_ref<T>::element_type>(value);

@@ -94,6 +94,76 @@ C# de origem e serve para comparar com a referência.
   do original. Não remova nem reordene sem rodar as fixtures de inicialização
   (`python tools/test_type_init.py`).
 
+### Código de apoio das classes
+
+Cada classe traduzida traz, no cabeçalho, duas linhas que não são lógica do jogo e sim
+o que o runtime precisa para reproduzir o C#
+(`PLS_MANAGED_CLASS` e `PLS_DELEGATE_SLOTS`, definidas em
+`src/kairo/common/semantic_runtime.hpp`):
+
+```cpp
+struct TitleForm : MyFormBase, pls::kairo::TouchValueAccessor {
+PLS_MANAGED_CLASS("form.TitleForm", TitleForm, MyFormBase, pls::kairo::TouchValueAccessor)
+PLS_DELEGATE_SLOTS(MyFormBase,
+    {"Update", "M:form.TitleForm.Update"},
+    {"Draw", "M:form.TitleForm.Draw(kairo.unity.ui.Graphics)"});
+...
+```
+
+- `PLS_MANAGED_CLASS(nome C#, Classe, Base, interfaces...)`: o nome do tipo no C#
+  (`GetType()`, mensagens) e a compatibilidade de referência usada por `is`, `as` e
+  pelos casts (a classe, a cadeia de bases e as interfaces que ela implementa).
+- `PLS_DELEGATE_SLOTS(Base, {slot, método}, ...)`: para cada método virtual que a classe
+  redefine, o método C# que um delegate criado a partir dele representa (igualdade e
+  remoção de delegates, `+=`/`-=`). Os slots que a classe não redefine vão para a base;
+  uma classe sem redefinições não tem a linha.
+
+**Ao mudar uma classe:**
+
+- classe nova: escreva o `PLS_MANAGED_CLASS` com o nome C#, a classe, a base e as
+  interfaces;
+- base ou interface nova: atualize o `PLS_MANAGED_CLASS`;
+- redefinição nova de um método virtual (`override`): acrescente a linha em
+  `PLS_DELEGATE_SLOTS` (crie a tabela se for a primeira).
+
+`python tools/check_readable_support.py` falha se uma classe não tiver o
+`PLS_MANAGED_CLASS` com o próprio nome, ou se um `override` de método C# não estiver
+na tabela. Os ganchos do runtime (`trace_edges`, `memory_ranges` e semelhantes) não
+são métodos C# e ficam fora da tabela.
+
+### Threads e memória (suposição de um núcleo)
+
+O caminho rápido da inicialização de tipos (`TypeInitFlag::ready()`,
+`src/kairo/common/managed_type_init.hpp`) lê o indicador "tipo pronto" com uma
+leitura comum, sem barreira de memória. Isso só é correto onde uma thread que vê
+o indicador também vê as escritas do inicializador. A escolha é feita por
+`PLS_TYPE_INIT_UNFENCED_READ`, uma por alvo:
+
+| Alvo | Caminho | Por que é correto |
+|---|---|---|
+| Nintendo 3DS | sem barreira (`unfenced`) | todas as threads gerenciadas rodam no núcleo da aplicação; um núcleo só não reordena as próprias escritas para si |
+| PC x86/x64 | sem barreira (`unfenced`) | o x86 não reordena leituras entre si (TSO); o `atomic_signal_fence` impede o compilador de antecipar as leituras |
+| Qualquer outro (ARM com vários núcleos, Android, etc.) | `acquire` | leitura com ordem de aquisição; é o caminho portátil |
+
+No 3DS a suposição é **verificada**, não só presumida:
+`Thread::entry()` (`src/kairo/common/managed_thread.cpp`) compara, antes de
+qualquer código gerenciado da thread nova, o núcleo ideal da thread
+(`svcGetThreadIdealProcessor`) com o núcleo da aplicação, lido na inicialização
+do programa. Se diferirem, ou se o núcleo não puder ser lido, o programa para
+com `PLS_FATAL managed thread ...` no `stderr`, que no console vai para
+`sdmc:/pls-benchmark/stderr.log`. Cada thread registra
+`PLS_THREAD_CORE application=N thread=N read=unfenced`.
+
+**Não quebrar:**
+
+- Não crie threads gerenciadas por fora de `pls::cs::Thread` (nem `std::thread`
+  direto, nem `threadCreate` da libctru com outro núcleo, como o núcleo 2 do
+  New 3DS). Uma thread em outro núcleo invalida o caminho sem barreira.
+- Ao portar para um alvo novo, ele cai no caminho `acquire` automaticamente.
+  Só ligue `PLS_TYPE_INIT_UNFENCED_READ=1` com uma justificativa como as da tabela.
+- `python tools/test_type_init_translated.py` roda os dois caminhos no PC (o
+  padrão e o `acquire` forçado) e confere qual cada executável usou.
+
 ### Nomes
 
 - Sobrecargas de mesma aridade levam sufixo (`RateConvert_3`) de propósito: o

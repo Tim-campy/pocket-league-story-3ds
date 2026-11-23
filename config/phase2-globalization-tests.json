@@ -275,7 +275,7 @@
     "src/kairo/api/globalization.hpp": "4b83a6a5627b60c08e65aec43f77cc8eeb5b6322b73e75e12a9607f5bed16d65",
     "src/kairo/platform/sdl/globalization.hpp": "9a5f11c69a8a41c03cc026741da7d4d6c7ef5d95afe94d228f2630871669c2d7",
     "src/kairo/common/managed_time.hpp": "8e42ed1ab0e3439709efc47259f09cd37014abf91fd8f79f896cb3f807ec65c2",
-    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8"
+    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9"
   },
   "compiler": {
     "path": "C:\\Program Files\\Microsoft Visual Studio\\18\\Community\\VC\\Tools\\MSVC\\14.51.36231\\bin\\Hostx64\\x64\\cl.exe",
@@ -283,7 +283,7 @@
   },
   "native_executable": {
     "path": "build/globalization-fixtures/globalization-fixtures.exe",
-    "sha256": "159db0e6b8b298eb5761b20426818c71811707a6fea12e0fa82f8dac203d2b99"
+    "sha256": "555f8db4003133e12022c6a3a59e16c1d2556b3d5d0d512c4015eae895cacba8"
   },
   "production_methods_promoted": 0,
   "original_game_binary_executed": false,

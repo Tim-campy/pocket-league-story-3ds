@@ -1,12 +1,12 @@
 # Limites de pilha para o coletor no ARM11
 
-Estado: integraÃ§Ã£o do coletor ARM validada por 60 assertions nos perfis New
+Estado: integração do coletor ARM validada por 60 assertions nos perfis New
 3DS e 3DS antigo do Azahar 2126.2, ambos com clock e limite de velocidade
-em 100%. NÃ£o Ã© evidÃªncia de boot do jogo nem de desempenho no hardware.
+em 100%. Não é evidência de boot do jogo nem de desempenho no hardware.
 
-SDK examinado: libctru 2.7.1. CÃ³pias locais e SHA-256 dos arquivos consultados
-estÃ£o em `build/libctru-gc-audit/provenance.json`. Nenhum binÃ¡rio do jogo Ã©
-necessÃ¡rio para esta anÃ¡lise.
+SDK examinado: libctru 2.7.1. Cópias locais e SHA-256 dos arquivos consultados
+estão em `build/libctru-gc-audit/provenance.json`. Nenhum binário do jogo é
+necessário para esta análise.
 
 ## Thread principal
 
@@ -20,10 +20,10 @@ SP = align_up(__ctru_heap + __stacksize__, 8)
 fake_heap_start = SP
 ```
 
-Portanto, o limite inferior Ã© `__ctru_heap`, e o superior Ã© essa expressÃ£o,
-nÃ£o o SP observado dentro de `main`. O sÃ­mbolo fraco `__stacksize__` tem valor
-padrÃ£o de 32 KiB; o coletor precisa ler o valor efetivamente ligado. O limite
-superior tambÃ©m nÃ£o deve ser deduzido de um `fake_heap_start` posteriormente
+Portanto, o limite inferior é `__ctru_heap`, e o superior é essa expressão,
+não o SP observado dentro de `main`. O símbolo fraco `__stacksize__` tem valor
+padrão de 32 KiB; o coletor precisa ler o valor efetivamente ligado. O limite
+superior também não deve ser deduzido de um `fake_heap_start` posteriormente
 alterado pelo alocador.
 
 ## Workers
@@ -38,77 +38,77 @@ bottom = address(Thread_tag) + stackoffset
 top = Thread_tag.stacktop = address(Thread_tag) + allocsize
 ```
 
-O TLS fica acima de `stacktop`. Ele nÃ£o deve entrar na varredura conservadora
-da pilha; referÃªncias gerenciadas em TLS precisam de suas prÃ³prias raÃ­zes.
+O TLS fica acima de `stacktop`. Ele não deve entrar na varredura conservadora
+da pilha; referências gerenciadas em TLS precisam de suas próprias raízes.
 [`internal.h`](https://github.com/devkitPro/libctru/blob/v2.7.1/libctru/source/internal.h)
 define o layout privado. `threadGetCurrent()` distingue o worker da thread
-principal, mas a API pÃºblica nÃ£o fornece seus limites de pilha.
+principal, mas a API pública não fornece seus limites de pilha.
 
-Uma integraÃ§Ã£o que leia esse layout deve fixar a revisÃ£o do SDK e validar o
-layout durante o build. NÃ£o basta assumir 32 KiB para todos os workers nem
-varrer toda a regiÃ£o de heap devolvida por uma consulta de memÃ³ria.
+Uma integração que leia esse layout deve fixar a revisão do SDK e validar o
+layout durante o build. Não basta assumir 32 KiB para todos os workers nem
+varrer toda a região de heap devolvida por uma consulta de memória.
 
-## ValidaÃ§Ã£o realizada
+## Validação realizada
 
 `src/runtime/ctr_stack_bounds.hpp` descobre os limites da thread principal
 e dos workers. `tools/test_ctr_stack_layout.py` fixa libctru 2.7.1 e compila
 assertions de tamanho e offsets contra o `internal.h` oficial, SHA-256
 `29b73a8532fec06e7eb3b24eae0a4dac7353a72fcde75b21c05b63f1fc4d2a01`.
-O build ARM executa essa verificaÃ§Ã£o antes de compilar o jogo.
+O build ARM executa essa verificação antes de compilar o jogo.
 
 `tools/build_ctr_gc_fixture.py` e `tools/run_ctr_gc_fixture.py` constroem e
 executam as mesmas fixtures usadas no PC, com dois testes adicionais de
-referÃªncia mantida somente em r4 ou d8. O assembly limpa os registradores
-volÃ¡teis e sobrescreve a Ã¡rea de pilha usada na preparaÃ§Ã£o antes de coletar.
+referência mantida somente em r4 ou d8. O assembly limpa os registradores
+voláteis e sobrescreve a área de pilha usada na preparação antes de coletar.
 Nos dois perfis foram observadas pilhas de 32.768 bytes tanto na thread
-principal quanto no worker. O limite Ã© descoberto, nÃ£o fixado nesse tamanho.
+principal quanto no worker. O limite é descoberto, não fixado nesse tamanho.
 
 Recibos privados: `build/ctr-gc-fixture/run-new-9/result.json` e
 `build/ctr-gc-fixture/run-old-1/result.json`. SHA-256 do `.3dsx` testado:
 `e7d1e8cb210fb1e67f1694fa10ba8f812c1e13b0510ed8f51e5f945d507ebee3`.
-No PC, as 58 assertions correspondentes tambÃ©m passaram.
+No PC, as 58 assertions correspondentes também passaram.
 
-## Falhas encontradas e correÃ§Ãµes
+## Falhas encontradas e correções
 
 1. A thread principal recebe ID zero pelo caminho
-   `pthread_self â†’ __syscall_thread_self â†’ threadGetCurrent`. O coletor
+   `pthread_self → __syscall_thread_self → threadGetCurrent`. O coletor
    confundia esse ID com o identificador vazio do coletor inativo e recusava
-   alocaÃ§Ãµes. A comparaÃ§Ã£o agora sÃ³ vale quando existe coleta solicitada.
+   alocações. A comparação agora só vale quando existe coleta solicitada.
 2. Uma espera indefinida de worker ficou bloqueada depois de o coletor
    terminar. O snapshot GDB mostrou a principal aguardando join e o worker
-   em `Heap::safepoint â†’ condition_variable â†’ CondVar_WaitTimeout`, com
+   em `Heap::safepoint → condition_variable → CondVar_WaitTimeout`, com
    timeout infinito. No ARM, as esperas do coletor reavaliam o mesmo
-   predicado protegido por mutex a cada 1 ms; nenhuma condiÃ§Ã£o de parada
-   cooperativa foi removida. EvidÃªncia privada: snapshots
+   predicado protegido por mutex a cada 1 ms; nenhuma condição de parada
+   cooperativa foi removida. Evidência privada: snapshots
    `workers-thread-states-3.json` sob `build/ctr-gc-fixture/`.
 3. Nas fixtures, `std::this_thread::yield` chegava a `sched_yield` sem
-   implementaÃ§Ã£o efetiva e impedia outra thread de progredir. O helper de
-   teste usa sleep de 1 ms no ARM. Pilhas reutilizadas tambÃ©m conservavam
-   endereÃ§os de objetos de testes anteriores: o teste de descarte usa uma
-   thread isolada com Ã¡rea de preparaÃ§Ã£o sobrescrita, preservando a
-   assertion de zero objetos e zero raÃ­zes. Isso nÃ£o altera o jogo.
+   implementação efetiva e impedia outra thread de progredir. O helper de
+   teste usa sleep de 1 ms no ARM. Pilhas reutilizadas também conservavam
+   endereços de objetos de testes anteriores: o teste de descarte usa uma
+   thread isolada com área de preparação sobrescrita, preservando a
+   assertion de zero objetos e zero raízes. Isso não altera o jogo.
 
-As tentativas anteriores que falharam permanecem nos diretÃ³rios privados;
-nÃ£o sÃ£o contadas como aprovaÃ§Ã£o. A integraÃ§Ã£o de recursos nativos continua
+As tentativas anteriores que falharam permanecem nos diretórios privados;
+não são contadas como aprovação. A integração de recursos nativos continua
 coberta pelas fixtures `native_lifetime` e `retained_memory_and_growth`.
 
-## ValidaÃ§Ã£o ainda necessÃ¡ria
+## Validação ainda necessária
 
 - Executar o jogo e o benchmark nos dois perfis do emulador; posteriormente
-  no New 3DS real. Velocidade do emulador nÃ£o comprova o orÃ§amento de 50 ms.
+  no New 3DS real. Velocidade do emulador não comprova o orçamento de 50 ms.
 
 ## Despejo de registradores examinado
 
 O objeto `libc_a-setjmp.o` da biblioteca instalada
 `devkitARM/arm-none-eabi/lib/armv6k/fpu/libc.a` foi desmontado localmente.
-`setjmp` armazena r4â€“r11, SP, LR e d8â€“d15; `longjmp` restaura o mesmo conjunto.
-Os registradores volÃ¡teis precisam ter os valores vivos preservados pelo
-chamador segundo a ABI antes da chamada. EvidÃªncia e hashes:
+`setjmp` armazena r4–r11, SP, LR e d8–d15; `longjmp` restaura o mesmo conjunto.
+Os registradores voláteis precisam ter os valores vivos preservados pelo
+chamador segundo a ABI antes da chamada. Evidência e hashes:
 `build/libctru-gc-audit/setjmp-evidence.json` e `setjmp-disassembly.txt`.
-Essa inspeÃ§Ã£o Ã© complementada pelas fixtures r4/d8 acima. Nos pontos seguros
+Essa inspeção é complementada pelas fixtures r4/d8 acima. Nos pontos seguros
 opacos, os valores vivos nos registradores de chamador precisam ser
-preservados pelo chamador segundo a ABI; o build atual nÃ£o usa LTO. Ainda
-nÃ£o Ã© prova de que o jogo completo sobrevive Ã  coleta nessa plataforma.
+preservados pelo chamador segundo a ABI; o build atual não usa LTO. Ainda
+não é prova de que o jogo completo sobrevive à coleta nessa plataforma.
 
 
 ## Encerramento de threads e registros do coletor
@@ -239,3 +239,27 @@ leitura/criação 125154551 ns, total 135355887 ns. Outra totalizou
 foi refutado nesses exemplos. Faltam os comandos de preparação e pós-carga
 em ResourceManager.LoadStart. Nenhuma otimização ou mudança no yield foi
 adotada a partir desta sonda. Logs e fonte instrumental permanecem locais.
+
+## Histórico da rodada (antigo `DECOMPLOG.md` da raiz)
+
+Notas do agente anterior (Codex), de 2026-11-11, movidas para cá em 2026-11-22;
+acentos restaurados (o arquivo original os tinha perdido).
+
+### Fixture de identidade fraca no ARM
+
+Circuit breaker: abordagem alterada após repetição da asserção 42.
+Retorno TLS corrigido expôs sensibilidade ao layout na fixture; coletor em
+thread fresca não resolveu; instrumentação de raízes mudou o resultado.
+Não foi inferida correção do GC a partir dessa instrumentação. Fixture de
+identidade usa armazenamento exclusivo para não misturar reutilização de
+endereços nativos com o teste do cache fraco. 60 asserções preservadas,
+PASS nos perfis New/old Azahar. Origem exata da falsa retenção anterior:
+UNKNOWN.
+
+### Identidade da execução ARM
+
+Sonda privada recompilada antes de terminar o run anterior: recibo new-1
+invalidado e preservado. Runner corrigido para fixar o SHA do lançamento e
+recusar alteração posterior. Duas fixtures end-to-end com processo simulado
+passam. Verificação completa anterior interrompida; nova execução integral
+obrigatória antes do commit. Nenhum estado de execução promovido por essa sonda.

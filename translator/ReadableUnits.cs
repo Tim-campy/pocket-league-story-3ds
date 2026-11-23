@@ -409,6 +409,9 @@ sealed partial class Lowerer {
         }
         if(start==plan.DeclIndex&&token==plan.DeclToken&&plan.OwnStruct==null)return RenderDeclarator(name,plan);
         if(token==plan.OwnStruct)return name.Leaf;
+        // A.4a: the emitter marks /*u*/ a call it proved needs no class (implicit this, same
+        // function found by unqualified lookup); the mark is dropped and the leaf written.
+        if(output.Length>=5&&output.ToString(output.Length-5,5)=="/*u*/"){output.Length-=5;return name.Leaf;}
         int b=output.Length-1;while(b>=0&&char.IsWhiteSpace(output[b]))b--;
         var member=qualifier==null&&b>=0&&(output[b]=='.'||output[b]=='~'||b>=1&&(output[b]=='>'&&output[b-1]=='-'||output[b]==':'&&output[b-1]==':'));
         if(member||name.Kind is RKind.Field or RKind.Slot or RKind.Closure)return name.Leaf;

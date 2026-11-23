@@ -19,16 +19,17 @@ using Vector3D = pls::generated::kairo::unity::m3d4::util3d::Vector3D;
 struct Case {std::function<void()> reset,call;std::function<void(std::ostream&)> dump;};
 static int integer(std::istream&r){int v;r.read(reinterpret_cast<char*>(&v),4);if(!r)throw std::runtime_error("capture truncated");return v;}
 static float real(std::istream&r){float v;r.read(reinterpret_cast<char*>(&v),4);if(!r)throw std::runtime_error("capture truncated");return v;}
-static Array<std::int32_t> ints(std::istream&r){int n=integer(r);if(n<0)return {};auto a=Array<std::int32_t>::make(n);for(int i=0;i<n;++i)a.at(i)=integer(r);return a;}
+static Array<Int32> ints(std::istream&r){int n=integer(r);if(n<0)return {};auto a=Array<Int32>::make(n);for(int i=0;i<n;++i)a.at(i)=integer(r);return a;}
 static Array<Single> floats(std::istream&r){int n=integer(r);if(n<0)return {};auto a=Array<Single>::make(n);for(int i=0;i<n;++i)a.at(i)=real(r);return a;}
-static Array<Array<std::int32_t>> grid(std::istream&r){int n=integer(r);if(n<0)return {};auto a=Array<Array<std::int32_t>>::make(n);for(int i=0;i<n;++i)a.at(i)=ints(r);return a;}
+static Array<Array<Int32>> grid(std::istream&r){int n=integer(r);if(n<0)return {};auto a=Array<Array<Int32>>::make(n);for(int i=0;i<n;++i)a.at(i)=ints(r);return a;}
 static void put(std::ostream&w,int v){w.write(reinterpret_cast<const char*>(&v),4);}
 static void put(std::ostream&w,std::uint8_t v){put(w,int(v));}
+static void put(std::ostream&w,Int32 v){put(w,v.raw());}
 template<class T>static void put(std::ostream&w,const Array<T>&a){put(w,a.is_null()?-1:a.length());if(!a.is_null())for(int i=0;i<a.length();++i)put(w,a.at(i));}
 template<class T>static Array<T> clone(const Array<T>&a){if(a.is_null())return {};auto b=Array<T>::make(a.length());for(int i=0;i<a.length();++i)b.at(i)=a.at(i);return b;}
-static Array<Array<std::int32_t>> clone(const Array<Array<std::int32_t>>&a){auto b=Array<Array<std::int32_t>>::make(a.length());for(int i=0;i<a.length();++i)b.at(i)=clone(a.at(i));return b;}
+static Array<Array<Int32>> clone(const Array<Array<Int32>>&a){auto b=Array<Array<Int32>>::make(a.length());for(int i=0;i<a.length();++i)b.at(i)=clone(a.at(i));return b;}
 template<class T>static void copy(const Array<T>&a,const Array<T>&b){for(int i=0;i<a.length();++i)b.at(i)=a.at(i);}
-static void copy(const Array<Array<std::int32_t>>&a,const Array<Array<std::int32_t>>&b){for(int i=0;i<a.length();++i)if(!a.at(i).is_null())copy(a.at(i),b.at(i));}
+static void copy(const Array<Array<Int32>>&a,const Array<Array<Int32>>&b){for(int i=0;i<a.length();++i)if(!a.at(i).is_null())copy(a.at(i),b.at(i));}
 static Case load(const std::filesystem::path&path,int kind){
     std::ifstream r(path,std::ios::binary);Case c;
     if(kind==0){

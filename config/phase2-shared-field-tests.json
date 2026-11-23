@@ -12,17 +12,17 @@
   "inputs_sha256": {
     "tests/translator/shared_field_fixtures.cpp": "483f1221151ae4f6a768490e150b13da7490574d7b569d8a228a0f275b5008a2",
     "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
-    "src/kairo/common/managed_thread.cpp": "a4e660e3f7a22b467536115fc08c61b2fb57e8ee1a582f18b9bdaac03b146e65",
+    "src/kairo/common/managed_thread.cpp": "0bf2dfd32f530779799568e1a9575aca6a368b80905cbaff53dd4d18deea9edc",
     "src/kairo/platform/sdl/thread_priority.cpp": "0ea4e402d1555193a01a8fde97ad71080278da74d33d81c143c46a20ecc0adab",
     "src/kairo/common/managed_shared_field.hpp": "4438cc28db77aa6678f1f6c752ea7850d503565db0c043ab599b8d2c0342c88f",
-    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
+    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9",
     "src/kairo/common/managed_thread.hpp": "2580d462b364f7c77717e7864879ad79361f40cc6539341358f57239ffccd0bc",
     "src/kairo/platform/sdl/thread_priority.hpp": "e8acfa5076079a7e2b776ca1c0ed2c54dfee71840a9ff5ca1dbd06f7c5135706",
     "tests/translator/gc_test_support.hpp": "0c7a2b64d85681515073da739165894fc2f3dec47a7a1696dbd0d73f0a384431"
   },
   "native_executable": {
     "path": "build/shared-field-fixtures/shared-field-fixtures.exe",
-    "sha256": "8cbad7040e614c5230816c7e12201a2f53b99ff29fc4a273510036b62a17c7ad"
+    "sha256": "174a7b3fcc6fa38b83d904eb7556ff77bec7f7be8a56f1d39fc7fbfb099c74f7"
   },
   "production_methods_promoted": 0,
   "game_executed": false,

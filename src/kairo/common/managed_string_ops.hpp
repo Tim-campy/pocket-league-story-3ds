@@ -13,6 +13,7 @@ std::int32_t int32_parse_hex_number(const String& value,bool allow_spaces=true);
 // Int32.TryParse(s, NumberStyles.HexNumber, CultureInfo.InvariantCulture, out r):
 // Mono returns false with r=0 for null, format and overflow failures.
 bool int32_try_parse_hex_number(const String& value,std::int32_t& result);
+inline bool int32_try_parse_hex_number(const String& value,Int32& result){std::int32_t plain=result.value;const bool ok=int32_try_parse_hex_number(value,plain);result=plain;return ok;}
 // MD5.Create().ComputeHash(byte[]): RFC 1321 digest, 16 bytes; null throws ArgumentNullException.
 Array<std::uint8_t> md5_compute_hash(const Array<std::uint8_t>& buffer);
 // Convert.ToString(int, 2|8|16): the 32-bit two's complement digits, lowercase,

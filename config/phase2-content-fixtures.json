@@ -9,11 +9,11 @@
   "producer": {
     "compiler_sha256": "c9cf9f8745929cf1222384d28a89f95af827560bbcddf335c25e0808d831f50e",
     "runtime_sha256": "4377f10c78400f0370b88156773de9843c07f14e65b3232005ec3179ef38d463",
-    "translator_source_sha256": "9f18df3694881d8ebff8888c3a346b9b08323977c666ea918c7abd8e3e7ca6c6",
-    "emission_source_sha256": "0fb6a0b867f79158f5244f1658e283bd03f76a5f050e2189c5b5970eb4a9c119",
+    "translator_source_sha256": "41070aa261b43564e60d226ac40178062532f3584c210ccef89631830d803825",
+    "emission_source_sha256": "311c757254c1a01cbb3beb8c1da4c488d1d5d638ef32a7eedb463a40aa4082bb",
     "readable_source_sha256": [
-      "6cc0735d994a14f235d7eb6c050f21ee52db9ac7182234ede35ca5755f463df7",
-      "a16eb1d45be56a1a0bb14728e4d2b9cee263a3ff513d8c5983e07e8be630c64c"
+      "e0b6ca3b258c94a50d54d01644fd791183c41000280dc4b3fd11bfef3dc6ae2f",
+      "af63c6882d0c9627eb3af019a526fc5c4d2581100e1a6bcf4f26811a0137d451"
     ],
     "driver_sha256": "805ec8fe2d8e289f11b7561f455518fbbbf70cd9566074e38d2d15e221b05760"
   },
@@ -48,7 +48,7 @@
     },
     {
       "path": "src/kairo/common/managed_thread.cpp",
-      "sha256": "a4e660e3f7a22b467536115fc08c61b2fb57e8ee1a582f18b9bdaac03b146e65"
+      "sha256": "0bf2dfd32f530779799568e1a9575aca6a368b80905cbaff53dd4d18deea9edc"
     },
     {
       "path": "src/kairo/common/managed_collation.cpp",
@@ -88,7 +88,7 @@
     },
     {
       "path": "src/kairo/common/baked_arrays.hpp",
-      "sha256": "c9f5f321b717f651356a56382df705a53013444e63bfe66235a3882810df0767"
+      "sha256": "4aa51f18839dae33f5353e8fa2cbbb40782ad52b98bbd82e9a5734435978b7df"
     },
     {
       "path": "src/kairo/common/canvas_back.hpp",
@@ -108,11 +108,11 @@
     },
     {
       "path": "src/kairo/common/managed_collections.hpp",
-      "sha256": "4c11723185f1d586914e10cbc3df2dfa7bb37f671a34ff75a43b91553b2c1ba0"
+      "sha256": "54074b647571027deba2015138e065dec79d981a793905054b27f4bc34fc79e4"
     },
     {
       "path": "src/kairo/common/managed_dictionary.hpp",
-      "sha256": "04a28923f0029f49fb6971b3a284ff337f22381769bd4c03e89e3a24a9ff36c1"
+      "sha256": "e50e50d4816852830af714e9dca9cdc62dc96ef37d5e479477b937984cc43536"
     },
     {
       "path": "src/kairo/common/managed_encoding.hpp",
@@ -164,7 +164,7 @@
     },
     {
       "path": "src/kairo/common/managed_string_ops.hpp",
-      "sha256": "15371a3c07aab211be37aeb8d396360a01e748819b85be39f032c3183033be87"
+      "sha256": "48be7944e9b71e8654612541211f79e01e86607cfa18b9c9ed1326a35c378200"
     },
     {
       "path": "src/kairo/common/managed_text.hpp",
@@ -180,7 +180,7 @@
     },
     {
       "path": "src/kairo/common/managed_type_init.hpp",
-      "sha256": "7c78327b3ac6584847891c89b6f3078b5111353384078cd4d12970c8afbd5d64"
+      "sha256": "99dfb990ed46c78e6abf0e36cc35f23f2327ebbce91b4a9be3a5435bda016d4e"
     },
     {
       "path": "src/kairo/common/memory_ranges.hpp",
@@ -204,7 +204,7 @@
     },
     {
       "path": "src/kairo/common/semantic_runtime.hpp",
-      "sha256": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8"
+      "sha256": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9"
     },
     {
       "path": "src/kairo/common/services.hpp",
@@ -238,7 +238,7 @@
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_runtime.hpp",
-      "sha256": "9d470206087a0cf5158d7f1a49c9455b21665ac2fa01662ad61716799b86fb33"
+      "sha256": "11bfa071263ae9d26c21c4983c05d34ffd63b93303822279491efa010999bd7c"
     },
     {
       "path": "build/translator/content-fixtures/generated/game_generated_type_19110fe1e69a8935.cpp",
@@ -251,10 +251,10 @@
   ],
   "native_executable": {
     "path": "build/translator/content-fixtures/native.exe",
-    "sha256": "78ec983eac7bb9f265527fc12f9f98f8e81715b42147692abc91667b8669fd0c"
+    "sha256": "61ec0ba80f833cd7621df0407179474be52bb32507cb18170920d2bee9102c5b"
   },
   "source_executable": {
     "path": "build/translator/content-fixtures/source.exe",
-    "sha256": "62095be63419232f010d37a2aa96073e4a26b4b090dde4e841ad6f2bf3eac4f2"
+    "sha256": "a400ad2443cefb64467b8f5fbab00970e8a04c7d684cdc75b107f6954db4aaf3"
   }
 }

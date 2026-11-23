@@ -38,8 +38,8 @@ sealed partial class Lowerer {
         field.Type.SpecialType is SpecialType.System_Boolean or SpecialType.System_Char or SpecialType.System_SByte or SpecialType.System_Byte or SpecialType.System_Int16 or SpecialType.System_UInt16
             or SpecialType.System_Int32 or SpecialType.System_UInt32 or SpecialType.System_Int64 or SpecialType.System_UInt64 or SpecialType.System_Single or SpecialType.System_Double;
     static string ConstantCppType(ITypeSymbol type)=>type.SpecialType switch{SpecialType.System_Boolean=>"bool",SpecialType.System_Char=>"char16_t",SpecialType.System_SByte=>"std::int8_t",
-        SpecialType.System_Byte=>"std::uint8_t",SpecialType.System_Int16=>"std::int16_t",SpecialType.System_UInt16=>"std::uint16_t",SpecialType.System_Int32=>"std::int32_t",
-        SpecialType.System_UInt32=>"std::uint32_t",SpecialType.System_Int64=>"std::int64_t",SpecialType.System_UInt64=>"std::uint64_t",SpecialType.System_Single=>"pls::cs::Single",_=>"pls::cs::Double"};
+        SpecialType.System_Byte=>"std::uint8_t",SpecialType.System_Int16=>"std::int16_t",SpecialType.System_UInt16=>"std::uint16_t",SpecialType.System_Int32=>"pls::cs::Int32",
+        SpecialType.System_UInt32=>"std::uint32_t",SpecialType.System_Int64=>"pls::cs::Int64",SpecialType.System_UInt64=>"std::uint64_t",SpecialType.System_Single=>"pls::cs::Single",_=>"pls::cs::Double"};
     // A source reference to a named constant of this assembly: Type::Name (resolved by the renamer).
     string? ReadableConstantReference(ExpressionSyntax n){
         if(n is not (IdentifierNameSyntax or MemberAccessExpressionSyntax))return null;
@@ -525,7 +525,15 @@ sealed partial class Lowerer {
         }
         var result=method.MethodKind==MethodKind.Constructor?Type(method.ContainingType,site):Type(method.ReturnType,site);
         string Done(string call)=>pre.Length==0?call:"([&]() -> "+result+" { "+pre+(result=="void"?"":"return ")+call+"; }())";
-        if(receiver==null)return Done(callee+"("+String.Join(", ",values)+")");
+        if(receiver==null){
+            // A.4a: an implicit-this call of a non-virtual member of this class (or a base)
+            // inside a member function, written without the class when C++ unqualified lookup
+            // reaches the same function (same rule as the explicit-this case below).
+            if(!method.IsStatic&&MemberMethod(method)&&nativeCallee==null&&closureDepth==0&&methods.TryGetValue(current,out var implicitCaller)&&InstanceMember(implicitCaller)
+                &&!HidesMember(implicitCaller.ContainingType,method)&&!model.LookupSymbols(site.SpanStart,null,method.Name).Any(s=>s is ILocalSymbol or IParameterSymbol))
+                callee=Unqualified(MemberLeaf(method));
+            return Done(callee+"("+String.Join(", ",values)+")");
+        }
         var memberCall=virtualCall||nativeMember;
         var cast=memberCall&&receiverType!=null&&!SymbolEqualityComparer.Default.Equals(receiverType,method.ContainingType)&&HidesMember(receiverType,method);
         var target=cast?"static_cast<"+Type(method.ContainingType,site)+">("+receiver+")":receiver;
@@ -539,13 +547,27 @@ sealed partial class Lowerer {
         if(nativeCallee==null&&MemberMethod(method)){
             // Member function: on this, the qualified name (exact C# target, also for base.M());
             // on another receiver, the null check is part of the call after the arguments.
-            if(thisReceiver)return Done((closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller)?"cs_this->"+MemberLeaf(method):callee)+"("+String.Join(", ",values)+")");
+            if(thisReceiver){
+                if(closureDepth>0||!methods.TryGetValue(current,out var caller)||!InstanceMember(caller))return Done("cs_this->"+MemberLeaf(method)+"("+String.Join(", ",values)+")");
+                // A.4a: a call on this of a non-virtual member is written without the class
+                // when C++ unqualified lookup reaches the same function: not base.M(), no
+                // class between the caller and the method's class declares the name, and no
+                // local or parameter has it. A non-virtual member has no slot, so leaving the
+                // class out never turns it into a virtual dispatch.
+                var unqualified=receiverNode is not BaseExpressionSyntax&&!(receiverNode!=null&&Unparen(receiverNode) is BaseExpressionSyntax)
+                    &&!HidesMember(caller.ContainingType,method)
+                    &&!model.LookupSymbols(site.SpanStart,null,method.Name).Any(s=>s is ILocalSymbol or IParameterSymbol);
+                return Done((unqualified?Unqualified(MemberLeaf(method)):callee)+"("+String.Join(", ",values)+")");
+            }
             return Done(Postfix(target)+"->"+MemberLeaf(method)+"("+String.Join(", ",values)+")");
         }
         if(nativeMember)return Done(Postfix(target)+"->"+nativeCallee!.Substring("member:".Length)+"("+String.Join(", ",values)+")");
         values.Insert(0,target);
         return Done(callee+"("+String.Join(", ",values)+")");
     }
+    // The renamer qualifies every member name (Class::m); /*u*/ asks for the bare name. A leaf
+    // that MemberLeaf already qualified (Base::m, hidden by a derived class) keeps its class.
+    static string Unqualified(string leaf)=>leaf.Contains("::")?leaf:"/*u*/"+leaf;
     static bool HidesMember(ITypeSymbol receiverType,IMethodSymbol method){
         for(var type=receiverType as INamedTypeSymbol;type!=null&&!SymbolEqualityComparer.Default.Equals(type.OriginalDefinition,method.ContainingType.OriginalDefinition);type=type.BaseType)
             if(type.GetMembers(method.Name).Any())return true;
@@ -639,18 +661,23 @@ sealed partial class Lowerer {
         var r=Unparen(member.Expression);
         if(r is ThisExpressionSyntax)return "cs_this";
         if(r is IdentifierNameSyntax&&model.GetSymbolInfo(r).Symbol is ILocalSymbol or IParameterSymbol{RefKind:RefKind.None}&&!capturedVariables.Contains(model.GetSymbolInfo(r).Symbol!))return "cs_require("+ReadLocal(model.GetSymbolInfo(r).Symbol!)+")";
+        // A.6: an instance field of this (v_.z_, this.v_.z_) read twice gives the same object
+        // when nothing runs in between; callers allow it only with a value that writes nothing.
+        var thisField=r is IdentifierNameSyntax||r is MemberAccessExpressionSyntax{Expression:ThisExpressionSyntax};
+        if(thisField&&model.GetSymbolInfo(r).Symbol is IFieldSymbol{IsStatic:false} receiverField&&PlainField(receiverField)&&!sharedFields.Contains(Id(receiverField))&&closureDepth==0)return "cs_require("+Expr(r)+")";
         return null;
     }
     string? IncrementStatement(ExpressionSyntax target,bool add){
         var symbol=model.GetSymbolInfo(target).Symbol;var type=model.GetTypeInfo(target).Type;
         var suffix=NumericSuffix(type);var narrow=suffix=="";if(narrow&&!Integral(type))return null;if(narrow)suffix="i32";
-        string Calculation(string value){var c="pls::cs::"+(add?"add_":"sub_")+suffix+"("+value+", 1)";return narrow?"pls::cs::cast_integral<"+Type(type,target)+">("+c+")":c;}
+        string Calculation(string value){var c=readableInt&&narrow?"("+value+(add?" + 1":" - 1")+")":"pls::cs::"+(add?"add_":"sub_")+suffix+"("+value+", 1)";return narrow?"pls::cs::cast_integral<"+Type(type,target)+">("+c+")":c;}
         string storage;
         if(TypedScalar(target))return (add?"++":"--")+ReadLocal(symbol!);
         if(symbol is ILocalSymbol or IParameterSymbol)storage=ReadLocal(symbol);
         else if(symbol is IFieldSymbol staticField&&SourceStatic(staticField))storage=StaticField(staticField,target);
         else if(symbol is IFieldSymbol field&&PlainField(field)&&PureReceiver(target) is string receiver){RequireClass(field.ContainingType,target);storage=receiver+"->"+NativeFieldMember(field,target);}
         else return null;
+        if(readableInt&&IntegerWord(type))return (add?"++":"--")+storage;  // A.2: the type's operator
         return storage+" = "+Calculation(storage);
     }
     string? AssignStatement(AssignmentExpressionSyntax a){
@@ -724,20 +751,28 @@ sealed partial class Lowerer {
     const string ReadableHelpers=@"
 template<std::size_t N> pls::cs::String literal(const char16_t (&text)[N]){return pls::cs::String::literal(text,N-1);}
 template<class T> bool is_null(const T& value){return pls::cs::box(value)==pls::cs::Ref<pls::cs::Object>{};}
-static std::int32_t post_increment(std::int32_t& value){const auto old=value;value=pls::cs::add_i32(old,1);return old;}
-static std::int64_t post_increment(std::int64_t& value){const auto old=value;value=pls::cs::add_i64(old,1);return old;}
+static std::int32_t post_increment(std::int32_t& value){const auto old=value;pls::cs::Int32 typed=value;++typed;value=typed;return old;}
+static std::int64_t post_increment(std::int64_t& value){const auto old=value;pls::cs::Int64 typed=value;++typed;value=typed;return old;}
 static std::uint32_t post_increment(std::uint32_t& value){const auto old=value;value=pls::cs::add_u32(old,1);return old;}
 static std::uint64_t post_increment(std::uint64_t& value){const auto old=value;value=pls::cs::add_u64(old,1);return old;}
-static std::int32_t post_decrement(std::int32_t& value){const auto old=value;value=pls::cs::sub_i32(old,1);return old;}
-static std::int64_t post_decrement(std::int64_t& value){const auto old=value;value=pls::cs::sub_i64(old,1);return old;}
+static std::int32_t post_decrement(std::int32_t& value){const auto old=value;pls::cs::Int32 typed=value;--typed;value=typed;return old;}
+static std::int64_t post_decrement(std::int64_t& value){const auto old=value;pls::cs::Int64 typed=value;--typed;value=typed;return old;}
 static std::uint32_t post_decrement(std::uint32_t& value){const auto old=value;value=pls::cs::sub_u32(old,1);return old;}
 static std::uint64_t post_decrement(std::uint64_t& value){const auto old=value;value=pls::cs::sub_u64(old,1);return old;}
-static std::int32_t pre_increment(std::int32_t& value){value=pls::cs::add_i32(value,1);return value;}
-static std::int64_t pre_increment(std::int64_t& value){value=pls::cs::add_i64(value,1);return value;}
+static std::int32_t pre_increment(std::int32_t& value){pls::cs::Int32 typed=value;++typed;value=typed;return value;}
+static pls::cs::Int32 pre_increment(pls::cs::Int32& value){return ++value;}
+static pls::cs::Int64 pre_increment(pls::cs::Int64& value){return ++value;}
+static pls::cs::Int32 pre_decrement(pls::cs::Int32& value){return --value;}
+static pls::cs::Int64 pre_decrement(pls::cs::Int64& value){return --value;}
+static pls::cs::Int32 post_increment(pls::cs::Int32& value){return value++;}
+static pls::cs::Int64 post_increment(pls::cs::Int64& value){return value++;}
+static pls::cs::Int32 post_decrement(pls::cs::Int32& value){return value--;}
+static pls::cs::Int64 post_decrement(pls::cs::Int64& value){return value--;}
+static std::int64_t pre_increment(std::int64_t& value){pls::cs::Int64 typed=value;++typed;value=typed;return value;}
 static std::uint32_t pre_increment(std::uint32_t& value){value=pls::cs::add_u32(value,1);return value;}
 static std::uint64_t pre_increment(std::uint64_t& value){value=pls::cs::add_u64(value,1);return value;}
-static std::int32_t pre_decrement(std::int32_t& value){value=pls::cs::sub_i32(value,1);return value;}
-static std::int64_t pre_decrement(std::int64_t& value){value=pls::cs::sub_i64(value,1);return value;}
+static std::int32_t pre_decrement(std::int32_t& value){pls::cs::Int32 typed=value;--typed;value=typed;return value;}
+static std::int64_t pre_decrement(std::int64_t& value){pls::cs::Int64 typed=value;--typed;value=typed;return value;}
 static std::uint32_t pre_decrement(std::uint32_t& value){value=pls::cs::sub_u32(value,1);return value;}
 static std::uint64_t pre_decrement(std::uint64_t& value){value=pls::cs::sub_u64(value,1);return value;}
 ";

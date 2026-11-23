@@ -19,6 +19,9 @@ namespace kl_io = pls::generated::java::io;
 namespace kl_lang = pls::generated::java::lang;
 namespace kl_util = pls::generated::kairo::unity::util;
 
+using StringArray = pls::cs::Array<pls::cs::String>;
+using IntArray = pls::cs::Array<pls::cs::Int32>;
+
 namespace pls::game {
 namespace data {
 
@@ -32,7 +35,7 @@ void SponsorData::trace_edges(const pls::cs::EdgeVisitor& visitor) const {
 
 static pls::cs::Ref<main::AppData> SponsorData_apdat__storage{};
 
-static pls::cs::Array<pls::cs::String> SponsorData_difficultStr_storage{};
+static StringArray SponsorData_difficultStr_storage{};
 
 static pls::cs::Ref<game::UserData> SponsorData_udat__storage{};
 
@@ -46,9 +49,7 @@ static PLS_NOINLINE void cs_init_bd3043ac164d021f_slow(pls::cs::TypeInitFlag& fl
     state.run("data.SponsorData", flag, []() {
         SponsorData_difficultStr_storage =
             pls::cs::evaluate_type_initializer_field("F:data.SponsorData.difficultStr", [&]() {
-                return pls::cs::Array<pls::cs::String>::from({literal(u"\u7C21\u5358") /* "簡単" */,
-                                                              literal(u"\u666E\u901A") /* "普通" */,
-                                                              literal(u"\u96E3\u3057\u3044") /* "難しい" */});
+                return StringArray::from({literal(u"簡単"), literal(u"普通"), literal(u"難しい")});
             });
     });
 }
@@ -66,7 +67,7 @@ pls::cs::Ref<main::AppData>& SponsorData::apdat_() {
     return SponsorData_apdat__storage;
 }
 
-pls::cs::Array<pls::cs::String>& SponsorData::difficultStr() {
+StringArray& SponsorData::difficultStr() {
     SponsorData::ensure_initialized();
     return SponsorData_difficultStr_storage;
 }
@@ -78,10 +79,8 @@ pls::cs::Ref<game::UserData>& SponsorData::udat_() {
 
 void SponsorData::create_init(pls::cs::Ref<SponsorData> self) {
     SponsorData::ensure_initialized();
-    self->income_ = pls::cs::Array<std::int32_t>::make(2);
-    ([&]() {
-        BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
-    }());
+    self->income_ = IntArray::make(2);
+    BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
 
     SponsorData::apdat_() = main::AppData::GetInstance();
     SponsorData::udat_() = game::UserData::GetInstance();
@@ -89,10 +88,8 @@ void SponsorData::create_init(pls::cs::Ref<SponsorData> self) {
 
 void SponsorData::create_init(pls::cs::Ref<SponsorData> self, pls::cs::String src) {
     SponsorData::ensure_initialized();
-    self->income_ = pls::cs::Array<std::int32_t>::make(2);
-    ([&]() {
-        BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
-    }());
+    self->income_ = IntArray::make(2);
+    BaseData::create_init(pls::cs::static_pointer_cast<BaseData>(self));
 
     SponsorData::apdat_() = main::AppData::GetInstance();
     SponsorData::udat_() = game::UserData::GetInstance();
@@ -127,7 +124,7 @@ void SponsorData::Init() {
 // M:data.SponsorData.Load(System.String)
 void SponsorData::Load(pls::cs::String src) {
     pls::cs::Int32 num = 0;
-    pls::cs::Array<pls::cs::String> array = kl_util::StringUtil::Split(src, literal(u"\t"));
+    StringArray array = kl_util::StringUtil::Split(src, literal(u"\t"));
     id_ = kl_lang::JInteger::ParseInt(array[num++]);
     name_ = array[num++];
     charaIndex_ = kl_lang::JInteger::ParseInt(array[num++]);
@@ -160,7 +157,7 @@ void SponsorData::Load(pls::cs::String src) {
 void SponsorData::NewGame() {
     state_ = 0;
     if (kl_util::BitUtil::Check(flag_, 1)) {
-        SponsorData::ChangeState(1);
+        ChangeState(1);
     }
 }
 
@@ -174,15 +171,15 @@ void SponsorData::Serialize(pls::cs::Ref<kl_io::OutputStream> os) {
 
 // M:data.SponsorData.Deserialize(java.io.InputStream)
 void SponsorData::Deserialize(pls::cs::Ref<kl_io::InputStream> stream) {
-    state_ = pls::cs::cast_integral<std::int32_t>(kl_util::StreamUtil::ReadShort(stream));
+    state_ = pls::cs::cast_integral<pls::cs::Int32>(kl_util::StreamUtil::ReadShort(stream));
     satisfactPoint_ = kl_util::StreamUtil::ReadInt(stream);
-    feelPt_ = pls::cs::cast_integral<std::int32_t>(kl_util::StreamUtil::ReadShort(stream));
+    feelPt_ = pls::cs::cast_integral<pls::cs::Int32>(kl_util::StreamUtil::ReadShort(stream));
     new_ = kl_util::StreamUtil::ReadBoolean(stream);
 }
 
 // M:data.SponsorData.ChangeState(System.Int32)
 void SponsorData::ChangeState(pls::cs::Int32 state) {
-    if ((state_ == 0) && (state == 1)) {
+    if (state_ == 0 && state == 1) {
         new_ = true;
     }
     state_ = state;
@@ -196,17 +193,16 @@ void SponsorData::Draw_sponsorChara(pls::cs::Ref<pls::kairo::Graphics> g, pls::c
     {
         pls::cs::Ref<pls::kairo::Image> cs_arg0 =
             require(require(SponsorData::apdat_())->resCom2_)->img.get_Item(169);
-        require(g)->DrawImage(cs_arg0, (dx - 10), (dy - 30), (20 * ((charaId % 12))), (30 * ((charaId / 12))),
-                              20, 30);
+        require(g)->DrawImage(cs_arg0, dx - 10, dy - 30, 20 * (charaId % 12), 30 * (charaId / 12), 20, 30);
     }
 }
 
 // M:data.SponsorData.GetIncome
-std::int32_t SponsorData::GetIncome() {
+pls::cs::Int32 SponsorData::GetIncome() {
     {
-        std::int32_t cs_arg0_23 = satisfactPoint_;
-        std::int32_t cs_arg3_23 = income_[0];
-        std::int32_t cs_arg4_23 = income_[1];
+        pls::cs::Int32 cs_arg0_23 = satisfactPoint_;
+        pls::cs::Int32 cs_arg3_23 = income_[0];
+        pls::cs::Int32 cs_arg4_23 = income_[1];
         return game::GameUtil::RateConvert(cs_arg0_23, 0, 100, cs_arg3_23, cs_arg4_23, true);
     }
 }
@@ -227,13 +223,13 @@ void SponsorData::UpdateSatisFactPoint() {
     if ([&]() -> bool {
             auto cs_left = require(require(SponsorData::udat_())->gm_)->score_[0];
             auto cs_right = require(require(SponsorData::udat_())->gm_)->score_[1];
-            return (cs_left > cs_right);
+            return cs_left > cs_right;
         }()) {
         flag = true;
     } else if ([&]() -> bool {
                    auto cs_left = require(require(SponsorData::udat_())->gm_)->score_[0];
                    auto cs_right = require(require(SponsorData::udat_())->gm_)->score_[1];
-                   return (cs_left == cs_right);
+                   return cs_left == cs_right;
                }()) {
         flag2 = true;
     } else {
@@ -242,14 +238,14 @@ void SponsorData::UpdateSatisFactPoint() {
     if (flag3) {
         return;
     }
-    pls::cs::Int32 x = pls::cs::sub_i32(require(teamData)->warPotential_, require(teamData2)->warPotential_);
+    pls::cs::Int32 x = require(teamData)->warPotential_ - require(teamData2)->warPotential_;
     pls::cs::Int32 x2 = 0;
     if (flag) {
         x2 = game::GameUtil::RateConvert(x, -50, 50, 1000, 333, true);
     } else if (flag2) {
         x2 = game::GameUtil::RateConvert(x, -50, 50, 333, 0, true);
     }
-    for (pls::cs::Int32 i = 0; i < (require(SponsorData::apdat_())->sponsorData_).length(); ++i) {
+    for (pls::cs::Int32 i = 0; i < require(SponsorData::apdat_())->sponsorData_.length(); ++i) {
         pls::cs::Ref<SponsorData> sponsorData = require(SponsorData::apdat_())->sponsorData_.get_Item(i);
         if (require(sponsorData)->state_ != 2) {
             continue;
@@ -260,7 +256,8 @@ void SponsorData::UpdateSatisFactPoint() {
         pls::cs::Int32 num = game::GameUtil::RateConvert(x2, 0, 1000, c2min, c2max, true);
         {
             auto cs_target = sponsorData;
-            auto cs_value = main::AppData::Clamp((require(sponsorData)->satisfactPoint_ + num), 0, 100);
+            pls::cs::Int32 cs_value =
+                main::AppData::Clamp(require(sponsorData)->satisfactPoint_ + num, 0, 100);
             require(cs_target)->satisfactPoint_ = cs_value;
         }
     }
@@ -281,11 +278,11 @@ pls::cs::String SponsorData::GetDifficultStr() {
 bool SponsorData::IsExistNew() {
     SponsorData::ensure_initialized();
 
-    if (!(require(game::UserData::GetInstance())->ChEventFlg(32))) {
+    if (!require(game::UserData::GetInstance())->ChEventFlg(32)) {
         return false;
     }
     pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
-    for (pls::cs::Int32 i = 0; i < (require(instance)->sponsorData_).length(); ++i) {
+    for (pls::cs::Int32 i = 0; i < require(instance)->sponsorData_.length(); ++i) {
         if (require(require(instance)->sponsorData_.get_Item(i))->IsNew()) {
             return true;
         }
@@ -298,7 +295,7 @@ void SponsorData::RemoveNew() {
     SponsorData::ensure_initialized();
 
     pls::cs::Ref<main::AppData> instance = main::AppData::GetInstance();
-    for (pls::cs::Int32 i = 0; i < (require(instance)->sponsorData_).length(); ++i) {
+    for (pls::cs::Int32 i = 0; i < require(instance)->sponsorData_.length(); ++i) {
         require(require(instance)->sponsorData_.get_Item(i))->new_ = false;
     }
 }

@@ -13,13 +13,13 @@
     "src/kairo/common/semantic_runtime.cpp": "e1d022ba7b2f42fa051c778ecb33958b3fbb03e9cc85b021755fc59e2703da10",
     "src/kairo/api/services_managed.hpp": "f5048d7be5fa57d1412fd14729dfbf6f3581fd9dcb411538e766a1c2fe4603a5",
     "src/kairo/common/services.hpp": "017c34591de2574b3be907e0b8ea70009d64b230f674d724fb33ffb854afabe0",
-    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
+    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9",
     "tools/test_managed_services.py": "2f9fe5f0344e226dc77855b1133f298655967a1f9832f1a450b61adbf3ceb6e9",
     "tools/test_input.py": "74aad60b4fb5f09cd70bbcd44601bf411cfbeddfcc819a5412fd0227740d4326"
   },
   "native_executable": {
     "path": "build/managed-services-tests/managed-services.exe",
-    "sha256": "46c13e2c143a44573aec3bd354283ccb67cb526d8b639a2a5084c7d0f2f0a394"
+    "sha256": "c08faf048de1187d9c26b9a01d3b08bf77947b1063098b7bb7ef5b2927bf011a"
   },
   "policy_sha256": "2767fa2c47ea68c3771448cc63ffd090ea912ccdf39cf25eb2371a1a7afc0e7d",
   "intended_symbol": "M:main.AppData.CgiRegist(System.String,System.String)",

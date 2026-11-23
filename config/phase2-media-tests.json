@@ -10,7 +10,7 @@
   "mixer_ring_bytes": 262144,
   "mixer_scratch_bytes": 131072,
   "resampler_peak_available_bytes": 85448,
-  "mixer_played_frames": 122880,
+  "mixer_played_frames": 126976,
   "completed_loops": 6,
   "assertions": 18157180,
   "mixer_underrun_frames": 0,
@@ -31,14 +31,14 @@
     "src/kairo/api/debug_input.hpp": "f65b74bd04e338431af9d028f1ea906cbefb7a650bf9eaf9d124b0f73fb17918",
     "src/kairo/api/vector3.hpp": "4830f223a65124ea07c7e49f119e14a581d8ef2eee901c1a37c9c863f6bfac81",
     "src/kairo/api/system.hpp": "bb37f69f8698583ce232749451d26d84137ff359f9954bd20083d819e98aedcd",
-    "src/kairo/common/semantic_runtime.hpp": "eb7eae3954e9835b9fd220aec96760d04b54bfa047c9da75708dc0097b6944d8",
+    "src/kairo/common/semantic_runtime.hpp": "818f6ab9b177a86453bbdbc1a4307db49e905ecdcf95b12db7293338fc9fcae9",
     "tools/test_media.py": "7f4a8fbba1f054855f8650ee93652d207a48dd0c91dd4375e90fa107d75c2bef"
   },
   "sdk_receipt_sha256": "3069a123d9530be5f35e22f3064c0f81395c4d685b677c1758b2a6ba33d7157b",
   "manifest_sha256": "0edc4594ece3180da4c3eb93b79e0e41d1c66d400e34ca10a031c613a5cb5664",
   "apk_sha256": "d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8",
-  "native_executable_sha256": "ec66213f3d5149a428768357548d77c4c62116035deba24f1634aa554f42d13d",
-  "native_stdout_sha256": "094678f5eaf59041269a49d4d1fba2c8dbf38c5b38e478dffe4f840efa6bac29",
+  "native_executable_sha256": "6aae690c7e6e57adbc7fdabb693f2bf3263e6e1a87071d6a056c4c64c8dfb729",
+  "native_stdout_sha256": "45be8a1c6d0f49f9281db2c558dfbdc5d7ed36260372b5eda66b3ad58e8ae805",
   "ffmpeg_comparisons": [
     {
       "sample_rate": 44100,

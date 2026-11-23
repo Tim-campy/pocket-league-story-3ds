@@ -69,7 +69,9 @@ template<class T> inline T cs_require(T value){if(!value)pls::cs::throw_null_ref
 [[maybe_unused]] static bool cs_is_little_endian(){const std::uint16_t value=1;std::uint8_t first;std::memcpy(&first,&value,1);return first==1;}
 
 template<class T> static T cs_network_to_host(T value){
+ if constexpr(std::is_class_v<T>)return T(cs_network_to_host(value.raw()));else{
  if(!cs_is_little_endian())return value;using U=std::make_unsigned_t<T>;U bits{};std::memcpy(&bits,&value,sizeof(T));U result=0;for(std::size_t i=0;i<sizeof(T);++i){result=static_cast<U>((result<<8)|(bits&255));bits>>=8;}T out{};std::memcpy(&out,&result,sizeof(T));return out;
+ }
 }
 
 [[maybe_unused]] static pls::cs::String cs_substring2(const pls::cs::String& source,std::int32_t start,std::int32_t count) {
@@ -77,7 +79,7 @@ template<class T> static T cs_network_to_host(T value){
  std::u16string value;for(std::int32_t i=0;i<count;++i)value.push_back(source.at(start+i));return pls::cs::String(std::move(value));
 }
 
-[[maybe_unused]] static pls::cs::String cs_substring1(const pls::cs::String& source,std::int32_t start) {return cs_substring2(source,start,pls::cs::sub_i32(source.length(),start));}
+[[maybe_unused]] static pls::cs::String cs_substring1(const pls::cs::String& source,std::int32_t start) {if(start<0||start>source.length())throw pls::cs::ArgumentOutOfRangeException();return cs_substring2(source,start,source.length()-start);}
 
 [[maybe_unused]] static pls::cs::Array<char16_t> cs_to_chars(const pls::cs::String& source) {
  auto result=pls::cs::Array<char16_t>::make(source.length());for(std::int32_t i=0;i<result.length();++i)result.at(i)=source.at(i);return result;

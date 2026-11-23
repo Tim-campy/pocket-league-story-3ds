@@ -8,10 +8,13 @@ Alvo principal: **New Nintendo 3DS XL**. O 3DS original é uma meta secundária.
 
 ## Estado atual
 
-O port está na **Fase 2 (tradução fiel)**, antes do congelamento. O congelamento
-(tag `v1.0.0-faithful`) depende de aprovação explícita e ainda não foi feito.
+A **versão fiel** foi congelada em 2026-11-23 (tag `v1.0.0-faithful`; nota da
+versão em [docs/release-notes/v1.0.0-faithful.md](docs/release-notes/v1.0.0-faithful.md)).
+Desde então `src/game/` é código-fonte mantido à mão e o tradutor está arquivado.
+Próximo passo proposto: backend 3DS com vídeo e som (Fase 4,
+[docs/plan-next-phases.md](docs/plan-next-phases.md)).
 
-- **PC:** o jogo inteiro traduzido roda em build de diagnóstico. Os roteiros
+- **PC:** o jogo inteiro roda em build de diagnóstico. Os roteiros
   de `tests/routes/` cobrem título, saves, gestão, instalações, partida completa,
   temporada, carreira, novo jogo, toque e diálogos. Esse build serve ao desenvolvimento, não à distribuição.
 - **3DS:** o build para o console usa um **backend nulo** (sem vídeo nem áudio).
@@ -21,8 +24,8 @@ O port está na **Fase 2 (tradução fiel)**, antes do congelamento. O congelame
   ([docs/design/phase3-prototype.md](docs/design/phase3-prototype.md)). Vídeo e
   áudio no 3DS ficam para a Fase 4.
 
-O estado de cada critério do congelamento, com números e pendências, fica em
-[PROGRESS.md](PROGRESS.md), gerado por `python tools/progress`. A auditoria do
+O estado de cada critério do congelamento, com números e pendências, ficou registrado
+em [PROGRESS.md](PROGRESS.md) (livro-razão da Fase 2, congelado). A auditoria do
 congelamento está em [docs/notes/freeze-audit.md](docs/notes/freeze-audit.md).
 
 ## Como funciona
@@ -32,7 +35,7 @@ congelamento está em [docs/notes/freeze-audit.md](docs/notes/freeze-audit.md).
    tag **v1.0.0-csharp-reconstruction**, commit
    **c7d097a847ca1f1a8e5fb7141ff11d338f5915c4**. Ele contém o C# reconstruído
    e verificado do jogo original (Unity 5.3.4f1, Mono).
-2. **Tradutor** (`translator/`, Roslyn): converte esse C# em C++17, preservando
+2. **Tradutor** (`tools/translator-archived/`, Roslyn; arquivado no congelamento): converte esse C# em C++17, preservando
    a semântica do C# e do Mono: inteiros com estouro definido, ordem de avaliação,
    exceções, verificações de nulo e de limites, e ponto flutuante igual ao do
    Android ARM. Há dois modos de saída:
@@ -41,8 +44,9 @@ congelamento está em [docs/notes/freeze-audit.md](docs/notes/freeze-audit.md).
      do congelamento.
 
    A amostra do modo legível fica em [docs/readable-sample/](docs/readable-sample/).
-3. **Código do jogo** (`src/game/`): saída do tradutor. Não se edita à mão; um erro
-   se corrige no tradutor, regenerando.
+3. **Código do jogo** (`src/game/`): a última saída do tradutor, em modo legível, é
+   desde o congelamento o código-fonte do jogo, mantido à mão
+   ([docs/maintaining-game-code.md](docs/maintaining-game-code.md)).
 4. **Plataforma** (`src/kairo/`): reimplementação da KairoLibrary e da parte usada
    do Unity, com três backends: nulo (medição), SDL2 (PC) e CTR (3DS).
 5. **Runtime** (`src/runtime/`, `src/kairo/common/`): strings UTF-16, arrays,

@@ -11,6 +11,8 @@ O projeto tem duas metades, separadas por um marco chamado **congelamento** (se�
 - **Antes do congelamento — fidelidade.** O C# é traduzido mecanicamente para C++ por um tradutor próprio. O C++ do jogo é gerado, nunca editado à mão, e a lógica do jogo não é alterada. A referência de comportamento é o jogo original no Android ARM.
 - **Depois do congelamento — evolução.** O C++ gerado pela última vez passa a ser o código-fonte do projeto. O tradutor é aposentado. A partir daí entram a adaptação ao 3DS e as melhorias de jogo decididas pelo usuário.
 
+**O congelamento foi feito em 2026-11-23 (tag `v1.0.0-faithful`).** O projeto está na segunda metade: valem as regras "Depois do congelamento" e "Sempre" da seção 5; as de "Antes do congelamento" ficam como registro.
+
 ## 2. Regras de conteúdo (invioláveis, valem nas duas metades)
 
 1. **O repositório contém apenas código obtido por engenharia reversa e código novo escrito para o port:** o C# reconstruído (como submódulo), o C++ traduzido, a reimplementação da KairoLibrary, o runtime, o tradutor, ferramentas, scripts e documentação.
@@ -52,7 +54,7 @@ O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): **50 m
 
 ## 4. Marcos
 
-### Fase 2 — Tradução fiel (em andamento)
+### Fase 2 — Tradução fiel (concluída em 2026-11-23)
 
 Termina no congelamento, que exige os cinco critérios abaixo, todos comprovados por script ou medição:
 
@@ -73,6 +75,8 @@ Cumpridos os cinco critérios e com aprovação explícita do usuário:
 
 O congelamento é sem volta na prática. Na dúvida, atrase-o. Nunca o execute sem a aprovação do usuário.
 
+**Feito em 2026-11-23**, com aprovação do usuário: `src/game/` e `src/kairo/common/generated/` substituídos pela árvore legível validada (corpos idênticos; cabeçalho de código mantido à mão; macros `PLS_METHOD_SCOPE` mantidas para o diagnóstico); tradutor em `tools/translator-archived/`; livro-razão de tradução (`PROGRESS.md`, `config/phase2-*`) congelado como registro; destino dos checks conforme `docs/notes/freeze-audit.md`, seção 7. Nota da versão: `docs/release-notes/v1.0.0-faithful.md`.
+
 ### Fase 3 — Design para o 3DS (decisão do usuário)
 
 Propostas em `docs/design/` para divisão das duas telas (400×240 sem toque, 320×240 com toque), escala, controles por botões e circle pad, teclado do sistema e legibilidade das fontes. Pode ser prototipada no PC com duas janelas nas resoluções do 3DS. Nada é implementado sem a escolha do usuário.
@@ -87,7 +91,7 @@ Melhorias de jogo pedidas pelo usuário, feitas no C++ após o congelamento, cad
 
 ## 5. Regras de trabalho
 
-### Antes do congelamento
+### Antes do congelamento (registro; não valem mais desde 2026-11-23)
 
 1. **A lógica do jogo não é alterada.** Bugs do original são preservados.
 2. **`src/game/` é gerado.** Se o tradutor erra, corrija o tradutor e regenere. Nenhuma edição manual.
@@ -97,10 +101,12 @@ Melhorias de jogo pedidas pelo usuário, feitas no C++ após o congelamento, cad
 
 ### Depois do congelamento
 
-6. `src/game/` é editado diretamente. Toda mudança de comportamento em relação à tag `v1.0.0-faithful` é intencional, isolada em commit próprio e registrada em `docs/changes-from-original.md`.
+6. **`src/game/` é código-fonte editado à mão; o tradutor não é mais executado** (`tools/translator-archived/`, somente leitura; `tools/translate` recusa). Toda mudança de comportamento em relação à tag `v1.0.0-faithful` é intencional, isolada em commit próprio e registrada em `docs/changes-from-original.md`. Regras de manutenção do código: `docs/maintaining-game-code.md`.
 7. Correções de fidelidade descobertas depois são feitas à mão e registradas como tais.
-8. Mudanças no formato de save exigem decisão do usuário sobre compatibilidade com os saves do Android.
+8. **Mudança no formato de save exige decisão do usuário** (inclusive sobre compatibilidade com os saves do Android).
 9. O runtime (`src/runtime/`, coletor incluído) pode evoluir depois do congelamento sem alterar o código do jogo, desde que a interface usada pelo código gerado se mantenha. (Decisão do usuário, 2026-11-13; ex.: a reforma do coletor em `docs/backlog.md`.)
+9a. **Antes de cada checkpoint** (além da regra 11): os checks do código do jogo — mapa do coletor e raízes (`tests/repository/test_gc_field_tracing.py src/game src/kairo/common/generated`), código de apoio (`tools/check_readable_support.py`) e literais (`tools/check_readable_literals.py`); a verificação completa que resta (`tools/verify_phase2.py --full`, sem os checks arquivados com o tradutor); e o conjunto de roteiros do critério 3 com estresse moderado do coletor (`tools/run_readable_routes.py --frozen`), aceito com a mesma cobertura e 0 alertas.
+9b. **Pendências abertas no congelamento, com dono:** teste numérico do critério 4a em aparelho Android (usuário); `AppData.DrawMoney2` e `MapMain.UpdateTrainingCoatNum` (cobertura por log textual, quando houver vídeo); comparação de telas com o Android e medição com vídeo e som no New 3DS (Fase 4); reforma do coletor, grafias de `Graphics` e coleções `Vector` (A.4e/A.4d) (`docs/backlog.md`).
 
 ### Sempre
 

@@ -13,6 +13,19 @@ EXPECTED='d557af6b4bc7748605a39ed3548821f6763c5773a12432a3fed6e8c413b211e8'
 
 
 def sha(path):return hashlib.sha256(path.read_bytes()).hexdigest()
+# Destination of the translator-bound checks at the freeze (freeze-audit.md, section 7).
+ARCHIVED_AT_FREEZE={
+    # archived with the translator: differentials and lowering fixtures of the emitter
+    'portable-compile','portable-differential','portable-split-differential','lowering-differential',
+    'content-lowering','value-type-lowering','matrix-point-lowering','shared-field-lowering',
+    'surface-adapter-lowering','image-metadata-lowering','ref-out-lowering','goto-case-lowering',
+    'service-policy-lowering','float-arm-emission-regression','type-init-translated',
+    'direct-kairo-adapter','source-allocation-attribution','diagnostic-leaf-guards',
+    'incremental-emission','vector-iterator','checkpoint-comparison',
+    # disabled: they regenerate the game
+    'game-diagnostic-inventory','game-partial-compile',
+    # frozen ledger and archived reachability analysis (kept in config/ as the record)
+    'progress','reachability-analysis'}
 
 def code_snapshot():
     paths={ROOT/'CMakeLists.txt',ROOT/'AGENTS.md',ROOT/'.gitignore'}
@@ -231,6 +244,19 @@ def main():
         # docs/notes/verification-groups.md); unmapped checks use every group.
         # Generated proof receipts in config/ are excluded from the snapshot.
         return dict(code=group_digest(snapshot if snapshot is not None else code_snapshot(),groups_for(name)),apk=EXPECTED,managed=managed_hash,producer=producer)
+    # After the freeze (v1.0.0-faithful, 2026-11-23) the translator is archived and these
+    # checks go with it (docs/notes/freeze-audit.md, section 7; confirmed by rehearsal 3 and
+    # by a keep-going run on the frozen tree). They validated the translation; the frozen
+    # result stays covered by the route set and the remaining checks.
+    frozen=(ROOT/'tools/translator-archived').is_dir() and not (ROOT/'translator').exists()
+    archived=[name for name,_ in commands if name in ARCHIVED_AT_FREEZE] if frozen else []
+    if frozen:
+        commands=[(name,command) for name,command in commands if name not in ARCHIVED_AT_FREEZE]
+        # Checks of the maintained game code (AGENTS.md, rule 9a): collector map and roots,
+        # support code of every class, text literals against the reconstructed C#.
+        commands+=[('game-gc-map-and-roots',['tests/repository/test_gc_field_tracing.py','src/game','src/kairo/common/generated']),
+                   ('game-support-code',['tools/check_readable_support.py']),
+                   ('game-literals',['tools/check_readable_literals.py'])]
     checks=[];deferred=[]
     for name,command in commands:
         receipt_path=receipts/(name+'.json');log=folder/(name+'.log')
@@ -275,7 +301,7 @@ def main():
            and json.loads((receipts/(name+'.json')).read_text(encoding='utf8'))['key']!=dict(state(name,final_snapshot),command=command)]
     if stale:raise RuntimeError('Code tree changed during verification; rerun to refresh: '+', '.join(stale[:10]))
     if sha(args.apk)!=EXPECTED:raise ValueError('Original APK changed during verification')
-    report=dict(operation='phase2-checkpoint-full-verification',status='PASS',complete=True,checks=checks,
+    report=dict(operation='phase2-checkpoint-full-verification',status='PASS',archived_at_freeze=archived,complete=True,checks=checks,
         full=bool(args.full),deferred_checks=deferred,dependency_model='per-check groups (tools/verification_groups.py)',
         verification_code_inputs=code_snapshot(),jobs=args.jobs,
         heaviest_checks=sorted(({'name':c['name'],'peak_commit_bytes':c['peak_commit_bytes']} for c in checks if c.get('peak_commit_bytes')),key=lambda c:-c['peak_commit_bytes'])[:3],

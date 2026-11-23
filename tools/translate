@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
+"""Archived at the freeze (v1.0.0-faithful, 2026-11-23).
+
+src/game/ and src/kairo/common/generated/ are maintained sources since the freeze;
+the translator that produced them is in tools/translator-archived/ (read-only) and
+must not be run over them (AGENTS.md, CLAUDE.md, docs/maintaining-game-code.md).
+"""
 import sys
-from pathlib import Path
-sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'translator'))
-from translate import main
-main()
+sys.stderr.write('tools/translate: o tradutor foi arquivado no congelamento v1.0.0-faithful '
+                 '(tools/translator-archived/, somente leitura). src/game/ é código-fonte '
+                 'mantido à mão; não execute o tradutor sobre ele.\n')
+sys.exit(2)

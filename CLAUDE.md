@@ -10,6 +10,20 @@ Este arquivo orienta o Claude neste repositório. As regras completas do projeto
 - **Regra de conteúdo:** o repositório só contém código de engenharia reversa e código novo. Nenhum asset, binário original, save ou captura entra no Git. Os assets vêm do APK local do usuário, verificado por hash, em tempo de build.
 - **Usuário:** fala português. Relatórios e mensagens em português.
 
+## Estado atual: congelado (`v1.0.0-faithful`, 2026-11-23)
+
+O congelamento foi feito. `src/game/` e `src/kairo/common/generated/` são
+**código-fonte mantido à mão** (corpos idênticos à última árvore legível validada;
+regras em `docs/maintaining-game-code.md`). O tradutor está em
+`tools/translator-archived/` e **não é mais executado** (`tools/translate` recusa).
+Valem as regras "Depois do congelamento" do `AGENTS.md` (seção 5, 6–9b): mudança de
+comportamento em commit próprio, registrada em `docs/changes-from-original.md`;
+formato de save só com decisão do usuário; antes de cada checkpoint, os checks do
+código do jogo (mapa do coletor, raízes, código de apoio, literais), a verificação
+completa que resta e os roteiros com estresse moderado. Próximas fases (proposta):
+`docs/plan-next-phases.md`. As seções abaixo descrevem a primeira metade e ficam
+como registro.
+
 ## Você está assumindo um trabalho em andamento
 
 O trabalho até aqui foi feito por outro agente (Codex), ao longo de muitas rodadas. Você não tem o histórico da conversa; o que vale é o que está no repositório.
@@ -60,13 +74,13 @@ O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): 50 ms 
 - Áudio em streaming; texturas sem perda; fontes rasterizadas do TTF do APK; imagens pré-convertidas pelo pipeline.
 - Textos literais e arrays constantes do C# reconstruído ficam no C++ (arrays como literais no modo legível, decisão de 2026-11-16); textos e dados dos assets vêm dos assets.
 - A parte LGPL v2 da colação do Mono (tabelas auxiliares) fica separada e documentada.
-- A lógica do jogo não muda antes do congelamento. Melhorias pedidas vão para `docs/backlog.md`.
+- Depois do congelamento, a lógica do jogo muda só por decisão do usuário, em commit próprio, registrada em `docs/changes-from-original.md`; o que não foi decidido vai para `docs/backlog.md`.
 
 ## Como trabalhar aqui
 
 - **Meça antes de mudar, e depois.** Todo ganho de desempenho tem número antes e depois, pelo mesmo método, em máquina ociosa.
 - **Fato ou hipótese.** O que não foi verificado é `UNKNOWN`. Hipóteses refutadas ficam registradas.
-- **`src/game/` é saída do tradutor.** Erro de tradução se corrige no tradutor, regenerando.
+- **`src/game/` é código-fonte mantido à mão desde o congelamento** (antes: saída do tradutor, corrigida no tradutor).
 - **Cadência:** entre checkpoints, só os testes do componente alterado. Verificação completa antes de cada checkpoint. Publique antes de encerrar a sessão; não deixe trabalho local sem verificação.
 - **Dependências:** código aberto com licença permissiva está pré-autorizado em `build/deps/`, com versão, hash e licença registrados. Copyleft e instalação no sistema exigem pergunta.
 - **Pare e pergunte** para: decisões de design de telas e controles, qualquer coisa que toque as regras de conteúdo, remoção de verificações, mudanças que dependam de suposição sobre threads, e o congelamento.
@@ -82,6 +96,14 @@ O jogo pede 20 quadros por segundo (`Main.OnUpdate`, `SetTargetFps(20)`): 50 ms 
 - Aprovar a amostra de C++ legível e o congelamento.
 
 ## Comandos
+
+**Depois do congelamento** deixam de existir os comandos do tradutor (tradução do
+jogo, `translator/readable.py`, `diagnostic_snapshot.py`, `test_lowering`,
+`test_portable`, `tools/progress` sobre o livro-razão): ficam em
+`tools/translator-archived/` só como registro. O diagnóstico usa a árvore editada:
+`tools/build_pc.py --frozen-diagnostic ...` (histórico em `build/frozen-attempts.json`)
+e `tools/build_arm11_null.py --frozen`; roteiros com `tools/run_readable_routes.py --frozen`.
+A tabela abaixo é da primeira metade.
 
 Confirmados executando em 2026-11-11 (Claude, primeira sessão). `APK` = APK local
 autenticado por `docs/apk.md`; `MANAGED` = diretório `assets/bin/Data/Managed`

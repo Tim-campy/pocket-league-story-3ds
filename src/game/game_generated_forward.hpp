@@ -1,317 +1,399 @@
-// GENERATED per declaring type by translator/EmissionUnits.cs. Do not edit.
+// Translated from the reconstructed C# (reference/, tag v1.0.0-csharp-reconstruction)
+// by translator/Translator.cs on 2026-11-23; maintained by hand since then.
+// Rules: docs/maintaining-game-code.md
 #pragma once
 #include "game_generated_runtime.hpp"
 namespace pls::game {
+namespace analytics {
 
-struct cs_2e79f4f38b707be7;
+struct AnalyticsTracker;
+} // namespace analytics
+namespace BuildInfos {
 
-struct cs_8a422f6f9c1bd55e;
+struct BuildInfo;
+} // namespace BuildInfos
+namespace cfg {
 
-struct cs_b89c480114cef140;
+struct MyConfig;
+} // namespace cfg
+namespace data {
 
-struct cs_b08d770c239489bf;
+struct BaseData;
 
-struct cs_80d72c9d6f5bfcfe;
+struct EventData;
 
-struct cs_ec7bde62b3c2b35f;
+struct FanActData;
 
-struct cs_69a97d2bf5ede86d;
+struct FanBonusData;
 
-struct cs_5beb6285da308d06;
+struct FormationData;
 
-struct cs_b68aa9c3dd5cf14c;
+struct LeagueData;
 
-struct cs_2b1e88c9c4c08d03;
+struct MapchipMain;
 
-struct cs_f991feb74054b6df;
+struct MapchipMatch;
 
-struct cs_8f8054b388e3f93e;
+struct PlayerData;
 
-struct cs_3e5b0d35ae6be8e7;
+struct QuestMatchData;
 
-struct cs_bd3043ac164d021f;
+struct SponsorData;
 
-struct cs_d22b1a8b100a0cab;
+struct StadiumData;
 
-struct cs_6803fd77f880b974;
+struct SupervisorData;
 
-struct cs_169021fb033627ed;
+struct TeamData;
 
-struct cs_76884ad002dceb7a;
+struct TenantData;
 
-struct cs_ba9af87bc2bff5b4;
+struct TradeData;
 
-struct cs_4489b86073532f79;
+struct TrainingData;
+} // namespace data
+namespace form {
 
-struct cs_3ee77977aa791047;
+struct BootForm;
 
-struct cs_66eb7014769dfe80;
+struct DebugForm;
 
-struct cs_6485f92c2f04639f;
+struct FormManager;
 
-struct cs_d0b7ac4933bed3ac;
+struct GameForm;
 
-struct cs_5451b2154f09f4c5;
+struct MyFormBase;
 
-struct cs_834c8c593e682d3f;
+struct RankForm;
 
-struct cs_65bcdaa7ea8c7d7a;
+struct SoccerForm;
 
-struct cs_7eb0a1119bc141dc;
+struct SpForm;
 
-struct cs_a2cea92715051fa5;
+struct SubForm;
 
-struct cs_e31f80000513fe82;
+struct TitleForm;
+} // namespace form
+namespace game {
 
-struct cs_86b804989f2a95bb;
+struct Ball;
 
-struct cs_ca6f5bbc06a496a9;
+struct Camera;
 
-struct cs_456d3d004decc356;
+struct DelayEvent;
 
-struct cs_0db347231f2257f9;
+struct GameManager;
 
-struct cs_1815a6964debf82a;
+struct GameUtil;
 
-struct cs_83b311c3bf434048;
+struct Map;
 
-struct cs_7c0f60cfdd8cf265;
+struct MapMain;
 
-struct cs_29293d4d6e77d3bc;
+struct MapObject;
 
-struct cs_2ef6641b828546ac;
+struct Player;
 
-struct cs_70a14a9a721e329a;
+struct TArea;
 
-struct cs_0f74b892eb1cdde4;
+struct TBall;
 
-struct cs_403f4e6631bd3667;
+struct Team;
 
-struct cs_a9f43a9b869eaae8;
+struct Tenant;
 
-struct cs_4feff672b530e53a;
+struct TGroupArea;
 
-struct cs_63cc285eb997c6a4;
+struct TPlayer;
 
-struct cs_75707aa3f1629c85;
+struct UserData;
+} // namespace game
+namespace java::lang {
 
-struct cs_4c145fe8f008af05;
+struct JRunnable;
 
-struct cs_ec7e2b4042d2be7d;
+struct JShort;
 
-struct cs_89c0d586cfe20341;
+struct JThread;
+} // namespace java::lang
+namespace kairo::unity::ad {
 
-struct cs_7a470603d6db57af;
+struct AdMobView;
+} // namespace kairo::unity::ad
+namespace kairo::unity::analytics {
 
-struct cs_70c4092da329e972;
+struct AnalyticsTracker_AnalyticsData;
+} // namespace kairo::unity::analytics
+namespace kairo::unity::graphics {
 
-struct cs_9f5a071d05c1d020;
+struct Rectangle;
 
-struct cs_f1dd8f2aa583774c;
+struct RectangleF;
+} // namespace kairo::unity::graphics
+namespace kairo::unity::io {
 
-struct cs_18d5b680efad7752;
+struct Http_HttpThread;
 
-struct cs_77de402a688eeb9d;
+struct HttpObject;
+} // namespace kairo::unity::io
+namespace kairo::unity::panel {
 
-struct cs_17bc7a5b28fcdc2a;
+struct Button;
 
-struct cs_5ad2213598dfcd5d;
+struct Component;
 
-struct cs_d37bccc1c3814fc6;
+struct FepPanel;
 
-struct cs_4c00a0e0c6e6e2e5;
+struct Label;
 
-struct cs_4ccab99c775ca4c5;
+struct TextBox;
+} // namespace kairo::unity::panel
+namespace kairo::unity::surface {
 
-struct cs_9326c27a92cfea3a;
+struct SurfaceBase;
 
-struct cs_e1ac8ca60ae0d404;
+struct SurfaceBase_MotionEventRecord;
 
-struct cs_e373231f616cd1ed;
+struct SurfaceBase_MotionEventRecord_MultiTouch;
 
-struct cs_70b7974d356d68ab;
+struct SurfaceBase_TouchPoint;
 
-struct cs_4a8bef2ab48b32d7;
+struct SurfaceManagerBase;
 
-struct cs_3a3d09f9e75a32d2;
+struct TouchComponent;
 
-struct cs_757516ce190cf813;
+struct TouchEvent;
 
-struct cs_6517d63c01870958;
+struct TouchOption;
+} // namespace kairo::unity::surface
+namespace kairo::unity::system::appli {
 
-struct cs_c87dc3d2d0f9440a;
+struct GameAppli;
+} // namespace kairo::unity::system::appli
+namespace kairo::unity::system {
 
-struct cs_b6ad7779caeeb23c;
+struct GameDataRecord;
 
-struct cs_f65ba01749ba9d34;
+struct GameDataRecord_Data;
 
-struct cs_b489b0d33bb37bb8;
+struct KairoBase;
 
-struct cs_7f70540c4f85d74f;
+struct KairoBase_AccessCount;
 
-struct cs_2c2ce8625d613473;
+struct KairoBase_ConnectObject;
 
-struct cs_88b206217a8b30c2;
+struct KairoBase_ConnectTask;
 
-struct cs_50c5a567a6876ee3;
+struct KairoBase_KairoDummy;
+} // namespace kairo::unity::system
+namespace kairo::unity::system::lineup::ui {
 
-struct cs_fd683372658feff4;
+struct LineupData;
 
-struct cs_1ab688350081022a;
+struct LineupManager;
+} // namespace kairo::unity::system::lineup::ui
+namespace kairo::unity::system::notification::ui {
 
-struct cs_4368d694d01424b0;
+struct NotifyManager;
+} // namespace kairo::unity::system::notification::ui
+namespace kairo::unity::system::payment {
 
-struct cs_c10f171a3a4c8973;
+struct IllegalPurchaseException;
 
-struct cs_8e2bf0f8fe011785;
+struct PaymentDataRecord;
+} // namespace kairo::unity::system::payment
+namespace kairo::unity::system::tapjoy::ui {
 
-struct cs_500cf5d961e2c3a4;
+struct ITapjoy;
+} // namespace kairo::unity::system::tapjoy::ui
+namespace kairo::unity::ui {
 
-struct cs_96c54d9323f24f8e;
+struct Balloon;
 
-struct cs_2eedf806ae9938c7;
+struct DepthInfo;
 
-struct cs_0286a0dbe9da0b33;
+struct Dialog;
 
-struct cs_9896b6da0c305f81;
+struct Image_BalloonRenderTask;
 
-struct cs_fbfef5c19ac20749;
+struct Image_TextRenderTask;
 
-struct cs_5841296a01607078;
+struct Image_TouchTask;
 
-struct cs_c8e1f3d3f96670c6;
+struct Matrix;
 
-struct cs_ec6b992b38927bb3;
+struct Pictograph;
 
-struct cs_b728593e3dcffe31;
+struct ResourceManager;
 
-struct cs_bf56843843fb840d;
+struct ResourceManager_JarCache;
 
-struct cs_9cade6927d6e0bf3;
+struct Seb;
 
-struct cs_672083a5397f2913;
+struct Seb_WorkStaticValue;
 
-struct cs_5ac9304f9db0671e;
+struct Seb_WorkValue;
 
-struct cs_dc09c88a279424b5;
+struct TextFormat;
 
-struct cs_87fb4d668ea5580b;
+struct TextLayout;
 
-struct cs_43347b50b6a10e65;
+struct TextLayout_TextBlock;
 
-struct cs_27b8baf7307cff9f;
+struct UIException;
+} // namespace kairo::unity::ui
+namespace kairo::unity::util {
 
-struct cs_cd97eee87b3216c4;
+struct KairoException;
 
-struct cs_d86010513034d6a0;
+struct Language_LanguagePackInfo;
 
-struct cs_3da6da0799f0bdf8;
+struct LogListener;
 
-struct cs_23a020152d468724;
+struct NotPermitException;
 
-struct cs_91b71e223c6a5085;
+struct SecureByteArray;
+} // namespace kairo::unity::util
+namespace kfw::panel {
 
-struct cs_8bf13b560e1e05e9;
+struct MainPanel;
+} // namespace kfw::panel
+namespace main {
 
-struct cs_2ffa6f51468590ea;
+struct AppData;
 
-struct cs_9d34b362d90540bb;
+struct AppData_stringErrorCode;
 
-struct cs_bad15ea7469ee2b9;
+struct Main;
 
-struct cs_75beb3a42e16f9bd;
+struct WebBox;
+} // namespace main
+namespace panel {
 
-struct cs_20db1845606f1f3b;
+struct MainPanel;
+} // namespace panel
+namespace PlsPortGeneratedBootstrap {
 
-struct cs_57e2b41d1ee1c149;
+struct Source_ImageTaskState;
+} // namespace PlsPortGeneratedBootstrap
+namespace surface {
 
-struct cs_792a6372766eb19f;
+struct GamePad;
 
-struct cs_e315dac1df3b175d;
+struct GameView;
 
-struct cs_f9cfa6da3459412e;
+struct SurfaceManager;
 
-struct cs_9b21b86f0d2914e0;
+struct TouchEffect;
 
-struct cs_4e9b1f0e9e3baf25;
+struct TouchEffectManager;
+} // namespace surface
+namespace system::billing {
 
-struct cs_08829eb6a4df2a40;
+struct MyBilling;
+} // namespace system::billing
+namespace system::billing::ui {
 
-struct cs_feb7ae74aa59a27c;
+struct ApplyTask;
 
-struct cs_931908081ea62151;
+struct BillingItem;
 
-struct cs_6ee7d14059be1acf;
+struct BillingManager;
 
-struct cs_24ddde8b39392611;
+struct PurchaseLogView;
 
-struct cs_cd85e7c847ae4598;
+struct PurchaseRecord;
 
-struct cs_15f31d4f046b09a8;
+struct Receipt;
 
-struct cs_fa01867c9c048464;
+struct StoreBase;
+} // namespace system::billing::ui
+namespace system::billing::util {
 
-struct cs_758f7068d68847ba;
+struct IabHelper;
 
-struct cs_51fd12cb14e568f9;
+struct Inventory;
 
-struct cs_e6ed65290db381ba;
+struct Json;
 
-struct cs_a42daea58251b089;
+struct Purchase;
 
-struct cs_b169f360ee9f1108;
+struct SkuDetails;
+} // namespace system::billing::util
+namespace system::form {
 
-struct cs_5df8265429cd2423;
+struct BillingForm;
 
-struct cs_f52c904bea265acc;
+struct ConnectForm;
 
-struct cs_7eeafe36a056776c;
+struct FriendForm;
 
-struct cs_5dc998c2cffb18c8;
+struct HttpForm;
 
-struct cs_408ac5c74e5f3515;
+struct HttpForm_ResultData;
 
-struct cs_c9cd56cdd30ecf7a;
+struct LanguageForm;
 
-struct cs_d01bf6d528df5d3e;
+struct LineupForm;
 
-struct cs_c63e265fb6ff73e9;
+struct MatchForm;
 
-struct cs_3855bfc5096e5e16;
+struct MatchForm_UserRecord;
 
-struct cs_7a8a85ab4c0396df;
+struct RestoreForm;
+} // namespace system::form
+namespace system::friend_ {
 
-struct cs_ec8ac507fb495e84;
+struct MyFriend;
+} // namespace system::friend_
+namespace system::friend_::ui {
 
-struct cs_9465f7541f51c47e;
+struct Friend;
 
-struct cs_2d2e25a6914f7709;
+struct FriendData;
 
-struct cs_22115ea4236d0eaa;
+struct FriendPlayTimeData;
+} // namespace system::friend_::ui
+namespace system {
 
-struct cs_925b3cf054e42b78;
+struct KairoService;
 
-struct cs_851a96be86c28dd2;
+struct KairoText;
+} // namespace system
+namespace system::lineup {
 
-struct cs_e00832a42e12ec3b;
+struct MyLineup;
+} // namespace system::lineup
+namespace system::notification {
 
-struct cs_23ed5cbd0e3922f3;
+struct MyNotify;
+} // namespace system::notification
+namespace system::panel {
 
-struct cs_90cdc908fbacdc4d;
+struct InputPanel;
+} // namespace system::panel
+namespace system::surface {
 
-struct cs_af32d28251411c95;
+struct GameBanner;
+} // namespace system::surface
+namespace system::tapjoy {
 
-struct cs_a47fef2fb9013301;
+struct MyTapjoy;
+} // namespace system::tapjoy
+namespace system::tapjoy::ui {
 
-struct cs_15d0c6400449da70;
+struct Tapjoy;
+} // namespace system::tapjoy::ui
 
-struct cs_f8053a3d49df91b7;
+struct TJPlacement;
+namespace UnityEngine::Purchasing {
 
-struct cs_764e04aa5493d588;
+struct IExtensionProvider;
 
-struct cs_1fc419a676702252;
+struct IStoreController;
 
-struct cs_10edc785c24978fc;
+struct IStoreListener;
 
-struct cs_efeeb7640894c95e;
+struct Product;
+} // namespace UnityEngine::Purchasing
 }

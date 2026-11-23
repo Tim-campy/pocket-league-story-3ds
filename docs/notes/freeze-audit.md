@@ -327,3 +327,24 @@ era de ambiente da cópia de trabalho (os assets agora estão ligados). **Nenhum
 dependência nova do tradutor.** O ambiente da cópia de trabalho precisa de
 `build/deps`, `build/generated`, `assets/` (ligações), `build/ctr-assets-native-v1`
 e dos saves das tentativas 31 e 50 em `build/pc-diagnostic-release/attempts/`.
+
+## 10. Congelamento (2026-11-23)
+
+Aprovado pelo usuário em 2026-11-23, condicionado aos itens 2d, 2e e 4a da rodada
+(todos cumpridos: `docs/notes/readable-emitter-pass-2026-11-22.md`,
+`docs/notes/readable-int32-cost.md`, `docs/notes/menu-save-difference.md`).
+Procedimento da seção 4, como no ensaio 3:
+
+| Passo | Resultado |
+|---|---|
+| Última geração legível (com `PLS_METHOD_SCOPE`) | `build/claude-readable-final2`, a árvore validada: 85 roteiros (0 alertas, 1.572 × 1.573 métodos contra o canônico atual), build ARM, código de máquina dos kernels, Azahar |
+| Verificação completa antes da troca | 127/127 (`c8cd1ed`) |
+| Troca de `src/game/` e `src/kairo/common/generated/` (`tools/freeze_tree.py`) | 402 + 115 unidades; cabeçalho de código mantido à mão; nenhum "Do not edit" |
+| Corpos iguais à árvore validada | 517/517 arquivos idênticos fora das linhas de cabeçalho |
+| Tradutor | `tools/translator-archived/` (somente leitura, `README-ARCHIVED.md`); `tools/translate` recusa com mensagem |
+| PC a partir da árvore congelada (`--frozen-diagnostic`) | partida (127 passos, 19 estados, `rs/0003`) e menu (180 passos, 331 estados, `rs/0003`) idênticos à árvore validada; 0 alertas |
+| ARM a partir da árvore congelada (`--frozen`) | `.3dsx` 7.281.448 B; código de máquina dos 5 kernels e de `TitleForm::_draw` idêntico ao da árvore validada |
+| Checks | os 25 ligados ao tradutor arquivados (`ARCHIVED_AT_FREEZE` em `tools/verify_phase2.py`, os mesmos do ensaio 3); `test_diagnostic_leaf_manifest` foi com o tradutor; entram `game-gc-map-and-roots`, `game-support-code` e `game-literals` sobre o código mantido |
+| Livro-razão | `PROGRESS.md` e `config/phase2-*` ficam como registro da Fase 2 (não regenerados) |
+| Regras | `AGENTS.md` e `CLAUDE.md` atualizados para a segunda metade |
+| Nota da versão | `docs/release-notes/v1.0.0-faithful.md` |

@@ -296,3 +296,25 @@ mesmo código): 87 execuções, 85 concluídas, 0 alertas, 0 lacunas; cobertura
 `AddCommandRunningRegist`, da simulação dependente da velocidade). Determinismo
 cruzado com o canônico atual: partida de referência com passos, estados e
 `rs/0003` idênticos.
+
+## 9. Ensaio 3 sobre a árvore da última passada do emissor (2026-11-23)
+
+Ramo local `freeze-rehearsal-3` (commit `7874b4a`, a partir de `e04f8dd`; sem tag,
+sem push). Árvore: legível final da rodada de 2026-11-22
+(`docs/notes/readable-emitter-pass-2026-11-22.md`), gerada em
+`build/claude-readable-final`.
+
+| Passo | Resultado |
+|---|---|
+| `tools/freeze_tree.py` (troca da árvore) | 402 unidades do jogo + 115 da KairoLibrary; cabeçalho de código mantido; nenhum "Do not edit" |
+| Tradutor arquivado | `tools/translator-archived/` (com `README-ARCHIVED.md`) |
+| Build ARM `--frozen` | **PASS** — `.3dsx` 7.286.380 B |
+| `match-touch` (`--frozen-diagnostic`) | **PASS** — quadro 2.972; 127 passos, 19 estados e `rs/0003` idênticos ao legível final; 0 alertas |
+| `menu-explore` (`--frozen-diagnostic`) | **PASS** — quadro 11.282; 180 passos, 331 estados e `rs/0003` idênticos ao legível final; 0 alertas |
+| Verificação `--full`, seguindo após falhas (cópia local do script) | **100 PASS / 27 FAIL** (ensaio 2: 99 / 28) |
+
+Os 27 que falham são os mesmos do ensaio 2, menos `private-resource-catalog`, que
+era de ambiente da cópia de trabalho (os assets agora estão ligados). **Nenhuma
+dependência nova do tradutor.** O ambiente da cópia de trabalho precisa de
+`build/deps`, `build/generated`, `assets/` (ligações), `build/ctr-assets-native-v1`
+e dos saves das tentativas 31 e 50 em `build/pc-diagnostic-release/attempts/`.

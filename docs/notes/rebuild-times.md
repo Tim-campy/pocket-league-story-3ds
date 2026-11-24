@@ -26,17 +26,35 @@ Para comparação: o cabeçalho de apoio `game_generated_forward.hpp` é incluí
 `.cpp`; mudá-lo equivale a recompilar quase tudo. Ele é infraestrutura (`AGENTS.md`,
 seção 2).
 
+## Experimentos de 2026-11-24 (aprovados para teste; nada entrou)
+
+Máquina: Intel i5-12450HX (8 núcleos, 12 lógicos), 7,7 GB de RAM. Recompilação de tudo
+(`touch src/kairo/common/semantic_runtime.hpp` + `dev.py build`), com amostragem de
+memória dos `cl.exe` a cada 1 s.
+
+| Configuração | Tudo | Um `.cpp` | Pico de memória dos `cl.exe` (soma / maior processo) | Memória livre mínima | Objetos do jogo |
+|---|---|---|---|---|---|
+| atual: `--jobs 2`, sem cabeçalho pré-compilado | 1.007 s | 17 s | 849 / 600 MB | 505 MB | — |
+| `--jobs 3` | 977 s (−3 %) | — | 1.019 / 605 MB | 503 MB | iguais (mesma compilação) |
+| cabeçalho pré-compilado (`game_generated_forward.hpp` no jogo, `portable_generated_runtime.hpp` na KairoLibrary), `--jobs 2` | 451 s (−55 %) | 10 s | 900 / 580 MB | 577 MB | **253/253 diferentes** |
+
+- `--jobs 3` não compensa: 3 % mais rápido, com a memória livre já perto de 0,5 GB.
+  O limite não é o processador.
+- Cabeçalho pré-compilado: corta o tempo pela metade, mas **não entra**. (1) Os objetos
+  mudam (ordem e numeração das seções de código e símbolos), e a regra para entrar era
+  objeto idêntico; a equivalência do código ficaria por provar de outro jeito
+  (`UNKNOWN`). (2) A auditoria de dependências de `tools/build_pc.py` falha
+  (`Ninja omitted required header dependencies`): com o cabeçalho pré-compilado, os
+  cabeçalhos do runtime deixam de aparecer nas dependências de cada unidade, e essa
+  auditoria é a garantia de que mudar um cabeçalho recompila quem o usa. Adotá-lo
+  exigiria adaptar a auditoria e uma prova de equivalência por outro meio (por exemplo,
+  os roteiros) — decisão do usuário.
+
 ## O que reduzir (propostas, não aplicadas)
 
-1. **Cabeçalho pré-compilado** (`target_precompile_headers`) com
-   `semantic_runtime.hpp`, `numeric_types.hpp` e `game_generated_runtime.hpp`, que
-   toda unidade inclui. É o maior ganho provável numa unidade de 17 s, mas o quanto
-   do tempo é análise desses cabeçalhos é `UNKNOWN` (medir com `/Bt+` ou
-   `-ftime-trace` antes). Muda o `CMakeLists.txt` (decisão do usuário); o código de
-   máquina não muda (provar com `tools/compare_objects.py`).
+1. **Cabeçalho pré-compilado**: medido acima (−55 %); não entrou pelas razões acima.
 2. **Menos inclusões de cabeçalhos grandes do jogo nos `.hpp`**: trocar `#include` por
    declaração antecipada onde o cabeçalho só usa `Ref<T>` (ponteiro). Reduz as 52
    unidades de `main.AppData.hpp` para as que usam o tipo completo. É edição de
    `src/game` só de forma; prova pelos objetos.
-3. **Mais compilações em paralelo** (`--jobs 3`): limitado pela memória de 8 GB; o
-   pico por unidade é `UNKNOWN` nesta árvore (medir antes).
+3. **Mais compilações em paralelo**: medido acima; não compensa nesta máquina.

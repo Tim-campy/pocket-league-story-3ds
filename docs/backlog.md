@@ -158,3 +158,12 @@ não sequenciados vizinhos). Prova necessária:
    comando, sem bloco de ordem (`cs_arg`, `cs_left`): listar por ferramenta e conferir
    que a ordem não é observável.
 Custo: perde-se a separação de tempo jogo × plataforma no perfil do PC.
+
+### Declarações antecipadas nos `.hpp` do jogo (decisão de 2026-11-24: backlog)
+
+Trocar `#include` de cabeçalhos grandes do jogo por declarações antecipadas onde o
+cabeçalho só usa `Ref<T>` (ponteiro), para que editar um `.hpp` muito incluído recompile
+menos unidades (hoje `main.AppData.hpp` → 52 unidades, ~6 min;
+`docs/notes/rebuild-times.md`). Só forma; prova pelos objetos idênticos
+(`tools/compare_objects.py`). O cabeçalho pré-compilado foi medido (−55 % no build
+completo) e não entrou: objetos diferentes e auditoria de dependências quebrada.

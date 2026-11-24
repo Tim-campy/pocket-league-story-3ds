@@ -124,7 +124,7 @@ extraída dele ficam em `build/dev-local.json` (fora do Git) ou nas variáveis
 
 | Subcomando | O que faz | Tempo nesta máquina |
 |---|---|---|
-| `build` | build do PC (diagnóstico, Release) a partir de `src/game` | 17 s depois de editar um `.cpp`; 2 s sem mudança; 13–15 min do zero |
+| `build` | build do PC (diagnóstico, Release) a partir de `src/game` | 17 s depois de editar um `.cpp`; 2 s sem mudança; 15–17 min do zero |
 | `run [--save 31\|50]` | roda no PC com as duas telas do 3DS em janelas (até 600 s); `--save 31` começa antes da 1ª partida, `--save 50` depois | build + jogo |
 | `check [--all]` | checks rápidos: mapa do coletor e raízes, código de apoio, literais, formatação dos arquivos alterados (`--all`: todos) | ~5 s, mais ~0,5 s por arquivo alterado (formatação); `--all`: ~4 min |
 | `routes` | os roteiros do jogo (87 execuções) com estresse moderado do coletor | ~3 h |
@@ -132,8 +132,12 @@ extraída dele ficam em `build/dev-local.json` (fora do Git) ou nas variáveis
 | `arm` | build do 3DS (`build/frozen-arm/null_game.3dsx`, backend nulo) | ~30 min do zero |
 
 Recompilar no PC depois de editar um `.cpp` do jogo: ~17 s. Depois de editar um
-`.hpp` muito incluído: ~6 min (`main.AppData.hpp`, 52 unidades) (detalhes e propostas em
-`docs/notes/rebuild-times.md`).
+`.hpp` muito incluído: ~6 min (`main.AppData.hpp`, 52 unidades); veja quantos `.cpp`
+incluem um cabeçalho antes de mexer nele: `grep -l '"data.SponsorData.hpp"' src/game/*.cpp`.
+Uma pasta de build nova (clone ou worktree novo) compila tudo: ~15–17 min. Detalhes em
+`docs/notes/rebuild-times.md`. `dev.py` usa `build/claude-run-utf8.py` quando existe
+(arquivo local que fixa a página de código das mensagens do compilador); sem ele
+funciona igual.
 
 A máquina tem 8 GB: rode **um trabalho pesado por vez** (build, roteiros, emulador).
 
@@ -188,7 +192,8 @@ ex.: `// M:game.Team.Update`). Para ver o original, procure o mesmo método em
 |---|---|---|
 | `pls::cs::Ref<T>` | referência a objeto gerenciado; é um ponteiro comum `T*` (sem contagem). Nulo é `Ref<T>{}` | o objeto só vive enquanto o coletor o alcança (seção 7) |
 | `require(x)` | devolve `x` ou lança a `NullReferenceException` do C# | todo acesso a membro de referência passa por `require`; não troque por `x->` |
-| `is_null(x)`, `x.is_null()` | teste de nulo (`x == null` do C#) | — |
+| `is_null(x)`, `x.is_null()` | teste de nulo (`x == null` do C#); `is_null` vem de `src/game/game_generated_runtime.hpp`, sem prefixo | — |
+| `==` / `!=` | `Ref<T>` compara identidade (como `==` entre objetos no C#); `String` compara o texto, ordinal (como `==` entre `string` no C#); `Array` compara identidade; `Delegate` segue a igualdade de delegates do C# | `string.Equals`, comparações com cultura e ignorando maiúsculas: use as funções `string_equals`, `culture_*` como o código já faz |
 | `pls::cs::Int32`, `Int64` | inteiros com o comportamento do C#: estouro com volta, `/` e `%` lançam as exceções do C# | não troque por `int`: estouro de `int` é indefinido em C++ |
 | `pls::cs::Single`, `Double`, `FloatEval` | `float`/`double` do C#. Aritmética de `float` é avaliada em binary64 (`FloatEval`) e estreitada para `float` ao guardar, ao passar argumento e ao retornar: a regra do Mono no ARM | guarde em `Single`; não acumule em `double`; nada de `-ffast-math`; `/fp:strict` no PC |
 | `pls::cs::to_int32(x)`, `cast_integral<T>(x)` | conversões explícitas do C# (`(int)f`, `(short)i`) | use estas, não `static_cast`: o resultado de valores fora da faixa segue o C# |
@@ -202,7 +207,7 @@ ex.: `// M:game.Team.Update`). Para ver o original, procure o mesmo método em
 | `Delegate<R(Args...)>::from_closure(identidade, "M:...:N", lambda, capturados...)` | lambda do C# como delegate | todo valor gerenciado usado pela lambda vai também na lista final `capturados...` (é por ela que o coletor o enxerga) |
 | blocos `{ auto cs_target = ...; auto cs_arg0 = ...; ... }` (`cs_target`, `cs_index`, `cs_value`, `cs_arg*`, `cs_left`, `cs_right`, `cs_receiver`) | fixam a ordem de avaliação do C# onde o C++ não a garante (argumentos, lados de um operador, alvo de uma atribuição) | ao editar um trecho desses, mantenha a ordem: avalie em variáveis, na ordem do C#, antes de combinar |
 | `PLS_API(expr)` | chamada à plataforma ou à KairoLibrary (`kl_*::...`, `pls::kairo::...`); no build de diagnóstico separa o tempo dela do tempo do jogo; nos outros é a própria chamada | use em toda chamada nova à plataforma; não muda o resultado |
-| `PLS_METHOD_SCOPE("Assembly-CSharp", "M:...", game)` | no build de diagnóstico, registra a chamada do método (cobertura, salvaguarda, perfil); some no build normal | método novo do jogo: acrescente com um DocID novo (ex.: `M:game.Team.MyNewMethod`), para a cobertura dos roteiros o enxergar |
+| `PLS_METHOD_SCOPE("Assembly-CSharp", "M:...", game)` | no build de diagnóstico, registra a chamada do método (cobertura, salvaguarda, perfil); some no build normal | método novo do jogo: acrescente com um DocID novo, no formato do C#: `M:<namespace>.<Classe>.<Método>(<tipos completos dos parâmetros>)`, ex.: `M:game.Team.NovoMetodo(System.Int32,data.TeamData)`; sem parâmetros, sem parênteses (`M:game.Team.Update`) |
 | `pls::cs::run_finally(corpo, finally)`, `capture_exception(e)` | `try/finally` e `catch` do C# | não troque `finally` por destrutor (RAII) se o bloco puder lançar |
 | `pls::cs::box(x)` / `unbox<T>(o)` | boxing do C# (valor → `object`) | `box` aloca; evite em código por quadro (seção 7) |
 
@@ -275,10 +280,14 @@ alocações que o original já fazia ficam como estão.
 no mesmo núcleo do 3DS.
 
 **Formatação.** O estilo está em `src/game/.clang-format`. Depois de editar:
-`python tools/format_game_code.py` (só espaços; ele recusa qualquer outra mudança).
+`python tools/format_game_code.py src/game/<arquivo>.cpp src/game/<arquivo>.hpp` (só
+os arquivos dados, em segundos; sem argumentos formata tudo, ~4 min). Ele só mexe em
+espaços — inclusive a linha em branco entre definições — e recusa qualquer outra mudança.
 
 **Método e classe novos.** Comentário `// M:<DocID>` antes da definição;
-`PLS_METHOD_SCOPE` no início do corpo; classe nova com `PLS_MANAGED_CLASS`,
+`PLS_METHOD_SCOPE` no início do corpo (a "salvaguarda" dos roteiros só alerta quando um
+método que a Fase 2 classificou como inalcançável é executado; um DocID novo não está
+nessa lista e não gera alerta); classe nova com `PLS_MANAGED_CLASS`,
 `trace_edges` (se tiver campos de referência), `create`/`create_init`. O build
 encontra sozinho todo `src/game/*.cpp` (não mexa no `CMakeLists.txt`). Modelos
 completos em `docs/maintaining-game-code.md`.
@@ -301,6 +310,10 @@ Pare e pergunte antes de:
 Não pare para confirmar uma hipótese técnica: teste-a e relate.
 
 ## 9. Toda mudança de comportamento
+
+Mudança de comportamento é o que o jogador ou o save podem perceber: o que aparece nas
+telas, as regras e os números do jogo, o conteúdo do save, os tempos. Código novo que
+ainda não é chamado, nomes locais, formatação e comentários não são.
 
 - Em **commit próprio**, separado de arrumação e formatação.
 - Registrada em **`docs/changes-from-original.md`**: o que mudou em relação à tag

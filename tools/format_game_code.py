@@ -1,6 +1,7 @@
 """Format the game code with its .clang-format and prove the change is whitespace-only.
 
-    python tools/format_game_code.py            # format src/game and src/kairo/common/generated in place
+    python tools/format_game_code.py FILE ...   # format only these files (seconds)
+    python tools/format_game_code.py            # format all of src/game and src/kairo/common/generated (~4 min)
     python tools/format_game_code.py --check    # only report files that are not formatted (exit 1)
 
 Proof run after formatting: every file's C++ token stream (tools/cpp_tokens.py) and its text with all
@@ -23,13 +24,16 @@ def sources(folder):
 
 
 def main():
-    parser = argparse.ArgumentParser(); parser.add_argument('--check', action='store_true'); args = parser.parse_args()
+    parser = argparse.ArgumentParser(); parser.add_argument('--check', action='store_true'); parser.add_argument('files', nargs='*', type=Path)
+    args = parser.parse_args()
+    chosen = {f.resolve() for f in args.files}
     style = (ROOT / 'src/game/.clang-format').read_bytes()
     if (ROOT / 'src/kairo/common/generated/.clang-format').read_bytes() != style:
         sys.exit('src/kairo/common/generated/.clang-format differs from src/game/.clang-format')
     changed = []; bad = []; count = 0
     for folder in FOLDERS:
         for f in sources(folder):
+            if chosen and f.resolve() not in chosen: continue
             count += 1
             before = f.read_text(encoding='utf8')
             after = subprocess.run([str(CLANG_FORMAT), '--style=file', '--assume-filename=' + str(f)], input=before.encode('utf8'),

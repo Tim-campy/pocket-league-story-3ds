@@ -169,6 +169,9 @@ def cmd_ci(a):
 
 
 def main():
+    for stream in (sys.stdout, sys.stderr):
+        try: stream.reconfigure(encoding='utf-8')
+        except (AttributeError, ValueError): pass
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest='command', required=True)
     p = sub.add_parser('build'); p.set_defaults(func=cmd_build)

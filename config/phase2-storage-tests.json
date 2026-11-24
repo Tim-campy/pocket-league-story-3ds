@@ -646,7 +646,7 @@
   },
   "native_executable": {
     "path": "build/storage-tests/storage-fixtures.exe",
-    "sha256": "69934cef48ea0e38b95eb4939c045251944d67c08540203a1be5ca4949115f49"
+    "sha256": "aa5a101931ddb8d055dd9866516e66515a78031b3a961fdb118cd0a23ed24d1b"
   },
   "inputs": {
     "tests/kairo/storage_fixtures.cpp": "ec52cef2a161061abec589040599e0f3893a7515a16d3c424c178de0a674800f",
@@ -664,7 +664,7 @@
     "src/kairo/common/sha256.hpp": "238732e87dd0a9929380691a2a272eac84e870fbd5e0154078ed461a44ee987c",
     "src/kairo/common/managed_collation.hpp": "86c35327c180bedb52e8235967b70612f67cc71d86378174104a1c031d1d773d",
     "src/kairo/common/mono_collator_methods.inc": "caac7739ad315b44569ca3e3e90a6fa4e1812a664f38613e1d5c0393803b7659",
-    "tools/generate_mono_collator.py": "f25254f9e6d5841311370427d98e6d2bef7d47443bf15aec097bd71657a8d9e0",
+    "tools/generate_mono_collator.py": "35afff35ddf9f15ac161e8d940ddd48ba1c1356e37670ae92062beb7c32263f4",
     "tools/setup_mono_collation.py": "3c2dff27fe1a098cdc68f6ee710f8e18bf5792ba1493106aa5ecdb7dafc745a6"
   },
   "source_manifest": [
